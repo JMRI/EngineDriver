@@ -3,118 +3,52 @@
     android:key="engine_driver_preference"
     android:summary="@string/prefSummary"
     android:title="@string/app_name_preferences" >
-    <EditTextPreference
-        android:defaultValue="@string/prefThrottleNameDefaultValue"
-        android:dialogTitle="@string/prefThrottleNameTitle"
-        android:inputType="text"
-        android:key="throttle_name_preference"
-        android:maxLines="1"
-        android:summary="@string/prefThrottleNameSummary"
-        android:title="@string/prefThrottleNameTitle" />
-    <ListPreference
-        android:defaultValue="@string/prefThrottleOrientationDefaultValue"
-        android:entries="@array/OrientationEntries"
-        android:entryValues="@array/OrientationEntryValues"
-        android:key="ThrottleOrientation"
-        android:summary="@string/prefThrottleOrientationSummary"
-        android:title="@string/prefThrottleOrientationTitle" />
-
-    <ListPreference
-        android:defaultValue="@string/prefThemeDefaultValue"
-        android:entries="@array/prefThemeEntries"
-        android:entryValues="@array/prefThemeEntryValues"
-        android:key="prefTheme"
-        android:summary="@string/prefThemeSummary"
-        android:title="@string/prefThemeTitle" />
-
     <CheckBoxPreference
-        android:layout="@layout/checkbox_icon_left_highlight"
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
         android:icon="?attr/ed_advanced_preferences"
         android:key="prefShowAdvancedPreferences"
+        android:layout="@layout/checkbox_icon_left_highlight"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
         android:title="@string/prefShowAdvancedPreferencesTitle" />
-
-    <ListPreference
-        android:defaultValue="@string/prefLocaleDefaultValue"
-        android:entries="@array/prefLocaleEntries"
-        android:entryValues="@array/prefLocaleEntryValues"
-        android:key="prefLocale"
-        android:summary="@string/prefLocaleSummary"
-        android:title="@string/prefLocaleTitle" />
-
     <PreferenceCategory
-        android:key="prefCategoryThrottleStatusRow"
-        android:title="@string/prefThrottleStatusTitle">
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
-            android:icon="?attr/ed_estop_button"
-            android:key="show_emergency_stop_menu_preference"
-            android:layout="@layout/checkbox_icon_right"
-            android:summary="@string/prefEmerStopSummary"
-            android:title="@string/prefEmerStopTitle" />
-        <CheckBoxPreference
-            android:icon="?attr/ed_power_green_button"
-            android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
-            android:key="show_layout_power_button_preference"
-            android:layout="@layout/checkbox_icon_right"
-            android:summary="@string/prefPowerButtonBarSummary"
-            android:title="@string/prefPowerButtonBarTitle" />
-        <CheckBoxPreference
-            android:icon="?attr/ed_flashlight_on_button"
-            android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
-            android:key="prefFlashlightButtonDisplay"
-            android:layout="@layout/checkbox_icon_right"
-            android:summary="@string/prefFlashlightSummary"
-            android:title="@string/prefFlashlightTitle" />
+        android:key="prefCategoryDevice"
+        android:title="@string/prefCategoryDevicePageTitle">
+        <EditTextPreference
+            android:defaultValue="@string/prefThrottleNameDefaultValue"
+            android:dialogTitle="@string/prefThrottleNameTitle"
+            android:inputType="text"
+            android:key="throttle_name_preference"
+            android:maxLines="1"
+            android:summary="@string/prefThrottleNameSummary"
+            android:title="@string/prefThrottleNameTitle" />
         <ListPreference
-            android:icon="?attr/ed_clock_icon"
-            android:defaultValue="@string/prefDisplayClockDefaultValue"
-            android:entries="@array/DisplayClockEntries"
-            android:entryValues="@array/DisplayClockEntryValues"
-            android:key="ClockDisplayTypePreference"
-            android:layout="@layout/checkbox_icon_right"
-            android:summary="@string/prefDisplayClockSummary"
-            android:title="@string/prefDisplayClockTitle" />
+            android:defaultValue="@string/prefThrottleOrientationDefaultValue"
+            android:entries="@array/OrientationEntries"
+            android:entryValues="@array/OrientationEntryValues"
+            android:key="ThrottleOrientation"
+            android:summary="@string/prefThrottleOrientationSummary"
+            android:title="@string/prefThrottleOrientationTitle" />
 
-        <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
-            android:key="prefThrottleSwitchButton"
-            android:layout="@layout/checkbox_icon_left_highlight"
-            android:persistent="false"
-            android:summary="@string/prefThrottleSwitchButtonSummary"
-            android:title="@string/prefThrottleSwitchButtonPreferencesTitle">
+        <ListPreference
+            android:defaultValue="@string/prefThemeDefaultValue"
+            android:entries="@array/prefThemeEntries"
+            android:entryValues="@array/prefThemeEntryValues"
+            android:key="prefTheme"
+            android:summary="@string/prefThemeSummary"
+            android:title="@string/prefThemeTitle" />
 
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
-                android:icon="?attr/ed_throttle_switch_button"
-                android:key="prefThrottleSwitchButtonDisplay"
-                android:layout="@layout/checkbox_icon_right"
-                android:summary="@string/prefThrottleSwitchButtonSummary"
-                android:title="@string/prefThrottleSwitchButtonTitle" />
-
-            <ListPreference
-                android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
-                android:entries="@array/prefThrottleScreenTypeEntries"
-                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
-                android:key="prefThrottleSwitchOption1"
-                android:summary="@string/prefThrottleSwitchOption1Summary"
-                android:title="@string/prefThrottleSwitchOption1Title" />
-
-            <ListPreference
-                android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
-                android:entries="@array/prefThrottleScreenTypeEntries"
-                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
-                android:key="prefThrottleSwitchOption2"
-                android:summary="@string/prefThrottleSwitchOption2Summary"
-                android:title="@string/prefThrottleSwitchOption2Title" />
-        </PreferenceScreen>
-
+        <ListPreference
+            android:defaultValue="@string/prefLocaleDefaultValue"
+            android:entries="@array/prefLocaleEntries"
+            android:entryValues="@array/prefLocaleEntryValues"
+            android:key="prefLocale"
+            android:summary="@string/prefLocaleSummary"
+            android:title="@string/prefLocaleTitle" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="prefCategoryThrottleAppearance"
-        android:title="@string/prefThrottlePageTitle" >
+        android:title="@string/prefThrottlePageTitle">
         <ListPreference
             android:defaultValue="@string/prefThrottleScreenTypeDefault"
             android:entries="@array/prefThrottleScreenTypeEntries"
@@ -130,12 +64,12 @@
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_slider_preference"
-            android:title="@string/prefSliderTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefSliderSummary"
-            android:persistent="false">
+            android:title="@string/prefSliderTitle">
             <CheckBoxPreference
                 android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
                 android:key="increase_slider_height_preference"
@@ -144,10 +78,10 @@
             <EditTextPreference
                 android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
                 android:dialogTitle="@string/prefSliderLeftMarginTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="left_slider_margin"
                 android:maxLength="2"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefSliderLeftMarginSummary"
                 android:title="@string/prefSliderLeftMarginTitle" />
             <CheckBoxPreference
@@ -159,8 +93,7 @@
                 android:defaultValue="@bool/prefHideSliderDefaultValue"
                 android:key="hide_slider_preference"
                 android:summary="@string/prefHideSliderSummary"
-                android:title="@string/prefHideSliderTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefHideSliderTitle"></CheckBoxPreference>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                 android:key="prefHideSliderAndSpeedButtons"
@@ -170,8 +103,7 @@
                 android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
                 android:key="prefTickMarksOnSliders"
                 android:summary="@string/prefTickMarksOnSlidersSummary"
-                android:title="@string/prefTickMarksOnSlidersTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefTickMarksOnSlidersTitle"></CheckBoxPreference>
 
             <EditTextPreference
                 android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
@@ -184,25 +116,23 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_direction_preference"
-            android:title="@string/prefDirectionTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefDirectionSummary"
-            android:persistent="false">
+            android:title="@string/prefDirectionTitle">
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                 android:key="prefSwapForwardReverseButtons"
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
-                android:title="@string/prefSwapForwardReverseButtonsTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefSwapForwardReverseButtonsTitle"></CheckBoxPreference>
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
                 android:key="prefSwapForwardReverseButtonsLongPress"
                 android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
-                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle"></CheckBoxPreference>
 
             <EditTextPreference
                 android:defaultValue="@string/prefDirectionButtonLongPressDelayDefaultValue"
@@ -251,16 +181,15 @@
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
-            android:title="@string/prefDecreaseLocoNumberHeightTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefDecreaseLocoNumberHeightTitle"></CheckBoxPreference>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_webview_preference"
-            android:title="@string/prefWebViewTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefWebViewSummary"
-            android:persistent="false">
+            android:title="@string/prefWebViewTitle">
             <ListPreference
                 android:defaultValue="@string/prefWebViewLocationDefaultValue"
                 android:entries="@array/WebViewLocationEntries"
@@ -274,33 +203,31 @@
                 android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
                 android:key="prefIncreaseWebViewSize"
                 android:summary="@string/prefIncreaseWebViewSizeSummary"
-                android:title="@string/prefIncreaseWebViewSizeTitle">
-            </CheckBoxPreference>
+                android:title="@string/prefIncreaseWebViewSizeTitle"></CheckBoxPreference>
             <EditTextPreference
                 android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
                 android:dialogTitle="@string/prefInitialThrotWebPageSummary"
-                android:key="InitialThrotWebPage"
-                android:summary="@string/prefInitialThrotWebPageSummary"
-                android:title="@string/prefInitialThrotWebPageTitle"
                 android:inputType="text"
-                android:maxLines="1"/>
+                android:key="InitialThrotWebPage"
+                android:maxLines="1"
+                android:summary="@string/prefInitialThrotWebPageSummary"
+                android:title="@string/prefInitialThrotWebPageTitle" />
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="swipe_up_down_preferences"
-            android:title="@string/prefSwipeUpDownTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefSwipeUpDownSummary"
-            android:persistent="false">
+            android:title="@string/prefSwipeUpDownTitle">
             <CheckBoxPreference
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
                 android:key="prefThrottleViewImmersiveMode"
                 android:summary="@string/prefThrottleViewImmersiveModeSummary"
-                android:title="@string/prefThrottleViewImmersiveModeTitle">
-            </CheckBoxPreference>
+                android:title="@string/prefThrottleViewImmersiveModeTitle"></CheckBoxPreference>
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"
@@ -311,20 +238,20 @@
             <EditTextPreference
                 android:defaultValue="@string/prefScreenBrightnessDimDefaultValue"
                 android:dialogTitle="@string/prefScreenBrightnessDimTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="prefScreenBrightnessDim"
                 android:maxLength="3"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefScreenBrightnessDimSummary"
                 android:title="@string/prefScreenBrightnessDimTitle" />
         </PreferenceScreen>
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_accelerometer_preference"
-            android:title="@string/prefAccelerometerTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefAccelerometerSummary"
-            android:persistent="false">
+            android:title="@string/prefAccelerometerTitle">
             <ListPreference
                 android:defaultValue="@string/prefAccelerometerShakeDefaultValue"
                 android:entries="@array/prefAccelerometerShakeEntries"
@@ -335,9 +262,9 @@
             <EditTextPreference
                 android:defaultValue="@string/prefAccelerometerShakeThresholdDefaultValue"
                 android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
+                android:inputType="numberDecimal"
                 android:key="prefAccelerometerShakeThreshold"
                 android:maxLength="5"
-                android:inputType="numberDecimal"
                 android:summary="@string/prefAccelerometerShakeThresholdSummary"
                 android:title="@string/prefAccelerometerShakeThresholdTitle" />
 
@@ -349,16 +276,15 @@
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
-            android:title="@string/prefShowAddressInsteadOfNameTitle">
-        </CheckBoxPreference>
+            android:title="@string/prefShowAddressInsteadOfNameTitle"></CheckBoxPreference>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="default_function_preferences"
-            android:title="@string/prefDefaultFunctionsTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefDefaultFunctionsSummary"
-            android:persistent="false">
+            android:title="@string/prefDefaultFunctionsTitle">
 
             <CheckBoxPreference
                 android:layout_width="wrap_content"
@@ -366,8 +292,7 @@
                 android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                 android:key="prefAlwaysUseDefaultFunctionLabels"
                 android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle">
-            </CheckBoxPreference>
+                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"></CheckBoxPreference>
             <EditTextPreference
                 android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
                 android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
@@ -387,20 +312,20 @@
 
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="volume_preferences"
-            android:title="@string/prefVolumeTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefVolumeSummary"
-            android:persistent="false">
+            android:title="@string/prefVolumeTitle">
 
             <EditTextPreference
                 android:defaultValue="@string/prefVolumeSpeedButtonsSpeedStepDefaultValue"
                 android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="prefVolumeSpeedButtonsSpeedStep"
                 android:maxLength="2"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                 android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
 
@@ -408,24 +333,22 @@
                 android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                 android:key="prefDisableVolumeKeys"
                 android:summary="@string/prefDisableVolumeKeysSummary"
-                android:title="@string/prefDisableVolumeKeysTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefDisableVolumeKeysTitle"></CheckBoxPreference>
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
                 android:key="prefVolumeKeysFollowLastTouchedThrottle"
                 android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
-                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle"></CheckBoxPreference>
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefTts"
-            android:title="@string/prefTtsTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefTtsSummary"
-            android:persistent="false">
+            android:title="@string/prefTtsTitle">
 
             <ListPreference
                 android:defaultValue="@string/prefTtsWhenDefaultValue"
@@ -436,9 +359,9 @@
                 android:title="@string/prefTtsWhenTitle" />
 
             <ListPreference
+                android:defaultValue="@string/prefTtsThrottleResponseDefaultValue"
                 android:entries="@array/prefTtsThrottleResponseEntries"
                 android:entryValues="@array/prefTtsThrottleResponseEntryValues"
-                android:defaultValue="@string/prefTtsThrottleResponseDefaultValue"
                 android:key="prefTtsThrottleResponse"
                 android:summary="@string/prefTtsThrottleResponseSummary"
                 android:title="@string/prefTtsThrottleResponseTitle" />
@@ -461,12 +384,12 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="gamepad_preferences"
-            android:title="@string/prefGamePadTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefGamePadSummary"
-            android:persistent="false">
+            android:title="@string/prefGamePadTitle">
 
             <ListPreference
                 android:defaultValue="@string/prefGamePadTypeDefaultValue"
@@ -480,35 +403,34 @@
                 android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                 android:key="prefGamepadTestNow"
                 android:summary="@string/prefGamepadTestNowSummary"
-                android:title="@string/prefGamepadTestNowTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadTestNowTitle"></CheckBoxPreference>
 
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
                 android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="prefGamePadSpeedButtonsSpeedStep"
                 android:maxLength="2"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
                 android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                 android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="prefGamePadFeedbackVolume"
                 android:maxLength="3"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefGamePadFeedbackVolumeSummary"
                 android:title="@string/prefGamePadFeedbackVolumeTitle" />
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
                 android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
+                android:digits="0123456789"
+                android:inputType="number"
                 android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
                 android:maxLength="4"
-                android:inputType="number"
-                android:digits="0123456789"
                 android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                 android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
             <!--    Gamepad button preferences   -->
@@ -615,8 +537,7 @@
                 android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
                 android:key="prefGamepadSwapForwardReverseWithScreenButtons"
                 android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
-                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle"></CheckBoxPreference>
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                 android:key="prefGamepadTestEnforceTesting"
@@ -638,12 +559,12 @@
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
         <PreferenceScreen
-            android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="prefBackgroundImageGroup"
-            android:title="@string/prefBackgroundImagePreferencesTitle"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
             android:summary="@string/prefBackgroundImageSummary"
-            android:persistent="false">
+            android:title="@string/prefBackgroundImagePreferencesTitle">
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefBackgroundImageDefaultValue"
@@ -652,9 +573,9 @@
                 android:title="@string/prefBackgroundImageTitle" />
 
             <Preference
+                android:key="prefBackgroundImageFileNameImagePicker"
                 android:summary="@string/prefBackgroundImageFileNameSummary"
-                android:title="@string/prefBackgroundImageFileNameTitle"
-                android:key="prefBackgroundImageFileNameImagePicker" />
+                android:title="@string/prefBackgroundImageFileNameTitle" />
 
             <ListPreference
                 android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
@@ -663,6 +584,74 @@
                 android:key="prefBackgroundImagePosition"
                 android:summary="@string/prefBackgroundImagePositionSummary"
                 android:title="@string/prefBackgroundImagePositionTitle" />
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="prefCategoryThrottleStatusRow"
+        android:title="@string/prefThrottleStatusTitle">
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
+            android:icon="?attr/ed_estop_button"
+            android:key="show_emergency_stop_menu_preference"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefEmerStopSummary"
+            android:title="@string/prefEmerStopTitle" />
+        <CheckBoxPreference
+            android:icon="?attr/ed_power_green_button"
+            android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
+            android:key="show_layout_power_button_preference"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefPowerButtonBarSummary"
+            android:title="@string/prefPowerButtonBarTitle" />
+        <CheckBoxPreference
+            android:icon="?attr/ed_flashlight_on_button"
+            android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
+            android:key="prefFlashlightButtonDisplay"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefFlashlightSummary"
+            android:title="@string/prefFlashlightTitle" />
+        <ListPreference
+            android:icon="?attr/ed_clock_icon"
+            android:defaultValue="@string/prefDisplayClockDefaultValue"
+            android:entries="@array/DisplayClockEntries"
+            android:entryValues="@array/DisplayClockEntryValues"
+            android:key="ClockDisplayTypePreference"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefDisplayClockSummary"
+            android:title="@string/prefDisplayClockTitle" />
+
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefThrottleSwitchButton"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefThrottleSwitchButtonSummary"
+            android:title="@string/prefThrottleSwitchButtonPreferencesTitle">
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
+                android:icon="?attr/ed_throttle_switch_button"
+                android:key="prefThrottleSwitchButtonDisplay"
+                android:layout="@layout/checkbox_icon_right"
+                android:summary="@string/prefThrottleSwitchButtonSummary"
+                android:title="@string/prefThrottleSwitchButtonTitle" />
+
+            <ListPreference
+                android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
+                android:entries="@array/prefThrottleScreenTypeEntries"
+                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+                android:key="prefThrottleSwitchOption1"
+                android:summary="@string/prefThrottleSwitchOption1Summary"
+                android:title="@string/prefThrottleSwitchOption1Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
+                android:entries="@array/prefThrottleScreenTypeEntries"
+                android:entryValues="@array/prefThrottleScreenTypeEntryValues"
+                android:key="prefThrottleSwitchOption2"
+                android:summary="@string/prefThrottleSwitchOption2Summary"
+                android:title="@string/prefThrottleSwitchOption2Title" />
         </PreferenceScreen>
 
     </PreferenceCategory>

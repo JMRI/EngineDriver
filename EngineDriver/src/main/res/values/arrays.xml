@@ -895,7 +895,9 @@
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>
+        <item>prefCategoryThrottleStatusRow</item>
         <item>show_emergency_stop_menu_preference</item>
+        <item>show_layout_power_button_preference</item>
         <item>prefFlashlightButtonDisplay</item>
         <item>ClockDisplayTypePreference</item>
         <item>increase_slider_height_preference</item>
@@ -927,9 +929,6 @@
         <item>prefLimitSpeedPercent</item>
         <item>prefLimitSpeedButtonPreferences</item>
 
-        <item>prefVolumeSpeedButtonsSpeedStep</item>
-        <item>prefDisableVolumeKeys</item>
-        <item>prefVolumeKeysFollowLastTouchedThrottle</item>
         <item>prefTtsWhen</item>
         <item>prefTtsThrottleResponse</item>
         <item>prefTtsGamepadTest</item>
@@ -1025,7 +1024,6 @@
         <item>swipe_up_down_preferences</item>
         <item>throttle_accelerometer_preference</item>
         <item>default_function_preferences</item>
-        <item>volume_preferences</item>
         <item>prefTts</item>
         <item>gamepad_preferences</item>
         <item>consist_follow_preferences</item>

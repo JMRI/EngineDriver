@@ -326,7 +326,7 @@
     <string name="prefDisplaySpeedArrowsSummary">Mostra els botons al costat dels controls lliscants de velocitat per canviar la velocitat de la locomotora?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Indicador de Locomotora Addicional Seleccionada</string>
-    <string name="prefSelectedLocoIndicatorSummary">Punt de referència addicional del botó Selecciona Locomotora basat en el mètode de selecció.\nRequereix Android Honeycomb o posterior.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Punt de referència addicional del botó Selecciona Locomotora basat en el mètode de selecció.</string>
 
     <string name="prefDisableVolumeKeysTitle">Deshabilita les Tecles de Volum</string>
     <string name="prefDisableVolumeKeysSummary">Deshabilita les tecles físiques de Volum del Telèfon/Tablet per a el control de velocitat. Nota: si es selecciona sobreescriu \'Indicador de Locomotora Addicional Seleccionada\' . </string>
@@ -419,7 +419,7 @@
     <string name="prefAccelerometerShakeSummary">Opcions per quan es sacseja el dispositiu.</string>
 
     <string name="prefAccelerometerShakeThresholdTitle">Llindar de sacseig</string>
-    <string name="prefAccelerometerShakeThresholdSummary">Llindar al qual es registrarà el sacseig. (1.5&#8211;3.5) Un valor més baix respondrà a una acció suau.\nRequereix el reinici del Engine Driver després de canviar-ho per tenir efecte.</string>
+    <string name="prefAccelerometerShakeThresholdSummary">Llindar al qual es registrarà el sacseig. (1.5&#8211;b5) Un valor més baix respondrà a una acció suau.\nRequereix el reinici del Engine Driver després de canviar-ho per tenir efecte.</string>
 
     <string name="functionButton00DefaultValue">Llums</string>
     <string name="functionButton01DefaultValue">Campana</string>

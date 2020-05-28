@@ -162,7 +162,7 @@
     <string name="prefSwipeUpDownSummary">Options for swipe Up-Down on the Throttle Screen.</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>
     <string name="prefThrottleNameDefaultValue" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle screen)</string>
+    <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle Server)</string>
     <string name="prefThrottleOrientationTitle">Screen orientation</string>
     <string name="prefThrottleOrientationDefaultValue" translatable="false">Portrait</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
@@ -183,7 +183,7 @@
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
 
     <string name="prefHideSliderAndSpeedButtonsTitle">Hide Slider AND Speed Buttons?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons.\nNote: Overrides the \'Hide Slider\', \'Slider Height\' and \'Display Speed buttons\' options.</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons.</string>
 
     <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
     <string name="prefDirChangeWhileMovingSummary">Allow direction change when moving.</string>
@@ -310,8 +310,8 @@
     <string name="prefNumOfThrottlesSummary">Choose how many throttles to display.</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
-    <string name="prefThrottleScreenTypeTitle">Throttle Screen Type</string>
-    <string name="prefThrottleScreenTypeSummary">Which type of throttle screen to use.</string>
+    <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
+    <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen layout.</string>
     <string name="prefThrottleScreenTypeDefault" translatable="false">Default</string>
 
     <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
@@ -417,7 +417,7 @@
     <string name="EStop">Estop</string>
     <string name="PowerButtonBar">power_button</string>
     <string name="prefPowerButtonBarTitle">Show layout power button?</string>
-    <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Turnout and Routes screens?</string>
+    <string name="prefPowerButtonBarSummary">Display layout power button in action bar?</string>
     <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Margin</string>
     <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders.</string>
     <string name="prefSliderLeftMarginDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
@@ -438,7 +438,7 @@
     <string name="prefSelectedLocoIndicatorDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
-    <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. Note: If selected overrides \'Additional Selected Loco Indicator\'. </string>
+    <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. </string>
 
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow Touch</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">The Volume keys speed control will follow the last touched throttle.</string>
@@ -465,7 +465,7 @@
     <string name="throttle_name">Throttle Name: %1$s</string>
 
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>
-    <string name="prefShowAdvancedPreferencesSummary">Show or hide the additional preferences.</string>
+    <string name="prefShowAdvancedPreferencesSummary">Show or hide less common preferences.</string>
 
     <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
@@ -495,7 +495,7 @@
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
     <string name="prefImportServerManualTitle">Import from current Server (Manually)</string>
-    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'/engine_driver/\' of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
+    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'/engine_driver/\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
     <string name="prefImportServerManualDefaultValue" translatable="false">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportServerAutoTitle">Auto import from all Servers</string>
@@ -565,7 +565,7 @@
     <string name="prefAccelerometerShakeThresholdDefaultValue" translatable="false">2.0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLocaleTitle">Localisation</string>
-    <string name="prefLocaleSummary">Language to use. WARNING! Engine Driver will restart immediately. Direction Button labels will be reset.</string>
+    <string name="prefLocaleSummary">Choose the language to use for this app.</string>
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Speed\' button Preferences</string>
@@ -1004,16 +1004,18 @@
     <string name="prefBackgroundImagePositionSummary">Select how the background image will be positioned on the screen.</string>
     <string name="prefBackgroundImagePositionDefaultValue" translatable="false">FIT_CENTER</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Switch Button Preferences</string>
-    <string name="prefThrottleSwitchButtonTitle">Throttle Switch Button</string>
-    <string name="prefThrottleSwitchButtonSummary">Display the Throttle Switch Button in the throttle screen to allow quick changing of throttle screen types.</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Layout Switch Button Preferences</string>
+    <string name="prefThrottleSwitchButtonTitle">Layout Switch Button</string>
+    <string name="prefThrottleSwitchButtonSummary">Display the Throttle Layout Switch Button in the throttle screen to allow quick changing of throttle layouts.</string>
 
-    <string name="prefThrottleSwitchOption1Title">Throttle Switch First Screen Type</string>
-    <string name="prefThrottleSwitchOption1Summary">Throttle Switch Button will switch between this screen type and the next preference.</string>
+    <string name="prefThrottleSwitchOption1Title">Layout Switch First Screen Layout</string>
+    <string name="prefThrottleSwitchOption1Summary">Layout Switch Button will switch between this throttle layout and the next preference.</string>
     <string name="prefThrottleSwitchOption1DefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefThrottleSwitchOption2Title">Throttle Switch Second Screen Type</string>
-    <string name="prefThrottleSwitchOption2Summary">Throttle Switch Button will switch between the screen type in the previous preference and this one.</string>
-    <string name="prefThrottleSwitchOption2DefaultValue" translatable="false">Switching</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefThrottleSwitchOption2Title">Layout Switch Second Screen Layout</string>
+    <string name="prefThrottleSwitchOption2Summary">Layout Switch Button will switch between the throttle layout in the previous preference and this one.</string>
+    <string name="prefThrottleSwitchOption2DefaultValue" translatable="false">Switching</string>
+
+    <string name="prefCategoryDevicePageTitle">Device Preferences</string>
 
 </resources>

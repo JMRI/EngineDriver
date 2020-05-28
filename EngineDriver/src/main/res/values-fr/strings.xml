@@ -351,7 +351,7 @@
     <string name="prefDisplaySpeedArrowsSummary">Afficher aussi les touches de vitesse à coté du curseur de vitesse?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Indicateur additionnel locomotive choisie</string>
-    <string name="prefSelectedLocoIndicatorSummary">Surbrillance locomotive choisie fonction de la méthode de selection;\nNécessite Android 3.0 minimum.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Surbrillance locomotive choisie fonction de la méthode de selection.</string>
 
     <string name="prefDisableVolumeKeysTitle">Desactive touches de volume</string>
     <string name="prefDisableVolumeKeysSummary">Desactivation des touches de volume sur le téléphone/la tablette qui sinon controleraient la vitesse. A noter: si option activée, cela annule l option \'Indicateur additionnel locomotive choisie\'.</string>
