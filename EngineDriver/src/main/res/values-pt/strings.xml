@@ -453,7 +453,7 @@
     <string name="prefAccelerometerShakeThresholdSummary">Patamar no qual a agitação será registrada. (1.5&#8211;3.5).Valores abaixos responderão a uma ação mais suave.\nNecessita reiniciar Engine Driver para a mudança  ter efeito.</string>
 
     <string name="prefLocaleTitle">Localização</string>
-    <string name="prefLocaleSummary">Idioma para usar. ATENÇÃO! Engine Driver irá reiniciar imediatamente. As etiquetas dos botões de direção serão redefinidas.</string>
+    <string name="prefLocaleSummary">Idioma para usar. ATENÇÃO! As etiquetas dos botões de direção serão redefinidas.</string>
 
     <string name="functionButton00DefaultValue">Luz</string>
     <string name="functionButton01DefaultValue">Sino</string>

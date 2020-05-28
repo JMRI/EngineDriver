@@ -581,7 +581,7 @@
     <string name="logviewerSave">Comenceu la gravació al fitxer</string>
 
     <string name="prefLocaleTitle">Localització</string>
-    <string name="prefLocaleSummary">Idioma a utilitzar.\nADVERTÈNCIA! El Engine Driver es reiniciarà immediatament. Es reiniciaran les etiquetes dels botons de direcció.</string>
+    <string name="prefLocaleSummary">Idioma a utilitzar. ADVERTÈNCIA! Es reiniciaran les etiquetes dels botons de direcció.</string>
 <!--
     <string name="toastPreferencesLocaleChange">Engine Driver es reinicarà al seleccionar l\'Idioma.</string>
 -->

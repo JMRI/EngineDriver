@@ -600,7 +600,7 @@
     <string name="logviewerSave">Starten Sie die Aufnahme in eine Datei</string>
 
     <string name="prefLocaleTitle">Lokalisierung</string>
-    <string name="prefLocaleSummary">Zu benützende Sprache.\nWARNUNG! Engine Driver wird sofort neu starten. Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
+    <string name="prefLocaleSummary">Zu benützende Sprache. WARNUNG! Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
 <!--
     <string name="toastPreferencesLocaleChange">Engine Driver startete neu mit gewählter Sprache.</string>
 -->
