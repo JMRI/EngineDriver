@@ -354,7 +354,7 @@
     <string name="prefDisplaySpeedArrowsSummary">Mostrar botões ao lado do controle de velocidade para mudar a velocidade da locomotiva?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Indicador Adicional da Locomotiva Selecionada </string>
-    <string name="prefSelectedLocoIndicatorSummary">Destaque adicional do botão de Seleção Locomotiva baseado no método de seleção.\nRequer Android Honeycomb ou sucessivo.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Destaque adicional do botão de Seleção Locomotiva baseado no método de seleção.</string>
 
     <string name="prefDisableVolumeKeysTitle">Desabilita teclas Volume</string>
     <string name="prefDisableVolumeKeysSummary">Desabilita as teclas físicas do fone/tablet que controlariam a velocidade. Nota: se selecionado, ignora \'Indicador Adicional Locomotiva Selecionada\'.</string>

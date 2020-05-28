@@ -325,7 +325,7 @@
     <string name="prefDisplaySpeedArrowsSummary">¿Muestra los botones al lado de los deslizador de velocidad para cambiar la velocidad de la locomotora?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Indicador de Locomotora Adicional Seleccionada</string>
-    <string name="prefSelectedLocoIndicatorSummary">Punto de referencia adicional del botón Selecciona Locomotora basado en el método de selección.\nRequiere Android Honeycomb o posterior.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Punto de referencia adicional del botón Selecciona Locomotora basado en el método de selección.</string>
 
     <string name="prefDisableVolumeKeysTitle">Deshabilita las Teclas de Volúmen</string>
     <string name="prefDisableVolumeKeysSummary">Deshabilita las teclas físicas de Volúmen del Teléfono/Tablet para el control de velocidad. Nota: si se selecciona, sobreescribe \'Indicador de Locomotora Adicional Seleccionada\'. </string>

@@ -341,7 +341,7 @@
     <string name="prefDisplaySpeedArrowsSummary">Knöpfe neben Schiebern für Geschwindigkeitsänderungen der Lok anzeigen?</string>
 
     <string name="prefSelectedLocoIndicatorTitle">Zusätzlicher Indikator für gewählte Lok</string>
-    <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.\nBenötigt Android Honeycomb oder neuer.</string>
+    <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.</string>
 <!--    <string name="prefSelectedLocoIndicatorDefaultValue">Keine</string> -->
     <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten</string>
     <string name="prefDisableVolumeKeysSummary">Schaltet die Lautstärketasten des Telefons/Tablets aus, welche sonst Geschwindigkeit steuern. Hinweis: Wenn gewählt wird \'Zusätzlicher Indikator für gewählte Lok\' ignoriert.</string>
