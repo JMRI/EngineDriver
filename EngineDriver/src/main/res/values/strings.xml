@@ -307,7 +307,7 @@
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
-    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display.</string>
+    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display.\n(Limited by the selected Throttle Screen Layout.)</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
@@ -746,7 +746,7 @@
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
-    <string name="toastNumThrottles">Chosen Throttle Screen Type does not support that many throttles. Reducing to %1$s.</string>
+    <string name="toastNumThrottles">Chosen Throttle Screen Layout does not support that many throttles. Reducing to %1$s.</string>
     <string name="toastRecentsHelp">Touch to select a Recent Entry,\n  or change entry method.\nLong press to rename.\nSwipe Right to remove an entry.</string>
     <string name="toastRecentConsistsHelp">Touch to select a Consist Entry,\n  or change entry method.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Right to remove an entry.</string>
     <string name="toastRosterHelp">Touch to select a Roster Entry,\n  or change entry method.\nLong press for details.</string>
@@ -822,7 +822,7 @@
     <string name="functionButtonLookForLight">LIGHT</string>
     <string name="functionButtonLookForRear">REAR</string>
 
-    <string name="throttleSwitchAction">Switch Throttle Screens</string>
+    <string name="throttleSwitchAction">Switch Throttle Screen Layouts</string>
     <string name="flashlightAction">Flashlight</string>
     <string name="flashlightStateOn">Flashlight is ON</string>
     <string name="flashlightStateOff">Flashlight is Off</string>
@@ -940,7 +940,7 @@
 
     <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
     <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
-    <string name="introThrottleTypeSummary2">Depending on the chosen type, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
+    <string name="introThrottleTypeSummary2">Depending on the chosen layout, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
 
     <string name="introFinishTitle">Ready to use</string>
     <string name="introFinishSummary">Engine Driver is now ready to connect.</string>

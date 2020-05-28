@@ -575,7 +575,7 @@
     <string name="logviewerSave">Empezar a grabar en archivo</string>
 
     <string name="prefLocaleTitle">Localización</string>
-    <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! El Engine Driver se reiniciará inmediatamente. Se reiniciarán las etiquetas de los botones de dirección.</string>
+    <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! Se reiniciarán las etiquetas de los botones de dirección.</string>
 <!--
     <string name="toastPreferencesLocaleChange">Engine Driver se reiniciará al seleccionar el Idioma.</string>
 -->

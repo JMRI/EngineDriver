@@ -538,7 +538,7 @@
 
 
     <string name="prefLocaleTitle">Lokalizace</string>
-    <string name="prefLocaleSummary">Jazyk který chcete používat. Varování! Engine Driver se okamžite restartuje. Štítky tlačítek směru budou resetovány.</string>
+    <string name="prefLocaleSummary">Jazyk který chcete používat. Varování! Štítky tlačítek směru budou resetovány.</string>
 
 
     <!--    Gamepad test page -->

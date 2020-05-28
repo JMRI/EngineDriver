@@ -458,7 +458,7 @@
     <string name="prefAccelerometerShakeThresholdSummary">Livello al quale lo scuotimento sará registrato.(1.5&#8211;3.5) Valori minori risponderanno ad una azione più lieve.\nRichiede il riavvio di Engine Driver per avere effetto.</string>
 
     <string name="prefLocaleTitle">Localizzazione</string>
-    <string name="prefLocaleSummary">Lingua da usare. ATTENZIONE! Engine Driver si riavvierà immediatamente. Le etichette dei pulsanti di direzione verranno ripristinate.</string>
+    <string name="prefLocaleSummary">Lingua da usare. ATTENZIONE! Le etichette dei pulsanti di direzione verranno ripristinate.</string>
 
     <string name="gamepadTestButtonLabelDpadUp">Su</string>
     <string name="gamepadTestButtonLabelDpadDown">Giu</string>

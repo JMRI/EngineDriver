@@ -621,7 +621,7 @@
     <string name="logviewerSave">Commencer enregistrement fichier log.</string>
 
     <string name="prefLocaleTitle">Localisation</string>
-    <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Engine Driver va redémarrer immédiatement. Les touches de directions seront réinitialisées.</string>
+    <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Les touches de directions seront réinitialisées.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver redémarré avec la langue choisie.</string> -->
     <string name="prefDirectionButtonLongPressDelayTitle">Delai pour appui long sur touches de direction</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Durée en millisecondes pour appui long sur touches de direction.</string>
