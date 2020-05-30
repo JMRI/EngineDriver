@@ -51,8 +51,8 @@
         <item>Sis</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Telèfon o tablet (1&#8211;3 controladors)</item>
-        <item>Vertical &#8211; Telèfon o tableta (2 controladors)</item>
+        <item>Original &#8211; telèfon o tablet (1&#8211;3 controladors)</item>
+        <item>Vertical &#8211; telèfon o tableta (2 controladors)</item>
         <item>Botons grans &#8211; esquerra (1 controlador)</item>
         <item>Botons grans &#8211; dreta (1 controlador)</item>
         <item>Vertical &#8211; esquerra (1 controlador)</item>
@@ -60,7 +60,7 @@
         <item>Switching &#8211; (2 controladors)</item>
         <item>Switching &#8211; esquerra (1 controlador)</item>
         <item>Switching &#8211; dreta (1 controlador)</item>
-        <item>Simple &#8211; Tablet recomanat (1&#8211;6 controladors)</item>
+        <item>Simple &#8211; tablet recomanat (1&#8211;6 controladors)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Cap</item>
@@ -79,10 +79,10 @@
         <item>Atura</item>
         <item>Endavant</item>
         <item>Enrere</item>
-        <item>Selecciona Endavant/Enrere</item>
-        <item>Augmenta Velocitat</item>
-        <item>Disminueix Velocitat</item>
-        <item>Proper Controlador</item>
+        <item>Selecciona endavant/enrere</item>
+        <item>Augmenta velocitat</item>
+        <item>Disminueix velocitat</item>
+        <item>Proper controlador</item>
         <item>Funció 00/Llum</item>
         <item>Funció 01/Campana</item>
         <item>Funció 02/Xiulet</item>

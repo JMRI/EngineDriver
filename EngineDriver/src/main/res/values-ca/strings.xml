@@ -715,7 +715,7 @@
     <string name="permissionsWriteSettingsAdditional">- Fes clic en la tecla per concedir els permisos.\n- Fes clic \'Enrera\' per torna aquí.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignora-ho si no necessites que el Engine Driver modifiqui la brillantor de la pantalla del teu dispositiu.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver necessita permisos GEOLOCALITZACIO per obtenir informació de la connexó wifi SSID.</string>
-    <string name="permissionsVIBRATE">Controlador de motor necessita permisos vibrar per proporcionar informació addicional.</string>
+    <string name="permissionsVIBRATE">Engine Driver necessita permisos vibrar per proporcionar informació addicional.</string>
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada.</string>
     <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació.</string>
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
@@ -811,9 +811,9 @@
     <string name="prefBackgroundImageTitle">Imatge de fons</string>
     <string name="prefBackgroundImagePositionSummary">Selecciona com es col·locarà a la pantalla la imatge de fons.</string>
     <string name="prefBackgroundImagePositionTitle">Posició de la imatge de fons</string>
-    <string name="prefThrottleSwitchButtonSummary">Visualitzar la tecla en la pantalla del controlador per permetre el canvi ràpid de tipus de disseny de pantalla del regulador.</string>
+    <string name="prefThrottleSwitchButtonSummary">Visualitzar la tecla en la pantalla del controlador per permetre el canvi ràpid de tipus de disseny.</string>
     <string name="prefThrottleSwitchButtonTitle">Tecla per canviar de disseny</string>
-    <string name="prefThrottleSwitchOption1Summary">La tecla que modifica el disseny canviarà entre aquest traçat i la següent preferència.</string>
+    <string name="prefThrottleSwitchOption1Summary">La tecla que modifica el disseny canviarà entre aquest disseny i el següent.</string>
     <string name="prefThrottleSwitchOption1Title">Canvia de disseny al primer disseny de pantalla</string>
     <string name="prefThrottleSwitchOption2Summary">La tecla que modifica el disseny es canviarà entre la disposició del regulador de la preferència anterior i aquesta..</string>
     <string name="prefThrottleSwitchOption2Title">Canvia de disseny al segon disseny de pantalla</string>
@@ -822,5 +822,5 @@
     <string name="toastPreferencesBackgroundChangeSucceeded">Imatge de fons canviada amb èxit.</string>
     <string name="throttleSwitchAction">Canvia el disseny de la pantalla del regulador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferències de la imatge de fons</string>
-    <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències la tecla de canvi de dissenys</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències de la tecla de canvi de dissenys</string>
 </resources>
