@@ -51,8 +51,8 @@
         <item>Seis</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Teléfono o tablet (1&#8211;3 controladores)</item>
-        <item>Vertical &#8211; Teléfono o tablet (2 controladores)</item>
+        <item>Original &#8211; teléfono o tablet (1&#8211;3 controladores)</item>
+        <item>Vertical &#8211; teléfono o tablet (2 controladores)</item>
         <item>Botones grandes &#8211; izquierda (1 controlador)</item>
         <item>Botones grandes &#8211; derecha (1 controlador)</item>
         <item >Vertical &#8211; izquierdo (1 controlador)</item>
@@ -60,7 +60,7 @@
         <item >Switching &#8211; (2 controladores)</item>
         <item >Switching &#8211; izquierdo (1 controlador)</item>
         <item >Switching &#8211; derecha (1 controlador)</item>
-        <item>Simple &#8211; Tablet recomendado (1&#8211;6 controladores)</item>
+        <item>Simple &#8211; tablet recomendado (1&#8211;6 controladores)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Ninguno</item>
@@ -79,10 +79,10 @@
         <item>Detiene</item>
         <item>Adelante</item>
         <item>Atrás</item>
-        <item>Selecciona Adelante/Atrás</item>
-        <item>Aumenta Velocidad</item>
-        <item>Disminuye Velocidad</item>
-        <item>Próximo Controlador</item>
+        <item>Selecciona adelante/atrás</item>
+        <item>Aumenta velocidad</item>
+        <item>Disminuye velocidad</item>
+        <item>Próximo controlador</item>
         <item>Función 00/Luz</item>
         <item>Función 01/Campana</item>
         <item>Función 02/Bocina</item>
@@ -198,6 +198,6 @@
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Reducir el tamaño de imagen para adaptarla</item>
-        <item>Adapta a la pantalla - Rellena si es necesario</item>
+        <item>Adapta a la pantalla - Recorta si es necesario</item>
     </string-array>
 </resources>
