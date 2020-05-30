@@ -1,3 +1,4 @@
+**Version 2.25.108
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
