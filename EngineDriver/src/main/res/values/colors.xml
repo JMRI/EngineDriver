@@ -20,6 +20,7 @@
     <color name="lightGrey">#a6a6a6</color>
 
     <color name="transparent">#00000000</color>
+    <color name="darkTint">#5A000000</color>
     <color name="solidBlack">#ff000000</color>
     <color name="solidWhite">#ffffffff</color>
     <color name="holoBlue">#ff33b5e5</color>
