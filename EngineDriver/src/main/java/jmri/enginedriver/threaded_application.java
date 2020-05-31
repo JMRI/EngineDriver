@@ -115,6 +115,9 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
+import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
@@ -252,6 +255,8 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
     public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
     public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
+
+    public int actionBarIconCount = 0;
 
     public Resources.Theme theme;
 
@@ -2358,6 +2363,7 @@ end force shutdown */
 
     public void displayPowerStateMenuButton(Menu menu) {
         if (prefs.getBoolean("show_layout_power_button_preference", false) && (power_state != null)) {
+            actionBarIconCount++;
             menu.findItem(R.id.power_layout_button).setVisible(true);
         } else {
             menu.findItem(R.id.power_layout_button).setVisible(false);
@@ -2396,6 +2402,7 @@ end force shutdown */
         boolean result;
 
         if (menu != null) {
+            boolean any = false;
             for (int i = 1; i <= 3; i++) {
                 MenuItem item = menu.findItem(R.id.gamepad_test_mnu1);
                 switch (i) {
@@ -2410,12 +2417,17 @@ end force shutdown */
 
                 if (item != null) {
                     if ((!whichGamePadMode.equals("None")) && (result)) {
+                        any = true;
                         item.setVisible(true);
                     } else {
                         item.setVisible(false);
                     }
                 }
             }
+            if (any) {
+                menu.findItem(R.id.gamepad_test_menu).setVisible(any);
+            }
+
         }
     }
 
@@ -2598,6 +2610,7 @@ end force shutdown */
             TypedValue outValue = new TypedValue();
             theme.resolveAttribute(R.attr.ed_estop_button, outValue, true);
             mi.setIcon(outValue.resourceId);
+            actionBarIconCount++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -2817,7 +2830,7 @@ end force shutdown */
                 threaded_application.context.getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
-            if ((isWeb && orient == Configuration.ORIENTATION_PORTRAIT)
+            if ((isWeb && orient == ORIENTATION_PORTRAIT)
                     || (!isWeb && orient == Configuration.ORIENTATION_LANDSCAPE))
                 return (false);
         } else if (isWeb) {
@@ -2913,6 +2926,7 @@ end force shutdown */
         if (mi == null) return;
 
         if (prefs.getBoolean("prefFlashlightButtonDisplay", false)) {
+            actionBarIconCount ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -2920,11 +2934,28 @@ end force shutdown */
 
     }
 
+    public void displayMenuSeparator(Menu menu, Activity activity) {
+        MenuItem mi = menu.findItem(R.id.separator);
+        if (mi == null) return;
+
+
+        if ((activity.getResources().getConfiguration().orientation==ORIENTATION_PORTRAIT)
+                && (actionBarIconCount>2)) {
+            mi.setVisible(true);
+        } else if ((activity.getResources().getConfiguration().orientation==ORIENTATION_LANDSCAPE)
+                    && (actionBarIconCount>3)) {
+                mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+    }
+
     public void displayThrottleSwitchMenuButton(Menu menu) {
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);
         if (mi == null) return;
 
         if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
+            actionBarIconCount ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
