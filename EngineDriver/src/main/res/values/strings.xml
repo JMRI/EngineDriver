@@ -43,6 +43,7 @@
     <string name="app_name_ConsistEdit">Consist Edit - Engine Driver</string>
     <string name="app_name_ConsistLightsEdit">Consist Lights - Engine Driver</string>
     <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>
+    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
@@ -955,6 +956,7 @@
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction.</string>
+    <string name="edit_consist_menu">\≡ Edit Consist</string>
     <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
     <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
     <string name="edit_consist_throttle_3">Edit Consist Throttle 3</string>

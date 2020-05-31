@@ -222,6 +222,15 @@
   <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar">
     <item name="android:background">#00000000</item>
     <item name="android:icon">@drawable/ic_launcher_outline</item>
+    <item name="android:titleTextStyle">@style/actionBarStyle_black.TitleTextStyle</item>
+    <item name="android:layout_marginLeft">0dp</item>
+    <item name="android:layout_marginRight">0dp</item>
+  </style>
+
+  <style name="actionBarStyle_black.TitleTextStyle"
+      parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <item name="android:textSize">16sp</item>
+    <item name="android:textStyle">normal</item>
   </style>
 
   <style name="dialogStyle_black" parent="@android:style/Theme.Holo.Dialog">
@@ -949,6 +958,13 @@
     <item name="android:icon">@drawable/ic_launcher</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
     <item name="android:colorBackground">@color/windowBackground_colorful</item>
+    <item name="android:titleTextStyle">@style/actionBarStyle_colorful.TitleTextStyle</item>
+  </style>
+
+  <style name="actionBarStyle_colorful.TitleTextStyle"
+      parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <item name="android:textSize">16sp</item>
+    <item name="android:textStyle">normal</item>
   </style>
 
   <style name="windowTitleBackground_colorful">
@@ -975,6 +991,9 @@
     <item name="android:minHeight">0dip</item>
     <item name="android:paddingLeft">0dip</item>
     <item name="android:paddingRight">0dip</item>
+    <item name="android:scaleX">0.9</item>
+    <item name="android:scaleY">0.9</item>
+    <item name="android:width">38dp</item>
   </style>
 
 </resources>

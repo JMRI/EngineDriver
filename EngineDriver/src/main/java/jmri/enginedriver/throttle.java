@@ -3433,6 +3433,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mi == null) return;
 
         if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
+            mainapp.actionBarIconCount ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -4731,34 +4732,44 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     private void showHideConsistMenus(){
         if (TMenu != null) {
+            boolean any = false;
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
                 switch (throttleIndex) {
                     case 0:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditConsist0_menu).setVisible(mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist0_menu).setVisible(mainapp.consists[0].isMulti());
                         break;
                     case 1:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist1_menu).setVisible(mainapp.consists[1].isMulti());
                         TMenu.findItem(R.id.EditConsist1_menu).setVisible(mainapp.consists[1].isMulti());
                         break;
                     case 2:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[2].isMulti());
                         TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[2].isMulti());
                         break;
                     case 3:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist3_menu).setVisible(mainapp.consists[3].isMulti());
                         TMenu.findItem(R.id.EditConsist3_menu).setVisible(mainapp.consists[3].isMulti());
                         break;
                     case 4:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist4_menu).setVisible(mainapp.consists[4].isMulti());
                         TMenu.findItem(R.id.EditConsist4_menu).setVisible(mainapp.consists[4].isMulti());
                         break;
                     case 5:
+                        any = (any || mainapp.consists[0].isMulti());
                         TMenu.findItem(R.id.EditLightsConsist5_menu).setVisible(mainapp.consists[5].isMulti());
                         TMenu.findItem(R.id.EditConsist5_menu).setVisible(mainapp.consists[5].isMulti());
                         break;
                 }
+            }
+            if (any) {
+                TMenu.findItem(R.id.edit_consists_menu).setVisible(any);
             }
         }
 
@@ -5041,6 +5052,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         //adjust several items in the menu
         if (TMenu != null) {
+            mainapp.actionBarIconCount=0;
             mainapp.displayEStop(TMenu);
             mainapp.setPowerStateButton(TMenu);
             mainapp.displayPowerStateMenuButton(TMenu);
@@ -5054,6 +5066,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.displayFlashlightMenuButton(TMenu);
             mainapp.displayThrottleSwitchMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
+            mainapp.displayMenuSeparator(TMenu, this);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -5153,12 +5166,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
         TMenu = menu;
+        mainapp.actionBarIconCount=0;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayThrottleSwitchMenuButton(menu);
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
+        mainapp.displayMenuSeparator(TMenu, this);
         return true;
     }
 
