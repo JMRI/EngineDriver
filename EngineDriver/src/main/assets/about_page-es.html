@@ -17,27 +17,30 @@
 </div>
 <p><b>Los cambios para esta versión incluye:</b></p>
 <ul>
-    <li>Opción para mostrar un botón Estación de clasificación / velocidad de conmutación (sólo vertical del acelerador)</li>
-    <li>Arreglar el problema de 'gota antes aquire' al volver a sellecting el mismo loco</li>
-    <li>Reproducir sonido y vibrar cuando se desconecta el dispositivo</li>
-    <li>Recuerde recientes Consta y restaurarlos desde la pantalla de selección de loco</li>
-    <li>Añadido botón de cierre y la imagen plantilla de diálogo de detalles roster</li>
-    <li>La reanudación del uso del nombre de lista cuando se introduce una dirección</li>
-    <li>Recuerde Desvíos recientes y permitir la selección de la pantalla de desvíos</li>
-    <li>Flagelo ahora trabaja en todas partes excepto deslizadores activos</li>
-    <li>Menos propensos a activar el botón de función al desplazarse o deslizar</li>
-    <li>Las traducciones francesas adicionales de Alain Carasso</li>
-    <li>Nueva Conmutación / Estación de clasificación del acelerador tipos de pantalla</li>
-    <li>Tema y acelerador preferencia ya no recargar la aplicación cambia</li>
-    <li>Cambio fastclock de WebSocket a withrottle mensaje PFT</li>
-    <li>Añadir fastclock a otras actividades</li>
-    <li>Nueva LongPress para recargar la página we</li>
-    <li>Eliminado notificaciones en segundo plano erróneas cuando el dispositivo se gira</li>
-    <li>JMRI comunicación reducida durante el régimen de aceleración de cambios para mejorar la fiabilidad</li>
-    <li>Un mejor manejo de tiempo de espera de comunicación JMRI</li>
-    <li>Configuración no válida preferencia de la página Web inicial ahora se realiza con gracia por la vista web</li>
-    <li>Las traducciones francesas adicionales de Alain Carasso</li>
-    <li>Prevenir accidente informado a desempeñar consola</li>
+    <li>Nuevos tipos de pantallas para desvíos</li>
+    <li>Recordar tracciones múltiples recientes y poder restaurar desde la pantalla de selección de locomotoras</li>
+    <li>Recordar desvíos recientes y permitir seleccionar desde la pantalla de desvíos</li>
+    <li>Opción de mostrar una tecla para cambiar entre los diferentes tipos de diseños</li>
+    <li>Añadida la opción de usar una imagen de fondo</li>
+    <li>Opción para mostrar una tecla para limitar la velocidad (solo reguladores verticales)</li>
+    <li>Añadida función de presión larga para recargar vista web</li>
+    <li>Añadida funcionalidad de cambio de tema del regulador sin reiniciar la App</li>
+    <li>Varias mejoras visuales y organizativas en las preferencias</li>
+    <li>Mejora del modo de trabajo en segundo plano, reinicios y comunicaciones de heartbeat</li>
+    <li>Deslizar ahora funciona en todas partes excepto los controles deslizantes activos</li>
+    <li>Menos probabilidades de activar la tecla de función al desplazarse o deslizar</li>
+    <li>Soluciona el problema de 'descartar antes de adquirir' cuando se selecciona la misma locomotora</li>
+    <li>Emitir sonido y vibración cunado el dispositivo se desconecta del servidor</li>
+    <li>Añadida tecla de cierre y imajen de la flota en una ventana de detalles</li>
+    <li>Reescrito el código del uso del nombre de la flota cuando se ingresa una dirección</li>
+    <li>Cambio del reloj rápido desde websocket al mensaje PFT del withrottle</li>
+    <li>Añadido reloj rápido a otras actividades</li>
+    <li>Se eliminaron las notificaciones de error de imagen de fondo cuando se gira el dispositivo</li>
+    <li>Reducida la comunicación con el servidor durante los cambios de velocidad para mejorar la confiabilidad</li>
+    <li>Mejorada la gestión del tiempo de espera de comunicación con el servidor</li>
+    <li>Página web inicial errónea, ahora se maneja desde la vista web</li>
+    <li>Traducciones al Francés por Alain Carasso</li>
+    <li>Solucionar el cierre repentino al abrir la Consola</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
@@ -88,8 +91,8 @@
     salir de la aplicación. Esto también detiene tus locomotoras (se puede modificar en las preferencias).
     Puedes volver a asignar el control del volúmen haciendo clic en el indicador de velocidad (la "v"
     pequeña muestra que se tiene el control).</p>
-<p>Para crear una multi tracción al vuelo, simplemente selecciona una locomotora adicional en el mismo controlador.
-    Se te pedirá la dirección de cada nueva locomotora en relación con la de la multi tracción existente. La
+<p>Para crear una tracción múltiple al vuelo, simplemente selecciona una locomotora adicional en el mismo controlador.
+    Se te pedirá la dirección de cada nueva locomotora en relación con la de la tracción múltiple existente. La
     dirección y la velocidad será enviada a todas por igual. El botón Libera, liberará todas las locomotoras
     del controlador.</p>
 <p>Presiona el botón del menú de tu teléfono para acceder a las ventanas de Desvíos, Rutas y Control de Energía,
@@ -131,7 +134,7 @@
     del EngineDriver para que puedas trabajar mejor con tu dispositivo, con tu circuito y tu estilo personal.
     Estas incluyen controladores para el circuito, reloj rápido, opciones de pasos de velocidad, vistas web,
     tamaño de botones, botones adicionales, tamaño del deslizador y su comportamiento, diferente número de
-    controladores, detener al liberar,  permite/bloquea multi tracciones al vuelo, autoconectar, y mucho más.
+    controladores, detener al liberar,  permite/bloquea tracciones múltiples al vuelo, autoconectar, y mucho más.
 </p>
 <p>Si has ingresado etiquetas de función para una entrada de la flota en el servidor, se usarán estas etiquetas.
     De lo contrario, puede usar la opción de menú Funciones Predeterminadas para establecer las etiquetas
