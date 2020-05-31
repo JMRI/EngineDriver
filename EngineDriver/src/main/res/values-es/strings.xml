@@ -399,8 +399,8 @@
     <string name="prefRightDirectionButtonsShortSummary">Etiquetas cortas para todas las teclas de dirección DERECHA. Introducir \'Atr\' o en blanco para el comportamiento normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Atr</string>
 
-    <string name="prefTickMarksOnSlidersTitle">Mostrar marcas de los deslizadores de velocidad</string>
-    <string name="prefTickMarksOnSlidersSummary">Mostrar u ocultar las marcas de graduación en el fondo de los deslizadores de velocidad.</string>
+    <string name="prefTickMarksOnSlidersTitle">Mostrar marcas de desplazamiento en el control de velocidad</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrar u ocultar las marcas de desplazamiento en los deslizadores de velocidad.</string>
 
     <string name="prefThemeTitle">Tema/estilo</string>
 
@@ -669,7 +669,7 @@
     <string name="prefConsistFollowAction5Title">Acción para la cadena 5</string>
     <string name="prefConsistFollowAction5Summary">Qué locomotoras en tracción múltiple tienen que responder a las funciones encontradas.</string>
 
-    <string name="prefKidsSectionTitle">Preferencias de los niños</string>
+    <string name="prefKidsSectionTitle">Preferencias para los niños</string>
     <string name="prefKidsSectionSummary">Opciones para niños pequeños.</string>
     <string name="prefKidsHelpTitle">Notas para el temporizador:</string>
 <!-- <string name="prefKidsHelpSummary">- Seleccione la locomotora primero.\n- El temporizador comenzará con el primer aumento de velocidad.\n- Debe volver a este ajuste para reiniciar el tiempo (o borrarlo) después del tiempo de espera.\n\nRecomendaciones:\n- Deshabilite las teclas de volumen.\n- Deshabilite \'Deslizar por los Desvíos\'.\n- Deshabilite \'Deslizar por las Rutas\'.\n- Desactive EStop.</string> -->
@@ -752,9 +752,9 @@
     <string name="edit_consist_lights_throttle_5">Edita luces de la TM regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita luces de la TM regulador 6</string>
 
-    <string name="prefLimitSpeedButtonTitle">Mostrar la tecla \'Límite de velocidad \'</string>
+    <string name="prefLimitSpeedButtonTitle">Mostrar la tecla de límite de velocidad</string>
     <string name="prefLimitSpeedButtonSummary">Opción para mostrar una tecla que limita la velocidad máxima de una locomotora.</string>
-    <string name="prefLimitSpeedPercentTitle">\'Límite de velocidad\' a \%</string>
+    <string name="prefLimitSpeedPercentTitle">Límite de velocidad a \%</string>
     <string name="prefLimitSpeedPercentSummary">Ajusta el \% de la aceleración que la velocidad se limitará a.</string>
     <string name="limitSpeedButtonLabel">Límite de velocidad</string>
     <string name="toastSelectConsistsConfirmClear">Confirma que quieres eliminar todos las tracciones múltiples recientes pulsando la tecla \'Borrar lista\' DE NUEVO.</string>
@@ -783,6 +783,8 @@
     <string name="toastRecentTurnoutCleared">Desvío eliminado de la lista</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirmar que desea eliminar todos los desvíos recientes pulsando la tecla \'Borrar lista\' DE NUEVO.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsación larga para eliminar una entrada.</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Cambia la zona muerta del control deslizante</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Establece la medida de la zona muerta en el control deslizante de velocidad</string>
     <string name="dialogConfirmClearTitle">Limpiar lista</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirme que desea eliminar todas las tracciones múltiples recientes</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirme que desea eliminar todas las locomotoras recientes</string>
@@ -798,7 +800,7 @@
     <string name="prefBackgroundImageFileNameTitle">Nombre del archivo de la imagen de fondo</string>
     <string name="prefBackgroundImageSummary">Mostrar una imagen de fondo en la página del controlador</string>
     <string name="prefBackgroundImageTitle">Imagen de fondo</string>
-    <string name="prefBackgroundImagePositionSummary">Selecciona como se colocará en l apantalla la imagen de fondo.</string>
+    <string name="prefBackgroundImagePositionSummary">Selecciona como se colocará en la pantalla la imagen de fondo.</string>
     <string name="prefBackgroundImagePositionTitle">Posición de la imagen de fondo</string>
     <string name="prefThrottleSwitchButtonSummary">Visualizar la tecla en la pantalla del controlador para permitir el cambio rápido de diseño.</string>
     <string name="prefThrottleSwitchButtonTitle">Tecla para cambiar el diseño</string>
@@ -807,7 +809,7 @@
     <string name="prefThrottleSwitchOption2Summary">La tecla de interruptor del acelerador se cambiará entre el tipo de pantalla en la preferencia anterior y éste.</string>
     <string name="prefThrottleSwitchOption2Title">Cambia el diseño al segundo diseño de pantalla</string>
     <string name="recent_consists">Seleccione una de las locomotoras recientes</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">Preferencias de la tecla \'Límite de velocidad\'</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Preferencias de la tecla límite de velocidad</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Imagen de fondo cambiada con éxito.</string>
     <string name="throttleSwitchAction">Cambia el diseño de la pantalla del regulador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferencias de la imagen de fondo</string>

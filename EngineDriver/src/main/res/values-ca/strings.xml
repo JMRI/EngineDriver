@@ -400,8 +400,8 @@
     <string name="prefRightDirectionButtonsShortSummary">Etiquetes curtes per a tots les tecles de direcció DRETA. Introduïu \'Enr\' o en blanc per al comportament normal.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Enr</string>
 
-    <string name="prefTickMarksOnSlidersTitle">Mostra marques dels barres de desplaçament de velocitat</string>
-    <string name="prefTickMarksOnSlidersSummary">Mostrar o amagar les marques de graduació en el fons dels barres de desplaçament de velocitat.</string>
+    <string name="prefTickMarksOnSlidersTitle">Mostra marques de desplaçament en el control de velocitat</string>
+    <string name="prefTickMarksOnSlidersSummary">Mostrar o amagar les marques de desplaçament de velocitat del control lliscant.</string>
 
     <string name="prefThemeTitle">Tema/Estil</string>
 
@@ -792,8 +792,8 @@
     <string name="toastRecentTurnoutCleared">Agulla eliminada de la llista</string>
     <string name="toastRecentTurnoutsConfirmClear">Confirma que vols eliminar totes les agulles recents prement la tecla \'Esborrar llista\' DE NOU.</string>
     <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada.</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvi de zona morta del control lliscant</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Estableix la mida de la zona morta en el control lliscant del controlador</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvia la zona morta del control lliscant</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Estableix la mida de la zona morta en el control lliscant de velocitat</string>
     <string name="dialogConfirmClearTitle">Esborra la llista</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirmeu que voleu eliminar totes les traccions múltiples recents</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmeu que voleu eliminar totes les locomotores recents</string>
