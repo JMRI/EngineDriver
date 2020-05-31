@@ -31,6 +31,7 @@
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle</item>
 
         <item name="android:textColor">@color/primary_text_color_selector</item>
         <item name="android:actionMenuTextColor">@color/primary_text_color_selector</item>
