@@ -821,6 +821,7 @@ public class turnouts extends Activity implements OnGestureListener {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
         TuMenu = menu;
+        mainapp.actionBarIconCountTurnouts=0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerMenuOption(menu);
@@ -829,6 +830,7 @@ public class turnouts extends Activity implements OnGestureListener {
         mainapp.setRoutesMenuOption(menu);
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
+        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
         return true;
     }
 

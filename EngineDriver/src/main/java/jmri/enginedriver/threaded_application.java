@@ -256,7 +256,9 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
     public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
 
-    public int actionBarIconCount = 0;
+    public int actionBarIconCountThrottle = 0;
+    public int actionBarIconCountRoutes = 0;
+    public int actionBarIconCountTurnouts = 0;
 
     public Resources.Theme theme;
 
@@ -2363,7 +2365,9 @@ end force shutdown */
 
     public void displayPowerStateMenuButton(Menu menu) {
         if (prefs.getBoolean("show_layout_power_button_preference", false) && (power_state != null)) {
-            actionBarIconCount++;
+            actionBarIconCountThrottle++;
+            actionBarIconCountRoutes++;
+            actionBarIconCountTurnouts++;
             menu.findItem(R.id.power_layout_button).setVisible(true);
         } else {
             menu.findItem(R.id.power_layout_button).setVisible(false);
@@ -2610,7 +2614,9 @@ end force shutdown */
             TypedValue outValue = new TypedValue();
             theme.resolveAttribute(R.attr.ed_estop_button, outValue, true);
             mi.setIcon(outValue.resourceId);
-            actionBarIconCount++;
+            actionBarIconCountThrottle++;
+            actionBarIconCountRoutes++;
+            actionBarIconCountTurnouts++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -2926,7 +2932,9 @@ end force shutdown */
         if (mi == null) return;
 
         if (prefs.getBoolean("prefFlashlightButtonDisplay", false)) {
-            actionBarIconCount ++;
+            actionBarIconCountThrottle ++;
+            actionBarIconCountRoutes ++;
+            actionBarIconCountTurnouts ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -2934,10 +2942,9 @@ end force shutdown */
 
     }
 
-    public void displayMenuSeparator(Menu menu, Activity activity) {
+    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;
-
 
         if ((activity.getResources().getConfiguration().orientation==ORIENTATION_PORTRAIT)
                 && (actionBarIconCount>2)) {
@@ -2955,7 +2962,7 @@ end force shutdown */
         if (mi == null) return;
 
         if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
-            actionBarIconCount ++;
+            actionBarIconCountThrottle ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);

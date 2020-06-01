@@ -924,4 +924,6 @@
     <string name="throttleSwitchAction">Přepnout Škrtící klapky obrazovek</string>
     <string name="prefBackgroundImagePreferencesTitle">Obrázek na pozadí Preferences</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Spínač předvolby</string>
+    <string name="edit_consist_menu">\≡ Upravit soupravu</string>
+    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
 </resources>

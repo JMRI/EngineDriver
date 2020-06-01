@@ -3433,7 +3433,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (mi == null) return;
 
         if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
-            mainapp.actionBarIconCount ++;
+            mainapp.actionBarIconCountThrottle ++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -5052,7 +5052,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         //adjust several items in the menu
         if (TMenu != null) {
-            mainapp.actionBarIconCount=0;
+            mainapp.actionBarIconCountThrottle=0;
             mainapp.displayEStop(TMenu);
             mainapp.setPowerStateButton(TMenu);
             mainapp.displayPowerStateMenuButton(TMenu);
@@ -5066,7 +5066,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.displayFlashlightMenuButton(TMenu);
             mainapp.displayThrottleSwitchMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
-            mainapp.displayMenuSeparator(TMenu, this);
+            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -5166,14 +5166,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
         TMenu = menu;
-        mainapp.actionBarIconCount=0;
+        mainapp.actionBarIconCountThrottle=0;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayThrottleSwitchMenuButton(menu);
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
-        mainapp.displayMenuSeparator(TMenu, this);
+        mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         return true;
     }
 

@@ -757,4 +757,6 @@
     <string name="throttleSwitchAction">Passare da una schermata a farfalla</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferenze immagine di sfondo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Interruttore Preferenze Button</string>
+    <string name="edit_consist_menu">\≡ Modifica Consistono</string>
+    <string name="gamepad_test_menu">\≡ Test Gamepad</string>
 </resources>
