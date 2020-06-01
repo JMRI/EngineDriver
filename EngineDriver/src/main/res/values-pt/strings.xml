@@ -761,4 +761,6 @@
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
+    <string name="edit_consist_menu">\≡ Editar Consistem</string>
+    <string name="gamepad_test_menu">\≡ Teste Gamepad</string>
 </resources>

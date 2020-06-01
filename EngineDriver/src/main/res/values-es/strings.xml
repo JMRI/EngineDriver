@@ -814,4 +814,6 @@
     <string name="throttleSwitchAction">Cambia el diseño de la pantalla del regulador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferencias de la imagen de fondo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferencias de la tecla de cambio de diseño</string>
+    <string name="edit_consist_menu">\≡ Edita el regulador</string>
+    <string name="gamepad_test_menu">\≡ Prueba de gamepad</string>
 </resources>
