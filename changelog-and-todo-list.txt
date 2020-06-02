@@ -543,6 +543,7 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
+ *   TODO: auto-open the numeric keyboard when Address gets focus
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * preferences:
