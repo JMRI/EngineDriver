@@ -502,7 +502,7 @@
     <string name="prefImportServerAutoTitle">Auto import from all Servers</string>
     <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'/engine_driver/auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
 
-    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Page Type preferences, will be overwitten.</string>
+    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
     <string name="importServerAutoDialogPositiveButton">Full</string>
     <string name="importServerAutoDialogNeutralButton">Partial</string>
 
@@ -708,7 +708,7 @@
     <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server Succeeded. (%1$s)</string>
     <string name="toastPreferencesImportSucceeded">Preferences Import from file Succeeded.</string>
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
-    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Page type change Succeeded.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Layout change Succeeded.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Background Change Succeeded.</string>
 <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
