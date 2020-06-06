@@ -22,7 +22,9 @@
             android:hint="@string/server_address"
             android:imeOptions="actionNext"
             android:maxLength="60"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:inputType="number"
+            />
         <EditText
             android:id="@+id/port"
             android:layout_width="80sp"
@@ -33,7 +35,8 @@
             android:inputType="number"
             android:maxLength="5"
             android:imeOptions="actionDone"
-            android:singleLine="true" />
+            android:singleLine="true"
+            />
 
         <TextView
             style="?android:attr/listSeparatorTextViewStyle"
@@ -49,6 +52,29 @@
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
             android:text="@string/connect_button" />
+
+        <LinearLayout
+            android:id="@+id/host_numeric_or_text"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_below="@id/host_ip"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/host_numeric"
+                android:layout_width="75sp"
+                android:layout_height="wrap_content"
+                style="?attr/ed_small_button_style"
+                android:text="123..." />
+            <Button
+                android:id="@+id/host_text"
+                android:layout_width="75sp"
+                android:layout_height="wrap_content"
+                style="?attr/ed_small_button_style"
+                android:text="abc..." />
+        </LinearLayout>
+
     </RelativeLayout>
 
     <TextView
