@@ -66,13 +66,13 @@
                 android:layout_width="75sp"
                 android:layout_height="wrap_content"
                 style="?attr/ed_small_button_style"
-                android:text="123..." />
+                android:text="@string/hostNumericButton" />
             <Button
                 android:id="@+id/host_text"
                 android:layout_width="75sp"
                 android:layout_height="wrap_content"
                 style="?attr/ed_small_button_style"
-                android:text="abc..." />
+                android:text="@string/hostTextButton" />
         </LinearLayout>
 
     </RelativeLayout>
