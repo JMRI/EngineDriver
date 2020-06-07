@@ -23,7 +23,7 @@
             android:imeOptions="actionNext"
             android:maxLength="60"
             android:singleLine="true"
-            android:inputType="numberDecimal"
+            android:inputType="phone"
             />
         <EditText
             android:id="@+id/port"
@@ -32,7 +32,7 @@
             android:layout_alignBottom="@id/host_ip"
             android:layout_toRightOf="@id/host_ip"
             android:hint="@string/port"
-            android:inputType="number"
+            android:inputType="phone"
             android:maxLength="5"
             android:imeOptions="actionDone"
             android:singleLine="true"
