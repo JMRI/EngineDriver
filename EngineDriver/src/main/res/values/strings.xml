@@ -1020,7 +1020,7 @@
 
     <string name="prefCategoryDevicePageTitle">Device Preferences</string>
 
-    <string name="hostNumericButton">123...</string>
-    <string name="hostTextButton">abc...</string>
+    <string name="hostNumericButton" translatable="false">123...</string>
+    <string name="hostTextButton" translatable="false">abc...</string>
 
 </resources>

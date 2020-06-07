@@ -208,7 +208,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private class HostNumericListener implements View.OnClickListener {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.host_ip);
-            entry.setInputType(InputType.TYPE_CLASS_NUMBER);
+            entry.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             entry.requestFocus();
         }
     }
