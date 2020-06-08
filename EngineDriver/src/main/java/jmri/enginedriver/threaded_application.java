@@ -3026,7 +3026,16 @@ end force shutdown */
             case 'P':
                 return 32; // PP - power state change
         }
-        return Character.getNumericValue(cWhichThrottle);
+//        return Character.getNumericValue(cWhichThrottle);
+        int val = Character.getNumericValue((cWhichThrottle));
+        if(val < 0) {
+            Log.d("debug", "TA.throttleCharToInt: converted value " + val + " is invalid.  char was " + cWhichThrottle + " (int " + (int)cWhichThrottle + ")");
+            val = 0;
+        }
+        else {
+            Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle + " (int " + (int)cWhichThrottle + ")");
+        }
+        return val;
     }
 
     public char throttleIntToChar(int whichThrottle) {
