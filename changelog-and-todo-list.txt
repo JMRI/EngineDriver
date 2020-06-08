@@ -511,6 +511,7 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
+ *   TODO: reset connection if VN not recieved in a "timely" manner
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -537,6 +538,7 @@
  *   TODO: User request to have re-arrangeable function buttons
  *   TODO: change throttle_vertical_left_or_right.java so that in inherits from throttle_vertical.java not throttle.java
  * select_loco:
+ *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
