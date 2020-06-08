@@ -93,7 +93,7 @@
                 android:defaultValue="@bool/prefHideSliderDefaultValue"
                 android:key="hide_slider_preference"
                 android:summary="@string/prefHideSliderSummary"
-                android:title="@string/prefHideSliderTitle"></CheckBoxPreference>
+                android:title="@string/prefHideSliderTitle" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                 android:key="prefHideSliderAndSpeedButtons"
@@ -103,7 +103,7 @@
                 android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
                 android:key="prefTickMarksOnSliders"
                 android:summary="@string/prefTickMarksOnSlidersSummary"
-                android:title="@string/prefTickMarksOnSlidersTitle"></CheckBoxPreference>
+                android:title="@string/prefTickMarksOnSlidersTitle" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
@@ -126,13 +126,13 @@
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                 android:key="prefSwapForwardReverseButtons"
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
-                android:title="@string/prefSwapForwardReverseButtonsTitle"></CheckBoxPreference>
+                android:title="@string/prefSwapForwardReverseButtonsTitle" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
                 android:key="prefSwapForwardReverseButtonsLongPress"
                 android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
-                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle"></CheckBoxPreference>
+                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefDirectionButtonLongPressDelayDefaultValue"
@@ -181,7 +181,7 @@
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
-            android:title="@string/prefDecreaseLocoNumberHeightTitle"></CheckBoxPreference>
+            android:title="@string/prefDecreaseLocoNumberHeightTitle" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -203,7 +203,7 @@
                 android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
                 android:key="prefIncreaseWebViewSize"
                 android:summary="@string/prefIncreaseWebViewSizeSummary"
-                android:title="@string/prefIncreaseWebViewSizeTitle"></CheckBoxPreference>
+                android:title="@string/prefIncreaseWebViewSizeTitle" />
             <EditTextPreference
                 android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
                 android:dialogTitle="@string/prefInitialThrotWebPageSummary"
@@ -227,7 +227,7 @@
                 android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
                 android:key="prefThrottleViewImmersiveMode"
                 android:summary="@string/prefThrottleViewImmersiveModeSummary"
-                android:title="@string/prefThrottleViewImmersiveModeTitle"></CheckBoxPreference>
+                android:title="@string/prefThrottleViewImmersiveModeTitle" />
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"
@@ -276,7 +276,7 @@
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
-            android:title="@string/prefShowAddressInsteadOfNameTitle"></CheckBoxPreference>
+            android:title="@string/prefShowAddressInsteadOfNameTitle" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -292,7 +292,7 @@
                 android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                 android:key="prefAlwaysUseDefaultFunctionLabels"
                 android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"></CheckBoxPreference>
+                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
             <EditTextPreference
                 android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
                 android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
@@ -333,13 +333,13 @@
                 android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                 android:key="prefDisableVolumeKeys"
                 android:summary="@string/prefDisableVolumeKeysSummary"
-                android:title="@string/prefDisableVolumeKeysTitle"></CheckBoxPreference>
+                android:title="@string/prefDisableVolumeKeysTitle" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
                 android:key="prefVolumeKeysFollowLastTouchedThrottle"
                 android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
-                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle"></CheckBoxPreference>
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -403,7 +403,7 @@
                 android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                 android:key="prefGamepadTestNow"
                 android:summary="@string/prefGamepadTestNowSummary"
-                android:title="@string/prefGamepadTestNowTitle"></CheckBoxPreference>
+                android:title="@string/prefGamepadTestNowTitle" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
@@ -537,7 +537,7 @@
                 android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
                 android:key="prefGamepadSwapForwardReverseWithScreenButtons"
                 android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
-                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle"></CheckBoxPreference>
+                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                 android:key="prefGamepadTestEnforceTesting"
@@ -652,6 +652,15 @@
                 android:key="prefThrottleSwitchOption2"
                 android:summary="@string/prefThrottleSwitchOption2Summary"
                 android:title="@string/prefThrottleSwitchOption2Title" />
+
+            <ListPreference
+                android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
+                android:entries="@array/prefThrottleSwitchWebViewEntries"
+                android:entryValues="@array/prefThrottleSwitchWebViewEntryValues"
+                android:key="prefThrottleSwitchWebView"
+                android:summary="@string/prefThrottleSwitchWebViewSummary"
+                android:title="@string/prefThrottleSwitchWebViewTitle" />
+
         </PreferenceScreen>
 
     </PreferenceCategory>
