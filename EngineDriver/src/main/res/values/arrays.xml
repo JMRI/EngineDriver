@@ -892,6 +892,19 @@
         <item>Fill screen - Crop if needed</item>
     </string-array>
 
+    <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>NONE</item>
+        <item>1</item>
+        <item>2</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="prefThrottleSwitchWebViewEntries">  <!-- display version -->
+        <item>None</item>
+        <item>First Layout only</item>
+        <item>Second Layout only</item>
+        <item>Both First and Second Layouts</item>
+    </string-array>
+
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>
