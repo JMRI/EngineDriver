@@ -661,7 +661,7 @@
                 android:key="prefThrottleSwitchOption2"
                 android:summary="@string/prefThrottleSwitchOption2Summary"
                 android:title="@string/prefThrottleSwitchOption2Title" />
-
+<!--
             <ListPreference
                 android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
                 android:entries="@array/prefThrottleSwitchWebViewEntries"
@@ -669,7 +669,7 @@
                 android:key="prefThrottleSwitchWebView"
                 android:summary="@string/prefThrottleSwitchWebViewSummary"
                 android:title="@string/prefThrottleSwitchWebViewTitle" />
-
+-->
         </PreferenceScreen>
 
     </PreferenceCategory>
