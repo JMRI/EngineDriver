@@ -77,6 +77,7 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
+        <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
     </style>
@@ -140,6 +141,7 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
+        <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
     </style>
@@ -202,6 +204,7 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
+        <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
     </style>
@@ -265,6 +268,7 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
+        <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
     </style>
@@ -335,6 +339,7 @@
 
         <item name="ed_folder_icon">@drawable/folder</item>
         <item name="ed_clock_icon">@drawable/fast_clock_black</item>
+        <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
     </style>

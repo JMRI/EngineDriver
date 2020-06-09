@@ -1524,7 +1524,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 webViewLocation = keepWebViewLocation;
             } else {
                 webViewLocation = WEB_VIEW_LOCATION_NONE;
-                Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+                if (!toastMsg.equals(""))
+                    Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             }
             webViewIsOn = !webViewIsOn;
 
@@ -5067,6 +5068,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
             mainapp.displayThrottleSwitchMenuButton(TMenu);
+            mainapp.displayWebViewMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
             mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
@@ -5172,6 +5174,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayThrottleSwitchMenuButton(menu);
+        mainapp.displayWebViewMenuButton(menu);
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
@@ -5321,6 +5324,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 return true;
             case R.id.throttle_switch_button:
                 switchThrottleScreenType();
+                return true;
+            case R.id.web_view_button:
+                showHideWebView("");
                 return true;
             case R.id.EsuMc2Knob_button:
                 toggleEsuMc2Knob(this, TMenu);
