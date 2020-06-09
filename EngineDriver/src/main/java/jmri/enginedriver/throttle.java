@@ -4731,6 +4731,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void showHideConsistMenus(){
+        if ((mainapp.consists==null) || (mainapp.consists[0]==null)) return;
+
         if (TMenu != null) {
             boolean any = false;
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {

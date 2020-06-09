@@ -354,7 +354,7 @@ public class throttle_full extends throttle {
             // update the state of each function button based on shared variable
             set_all_function_states(throttleIndex);
         }
-        if (screenHeight > throttleMargin) { // don't do this if height is invalid
+        if ( (screenHeight > throttleMargin) && (mainapp.consists!=null)) { // don't do this if height is invalid
             //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
             screenHeight -= throttleMargin;
