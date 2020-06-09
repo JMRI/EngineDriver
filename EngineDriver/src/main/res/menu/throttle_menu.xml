@@ -37,6 +37,11 @@
         android:title="@string/PowerButtonBar"
         android:visible="false"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/web_view_button"
+        android:icon="?attr/ed_web_view_button"
+        android:title="@string/webViewButtonBar"
+        android:visible="false"
+        android:showAsAction="ifRoom" />
 
     <item android:id="@+id/separator"
         android:title="──────────"

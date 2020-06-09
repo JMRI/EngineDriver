@@ -832,6 +832,11 @@
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
+    <string name="webViewButtonBar">Web View Button</string>
+    <string name="webViewAction">Show/Hide Web View</string>
+    <string name="prefWebViewButtonSummary">Display Show/Hide Web View button in action bar?\n(requires \'Throttle Web View\' preference to be enabled)</string>
+    <string name="prefWebViewButtonTitle">Show/Hide Web View button?</string>
+
     <string name="logViewerTitle">LogViewerActivity | %1$s</string>
 
     <!-- Consist Follow Function Preferences etc. -->

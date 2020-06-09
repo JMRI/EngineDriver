@@ -2942,6 +2942,19 @@ end force shutdown */
 
     }
 
+    public void displayWebViewMenuButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.web_view_button);
+        if (mi == null) return;
+
+        if (prefs.getBoolean("prefWebViewButton", false)) {
+            actionBarIconCountThrottle ++;
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+
+    }
+
     public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;

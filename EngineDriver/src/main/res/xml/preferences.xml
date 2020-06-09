@@ -621,6 +621,15 @@
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
 
+        <CheckBoxPreference
+            android:icon="?attr/ed_web_view_button"
+            android:defaultValue="@bool/prefWebViewButtonDefaultValue"
+            android:key="prefWebViewButton"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefWebViewButtonSummary"
+            android:title="@string/prefWebViewButtonTitle" />
+
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="prefThrottleSwitchButton"
