@@ -6029,21 +6029,21 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected void switchThrottleScreenType() {
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
-        String prefThrottleSwitchWebView = prefs.getString("prefThrottleSwitchWebView", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchWebViewDefaultValue));
+//        String prefThrottleSwitchWebView = prefs.getString("prefThrottleSwitchWebView", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchWebViewDefaultValue));
         if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
             prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
-            if ( (prefThrottleSwitchWebView.equals("2")) || (prefThrottleSwitchWebView.equals("12")) ) {
-                webViewLocation = WEB_VIEW_LOCATION_BOTTOM;
-            } else {
-                webViewLocation = WEB_VIEW_LOCATION_NONE;
-            }
+//            if ( (prefThrottleSwitchWebView.equals("2")) || (prefThrottleSwitchWebView.equals("12")) ) {
+//                webViewLocation = WEB_VIEW_LOCATION_BOTTOM;
+//            } else {
+//                webViewLocation = WEB_VIEW_LOCATION_NONE;
+//            }
         } else {
             prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption1).commit();
-            if ( (prefThrottleSwitchWebView.equals("1")) || (prefThrottleSwitchWebView.equals("12")) ) {
-                webViewLocation = WEB_VIEW_LOCATION_BOTTOM;
-            } else {
-                webViewLocation = WEB_VIEW_LOCATION_NONE;
-            }
+//            if ( (prefThrottleSwitchWebView.equals("1")) || (prefThrottleSwitchWebView.equals("12")) ) {
+//                webViewLocation = WEB_VIEW_LOCATION_BOTTOM;
+//            } else {
+//                webViewLocation = WEB_VIEW_LOCATION_NONE;
+//            }
         }
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);

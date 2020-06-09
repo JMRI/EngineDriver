@@ -1028,8 +1028,10 @@
     <string name="hostNumericButton" translatable="false">123...</string>
     <string name="hostTextButton" translatable="false">abc...</string>
 
+    <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>
     <string name="prefThrottleSwitchWebViewSummary">Choose if the layouts should also show the Web View</string>
     <string name="prefThrottleSwitchWebViewDefaultValue" translatable="false">NONE</string>
+    -->
 
 </resources>
