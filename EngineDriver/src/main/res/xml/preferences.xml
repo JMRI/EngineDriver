@@ -232,6 +232,13 @@
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"
                 android:entryValues="@array/prefSwipeUpOptionsEntryValues"
+                android:key="SwipeDownOption"
+                android:summary="@string/prefSwipeDownOptionSummary"
+                android:title="@string/prefSwipeDownOptionTitle" />
+            <ListPreference
+                android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
+                android:entries="@array/prefSwipeUpOptionsEntries"
+                android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                 android:key="SwipeUpOption"
                 android:summary="@string/prefSwipeUpOptionSummary"
                 android:title="@string/prefSwipeUpOptionTitle" />

@@ -346,6 +346,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     //used in the gesture for temporarily showing the Web View
     protected boolean webViewIsOn = false;
     private String prefSwipeUpOption;
+    private String prefSwipeDownOption;
     private String keepWebViewLocation = WEB_VIEW_LOCATION_NONE;
     // use for locking the screen on swipe up
     private boolean isScreenLocked = false;
@@ -358,6 +359,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final String SWIPE_UP_OPTION_LOCK = "Lock and Dim Screen";
     private static final String SWIPE_UP_OPTION_DIM = "Dim Screen";
     private static final String SWIPE_UP_OPTION_IMMERSIVE = "Immersive Mode";
+    private static final String SWIPE_UP_OPTION_SWITCH_LAYOUTS = "Switch Layouts";
 
     //private int screenBrightnessBright;
     private int screenBrightnessOriginal;
@@ -1381,6 +1383,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
+        prefSwipeDownOption = prefs.getString("SwipeDownOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
         prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
         isScreenLocked = false;
 
@@ -5625,38 +5628,33 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
                 else {
                     // swipe up/down
-                    if (deltaY > 0.0) {
-                        // swipe down
-                        if (!isScreenLocked) {
-                            // enter or exit immersive mode only if the preference is set
+                    String upDown;
+                    if (deltaY > 0.0) {  // swipe down
+                        upDown = prefSwipeDownOption;
+                    } else { // Swipe up
+                        upDown = prefSwipeUpOption;
+                    }
+                    switch(upDown) {
+                        case SWIPE_UP_OPTION_WEB:
+                            showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
+                            break;
+                        case SWIPE_UP_OPTION_LOCK:
+                            setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
+                            break;
+                        case SWIPE_UP_OPTION_DIM:
+                            setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
+                            break;
+                        case SWIPE_UP_OPTION_IMMERSIVE:
                             if (immersiveModeIsOn) {
                                 setImmersiveModeOff(webView);
                                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                             } else {
                                 setImmersiveModeOn(webView);
                             }
-                        }
-                    } else {
-                        // swipe up
-                        switch(prefSwipeUpOption) {
-                            case SWIPE_UP_OPTION_WEB:
-                                showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
-                                break;
-                            case SWIPE_UP_OPTION_LOCK:
-                                setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
-                                break;
-                            case SWIPE_UP_OPTION_DIM:
-                                setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
-                                break;
-                            case SWIPE_UP_OPTION_IMMERSIVE:
-                                if (immersiveModeIsOn) {
-                                    setImmersiveModeOff(webView);
-                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    setImmersiveModeOn(webView);
-                                }
-                                break;
-                        }
+                            break;
+                        case SWIPE_UP_OPTION_SWITCH_LAYOUTS:
+                            switchThrottleScreenType();
+                            break;
                     }
                 }
             } else {
@@ -6015,10 +6013,22 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             File sdcard_path = Environment.getExternalStorageDirectory();
             File image_file = new File(prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-            if (prefBackgroundImagePosition.equals("FIT_CENTER")) {
-                myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            } else {
-                myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            switch (prefBackgroundImagePosition){
+                case "FIT_CENTER":
+                    myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                break;
+                case "CENTER_CROP":
+                    myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                break;
+                case "CENTER":
+                    myImage.setScaleType(ImageView.ScaleType.CENTER);
+                break;
+                case "FIT_XY":
+                    myImage.setScaleType(ImageView.ScaleType.FIT_XY);
+                break;
+                case "CENTER_INSIDE":
+                    myImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                break;
             }
         } catch (Exception e) {
             Log.d("Engine_Driver", "Throttle: failed loading background image");
@@ -6030,6 +6040,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 //        String prefThrottleSwitchWebView = prefs.getString("prefThrottleSwitchWebView", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchWebViewDefaultValue));
+
+        if (webViewLocation!=keepWebViewLocation) {
+            showHideWebView("");
+        }
+
         if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
             prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
 //            if ( (prefThrottleSwitchWebView.equals("2")) || (prefThrottleSwitchWebView.equals("12")) ) {

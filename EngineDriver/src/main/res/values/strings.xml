@@ -200,6 +200,8 @@
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
+    <string name="prefSwipeDownOptionTitle">Swipe down action in the Throttle view?</string>
+    <string name="prefSwipeDownOptionSummary">What should happen when you swipe down on the Throttle view.</string>
 
     <!--     Volume preferences  -->
     <string name="prefVolumeTitle">Volume Button Preferences</string>

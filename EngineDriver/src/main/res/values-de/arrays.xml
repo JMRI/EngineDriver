@@ -148,6 +148,7 @@
         <item>Bildschirm blockieren und dimmen</item>
         <item>Bildschirm dimmen</item>
         <item>Immersiver Modus temporär ein-/ausschalten</item>
+        <item >Switch Throttle Screen Layouts</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Keine</item>
@@ -199,5 +200,7 @@
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Shrink Bild zu passen</item>
         <item>Füllen Bildschirm - Crop bei Bedarf</item>
-    </string-array>
+        <item>Center - No Crop</item>
+        <item>Fill screen - Crop if needed</item>
+        <item>Fill screen - distort if needed</item>    </string-array>
 </resources>
