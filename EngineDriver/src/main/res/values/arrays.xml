@@ -202,6 +202,7 @@
         <item >Lock and Dim Screen</item>
         <item >Dim Screen</item>
         <item >Immersive Mode</item>
+        <item >Switch Layouts</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
@@ -210,6 +211,7 @@
         <item >Lock and Dim Screen</item>
         <item >Dim Screen</item>
         <item >Immersive Mode temporarily enable-disable</item>
+        <item >Switch Throttle Screen Layouts</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
@@ -886,10 +888,16 @@
     <string-array name="prefBackgroundImagePositionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>FIT_CENTER</item>
         <item>CENTER_CROP</item>
+        <item>CENTER</item>
+        <item>CENTER_INSIDE</item>
+        <item>FIT_XY</item>
     </string-array>
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>Shrink image to fit</item>
-        <item>Fill screen - Crop if needed</item>
+        <item>Fit - Shrink/expand</item>
+        <item>Fill - Crop one edge pair</item>
+        <item>Center - No scaling</item>
+        <item>Fit - Shrink only</item>
+        <item>Fill - Distort if needed</item>
     </string-array>
 
     <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

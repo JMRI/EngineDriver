@@ -156,6 +156,7 @@
         <item>Bloquer et diminuer la luminosité de l écran</item>
         <item>Assombrir l écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
+        <item >Switch Throttle Screen Layouts</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
@@ -374,5 +375,7 @@
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Réduire affichage aux dimensions écran</item>
         <item>Affichage plein écran - rogner si besoin</item>
-    </string-array>
+        <item>Center - No Crop</item>
+        <item>Fill screen - Crop if needed</item>
+        <item>Fill screen - distort if needed</item>    </string-array>
 </resources>

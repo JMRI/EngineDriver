@@ -148,6 +148,7 @@
         <item>Bloquea y atenua la pantalla</item>
         <item>Atenuar la pantalla</item>
         <item>Activación-desactivación temporal del modo inmersivo</item>
+        <item >Switch Throttle Screen Layouts</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Ninguno</item>
@@ -199,5 +200,7 @@
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Reducir el tamaño de imagen para adaptarla</item>
         <item>Adapta a la pantalla - Recorta si es necesario</item>
-    </string-array>
+        <item>Center - No Crop</item>
+        <item>Fill screen - Crop if needed</item>
+        <item>Fill screen - distort if needed</item>    </string-array>
 </resources>

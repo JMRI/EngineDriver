@@ -149,6 +149,7 @@
         <item>Bloquear e reduzir brilho da Tela</item>
         <item>Reduzir brilho da Tela</item>
         <item>Abilitação-disabilitação temporária do Modo Imersivo</item>
+        <item >Switch Throttle Screen Layouts</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">
@@ -216,5 +217,8 @@
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Encolher a imagem para caber</item>
         <item>Preencher a tela - Colheita, se necessário</item>
+        <item>Center - No Crop</item>
+        <item>Fill screen - Crop if needed</item>
+        <item>Fill screen - distort if needed</item>
     </string-array>
 </resources>
