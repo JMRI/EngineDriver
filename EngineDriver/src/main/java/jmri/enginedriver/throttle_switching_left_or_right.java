@@ -93,16 +93,16 @@ public class throttle_switching_left_or_right extends throttle {
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-                super.layoutViewId = R.layout.throttle_switching;
+                mainapp.throttleLayoutViewId = R.layout.throttle_switching;
                 break;
             case "Switching Right":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                super.layoutViewId = R.layout.throttle_switching_right;
+                mainapp.throttleLayoutViewId = R.layout.throttle_switching_right;
                 break;
             case "Switching Left":
             default:
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                super.layoutViewId = R.layout.throttle_switching_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_switching_left;
                 break;
         }
 

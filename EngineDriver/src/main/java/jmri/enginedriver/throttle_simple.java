@@ -109,7 +109,7 @@ public class throttle_simple extends throttle {
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
-        super.layoutViewId = R.layout.throttle_simple;
+        mainapp.throttleLayoutViewId = R.layout.throttle_simple;
         super.onCreate(savedInstanceState);
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];

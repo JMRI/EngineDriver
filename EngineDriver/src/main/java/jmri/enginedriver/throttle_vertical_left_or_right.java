@@ -62,11 +62,11 @@ public class throttle_vertical_left_or_right extends throttle {
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Vertical Right":
-                super.layoutViewId = R.layout.throttle_vertical_right;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_right;
                 break;
             case "Vertical Left":
             default:
-                super.layoutViewId = R.layout.throttle_vertical_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_left;
                 break;
         }
 
@@ -379,7 +379,9 @@ public class throttle_vertical_left_or_right extends throttle {
         if (!forceDisable) { // avoid index crash, but may simply push to next line
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
-        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+        if ((bLimitSpeeds!=null) && (bLimitSpeeds[whichThrottle]!=null)) {
+            bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+        }
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
