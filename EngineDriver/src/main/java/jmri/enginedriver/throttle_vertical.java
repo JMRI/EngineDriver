@@ -60,7 +60,7 @@ public class throttle_vertical extends throttle {
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
-        super.layoutViewId = R.layout.throttle_vertical;
+        mainapp.throttleLayoutViewId = R.layout.throttle_vertical;
         super.onCreate(savedInstanceState);
 
         if (mainapp.appIsFinishing) {

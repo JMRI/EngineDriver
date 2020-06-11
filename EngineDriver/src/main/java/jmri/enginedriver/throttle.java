@@ -428,7 +428,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected boolean prefDisableVolumeKeys = false;
     protected boolean prefVolumeKeysFollowLastTouchedThrottle = false;
 
-    protected int layoutViewId;
+//    protected int layoutViewId;
     protected String prefThrottleScreenType;
 
     protected boolean prefThrottleViewImmersiveMode = false;
@@ -4154,7 +4154,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         mainapp.applyTheme(this);
 
-        setContentView(layoutViewId);
+        setContentView(mainapp.throttleLayoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
 
