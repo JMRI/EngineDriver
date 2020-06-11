@@ -149,7 +149,7 @@
         <item>Bloquear e reduzir brilho da Tela</item>
         <item>Reduzir brilho da Tela</item>
         <item>Abilitação-disabilitação temporária do Modo Imersivo</item>
-        <item >Switch Throttle Screen Layouts</item>
+        <item >Mudar layouts de tela acelerador</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">
