@@ -115,7 +115,7 @@
         <item >Zamknout a Ztlumit obrazovku</item>
         <item >Ztlumit obrazovku</item>
         <item >Působivý režim dočasně povolit-zakázat</item>
-        <item >Switch Throttle Screen Layouts</item>
+        <item >Přepnout Škrtící klapky rozvržení obrazovky</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
@@ -405,9 +405,10 @@
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>Shrink image to fit</item>
-        <item>Fill screen - Crop if needed</item>
-        <item>Center - No Crop</item>
-        <item>Fill screen - Crop if needed</item>
-        <item>Fill screen - distort if needed</item>    </string-array>
+        <item>Fit - zmenšit / expandovat</item>
+        <item>Výplň - Rostlinná dvojice jeden okraj</item>
+        <item>Centrum - Ne škálování</item>
+        <item>Fit - smršťovací jen</item>
+        <item>Fill - Deformace v případě potřeby</item>
+    </string-array>
 </resources>

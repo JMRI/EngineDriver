@@ -148,7 +148,7 @@
         <item>Bildschirm blockieren und dimmen</item>
         <item>Bildschirm dimmen</item>
         <item>Immersiver Modus temporär ein-/ausschalten</item>
-        <item >Switch Throttle Screen Layouts</item>
+        <item >Schalten Drosselklappenbildschirmlayouts</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Keine</item>
@@ -198,9 +198,10 @@
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>Shrink Bild zu passen</item>
-        <item>Füllen Bildschirm - Crop bei Bedarf</item>
-        <item>Center - No Crop</item>
-        <item>Fill screen - Crop if needed</item>
-        <item>Fill screen - distort if needed</item>    </string-array>
+        <item>Fit - verkleinern / erweitern</item>
+        <item>Fill - Crop ein Kantenpaar</item>
+        <item>Zentrum - Keine Skalierung</item>
+        <item>Fit - Schrumpf nur</item>
+        <item>Fill - Verzerren bei Bedarf</item>
+    </string-array>
 </resources>

@@ -151,7 +151,7 @@
         <item>Bloccare e diminuire brillantezza Schermo</item>
         <item>Diminuire brillantezza Schermo</item>
         <item>Abilitazione-disabilitazione provvisoria del Modo Immersivo</item>
-        <item >Switch Throttle Screen Layouts</item>
+        <item>Passare a farfalla layout dello schermo</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">
