@@ -1,4 +1,10 @@
 **Version 2.26.108
+ * Swipe down options same as swipe up
+ * include web view when switching layouts
+ * additional background layout options
+ * Menu Button to show/hide the Web View
+ * fix crashes reported to Play Store
+ * default to numeric keyboard for Server Address
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
