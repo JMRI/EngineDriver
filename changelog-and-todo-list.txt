@@ -48,6 +48,7 @@
  * Remember Recent Consists and restore them from the select loco screen
  * Added close button and roster image to roster details dialog
  * Rework of roster name usage when an address is entered
+ * Distinguish manual loco address entry vs. roster selection
 **Version 2.24.93
  * prevent crash when removing recent loco
  * enable clear text in webview
