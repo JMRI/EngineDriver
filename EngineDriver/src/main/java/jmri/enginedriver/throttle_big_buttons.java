@@ -62,11 +62,11 @@ public class throttle_big_buttons extends throttle {
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Big Right":
-                super.layoutViewId = R.layout.throttle_big_buttons_right;
+                mainapp.throttleLayoutViewId = R.layout.throttle_big_buttons_right;
                 break;
             case "Big Left":
             default:
-                super.layoutViewId = R.layout.throttle_big_buttons_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_big_buttons_left;
                 break;
         }
 

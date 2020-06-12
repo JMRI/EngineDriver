@@ -262,6 +262,8 @@ public class threaded_application extends Application {
 
     public Resources.Theme theme;
 
+    protected int throttleLayoutViewId;
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;
@@ -1921,6 +1923,7 @@ public class threaded_application extends Application {
 
         numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
+        throttleLayoutViewId = R.layout.throttle;
 
         try {
             Map<String, ?> ddd = prefs.getAll();
