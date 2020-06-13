@@ -693,7 +693,8 @@ public class threaded_application extends Application {
                     }
                     //send Q to withrottle server
                     case message_type.WITHROTTLE_QUIT:
-                        withrottle_send("Q");
+                        if(socketWiT != null && socketWiT.SocketGood())
+                            withrottle_send("Q");
                         break;
 
                     //send heartbeat start command to withrottle server
