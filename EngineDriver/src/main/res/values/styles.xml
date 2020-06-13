@@ -536,6 +536,11 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="small_button_solid_style_outline" parent="small_button_style_outline">
+    <item name="android:textSize">10sp</item>
+    <item name="android:background">@drawable/sticky_button_states_round_solid_outline</item>
+  </style>
+
   <style name="fn_button_style_outline" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/fn_btn_text_states_outline</item>
     <item name="android:textSize">16sp</item>
