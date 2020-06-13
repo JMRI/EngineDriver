@@ -58,26 +58,26 @@
             android:id="@+id/host_numeric_or_text"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="26dp"
             android:layout_alignTop="@id/ip_label"
             android:layout_alignEnd="@id/ip_label"
             android:layout_alignRight="@id/ip_label"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="-10dp"
             android:visibility="gone">
 
             <Button
                 android:id="@+id/host_numeric"
                 android:layout_width="45sp"
                 android:layout_height="wrap_content"
-                style="?attr/ed_small_button_solid_style"
+                style="?attr/ed_hover_button_style"
                 android:text="@string/hostNumericButton"
                 android:visibility="gone" />
             <Button
                 android:id="@+id/host_text"
                 android:layout_width="45sp"
                 android:layout_height="wrap_content"
-                style="?attr/ed_small_button_solid_style"
+                style="?attr/ed_hover_button_style"
                 android:text="@string/hostTextButton"/>
         </LinearLayout>
 

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- common -->
+
+    <dimen name="buttonStroke_hover">1dip</dimen>
+    <dimen name="buttonCornerRadius_hover">10dip</dimen>
+
+
     <!-- Black theme -->
 
     <dimen name="buttonDisabledStroke_black">1dip</dimen>
