@@ -5,6 +5,7 @@
  * Menu Button to show/hide the Web View
  * fix crashes reported to Play Store
  * default to numeric keyboard for Server Address
+ * Suppress WiT message on exit unless connected
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -508,6 +509,7 @@
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
+ *   TODO: preserve state on switch between throttle and web view
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
@@ -526,6 +528,7 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
  * throttle:
+ *   TODO: horizontal switching layout or option (use with webview)
  *   TODO: support reordering of roster labels based on function number
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)

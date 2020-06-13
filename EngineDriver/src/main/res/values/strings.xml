@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+      Copyright (C) M. Steve Todd mstevetodd@gmail.com
       This program is free software; you can redistribute it and/or modify it 
       under the terms of the GNU General Public License as published by the 
       Free Software Foundation;
@@ -194,8 +194,8 @@
     <string name="prefSelLocoWhileMovingSummary">Enables Loco button when moving.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Show Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show the loco DCC Address instead of the Loco Name on the Throttle page.</string>
-    <string name="prefIncreaseWebViewSizeTitle">Increase Web View Size?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Increase web view size to 60% for small screens.</string>
+    <string name="prefIncreaseWebViewSizeTitle">Increase Throttle Web View Size?</string>
+    <string name="prefIncreaseWebViewSizeSummary">Increase throttle web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Swipe down to temporarily disable and reach the menu.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
@@ -323,8 +323,8 @@
     <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue" translatable="false">25</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
-    <string name="prefWebViewTitle">Web View Preferences</string>
-    <string name="prefWebViewSummary">Options for Web View appearance</string>
+    <string name="prefWebViewTitle">Throttle Web View Preferences</string>
+    <string name="prefWebViewSummary">Options for Throttle Web View appearance</string>
     <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string>
     <string name="prefInitialThrotWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'/panel/\')</string>
