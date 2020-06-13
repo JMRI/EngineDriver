@@ -55,6 +55,7 @@
         <item name="ed_normal_button2_style">@style/normal_button2_style</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>
+        <item name="ed_small_button_solid_style">@style/small_button_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style</item>
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
@@ -116,6 +117,7 @@
         <item name="ed_normal_button2_style">@style/normal_button2_style_black</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_black</item>
         <item name="ed_small_button_style">@style/small_button_style_black</item>
+        <item name="ed_small_button_solid_style">@style/small_button_style_black</item>
         <item name="ed_stop_button_style">@style/stop_button_style_black</item>
         <item name="ed_fn_button_style">@style/fn_button_style_black</item>
         <item name="ed_list_button_style">@style/list_button_style_black</item>
@@ -179,6 +181,7 @@
         <item name="ed_normal_button2_style">@style/normal_button2_style_outline</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_outline</item>
         <item name="ed_small_button_style">@style/small_button_style_outline</item>
+        <item name="ed_small_button_solid_style">@style/small_button_solid_style_outline</item>
         <item name="ed_stop_button_style">@style/stop_button_style_outline</item>
         <item name="ed_fn_button_style">@style/fn_button_style_outline</item>
         <item name="ed_list_button_style">@style/list_button_style_outline</item>
@@ -243,6 +246,7 @@
         <item name="ed_normal_button2_style">@style/normal_button2_style_ultra</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
         <item name="ed_small_button_style">@style/small_button_style_ultra</item>
+        <item name="ed_small_button_solid_style">@style/small_button_style_ultra</item>
         <item name="ed_stop_button_style">@style/stop_button_style_ultra</item>
         <item name="ed_fn_button_style">@style/fn_button_style_ultra</item>
         <item name="ed_list_button_style">@style/list_button_style_ultra</item>
@@ -314,6 +318,7 @@
         <item name="ed_normal_button2_style">@style/normal_button2_style_colorful</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_colorful</item>
         <item name="ed_small_button_style">@style/small_button_style_colorful</item>
+        <item name="ed_small_button_solid_style">@style/small_button_style_colorful</item>
         <item name="ed_stop_button_style">@style/stop_button_style_colorful</item>
         <item name="ed_fn_button_style">@style/fn_button_style_colorful</item>
         <item name="ed_list_button_style">@style/list_button_style_colorful</item>

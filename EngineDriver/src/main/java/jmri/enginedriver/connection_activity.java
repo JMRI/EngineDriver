@@ -110,6 +110,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     EditText port;
 
     View host_numeric_or_text;
+    Button host_numeric;
+    Button host_text;
 
     static {
         try {
@@ -210,6 +212,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             EditText entry = findViewById(R.id.host_ip);
             entry.setInputType(InputType.TYPE_CLASS_PHONE);
             entry.requestFocus();
+            host_numeric.setVisibility(View.GONE);
+            host_text.setVisibility(View.VISIBLE);
         }
     }
 
@@ -218,6 +222,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             EditText entry = findViewById(R.id.host_ip);
             entry.setInputType(InputType.TYPE_CLASS_TEXT);
             entry.requestFocus();
+            host_numeric.setVisibility(View.VISIBLE);
+            host_text.setVisibility(View.GONE);
         }
     }
 
@@ -470,10 +476,11 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             });
 
             host_numeric_or_text = findViewById(R.id.host_numeric_or_text);
-            Button host_numeric = findViewById(R.id.host_numeric);
+            host_numeric = findViewById(R.id.host_numeric);
             HostNumericListener host_numeric_listener = new HostNumericListener();
             host_numeric.setOnClickListener(host_numeric_listener);
-            Button host_text = findViewById(R.id.host_text);
+            host_numeric.setVisibility(View.GONE);
+            host_text = findViewById(R.id.host_text);
             HostTextListener host_text_listener = new HostTextListener();
             host_text.setOnClickListener(host_text_listener);
 

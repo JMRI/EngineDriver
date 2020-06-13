@@ -39,6 +39,7 @@
             />
 
         <TextView
+            android:id="@+id/port_title"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,23 +57,28 @@
         <LinearLayout
             android:id="@+id/host_numeric_or_text"
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_below="@id/host_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignTop="@id/ip_label"
+            android:layout_alignEnd="@id/ip_label"
+            android:layout_alignRight="@id/ip_label"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
             android:visibility="gone">
 
             <Button
                 android:id="@+id/host_numeric"
-                android:layout_width="75sp"
+                android:layout_width="45sp"
                 android:layout_height="wrap_content"
-                style="?attr/ed_small_button_style"
-                android:text="@string/hostNumericButton" />
+                style="?attr/ed_small_button_solid_style"
+                android:text="@string/hostNumericButton"
+                android:visibility="gone" />
             <Button
                 android:id="@+id/host_text"
-                android:layout_width="75sp"
+                android:layout_width="45sp"
                 android:layout_height="wrap_content"
-                style="?attr/ed_small_button_style"
-                android:text="@string/hostTextButton" />
+                style="?attr/ed_small_button_solid_style"
+                android:text="@string/hostTextButton"/>
         </LinearLayout>
 
     </RelativeLayout>
