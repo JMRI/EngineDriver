@@ -14,6 +14,8 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources>
+    <!-- Common -->
+
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
     <color name="grey">#ff888888</color>
@@ -36,6 +38,7 @@
     <color name="intro_buttonbar_background">#ffac00</color>
 
     <color name="seekBarTickColor">#AFAEAE</color>
+    <color name="hoverButtonBackgroundBlue">#1E3AEC</color>
 
     <!-- Black Theme -->
     <color name="primary_black">@color/solidWhite</color>
