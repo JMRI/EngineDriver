@@ -156,7 +156,7 @@
         <item>Bloquer et diminuer la luminosité de l écran</item>
         <item>Assombrir l écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
-        <item >Commutateur formats d\'écran Throttle</item>
+        <item>Changement affichage régulateur</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
@@ -205,7 +205,7 @@
         <item>2 minutes</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
-        <item>Fin de roulage</item>
+        <item>Session terminée</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntries"> <!-- display version -->
@@ -375,8 +375,8 @@
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Réduire affichage aux dimensions écran</item>
         <item>Affichage plein écran - rogner si besoin</item>
-        <item>Centre - mise à l\'échelle No</item>
-        <item>Fit - Réduction de la taille seulement</item>
-        <item>Remplir - Déformer si nécessaire</item>
+        <item>Recentrer écran</item>
+        <item>Ajustement taille écran</item>
+        <item>Remplissage taille écran</item>
     </string-array>
 </resources>

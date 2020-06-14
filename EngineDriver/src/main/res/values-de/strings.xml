@@ -827,4 +827,6 @@
     <string name="prefBackgroundImagePreferencesTitle">Hintergrundbild Einstellungen</string>
     <string name="edit_consist_menu">\≡ Bearbeiten Consist</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="prefSwipeDownOptionSummary">Was soll passieren, wenn Sie auf dem Drosselklappen Blick nach unten wischen.</string>
+    <string name="prefSwipeDownOptionTitle">Swipe nach unten Aktion in der Drossel Ansicht?</string>
 </resources>
