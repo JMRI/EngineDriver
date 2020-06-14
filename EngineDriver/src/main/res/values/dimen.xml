@@ -3,7 +3,7 @@
     <!-- common -->
 
     <dimen name="buttonStroke_hover">1dip</dimen>
-    <dimen name="buttonCornerRadius_hover">10dip</dimen>
+    <dimen name="buttonCornerRadius_hover">15dip</dimen>
 
 
     <!-- Black theme -->

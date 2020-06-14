@@ -21,6 +21,7 @@ package jmri.enginedriver;
 // Main java file.
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -112,9 +113,11 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
@@ -769,6 +772,13 @@ public class threaded_application extends Application {
                         Log.d("Engine_Driver", "threaded_application.comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " + msg.what);
                         sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
                         break;
+
+                    case message_type.HTTP_SERVER_NAME_RECEIVED:
+                        String retrievedServerName = msg.obj.toString();
+                        if (!retrievedServerName.equals(connectedHostName)) {
+                            updateConnectionList(retrievedServerName);
+                        }
+                        break;
                 }
             }
         }
@@ -1112,6 +1122,7 @@ public class threaded_application extends Application {
                                 dlRosterTask.get();             // start background roster update
 
                             }
+                            getServerNameFromWebServer();
                             break;
                     }  //end switch inside P
                     break;
@@ -3265,6 +3276,24 @@ end force shutdown */
             } else {
                 this.safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
             }
+        }
+    }
+
+    private void getServerNameFromWebServer() {
+        GetJsonFromUrl getJson = new GetJsonFromUrl(this);
+        getJson.execute("http://"+host_ip+":" +web_server_port+"/json/railroad");
+    }
+
+    private void updateConnectionList(String retrievedServerName) {
+        // if I don't have permissions, do ask, just ignore
+        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
+
+            ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
+            importExportConnectionList.connections_list.clear();
+            importExportConnectionList.getConnectionsList("", "");
+            importExportConnectionList.saveConnectionsListExecute(
+                    this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
         }
     }
 

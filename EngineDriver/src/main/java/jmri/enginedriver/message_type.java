@@ -17,7 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-interface message_type {
+public interface message_type {
     //Constant values for Message types:  from->to parms (action)
     int NONE = -1;
     int ERROR = 0;
@@ -69,4 +69,5 @@ interface message_type {
     int RESTART_APP = 46;   //
     int WIT_QUERY_SPEED = 47;   //
     int WIT_QUERY_DIRECTION = 48;   //
+    int HTTP_SERVER_NAME_RECEIVED = 49;   //
 }
