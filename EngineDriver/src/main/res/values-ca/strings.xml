@@ -825,4 +825,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències de la tecla de canvi de dissenys</string>
     <string name="edit_consist_menu">\≡ Editar el Regulador</string>
     <string name="gamepad_test_menu">\≡ Prova de gamepad</string>
+    <string name="prefSwipeDownOptionSummary">El que hauria de passar quan es llisca cap avall a la vista de l\'accelerador.</string>
+    <string name="prefSwipeDownOptionTitle">acció per cop a la vista de l\'accelerador?</string>
 </resources>

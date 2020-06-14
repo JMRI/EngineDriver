@@ -759,4 +759,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Interruttore Preferenze Button</string>
     <string name="edit_consist_menu">\≡ Modifica Consistono</string>
     <string name="gamepad_test_menu">\≡ Test Gamepad</string>
+    <string name="prefSwipeDownOptionSummary">Che cosa dovrebbe accadere quando si scorrere verso il basso la vista acceleratore.</string>
+    <string name="prefSwipeDownOptionTitle">Swipe l\'azione verso il basso nella vista Throttle?</string>
 </resources>

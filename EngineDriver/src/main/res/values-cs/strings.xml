@@ -926,4 +926,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Spínač předvolby</string>
     <string name="edit_consist_menu">\≡ Upravit soupravu</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="prefSwipeDownOptionSummary">Co by se stalo, když přejedete prstem dolů na pohled škrticí klapky.</string>
+    <string name="prefSwipeDownOptionTitle">Přejetí dolů akční z pohledu škrticí klapky?</string>
 </resources>
