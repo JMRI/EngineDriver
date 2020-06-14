@@ -914,14 +914,14 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 }
             }
 
-            //if demo host not already in list, add it at end
-            if ((!prefHideDemoServer) && (!foundDemoHost)) {
-                HashMap<String, String> hm = new HashMap<>();
-                hm.put("ip_address", demo_host);
-                hm.put("host_name", demo_host);
-                hm.put("port", demo_port);
-                importExportConnectionList.connections_list.add(hm);
-            }
+//            //if demo host not already in list, add it at end
+//            if ((!prefHideDemoServer) && (!foundDemoHost)) {
+//                HashMap<String, String> hm = new HashMap<>();
+//                hm.put("ip_address", demo_host);
+//                hm.put("host_name", demo_host);
+//                hm.put("port", demo_port);
+//                importExportConnectionList.connections_list.add(hm);
+//            }
             connection_list_adapter.notifyDataSetChanged();
         }
 
