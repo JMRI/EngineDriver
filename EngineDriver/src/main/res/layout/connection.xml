@@ -112,7 +112,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginRight="20dp"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/host_numeric"

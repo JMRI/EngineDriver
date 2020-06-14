@@ -3294,6 +3294,7 @@ end force shutdown */
             importExportConnectionList.getConnectionsList("", "");
             importExportConnectionList.saveConnectionsListExecute(
                     this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
+            connectedHostName = retrievedServerName;
         }
     }
 
