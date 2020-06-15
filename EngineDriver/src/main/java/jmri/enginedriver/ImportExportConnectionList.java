@@ -118,7 +118,7 @@ class ImportExportConnectionList {
 
         private String connected_hostip;
         private String connected_hostname;
-        private int connected_port;
+        private Integer connected_port;
         private String webServerName;  //name from the webServer
 
         public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName) {
@@ -136,6 +136,8 @@ class ImportExportConnectionList {
             //exit if values not set, avoid NPE reported to Play Store
             if (connected_hostip == null || connected_port == 0) return errMsg;
 
+            foundDemoHost = false;
+
             //if no SD Card present then nothing to do
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
                 return errMsg;
@@ -150,11 +152,15 @@ class ImportExportConnectionList {
 
                 if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
                     //Write selected connection to file, then write all others (skipping selected if found)
-                    if ((webServerName.equals("")) || (connected_hostname.equals(webServerName))) {
+                    if ( ((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
+                        || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) ) {
                         list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
                     } else {
                         list_output.format("%s:%s:%d\n", webServerName, connected_hostip, connected_port);
                     }
+                }
+                if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
+                    foundDemoHost = true;
                 }
 
                 String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
@@ -173,7 +179,14 @@ class ImportExportConnectionList {
                     String lh = t.get("host_name");
                     Integer lp = Integer.valueOf(t.get("port"));
 
-                    if (!connected_hostip.equals(li) || (connected_port != lp)) {  //write it out if not same as selected
+                    boolean doWrite = true;
+                    if (connected_hostip.equals(li) && (connected_port == lp)){  //dont write it out if same as selected
+                        doWrite = false;
+                    }
+                    if ( li.equals(demo_host) && lp.toString().equals(demo_port) && (foundDemoHost) ) {
+                        doWrite = false;
+                    }
+                    if (doWrite) {
                         list_output.format("%s:%s:%d\n", lh, li, lp);
                     }
                 }
