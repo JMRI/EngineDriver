@@ -27,11 +27,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class throttle_full extends throttle {
@@ -405,6 +404,9 @@ public class throttle_full extends throttle {
                 heights[1] = (int) (screenHeight * 0.45);
                 heights[2] = (int) (screenHeight * 0.10);
             }
+
+            ImageView myImage = findViewById(R.id.backgroundImgView);
+            myImage.getLayoutParams().height = screenHeight;
 
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
