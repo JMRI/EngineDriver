@@ -29,6 +29,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -300,6 +301,9 @@ public class throttle_vertical extends throttle {
                 }
             }
         }
+
+        ImageView myImage = findViewById(R.id.backgroundImgView);
+        myImage.getLayoutParams().height = screenHeight;
 
         int speedButtonHeight = (int) (50 * denScale);
         if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {

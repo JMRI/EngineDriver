@@ -28,6 +28,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -265,6 +266,10 @@ public class throttle_big_buttons extends throttle {
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
+
+        ImageView myImage = findViewById(R.id.backgroundImgView);
+        myImage.getLayoutParams().height = screenHeight;
+
 
         if (webView!=null) {
             setImmersiveModeOn(webView);
