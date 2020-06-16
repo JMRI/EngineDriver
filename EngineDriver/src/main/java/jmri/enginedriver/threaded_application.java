@@ -181,6 +181,9 @@ public class threaded_application extends Application {
 
     public String deviceId = "";
 
+    private static final String demo_host = "jmri.mstevetodd.com";
+    private static final String demo_port = "44444";
+
     String client_address; //address string of the client address
     Inet4Address client_address_inet4; //inet4 value of the client address
     String client_ssid = "UNKNOWN";    //string of the connected SSID
@@ -450,7 +453,7 @@ public class threaded_application extends Application {
             /***future PowerLock
              private PowerManager.WakeLock wl = null;
              */
-            @SuppressLint("DefaultLocale")
+            @SuppressLint({"DefaultLocale", "ApplySharedPref"})
             public void handleMessage(Message msg) {
 //                Log.d("Engine_Driver", "threaded_application.comm_handler: message: " +msg.what);
                 switch (msg.what) {
@@ -775,7 +778,8 @@ public class threaded_application extends Application {
 
                     case message_type.HTTP_SERVER_NAME_RECEIVED:
                         String retrievedServerName = msg.obj.toString();
-                        if (!retrievedServerName.equals(connectedHostName)) {
+                        if ((!retrievedServerName.equals(connectedHostName))
+                            && (!connectedHostName.equals(demo_host)) ) {
                             updateConnectionList(retrievedServerName);
                         }
                         break;
@@ -3284,8 +3288,9 @@ end force shutdown */
         getJson.execute("http://"+host_ip+":" +web_server_port+"/json/railroad");
     }
 
+    @SuppressLint("ApplySharedPref")
     private void updateConnectionList(String retrievedServerName) {
-        // if I don't have permissions, do ask, just ignore
+        // if I don't have permissions, don't ask, just ignore
         if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                 && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
@@ -3295,6 +3300,29 @@ end force shutdown */
             importExportConnectionList.saveConnectionsListExecute(
                     this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
             connectedHostName = retrievedServerName;
+
+            String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
+
+            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+            prefs.edit().putString("prefAndroidId", deviceId).commit();
+            prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
+
+            if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
+                    || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+                if (connectedHostName != null) {
+                    String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                    ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+                    importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
+
+                    Message msg = Message.obtain();
+                    msg.what = message_type.RESTART_APP;
+                    msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
+                    comm_msg_handler.sendMessage(msg);
+                } else {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
+                }
+            }
+
         }
     }
 

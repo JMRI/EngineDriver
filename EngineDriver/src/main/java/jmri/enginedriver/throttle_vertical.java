@@ -206,7 +206,7 @@ public class throttle_vertical extends throttle {
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
                     }
-                        bLabelPlainText = bLabel;
+                    bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
@@ -316,10 +316,10 @@ public class throttle_vertical extends throttle {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
 
-                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+//                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
                 bLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bLSpds[throttleIndex].requestLayout();
-                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+//                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
                 bRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bRSpds[throttleIndex].requestLayout();
             } else {
