@@ -180,7 +180,7 @@ class ImportExportConnectionList {
                     Integer lp = Integer.valueOf(t.get("port"));
 
                     boolean doWrite = true;
-                    if (connected_hostip.equals(li) && (connected_port == lp)){  //dont write it out if same as selected
+                    if (connected_hostip.equals(li) && (connected_port.intValue() == lp.intValue())){  //dont write it out if same as selected
                         doWrite = false;
                     }
                     if ( li.equals(demo_host) && lp.toString().equals(demo_port) && (foundDemoHost) ) {
