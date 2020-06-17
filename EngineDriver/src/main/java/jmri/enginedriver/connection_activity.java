@@ -45,6 +45,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -52,6 +53,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -113,6 +115,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     View host_numeric_or_text;
     Button host_numeric;
     Button host_text;
+
+    LinearLayout rootView;
+    int rootViewHeight = 0;
 
     static {
         try {
@@ -510,6 +515,23 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
+
+            rootView = findViewById(R.id.connection_view);
+            rootView.requestFocus();
+            rootViewHeight = rootView.getHeight();
+            rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (rootViewHeight!=0) {
+                        int heightDiff = rootViewHeight - rootView.getHeight();
+                        if (heightDiff < -400) {  //keyboard closed
+                            rootView.requestFocus();
+                            showHideNumericOrTextButtons(false);
+                        }
+                    }
+                    rootViewHeight = rootView.getHeight();
+                }
+            });
         }
 
         @Override
