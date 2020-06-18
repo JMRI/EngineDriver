@@ -4732,6 +4732,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
+
+        mainapp.throttleActivityHasStarted = true;
     }
 
     private void showHideConsistMenus(){
