@@ -269,6 +269,7 @@ public class threaded_application extends Application {
     public Resources.Theme theme;
 
     protected int throttleLayoutViewId;
+    public boolean throttleActivityHasStarted = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3317,7 +3318,11 @@ end force shutdown */
                     Message msg = Message.obtain();
                     msg.what = message_type.RESTART_APP;
                     msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
-                    comm_msg_handler.sendMessage(msg);
+                    if (throttleActivityHasStarted) {
+                        comm_msg_handler.sendMessageDelayed(msg,1000);
+                    } else {
+                        comm_msg_handler.sendMessageDelayed(msg,3000);
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
                 }
