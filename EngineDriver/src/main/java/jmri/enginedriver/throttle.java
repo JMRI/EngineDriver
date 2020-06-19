@@ -4733,7 +4733,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
-        mainapp.throttleActivityHasStarted = true;
+//        mainapp.throttleActivityHasStarted = true;
+        if (!mainapp.webServerNameHasBeenChecked) {
+            mainapp.getServerNameFromWebServer();
+        }
     }
 
     private void showHideConsistMenus(){
