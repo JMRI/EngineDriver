@@ -269,7 +269,7 @@ public class threaded_application extends Application {
     public Resources.Theme theme;
 
     protected int throttleLayoutViewId;
-    public boolean throttleActivityHasStarted = false;
+    public boolean webServerNameHasBeenChecked = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -1127,7 +1127,7 @@ public class threaded_application extends Application {
                                 dlRosterTask.get();             // start background roster update
 
                             }
-                            getServerNameFromWebServer();
+//                            getServerNameFromWebServer();
                             break;
                     }  //end switch inside P
                     break;
@@ -3284,9 +3284,10 @@ end force shutdown */
         }
     }
 
-    private void getServerNameFromWebServer() {
+    public void getServerNameFromWebServer() {
         GetJsonFromUrl getJson = new GetJsonFromUrl(this);
         getJson.execute("http://"+host_ip+":" +web_server_port+"/json/railroad");
+        webServerNameHasBeenChecked = true;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -3318,11 +3319,11 @@ end force shutdown */
                     Message msg = Message.obtain();
                     msg.what = message_type.RESTART_APP;
                     msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
-                    if (throttleActivityHasStarted) {
-                        comm_msg_handler.sendMessageDelayed(msg,1000);
-                    } else {
+//                    if (throttleActivityHasStarted) {
                         comm_msg_handler.sendMessageDelayed(msg,3000);
-                    }
+//                    } else {
+//                        comm_msg_handler.sendMessageDelayed(msg,3000);
+//                    }
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
                 }
