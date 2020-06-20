@@ -1128,6 +1128,7 @@ public class threaded_application extends Application {
 
                             }
 //                            getServerNameFromWebServer();
+                            webServerNameHasBeenChecked = false;
                             break;
                     }  //end switch inside P
                     break;
@@ -3319,11 +3320,8 @@ end force shutdown */
                     Message msg = Message.obtain();
                     msg.what = message_type.RESTART_APP;
                     msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
-//                    if (throttleActivityHasStarted) {
-                        comm_msg_handler.sendMessageDelayed(msg,3000);
-//                    } else {
-//                        comm_msg_handler.sendMessageDelayed(msg,3000);
-//                    }
+                    Log.d("Engine_Driver","updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                    comm_msg_handler.sendMessage(msg);
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
                 }

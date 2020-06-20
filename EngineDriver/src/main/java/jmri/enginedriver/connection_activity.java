@@ -766,66 +766,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
          }
          ***/
 
-        //save connections list in background using asynctask
-//        private class saveConnectionsList extends AsyncTask<Void, Void, String> {
-//            @Override
-//            protected String doInBackground(Void... params) {
-//
-//                String errMsg = "";
-//                //exit if values not set, avoid NPE reported to Play Store
-//                if (connected_hostip == null || connected_port == 0) return errMsg;
-//
-//                //if no SD Card present then nothing to do
-//                if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-//                    return errMsg;
-//                try {
-//                    File path = Environment.getExternalStorageDirectory();
-//                    File engine_driver_dir = new File(path, "engine_driver");
-//                    //noinspection ResultOfMethodCallIgnored
-//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//
-//                    File connections_list_file = new File(path, "engine_driver/connections_list.txt");
-//                    PrintWriter list_output = new PrintWriter(connections_list_file);
-//
-//                    if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
-//                        //Write selected connection to file, then write all others (skipping selected if found)
-//                        list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
-//                    }
-//
-//                    SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-//                    String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
-//                    if (smrc.equals("")) { //if no value or entry removed, set to default
-//                        smrc = getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
-//                    }
-//                    int mrc = 10;
-//                    try {
-//                        mrc = Integer.parseInt(smrc);
-//                    } catch (NumberFormatException ignored) {
-//                    }
-//                    int clEntries = Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
-//                    for (int i = 0; i < clEntries; i++) {  //loop thru entries from connections list, up to max in prefs
-//                        HashMap<String, String> t = connections_list.get(i);
-//                        String li = t.get("ip_address");
-//                        String lh = t.get("host_name");
-//                        Integer lp = Integer.valueOf(t.get("port"));
-//                        if (!connected_hostip.equals(li) || (connected_port != lp)) {  //write it out if not same as selected
-//                            list_output.format("%s:%s:%d\n", lh, li, lp);
-//                        }
-//                    }
-//                    list_output.flush();
-//                    list_output.close();
-//                } catch (IOException except) {
-//                    errMsg = except.getMessage();
-//                }
-//                return errMsg;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String errMsg) {
-//                if (errMsg.length() > 0)
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT).show();
-//            }
-//        }
 
         private void clearConnectionsList() {
             navigateToHandler(PermissionsHelper.CLEAR_CONNECTION_LIST);
