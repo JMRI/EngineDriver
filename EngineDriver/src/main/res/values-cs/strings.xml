@@ -24,7 +24,6 @@
     <string name="function_buttons">Funkce tlačítko</string>
     <string name="introMenu">Úvodní/Nastavení Průvodce</string>
 
-
     <string name="app_description">Engine Driver – Ovladač pro váš telefon Android. Tato aplikace se může připojit k JMRI, MRC nabo DigiTrax WiThrottle serveru a může řídit vaše lokomotivy. Rychlost, směr a až 29 DCC funkcí je podporováno pro jednu až šest lokomotiv.</string>
     <string name="app_name_intro">Úvod – Engine Driver</string>
     <string name="app_name_connect">Připojet se na server – Engine Driver</string>
@@ -37,12 +36,15 @@
     <string name="app_name_turnouts">Výhybky – Engine Driver</string>
     <string name="app_name_turnouts_short">Výhybky</string>
     <string name="app_name_about">O aplikaci – Engine Driver</string>
+    <string name="app_name_web">Web – Engine Driver</string>
+    <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Výchozí nastavení funkcí – Engine Driver</string>
     <string name="app_name_preferences">Předvolby – Engine Driver</string>
     <string name="app_name_select_loco">Vybrat/Vzdát se Lokomotivy – Engine Driver</string>
     <string name="app_name_ConsistEdit">Upravit Soupravy – Engine Driver</string>
     <string name="app_name_ConsistLightsEdit">Souprava světla – Engine Driver</string>
     <string name="app_name_gamepad_test">Gamepad Test – Engine Driver</string>
+    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
@@ -58,7 +60,9 @@
     <string name="select_loco_address">Adresa</string>
     <string name="acquire_button">Získat</string>
     <string name="roster_list">Vybrat ze záznamů evidence/soupravy</string>
+    <string name="rosterDetailsDialogTitle">"Podrobnosti evidence pro "</string>
     <string name="recent_engines">Vybrat z Nedávných lokomotiv</string>
+    <string name="recent_consists">Vybrat z Nedávných souprav</string>
     <string name="direction">Vpřed</string>
     <string name="speed">Rychlost:</string>
     <string name="discovered_services">Nalezené servery</string>
@@ -75,7 +79,6 @@
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Výchozí počet funkcí</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Omezení štítků funkcí, pokud nejsou k dispozici z evidence JMRI.</string>
 
-
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Výchozí počet funkcí pro evidenci</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Omezení štítků funkcí zobrazené ze záznamů evidence JMRI bez štítku funkce.</string>
 
@@ -85,7 +88,8 @@
     <string name="web">Web</string>
 
     <string name="about_page_url">file:///android_asset/about_page-cs.html</string>
-    <!--
+    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
+<!--
         <string name="feature_not_available_page_url">file:///android_asset/feature_not_available-cs.html</string>
         <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
     -->
@@ -148,6 +152,10 @@
     <string name="lightsTextFollow">Následovat tlačítko Fn</string>
     <string name="lightsTextUnknown">Neznámý</string>
 
+    <!--    <string name="logviewerReset">Reset</string> -->
+    <string name="logviewerClose">Zavřít</string>
+    <string name="logviewerSave">Spustit ukládání do souboru</string>
+
     <string name="prefTitle">Předvolby</string>
     <string name="prefSummary">Předvolby pro Engine Driver</string>
     <string name="preferences">Předvolby</string>
@@ -190,8 +198,10 @@
     <string name="prefIncreaseWebViewSizeSummary">Zvětšit velikost zobrazení Webu na 60% pro malé obrazovky.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Použít pohlcující režim pro zobrazení ovladače?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Zobrazit ovladač v režimu celé obrazovky. Přetažení prstem dolů dočasně deaktivujete a dostanete se do nabídky.</string>
-    <string name="prefSwipeUpOptionTitle">Akce přetažení prstem nahoru v zobrazení ovladače?</string>
-    <string name="prefSwipeUpOptionSummary">Co se má stát při přetažení prstem nahoru v zobrazení ovladače.</string>
+    <string name="prefSwipeUpOptionTitle">Akce přetažení prstem nahoru v zobrazení Ovladače?</string>
+    <string name="prefSwipeUpOptionSummary">Co se má stát při přetažení prstem nahoru v zobrazení Ovladače.</string>
+    <string name="prefSwipeDownOptionTitle">Akce přetažení prstem dolů v zobrazení Ovladače?</string>
+    <string name="prefSwipeDownOptionSummary">Co se má stát při přetažení prstem dolů v zobrazení Ovladače.</string>
 
     <!--     Volume preferences  -->
     <string name="prefVolumeTitle">Předvolby hlasitost</string>
@@ -234,11 +244,23 @@
     <string name="prefGamePadButtonLeftTitle">Gamepad DPAD Vlavo akce</string>
     <string name="prefGamePadButtonSummary">Vyberte akci která nastane při stisku tlačítka.</string>
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-
+    
     <string name="prefEsuMc2Title">ESU MobileControl II Volby</string>
     <string name="prefEsuMc2Summary">Zvolte ESU MobileControl II volby</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Volby postranní tlačítka zařízení</string>
@@ -290,9 +312,11 @@
     <string name="prefNumOfThrottles">Počet ovladačů</string>
     <string name="prefNumOfThrottlesSummary">Zvolte kolik ovladačů chcete zobrazit.</string>
 
+    
     <string name="prefThrottleScreenTypeTitle">Typ obrazovky ovladače</string>
-    <string name="prefThrottleScreenTypeSummary">Jaký typ obrazovky ovladače použít.</string>
+    <string name="prefThrottleScreenTypeSummary">Vyberte typ obrazovky ovladače.</string>
 
+    
     <string name="prefMaximumThrottleTitle">Maximum ovladače procento</string>
 
     <string name="prefMaximumThrottleSummary">Dovolené maximum posuvníku ovladače, hodnota v %</string>
@@ -341,8 +365,9 @@
 
     <string name="LocoSelectMethodQuestion">Metoda: </string>
     <string name="LocoSelectMethodAddress">DCC adresa</string>
-    <string name="LocoSelectMethodRoster">JMRI evidence</string>
-    <string name="LocoSelectMethodRecent">Nedávné</string>
+    <string name="LocoSelectMethodRoster">Evidence serveru</string>
+    <string name="LocoSelectMethodRecent">Nedávné Lokomotivy</string>
+    <string name="LocoSelectMethodRecentConsist">Nedávné Soupravy</string>
     <string name="LocoSelectMethodHelp">Zadejte DCC adresu vaší lokomotivy výše a klikněte \'Získat\'.\nPřípadně vyberte lokomotivu z \'Evidence\' JMRI nebo vyberte z \'Nedávné\' lokomotivy klikem na radio tlačítko výše.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximální počet Nedávných lokomotiv</string>
@@ -389,6 +414,7 @@
     <string name="logViewer">Zobrazit protokol</string>
     <string name="clearLocoList">Vymazat seznam</string>
     <string name="ClearConnList">Vymazat poslední seznam</string>
+    <string name="clearConsistsList">Vymazat seznam Souprav</string>
     <string name="prefEmerStopTitle">Zobrazit tlačítko nouzového zastavení?</string>
     <string name="prefEmerStopSummary">Zobrazit tlačítko nouzového zastavení lokomotivy v liště akcí?</string>
     <string name="EStop">EStop</string>
@@ -401,7 +427,7 @@
     <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu WiThrottle serveru?</string>
     <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému WiThrottle serveru?</string>
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
-    <string name="prefDisplayClockSummary">Nastacvit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
+    <string name="prefDisplayClockSummary">Nastavit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
 
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
@@ -428,13 +454,17 @@
     <string name="prefSpeedButtonsSpeedStepSummary">Jak moc poskočí rychlost ovladače na tlačítko šipka.</string>
 
 
+    
+    
+    
+    
     <string name="server_address">Adresa serveru</string>
     <string name="routes_route">Systémový název trasy</string>
-    <string name="label_percent">%</string>
-    <string name="label_14step">14</string>
-    <string name="label_27step">27</string>
-    <string name="label_28step">28</string>
-    <string name="label_128step">128</string>
+    
+    
+    
+    
+    
     <string name="throttle_name">Název ovladače: %1$s</string>
 
     <string name="prefShowAdvancedPreferencesTitle">Zobrazit rozšířené předvolby?</string>
@@ -470,6 +500,7 @@
     <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
     <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'/engine_driver/\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
 
+    
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
     <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/engine_driver/auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
 
@@ -493,11 +524,11 @@
     <string name="prefGamepadTestEnforceTestingSimpleSummary">Pouze test že můžete snížit rychlost.</string>
 
     <string name="prefLeftDirectionButtonsTitle">Štítek levého tlačítka směru</string>
-    <string name="prefLeftDirectionButtonsSummary">Štítky pro všechna levá tlačítka směru. Zadejte \'Vpřed\' nebo nechte prázdné pro normální chování.</string>
+    <string name="prefLeftDirectionButtonsSummary">Štítky pro všechna LEVÁ tlačítka směru. Zadejte \'Vpřed\' nebo nechte prázdné pro normální chování.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Vpřed</string>
 
     <string name="prefRightDirectionButtonsTitle">Štítek pravého tlačítka směru</string>
-    <string name="prefRightDirectionButtonsSummary">Štítky pro všechna pravá tlačítka směru. Zadejte \'Vzad\' nebo nechte prázdné pro normální chování.</string>
+    <string name="prefRightDirectionButtonsSummary">Štítky pro všechna PRAVǍ tlačítka směru. Zadejte \'Vzad\' nebo nechte prázdné pro normální chování.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Vzad</string>
 
     <string name="prefLeftDirectionButtonsShortTitle">Štítek zkratka levého tlačítka směru</string>
@@ -506,11 +537,10 @@
 
     <string name="prefRightDirectionButtonsShortTitle">Štítek zkratka pravého tlačítka směru</string>
     <string name="prefRightDirectionButtonsShortSummary">Štítky zkratka pro všechna pravá tlačítka směru. Zadejte \'Z\' nebo nechte prázdné pro normální chování.</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">Z</string>
 
     <string name="prefTickMarksOnSlidersTitle">Zaškrtněte značky na posuvníku rychlosti</string>
     <string name="prefTickMarksOnSlidersSummary">Zobrazit nebo skrýt zašktnuté značky na pozadí posuvníků rychlosti.</string>
-
-    <string name="prefRightDirectionButtonsShortDefaultValue">Z</string>
 
     <string name="prefThemeTitle">Téma/Styl</string>
     <string name="prefThemeSummary">Téma aplikace. Varování! Engine Driver se ihned restartuje!</string>
@@ -538,9 +568,60 @@
 
 
     <string name="prefLocaleTitle">Lokalizace</string>
-    <string name="prefLocaleSummary">Jazyk který chcete používat. Varování! Štítky tlačítek směru budou resetovány.</string>
+    <string name="prefLocaleSummary">Vyberte jazyk který chcete použít pro tuto aplikaci.</string>
 
 
+    <string name="prefLimitSpeedButtonPreferencesTitle">Předvolby tlačítka \'Omezení rychlosti\'</string>
+    <string name="prefLimitSpeedButtonTitle">Zobrazit tlačítko \'Omezení rychlosti\'</string>
+    <string name="prefLimitSpeedButtonSummary">Zobrazit tlačítko pro dočasné omezení maximální rychlosti na jednotlivém Ovladači.</string>
+
+    <string name="prefLimitSpeedPercentTitle">Tlačítko \'Omezení rychlosti\' \%</string>
+    <string name="prefLimitSpeedPercentSummary">Nastavit \% Ovladače, na které bude dočasně omezena rychlost.</string>
+    
+
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Přepínání mrtvé zóny Ovladače</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Nastavit velikost mrtvé zóny na posuvníku přepínání Ovladače obrazovky</string>
+
+    
+    <string name="limitSpeedButtonLabel">Omezení rychlosti</string>
+
+    <string name="functionButton00DefaultValue">Světlo</string>
+    <string name="functionButton01DefaultValue">Zvon</string>
+    <string name="functionButton02DefaultValue">Houkačka</string>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <!--    Gamepad test page -->
     <string name="gamepadTestButtonLabelDpadUp">Nahoru</string>
     <string name="gamepadTestButtonLabelDpadDown">Dolů</string>
@@ -599,6 +680,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Chyba startování socket_WiT vlákna: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Chyba vytváření output stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Chyba spícího vlákna, InterruptedException: %1$s</string>
+    <string name="toastThreadedAppNotWIFI">Používáte síť %1$s, není WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
     <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$s sekundy. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
@@ -618,6 +700,7 @@
     <string name="toastSwipeUpScreenDimmed">Obrazovka ovladače setmělá – přetáhněte pro obnovení</string>
     <string name="toastSwipeUpViewHidden">Zobrazení webu je dočasně skryto. Pro trvalé skrytí proveďte změnu v předvolbách</string>
     <string name="toastThrottleAlertEstop">Upozornění: Lokomotiva %1$s je nastavena na ESTOP</string>
+    <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z webového serveru byl úspěšný.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s-%2$s). Nastavím na %3$s.</string>
@@ -629,6 +712,7 @@
     <string name="toastPreferencesThemeChangeSucceeded">Změna tématu se zdařila.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Změna typu stránky ovladače se zdařila.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Změna místního nastavení (Jazyka) se zdařila.</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Změna pozadí se zdařila.</string>
     <!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
 
     <!--    Toast messages for the Turnout Activity -->
@@ -646,6 +730,9 @@
     <string name="toastConnectUnableToLoadPref">Nemohu načíst předvolby pro určitého hosta. Nemohu získat název hosta.</string>
     <string name="toastConnectErrorReadingRecentConnections">Chyba při čtení seznamu Nedávných připojení:</string>
     <string name="toastConnectErrorSavingRecentConnection">Chyba při ukládání Nedávných připojení:</string>
+    <string name="toastConnectRemoveDemoHostError">Demo Server lze odstranit pouze úpravou předvoleb.</string>
+    <string name="toastConnectRemoved">Server odebrán ze seznamu.</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">Automatický Import předvoleb ze serveru byl úspěšný. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Příkaz odeslaný k nastavení trasy "</string>
@@ -661,16 +748,39 @@
 
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
+    <string name="toastSelectConsistsConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné soupravy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
     <string name="toastNumThrottles">Zvolený typ obrazovky nepodporuje tolik ovladačů. Omezuji na %1$s.</string>
+    <string name="toastRecentsHelp">Dotykem vyberete položku Nedávný záznam,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování.\nPřetažením doprava odeberete položku.</string>
+    <string name="toastRecentConsistsHelp">Dotykem vyberete položku záznam Soupravy,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování (pro zadané adresy) nebo zobrazte detaily Evidence.\nPřetažením doprava odeberte záznam.</string>
+    <string name="toastRosterHelp">Dotykem vyberte položku záznam Evidence,\nnebo změňte způsob zápisu.\nDalší podrobnosti zobrazíte stisknutím tlačítka.</string>
+    <string name="toastConnectionsListHelp">Dotykem vyberte server,\nnebo zadejte adresu serveru a port.\nPřetažením vpravo odeberete položku. </string>
+    <string name="toastLocoAlreadySelected">Lokomotiva je již vybrána</string>
+
+    <!--    Toast messages for the Consist Edit Activity -->
+    <string name="toastConsistEditHelp">Dotykem změníte směr. Přetažením doprava odeberete položku.</string>
+
+    <string name="toastRecentCleared">Lokomotiva odstraněna ze seznamu.</string>
+    <string name="toastRecentConsistCleared">Souprava odstraněna ze seznamu</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Zahájeno protokolování do souboru %1$s. Protokolování bude pokračovat až do ukončení aplikace Engine Driver.</string>
+
+    <!--    Toast messages for the Turnouts Activity -->
+    <string name="toastRecentTurnoutCleared">Výhybka odebrána ze seznamu</string>
+    <string name="toastRecentTurnoutsConfirmClear">Potvrďte, že chcete odebrat všechny nedávné Výhybky OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
+    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>
+
+    <string name="RecentsNameEditTitle">Název nedávné lokomotivy</string>
+    <string name="RecentsNameEditText">Zadejte název lokomotivy</string>
+
+    <string name="RecentConsistsNameEditTitle">Název nedávné soupravy</string>
+    <string name="RecentConsistsNameEditText">Zadejte název soupravy</string>
 
     <string name="prefTtsTitle">Předvolby Hlasová odpověď</string>
     <string name="prefTtsSummary">Volby pro řeč klávesa události</string>
 
     <string name="prefTtsWhenTitle">Hlasová odpověď</string>
-    <string name="prefTtsWhenSummary">Když řeč klávesa události a akce použitím Text na řeč (TTS).</string>
+    <string name="prefTtsWhenSummary">Kdy má událost klávesy a akce být řečena pomocí převodu Textu na řeč (TTS).</string>
 
 
     <string name="prefTtsThrottleResponseTitle">Gamepad změna ovladače</string>
@@ -715,19 +825,21 @@
     <string name="functionButtonLookForLight">SVĚTLA</string>
     <string name="functionButtonLookForRear">ZADNÍ</string>
 
+    <string name="throttleSwitchAction">Přepnout rozložení obrazovky Ovladače</string>
     <string name="flashlightAction">Svítilna</string>
     <string name="flashlightStateOn">Svítilna Zapnuta</string>
     <string name="flashlightStateOff">Svítilna Vypnuta</string>
-
-    <string name="logviewerClose">Zavřít</string>
-    <string name="logviewerSave">Spustit ukládání do souboru</string>
-
-    <string name="prefFlashlightSummary">Zobrazit tlačítko svítilny na obrazovce Ovladače, Výhybek a Tras?</string>
+    <string name="prefFlashlightSummary">Zobrazit tlačítko svítilny na panelu akcí?</string>
     <string name="prefFlashlightTitle">Zobrazit tlačítko svítilny?</string>
     <string name="toastFlashlightOnFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
-    <string name="toastFlashlightOffFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
+    <string name="toastFlashlightOffFailed">Je mi líto! Při vypnutí svítilny došlo k problému&#8230;</string>
 
-    <string name="logViewerTitle">Prohlížeč protokolu aktivity | Ovladač název: %1$s</string>
+    <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
+    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
+    <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí?\n(vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
+    <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
+
+    <string name="logViewerTitle">Prohlížeč protokolu aktivity | %1$s</string>
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
@@ -740,6 +852,12 @@
     <string name="prefConsistFollowTitle">Funkce soupravy Následování předvoleb</string>
     <string name="prefConsistFollowSummary">Volby pro to jak se budou chovat funkce v soupravě.</string>
 
+    <string name="prefConsistFollowString1DefaultValue">SVĚTLA</string>
+    <string name="prefConsistFollowString2DefaultValue">PÍŠŤALA,HOUKAČKA,ZVON</string>
+    <string name="prefConsistFollowStringOtherDefaultValue" />
+    
+    
+    <string name="prefConsistFollowActionOtherDefaultValue">přípřež</string>
 
     <string name="prefConsistFollowDefaultActionTitle">Výchozí akce</string>
     <string name="prefConsistFollowDefaultActionSummary">Která z lokomotiv by měla reagovat na tlačítko funkce pokud žádné z níže uvedených pravidel není splněno.</string>
@@ -800,6 +918,7 @@
     <string name="permissionsStoreRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení.</string>
     <string name="permissionsClearRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro vymazání nedávných připojení.</string>
     <string name="permissionsReadPreferences">Engine Driver potřebuje oprávnění STORAGE pro čtení předvoleb.</string>
+    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění STORAGE pro načtení obrázků pozadí.</string>
     <string name="permissionsStorePreferences">Engine Driver potřebuje oprávnění STORAGE pro uložení předvoleb.</string>
     <string name="permissionsClearPreferences">Engine Driver potřebuje oprávnění STORAGE pro vymazání předvoleb.</string>
     <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>
@@ -809,7 +928,7 @@
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_COARSE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
-    <string name="permissionsVIBRATE">Driver motor potřebuje oprávnění vibrovat poskytnout další zpětnou vazbu.</string>
+    <string name="permissionsVIBRATE">Engine Driver potřebuje oprávnění VIBRATE aby poskytl další zpětnou vazbu.</string>
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
     <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>
     <string name="permissionsAppSettingsButton">Nastavení aplikace</string>
@@ -844,6 +963,7 @@
     <string name="introButtonsNoSlider">Pouze tlačítka rychlosti</string>
 
     <string name="introbackButtonPress">Prosím restartujte aplikaci Engine Driver pro dokončení úvodního nastavení.</string>
+    <string name="edit_consist_menu">\≡ Upravit soupravu</string>
     <string name="edit_consist_throttle_1">Upravit soupravu ovladače 1</string>
     <string name="edit_consist_throttle_2">Upravit soupravu ovladače 2</string>
     <string name="edit_consist_throttle_3">Upravit soupravu ovladače 3</string>
@@ -856,74 +976,64 @@
     <string name="edit_consist_lights_throttle_4">Upravit světla soupravy ovladače 4</string>
     <string name="edit_consist_lights_throttle_5">Upravit světla soupravy ovladače 5</string>
     <string name="edit_consist_lights_throttle_6">Upravit světla soupravy ovladače 6</string>
-    <string name="functionButton00DefaultValue">Světla</string>
-    <string name="functionButton01DefaultValue">Zvon</string>
-    <string name="functionButton02DefaultValue">Houkačka</string>
-    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
-    <string name="toastThreadedAppNotWIFI">Používám %1$s síť, ne WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
-    <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z Web serveru JMRI byl úspěšný.</string>
-    <string name="LocoSelectMethodRecentConsist">Nedávná Skládá</string>
-    <string name="toastSelectConsistsConfirmClear">Confirmeu que voleu eliminar tots els recents Consisteix prement el botó \'Esborrar llista\' DO NOU.</string>
-    <string name="toastRecentConsistsHelp">Dotykem vyberte.\nDlouhým stiskem přejmenovat.\nSwipe zleva doprava, aby se odstranily položku.</string>
-    <string name="toastRecentsHelp">Dotykem vyberte.\nDlouhým stiskem přejmenovat.\nSwipe zleva doprava, aby se odstranily položku.</string>
-    <string name="toastRosterHelp">Dotykem vyberte.\nDlouhým stiskem podrobnosti.</string>
-    <string name="RecentConsistsNameEditText">Zadejte název pro Skládá</string>
-    <string name="RecentConsistsNameEditTitle">Nedávná Skládá Name</string>
-    <string name="RecentsNameEditText">Zadejte název pro Loco</string>
-    <string name="RecentsNameEditTitle">Nedávná Loco Name</string>
-    <string name="prefLimitSpeedButtonSummary">Možnost zobrazit tlačítko, které omezuje rychlost maximálně lokomotivy.</string>
-    <string name="prefLimitSpeedButtonTitle">Show tlačítka \'rychlostní limit\'</string>
-    <string name="prefLimitSpeedPercentSummary">Nastavení \% z ceny plynu, že rychlost bude omezena na.</string>
-    <string name="prefLimitSpeedPercentTitle">Rychlostní limit na \%</string>
-    <string name="rosterDetailsDialogTitle">Vyberte si z Roster / Skládá se Příspěvky</string>
-    <string name="toastRecentConsistCleared">Skládat odstraněn ze seznamu</string>
-    <string name="toastRecentCleared">Loco odstraněn ze seznamu</string>
-    <string name="editConsistButtonLabel">Editovat pořádek a Direction</string>
-    <string name="editConsistLightsButtonLabel">Editovat Lights</string>
-    <string name="toastConnectionsListHelp">Dotykem vyberte.\nPřejeďte zleva doprava, aby se odstranily položku.</string>
-    <string name="toastConsistEditHelp">Dotykem změnit směr.\nPřejeďte zleva doprava, aby se odstranily položku.</string>
+    
+    <string name="editConsistButtonLabel">Upravit pořadí a směr</string>
+    <string name="editConsistLightsButtonLabel">Upravit světla</string>
+
+    <string name="editConsistLocoFacingLabel">Směr</string>
     <string name="consistLocoFacingFront">Přední</string>
     <string name="consistLocoFacingRear">Zadní</string>
-    <string name="editConsistLocoFacingLabel">Obložení</string>
-    <string name="toastLocoAlreadySelected">Loco již vybrána</string>
-    <string name="turnoutsRecentHeading">Nedávné Výhybky</string>
-    <string name="turnoutsSelectionTypeAddress">Adresa / Poslední</string>
-    <string name="turnoutsSelectionTypeHeading">Volební účast Method Selection</string>
-    <string name="turnoutsSelectionTypeRoster">%1$s Definované</string>
-    <string name="toastRecentTurnoutCleared">Volební účast odstraněn ze seznamu</string>
-    <string name="toastRecentTurnoutsConfirmClear">onfirm, že chcete odstranit všechny Nejnovější výhybek opětovným stisknutím tlačítka ‚Smazat seznam‘.</string>
-    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem lze odstranit položku.</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneSummary">Přepínání Throttle Mrtvé zóny</string>
-    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Nastavit velikost mrtvé zóny na jezdci spínacího škrticí Screen</string>
-    <string name="dialogConfirmClearTitle">Prázdný seznam</string>
-    <string name="dialogRecentConsistsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nedávný Sestává</string>
-    <string name="dialogRecentLocoConfirmClearQuestion">Potvrďte, že chcete odstranit všechny Nejnovější Lokomotivy</string>
-    <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny Nejnovější výhybky</string>
 
-    <string name="dialogConfirmResetPreferencesTitle">Obnovit nastavení</string>
-    <string name="dialogResetPreferencesQuestion">Ujistěte se, že budete chtít obnovit všechny předvolby. \nALL budou ztraceny aktuální preference.</string>
-    <string name="dialogConfirmImportPreferencesTitle">dovozní Preferences</string>
-    <string name="dialogImportPreferencesQuestion">Ujistěte se, že budete chtít předvoleb pro import. \nALL budou ztraceny aktuální preference.</string>
-    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
-    <string name="prefBackgroundImageFileNameNoImageSelected">Žádný obrázek byl vybrán</string>
-    <string name="prefBackgroundImageFileNameSummary">Zadejte název souboru na pozadí obrazu.</string>
-    <string name="prefBackgroundImageFileNameTitle">Pozadí Image File Name</string>
-    <string name="prefBackgroundImageSummary">Zobrazoval obrázek na pozadí na straně škrticí</string>
-    <string name="prefBackgroundImageTitle">Obrázek na pozadí</string>
-    <string name="prefBackgroundImagePositionSummary">Zvolit, jak bude obrázek na pozadí umístěn na obrazovce.</string>
-    <string name="prefBackgroundImagePositionTitle">Background Position Image</string>
-    <string name="prefThrottleSwitchButtonSummary">Zobrazit Spínač škrticí klapky plynového obrazovce umožňují rychlé střídání škrticích typy obrazovek.</string>
-    <string name="prefThrottleSwitchButtonTitle">Throttle Spínač</string>
-    <string name="prefThrottleSwitchOption1Summary">Throttle Spínač se přepne mezi tímto typem obrazovky a další preference.</string>
-    <string name="prefThrottleSwitchOption1Title">Throttle Typ přepínače First Screen</string>
-    <string name="prefThrottleSwitchOption2Summary">Throttle Spínač se přepne mezi typem obrazovky v předchozím preference a tento jeden.</string>
-    <string name="prefThrottleSwitchOption2Title">Throttle Typ přepínače Druhá obrazovka</string>
-    <string name="recent_consists">Vyberte si z Nedávné Lokomotivy</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">Tlačítko Preferences \\\'rychlostní limit\\\'</string>
-    <string name="toastPreferencesBackgroundChangeSucceeded">Pozadí Změna Uspěl.</string>
-    <string name="throttleSwitchAction">Přepnout Škrtící klapky obrazovek</string>
-    <string name="prefBackgroundImagePreferencesTitle">Obrázek na pozadí Preferences</string>
-    <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Spínač předvolby</string>
-    <string name="edit_consist_menu">\≡ Upravit soupravu</string>
-    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="turnoutsSelectionTypeHeading">Způsob výběru výhybky</string>
+    <string name="turnoutsSelectionTypeAddress">Adresa/Nedávný</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Definováno</string>
+    <string name="turnoutsRecentHeading">Nedávné výhybky</string>
+
+    <string name="dialogConfirmClearTitle">Vymazat seznam</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Potvrďte, že chcete odstranit všechny nedávné lokomotivy</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny nedávné soupravy</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny nedávné výhybky</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">Resetovat předvolby</string>
+    <string name="dialogResetPreferencesQuestion">Potvrďte, že chcete resetovat všechny předvolby.\nVšechny aktuální preference budou ztraceny.</string>
+
+    <string name="dialogConfirmImportPreferencesTitle">Import předvoleb</string>
+    <string name="dialogImportPreferencesQuestion">Potvrďte, že chcete importovat předvolby.\nVšechny současné předvolby budou ztraceny.</string>
+    
+    <string name="prefBackgroundImagePreferencesTitle">Předvolby obrázku pozadí</string>
+    <string name="prefBackgroundImageTitle">Obrázek pozadí</string>
+    <string name="prefBackgroundImageSummary">Zobrazit obrázek pozadí na stránce Ovladače</string>
+
+    <string name="prefBackgroundImageFileNameTitle">Název souboru obrázku pozadí</string>
+    <string name="prefBackgroundImageFileNameSummary">Zadejte název souboru pro obrázek pozadí.</string>
+    
+    <string name="prefBackgroundImageFileNameNoImageSelected">Žádný obrázek nebyl vybrán</string>
+
+    <string name="prefBackgroundImagePositionTitle">Pozice obrázku pozadí</string>
+    <string name="prefBackgroundImagePositionSummary">Vyberte jak bude obrázek pozadí umístěn na obrazovce.</string>
+
+    
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Předvolby tlačítka přepínání rozvržení</string>
+    <string name="prefThrottleSwitchButtonTitle">Tlačíto přepínání rozvržení</string>
+    <string name="prefThrottleSwitchButtonSummary">Zobrazit tlačítko přepínání rozvržení ovladače na obrazovce ovladače a umožnit tak rychlou změnu rozvržení ovladače.</string>
+
+    <string name="prefThrottleSwitchOption1Title"> Přepínač rozvržení Rozvržení první obrazovky</string>
+    <string name="prefThrottleSwitchOption1Summary">Tlačítko přepínání rozvržení přepne mezi tímto rozvržením ovladače a dalším předvoleným.</string>
+
+    
+    <string name="prefThrottleSwitchOption2Title">Přepínač rozvržení Rozvržení druhé obrazovky</string>
+    <string name="prefThrottleSwitchOption2Summary">Tlačítko přepínání rozvržení přepne mezi předchozím předvoleným a tímto.</string>
+
+    
+    <string name="prefCategoryDevicePageTitle">Předvolby zařízení</string>
+    
+    
+    
+    
+    <!--
+    <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>
+    <string name="prefThrottleSwitchWebViewSummary">Choose if the layouts should also show the Web View</string>
+    <string name="prefThrottleSwitchWebViewDefaultValue" translatable="false">NONE</string>
+    -->
+    
 </resources>
