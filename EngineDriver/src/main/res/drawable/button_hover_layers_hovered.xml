@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_hover" />
+            <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/solidWhite" />
+            <solid android:color="@color/buttonSelectedFill_outline"/>
+        </shape>
+    </item>
+
+    <!-- inside border 2 -->
+    <item
+        android:top="@dimen/buttonActivated2InsideStrokePadding_outline" android:left="@dimen/buttonActivated2InsideStrokePadding_outline" android:right="@dimen/buttonActivated2InsideStrokePadding_outline" android:bottom="@dimen/buttonActivated2InsideStrokePadding_outline">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_hover" />
+            <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/buttonActivatedHoveredInside2Stroke_outline" />
+            <solid android:color="@color/hoverButtonBackgroundBlue"/>
+        </shape>
+    </item>
+
+</layer-list>

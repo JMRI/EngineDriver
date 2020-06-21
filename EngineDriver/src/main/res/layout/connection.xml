@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/connection_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -39,6 +43,7 @@
             />
 
         <TextView
+            android:id="@+id/port_title"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,28 +57,6 @@
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
             android:text="@string/connect_button" />
-
-        <LinearLayout
-            android:id="@+id/host_numeric_or_text"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="35dp"
-            android:layout_below="@id/host_ip"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/host_numeric"
-                android:layout_width="75sp"
-                android:layout_height="wrap_content"
-                style="?attr/ed_small_button_style"
-                android:text="@string/hostNumericButton" />
-            <Button
-                android:id="@+id/host_text"
-                android:layout_width="75sp"
-                android:layout_height="wrap_content"
-                style="?attr/ed_small_button_style"
-                android:text="@string/hostTextButton" />
-        </LinearLayout>
 
     </RelativeLayout>
 
@@ -95,7 +78,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#00000000"
-            android:footerDividersEnabled="true"></ListView>
+            android:footerDividersEnabled="true" />
     </LinearLayout>
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
@@ -115,7 +98,7 @@
             style="?attr/EDListView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:footerDividersEnabled="true"></ListView>
+            android:footerDividersEnabled="true" />
     </LinearLayout>
 
     <TextView
@@ -124,4 +107,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/none" />
+
+    <RelativeLayout
+        android:id="@+id/host_numeric_or_text"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/host_numeric"
+            style="?attr/ed_hover_button_style"
+            android:layout_width="55sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/hostNumericButton"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/host_text"
+            style="?attr/ed_hover_button_style"
+            android:layout_width="55sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/hostTextButton" />
+    </RelativeLayout>
 </LinearLayout>

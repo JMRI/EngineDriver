@@ -29,6 +29,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -205,7 +206,7 @@ public class throttle_vertical extends throttle {
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
                     }
-                        bLabelPlainText = bLabel;
+                    bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
@@ -301,6 +302,9 @@ public class throttle_vertical extends throttle {
             }
         }
 
+        ImageView myImage = findViewById(R.id.backgroundImgView);
+        myImage.getLayoutParams().height = screenHeight;
+
         int speedButtonHeight = (int) (50 * denScale);
         if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
             speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
@@ -312,10 +316,10 @@ public class throttle_vertical extends throttle {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
 
-                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+//                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
                 bLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bLSpds[throttleIndex].requestLayout();
-                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+//                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
                 bRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bRSpds[throttleIndex].requestLayout();
             } else {

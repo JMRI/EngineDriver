@@ -763,4 +763,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
     <string name="edit_consist_menu">\≡ Editar Consistem</string>
     <string name="gamepad_test_menu">\≡ Teste Gamepad</string>
+    <string name="prefSwipeDownOptionSummary">O que deve acontecer quando você deslizar para baixo na visão do acelerador.</string>
+    <string name="prefSwipeDownOptionTitle">ação baixo furto na visão do acelerador?</string>
 </resources>

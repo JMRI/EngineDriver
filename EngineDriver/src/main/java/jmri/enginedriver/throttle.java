@@ -4628,6 +4628,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         loadBackgroundImage();
 
+        if (!mainapp.webServerNameHasBeenChecked) {
+            mainapp.getServerNameFromWebServer();
+        }
+
     } // end of onCreate()
 
     @Override
@@ -4732,6 +4736,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
+
     }
 
     private void showHideConsistMenus(){
@@ -5058,7 +5063,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         //adjust several items in the menu
         if (TMenu != null) {
-            mainapp.actionBarIconCountThrottle=0;
+            mainapp.actionBarIconCountThrottle = 0;
             mainapp.displayEStop(TMenu);
             mainapp.setPowerStateButton(TMenu);
             mainapp.displayPowerStateMenuButton(TMenu);
