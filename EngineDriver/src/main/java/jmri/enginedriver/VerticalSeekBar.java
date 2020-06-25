@@ -56,6 +56,7 @@ public class VerticalSeekBar extends SeekBar {
     int tickMarkType = 0;
 
     public boolean touchFromUser = false;
+    public boolean realTouch = true;
 
     public VerticalSeekBar(final Context context) {
         super(context);
@@ -188,7 +189,7 @@ public class VerticalSeekBar extends SeekBar {
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
-                setSeekBarProgress(progress,true);
+                setSeekBarProgress(progress,realTouch);
                 mOnSeekBarChangeListener.onStartTrackingTouch(this);
                 break;
 
@@ -196,14 +197,14 @@ public class VerticalSeekBar extends SeekBar {
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
-                setSeekBarProgress(progress,true);
+                setSeekBarProgress(progress,realTouch);
                 break;
 
             case MotionEvent.ACTION_UP:
                 progress = getMax() - (int) (getMax() * event.getY() / getHeight());
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
-                setSeekBarProgress(progress,true);
+                setSeekBarProgress(progress,realTouch);
                 mOnSeekBarChangeListener.onStopTrackingTouch(this);
                 break;
 
@@ -214,6 +215,8 @@ public class VerticalSeekBar extends SeekBar {
             default:
                 break;
         }
+
+        realTouch = true;
 
         return true;
     }

@@ -336,6 +336,12 @@
                                     android:layout_width="fill_parent"
                                     android:text="@string/limitSpeedButtonLabel" />
 
+                                <Button
+                                    android:id="@+id/pause_speed_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:text="@string/pauseSpeedButtonLabel" />
+
                                 <TableLayout
                                     android:id="@+id/function_buttons_table_0"
                                     android:layout_width="match_parent"
@@ -921,6 +927,12 @@
                                     style="?attr/ed_normal_button_style"
                                     android:layout_width="fill_parent"
                                     android:text="@string/limitSpeedButtonLabel" />
+
+                                <Button
+                                    android:id="@+id/pause_speed_1"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:text="@string/pauseSpeedButtonLabel" />
 
                                 <TableLayout
                                     android:id="@+id/function_buttons_table_1"
