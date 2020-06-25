@@ -132,6 +132,7 @@ public class throttle_big_buttons extends throttle {
                 bLimitSpeed.setVisibility(View.GONE);
             }
         }
+        sliderType = SLIDER_TYPE_VERTICAL;   // they are not visible
     } // end of onCreate()
 
     @Override

@@ -755,6 +755,31 @@
                 android:inputType="number"
                 android:summary="@string/prefLimitSpeedPercentSummary"
                 android:title="@string/prefLimitSpeedPercentTitle" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefPauseSpeedButtonDefaultValue"
+                android:key="prefPauseSpeedButton"
+                android:summary="@string/prefPauseSpeedButtonSummary"
+                android:title="@string/prefPauseSpeedButtonTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefPauseSpeedRateDefaultValue"
+                android:dialogTitle="@string/prefPauseSpeedRateTitle"
+                android:key="prefPauseSpeedRate"
+                android:maxLength="4"
+                android:inputType="number"
+                android:summary="@string/prefPauseSpeedRateSummary"
+                android:title="@string/prefPauseSpeedRateTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefPauseSpeedStepDefaultValue"
+                android:dialogTitle="@string/prefPauseSpeedStepTitle"
+                android:key="prefPauseSpeedStep"
+                android:maxLength="2"
+                android:inputType="number"
+                android:summary="@string/prefPauseSpeedStepSummary"
+                android:title="@string/prefPauseSpeedStepTitle" />
+
         </PreferenceScreen>
 
         <CheckBoxPreference

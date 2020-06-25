@@ -806,84 +806,20 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     v.setText(getString(R.string.ca_recent_conn_notice));
                 } else {
                     importExportConnectionList.getConnectionsList(addressToRemove, portToRemove);
-//                    try {
-//                        File sdcard_path = Environment.getExternalStorageDirectory();
-//                        File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
-//
-//                        if (connections_list_file.exists()) {
-//                            BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
-//                            while (list_reader.ready()) {
-//                                String line = list_reader.readLine();
-//                                String ip_address;
-//                                String host_name;
-//                                String port_str;
-//                                Integer port = 0;
-//                                List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-//                                if (parts.size() > 1) {  //skip if not split
-//                                    if (parts.size() == 2) {  //old style, use part 1 for ip and host
-//                                        host_name = parts.get(0);
-//                                        ip_address = parts.get(0);
-//                                        port_str = parts.get(1);
-//                                    } else {                          //new style, get all 3 parts
-//                                        host_name = parts.get(0);
-//                                        ip_address = parts.get(1);
-//                                        port_str = parts.get(2);
-//                                    }
-//                                    try {  //attempt to convert port to integer
-//                                        port = Integer.decode(port_str);
-//                                    } catch (Exception ignored) {
-//                                    }
-//                                    if (!(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove))) {
-//                                        if (port > 0) {  //skip if port not converted to integer
-//
-//                                            if (!prefHideDemoServer || !(host_name.equals(demo_host) && port.toString().equals(demo_port))) {
-//                                                HashMap<String, String> hm = new HashMap<>();
-//                                                hm.put("ip_address", ip_address);
-//                                                hm.put("host_name", host_name);
-//                                                hm.put("port", port.toString());
-//                                                if (!connections_list.contains(hm)) {    // suppress dups
-//                                                    connections_list.add(hm);
-//                                                }
-//                                            }
-//                                            if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
-//                                                foundDemoHost = true;
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                            list_reader.close();
-//
-//                            if (((foundDemoHost) && (connections_list.size()>1)) || (connections_list.size()>0)) {
-//                                // use connToast so onPause can cancel toast if connection is made
-//                                connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
-//                                connToast.show();
-//                            }
-//
-//                        }
-//                    } catch (IOException except) {
-//                        errMsg = except.getMessage();
-//                        Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
-//                    }
 
-                    if (((importExportConnectionList.foundDemoHost)
-                            && (importExportConnectionList.connections_list.size()>1)) || (importExportConnectionList.connections_list.size()>0)) {
-                        // use connToast so onPause can cancel toast if connection is made
-                        connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
-                        connToast.show();
+                    if (importExportConnectionList.failureReason.length()>0) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (((importExportConnectionList.foundDemoHost)
+                                && (importExportConnectionList.connections_list.size() > 1)) || (importExportConnectionList.connections_list.size() > 0)) {
+                            // use connToast so onPause can cancel toast if connection is made
+                            connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                            connToast.show();
+                        }
                     }
                 }
             }
 
-//            //if demo host not already in list, add it at end
-//            if ((!prefHideDemoServer) && (!foundDemoHost)) {
-//                HashMap<String, String> hm = new HashMap<>();
-//                hm.put("ip_address", demo_host);
-//                hm.put("host_name", demo_host);
-//                hm.put("port", demo_port);
-//                importExportConnectionList.connections_list.add(hm);
-//            }
             connection_list_adapter.notifyDataSetChanged();
         }
 

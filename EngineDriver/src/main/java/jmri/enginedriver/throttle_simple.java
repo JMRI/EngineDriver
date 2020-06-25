@@ -149,8 +149,8 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
                     break;
             }
-
-        } // end of onCreate()
+        sliderType = SLIDER_TYPE_VERTICAL;
+    } // end of onCreate()
 
     @Override
     public void onResume() {

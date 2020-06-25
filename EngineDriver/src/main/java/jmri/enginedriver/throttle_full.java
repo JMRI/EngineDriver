@@ -151,7 +151,7 @@ public class throttle_full extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 //
-
+        sliderType = SLIDER_TYPE_VERTICAL;
     } // end of onCreate()
 
 
