@@ -32,6 +32,9 @@ class ImportExportConnectionList {
     private static final String DUMMY_ADDRESS = "999";
     private static final int DUMMY_PORT = 999;
 
+    private static final int FAILURE_REASON_ERROR_READING = 1;
+    public String failureReason = "";
+
     public ImportExportConnectionList(SharedPreferences p) {
         prefs = p;
         prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", context.getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
@@ -94,6 +97,7 @@ class ImportExportConnectionList {
         } catch (IOException except) {
             errMsg = except.getMessage();
             Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+            failureReason = errMsg;
 //                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
