@@ -1,4 +1,6 @@
 **Version 2.26.108
+ * get server name for prefs using webserver
+ * Add Numeric/Text button on Connect soft keyboard
  * Swipe down options same as swipe up
  * include web view when switching layouts
  * additional background layout options
@@ -6,6 +8,8 @@
  * fix crashes reported to Play Store
  * default to numeric keyboard for Server Address
  * Suppress WiT message on exit unless connected
+ * Limiting speed change rate also applied to decreases in speed
+ * Optional Pause button for vertical throttles
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences

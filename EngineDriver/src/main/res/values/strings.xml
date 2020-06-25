@@ -194,7 +194,7 @@
     <string name="prefSelLocoWhileMovingSummary">Enables Loco button when moving.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Show Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show the loco DCC Address instead of the Loco Name on the Throttle page.</string>
-    <string name="prefIncreaseWebViewSizeTitle">Increase Throttle Web View Size?</string>
+    <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
     <string name="prefIncreaseWebViewSizeSummary">Increase throttle web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
