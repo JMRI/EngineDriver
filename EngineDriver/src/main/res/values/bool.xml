@@ -81,4 +81,6 @@
 
     <bool name="prefBackgroundImageDefaultValue">false</bool>
 
+    <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>
+
 </resources>

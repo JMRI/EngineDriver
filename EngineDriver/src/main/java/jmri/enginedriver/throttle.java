@@ -307,6 +307,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private int prefSpeedButtonsSpeedStep = 4;
     private int prefVolumeSpeedButtonsSpeedStep = 1;
     private int prefGamePadSpeedButtonsSpeedStep = 4;
+    private boolean prefSpeedButtonsSpeedStepDecrement = false;
 
     private static final int SPEED_COMMAND_FROM_BUTTONS = 0;
     private static final int SPEED_COMMAND_FROM_VOLUME = 1;
@@ -1441,6 +1442,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
         prefVolumeSpeedButtonsSpeedStep= preferences.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
         prefTtsThrottleResponse = prefs.getString("prefTtsThrottleResponse", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
@@ -3916,6 +3918,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
                         case function_button.STOP:
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = false;
+
                             set_stop_button(whichThrottle, true);
                             speedUpdateAndNotify(whichThrottle, 0);
                             break;
@@ -4024,7 +4029,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if ( (!limitedJump[whichThrottle])         // touch generates multiple onProgressChanged events, skip processing after first limited jump
                     && (sliderType!=SLIDER_TYPE_SWITCHING) ) {
 
-                    if ( ((Math.abs(speed - lastSpeed)) > max_throttle_change) // if jump is too large then limit it
+                    int dif = speed - lastSpeed;
+                    if ((prefSpeedButtonsSpeedStepDecrement)   // don't limit the decrement speed if the preference is not set
+                            || isPauseSpeeds[whichThrottle] != PAUSE_SPEED_INACTIVE) { // but always do it for the pause button
+                        dif = (Math.abs(speed - lastSpeed));
+                    }
+
+                    if ( (dif > max_throttle_change) // if jump is too large then limit it
                     || (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE)) {
 
                         // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
