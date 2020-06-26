@@ -454,6 +454,9 @@
     <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
     <string name="prefSpeedButtonsSpeedStepDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed step on decrement</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Force the speed step to be used when long pressing a lower speed on the slider.</string>
+
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
