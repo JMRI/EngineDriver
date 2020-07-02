@@ -585,10 +585,13 @@
     <string name="prefPauseSpeedRateSummary">Number of milliseconds between speed step changes for the Pause action.</string>
     <string name="prefPauseSpeedRateDefaultValue" translatable="false">300</string>
 
-    <string name="prefPauseSpeedStepTitle">\'Pause\' button rate</string>
+    <string name="prefPauseSpeedStepTitle">\'Pause\' button step</string>
     <string name="prefPauseSpeedStepSummary">Step size changes for the Pause action.</string>
     <string name="prefPauseSpeedStepDefaultValue" translatable="false">2</string>
-
+<!--
+    <string name="prefPauseSpeedReverseTitle">Change direction after pause</string>
+    <string name="prefPauseSpeedReverseSummary">Select if the loco should change direction after pausing.</string>
+-->
     <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' button \%</string>
     <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be temporarily limited to.</string>
     <string name="prefLimitSpeedPercentDefaultValue" translatable="false">50</string>  <!-- DO NOT TRANSLATE -->

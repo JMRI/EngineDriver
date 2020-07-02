@@ -624,6 +624,7 @@ public class throttle_switching_left_or_right extends throttle {
                                 isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
                             } else {
                                 isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
+                                jumpSpeed = pauseSpeed[whichThrottle];  // the recorded thumb position may be slightly out
                             }
                             repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
                         }
@@ -989,19 +990,17 @@ public class throttle_switching_left_or_right extends throttle {
                     case PAUSE_SPEED_ZERO: {
                         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
                         bPauseSpeeds[whichThrottle].setSelected(false);
-                        y = pauseSpeed[whichThrottle];
+                        y = pauseSpeedThumbPosition[whichThrottle];
                         break;
                     }
                     case PAUSE_SPEED_INACTIVE: {
                         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
                         bPauseSpeeds[whichThrottle].setSelected(true);
-                        pauseSpeed[whichThrottle] = thumbPos;
+                        pauseSpeedThumbPosition[whichThrottle] = thumbPos;
 
-                        if (getDirection(whichThrottle) == DIRECTION_FORWARD) {
-                           pauseDir[whichThrottle] = DIRECTION_FORWARD;
-                        } else {
-                            pauseDir[whichThrottle] = DIRECTION_REVERSE;
-                        }
+                        pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                        pauseDir[whichThrottle] = getDirection(whichThrottle);
+
                         y = ((float) vsbSwitchingSpeeds[whichThrottle].height) / 2;
                         break;
                     }

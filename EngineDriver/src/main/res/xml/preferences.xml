@@ -784,7 +784,13 @@
                 android:inputType="number"
                 android:summary="@string/prefPauseSpeedStepSummary"
                 android:title="@string/prefPauseSpeedStepTitle" />
-
+<!--
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefPauseSpeedReverseDefaultValue"
+                android:key="prefPauseSpeedBReverse"
+                android:summary="@string/prefPauseSpeedReverseSummary"
+                android:title="@string/prefPauseSpeedReverseTitle" />
+-->
         </PreferenceScreen>
 
         <CheckBoxPreference

@@ -282,6 +282,10 @@ public class throttle_vertical extends throttle {
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
+        if (throttleWidth == 0) {
+            // throttle screen hasn't been drawn yet, so use display metrics for now
+            throttleWidth = dm.widthPixels;
+        }
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 //            if ((screenWidth > 0) && (throttleWidth > 900)) {
 //                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth / 3;
@@ -498,19 +502,17 @@ public class throttle_vertical extends throttle {
                     case PAUSE_SPEED_ZERO: {
                         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
                         bPauseSpeeds[whichThrottle].setSelected(false);
-                        y = pauseSpeed[whichThrottle];
+                        y = pauseSpeedThumbPosition[whichThrottle];
                         break;
                     }
                     case PAUSE_SPEED_INACTIVE: {
                         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
                         bPauseSpeeds[whichThrottle].setSelected(true);
-                        pauseSpeed[whichThrottle] = thumbPos;
+                        pauseSpeedThumbPosition[whichThrottle] = thumbPos;
 
-                        if (getDirection(whichThrottle) == DIRECTION_FORWARD) {
-                            pauseDir[whichThrottle] = DIRECTION_FORWARD;
-                        } else {
-                            pauseDir[whichThrottle] = DIRECTION_REVERSE;
-                        }
+                        pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                        pauseDir[whichThrottle] = getDirection(whichThrottle);
+
                         y = ((float) vsbSpeeds[whichThrottle].height);
                         break;
                     }
