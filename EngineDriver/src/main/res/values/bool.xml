@@ -78,7 +78,9 @@
 
     <bool name="prefLimitSpeedButtonDefaultValue">false</bool>
     <bool name="prefPauseSpeedButtonDefaultValue">false</bool>
-
+<!--
+    <bool name="prefPauseSpeedReverseDefaultValue">false</bool>
+-->
     <bool name="prefBackgroundImageDefaultValue">false</bool>
 
     <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>

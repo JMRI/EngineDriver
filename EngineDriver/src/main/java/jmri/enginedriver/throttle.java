@@ -328,7 +328,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected boolean[] isLimitSpeeds;
     protected Button[] bPauseSpeeds;
     protected int[] isPauseSpeeds = {100,100,100,100,100,100 };
-    protected int[] pauseSpeed = {100,100,100,100,100,100 };
+    protected int[] pauseSpeedThumbPosition = {100,100,100,100,100,100 };
+    protected int[] pauseSpeed = {0,0,0,0,0,0};
     protected int[] pauseDir = {1,1,1,1,1,1 };
     protected float[] limitSpeedSliderScalingFactors;
     protected int[] limitSpeedMax = {100,100,100,100,100,100 };
@@ -4059,6 +4060,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
                             } else {
                                 isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
+                                jumpSpeed = pauseSpeed[whichThrottle];  // the recorded thumb position may be slightly out
                             }
                             repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
                         }

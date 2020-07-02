@@ -648,10 +648,10 @@
 
     <string name="logViewerTitle">Visualisation Log | %1$s</string>
 
-    <string name="prefConnectTimeoutMsTitle">Timeout connexion initiale</string>
-    <string name="prefConnectTimeoutMsSummary">Définition en secondes Timeout connexion initiale</string>
-    <string name="prefSocketTimeoutMsTitle">Timeout Socket</string>
-    <string name="prefSocketTimeoutMsSummary">Definition en ms Timeout sur lecture Socket</string>
+    <string name="prefConnectTimeoutMsTitle">Delai de connexion initiale</string>
+    <string name="prefConnectTimeoutMsSummary">Définition du delai de connexion initiale en secondes</string>
+    <string name="prefSocketTimeoutMsTitle">Delai du socket</string>
+    <string name="prefSocketTimeoutMsSummary">Definition en ms du delai de lecture Socket</string>
     <string name="permissionsReadRecentConnections">Engine Driver nécessite un accès au STOCKAGE pour lire les connexions récentes.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver nécessite un accès au STOCKAGE pour sauver les connexions récentes.</string>
     <string name="permissionsClearRecentConnections">Engine Driver nécessite un accès au STOCKAGE pour effacer les connexions récentes.</string>
@@ -734,13 +734,13 @@
     <string name="prefConsistFollowAction5Summary">Les locos dans l UM doivent réagir aux fonctions trouvées.</string>
     <string name="prefKidsSectionTitle">Préférences des enfants</string>
     <string name="prefKidsSectionSummary">Options pour les jeunes enfants.</string>
-    <string name="prefKidsHelpTitle">Notes pour la minuterie:</string>
-    <string name="prefKidsHelpSummary">- sélectionnez d abord la locomotive. \n- Le minuteur commencera à la première augmentation de vitesse. \n- Vous devez revenir à cette préférence pour réinitialiser le délai (ou l effacer) après le délai. \n \nRecommandations: \n- Désactivez les touches de volume. \n- Désactiver \'Balayage des aiguillages \'. \n- Désactivation \'Balayage des itinéraires \'. \n- Désactiver EStop.</string>
+    <string name="prefKidsHelpTitle">Notes pour le Timer:</string>
+    <string name="prefKidsHelpSummary">- sélectionnez d abord la locomotive. \n- Le Timer commencera à la première augmentation de vitesse. \n- Vous devez revenir à cette préférence pour réinitialiser le délai (ou l effacer) après le délai. \n \nRecommandations: \n- Désactivez les touches de volume. \n- Désactiver \'Balayage des aiguillages \'. \n- Désactivation \'Balayage des itinéraires \'. \n- Désactiver EStop.</string>
     <string name="prefKidsTimerTitle">Temps maximum de fonctionnement</string>
     <string name="prefKidsTimerSummary">Restreindre le temps que la locomotive va courir. par exemple. Chaque enfant aura le même temps.</string>
     <string name="app_name_throttle_kids_running">régulateur -%1$s sec. restant</string>
-    <string name="app_name_throttle_kids_enabled">régulateur - minuterie prête</string>
-    <string name="app_name_throttle_kids_ended">régulateur - minuterie terminée</string>
+    <string name="app_name_throttle_kids_enabled">régulateur - Timer prêt</string>
+    <string name="app_name_throttle_kids_ended">régulateur - Timer terminé</string>
     <string name="prefKidsTimerRestartPasswordTitle">Mot de passe pour relancer</string>
     <string name="prefKidsTimerRestartPasswordSummary">Mot de passe permettant de relancer le jeu avec une durée identique</string>
     <string name="prefKidsTimerResetPasswordTitle">Reset/désactive le mot de passe</string>
@@ -845,6 +845,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Préférences pour changer Affichage du régulateur</string>
     <string name="edit_consist_menu">\≡ Modif UM</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
-    <string name="prefSwipeDownOptionSummary">Que faut-il lorsque vous faites glisser votre doigt sur le point de vue des gaz.</string>
-    <string name="prefSwipeDownOptionTitle">Swipe action dans la vue des gaz?</string>
+    <string name="prefSwipeDownOptionSummary">Action à faire sur Glisser Bas</string>
+    <string name="prefSwipeDownOptionTitle">Action régulateur sur Glisser Bas</string>
 </resources>
