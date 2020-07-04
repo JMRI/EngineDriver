@@ -318,6 +318,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected String speedButtonUpText;
     protected String speedButtonDownText;
 
+    protected boolean prefHideSlider = false;
+
     protected boolean prefLimitSpeedButton = false;
     protected boolean prefPauseSpeedButton = false;
     protected int prefPauseSpeedRate = 200;
@@ -1463,6 +1465,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
         prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
         prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
+
+        prefHideSlider = prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));

@@ -244,7 +244,7 @@ public class throttle_switching_left_or_right extends throttle {
             }
 
 //             show or hide the pause speed buttons
-            if (!prefPauseSpeedButton) {
+            if ((!prefPauseSpeedButton) || (prefHideSlider)) {
                 bPauseSpeeds[throttleIndex].setVisibility(View.GONE);
             } else {
                 bPauseSpeeds[throttleIndex].setVisibility(View.VISIBLE);
@@ -994,14 +994,18 @@ public class throttle_switching_left_or_right extends throttle {
                         break;
                     }
                     case PAUSE_SPEED_INACTIVE: {
-                        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
-                        bPauseSpeeds[whichThrottle].setSelected(true);
-                        pauseSpeedThumbPosition[whichThrottle] = thumbPos;
+                        if (getSpeed(whichThrottle) != 0) {
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                            bPauseSpeeds[whichThrottle].setSelected(true);
+                            pauseSpeedThumbPosition[whichThrottle] = thumbPos;
 
-                        pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
-                        pauseDir[whichThrottle] = getDirection(whichThrottle);
+                            pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                            pauseDir[whichThrottle] = getDirection(whichThrottle);
 
-                        y = ((float) vsbSwitchingSpeeds[whichThrottle].height) / 2;
+                            y = ((float) vsbSwitchingSpeeds[whichThrottle].height) / 2;
+                        } else {
+                            return false;
+                        }
                         break;
                     }
                     case PAUSE_SPEED_TO_RETURN:
