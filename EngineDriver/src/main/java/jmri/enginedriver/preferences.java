@@ -102,6 +102,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     boolean prefThrottleSwitchButtonDisplay = false;
     boolean prefBackgroundImage = false;
+    protected boolean prefHideSlider = false;
 
     private String prefConsistFollowRuleStyle = "original";
     private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
@@ -215,6 +216,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
         showHideBackgroundImagePreferences();
+
+        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+        showHidePausePreferences();
 
         Preference button = getPreferenceScreen().findPreference("prefBackgroundImageFileNameImagePicker");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -435,6 +439,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     showHideThrottleNumberPreference();
                     limitNumThrottles(sharedPreferences);
                     break;
+
                 case "prefTheme":
                     String prefTheme = sharedPreferences.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
                     if (!prefTheme.equals(prefThemeOriginal)) {
@@ -460,6 +465,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
                     showHideConsistRuleStylePreferences();
                     break;
+
+                case "hide_slider_preference":
+                    prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+                    showHidePausePreferences();
+                    break;
+
                 case "prefShowAdvancedPreferences":
                     reload();
                     break;
@@ -844,6 +855,16 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         enableDisablePreference("prefBackgroundImageFileNameImagePicker", !enable);
         enableDisablePreference("prefBackgroundImagePosition", !enable);
+    }
+
+    private void showHidePausePreferences() {
+        boolean enable = true;
+        if (prefHideSlider) {
+            enable = false;
+        }
+        enableDisablePreference("prefPauseSpeedButton", enable);
+        enableDisablePreference("prefPauseSpeedRate", enable);
+        enableDisablePreference("prefPauseSpeedStep", enable);
     }
 
     private void showHideConsistRuleStylePreferences() {
