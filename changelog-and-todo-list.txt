@@ -515,6 +515,7 @@
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
  * routes
+ *   TODO: disable Routes and remove from menu for Digitrax, MRC and other server types without Routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
  *   TODO: combine loco control and turnout control in one page
@@ -524,7 +525,7 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
- *   TODO: reset connection if VN not recieved in a "timely" manner
+ *   TODO: reset connection if VN not received in a "timely" manner
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -567,6 +568,7 @@
  * log_viewer:
  *
  * These require changes to WiThrottle
+ *   add Light control page
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   resend roster list when items are added or removed, by adding listeners to WiT
  *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)
