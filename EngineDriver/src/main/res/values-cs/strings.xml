@@ -1026,10 +1026,14 @@
 
     
     <string name="prefCategoryDevicePageTitle">Předvolby zařízení</string>
-    
-    
-    
-    
+    <string name="prefPauseSpeedButtonTitle">Show \\\'Pause\\\' Tlačítko</string>
+    <string name="prefPauseSpeedButtonSummary">Zobrazovat tlačítko pro zpomalení a zastavení lokomotivy, pak se vrátí do rychlosti na propuštění.</string>
+    <string name="prefPauseSpeedRateTitle">\\\'Pauza\\\' Tlačítko rychlost</string>
+    <string name="prefPauseSpeedRateSummary">Počet milisekund mezi otáčkami skokové změny na akci Pauza.</string>
+    <string name="prefPauseSpeedStepTitle">\\\'Pauza\\\' Tlačítko krok</string>
+    <string name="prefPauseSpeedStepSummary">velikost kroku se změní na akci Pauza.</string>
+
+
     <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>
     <string name="prefThrottleSwitchWebViewSummary">Choose if the layouts should also show the Web View</string>

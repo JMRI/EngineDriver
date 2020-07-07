@@ -818,4 +818,10 @@
     <string name="gamepad_test_menu">\≡ Prueba de gamepad</string>
     <string name="prefSwipeDownOptionSummary">Lo que debería ocurrir cuando se desliza hacia abajo en la vista del acelerador.</string>
     <string name="prefSwipeDownOptionTitle">acción por golpe en la vista del acelerador?</string>
+    <string name="prefPauseSpeedButtonTitle">Show \\\'Pausa\\\' botón</string>
+    <string name="prefPauseSpeedButtonSummary">Mostrar un botón para reducir la velocidad y detener la locomotora, a continuación, volver a la velocidad de liberación.</string>
+    <string name="prefPauseSpeedRateTitle">\\\'Pausa\\\' tasa botón</string>
+    <string name="prefPauseSpeedRateSummary">Número de milisegundos entre cambios de paso de velocidad para la acción Pausa.</string>
+    <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' paso botón</string>
+    <string name="prefPauseSpeedStepSummary">Tamaño del paso cambia para la acción de Pausa.</string>
 </resources>

@@ -827,4 +827,10 @@
     <string name="gamepad_test_menu">\≡ Prova de gamepad</string>
     <string name="prefSwipeDownOptionSummary">El que hauria de passar quan es llisca cap avall a la vista de l\'accelerador.</string>
     <string name="prefSwipeDownOptionTitle">acció per cop a la vista de l\'accelerador?</string>
+    <string name="prefPauseSpeedButtonSummary">Mostra un botó per reduir la velocitat i aturar la locomotora, a continuació, tornar a la velocitat d\\\'alliberament.</string>
+    <string name="prefPauseSpeedButtonTitle">Show \\\'Pausa\\\' botó</string>
+    <string name="prefPauseSpeedRateSummary">Nombre de milisegons entre canvis de pas de velocitat per a l\\\'acció Pausa.</string>
+    <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' pas botó</string>
+    <string name="prefPauseSpeedStepSummary">Mida de el pas canvia per l\'acció de Pausa.</string>
+    <string name="prefPauseSpeedRateTitle">\\\'Pausa\\\' taxa botó</string>
 </resources>
