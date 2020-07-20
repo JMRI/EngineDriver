@@ -52,11 +52,11 @@ public class throttle_switching_left_or_right extends throttle {
     private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
-    private int throttleMidPointZero[] = {0,0};
-    private int throttleSwitchingMax[] = {0,0};
+    private int[] throttleMidPointZero = {0,0};
+    private int[] throttleSwitchingMax = {0,0};
 
-    private int throttleMidPointDeadZoneUpper[] = {0,0};
-    private int throttleMidPointDeadZoneLower[] = {0,0};
+    private int[] throttleMidPointDeadZoneUpper = {0,0};
+    private int[] throttleMidPointDeadZoneLower = {0,0};
 
     private int prefSwitchingThrottleSliderDeadZone = 10;
 
@@ -920,45 +920,47 @@ public class throttle_switching_left_or_right extends throttle {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            int speed = 0;
-
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                int dir = getDirection(whichThrottle);
-                speed=getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle, false);
+                limitSpeed(whichThrottle);
+            }
+            return false;
+        }
+    }
+
+    protected void limitSpeed(int whichThrottle) {
+        int dir = getDirection(whichThrottle);
+        int speed = getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle, false);
 //                Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
 
-                isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
-                if (isLimitSpeeds[whichThrottle]) {
-                    bLimitSpeeds[whichThrottle].setSelected(true);
-                    limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
-                    sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
+        isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
+        if (isLimitSpeeds[whichThrottle]) {
+            bLimitSpeeds[whichThrottle].setSelected(true);
+            limitSpeedSliderScalingFactors[whichThrottle] = 100/ ((float) prefLimitSpeedPercent);
+            sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
 
-                    throttleMidPointZero[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
-                    throttleSwitchingMax[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
-                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
+            throttleMidPointZero[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
+            vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
 
-                } else {
-                    bLimitSpeeds[whichThrottle].setSelected(false);
-                    sbs[whichThrottle].setMax(maxThrottle);
+        } else {
+            bLimitSpeeds[whichThrottle].setSelected(false);
+            sbs[whichThrottle].setMax(maxThrottle);
 
 //                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
 //                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
-                    throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
-                    throttleSwitchingMax[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
-                    vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
-                }
-                throttleMidPointDeadZoneUpper[whichThrottle] = throttleMidPointZero[whichThrottle] + prefSwitchingThrottleSliderDeadZone;
-                throttleMidPointDeadZoneLower[whichThrottle] = throttleMidPointZero[whichThrottle] - prefSwitchingThrottleSliderDeadZone;
-
-                speedUpdate(whichThrottle,  speed);
-                setEngineDirection(whichThrottle, dir, false);
-            }
-            Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
-
-            speedChangeAndNotify(whichThrottle,0);
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-            return false;
+            throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
+            vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
         }
+        throttleMidPointDeadZoneUpper[whichThrottle] = throttleMidPointZero[whichThrottle] + prefSwitchingThrottleSliderDeadZone;
+        throttleMidPointDeadZoneLower[whichThrottle] = throttleMidPointZero[whichThrottle] - prefSwitchingThrottleSliderDeadZone;
+
+        speedUpdate(whichThrottle,  speed);
+        setEngineDirection(whichThrottle, dir, false);
+
+        Log.d("Engine_Driver","limitSpeed -  speed: " + speed );
+        speedChangeAndNotify(whichThrottle,0);
+        setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
     }
 
     //listeners for the Pause Speed Button
@@ -971,63 +973,67 @@ public class throttle_switching_left_or_right extends throttle {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            float y = 0;
-            float x = 0;
-
-            //get the current thumb position
-            int height = vsbSwitchingSpeeds[whichThrottle].getHeight()
-                    - vsbSwitchingSpeeds[whichThrottle].getPaddingLeft()
-                    - vsbSwitchingSpeeds[whichThrottle].getPaddingRight();
-            int thumbPos = vsbSwitchingSpeeds[whichThrottle].getPaddingLeft()
-                    + height
-                    * vsbSwitchingSpeeds[whichThrottle].getProgress()
-                    / vsbSwitchingSpeeds[whichThrottle].getMax();
-            thumbPos = vsbSwitchingSpeeds[whichThrottle].getHeight() - thumbPos;
-            x = vsbSwitchingSpeeds[whichThrottle].width / 2;
-
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                switch (isPauseSpeeds[whichThrottle]) {
-                    case PAUSE_SPEED_ZERO: {
-                        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
-                        bPauseSpeeds[whichThrottle].setSelected(false);
-                        y = pauseSpeedThumbPosition[whichThrottle];
-                        break;
-                    }
-                    case PAUSE_SPEED_INACTIVE: {
-                        if (getSpeed(whichThrottle) != 0) {
-                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
-                            bPauseSpeeds[whichThrottle].setSelected(true);
-                            pauseSpeedThumbPosition[whichThrottle] = thumbPos;
-
-                            pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
-                            pauseDir[whichThrottle] = getDirection(whichThrottle);
-
-                            y = ((float) vsbSwitchingSpeeds[whichThrottle].height) / 2;
-                        } else {
-                            return false;
-                        }
-                        break;
-                    }
-                    case PAUSE_SPEED_TO_RETURN:
-                    case PAUSE_SPEED_TO_ZERO:
-                    default: {
-                        mAutoIncrement[whichThrottle] = false;
-                        mAutoDecrement[whichThrottle] = false;
-                        bPauseSpeeds[whichThrottle].setSelected(false);
-                        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
-                        limitedJump[whichThrottle] = false;
-                        y = thumbPos;
-                        break;
-                    }
-                }
-
-                long downTime = SystemClock.uptimeMillis();
-                long eventTime = SystemClock.uptimeMillis() + 100;
-                MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-                vsbSwitchingSpeeds[whichThrottle].dispatchTouchEvent(motionEvent);
+                pauseSpeed(whichThrottle);
             }
             return false;
         }
     }
 
+    protected void pauseSpeed(int whichThrottle) {
+        float y;
+        float x;
+
+        //get the current thumb position
+        int height = vsbSwitchingSpeeds[whichThrottle].getHeight()
+                - vsbSwitchingSpeeds[whichThrottle].getPaddingLeft()
+                - vsbSwitchingSpeeds[whichThrottle].getPaddingRight();
+        int thumbPos = vsbSwitchingSpeeds[whichThrottle].getPaddingLeft()
+                + height
+                * vsbSwitchingSpeeds[whichThrottle].getProgress()
+                / vsbSwitchingSpeeds[whichThrottle].getMax();
+        thumbPos = vsbSwitchingSpeeds[whichThrottle].getHeight() - thumbPos;
+        x = ((float) vsbSwitchingSpeeds[whichThrottle].width) / 2;
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                y = pauseSpeedThumbPosition[whichThrottle];
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) != 0) {
+                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                    bPauseSpeeds[whichThrottle].setSelected(true);
+                    pauseSpeedThumbPosition[whichThrottle] = thumbPos;
+
+                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                    pauseDir[whichThrottle] = getDirection(whichThrottle);
+
+                    y = ((float) vsbSwitchingSpeeds[whichThrottle].height) / 2;
+                } else {
+                    return;
+                }
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                mAutoIncrement[whichThrottle] = false;
+                mAutoDecrement[whichThrottle] = false;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                limitedJump[whichThrottle] = false;
+                y = thumbPos;
+                break;
+            }
+        }
+        if (isPauseSpeeds[whichThrottle] != PAUSE_SPEED_INACTIVE) {
+            long downTime = SystemClock.uptimeMillis();
+            long eventTime = SystemClock.uptimeMillis() + 100;
+            MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+            vsbSwitchingSpeeds[whichThrottle].dispatchTouchEvent(motionEvent);
+        }
+    }
 }
