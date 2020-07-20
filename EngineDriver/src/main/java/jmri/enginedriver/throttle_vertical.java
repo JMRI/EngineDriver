@@ -281,11 +281,11 @@ public class throttle_vertical extends throttle {
         final float denScale = dm.density;
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
-        if (throttleWidth == 0) {
-            // throttle screen hasn't been drawn yet, so use display metrics for now
-            throttleWidth = dm.widthPixels;
-        }
+//        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
+//        if (throttleWidth == 0) {
+//            // throttle screen hasn't been drawn yet, so use display metrics for now
+//            throttleWidth = dm.widthPixels;
+//        }
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 //            if ((screenWidth > 0) && (throttleWidth > 900)) {
 //                svFnBtns[throttleIndex].getLayoutParams().width = throttleWidth / 3;
@@ -483,62 +483,68 @@ public class throttle_vertical extends throttle {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            float y = 0;
-            float x = 0;
-
-            //get the current thumb position
-            int height = vsbSpeeds[whichThrottle].getHeight()
-                    - vsbSpeeds[whichThrottle].getPaddingLeft()
-                    - vsbSpeeds[whichThrottle].getPaddingRight();
-            int thumbPos = vsbSpeeds[whichThrottle].getPaddingLeft()
-                    + height
-                    * vsbSpeeds[whichThrottle].getProgress()
-                    / vsbSpeeds[whichThrottle].getMax();
-            thumbPos = vsbSpeeds[whichThrottle].getHeight() - thumbPos;
-            x = vsbSpeeds[whichThrottle].width / 2;
-
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                switch (isPauseSpeeds[whichThrottle]) {
-                    case PAUSE_SPEED_ZERO: {
-                        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
-                        bPauseSpeeds[whichThrottle].setSelected(false);
-                        y = pauseSpeedThumbPosition[whichThrottle];
-                        break;
-                    }
-                    case PAUSE_SPEED_INACTIVE: {
-                        if (getSpeed(whichThrottle) != 0) {
-                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
-                            bPauseSpeeds[whichThrottle].setSelected(true);
-                            pauseSpeedThumbPosition[whichThrottle] = thumbPos;
-
-                            pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
-                            pauseDir[whichThrottle] = getDirection(whichThrottle);
-
-                            y = ((float) vsbSpeeds[whichThrottle].height);
-                        } else {
-                            return false;
-                        }
-                        break;
-                    }
-                    case PAUSE_SPEED_TO_RETURN:
-                    case PAUSE_SPEED_TO_ZERO:
-                    default: {
-                        mAutoIncrement[whichThrottle] = false;
-                        mAutoDecrement[whichThrottle] = false;
-                        bPauseSpeeds[whichThrottle].setSelected(false);
-                        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
-                        limitedJump[whichThrottle] = false;
-                        y = thumbPos;
-                        break;
-                    }
-                }
-
-                long downTime = SystemClock.uptimeMillis();
-                long eventTime = SystemClock.uptimeMillis() + 100;
-                MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-                vsbSpeeds[whichThrottle].dispatchTouchEvent(motionEvent);
+                pauseSpeed(whichThrottle);
             }
             return false;
+        }
+    }
+
+    protected void pauseSpeed(int whichThrottle) {
+        float y;
+        float x;
+
+        //get the current thumb position
+        int height = vsbSpeeds[whichThrottle].getHeight()
+                - vsbSpeeds[whichThrottle].getPaddingLeft()
+                - vsbSpeeds[whichThrottle].getPaddingRight();
+        int thumbPos = vsbSpeeds[whichThrottle].getPaddingLeft()
+                + height
+                * vsbSpeeds[whichThrottle].getProgress()
+                / vsbSpeeds[whichThrottle].getMax();
+        thumbPos = vsbSpeeds[whichThrottle].getHeight() - thumbPos;
+        x = ((float) vsbSpeeds[whichThrottle].width) / 2;
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                y = pauseSpeedThumbPosition[whichThrottle];
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) != 0) {
+                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                    bPauseSpeeds[whichThrottle].setSelected(true);
+                    pauseSpeedThumbPosition[whichThrottle] = thumbPos;
+
+                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                    pauseDir[whichThrottle] = getDirection(whichThrottle);
+
+                    y = ((float) vsbSpeeds[whichThrottle].height);
+                } else {
+                    return;
+                }
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                mAutoIncrement[whichThrottle] = false;
+                mAutoDecrement[whichThrottle] = false;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                limitedJump[whichThrottle] = false;
+                y = thumbPos;
+                break;
+            }
+        }
+
+        if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
+            long downTime = SystemClock.uptimeMillis();
+            long eventTime = SystemClock.uptimeMillis() + 100;
+            MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+            vsbSpeeds[whichThrottle].dispatchTouchEvent(motionEvent);
         }
     }
 }

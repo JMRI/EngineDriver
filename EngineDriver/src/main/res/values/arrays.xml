@@ -222,6 +222,8 @@
         <item >Forward/Reverse Toggle</item>
         <item >Increase Speed</item>
         <item >Decrease Speed</item>
+        <item >Limit Speed</item>
+        <item >Pause</item>
         <item >Next Throttle</item>
         <item >Function 00/Light</item>
         <item >Function 01/Bell</item>
@@ -254,7 +256,7 @@
         <item >Function 28</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntryValues">  <!-- display version -->
+    <string-array name="prefGamePadKeyEntryValues" translatable="false">
         <item >All Stop</item>
         <item >Stop</item>
         <item >Forward</item>
@@ -262,6 +264,8 @@
         <item >Forward/Reverse Toggle</item>
         <item >Increase Speed</item>
         <item >Decrease Speed</item>
+        <item >Limit Speed</item>
+        <item >Pause</item>
         <item >Next Throttle</item>
         <item >Function 00/Light</item>
         <item >Function 01/Bell</item>

@@ -829,4 +829,10 @@
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="prefSwipeDownOptionSummary">Was soll passieren, wenn Sie auf dem Drosselklappen Blick nach unten wischen.</string>
     <string name="prefSwipeDownOptionTitle">Swipe nach unten Aktion in der Drossel Ansicht?</string>
+    <string name="prefPauseSpeedButtonTitle">Show \\\'Pause\\\' Taste</string>
+    <string name="prefPauseSpeedButtonSummary">Zeigen Sie auf eine Schaltfläche zu verlangsamen und die Lok zu stoppen, dann wieder auf Geschwindigkeit auf Release.</string>
+    <string name="prefPauseSpeedRateTitle">\\\'Pause\\\' Taste Rate</string>
+    <string name="prefPauseSpeedRateSummary">Anzahl der Millisekunden zwischen Gangstufe Änderungen für die Pause Aktion.</string>
+    <string name="prefPauseSpeedStepTitle">\\\'Pause\\\' Taste Schritt</string>
+    <string name="prefPauseSpeedStepSummary">\\ \'Pause \\\' Taste Schritt Schrittgröße ändert sich für die Pause Aktion.</string>
 </resources>

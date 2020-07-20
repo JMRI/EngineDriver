@@ -811,6 +811,9 @@
     <string name="prefTtsGamepadTestCompleteTitle">On Gamepad Test complete</string>
     <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test page is finished. </string>
 
+    <string name="prefTurnMobileDataOnOffTitle">Mobile Data</string>
+    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close. </string>
+
     <string name="TtsVolumeThrottle">Throttle</string>
     <string name="TtsGamepadThrottle">Throttle</string>
     <string name="TtsLoco">Loco</string>
@@ -947,6 +950,7 @@
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COARSE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
     <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
     <string name="permissionsAppSettingsButton">App settings</string>

@@ -44,7 +44,9 @@ public class PermissionsHelper {
             ACCESS_COARSE_LOCATION,
             STORE_SERVER_AUTO_PREFERENCES,
             READ_SERVER_AUTO_PREFERENCES,
-            VIBRATE
+            VIBRATE,
+            CHANGE_NETWORK_STATE_ON,
+            CHANGE_NETWORK_STATE_OFF
     })
     public @interface RequestCodes {}
 
@@ -67,6 +69,8 @@ public class PermissionsHelper {
     public static final int STORE_LOG_FILES = 45;
     public static final int VIBRATE = 46;
     public static final int READ_IMAGES = 47;
+    public static final int CHANGE_NETWORK_STATE_ON = 48;
+    public static final int CHANGE_NETWORK_STATE_OFF = 49;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -161,6 +165,9 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
             case VIBRATE:
                 return context.getResources().getString(R.string.permissionsVIBRATE);
+           case CHANGE_NETWORK_STATE_ON:
+           case CHANGE_NETWORK_STATE_OFF:
+                return context.getResources().getString(R.string.permissionsCHANGE_NETWORK_STATE);
             default:
                 return "Unknown permission request: " + requestCode;
         }
@@ -231,6 +238,13 @@ public class PermissionsHelper {
                     Log.d("Engine_Driver", "Requesting VIBRATE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.VIBRATE},
+                            requestCode);
+                    break;
+                case CHANGE_NETWORK_STATE_ON:
+                case CHANGE_NETWORK_STATE_OFF:
+                    Log.d("Engine_Driver", "Requesting CHANGE_NETWORK_STATE permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.CHANGE_NETWORK_STATE},
                             requestCode);
                     break;
             }
@@ -362,6 +376,9 @@ public class PermissionsHelper {
                 return result;
             case VIBRATE:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
+            case CHANGE_NETWORK_STATE_ON:
+            case CHANGE_NETWORK_STATE_OFF:
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.CHANGE_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED;
             default:
                 return false;
         }
@@ -401,6 +418,9 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
+            case CHANGE_NETWORK_STATE_ON:
+            case CHANGE_NETWORK_STATE_OFF:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CHANGE_NETWORK_STATE);
             default:
                 return false;
         }

@@ -56,16 +56,16 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original &#8211; Téléphone ou Tablette (1&#8211;3 régulateurs)</item>
-        <item>Vertical &#8211; Téléphone ou Tablette (1-2 régulateurs)</item>
-        <item>Big Buttons &#8211;  Gauche (1 régulateur)</item>
-        <item>Big Buttons &#8211;  Droite (1 régulateur)</item>
-        <item>Vertical &#8211; Gauche (1 régulateur)</item>
-        <item>Vertical &#8211; Droite (1 régulateur)</item>
-        <item>Switching &#8211; (2 régulateurs)</item>
-        <item>Switching &#8211; Gauche (1 régulateur)</item>
-        <item>Switching &#8211; Droite (1 régulateur)</item>
-        <item>Simple &#8211; Recommandé Tablette (1-6 régulateurs)</item>
+        <item>Original - Téléphone ou Tablette (1-3 régulateurs)</item>
+        <item>Vertical - Téléphone ou Tablette (1-2 régulateurs)</item>
+        <item>Big Buttons - Gauche (1 régulateur)</item>
+        <item>Big Buttons - Droite (1 régulateur)</item>
+        <item>Vertical - Gauche (1 régulateur)</item>
+        <item>Vertical - Droite (1 régulateur)</item>
+        <item>Switching - (2 régulateurs)</item>
+        <item>Switching - Gauche (1 régulateur)</item>
+        <item>Switching - Droite (1 régulateur)</item>
+        <item>Simple – Recommandé Tablette (1–6 régulateurs)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -82,6 +82,8 @@
         <item>Bascule Avant/Arrière</item>
         <item>Augmenter la vitesse</item>
         <item>Réduire la vitesse</item>
+        <item>Vitesse Maxi</item>
+        <item>Pause</item>
         <item>Prochain régulateur</item>
         <item>Fonction 00/Feux loco</item>
         <item>Fonction 01/Cloche</item>

@@ -847,4 +847,10 @@
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="prefSwipeDownOptionSummary">Action à faire sur Glisser Bas</string>
     <string name="prefSwipeDownOptionTitle">Action régulateur sur Glisser Bas</string>
+    <string name="prefPauseSpeedButtonTitle">Show \\\'Pause\\\' bouton</string>
+    <string name="prefPauseSpeedButtonSummary">Afficher un bouton pour ralentir et arrêter la locomotive, puis revenir à la vitesse sur la libération.</string>
+    <string name="prefPauseSpeedRateSummary">Nombre de millisecondes entre les changements étape de vitesse pour l\\\'action Pause.</string>
+    <string name="prefPauseSpeedRateTitle">bouton \\\'Pause\\\' taux</string>
+    <string name="prefPauseSpeedStepSummary">la taille de l\\\'étape change pour l\\\'action Pause.</string>
+    <string name="prefPauseSpeedStepTitle">\\\'Pause\\\' étape de bouton</string>
 </resources>

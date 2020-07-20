@@ -32,6 +32,7 @@ import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -409,6 +410,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static String PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE = "Forward/Reverse Toggle";
     private static String PREF_GAMEPAD_BUTTON_OPTION_INCREASE_SPEED = "Increase Speed";
     private static String PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED = "Decrease Speed";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED = "Limit Speed";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_PAUSE = "Pause";
+
+    protected MediaPlayer _mediaPlayer;
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
@@ -737,7 +742,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // For speed slider speed buttons.
     protected class RptUpdater implements Runnable {
         int whichThrottle;
-        int repeatDelay = 100;
+        int repeatDelay;
 
         protected RptUpdater(int WhichThrottle, int rptDelay) {
             whichThrottle = WhichThrottle;
@@ -899,7 +904,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                     if (com3 == 'R') { // set direction
                                         int dir;
                                         try {
-                                            dir = Integer.valueOf(ls[1].substring(1, 2));
+                                            dir = Integer.parseInt(ls[1].substring(1, 2));
                                         } catch (Exception e) {
                                             dir = 1;
                                         }
@@ -934,7 +939,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                         }
                                     } else if (com3 == 'F') { // function key
                                         try {
-                                            int function = Integer.valueOf(ls[1].substring(2));
+                                            int function = Integer.parseInt(ls[1].substring(2));
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
@@ -946,7 +951,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                         }
                                     } else if (com3 == 's') { // set speed step
                                         try {
-                                            int speedStepCode = Integer.valueOf(ls[1].substring(1));
+                                            int speedStepCode = Integer.parseInt(ls[1].substring(1));
                                             setSpeedStepsFromWiT(whichThrottle, speedStepCode);
                                         } catch (Exception ignored) {
                                         }
@@ -1809,7 +1814,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         int scaleSpeed = (int) Math.round(speed * speedScale);
 
         String prefix = "";
-        String suffix = "";
+        String suffix;
         suffix = "    ";
         int dir = getDirection(whichThrottle);
 
@@ -2766,9 +2771,28 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 0);
                     sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction);
                 }
-
             }
-
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED)) {
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                if (!isLimitSpeeds[whichThrottle]) {
+                    gamepadBeep(1);
+                } else {
+                    gamepadBeep(10);
+                }
+                limitSpeed(whichThrottle);
+//                GamepadFeedbackSound(false);
+            }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_PAUSE)) {
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                gamepadBeep(6);
+                if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE) {
+                    gamepadBeep(2);
+                } else {
+                    gamepadBeep(20);
+                }
+                pauseSpeed(whichThrottle);
+//                GamepadFeedbackSound(false);
+            }
         }
     }
 
@@ -3059,7 +3083,35 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    void GamepadFeedbackSoundStop() {
+    void gamepadBeep(int whichBeep) {
+        //try
+        {
+            if (_mediaPlayer != null)
+            {
+                // _mediaPlayer.stop();     freeze on some emulator snapshot
+                // _mediaPlayer.release();
+                _mediaPlayer.reset();     // reset stops and release on any state of the player
+            }
+            switch (whichBeep) {
+                default:
+                case 1:
+                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_1);
+                    break;
+                case 10:
+                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_1a);
+                    break;
+                case 2:
+                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_2);
+                    break;
+                case 20:
+                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_2a);
+                    break;
+            }
+            _mediaPlayer.start();
+        }
+    }
+
+        void GamepadFeedbackSoundStop() {
         if (tg != null) {
             tg.stopTone();
         }
@@ -3577,24 +3629,29 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
-            maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
-
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
-                if (isLimitSpeeds[whichThrottle]) {
-                    bLimitSpeeds[whichThrottle].setSelected(true);
-                    limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
-                    sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
-                } else {
-                    bLimitSpeeds[whichThrottle].setSelected(false);
-                    sbs[whichThrottle].setMax(maxThrottle);
-                }
+                limitSpeed(whichThrottle);
             }
-            speedChangeAndNotify(whichThrottle,0);
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             return false;
         }
+    }
+
+    protected void limitSpeed(int whichThrottle) {
+        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
+
+        isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
+        if (isLimitSpeeds[whichThrottle]) {
+            bLimitSpeeds[whichThrottle].setSelected(true);
+            limitSpeedSliderScalingFactors[whichThrottle]=100/prefLimitSpeedPercent;
+            sbs[whichThrottle].setMax( Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
+        } else {
+            bLimitSpeeds[whichThrottle].setSelected(false);
+            sbs[whichThrottle].setMax(maxThrottle);
+        }
+
+        speedChangeAndNotify(whichThrottle,0);
+        setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
     }
 
     //listeners for the increase/decrease speed buttons (not the slider)
@@ -4927,7 +4984,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -6001,7 +6057,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                 FileOutputStream output = new FileOutputStream(urlPreferencesFilePath);
 
-                byte data[] = new byte[1024];
+                byte[] data = new byte[1024];
 
                 while ((count = input.read(data)) != -1) {
                     output.write(data, 0, count);
@@ -6142,7 +6198,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 //        String prefThrottleSwitchWebView = prefs.getString("prefThrottleSwitchWebView", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchWebViewDefaultValue));
 
-        if (webViewLocation!=keepWebViewLocation) {
+        if (!webViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
         }
 
@@ -6165,4 +6221,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);
     }
 
+    protected void pauseSpeed(int whichThrottle) {
+    }
 }
