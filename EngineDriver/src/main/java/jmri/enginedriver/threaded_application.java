@@ -595,7 +595,7 @@ public class threaded_application extends Application {
                         }
                         else {
                             //send quit message to withrottle after a short delay for other activities to communicate
-                            sendMsgDelay(comm_msg_handler, 100L, message_type.WITHROTTLE_QUIT);
+                            sendMsgDelay(comm_msg_handler, 1000L, message_type.WITHROTTLE_QUIT);
                             //give msgs a chance to xmit before closing socket
                             if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
                                 shutdown(false);

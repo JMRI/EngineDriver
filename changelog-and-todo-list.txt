@@ -12,6 +12,8 @@
  * Optional Pause button for vertical throttles
  * Pause and Limit Speed options for gamepads
  * 'Different' acknowledgement sounds for Pause and Limit Speed options for gamepads
+ * rewrite Pause function to work with hidden slider
+ * increase delay before sending 'Q' to server
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
