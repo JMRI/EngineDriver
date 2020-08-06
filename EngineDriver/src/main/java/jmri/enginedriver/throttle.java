@@ -310,9 +310,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private int prefGamePadSpeedButtonsSpeedStep = 4;
     private boolean prefSpeedButtonsSpeedStepDecrement = false;
 
-    private static final int SPEED_COMMAND_FROM_BUTTONS = 0;
-    private static final int SPEED_COMMAND_FROM_VOLUME = 1;
-    private static final int SPEED_COMMAND_FROM_GAMEPAD = 2;
+    protected static final int SPEED_COMMAND_FROM_BUTTONS = 0;
+    protected static final int SPEED_COMMAND_FROM_VOLUME = 1;
+    protected static final int SPEED_COMMAND_FROM_GAMEPAD = 2;
 
     protected String speedButtonLeftText;
     protected String speedButtonRightText;
@@ -331,7 +331,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected boolean[] isLimitSpeeds;
     protected Button[] bPauseSpeeds;
     protected int[] isPauseSpeeds = {100,100,100,100,100,100 };
-    protected int[] pauseSpeedThumbPosition = {100,100,100,100,100,100 };
+//    protected int[] pauseSpeedThumbPosition = {100,100,100,100,100,100 };
     protected int[] pauseSpeed = {0,0,0,0,0,0};
     protected int[] pauseDir = {1,1,1,1,1,1 };
     protected float[] limitSpeedSliderScalingFactors;
@@ -1714,13 +1714,75 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         return speed;
     }
 
-    public void decrementSpeed(int whichThrottle, int from) {
+    public void setSpeed(int whichThrottle, int speed,  int from) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
                 if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
+                    speedUpdateAndNotify(whichThrottle, speed);
+                } else {
+                    if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
+                        speedChangeAndNotify(whichThrottle, speed);
+                    } else {
+                        if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
+                            isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = true;
+                            if ((vsbSwitchingSpeeds!=null) && (getDirection(whichThrottle)==DIRECTION_REVERSE)) {
+                                mAutoIncrement[whichThrottle] = true;
+                                mAutoDecrement[whichThrottle] = false;
+                            }
+                        } else {
+                            isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
+                            mAutoIncrement[whichThrottle] = true;
+                            mAutoDecrement[whichThrottle] = false;
+                            if ((vsbSwitchingSpeeds!=null) && (getDirection(whichThrottle)==DIRECTION_REVERSE)) {
+                                mAutoIncrement[whichThrottle] = false;
+                                mAutoDecrement[whichThrottle] = true;
+                            }
+                        }
+                        repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
+                    }
+                }
+                break;
+            case SPEED_COMMAND_FROM_VOLUME:
+                speedUpdateAndNotify(whichThrottle, speed);
+                break;
+            case SPEED_COMMAND_FROM_GAMEPAD:
+                speedUpdateAndNotify(whichThrottle, speed);
+                break;
+        }
+    }
+
+
+    public void decrementSpeed(int whichThrottle, int from) {
+        switch (from) {
+            case SPEED_COMMAND_FROM_BUTTONS:
+                if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE)
+                        || (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ){
                     speedChangeAndNotify(whichThrottle, -prefSpeedButtonsSpeedStep);
                 } else {
-                    speedChangeAndNotify(whichThrottle, -prefPauseSpeedStep);
+                    if ((vsbSwitchingSpeeds==null) || (getDirection(whichThrottle)!=DIRECTION_REVERSE)) {
+                        if ((getSpeed(whichThrottle) - prefPauseSpeedStep) > 0) {
+                            speedChangeAndNotify(whichThrottle, -prefPauseSpeedStep);
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_TO_ZERO;
+                        } else {
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = false;
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO;
+                            speedChangeAndNotify(whichThrottle, -getSpeed(whichThrottle));
+                        }
+                    } else {
+                        if ((getSpeed(whichThrottle) + prefPauseSpeedStep) < pauseSpeed[whichThrottle]) {
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_TO_RETURN;
+                            speedChangeAndNotify(whichThrottle, -prefPauseSpeedStep);  // minus... reverse to what might be expected
+                        } else {
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = false;
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                            speedChangeAndNotify(whichThrottle, pauseSpeed[whichThrottle] - getSpeed(whichThrottle));
+                        }
+
+                    }
                 }
                 break;
             case SPEED_COMMAND_FROM_VOLUME:
@@ -1735,12 +1797,34 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     public void incrementSpeed(int whichThrottle, int from) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
-                if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
+                if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE)
+                        || (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ){
                     speedChangeAndNotify(whichThrottle, prefSpeedButtonsSpeedStep);
                 } else {
-                    speedChangeAndNotify(whichThrottle, prefPauseSpeedStep);
-                }
+                    int xx = getSpeed(whichThrottle);
+                    if ((vsbSwitchingSpeeds==null) || (getDirection(whichThrottle)!=DIRECTION_REVERSE)) {
+                        if ((getSpeed(whichThrottle) + prefPauseSpeedStep) < pauseSpeed[whichThrottle]) {
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_TO_RETURN;
+                            speedChangeAndNotify(whichThrottle, prefPauseSpeedStep);
+                        } else {
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = false;
+                            isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                            speedChangeAndNotify(whichThrottle, pauseSpeed[whichThrottle] - getSpeed(whichThrottle));
+                        }
+                    } else { // shunting switching layout and the direction is reverse
 
+                        if ((getSpeed(whichThrottle)-prefPauseSpeedStep) > 0 ) {
+                            speedChangeAndNotify(whichThrottle, prefPauseSpeedStep);  // add... reverse to what might be expected
+                            isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
+                        } else {
+                            mAutoIncrement[whichThrottle] = false;
+                            mAutoDecrement[whichThrottle] = false;
+                            isPauseSpeeds[whichThrottle]=PAUSE_SPEED_ZERO;
+                            speedChangeAndNotify(whichThrottle, getSpeed(whichThrottle));  // add... reverse to what might be expected
+                        }
+                    }
+                }
                 break;
             case SPEED_COMMAND_FROM_VOLUME:
                 speedChangeAndNotify(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
@@ -3984,8 +4068,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             mAutoDecrement[whichThrottle] = false;
 
                             set_stop_button(whichThrottle, true);
+
+                            if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_ZERO) {
+                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_ZERO;
+                            } else if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN) {
+                                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                            }
+
                             speedUpdateAndNotify(whichThrottle, 0);
                             break;
+
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             if (getConsist(whichThrottle).isActive() && !(IS_ESU_MCII && isEsuMc2Stopped)) { // only assign if Active and, if an ESU MCII not in Stop mode
                                 whichVolume = whichThrottle;
@@ -4084,21 +4176,17 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump[whichThrottle] + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
-            if ( (fromUser) || (touchFromUser)
-                    || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_TO_ZERO)
-                    || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_RETURN) ) {
+            if ( (fromUser) || (touchFromUser) ) {
 
                 if ( (!limitedJump[whichThrottle])         // touch generates multiple onProgressChanged events, skip processing after first limited jump
                     && (sliderType!=SLIDER_TYPE_SWITCHING) ) {
 
                     int dif = speed - lastSpeed;
-                    if ((prefSpeedButtonsSpeedStepDecrement)   // don't limit the decrement speed if the preference is not set
-                            || isPauseSpeeds[whichThrottle] != PAUSE_SPEED_INACTIVE) { // but always do it for the pause button
+                    if (prefSpeedButtonsSpeedStepDecrement) {  // don't limit the decrement speed if the preference is not set
                         dif = (Math.abs(speed - lastSpeed));
                     }
 
-                    if ( (dif > max_throttle_change) // if jump is too large then limit it
-                    || (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE)) {
+                    if (dif > max_throttle_change) { // if jump is too large then limit it
 
                         // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
 
@@ -4112,19 +4200,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         jumpSpeed = speed;      // save ultimate target value
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSpeed);
-//                        repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
 
-                        if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
-                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
-                        } else {
-                            if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
-                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
-                            } else {
-                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
-                                jumpSpeed = pauseSpeed[whichThrottle];  // the recorded thumb position may be slightly out
-                            }
-                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
-                        }
+                        repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
 
                         return;
                     }
@@ -4151,11 +4228,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         mAutoDecrement[whichThrottle] = false;
                         limitedJump[whichThrottle] = false;
                         throttle.setProgress(jumpSpeed);
-
-                        switch (isPauseSpeeds[whichThrottle]) {
-                            case PAUSE_SPEED_TO_ZERO: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO; break;
-                            case PAUSE_SPEED_TO_RETURN: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE; break;
-                        }
                     }
                 }
                 setDisplayedSpeed(whichThrottle, speed);
