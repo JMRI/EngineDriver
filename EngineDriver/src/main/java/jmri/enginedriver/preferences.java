@@ -217,8 +217,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
         showHideBackgroundImagePreferences();
 
-        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
-        showHidePausePreferences();
+//        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+//        showHidePausePreferences();
 
         Preference button = getPreferenceScreen().findPreference("prefBackgroundImageFileNameImagePicker");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -468,7 +468,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
                 case "hide_slider_preference":
                     prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
-                    showHidePausePreferences();
                     break;
 
                 case "prefShowAdvancedPreferences":

@@ -178,7 +178,8 @@ public class throttle_vertical_left_or_right extends throttle {
             }
 
 //             show or hide the pause speed buttons
-            if ((!prefPauseSpeedButton) || (prefHideSlider)) {
+            if (!prefPauseSpeedButton) {
+//            if ((!prefPauseSpeedButton) || (prefHideSlider)) {
                 bPauseSpeeds[throttleIndex].setVisibility(View.GONE);
             } else {
                 bPauseSpeeds[throttleIndex].setVisibility(View.VISIBLE);
@@ -490,37 +491,23 @@ public class throttle_vertical_left_or_right extends throttle {
     }
 
     protected void pauseSpeed(int whichThrottle) {
-        float y;
-        float x;
+        int speed = 0;
 
-        //get the current thumb position
-        int height = vsbSpeeds[whichThrottle].getHeight()
-                - vsbSpeeds[whichThrottle].getPaddingLeft()
-                - vsbSpeeds[whichThrottle].getPaddingRight();
-        int thumbPos = vsbSpeeds[whichThrottle].getPaddingLeft()
-                + height
-                * vsbSpeeds[whichThrottle].getProgress()
-                / vsbSpeeds[whichThrottle].getMax();
-        thumbPos = vsbSpeeds[whichThrottle].getHeight() - thumbPos;
-        x = ((float) vsbSpeeds[whichThrottle].width) / 2;
 
         switch (isPauseSpeeds[whichThrottle]) {
             case PAUSE_SPEED_ZERO: {
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
                 bPauseSpeeds[whichThrottle].setSelected(false);
-                y = pauseSpeedThumbPosition[whichThrottle];
+                speed = getSpeed(whichThrottle);
                 break;
             }
             case PAUSE_SPEED_INACTIVE: {
                 if (getSpeed(whichThrottle) != 0) {
                     isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
                     bPauseSpeeds[whichThrottle].setSelected(true);
-                    pauseSpeedThumbPosition[whichThrottle] = thumbPos;
-
                     pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
                     pauseDir[whichThrottle] = getDirection(whichThrottle);
-
-                    y = ((float) vsbSpeeds[whichThrottle].height);
+                    speed = 0;
                 } else {
                     return;
                 }
@@ -534,16 +521,12 @@ public class throttle_vertical_left_or_right extends throttle {
                 bPauseSpeeds[whichThrottle].setSelected(false);
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
                 limitedJump[whichThrottle] = false;
-                y = thumbPos;
                 break;
             }
         }
 
         if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
-            long downTime = SystemClock.uptimeMillis();
-            long eventTime = SystemClock.uptimeMillis() + 100;
-            MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
-            vsbSpeeds[whichThrottle].dispatchTouchEvent(motionEvent);
+            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
         }
     }
 
