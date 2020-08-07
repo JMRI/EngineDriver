@@ -53,7 +53,6 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -97,7 +96,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
@@ -112,12 +110,11 @@ import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.util.Flashlight;
-import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.GetJsonFromUrl;
+import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
@@ -594,10 +591,14 @@ public class threaded_application extends Application {
                             shutdown(true);
                         }
                         else {
-                            //send quit message to withrottle after a short delay for other activities to communicate
-                            sendMsgDelay(comm_msg_handler, 1000L, message_type.WITHROTTLE_QUIT);
-                            //give msgs a chance to xmit before closing socket
-                            if (!sendMsgDelay(comm_msg_handler, 1500L, message_type.SHUTDOWN)) {
+                            // At this point TA needs to send the quit message to WiT and then shutdown.
+                            // However the DISCONNECT message also tells the Throttle activity to release all throttles
+                            // and that process can take some time:
+                            //  release request messages and possibly zero speed messages need to be sent to WiT
+                            //  for each active throttle and WiT will respond with release messages.
+                            // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
+                            sendMsgDelay(comm_msg_handler, 1500L, message_type.WITHROTTLE_QUIT);
+                            if (!sendMsgDelay(comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
                                 shutdown(false);
                             }
                         }
