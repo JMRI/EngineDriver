@@ -1779,7 +1779,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             mAutoIncrement[whichThrottle] = false;
                             mAutoDecrement[whichThrottle] = false;
                             isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
-                            speedChangeAndNotify(whichThrottle, pauseSpeed[whichThrottle] - getSpeed(whichThrottle));
+                            speedChangeAndNotify(whichThrottle, -1*(pauseSpeed[whichThrottle] - getSpeed(whichThrottle)));
                         }
 
                     }
