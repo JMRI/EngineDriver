@@ -607,11 +607,9 @@ public class throttle_switching_left_or_right extends throttle {
                         throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
 
                         if (newSliderPosition < lastSliderPosition) { // going down
-                            mAutoIncrement[whichThrottle] = false;
-                            mAutoDecrement[whichThrottle] = true; //decrease slowly
+                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
                         } else { // going up
-                            mAutoIncrement[whichThrottle] = true;  // advance slowly
-                            mAutoDecrement[whichThrottle] = false;
+                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
                         }
 
                         if ((lastSliderPosition < throttleMidPointZero[whichThrottle]) && (newSliderPosition > throttleMidPointZero[whichThrottle])) { // passing from reverse to forward
@@ -697,8 +695,7 @@ public class throttle_switching_left_or_right extends throttle {
                         } else {
                             Log.d("Engine_Driver", "onProgressChanged !!-- LimitedJump hit jump speed.");
                             limitedJump[whichThrottle] = false;
-                            mAutoIncrement[whichThrottle] = false;
-                            mAutoDecrement[whichThrottle] = false;
+                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
                             speedUpdate(whichThrottle, getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                         }
@@ -718,8 +715,7 @@ public class throttle_switching_left_or_right extends throttle {
         public void onStopTrackingTouch(SeekBar sb) {
 //            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
-            mAutoIncrement[whichThrottle] = false;
-            mAutoDecrement[whichThrottle] = false;
+            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
             kidsTimerActions(KIDS_TIMER_STARTED,0);
         }
     }
@@ -1008,8 +1004,7 @@ public class throttle_switching_left_or_right extends throttle {
             case PAUSE_SPEED_TO_RETURN:
             case PAUSE_SPEED_TO_ZERO:
             default: {
-                mAutoIncrement[whichThrottle] = false;
-                mAutoDecrement[whichThrottle] = false;
+                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
                 bPauseSpeeds[whichThrottle].setSelected(false);
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
                 limitedJump[whichThrottle] = false;
