@@ -516,8 +516,7 @@ public class throttle_vertical_left_or_right extends throttle {
             case PAUSE_SPEED_TO_RETURN:
             case PAUSE_SPEED_TO_ZERO:
             default: {
-                mAutoIncrement[whichThrottle] = false;
-                mAutoDecrement[whichThrottle] = false;
+                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
                 bPauseSpeeds[whichThrottle].setSelected(false);
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
                 limitedJump[whichThrottle] = false;
