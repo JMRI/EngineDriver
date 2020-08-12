@@ -42,7 +42,8 @@ import java.util.LinkedHashMap;
 
 public class throttle_vertical_left_or_right extends throttle {
 
-    protected static final int MAX_SCREEN_THROTTLES = 1;
+    protected static final int MAX_SCREEN_THROTTLES = 2;
+    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = 1;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
@@ -63,12 +64,19 @@ public class throttle_vertical_left_or_right extends throttle {
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        switch (prefThrottleScreenType) {
+            case "Vertical":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical;
+                break;
             case "Vertical Right":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
                 mainapp.throttleLayoutViewId = R.layout.throttle_vertical_right;
                 break;
             case "Vertical Left":
             default:
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
                 mainapp.throttleLayoutViewId = R.layout.throttle_vertical_left;
                 break;
         }
@@ -120,6 +128,9 @@ public class throttle_vertical_left_or_right extends throttle {
 
         setAllFunctionLabelsAndListeners();
 
+        // set listeners for the limit speed buttons for each throttle
+        //----------------------------------------
+
         limit_speed_button_touch_listener lstl;
         Button bLimitSpeed = findViewById(R.id.limit_speed_0);
         pause_speed_button_vertical_touch_listener psvtl;
@@ -131,10 +142,10 @@ public class throttle_vertical_left_or_right extends throttle {
                     bLimitSpeed = findViewById(R.id.limit_speed_0);
                     bPauseSpeed = findViewById(R.id.pause_speed_0);
                     break;
-//                case 1:
-//                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-//                bPauseSpeed = findViewById(R.id.pause_speed_1);
-//                    break;
+                case 1:
+                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+                    bPauseSpeed = findViewById(R.id.pause_speed_1);
+                    break;
 
             }
             bLimitSpeeds[throttleIndex] = bLimitSpeed;
@@ -164,7 +175,7 @@ public class throttle_vertical_left_or_right extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if( throttleIndex < mainapp.numThrottles) {
+            if (throttleIndex < mainapp.numThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
@@ -234,7 +245,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
                     }
-                        bLabelPlainText = bLabel;
+                    bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
             } else {
@@ -257,7 +268,10 @@ public class throttle_vertical_left_or_right extends throttle {
                         textScale = minTextScale;
                 }
             }
-            int textSize = (int) (conNomTextSize * textScale);
+            int textSize = (int) (conNomTextSize * textScale * 0.95);
+            if (prefThrottleScreenType != "Vertical") {
+                textSize = (int) (conNomTextSize * textScale);
+            }
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 //            b.setText(bLabel);
             b.setText(Html.fromHtml(bLabel));
@@ -305,7 +319,7 @@ public class throttle_vertical_left_or_right extends throttle {
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
-        if (webView!=null) {
+        if (webView != null) {
             setImmersiveModeOn(webView);
         }
 
@@ -377,7 +391,7 @@ public class throttle_vertical_left_or_right extends throttle {
             sliderTopLeftX[throttleIndex] = x - ovx;
             sliderTopLeftY[throttleIndex] = y - ovy;
             sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
-            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() -ovy;
+            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() - ovy;
 
 //            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);

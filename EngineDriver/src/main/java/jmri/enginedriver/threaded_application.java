@@ -3176,8 +3176,6 @@ end force shutdown */
                 throttle = new Intent().setClass(this, throttle_simple.class);
                 break;
             case "Vertical":
-                throttle = new Intent().setClass(this, throttle_vertical.class);
-                break;
             case "Vertical Left":
             case "Vertical Right":
                 throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
