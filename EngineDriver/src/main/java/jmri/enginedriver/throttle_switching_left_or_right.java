@@ -785,7 +785,7 @@ public class throttle_switching_left_or_right extends throttle {
 
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  speed: " + speed + " change: " + change);
 
-        speedUpdateAndNotify(whichThrottle, speed);
+//        speedUpdateAndNotify(whichThrottle, speed);
         return speed;
 
     } // end speedChange

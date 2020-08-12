@@ -14,6 +14,7 @@
  * 'Different' acknowledgement sounds for Pause and Limit Speed options for gamepads
  * rewrite Pause function to work with hidden slider
  * increase delay before sending 'Q' to server
+ * removed redundant vertical throttle code
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -555,7 +556,6 @@
  *   TODO: option to show the turnout view instead of the webview
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
- *   TODO: change throttle_vertical_left_or_right.java so that in inherits from throttle_vertical.java not throttle.java
  * select_loco:
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
