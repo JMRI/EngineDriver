@@ -369,6 +369,14 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         }
                         break;
 
+                    case message_type.CONNECTION_COMPLETED_CHECK:
+                        //if not successfully connected by this time, kill connection
+                        if (mainapp.connectedHostName==null || mainapp.connectedHostName.equals("")) {
+                            Toast.makeText(getApplicationContext(), "timeout waiting for VN message, disconnecting", Toast.LENGTH_LONG).show();
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT);
+                        }
+                        break;
+
                     case message_type.CONNECTED:
                         //use asynctask to save the updated connections list to the connections_list.txt file
 //                        new saveConnectionsList().execute();

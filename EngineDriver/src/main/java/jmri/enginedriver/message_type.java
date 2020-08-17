@@ -70,4 +70,5 @@ public interface message_type {
     int WIT_QUERY_SPEED = 47;   //
     int WIT_QUERY_DIRECTION = 48;   //
     int HTTP_SERVER_NAME_RECEIVED = 49;   //
+    int CONNECTION_COMPLETED_CHECK = 50;   //
 }

@@ -129,7 +129,7 @@ public class threaded_application extends Application {
     private volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
     volatile int web_server_port = 0; //default port for jmri web server
-    private String serverType = "JMRI"; //currently, only JMRI or MRC
+    private String serverType = ""; //should be set by server in initial command strings
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
     volatile Consist[] consists;
@@ -164,10 +164,10 @@ public class threaded_application extends Application {
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10;       //interval for outbound heartbeat when WiT heartbeat is disabled
-    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
+    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for outbound heartbeat generator
     static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
-    static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;      //worst case time delay for WiT to respond to a heartbeat message
-   static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for (enabled) inbound heartbeat generator
+    static final int HEARTBEAT_RESPONSE_ALLOWANCE = 1;      //worst case time delay for WiT to respond to a heartbeat message
+    static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for (enabled) inbound heartbeat generator
     static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
@@ -524,7 +524,7 @@ public class threaded_application extends Application {
                         socketWiT = new socket_WiT();
                         if (socketWiT.connect()) {
                             sendThrottleName();
-//                            sendMsg(connection_msg_handler, message_type.CONNECTED);
+                            sendMsgDelay(comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
                             phone = new PhoneListener();
                         /*future Notification
                          showNotification();
@@ -727,6 +727,16 @@ public class threaded_application extends Application {
                         shutdown(false);
                         break;
 
+                    case message_type.CONNECTION_COMPLETED_CHECK:
+                        //if not successfully connected by this time, kill connection
+                        if (connectedHostName==null || connectedHostName.equals("")) {
+                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE, "timeout waiting for VN message, disconnecting");;
+                            if (socketWiT != null) {
+                                socketWiT.disconnect(true, true);     //just close the socket
+                            }
+                        }
+                        break;
+
                     // update of roster-related data completed in background
                     case message_type.ROSTER_UPDATE:
                         if (!doFinish) {
@@ -736,9 +746,6 @@ public class threaded_application extends Application {
 
                     // WiT socket is down and reconnect attempt in prog
                     case message_type.WIT_CON_RETRY:
-                    /*future Notification
-                     hideNotification();
-                     */
                         if (!doFinish) {
                             alert_activities(message_type.WIT_CON_RETRY, msg.obj.toString());
                         }
@@ -746,9 +753,6 @@ public class threaded_application extends Application {
 
                     // WiT socket is back up
                     case message_type.WIT_CON_RECONNECT:
-                    /*future Notification
-                     showNotification();
-                     */
                         if (!doFinish) {
                             sendThrottleName();
                             reacquireAllConsists();
@@ -1791,10 +1795,6 @@ public class threaded_application extends Application {
                     comm_msg_handler.removeCallbacks(this);             //remove pending requests
                     if (heartbeatIntervalSetpoint != 0) {
                         boolean anySent = false;
-                        // prior to JMRI 4.20 there were cases where WiT might not respond to
-                        // speed and direction request.  If inboundTimeout handling is in progress
-                        // then we always send the Throttle Name to ensure a response
-                        boolean forceResponseMessage = socketWiT.inboundTimeoutRecovery;
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
                                 witRequestSpeed(i);
@@ -1802,7 +1802,10 @@ public class threaded_application extends Application {
                                 anySent = true;
                             }
                         }
-                        if (!anySent || forceResponseMessage) {
+                        // prior to JMRI 4.20 there were cases where WiT might not respond to
+                        // speed and direction request.  If inboundTimeout handling is in progress
+                        // then we always send the Throttle Name to ensure a response
+                        if (!anySent || (getServerType().equals("") && socketWiT.inboundTimeoutRecovery)) {
                             sendThrottleName(false);    //send message that will get a response
                         }
                         comm_msg_handler.postDelayed(this, heartbeatOutboundInterval);   //set next beat
@@ -2296,7 +2299,7 @@ end force shutdown */
         withrottle_version = 0.0;
         web_server_port = 0;
         host_ip = null;
-        setServerType("JMRI");
+        setServerType("");
         power_state = null;
         to_states = null;
         to_system_names = null;
