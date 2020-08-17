@@ -164,10 +164,10 @@ public class threaded_application extends Application {
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10;       //interval for outbound heartbeat when WiT heartbeat is disabled
-    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for outbound heartbeat generator
+    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for outbound heartbeat generator
     static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
-    static final int HEARTBEAT_RESPONSE_ALLOWANCE = 4;      //worst case time delay for WiT to respond to a heartbeat message
-   static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 2;   //minimum allowed interval for (enabled) inbound heartbeat generator
+    static final int HEARTBEAT_RESPONSE_ALLOWANCE = 1;      //worst case time delay for WiT to respond to a heartbeat message
+    static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for (enabled) inbound heartbeat generator
     static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
     public int turnouts_list_position = 0;                  //remember where user was in item lists
@@ -524,7 +524,7 @@ public class threaded_application extends Application {
                         socketWiT = new socket_WiT();
                         if (socketWiT.connect()) {
                             sendThrottleName();
-//                            sendMsg(connection_msg_handler, message_type.CONNECTED);
+                            sendMsgDelay(connection_msg_handler, 3000L, message_type.CONNECTION_COMPLETED_CHECK);
                             phone = new PhoneListener();
                         /*future Notification
                          showNotification();
@@ -1802,7 +1802,7 @@ public class threaded_application extends Application {
                                 anySent = true;
                             }
                         }
-                        if (!anySent || forceResponseMessage) {
+                        if (!anySent) {
                             sendThrottleName(false);    //send message that will get a response
                         }
                         comm_msg_handler.postDelayed(this, heartbeatOutboundInterval);   //set next beat

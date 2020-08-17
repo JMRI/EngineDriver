@@ -12,9 +12,12 @@
  * Optional Pause button for vertical throttles
  * Pause and Limit Speed options for gamepads
  * 'Different' acknowledgement sounds for Pause and Limit Speed options for gamepads
- * rewrite Pause function to work with hidden slider
+ * multiple changes to Pause function
  * increase delay before sending 'Q' to server
  * removed redundant vertical throttle code
+ * reduced several heartbeat minimums to 1 second
+ * removed send of 'N' heartbeat if no speed/dir response from server
+ * disconnect if VN not received in 3 seconds
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -517,12 +520,14 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * web
+ *   TODO: allow web view in swipe list
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
  * routes
  *   TODO: disable Routes and remove from menu for Digitrax, MRC and other server types without Routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: show system turnout option if list arrives while on turnout page
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
@@ -530,7 +535,6 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
- *   TODO: reset connection if VN not received in a "timely" manner
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
