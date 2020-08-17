@@ -1486,6 +1486,10 @@ public class select_loco extends Activity {
         }
         HashMap<String, String> hm = roster_list.get(position);
         String rosterNameString = hm.get("roster_name");
+        if (mainapp.roster == null) {
+            Log.w("Engine_Driver", "select_loco: Roster is null.");
+            return true;
+        }
         RosterEntry re = mainapp.roster.get(rosterNameString);
         if (re == null) {
             Log.w("Engine_Driver", "select_loco: Roster entry " + rosterNameString + " not available.");
