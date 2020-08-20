@@ -16,8 +16,9 @@
  * increase delay before sending 'Q' to server
  * removed redundant vertical throttle code
  * reduced several heartbeat minimums to 1 second
- * removed send of 'N' heartbeat if no speed/dir response from server
- * disconnect if VN not received in 3 seconds
+ * removed send of 'N' heartbeat when no speed/dir response from server (old JMRI only)
+ * disconnect if VN not received in 5 seconds
+ * only scroll Log View when at bottom
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -535,6 +536,7 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
+ *   TODO: fix visibility of Connect button when device Font and Display Size are set to max
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
