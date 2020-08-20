@@ -344,6 +344,7 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
             //			if ((values[0] != null) && !values[0].equals(lastLine)) {
             if ((values[0] != null)) {
                 adaptor.add(values[0]);
+                adaptor.notifyDataSetChanged();
             }
             //			lastLine = values[0];
         }
