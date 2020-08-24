@@ -455,6 +455,15 @@ public class select_loco extends Activity {
             l.setRosterName(null); //make sure rosterName is null
             l.setFunctionLabelDefaults(mainapp, whichThrottle);
         }
+        if(mainapp.consists==null || mainapp.consists[whichThrottle]==null) {
+            if(mainapp.consists==null)
+                Log.d("Engine_Driver", "acquireEngine consists is null");
+            else if(mainapp.consists[whichThrottle]==null)
+                Log.d("Engine_Driver", "acquireEngine consists["+whichThrottle+"] is null");
+            end_this_activity();
+            return;
+        }
+
         Consist consist = mainapp.consists[whichThrottle];
 
         // if we already have it do nothing

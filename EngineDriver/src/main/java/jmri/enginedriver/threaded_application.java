@@ -505,7 +505,7 @@ public class threaded_application extends Application {
                         if (socketWiT != null && socketWiT.SocketGood()
                                 && new_host_ip.equals(host_ip) && new_port == port) {
                             Log.d("Engine_Driver", "threaded_application: Duplicate CONNECT message received.");
-                            return;
+                            break;
                         }
 
                         //clear app.thread shared variables so they can be reinitialized
@@ -2310,20 +2310,23 @@ end force shutdown */
         rt_user_names = null;
         rt_state_names = null;
 
-        consists = new Consist[maxThrottles];
-        function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
-        function_states = new boolean[maxThrottles][32];
+        try {
+            consists = new Consist[maxThrottles];
+            function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
+            function_states = new boolean[maxThrottles][32];
 
-        for (int i = 0; i < maxThrottles; i++) {
-            consists[i] = new Consist();
-            function_labels[i] = new LinkedHashMap<Integer, String>();
-            function_states[i] = new boolean[32];        // also allocated in onCreate() ???
+            for (int i = 0; i < maxThrottles; i++) {
+                consists[i] = new Consist();
+                function_labels[i] = new LinkedHashMap<Integer, String>();
+                function_states[i] = new boolean[32];        // also allocated in onCreate() ???
+            }
+
+            consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
+            roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         }
-
-        consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-        roster = null;
-        roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-        metadata = null;
+        catch(Exception e) {
+            Log.d("Engine_Driver", "initShared object create exception");
+        }
         doFinish = false;
         turnouts_list_position = 0;
         routes_list_position = 0;
@@ -3050,29 +3053,32 @@ end force shutdown */
         return 1; // default to 1 in case of problems
     }
 
+    //
+    // map '0'-'9' to 0-9
+    // map WiT deprecated throttle name characters T,S,G to throttle values
+    //
     public int throttleCharToInt(char cWhichThrottle) {
-        switch (cWhichThrottle) {
-            case 'F':
+        int val;
+        if(Character.isDigit(cWhichThrottle)) {  // throttle number
+            val = Character.getNumericValue((cWhichThrottle));
+        }
+        else switch (cWhichThrottle) {          // WiT protocol deprecated throttle letter codes
             case 'T':
-                return 0;
+                val = 0;
+                break;
             case 'S':
-                return 1;
+                val = 1;
+                break;
             case 'G':
-                return 2;
-            case 'W':
-                return 39; // PW - web server port info
-            case 'P':
-                return 32; // PP - power state change
+                val = 2;
+                break;
+            default:
+                val = 0;
+                Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle);
+                break;
         }
-//        return Character.getNumericValue(cWhichThrottle);
-        int val = Character.getNumericValue((cWhichThrottle));
-        if(val < 0) {
-            Log.d("debug", "TA.throttleCharToInt: converted value " + val + " is invalid.  char was " + cWhichThrottle + " (int " + (int)cWhichThrottle + ")");
-            val = 0;
-        }
-        else {
-            Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle + " (int " + (int)cWhichThrottle + ")");
-        }
+        if(val > maxThrottlesCurrentScreen) {
+            Log.d("debug", "TA.throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle );
         return val;
     }
 

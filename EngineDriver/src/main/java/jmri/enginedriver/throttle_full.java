@@ -209,19 +209,30 @@ public class throttle_full extends throttle {
         final double minTextScale = 0.5;
         String bLabel;
         String bLabelPlainText;
+
+        if(mainapp.consists==null) {
+            Log.d("Engine_Driver", "throttle_full.setLabels consists is null");
+            return;
+        }
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             Button b = bSels[throttleIndex];
             bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             bLabelPlainText = bLabel;
-            if ((mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)) {
-                if (mainapp.consists[throttleIndex].isActive()) {
+
+            Consist con = mainapp.consists[throttleIndex];
+            if(con==null) {
+                Log.d("Engine_Driver", "throttle_full setLabels consists[" + throttleIndex + "] is null");
+            }
+            else {
+                if (con.isActive()) {
                     if (!prefShowAddressInsteadOfName) {
                         if (!overrideThrottleNames[throttleIndex].equals("")) {
                             bLabel = overrideThrottleNames[throttleIndex];
                             bLabelPlainText = overrideThrottleNames[throttleIndex];
                         } else {
-                            bLabel = mainapp.consists[throttleIndex].toHtml();
-                            bLabelPlainText = mainapp.consists[throttleIndex].toString();
+                            bLabel = con.toHtml();
+                            bLabelPlainText = con.toString();
                         }
 
 //                        bLabel = mainapp.consists[throttleIndex].toString();
@@ -229,7 +240,7 @@ public class throttle_full extends throttle {
 //                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
                         if (overrideThrottleNames[throttleIndex].equals("")) {
-                            bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
+                            bLabel = con.formatConsistAddr();
                         } else {
                             bLabel = overrideThrottleNames[throttleIndex];
                         }
@@ -353,6 +364,8 @@ public class throttle_full extends throttle {
             // update the state of each function button based on shared variable
             set_all_function_states(throttleIndex);
         }
+
+
         if ( (screenHeight > throttleMargin) && (mainapp.consists!=null)) { // don't do this if height is invalid
             //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)

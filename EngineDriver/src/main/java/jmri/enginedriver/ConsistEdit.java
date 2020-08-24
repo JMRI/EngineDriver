@@ -215,13 +215,16 @@ public class ConsistEdit extends Activity implements OnGestureListener {
             whichThrottle = 0;
         }
 
-        if(mainapp.consists != null) {
-            consist = mainapp.consists[whichThrottle];
-        }
-        else {
-            Log.d("debug", "ConsistEdit.onCreate: mainapp.consists[] is null");
+        if(mainapp.consists==null || mainapp.consists[whichThrottle]==null) {
+            if(mainapp.consists==null)
+                Log.d("Engine_Driver", "consistEdit onCreate consists is null");
+            else
+                Log.d("Engine_Driver", "consistEdit onCreate consists[" + whichThrottle + "] is null");
             this.finish();
+            return;
         }
+
+        consist = mainapp.consists[whichThrottle];
 
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         consistList = new ArrayList<>();
