@@ -3077,7 +3077,7 @@ end force shutdown */
                 Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle);
                 break;
         }
-        if(val > maxThrottlesCurrentScreen) {
+        if(val > maxThrottlesCurrentScreen) 
             Log.d("debug", "TA.throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle );
         return val;
     }
