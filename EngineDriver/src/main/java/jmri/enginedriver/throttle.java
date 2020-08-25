@@ -867,15 +867,18 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             switch (msg.what) {
                 case message_type.RESPONSE: { // handle messages from WiThrottle server
                     if (response_str.length() < 2)
-                        return;  //bail if too short, to avoid crash
-                    char com1 = response_str.charAt(0);
-                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(1)); // '0', '1'',2' etc.
+                        break;  //bail if too short, to avoid crash
+                    char com0 = response_str.charAt(0);
+                    char com1 = response_str.charAt(1);
+//                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(1)); // '0', '1'',2' etc.
+                    int whichThrottle;
 
-                    switch (com1) {
+                    switch (com0) {
                         // various MultiThrottle messages
                         case 'M':  // multi-throttle
                             if (response_str.length() < 3)
-                                return;  //bail if too short, to avoid crash
+                                break;  //bail if too short, to avoid crash
+                            whichThrottle = mainapp.throttleCharToInt(com1); // '0', '1'',2' etc.
                             char com2 = response_str.charAt(2);
                             String[] ls = threaded_application.splitByString(response_str, "<;>");
                             String addr;
@@ -971,11 +974,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         case '3':
                         case '4':
                         case '5':
-                            enable_disable_buttons(com1); // pass whichthrottle
+                            enable_disable_buttons(com0); // pass whichthrottle
                             set_labels();
                             break;
-
+/* dead code ***
                         case 'R':  // Roster info
+                            whichThrottle = mainapp.throttleCharToInt(com1); // '0', '1'',2' etc.
                             if (whichThrottle >= 0 && whichThrottle <= mainapp.numThrottles) {
                                 set_function_labels_and_listeners_for_view(whichThrottle);
                                 enable_disable_buttons_for_view(fbs[whichThrottle], true);
@@ -992,14 +996,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 }
                             }
                             break;
+ *** end dead code */
                         case 'P': // panel info
-//                            if (whichThrottle == 'W') { // PW - web server port info
-                            if (whichThrottle == 39) { // PW - web server port info
+                            if (com1 == 'W') { // PW - web server port info
                                 initWeb();
                                 set_labels();
                             }
-//                            if (whichThrottle == 'P') { // PP - power state change
-                            if (whichThrottle == 32) { // PP - power state change
+                            else if (com1 == 'P') { // PP - power state change
                                 set_labels();
                             }
                             break;
@@ -5019,50 +5022,55 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void showHideConsistMenus(){
-        if ((mainapp.consists==null) || (mainapp.consists[0]==null)) return;
+        if (mainapp.consists==null) {
+            Log.d("Engine_Driver", "showHideConsistMenu consists[] is null");
+            return;
+        }
 
         if (TMenu != null) {
-            boolean any = false;
+            boolean anyConsist = false;
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-
+                Consist con = mainapp.consists[throttleIndex];
+                if (con == null) {
+                    Log.d("Engine_Driver", "showHideConsistMenu consists[" + throttleIndex + "] is null");
+                    break;
+                }
+                boolean isMulti = con.isMulti();
                 switch (throttleIndex) {
                     case 0:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditConsist0_menu).setVisible(mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist0_menu).setVisible(mainapp.consists[0].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditConsist0_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditLightsConsist0_menu).setVisible(isMulti);
                         break;
                     case 1:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist1_menu).setVisible(mainapp.consists[1].isMulti());
-                        TMenu.findItem(R.id.EditConsist1_menu).setVisible(mainapp.consists[1].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditLightsConsist1_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditConsist1_menu).setVisible(isMulti);
                         break;
                     case 2:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(mainapp.consists[2].isMulti());
-                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(mainapp.consists[2].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditLightsConsist2_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditConsist2_menu).setVisible(isMulti);
                         break;
                     case 3:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist3_menu).setVisible(mainapp.consists[3].isMulti());
-                        TMenu.findItem(R.id.EditConsist3_menu).setVisible(mainapp.consists[3].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditLightsConsist3_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditConsist3_menu).setVisible(isMulti);
                         break;
                     case 4:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist4_menu).setVisible(mainapp.consists[4].isMulti());
-                        TMenu.findItem(R.id.EditConsist4_menu).setVisible(mainapp.consists[4].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditLightsConsist4_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditConsist4_menu).setVisible(isMulti);
                         break;
                     case 5:
-                        any = (any || mainapp.consists[0].isMulti());
-                        TMenu.findItem(R.id.EditLightsConsist5_menu).setVisible(mainapp.consists[5].isMulti());
-                        TMenu.findItem(R.id.EditConsist5_menu).setVisible(mainapp.consists[5].isMulti());
+                        anyConsist |= isMulti;
+                        TMenu.findItem(R.id.EditLightsConsist5_menu).setVisible(isMulti);
+                        TMenu.findItem(R.id.EditConsist5_menu).setVisible(isMulti);
                         break;
                 }
             }
-            if (any) {
-                TMenu.findItem(R.id.edit_consists_menu).setVisible(any);
-            }
+            TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
         }
-
     }
 
     @Override
