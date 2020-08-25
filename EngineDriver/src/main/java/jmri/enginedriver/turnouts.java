@@ -775,14 +775,22 @@ public class turnouts extends Activity implements OnGestureListener {
         if ((absDeltaX > threaded_application.min_fling_distance) &&
                 (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
                 (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-            // left to right swipe goes to routes if enabled in prefs
+            // left to right swipe goes to web, then routes if enabled in prefs
             if (deltaX > 0.0) {
-                boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                        getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                if (swipeRoutes) {
-                    Intent in = new Intent().setClass(this, routes.class);
+                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+                if (swipeWeb) {
+                    Intent in = new Intent().setClass(this, web_activity.class);
                     startActivity(in);
+                } else {
+                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+                    if (swipeRoutes) {
+                        Intent in = new Intent().setClass(this, routes.class);
+                        startActivity(in);
+                    }
                 }
                 this.finish();  //don't keep on return stack
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);

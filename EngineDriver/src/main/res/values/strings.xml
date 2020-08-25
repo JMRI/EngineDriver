@@ -344,6 +344,8 @@
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
     <string name="prefSwipeThroughRoutesTitle">Swipe Through Routes?</string>
     <string name="prefSwipeThroughRoutesSummary">Include Routes screen when swiping between screens.</string>
+    <string name="prefSwipeThroughWebTitle">Swipe Through Web?</string>
+    <string name="prefSwipeThroughWebSummary">Include Web screen when swiping between screens.</string>
     <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Turnouts?</string>
     <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts screen when swiping between screens.</string>
     <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire?</string>

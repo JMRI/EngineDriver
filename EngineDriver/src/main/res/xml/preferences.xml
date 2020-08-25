@@ -1152,6 +1152,11 @@
             android:title="@string/prefInitialWebPageTitle"
             android:inputType="text"
             android:maxLines="1"/>
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
+            android:key="swipe_through_web_preference"
+            android:summary="@string/prefSwipeThroughWebSummary"
+            android:title="@string/prefSwipeThroughWebTitle" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="prefCategoryTurnouts"

@@ -24,15 +24,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.gesture.GestureOverlayView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
@@ -46,7 +50,7 @@ import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-public class web_activity extends Activity {
+public class web_activity extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -62,7 +66,159 @@ public class web_activity extends Activity {
     private int urlRestoreStep = 0;
     private static Bundle webBundle = new Bundle();
 
+    protected GestureOverlayView ov;
+    // these are used for gesture tracking
+    private float gestureStartX = 0;
+    private float gestureStartY = 0;
+    private boolean gestureFailed = false; // gesture didn't meet velocity or distance requirement
+    protected boolean gestureInProgress = false; // gesture is in progress
+    private long gestureLastCheckTime; // time in milliseconds that velocity was last checked
+    private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
+    private VelocityTracker mVelocityTracker;
+
     Button closeButton;
+
+    @Override
+    public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+        gestureMove(event);
+    }
+
+    @Override
+    public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+        gestureCancel(event);
+    }
+
+    // determine if the action was long enough to be a swipe
+    @Override
+    public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+        gestureEnd(event);
+    }
+
+    @Override
+    public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+        gestureStart(event);
+    }
+
+    private void gestureStart(MotionEvent event) {
+        gestureStartX = event.getX();
+        gestureStartY = event.getY();
+//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+
+        gestureInProgress = true;
+        gestureFailed = false;
+        gestureLastCheckTime = event.getEventTime();
+        mVelocityTracker.clear();
+
+        // start the gesture timeout timer
+        if (mainapp.web_msg_handler != null)
+            mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+    }
+
+    public void gestureMove(MotionEvent event) {
+        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+        if (gestureInProgress) {
+            // stop the gesture timeout timer
+            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+
+            mVelocityTracker.addMovement(event);
+            if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
+                // monitor velocity and fail gesture if it is too low
+                gestureLastCheckTime = event.getEventTime();
+                final VelocityTracker velocityTracker = mVelocityTracker;
+                velocityTracker.computeCurrentVelocity(1000);
+                int velocityX = (int) velocityTracker.getXVelocity();
+                int velocityY = (int) velocityTracker.getYVelocity();
+                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+                if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
+                    gestureFailed(event);
+                }
+            }
+            if (gestureInProgress) {
+                // restart the gesture timeout timer
+                mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+            }
+        }
+    }
+
+    private void gestureEnd(MotionEvent event) {
+        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+        if (gestureInProgress) {
+            float deltaX = (event.getX() - gestureStartX);
+            float absDeltaX =  Math.abs(deltaX);
+            if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes
+                // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                // process swipe in the direction with the largest change
+                if (deltaX > 0.0) { // left to right swipe goes to routes if enabled in prefs
+                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+                    if (swipeRoutes) {
+                        Intent in = new Intent().setClass(this, routes.class);
+                        startActivity(in);
+                    } // else falls back  to throttle
+                    this.finish();  //don't keep on return stack
+                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                } else { // right to left swipe goes to turnouts if enabled
+                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
+                    if (swipeTurnouts) {
+                        Intent in = new Intent().setClass(this, turnouts.class);
+                        startActivity(in);
+                    } // else falls back  to throttle
+                    this.finish();  //don't keep on return stack
+                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                }
+            } else {
+                // gesture was not long enough
+                gestureFailed(event);
+            }
+        }
+    }
+
+    private void gestureCancel(MotionEvent event) {
+        if (mainapp.web_msg_handler != null)
+            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+        gestureInProgress = false;
+        gestureFailed = true;
+    }
+
+    void gestureFailed(MotionEvent event) {
+        // end the gesture
+        gestureInProgress = false;
+        gestureFailed = true;
+    }
+
+    //
+    // GestureStopped runs when more than gestureCheckRate milliseconds
+    // elapse between onGesture events (i.e. press without movement).
+    //
+    @SuppressLint("Recycle")
+    private Runnable gestureStopped = new Runnable() {
+        @Override
+        public void run() {
+            if (gestureInProgress) {
+                // end the gesture
+                gestureInProgress = false;
+                gestureFailed = true;
+                // create a MOVE event to trigger the underlying control
+                if (webView != null) {
+                    // use uptimeMillis() rather than 0 for time in
+                    // MotionEvent.obtain() call in throttle gestureStopped:
+                    MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
+                            gestureStartY, 0);
+                    try {
+                        webView.dispatchTouchEvent(event);
+                    } catch (IllegalArgumentException e) {
+                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                    }
+                }
+            }
+        }
+    };
+
 
     @SuppressLint("HandlerLeak")
     class web_handler extends Handler {
@@ -250,6 +406,14 @@ public class web_activity extends Activity {
         web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
         closeButton.setOnClickListener(close_click_listener);
 
+        // myGesture = new GestureDetector(this);
+        ov = findViewById(R.id.web_overlay);
+        ov.addOnGestureListener(this);
+        ov.setGestureVisible(false);
+
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
@@ -328,7 +492,6 @@ public class web_activity extends Activity {
         }
     }
 
-
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             navigateAway();
@@ -390,7 +553,6 @@ public class web_activity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        Intent in;
         switch (item.getItemId()) {
             case R.id.throttle_mnu:
                 navigateAway();

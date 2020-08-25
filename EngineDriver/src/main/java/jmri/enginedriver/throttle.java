@@ -5892,26 +5892,31 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                         boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
                                 getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
                         swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                        // if swiping (to Turnouts or Routes screen) is enabled, process the swipe
-                        if (swipeTurnouts || swipeRoutes) {
-                            // left to right swipe goes to turnouts if enabled in prefs
+                        boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                                getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+                        swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+
+                        // if any swiping is enabled, process the swipe
+                        if (swipeTurnouts || swipeRoutes || swipeWeb) {
                             if (deltaX > 0.0) {
-                                // swipe left
+                                // left to right swipe goes to turnouts, then web if enabled in prefs
                                 Intent in;
                                 if (swipeTurnouts) {
                                     in = new Intent().setClass(this, turnouts.class);
+                                } else if (swipeWeb) {
+                                    in = new Intent().setClass(this, web_activity.class);
                                 } else {
                                     in = new Intent().setClass(this, routes.class);
                                 }
                                 startActivity(in);
                                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                            }
-                            // right to left swipe goes to routes if enabled in prefs
-                            else {
-                                // swipe right
+                            } else {
+                                // right to left swipe goes to routes, then web if enabled in prefs
                                 Intent in;
                                 if (swipeRoutes) {
                                     in = new Intent().setClass(this, routes.class);
+                                } else if (swipeWeb){
+                                    in = new Intent().setClass(this, web_activity.class);
                                 } else {
                                     in = new Intent().setClass(this, turnouts.class);
                                 }

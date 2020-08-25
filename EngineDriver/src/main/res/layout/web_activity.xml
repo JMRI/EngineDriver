@@ -7,25 +7,36 @@
     android:keepScreenOn="true"
     android:minWidth="1000dp"
     android:minHeight="1000dp">
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
 
-    <Button
-        android:id="@+id/webview_button_close"
-        style="@style/small_button_style_outline"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/webview"
-        android:layout_alignRight="@+id/webview"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/logviewerClose"
-        tools:ignore="RtlHardcoded" />
+    <android.gesture.GestureOverlayView
+        android:id="@+id/web_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:eventsInterceptionEnabled="true"
+        android:gestureStrokeType="single"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <Button
+            android:id="@+id/webview_button_close"
+            style="@style/small_button_style_outline"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_alignRight="@+id/webview"
+            android:layout_alignBottom="@+id/webview"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/logviewerClose"
+            tools:ignore="RtlHardcoded" />
+
+    </android.gesture.GestureOverlayView>
 
 </RelativeLayout>
