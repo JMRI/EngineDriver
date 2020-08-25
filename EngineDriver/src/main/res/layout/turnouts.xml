@@ -82,7 +82,7 @@
                 android:inputType="textCapCharacters"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
                 android:imeOptions="actionDone"
-                android:maxLength="7"
+                android:maxLength="8"
                 android:singleLine="true" />
             <Button
                 android:id="@+id/turnout_throw"

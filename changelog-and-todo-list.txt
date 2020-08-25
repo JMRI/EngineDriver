@@ -23,6 +23,7 @@
  * improve connect screen when using very large fonts
  * consists null debugging and fixes
  * Support for Gamepad = Utopia 360 - Android - Mode C
+ * prevent recursive crash in Turnouts due to comparing truncated string
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -524,8 +525,9 @@
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ * intro
+ *   TODO: if saved preferences found, prompt for import and shortcut intro
  * web
- *   TODO: allow web view in swipe list
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
  * routes
@@ -577,7 +579,6 @@
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * preferences:
- *
  * log_viewer:
  *
  * These require changes to WiThrottle

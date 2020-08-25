@@ -69,6 +69,8 @@ import java.util.Map;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
+import static android.text.TextUtils.substring;
+
 public class turnouts extends Activity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -285,8 +287,10 @@ public class turnouts extends Activity implements OnGestureListener {
             butClose.setEnabled(false);
             butTog.setEnabled(false);
             //set text to "Disabled", but only do this once to avoid getting stuck in this callback
-            if (!trn.getText().toString().equals(getString(R.string.disabled)))
-                trn.setText(getString(R.string.disabled));
+            //NOTE: field is max 8 chars, and might be translated shorter or longer, so pad and truncate
+            String disabledText = substring(getString(R.string.disabled)+"        ",0,8);
+            if (!trn.getText().toString().equals(disabledText))
+                trn.setText(disabledText);
             trnPrefix.setEnabled(false);
         }
         if (mainapp.getServerType().equals("Digitrax")) {  //Digitrax LnWi does not support toggle
