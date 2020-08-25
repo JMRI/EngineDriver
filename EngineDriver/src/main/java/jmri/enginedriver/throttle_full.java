@@ -370,52 +370,72 @@ public class throttle_full extends throttle {
             //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
             screenHeight -= throttleMargin;
-            String numThrot = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumOfThrottlesDefault));
 
-            if (numThrot.matches("One")) {
+            if (mainapp.numThrottles == 1) {        // just one throttle
                 heights[0] = screenHeight;
                 heights[1] = 0;
                 heights[2] = 0;
-            } else if (numThrot.matches("Two") && !mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.9);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = 0;
-            } else if (numThrot.matches("Two") && !mainapp.consists[0].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.9);
-                heights[2] = 0;
-            } else if (numThrot.matches("Two")) {
-                heights[0] = (int) (screenHeight * 0.5);
-                heights[1] = (int) (screenHeight * 0.5);
-                heights[2] = 0;
-            } else if (throttle_count == 0 || throttle_count == 3) {
-                heights[0] = (int) (screenHeight * 0.33);
-                heights[1] = (int) (screenHeight * 0.33);
-                heights[2] = (int) (screenHeight * 0.33);
-            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.80);
-            } else if (!mainapp.consists[0].isActive() && !mainapp.consists[2].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.80);
-                heights[2] = (int) (screenHeight * 0.10);
-            } else if (!mainapp.consists[1].isActive() && !mainapp.consists[2].isActive()) {
-                heights[0] = (int) (screenHeight * 0.80);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.10);
-            } else if (!mainapp.consists[0].isActive()) {
-                heights[0] = (int) (screenHeight * 0.10);
-                heights[1] = (int) (screenHeight * 0.45);
-                heights[2] = (int) (screenHeight * 0.45);
-            } else if (!mainapp.consists[1].isActive()) {
-                heights[0] = (int) (screenHeight * 0.45);
-                heights[1] = (int) (screenHeight * 0.10);
-                heights[2] = (int) (screenHeight * 0.45);
-            } else {
-                heights[0] = (int) (screenHeight * 0.45);
-                heights[1] = (int) (screenHeight * 0.45);
-                heights[2] = (int) (screenHeight * 0.10);
+            } else {                                // 2 or more throttles - split screen among active throttles
+                boolean con0Active = false;
+                boolean con1Active = false;
+                boolean con2Active = false;
+                if (mainapp.consists[0] == null)
+                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[0] is null");
+                else
+                    con0Active = mainapp.consists[0].isActive();
+                if( mainapp.consists[1] == null)
+                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[1] is null");
+                else
+                    con1Active = mainapp.consists[1].isActive();
+                if (mainapp.consists[2] == null) {
+                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[2] is null");
+                }
+                else
+                    con2Active = mainapp.consists[2].isActive();
+
+                if (mainapp.numThrottles == 2) {
+                    if (!con1Active) {
+                        heights[0] = (int) (screenHeight * 0.9);
+                        heights[1] = (int) (screenHeight * 0.10);
+                        heights[2] = 0;
+                    } else if (!con0Active) {
+                        heights[0] = (int) (screenHeight * 0.10);
+                        heights[1] = (int) (screenHeight * 0.9);
+                        heights[2] = 0;
+                    } else {
+                        heights[0] = (int) (screenHeight * 0.5);
+                        heights[1] = (int) (screenHeight * 0.5);
+                        heights[2] = 0;
+                    }
+                } else if (throttle_count == 0 || throttle_count == 3) {    // none active or all active
+                    heights[0] = (int) (screenHeight * 0.33);
+                    heights[1] = (int) (screenHeight * 0.33);
+                    heights[2] = (int) (screenHeight * 0.33);
+                } else if (!con0Active && !con1Active) {            // just throttle 2 active
+                    heights[0] = (int) (screenHeight * 0.10);
+                    heights[1] = (int) (screenHeight * 0.10);
+                    heights[2] = (int) (screenHeight * 0.80);
+                } else if (!con0Active && !con2Active) {            // just throttle 1 active
+                    heights[0] = (int) (screenHeight * 0.10);
+                    heights[1] = (int) (screenHeight * 0.80);
+                    heights[2] = (int) (screenHeight * 0.10);
+                } else if (!con1Active && !con2Active) {            // just throttle 0 active
+                    heights[0] = (int) (screenHeight * 0.80);
+                    heights[1] = (int) (screenHeight * 0.10);
+                    heights[2] = (int) (screenHeight * 0.10);
+                } else if (!con0Active) {                           // throttles 1 and 2 active
+                    heights[0] = (int) (screenHeight * 0.10);
+                    heights[1] = (int) (screenHeight * 0.45);
+                    heights[2] = (int) (screenHeight * 0.45);
+                } else if (!con1Active) {                           // throttles 0 and 2 active
+                    heights[0] = (int) (screenHeight * 0.45);
+                    heights[1] = (int) (screenHeight * 0.10);
+                    heights[2] = (int) (screenHeight * 0.45);
+                } else {                                            // throttles 0 and 1 active
+                    heights[0] = (int) (screenHeight * 0.45);
+                    heights[1] = (int) (screenHeight * 0.45);
+                    heights[2] = (int) (screenHeight * 0.10);
+                }
             }
 
             ImageView myImage = findViewById(R.id.backgroundImgView);
