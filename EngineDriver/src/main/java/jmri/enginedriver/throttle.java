@@ -2665,6 +2665,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "UtopiaC":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
 
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);

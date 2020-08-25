@@ -222,6 +222,10 @@ public class gamepad_test extends Activity implements OnGestureListener {
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "UtopiaC":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
