@@ -486,16 +486,23 @@ public class routes extends Activity implements OnGestureListener {
             if (deltaX > 0.0) {
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-            }
-            // right to left swipe goes to turnouts if enabled in prefs
-            else {
-                boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                if (swipeTurnouts) {
-                    Intent in = new Intent().setClass(this, turnouts.class);
+            } else {
+                // right to left swipe goes to web, then turnouts if enabled in prefs
+                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+                if (swipeWeb) {
+                    Intent in = new Intent().setClass(this, web_activity.class);
                     startActivity(in);
+                } else {
+                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
+                    if (swipeTurnouts) {
+                        Intent in = new Intent().setClass(this, turnouts.class);
+                        startActivity(in);
+                    }
                 }
-                this.finish();
+                this.finish(); //fall back to throttle
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
             }
             return true;

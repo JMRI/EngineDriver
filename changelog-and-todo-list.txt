@@ -2,9 +2,10 @@
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
  * Swipe down options same as swipe up
- * include web view when switching layouts
+ * include throttle web view when switching layouts
  * additional background layout options
- * Menu Button to show/hide the Web View
+ * Menu Button to show/hide the Throttle Web View
+ * Pref to add Web Activity to swipe list
  * fix crashes reported to Play Store
  * default to numeric keyboard for Server Address
  * Suppress WiT message on exit unless connected
@@ -19,6 +20,9 @@
  * removed send of 'N' heartbeat when no speed/dir response from server (old JMRI only)
  * disconnect if VN not received in 5 seconds
  * only scroll Log View when at bottom
+ * improve connect screen when using very large fonts
+ * consists null debugging and fixes
+ * Support for Gamepad = Utopia 360 - Android - Mode C
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -525,7 +529,6 @@
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
  * routes
- *   TODO: disable Routes and remove from menu for Digitrax, MRC and other server types without Routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
  *   TODO: show system turnout option if list arrives while on turnout page

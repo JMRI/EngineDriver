@@ -34,7 +34,8 @@
     <bool name="prefHideSliderDefaultValue">false</bool>
     <bool name="prefHideSliderAndSpeedButtonsDefaultValue">false</bool>
     <bool name="prefSwipeThroughTurnoutsDefaultValue">true</bool>
-    <bool name="prefSwipeThroughRoutesDefaultValue">true</bool>
+    <bool name="prefSwipeThroughRoutesDefaultValue">false</bool>
+    <bool name="prefSwipeThroughWebDefaultValue">false</bool>
     <bool name="prefDirChangeWhileMovingDefaultValue">false</bool>
     <bool name="prefStopOnDirectionChangeDefaultValue">false</bool>
     <bool name="prefSelLocoWhileMovingDefaultValue">false</bool>
