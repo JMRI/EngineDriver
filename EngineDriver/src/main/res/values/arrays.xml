@@ -172,6 +172,7 @@
       -->
         <item>MagicseeR1B</item>
         <item>FlydigiWee2</item>
+        <item>UtopiaC</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
@@ -194,6 +195,7 @@
 -->
         <item>MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
+        <item >Utopia 360 Android-C</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -488,6 +490,42 @@
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
+
+    <integer-array name="prefGamePadUtopiaC" translatable="false">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_Y</item> //gamepadD
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
+        <item>@integer/KeyCode_Button_X</item> //gamepadC
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_L1</item> //lower front button
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_R1</item> //upper front button
+    </integer-array>
+
+    <string-array name="prefGamePadUtopiaCLabels">
+        <item> </item> //not used
+        <item>Button not usable</item>
+        <item>Gamepad Button DPAD Up action</item>
+        <item>Gamepad Button DPAD Down action</item>
+        <item>Gamepad Button DPAD Left action</item>
+        <item>Gamepad Button DPAD Right action</item>
+        <item>Button not usable</item>
+        <item>Gamepad Button A action</item>
+        <item>Gamepad Button D action</item>
+        <item>Gamepad Button B action</item>
+        <item>Gamepad Button C action</item>
+        <item>Button not available</item> //not used
+        <item>Gamepad Trigger Front Lower</item>
+        <item>Button not available</item> //not used
+        <item>Gamepad Trigger Front Upper</item>
+    </string-array>
 
     <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used

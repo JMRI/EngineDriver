@@ -210,20 +210,6 @@
         <item>Session terminée</item>
     </string-array>
 
-    <string-array name="prefGamePadTypeEntries"> <!-- display version -->
-        <item>Rien</item>
-        <item >Mocute iCade</item>
-        <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
-        <item >Mocute iCade+DPAD</item>
-        <!-- <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item> -->
-        <item >Mocute MTK</item>
-        <!-- <item >Mocute/Android- MTK Mode - DPAD rotated</item> -->
-        <item >Mocute Android-Game</item>
-        <!-- <item >Mocute/Android- Game Mode - DPAD rotated</item> -->
-        <item>MagicseeR1 Android-Game B</item>
-        <item >Flydigi Wee 2</item>
-    </string-array>
-
     <string-array name="prefGamePadFlydigiWee2Labels">
         <item> </item> //not used
         <item>Touche Select Action</item>

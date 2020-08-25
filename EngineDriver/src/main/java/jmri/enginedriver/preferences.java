@@ -1086,6 +1086,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             case "FlydigiWee2":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadFlydigiWee2Labels);
                 break;
+            case "UtopiaC":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadUtopiaCLabels);
+                break;
             case "None":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
                 break;

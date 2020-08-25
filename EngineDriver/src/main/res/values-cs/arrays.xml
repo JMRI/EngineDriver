@@ -170,41 +170,7 @@
     
     
     
-    
-    
-    
-    
-    <string-array name="prefGamePadTypeEntries">  <!-- display version -->
-        <item >Nic</item>
-        <item >Mocute iCade</item>
-        <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
-        <item >Mocute iCade+DPAD</item>
-        <!-- <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item> -->
-        <item >Mocute MTK</item>
-        <!-- <item >Mocute/Android- MTK Mode - DPAD rotated</item> -->
-        <item >Mocute Android-Game</item>
-        <!-- <item >Mocute/Android- Game Mode - DPAD rotated</item> -->
-<!--
-        <item >VRBOX/Android- A Mode</item>
-        <item >VRBOX/Android- A Mode - DPAD rotated</item>
-        <item >VRBOX/Android- C Mode</item>
-        <item >VRBOX/Android- C Mode - DPAD rotated</item>
-        <item >VRBOX/iOS- C Mode</item>
-        <item >VRBOX/iOS- C Mode - DPAD rotated</item>
--->
-        <item>MagicseeR1 Android-Game B</item>
-        <item >Flydigi Wee 2</item>
-    </string-array>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
         <item >Nic</item>
         <item >Skrýt Web Pohled\n(vyžaduje \'Ovladačový Web Pohled\' předvolby)</item>
