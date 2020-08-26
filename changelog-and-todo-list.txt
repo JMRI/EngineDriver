@@ -1,3 +1,4 @@
+**Version 2.26.110
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
