@@ -576,10 +576,10 @@
         <item>Button Y [Triangle] action</item>
         <item>Button A [Cross] action</item>
         <item>Button B [@] action</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
     </string-array>
 
 <!--
@@ -614,10 +614,10 @@
         <item>Button D action</item>
         <item>Button A action</item>
         <item>Button B action</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
@@ -632,10 +632,10 @@
         <item>Button not available</item>
         <item>Button not available</item>
         <item>Button not available</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
     </string-array>
 
     <string-array name="prefGamePadPrefButtonReferences" translatable="false">  <!-- DO NOT TRANSLATE -->
