@@ -795,7 +795,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
 
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
-                || ((fixed[index] == 0) && (numThrottles > max[index]-1)) ) {
+                || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
 //            Log.d("Engine_Driver", "Preferences: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
@@ -947,7 +947,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 //                Log.d("Engine_Driver", "Preferences: hideAdvancedPreferences(): " + advancedPreference1);
 
                 Preference advancedPreference = getPreferenceScreen().findPreference(advancedPreference1);
-                removePreference(advancedPreference);
+                if (advancedPreference != null) {
+                    removePreference(advancedPreference);
+                } else {
+                    Log.d("Engine_Driver", "Preferences: '" + advancedPreference1 + "' not found.");
+                }
             }
         }
     }
