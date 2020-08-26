@@ -987,6 +987,7 @@
         <item>prefAlwaysUseDefaultFunctionLabels</item>
         <item>prefNumberOfDefaultFunctionLabels</item>
         <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
+        <item>prefSpeedButtonsSpeedStepDecrement</item>
 
         <item>prefLimitSpeedButton</item>
         <item>prefLimitSpeedPercent</item>
@@ -1094,7 +1095,6 @@
         <item>kids_preferences</item>
 
         <item>prefCategorySelectLoco</item>
-        <item>prefCategoryWeb</item>
         <item>prefCategoryChildren</item>
 
         <item>prefBackgroundImage</item>

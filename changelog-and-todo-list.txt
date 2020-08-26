@@ -24,6 +24,8 @@
  * consists null debugging and fixes
  * Support for Gamepad = Utopia 360 - Android - Mode C
  * prevent recursive crash in Turnouts due to comparing truncated string
+ * fix incorrect toast on number of throttles
+ * debug advancedPreference name when not found
 **Version 2.25.106
  * fix crashes reported to Play Store
  * several visual and organizational improvements to Preferences
@@ -521,6 +523,7 @@
  *   added html About page
  */
 /*
+ *   TODO: support negative responses to permissions prompts, limiting function
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
