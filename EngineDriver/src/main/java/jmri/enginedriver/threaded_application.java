@@ -130,13 +130,14 @@ public class threaded_application extends Application {
     Double withrottle_version = 0.0; //version of withrottle server
     volatile int web_server_port = 0; //default port for jmri web server
     private String serverType = ""; //should be set by server in initial command strings
+    private String serverDescription = ""; //may be set by server in initial command strings
     private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
     volatile Consist[] consists;
     LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
     LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
-    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with not function labels only
-    boolean[][] function_states = {null, null, null, null, null, null};  //current function states for second throttle
+    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with no function labels
+    boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
     String[] to_system_names;
     String[] to_user_names;
     String[] to_states;
@@ -150,7 +151,7 @@ public class threaded_application extends Application {
     private static DownloadRosterTask dlRosterTask = null;
     private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
-    public static HashMap<String, String> metadata;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
+    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
@@ -1010,11 +1011,13 @@ public class threaded_application extends Application {
                     break;
 
                 case 'H':
-                    if (response_str.charAt(1) == 'T') { //set hardware type, HTMRC for example
+                    if (response_str.charAt(1) == 'T') { //set hardware server type, HTMRC for example
                         setServerType(response_str.substring(2)); //store the type
                         if (getServerType().equals("MRC")) {
                             web_server_port = 80; //hardcode web port for MRC
                         }
+                    } else if (response_str.charAt(1) == 't') { //server description string "HtMy Server Details go here"
+                        setServerDescription(response_str.substring(2)); //store the description
                     } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
                         safeToast(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
@@ -2164,8 +2167,8 @@ end force shutdown */
             if (metadataTemp.size() == 0) {
                 Log.d("Engine_Driver", "threaded_application: did not retrieve any json metadata entries.");
             } else {
-                metadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-                Log.d("Engine_Driver", "threaded_application: Loaded " + metadata.size() + " metadata entries from json web server.");
+                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
+                Log.d("Engine_Driver", "threaded_application: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
             }
         }
     }
@@ -2279,11 +2282,17 @@ end force shutdown */
     }
 
     public String getServerType() {
-        return serverType;
+        return this.serverType;
     }
-
     public void setServerType(String serverType) {
         this.serverType = serverType;
+    }
+
+    public String getServerDescription() {
+        return this.serverDescription;
+    }
+    public void setServerDescription(String serverDescription) {
+        this.serverDescription = serverDescription;
     }
 
     //reinitialize statics in activities as required to be ready for next launch
@@ -2300,6 +2309,8 @@ end force shutdown */
         web_server_port = 0;
         host_ip = null;
         setServerType("");
+        setServerDescription("");
+        jmriMetadata = null;
         power_state = null;
         to_states = null;
         to_system_names = null;

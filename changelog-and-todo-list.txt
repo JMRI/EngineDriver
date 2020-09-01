@@ -1,4 +1,6 @@
 **Version 2.26.110
+ * add HTservertype and Htserverdescription to About page
+ * change targetSdkVersion from 28 to 29
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
@@ -537,6 +539,7 @@
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
+ *   TODO: support client entry/edit of username for servers without usernames
  *   TODO: show system turnout option if list arrives while on turnout page
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
@@ -545,7 +548,6 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
- *   TODO: fix visibility of Connect button when device Font and Display Size are set to max
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also

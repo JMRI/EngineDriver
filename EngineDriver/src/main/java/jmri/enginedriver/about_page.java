@@ -55,20 +55,31 @@ public class about_page extends Activity {
         // ED version info
         s = "Engine Driver: " + mainapp.appVersion;
         if (mainapp.host_ip != null) {
-            // JMRI version info
-            HashMap<String, String> metadata = threaded_application.metadata;
-            if (metadata != null && metadata.size() > 0) {
-                s += "\nJMRI v" + metadata.get("JMRIVERCANON") + "    build: " + metadata.get("JMRIVERSION");
-                if (metadata.get("activeProfile") != null) {
-                    s += "\nActive Profile: " + metadata.get("activeProfile");
-                }
-            }
             // WiT info
             if (mainapp.withrottle_version != 0.0) {
                 s += "\nWiThrottle: v" + mainapp.withrottle_version;
                 s += String.format("    Heartbeat: %d secs", mainapp.heartbeatInterval);
             }
             s += String.format("\nHost: %s", mainapp.host_ip);
+            //show server type and description if set
+            String sServer = "";
+            if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
+                sServer = mainapp.getServerDescription();
+            } else {
+                sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
+            }
+            if (!sServer.isEmpty()) {
+                s += String.format("\nServer: %s", sServer);
+            } else {
+                // otherwise show JMRI version info from web if populated
+                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
+                if (JmriMetadata != null && JmriMetadata.size() > 0) {
+                    s += "\nJMRI v" + JmriMetadata.get("JMRIVERCANON") + "    build: " + JmriMetadata.get("JMRIVERSION");
+                    if (JmriMetadata.get("activeProfile") != null) {
+                        s += "\nActive Profile: " + JmriMetadata.get("activeProfile");
+                    }
+                }
+            }
         }
         s += String.format("\nSSID: %s Net: %s ", mainapp.client_ssid, mainapp.client_type);
         if (mainapp.client_address_inet4 != null) {
