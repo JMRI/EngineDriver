@@ -6,7 +6,7 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-29.0.2
+    - build-tools-29.0.3
     - android-19
     - android-22
     - android-24
