@@ -125,7 +125,7 @@ public class RosterEntry {
         if ((_iconFilePath != null) && (_iconFilePath.length() > 0) && (!_iconFilePath.equals("__noIcon.jpg"))) {
             try {
                 //decide which icon path to use, path was changed with jetty upgrade, 2.99.5
-                HashMap<String, String> metadata = threaded_application.metadata;  //reference global metadata
+                HashMap<String, String> metadata = threaded_application.jmriMetadata;  //reference global metadata
                 if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON") != null && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0) {
                     return rosterURL + URLEncoder.encode(_id, "UTF-8").replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
                 }
