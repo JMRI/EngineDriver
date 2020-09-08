@@ -406,15 +406,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
         closeButton.setOnClickListener(close_click_listener);
 
-        // myGesture = new GestureDetector(this);
-        ov = findViewById(R.id.web_overlay);
-        ov.addOnGestureListener(this);
-        ov.setGestureVisible(false);
-
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
-
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
     }
@@ -450,6 +441,21 @@ public class web_activity extends Activity implements android.gesture.GestureOve
             }
             resumeWebView();
             CookieSyncManager.getInstance().startSync();
+        }
+
+        // enable swipe/fling detection if enabled in Prefs
+        ov = findViewById(R.id.web_overlay);
+        boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+        if (swipeWeb) {
+            ov.addOnGestureListener(this);
+            ov.setEventsInterceptionEnabled(true);
+            if (mVelocityTracker == null) {
+                mVelocityTracker = VelocityTracker.obtain();
+            }
+        } else {
+            ov.removeOnGestureListener(this);
+            ov.setEventsInterceptionEnabled(false);
         }
     }
 

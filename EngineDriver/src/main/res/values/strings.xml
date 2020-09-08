@@ -733,7 +733,7 @@
     <string name="toastPreferencesThrottleChangeSucceeded">Throttle Layout change Succeeded.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Background Change Succeeded.</string>
-<!--    <string name="toastPreferencesLocaleChange">Engine Driver restarted with chosen Language.</string> -->
+    <string name="toastPreferencesSwipeThroughWebDisabled">Swipe through web disabled.</string>
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid turnout number.</string>

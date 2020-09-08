@@ -38,9 +38,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
-import android.preference.PreferenceScreen;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -48,7 +46,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -217,6 +214,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
         showHideBackgroundImagePreferences();
 
+        setSwipeThroughWebPreference();
+
 //        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
 //        showHidePausePreferences();
 
@@ -339,6 +338,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
                     break;
                 case "ThrottleOrientation":
+                    setSwipeThroughWebPreference(); //disable web swipe if Auto-Web
                     //if mode was fixed (Port or Land) won't get callback so need explicit call here
                     mainapp.setActivityOrientation(this);
                     break;
@@ -854,6 +854,23 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         enableDisablePreference("prefBackgroundImageFileNameImagePicker", !enable);
         enableDisablePreference("prefBackgroundImagePosition", !enable);
+    }
+
+    private void setSwipeThroughWebPreference() {
+        String to = sharedPreferences.getString("ThrottleOrientation",
+                getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+        if (to.equals("Auto-Web")) {
+            enableDisablePreference("swipe_through_web_preference", false);
+            boolean swipeWeb = sharedPreferences.getBoolean("swipe_through_web_preference",
+                    getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+            if (swipeWeb) {
+                sharedPreferences.edit().putBoolean("swipe_through_web_preference", false).commit();  //make sure preference is off
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources()
+                        .getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            enableDisablePreference("swipe_through_web_preference", true);
+        }
     }
 
     private void showHidePausePreferences() {

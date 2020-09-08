@@ -12,9 +12,11 @@
         android:id="@+id/web_overlay"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:eventsInterceptionEnabled="true"
+        android:eventsInterceptionEnabled="false"
+        android:gestureColor="@color/transparent"
         android:gestureStrokeType="single"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:uncertainGestureColor="@color/transparent">
 
         <WebView
             android:id="@+id/webview"
