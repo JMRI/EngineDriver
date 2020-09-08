@@ -1,6 +1,7 @@
 **Version 2.26.110
  * add HTservertype and Htserverdescription to About page
  * change targetSdkVersion from 28 to 29
+ * don't allow web swipe when Auto-Web is on
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
@@ -526,13 +527,13 @@
  *   added html About page
  */
 /*
- *   TODO: support negative responses to permissions prompts, limiting function
+ *   TODO: support negative responses to permissions prompts, limiting functionality
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * intro
- *   TODO: if saved preferences found, prompt for import and shortcut intro
+ *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
