@@ -73,7 +73,7 @@ public class intro_activity extends AppIntro2 {
                 (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.STORE_CONNECTION_LIST)) ) {
             SliderPage sliderPage1 = new SliderPage();
             sliderPage1.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-            sliderPage1.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPreferences));
+            sliderPage1.setDescription(getApplicationContext().getResources().getString(R.string.permissionsStoreAndReadPreferences));
             sliderPage1.setImageDrawable(R.drawable.icon_xl);
             sliderPage1.setBgColor(getResources().getColor(R.color.intro_background));
             addSlide(AppIntroFragment.newInstance(sliderPage1));
@@ -92,15 +92,15 @@ public class intro_activity extends AppIntro2 {
             askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
         }
 
-        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION )) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION )) {
             SliderPage sliderPage3 = new SliderPage();
             sliderPage3.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-            sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION));
+            sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsACCESS_FINE_LOCATION));
             sliderPage3.setImageDrawable(R.drawable.icon_xl);
             sliderPage3.setBgColor(getResources().getColor(R.color.intro_background));
             addSlide(AppIntroFragment.newInstance(sliderPage3));
             slideNumber = slideNumber + 1;
-            askForPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, slideNumber);
+            askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, slideNumber);
         }
 
 //        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.VIBRATE )) {

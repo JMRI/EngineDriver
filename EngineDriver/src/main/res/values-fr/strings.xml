@@ -664,7 +664,7 @@
     <string name="permissionsWriteSettings">Engine Driver nécessite un accès ECRITURE pour changer la luminosité Ecran</string>
     <string name="permissionsWriteSettingsAdditional">- Cliquer sur le bouton ci dessous.\nAutoriser la permission.\n-Cliquer \'Arrière\' pour retourner ici.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorer ceci si vous ne voulez pas modifier la luminosité avec Engine Driver.</string>
-    <string name="permissionsACCESS_COARSE_LOCATION">Engine Diver nécessite un accès à POSITION pour retrouver le SSID du WiFi courant.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Diver nécessite un accès à POSITION pour retrouver le SSID du WiFi courant.</string>
     <string name="permissionsVIBRATE">Engine Driver nécessite la permission VIBREUR pour plus de feedback</string>
     <string name="permissionsConnectToServer">Engine Driver nécessite un accès au STOCKAGE pour sauver les connexions récentes et un accès TELEPHONE pour se mettre en pause lors de communications téléphoniques.</string>
     <string name="permissionsGotoAppSettings">Merci de valider ces permissions depuis le paramétrage APPLICATION</string>

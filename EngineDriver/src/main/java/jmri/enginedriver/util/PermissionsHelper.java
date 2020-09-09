@@ -41,7 +41,7 @@ public class PermissionsHelper {
             STORE_LOG_FILES,
             CONNECT_TO_SERVER,
             WRITE_SETTINGS,
-            ACCESS_COARSE_LOCATION,
+            ACCESS_FINE_LOCATION,
             STORE_SERVER_AUTO_PREFERENCES,
             READ_SERVER_AUTO_PREFERENCES,
             VIBRATE
@@ -61,7 +61,7 @@ public class PermissionsHelper {
     public static final int STORE_FUNCTION_SETTINGS = 39;
     public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
-    public static final int ACCESS_COARSE_LOCATION = 42;
+    public static final int ACCESS_FINE_LOCATION = 42;
     public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
     public static final int READ_SERVER_AUTO_PREFERENCES = 44;
     public static final int STORE_LOG_FILES = 45;
@@ -157,8 +157,8 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsConnectToServer);
             case WRITE_SETTINGS:
                 return context.getResources().getString(R.string.permissionsWriteSettings);
-            case ACCESS_COARSE_LOCATION:
-                return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
+            case ACCESS_FINE_LOCATION:
+                return context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
             case VIBRATE:
                 return context.getResources().getString(R.string.permissionsVIBRATE);
             default:
@@ -201,10 +201,10 @@ public class PermissionsHelper {
                                     Manifest.permission.READ_PHONE_STATE},
                             requestCode);
                     break;
-                case ACCESS_COARSE_LOCATION:
-                    Log.d("Engine_Driver", "Requesting ACCESS_COARSE_LOCATION permissions");
+                case ACCESS_FINE_LOCATION:
+                    Log.d("Engine_Driver", "Requesting ACCESS_FINE_LOCATION permissions");
                     activity.requestPermissions(new String[]{
-                                    Manifest.permission.ACCESS_COARSE_LOCATION},
+                                    Manifest.permission.ACCESS_FINE_LOCATION},
                             requestCode);
                     break;
                 case CONNECT_TO_SERVER:
@@ -350,8 +350,8 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
-            case ACCESS_COARSE_LOCATION :
-                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
+            case ACCESS_FINE_LOCATION :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
             case WRITE_SETTINGS:
                 boolean result;
                 if (android.os.Build.VERSION.SDK_INT < 23) {
@@ -397,8 +397,8 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
-            case ACCESS_COARSE_LOCATION:
-                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+            case ACCESS_FINE_LOCATION:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION);
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
             default:

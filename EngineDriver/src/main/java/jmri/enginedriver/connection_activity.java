@@ -637,9 +637,9 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 }
                 //we must have location permissions to get SSID.
                 PermissionsHelper phi = PermissionsHelper.getInstance();
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
                     }
                 }
                 mainapp.client_ssid = wifiinfo.getSSID();
