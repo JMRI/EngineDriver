@@ -661,7 +661,9 @@ public class turnouts extends Activity implements OnGestureListener {
         // setup the method radio buttons
         rbAddress = findViewById(R.id.select_turnout_method_address_button);
         rbRoster = findViewById(R.id.select_turnout_method_roster_button);
-        rbRoster.setText(getApplicationContext().getResources().getString(R.string.turnoutsSelectionTypeRoster,mainapp.getServerType()));
+        String serverType = mainapp.getServerType();
+        if (serverType.isEmpty()) serverType = getApplicationContext().getResources().getString(R.string.server);
+        rbRoster.setText(getApplicationContext().getResources().getString(R.string.turnoutsSelectionTypeRoster,serverType));
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid

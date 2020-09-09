@@ -2,6 +2,7 @@
  * add HTservertype and Htserverdescription to About page
  * change targetSdkVersion from 28 to 29
  * don't allow web swipe when Auto-Web is on
+ * show "Server Defined", not "Defined" in Turnouts if no server type
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
@@ -546,6 +547,7 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout
  * connection
+ *   TODO: investigate <unknown ssid> showing up on my phone
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
