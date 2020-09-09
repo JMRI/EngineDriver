@@ -464,6 +464,7 @@
     <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
     <string name="NumThrottleDefaulValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
+    <string name="server">Server</string>
     <string name="routes_route">Route System Name</string>
     <string name="label_percent" translatable="false">%</string>
     <string name="label_14step" translatable="false">14</string>
