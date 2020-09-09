@@ -927,7 +927,7 @@
     <string name="permissionsWriteSettings">Engine Driver potřebuje oprávnění WRITE SETTINGS pro změnu jasu obrazovky.</string>
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
-    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_COARSE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_FINE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
     <string name="permissionsVIBRATE">Engine Driver potřebuje oprávnění VIBRATE aby poskytl další zpětnou vazbu.</string>
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
     <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>

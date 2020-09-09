@@ -1,6 +1,7 @@
 **Version 2.26.110
  * add HTservertype and Htserverdescription to About page
  * change targetSdkVersion from 28 to 29
+ * moved from ACCESS_COARSE_LOCATION to ACCESS_FINE_LOCATION due to sdk29
  * don't allow web swipe when Auto-Web is on
  * show "Server Defined", not "Defined" in Turnouts if no server type
 **Version 2.26.108
@@ -528,13 +529,13 @@
  *   added html About page
  */
 /*
- *   TODO: support negative responses to permissions prompts, limiting functionality
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
+ *   TODO: support negative responses to permissions prompts, limiting functionality
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: preserve state on switch between throttle and web view
@@ -545,9 +546,8 @@
  *   TODO: show system turnout option if list arrives while on turnout page
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
- *   TODO: use PTT titles for Turnouts/Turnout
+ *   TODO: use PTT titles for Turnouts/Turnout/Thrown/Closed
  * connection
- *   TODO: investigate <unknown ssid> showing up on my phone
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections

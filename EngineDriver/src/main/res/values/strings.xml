@@ -944,6 +944,7 @@
     <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
     <string name="permissionsReadImages">Engine Driver needs STORAGE permissions to load background images.</string>
     <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>
     <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
     <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
@@ -951,7 +952,7 @@
     <string name="permissionsWriteSettings">Engine Driver needs WRITE SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
-    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COARSE_LOCATION permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
