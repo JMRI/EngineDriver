@@ -55,11 +55,6 @@
         <item>Dolů</item>
         <item>nic</item>
     </string-array>
-
-
-
-
-
     <string-array name="OrientationEntries">  <!-- display version -->
         <item>Na výšku</item>
         <item>Na šířku</item>
