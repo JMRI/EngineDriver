@@ -45,6 +45,11 @@
         <item>Rotation auto</item>
         <item>Auto-Web</item>
     </string-array>
+    <string-array name="WebOrientationEntries">
+        <item>Portrait</item>
+        <item>Paysage</item>
+        <item>Rotation auto</item>
+    </string-array>
 
     <string-array name="NumOfThrottlesEntries">
         <item>Un</item>

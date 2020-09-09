@@ -73,6 +73,17 @@
         <item>Auto-Web</item>
     </string-array>
 
+    <string-array name="WebOrientationEntries">  <!-- display version -->
+        <item>Portrait</item>
+        <item>Landscape</item>
+        <item>Auto-Rotate</item>
+    </string-array>
+    <string-array name="WebOrientationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>Portrait</item>
+        <item>Landscape</item>
+        <item>Auto-Rotate</item>
+    </string-array>
+
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->
         <item >One</item>
         <item >Two</item>
