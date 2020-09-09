@@ -42,6 +42,11 @@
         <item>Rotación automática</item>
         <item>Auto-web</item>
     </string-array>
+    <string-array name="WebOrientationEntries">
+        <item>Vertical</item>
+        <item>Horizontal</item>
+        <item>Rotación automática</item>
+    </string-array>
     <string-array name="NumOfThrottlesEntries">
         <item>Uno</item>
         <item>Dos</item>

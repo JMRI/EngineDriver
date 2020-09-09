@@ -5,6 +5,7 @@
  * don't allow web swipe when Auto-Web is on
  * show "Server Defined", not "Defined" in Turnouts if no server type
  * bypass "EACCES (Permission denied)" error due to SDK29
+ * removed unused Web Orientation option "Auto-Web"
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard

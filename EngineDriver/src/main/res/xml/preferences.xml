@@ -1139,8 +1139,8 @@
         android:title="@string/prefWebTitle" >
         <ListPreference
             android:defaultValue="@string/prefWebOrientationDefaultValue"
-            android:entries="@array/OrientationEntries"
-            android:entryValues="@array/OrientationEntryValues"
+            android:entries="@array/WebOrientationEntries"
+            android:entryValues="@array/WebOrientationEntryValues"
             android:key="WebOrientation"
             android:summary="@string/prefWebOrientationSummary"
             android:title="@string/prefWebOrientationTitle" />

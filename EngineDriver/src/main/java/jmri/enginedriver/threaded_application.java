@@ -2882,7 +2882,6 @@ end force shutdown */
             to = prefs.getString("WebOrientation",
                     threaded_application.context.getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
-//        webMenuSelected= false;
 
         try {
             int co = activity.getRequestedOrientation();
