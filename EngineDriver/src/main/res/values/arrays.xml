@@ -127,30 +127,29 @@
     </string-array>
 
     <integer-array name="prefThrottleScreenTypeMaxThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item >3</item>
-        <item >2</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >2</item>
-        <item >1</item>
-        <item >1</item>
-        <item >6</item>
+        <item >3</item>  <!-- Default -->
+        <item >2</item>  <!-- Vertical -->
+        <item >1</item>  <!-- Big Left -->
+        <item >1</item>  <!-- Big Right -->
+        <item >1</item>  <!-- Vertical Left -->
+        <item >1</item>  <!-- Vertical Right -->
+        <item >2</item>  <!-- Switching -->
+        <item >1</item>  <!-- Switching Left -->
+        <item >1</item>  <!-- Switching Right -->
+        <item >6</item>  <!-- Simple -->
     </integer-array>
 
     <integer-array name="prefThrottleScreenTypeFixedThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item >0</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >1</item>
-        <item >0</item>
+        <item >0</item>  <!-- Default -->
+        <item >1</item>  <!-- Vertical -->
+        <item >1</item>  <!-- Big Left -->
+        <item >1</item>  <!-- Big Right -->
+        <item >1</item>  <!-- Vertical Left -->
+        <item >1</item>  <!-- Vertical Right -->
+        <item >1</item>  <!-- Switching -->
+        <item >1</item>  <!-- Switching Left -->
+        <item >1</item>  <!-- Switching Right -->
+        <item >0</item>  <!-- Simple -->
     </integer-array>
 
     <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
