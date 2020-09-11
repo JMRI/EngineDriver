@@ -808,7 +808,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     private void showHideThrottleNumberPreference() {
         boolean enable = true;
         String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        int index = -1;
+        int index = 0;
         String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
         int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
         for (int i = 0; i < arr.length; i++) {
@@ -817,7 +817,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             }
         }
 
-        if (fixed[index] == 0) {
+        if ((index<fixed.length) && (fixed[index] == 0)) {
             enable = false;
         }
 
