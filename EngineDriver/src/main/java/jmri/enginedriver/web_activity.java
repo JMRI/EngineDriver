@@ -470,6 +470,15 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("scale", scale);   // save in bundle for use if just rotationg
+        if (webView != null) {
+            webView.saveState(outState);            // save in bundle for use if rotating
+        }
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public void onDestroy() {
