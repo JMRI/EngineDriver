@@ -465,6 +465,9 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         super.onPause();
         pauseWebView();
         CookieSyncManager.getInstance().stopSync();
+        if (webView != null) {
+            webView.saveState(webBundle);           // save locally for use if finishing
+        }
     }
 
     @Override
@@ -472,7 +475,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         super.onSaveInstanceState(outState);
         outState.putSerializable("scale", scale);   // save in bundle for use if just rotationg
         if (webView != null) {
-            webView.saveState(webBundle);           // save locally for use if finishing
             webView.saveState(outState);            // save in bundle for use if rotating
         }
     }
