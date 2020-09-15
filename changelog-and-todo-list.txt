@@ -6,6 +6,7 @@
  * show "Server Defined", not "Defined" in Turnouts if no server type
  * bypass "EACCES (Permission denied)" error due to SDK29
  * removed unused Web Orientation option "Auto-Web"
+ * fix: web menu and swipe now remember URL and zoom
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
