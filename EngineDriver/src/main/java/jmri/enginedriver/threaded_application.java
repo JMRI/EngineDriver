@@ -1392,7 +1392,7 @@ public class threaded_application extends Application {
         }
 
         private void witRequestSpeed(int whichThrottle) {
-            withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(whichThrottle), throttleIntToString(whichThrottle)));
+            withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(whichThrottle)));
         }
 
         private void witRequestDir(int whichThrottle) {
