@@ -233,10 +233,6 @@ public class threaded_application extends Application {
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
-    private static final int WHICH_SOURCE_UNKNOWN = 0;
-    private static final int WHICH_SOURCE_ADDRESS = 1;
-    private static final int WHICH_SOURCE_ROSTER = 2;
-
     public boolean shownToastRecentConsists = false;
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
@@ -293,7 +289,7 @@ public class threaded_application extends Application {
                 ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
                 if (si == null || si.getPort() == 0) {
                     Log.d("Engine_Driver", String.format("threaded_application.serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
-                    jmdns.requestServiceInfo(event.getType(), event.getName(), true, (long) 1000);
+                    jmdns.requestServiceInfo(event.getType(), event.getName(), true, 1000);
                 }
             }
 
@@ -731,7 +727,7 @@ public class threaded_application extends Application {
                     case message_type.CONNECTION_COMPLETED_CHECK:
                         //if not successfully connected by this time, kill connection
                         if (connectedHostName==null || connectedHostName.equals("")) {
-                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE, "timeout waiting for VN message, disconnecting");;
+                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE, "timeout waiting for VN message, disconnecting");
                             if (socketWiT != null) {
                                 socketWiT.disconnect(true, true);     //just close the socket
                             }
@@ -1022,7 +1018,7 @@ public class threaded_application extends Application {
                         safeToast(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
                         if ((response_str.contains("Turnout")) || (response_str.contains("create not allowed"))) {
-                            Pattern pattern = Pattern.compile(".*\\\'(.*)\\\'.*");
+                            Pattern pattern = Pattern.compile(".*'(.*)'.*");
                             Matcher matcher = pattern.matcher(response_str);
                             if (matcher.find()) {
                                 sendMsg(turnouts_msg_handler, message_type.WIT_TURNOUT_NOT_DEFINED, matcher.group(1));

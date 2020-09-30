@@ -182,13 +182,11 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         if (mainapp.web_msg_handler != null)
             mainapp.web_msg_handler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
-//        gestureFailed = true;
     }
 
     void gestureFailed(MotionEvent event) {
         // end the gesture
         gestureInProgress = false;
-//        gestureFailed = true;
     }
 
     //
@@ -202,7 +200,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
-//                gestureFailed = true;
                 // create a MOVE event to trigger the underlying control
                 if (webView != null) {
                     // use uptimeMillis() rather than 0 for time in
@@ -299,12 +296,7 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         webView.getSettings().setBuiltInZoomControls(true); //Enable Multitouch if supported
         webView.getSettings().setUseWideViewPort(true);        // Enable greater zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-//        if (savedInstanceState != null) {
-//            if (savedInstanceState.getSerializable("scale") != null) {
-//                scale = (float) savedInstanceState.getSerializable(("scale"));
-//            }
-//        }
-        if (mainapp.firstWebActivity == false) {
+        if (!mainapp.firstWebActivity) {
             webView.clearCache(true);   // force fresh javascript download on first connection
             mainapp.firstWebActivity = true;
         }
@@ -331,8 +323,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
                     }
                     if (firstUrl == null) {                // if this is the first legit url
                         firstUrl = url;
-//                        scale = initialScale;
-//                        webView.setInitialScale((int) (100 * scale));
                         clearHistory = true;
                     }
                     if (clearHistory) {                    // keep clearing history until off this page
@@ -370,12 +360,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
                 }
                 return false;                   // load in webView
             }
-
-//            @Override
-//            public void onScaleChanged(WebView view, float oldScale, float newScale) {
-//                super.onScaleChanged(view, oldScale, newScale);
-//                scale = newScale;
-//            }
         };
 
         noUrl = getApplicationContext().getResources().getString(R.string.blank_page_url);
@@ -387,9 +371,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
             // try remaining methods
             urlRestore(true);
         }
-//        else {
-//            webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
-//        }
 
         //longpress webview to reload
         webView.setOnLongClickListener(new WebView.OnLongClickListener() {
@@ -469,15 +450,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         }
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putSerializable("scale", scale);   // save in bundle for use if just rotationg
-//        if (webView != null) {
-//            webView.saveState(outState);            // save in bundle for use if rotating
-//        }
-//    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -488,7 +460,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
             if (webGroup != null) {
                 webGroup.removeView(webView);
             }
-//            webView.removeAllViews();
         }
         if (mainapp.web_msg_handler !=null) {
             mainapp.web_msg_handler.removeCallbacksAndMessages(null);
@@ -534,7 +505,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         if (key == KeyEvent.KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
                 webView.goBack();
-//                webView.setInitialScale((int) (100 * scale));    // restore scale
                 return true;
             }
             navigateAway();
@@ -628,9 +598,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         if (urlRestoreStep == 1 && webBundle != null && webView.restoreState(webBundle) == null) {
             urlRestoreStep = 2;
         }
-//        else {
-//            webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
-//        }
         // try the pref setting
         if (urlRestoreStep == 2) {
             String url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
@@ -655,7 +622,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     // helper app to initialize statics (in case GC has not run since app last shutdown)
     // call before instantiating any instances of class
     public static void initStatics() {
-//        scale = initialScale;
         clearHistory = false;
         firstUrl = null;
         webBundle = new Bundle();

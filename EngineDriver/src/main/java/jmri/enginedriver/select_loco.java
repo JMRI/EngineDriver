@@ -387,7 +387,6 @@ public class select_loco extends Activity {
 //                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
-                        String com123 = response_str.substring(0 , Math.min(response_str.length(), 3) );
                         if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             roster_list_adapter.notifyDataSetChanged();
                             set_labels();
@@ -661,7 +660,7 @@ public class select_loco extends Activity {
             importExportPreferences.getRecentConsistsListFromFile();
             for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
-                hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i).toString(),
+                hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i),
                                 false));
                 hm.put("consist", mainapp.locoAndConsistNamesCleanupHtml(importExportPreferences.consistNameList.get(i)));
                 recent_consists_list.add(hm);
@@ -784,7 +783,7 @@ public class select_loco extends Activity {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.loco_address);
             try {
-                engine_address = Integer.valueOf(entry.getText().toString());
+                engine_address = Integer.parseInt(entry.getText().toString());
             } catch (NumberFormatException e) {
                 Toast.makeText(getApplicationContext(), "ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 return;
@@ -1012,7 +1011,7 @@ public class select_loco extends Activity {
                         ? address_type.LONG
                         : address_type.SHORT;   // convert S/L to 0/1
                 try {
-                    engine_address = Integer.valueOf(ras[0]);   // convert address to int
+                    engine_address = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(), "ERROR - could not parse address\n" + e.getMessage(),
                             Toast.LENGTH_SHORT).show();

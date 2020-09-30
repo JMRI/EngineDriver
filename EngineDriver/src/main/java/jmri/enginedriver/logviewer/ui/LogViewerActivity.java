@@ -158,8 +158,6 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
-//                process = Runtime.getRuntime().exec("logcat -f /engine_driver/log.txt" );
-//            String x = getApplicationContext().getResources().getString(R.string.toastSaveLogFile, ENGINE_DRIVER_DIR+ "logcat" + System.currentTimeMillis() + ".txt") ;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, ENGINE_DRIVER_DIR+ "logcat" + System.currentTimeMillis() + ".txt"), Toast.LENGTH_LONG).show();
         } catch ( IOException e ) {
             e.printStackTrace();

@@ -62,7 +62,7 @@ public class about_page extends Activity {
             }
             s += String.format("\nHost: %s", mainapp.host_ip);
             //show server type and description if set
-            String sServer = "";
+            String sServer;
             if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
                 sServer = mainapp.getServerDescription();
             } else {

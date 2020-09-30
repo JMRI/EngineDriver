@@ -9,6 +9,7 @@
  * fix: web menu and swipe now remember URL and zoom
  * remove save and restore of web view "scale", no longer needed
  * send speed and direction request in one message
+ * some linting and commented-out-code removal
 **Version 2.26.108
  * get server name for prefs using webserver
  * Add Numeric/Text button on Connect soft keyboard
