@@ -1372,7 +1372,7 @@ public class threaded_application extends Application {
             }
 
             //log message
-            Log.d("Engine_Driver", "-->:" + msg);
+            Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n","\u21B5")); //replace newline with cr arrow
 
             //perform the send
             if (socketWiT != null) {
@@ -1397,6 +1397,10 @@ public class threaded_application extends Application {
 
         private void witRequestDir(int whichThrottle) {
             withrottle_send(String.format("M%sA*<;>qR", throttleIntToString(whichThrottle)));
+        }
+
+        private void witRequestSpeedAndDir(int whichThrottle) {
+            withrottle_send(String.format("M%sA*<;>qV\nM%sA*<;>qR", throttleIntToString(whichThrottle), throttleIntToString(whichThrottle)));
         }
 
         public void run() {
@@ -1800,8 +1804,7 @@ public class threaded_application extends Application {
                         boolean anySent = false;
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
-                                witRequestSpeed(i);
-                                witRequestDir(i);
+                                witRequestSpeedAndDir(i);
                                 anySent = true;
                             }
                         }
