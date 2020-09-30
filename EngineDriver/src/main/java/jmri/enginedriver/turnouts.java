@@ -76,9 +76,6 @@ public class turnouts extends Activity implements OnGestureListener {
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
 
-    private static final int GONE = 8;
-    //  private static final int VISIBLE = 0;
-
     private ArrayList<HashMap<String, String>> turnoutsFullList;
     private ArrayList<HashMap<String, String>> turnouts_list;
     private SimpleAdapter turnouts_list_adapter;
@@ -90,15 +87,13 @@ public class turnouts extends Activity implements OnGestureListener {
     private GestureDetector myGesture;
     private Menu TuMenu;
 
-//    private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
-    private static final int WHICH_SOURCE_RECENT = 2;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
     private static final String WHICH_METHOD_ROSTER = "2";
-//    private static final String WHICH_METHOD_RECENT = "3";
+
     String prefSelectTurnoutsMethod = "0";
     String currentSelectTurnoutMethod = "0";
     String lastTurnoutUsedName = "XYZZY";
@@ -213,12 +208,8 @@ public class turnouts extends Activity implements OnGestureListener {
                             ViewGroup vg = (ViewGroup) turnouts_lv.getChildAt(i);  //start with the list item the button belongs to
                             if (vg!=null) {
                                 ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
-//                                TextView source = (TextView) rl.getChildAt(2); // get source from 3nd (hidden) box
-                                TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
                                 TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
-//                                String rowSystemName = snv.getText().toString();
                                 String rowUserName = unv.getText().toString();
-//                                int src = WHICH_SOURCE_ROSTER;
 
                                 if (username.equals(rowUserName)) {
                                     Button b = vg.findViewById(R.id.to_current_state_desc);
@@ -310,7 +301,7 @@ public class turnouts extends Activity implements OnGestureListener {
     class turnouts_handler extends Handler {
 
         public void handleMessage(Message msg) {
-            String response_str ="";
+            String response_str;
             switch (msg.what) {
                 case message_type.RESPONSE:
                     response_str = msg.obj.toString();
@@ -374,7 +365,6 @@ public class turnouts extends Activity implements OnGestureListener {
                 //otherwise send the text as is
                 if (Character.isDigit(entrytext.charAt(0))) {
                     try {
-                        //noinspection ResultOfMethodCallIgnored
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
                         Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
@@ -1197,7 +1187,7 @@ public class turnouts extends Activity implements OnGestureListener {
         }
 
         if (importExportPreferences.recent_turnout_address_list.size()==0) {
-            importExportPreferences.deleteFile(importExportPreferences.RECENT_TURNOUTS_FILENAME);
+            importExportPreferences.deleteFile(ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
             importExportPreferences.writeRecentTurnoutsListToFile(prefs);
         }

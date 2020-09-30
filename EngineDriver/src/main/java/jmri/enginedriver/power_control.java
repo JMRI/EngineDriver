@@ -125,13 +125,12 @@ public class power_control extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
-//      SharedPreferences prefs  = getSharedPreferences("jmri.enginedriver_preferences", 0);
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)); // needed in case the langauge was changed from the default
+        setTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)); // needed in case the language was changed from the default
 
         setContentView(R.layout.power_control);
 

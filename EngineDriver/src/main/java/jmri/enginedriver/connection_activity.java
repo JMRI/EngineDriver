@@ -89,8 +89,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private static final String DUMMY_ADDRESS = "999";
     private static final int DUMMY_PORT = 999;
 
-    private boolean prefHideDemoServer = false;
-
     private static Method overridePendingTransition;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
@@ -197,7 +195,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
                         connected_hostname = hnv.getText().toString();
                         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-                        connected_port = Integer.valueOf(hpv.getText().toString());
+                        connected_port = Integer.parseInt(hpv.getText().toString());
                         break;
                 }
                 connect();
@@ -238,7 +236,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                 if (connected_hostip.trim().length() > 0) {
                     entry = findViewById(R.id.port);
                     try {
-                        connected_port = Integer.valueOf(entry.getText().toString());
+                        connected_port = Integer.parseInt(entry.getText().toString());
                     } catch (Exception except) {
                         Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                         connected_port = 0;
@@ -256,19 +254,13 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             //When a connection swiped , remove it from the list
             ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
             TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
-            //connected_hostip = hip.getText().toString();
             TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
-            //connected_hostname = hnv.getText().toString();
             TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-            //connected_port = Integer.valueOf(hpv.getText().toString());
-            //Log.d("Engine_Driver", "connection.longClick " + connected_hostip );
             if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
                 getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
                 connected_hostip = DUMMY_ADDRESS;
                 connected_hostname = DUMMY_HOST;
                 connected_port = DUMMY_PORT;
-//            new saveConnectionsList().execute();
 
                 Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
                 anim.setDuration(500);
@@ -306,7 +298,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
                     if (connected_hostip.trim().length() > 0) {
                         try {
-                            connected_port = Integer.valueOf(tm.get("port"));
+                            connected_port = Integer.parseInt(tm.get("port"));
                         } catch (Exception except) {
                             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                             connected_port = 0;
@@ -425,7 +417,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
             setContentView(R.layout.connection);
 
-            prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
+            boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
 
             //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
             discovery_list = new ArrayList<>();
@@ -786,9 +778,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
         }
 
         private void getConnectionsListImpl(String addressToRemove, String portToRemove) {
-            boolean foundDemoHost = false;
             importExportConnectionList.connections_list.clear();
-            String errMsg;
 
             if (prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
 
