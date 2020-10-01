@@ -1,3 +1,4 @@
+**Version 2.26.114
 **Version 2.26.110
  * add HTservertype and Htserverdescription to About page
  * change targetSdkVersion from 28 to 29
