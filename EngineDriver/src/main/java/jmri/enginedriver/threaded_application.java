@@ -1696,8 +1696,8 @@ public class threaded_application extends Application {
             //  If the HeartbeatValueFromServer is 0 then set heartbeatOutboundInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL,
             //    and set heartbeatInboundInterval = 0, to disable the inbound heartbeat checks
             //
-            //  Otherwise, set heartbeatOutboundInterval to HeartbeatValueFromServer / HEARTBEAT_RESPONSE_ALLOWANCE,
-            //    and set heartbeatInboundInterval to HeartbeatValueFromServer * HEARTBEAT_RESPONSE_ALLOWANCE
+            //  Otherwise, set heartbeatOutboundInterval to HeartbeatValueFromServer * HEARTBEAT_RESPONSE_ALLOWANCE,
+            //    and set heartbeatInboundInterval to HeartbeatValueFromServer / HEARTBEAT_RESPONSE_ALLOWANCE
             //
             //  Insure both values are between MIN_OUTBOUND_HEARTBEAT_INTERVAL and MAX_OUTBOUND_HEARTBEAT_INTERVAL
 
