@@ -619,7 +619,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Error en iniciar el fluxe del socket_WiT: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Error en crear el fluxe de sortida, Excepció IO: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error dormint el fluxe de sortida, Excepció Interrumpida: %1$s</string>
-    <string name="statusThreadedAppNoResponse">No hi ha hagut resposta des del servidor %1$s:%2$s en %3$s segons. Verifica que el servidor WiThrottle s\'estigui executant.\n\nReintenta</string>
+    <string name="statusThreadedAppNoResponse">No hi ha hagut resposta des del servidor %1$s:%2$s en %3$dms. Verifica que el servidor WiThrottle s\'estigui executant.\n\nReintenta</string>
     <string name="statusThreadedAppUnableToConnect">No s\'ha pogut connectar al servidor a %1$s:%2$s des de %3$s.\n\nReintentant</string>
     <string name="functionButtonLookForWhistle">XIULET</string>
     <string name="functionButtonLookForHorn">BOTZINA</string>

@@ -164,16 +164,18 @@ public class threaded_application extends Application {
     public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
-    static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10;       //interval for outbound heartbeat when WiT heartbeat is disabled
-    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for outbound heartbeat generator
-    static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30;  //maximum allowed interval for outbound heartbeat generator
-    static final int HEARTBEAT_RESPONSE_ALLOWANCE = 1;      //worst case time delay for WiT to respond to a heartbeat message
-    static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1;   //minimum allowed interval for (enabled) inbound heartbeat generator
-    static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60;  //maximum allowed interval for inbound heartbeat generator
-    public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (seconds)
+    //all heartbeat values are in milliseconds
+    static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10000; //interval for outbound heartbeat when WiT heartbeat is disabled
+    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for outbound heartbeat generator
+    static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30000;  //maximum allowed interval for outbound heartbeat generator
+    static final double HEARTBEAT_RESPONSE_FACTOR = 0.9;   //adjustment for inbound and outbound timers
+    static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for (enabled) inbound heartbeat generator
+    static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60000;  //maximum allowed interval for inbound heartbeat generator
+    public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
+
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
-    static final long WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval between messages sent to WiThrottle server, in milliseconds
+    static final int WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval (ms) between messages sent to WiThrottle server, in milliseconds
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
@@ -437,7 +439,7 @@ public class threaded_application extends Application {
             if (!sent)
                 service_message.recycle();
 
-            Log.d("Engine_Driver", String.format("threaded_application: added DigiTrax LnWi at %s to Discovered List", server_addr));
+            Log.d("Engine_Driver", String.format("t_a: added DigiTrax LnWi at %s to Discovered List", server_addr));
 
         }
 
@@ -501,7 +503,7 @@ public class threaded_application extends Application {
                         //avoid duplicate connects, seen when user clicks address multiple times quickly
                         if (socketWiT != null && socketWiT.SocketGood()
                                 && new_host_ip.equals(host_ip) && new_port == port) {
-                            Log.d("Engine_Driver", "threaded_application: Duplicate CONNECT message received.");
+                            Log.d("Engine_Driver", "t_a: Duplicate CONNECT message received.");
                             break;
                         }
 
@@ -576,9 +578,9 @@ public class threaded_application extends Application {
                     }
                     //Disconnect from the WiThrottle server and Shutdown
                     case message_type.DISCONNECT: {
-                        Log.d("Engine_Driver", "threaded_application: TA Disconnect");
+                        Log.d("Engine_Driver", "t_a: TA Disconnect");
                         doFinish = true;
-                        Log.d("Engine_Driver", "threaded_application: TA alert all activities to shutdown");
+                        Log.d("Engine_Driver", "t_a: TA alert all activities to shutdown");
                         alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
                         stoppingConnection();
 
@@ -605,7 +607,7 @@ public class threaded_application extends Application {
                     //Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
                     //Optional rostername if present is separated from the address by the proper delimiter
                     case message_type.REQ_LOCO_ADDR: {
-                        long delays = 0;
+                        int delays = 0;
                         final String addr = msg.obj.toString();
                         final int whichThrottle = msg.arg1;
                         if (prefs.getBoolean("drop_on_acquire_preference",
@@ -852,7 +854,7 @@ public class threaded_application extends Application {
         /* ask for specific loco to be added to a throttle
              input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
              msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
-        private void acquireLoco(String addr, int whichThrottle, long interval) {
+        private void acquireLoco(String addr, int whichThrottle, int interval) {
             String rosterName;
             String address;
             String[] as = splitByString(addr, "<;>");
@@ -866,7 +868,7 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-            Log.d("Engine_Driver", "threaded_application: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
+            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
             sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
 
             if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
@@ -933,7 +935,7 @@ public class threaded_application extends Application {
                 //handle responses from MultiThrottle function
                 case 'M': {
                     if (response_str.length() < 5) { //must be at least Mtxs9
-                        Log.d("Engine_Driver", "threaded_application: invalid response string: '" + response_str + "'");
+                        Log.d("Engine_Driver", "t_a: invalid response string: '" + response_str + "'");
                         break;
                     }
                     String sWhichThrottle = response_str.substring(1, 2);
@@ -953,13 +955,13 @@ public class threaded_application extends Application {
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = splitByString(consistname, "+");
                             String cmd = String.format("M%sA%s<;>C%s", throttleIntToString(whichThrottle), addr, cvtToLAddr(cna[0]));
-                            Log.d("Engine_Driver", "threaded_application: rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
+                            Log.d("Engine_Driver", "t_a: rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
                             withrottle_send(cmd);
                         }
 
                     } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                         consists[whichThrottle].remove(addr);
-                        Log.d("Engine_Driver", "threaded_application: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
+                        Log.d("Engine_Driver", "t_a: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
                         if (consists[whichThrottle].isLeadFromRoster()) { // if not from the roster ignore the function labels that WiT has sent back
@@ -980,7 +982,7 @@ public class threaded_application extends Application {
                         }
 
                     } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                        Log.d("Engine_Driver", "threaded_application: rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
+                        Log.d("Engine_Driver", "t_a: rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
                         sendMsg(throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
                     }
 
@@ -1032,9 +1034,9 @@ public class threaded_application extends Application {
 
                 case '*':
                     try {
-                        heartbeatInterval = Integer.parseInt(response_str.substring(1));  //set app variable
+                        heartbeatInterval = Integer.parseInt(response_str.substring(1))*1000;  //convert to milliseconds
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application: process response: invalid WiT hearbeat string");
+                        Log.d("Engine_Driver", "t_a: process response: invalid WiT hearbeat string");
                         heartbeatInterval = 0;
                     }
                     heart.startHeartbeat(heartbeatInterval);
@@ -1122,7 +1124,7 @@ public class threaded_application extends Application {
                             try {
                                 web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
                             } catch (Exception e) {
-                                Log.d("Engine_Driver", "threaded_application: process response: invalid web server port string");
+                                Log.d("Engine_Driver", "t_a: process response: invalid web server port string");
                             }
                             if (oldPort == web_server_port) {
                                 skipAlert = true;
@@ -1147,7 +1149,7 @@ public class threaded_application extends Application {
         //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
         private void process_roster_function_string(String response_str, int whichThrottle) {
 
-            Log.d("Engine_Driver", "threaded_application: processing function labels for " + throttleIntToString(whichThrottle));
+            Log.d("Engine_Driver", "t_a: processing function labels for " + throttleIntToString(whichThrottle));
             String[] ta = splitByString(response_str, "]\\[");  //split into list of labels
 
             //populate a temp label array from RF command string
@@ -1181,7 +1183,7 @@ public class threaded_application extends Application {
                     try {
                         roster_entries.put(tv[0], tv[1] + "(" + tv[2] + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application: process_roster_list caught Exception");  //ignore any bad stuff in roster entries
+                        Log.d("Engine_Driver", "t_a: process_roster_list caught Exception");  //ignore any bad stuff in roster entries
                     }
                 }  //end if i>0
                 i++;
@@ -1211,7 +1213,7 @@ public class threaded_application extends Application {
                 }  //end if i==0
                 i++;
             }  //end for
-            Log.d("Engine_Driver", "threaded_application: consist header, addr=" + consist_addr
+            Log.d("Engine_Driver", "t_a: consist header, addr=" + consist_addr
                     + ", name=" + consist_name + ", desc=" + consist_desc);
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
@@ -1360,7 +1362,7 @@ public class threaded_application extends Application {
         //
         //send formatted msg to the socket using multithrottle format
         private void withrottle_send(String msg) {
-//            Log.d("Engine_Driver", "threaded_application: WiT send '" + msg + "'");
+//            Log.d("Engine_Driver", "t_a: WiT send '" + msg + "'");
 
             if (msg == null) {
                 Log.d("Engine_Driver", "--> null msg");
@@ -1450,7 +1452,7 @@ public class threaded_application extends Application {
                 if (socketOk) {
                     try {
                         //look for someone to answer on specified socket, and set timeout
-                        Log.d("Engine_Driver", "threaded_application: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                        Log.d("Engine_Driver", "t_a: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                         clientSocket = new Socket();
                         InetSocketAddress sa = new InetSocketAddress(host_ip, port);
                         clientSocket.connect(sa, connectTimeoutMs);
@@ -1537,7 +1539,7 @@ public class threaded_application extends Application {
                     try {
                         clientSocket.close();
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application: Error closing the Socket: " + e.getMessage());
+                        Log.d("Engine_Driver", "t_a: Error closing the Socket: " + e.getMessage());
                     }
                 }
             }
@@ -1560,7 +1562,7 @@ public class threaded_application extends Application {
                             socketGood = this.SocketCheck();
                         } catch (IOException e) {
                             if (socketGood) {
-                                Log.d("Engine_Driver", "threaded_application: WiT rcvr error.");
+                                Log.d("Engine_Driver", "t_a: WiT rcvr error.");
                                 socketGood = false;     //input buffer error so force reconnection on next send
                             }
                         }
@@ -1570,7 +1572,7 @@ public class threaded_application extends Application {
                     }
                 }
                 heart.stopHeartbeat();
-                Log.d("Engine_Driver", "threaded_application: socket_WiT exit.");
+                Log.d("Engine_Driver", "t_a: socket_WiT exit.");
             }
 
             void Send(String msg) {
@@ -1581,13 +1583,13 @@ public class threaded_application extends Application {
 //                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
                         status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
-                        Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
+                        Log.d("Engine_Driver", "t_a: WiT send reconnection attempt.");
                     } else if (inboundTimeout) {
-                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.sGetInboundInterval());
-                        Log.d("Engine_Driver", "threaded_application: WiT receive reconnection attempt.");
+                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.getInboundInterval());
+                        Log.d("Engine_Driver", "t_a: WiT receive reconnection attempt.");
                     } else {
                         status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
-                        Log.d("Engine_Driver", "threaded_application: WiT send reconnection attempt.");
+                        Log.d("Engine_Driver", "t_a: WiT send reconnection attempt.");
                     }
                     socketGood = false;
 
@@ -1611,12 +1613,12 @@ public class threaded_application extends Application {
 //                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
-                            Log.d("Engine_Driver", "threaded_application: WiT reconnection successful.");
+                            Log.d("Engine_Driver", "t_a: WiT reconnection successful.");
                             clearInboundTimeout();
                             heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                         }
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application: WiT xmtr error.");
+                        Log.d("Engine_Driver", "t_a: WiT xmtr error.");
                         socketGood = false;             //output buffer error so force reconnection on next send
                     }
                 }
@@ -1664,7 +1666,7 @@ public class threaded_application extends Application {
 
             void InboundTimeout() {
                 if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
-                    Log.d("Engine_Driver", "threaded_application: WiT max inbound timeouts");
+                    Log.d("Engine_Driver", "t_a: WiT max inbound timeouts");
                     inboundTimeout = true;
                     inboundTimeoutRetryCount = 0;
                     inboundTimeoutRecovery = false;
@@ -1672,7 +1674,8 @@ public class threaded_application extends Application {
                     comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
                 }
                 else {
-                    Log.d("Engine_Driver", "threaded_application: WiT inbound timeout number: " + Integer.toString(inboundTimeoutRetryCount));
+                    Log.d("Engine_Driver", "t_a: WiT inbound timeout " +
+                            Integer.toString(inboundTimeoutRetryCount) + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
                     // heartbeat should trigger a WiT reply so force that now
                     inboundTimeoutRecovery = true;
                     comm_msg_handler.post(heart.outboundHeartbeatTimer);
@@ -1688,22 +1691,19 @@ public class threaded_application extends Application {
 
         class heartbeat {
             //  outboundHeartbeat - send a periodic heartbeat to WiT to show that ED is alive.
-            //
             //  inboundHeartbeat - WiT doesn't send a heartbeat to ED, so send a periodic message to WiT that requires a response.
             //
-            //  If the WiT heartbeat interval = 0 then use DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL.
+            //  If the HeartbeatValueFromServer is 0 then set heartbeatOutboundInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL,
+            //    and set heartbeatInboundInterval = 0, to disable the inbound heartbeat checks
             //
-            //  If the WiT heartbeat is >= (MIN_OUTBOUND_HEARTBEAT_INTERVAL + HEARTBEAT_RESPONSE_ALLOWANCE) 
-            //  then set the outbound heartbeat rate to (WiT heartbeat - HEARTBEAT_RESPONSE_ALLOWANCE)
+            //  Otherwise, set heartbeatOutboundInterval to HeartbeatValueFromServer / HEARTBEAT_RESPONSE_ALLOWANCE,
+            //    and set heartbeatInboundInterval to HeartbeatValueFromServer * HEARTBEAT_RESPONSE_ALLOWANCE
             //
-            //  Else the outbound heartbeat rate to MIN_OUTBOUND_HEARTBEAT_INTERVAL.
-            //
-            //  The inbound heartbeat rate is set to (outbound heartbeat rate + HEARTBEAT_RESPONSE_ALLOWANCE)
+            //  Insure both values are between MIN_OUTBOUND_HEARTBEAT_INTERVAL and MAX_OUTBOUND_HEARTBEAT_INTERVAL
 
-            private int heartbeatIntervalSetpoint = 0;      //WiT heartbeat interval in seconds
+            private int heartbeatIntervalSetpoint = 0;      //WiT heartbeat interval in msec
             private int heartbeatOutboundInterval = 0;      //sends outbound heartbeat message at this rate (msec)
             private int heartbeatInboundInterval = 0;       //alerts user if there was no inbound traffic for this long (msec)
-            private String sInboundInterval = "";           //inbound heartbeat interval in seconds
 
             int getInboundInterval() {
                 return heartbeatInboundInterval;
@@ -1713,36 +1713,30 @@ public class threaded_application extends Application {
                 return heartbeatOutboundInterval;
             }
 
-            String sGetInboundInterval() {
-                return sInboundInterval;
-            }
-
-
-
             /***
-             * startHeartbeat(timeoutInterval in seconds)
+             * startHeartbeat(timeoutInterval in milliseconds)
              * calcs the inbound and outbound intervals and starts the beating
              *
-             * @param timeoutInterval the WiT timeoutInterval
+             * @param timeoutInterval the WiT timeoutInterval in milliseconds
              */
             void startHeartbeat(int timeoutInterval) {
                 //update interval timers only when the heartbeat timeout interval changed
                 if (timeoutInterval != heartbeatIntervalSetpoint) {
                     heartbeatIntervalSetpoint = timeoutInterval;
 
-                    // outbound interval
+                    // outbound interval (in ms)
                     int outInterval;
                     if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
                         outInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
                     } else {
-                        outInterval = heartbeatIntervalSetpoint - HEARTBEAT_RESPONSE_ALLOWANCE;
+                        outInterval = (int)(heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
                         //keep values in a reasonable range
                         if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
                             outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
                         if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
                             outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
                     }
-                    heartbeatOutboundInterval = outInterval * 1000;     //convert to milliseconds
+                    heartbeatOutboundInterval = outInterval;
 
                     // inbound interval
                     int inInterval = heartbeatInterval;
@@ -1753,12 +1747,12 @@ public class threaded_application extends Application {
                         if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
                         if (inInterval < outInterval)
-                            inInterval = outInterval + HEARTBEAT_RESPONSE_ALLOWANCE;
+                            inInterval = (int) (outInterval / HEARTBEAT_RESPONSE_FACTOR);
                         if (inInterval > MAX_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MAX_INBOUND_HEARTBEAT_INTERVAL;
                     }
-                    heartbeatInboundInterval = inInterval * 1000;       //convert to milliseconds
-                    sInboundInterval = Integer.toString(inInterval);    // seconds
+                    heartbeatInboundInterval = inInterval;
+                    //sInboundInterval = Integer.toString(inInterval);    // seconds
 
                     restartOutboundInterval();
                     restartInboundInterval();
@@ -1787,7 +1781,7 @@ public class threaded_application extends Application {
                 comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
                 comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
                 heartbeatIntervalSetpoint = 0;
-                Log.d("Engine_Driver", "threaded_application: heartbeat stopped.");
+                Log.d("Engine_Driver", "t_a: heartbeat stopped.");
             }
 
             //outboundHeartbeatTimer()
@@ -1852,7 +1846,7 @@ public class threaded_application extends Application {
                 if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                     if (prefs.getBoolean("stop_on_phonecall_preference",
                             getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-                        Log.d("Engine_Driver", "threaded_application: Phone is OffHook, Stopping Trains");
+                        Log.d("Engine_Driver", "t_a: Phone is OffHook, Stopping Trains");
                         for (int i = 0; i < numThrottles; i++) {
                             if (consists[i].isActive()) {
                                 witSetSpeedZero(i);
@@ -2116,7 +2110,7 @@ end force shutdown */
             HashMap<String, RosterEntry> rosterTemp;
             if (rosterUrl == null || rosterUrl.equals("") || dl.cancel)
                 return;
-            Log.d("Engine_Driver", "threaded_application: Background loading roster from " + rosterUrl);
+            Log.d("Engine_Driver", "t_a: Background loading roster from " + rosterUrl);
             int rosterSize;
             try {
                 RosterLoader rl = new RosterLoader(rosterUrl);
@@ -2129,7 +2123,7 @@ end force shutdown */
             } catch (Exception e) {
                 throw new IOException();
             }
-            Log.d("Engine_Driver", "threaded_application: Loaded " + rosterSize + " entries from /roster/?format=xml.");
+            Log.d("Engine_Driver", "t_a: Loaded " + rosterSize + " entries from /roster/?format=xml.");
         }
     }
 
@@ -2140,14 +2134,14 @@ end force shutdown */
             String metaUrl = createUrl("json/metadata");
             if (metaUrl == null || metaUrl.equals("") || dl.cancel)
                 return;
-            Log.d("Engine_Driver", "threaded_application: Background loading metadata from " + metaUrl);
+            Log.d("Engine_Driver", "t_a: Background loading metadata from " + metaUrl);
 
             HttpClient Client = new DefaultHttpClient();
             HttpGet httpget = new HttpGet(metaUrl);
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             String jsonResponse;
             jsonResponse = Client.execute(httpget, responseHandler);
-            Log.d("Engine_Driver", "threaded_application: Raw metadata retrieved: " + jsonResponse);
+            Log.d("Engine_Driver", "t_a: Raw metadata retrieved: " + jsonResponse);
 
             HashMap<String, String> metadataTemp = new HashMap<>();
             try {
@@ -2159,15 +2153,15 @@ end force shutdown */
                     metadataTemp.put(metadataName, metadataValue);
                 }
             } catch (JSONException e) {
-                Log.d("Engine_Driver", "threaded_application: exception trying to retrieve json metadata.");
+                Log.d("Engine_Driver", "t_a: exception trying to retrieve json metadata.");
             } catch (Exception e) {
                 throw new IOException();
             }
             if (metadataTemp.size() == 0) {
-                Log.d("Engine_Driver", "threaded_application: did not retrieve any json metadata entries.");
+                Log.d("Engine_Driver", "t_a: did not retrieve any json metadata entries.");
             } else {
                 jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-                Log.d("Engine_Driver", "threaded_application: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
+                Log.d("Engine_Driver", "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
             }
         }
     }
@@ -2185,20 +2179,20 @@ end force shutdown */
                 try {
                     runMethod(this);
                     if (!cancel) {
-                        Log.d("Engine_Driver", "threaded_application: sendMsg - message - ROSTER_UPDATE");
+                        Log.d("Engine_Driver", "t_a: sendMsg - message - ROSTER_UPDATE");
                         sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
                     }
                 } catch (Throwable t) {
-                    Log.d("Engine_Driver", "threaded_application: Data fetch failed: " + t.getMessage());
+                    Log.d("Engine_Driver", "t_a: Data fetch failed: " + t.getMessage());
                 }
 
                 // background load of Data completed
                 finally {
                     if (cancel) {
-                        Log.d("Engine_Driver", "threaded_application: Data fetch cancelled");
+                        Log.d("Engine_Driver", "t_a: Data fetch cancelled");
                     }
                 }
-                Log.d("Engine_Driver", "threaded_application: Data fetch ended");
+                Log.d("Engine_Driver", "t_a: Data fetch ended");
             }
 
             Download() {
@@ -2667,7 +2661,7 @@ end force shutdown */
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;
-                Log.d("Engine_Driver", "threaded_application: EStop sent to server for " + i);
+                Log.d("Engine_Driver", "t_a: EStop sent to server for " + i);
             }
         }
     }
@@ -2778,7 +2772,7 @@ end force shutdown */
         int port = web_server_port;
         if (getServerType().equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
             defaultUrl = "";
-            Log.d("Engine_Driver", "threaded_application: ignoring web url for MRC");
+            Log.d("Engine_Driver", "t_a: ignoring web url for MRC");
         }
         if (port > 0) {
             if (defaultUrl.startsWith("http")) { //if url starts with http, use it as is
