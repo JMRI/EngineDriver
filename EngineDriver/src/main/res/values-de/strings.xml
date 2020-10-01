@@ -483,7 +483,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Fehler beim Starten von socket_WiT-Thread: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Fehler beim Erstellen des Ausgabestreams, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Fehler beim Einschläfern des Threads, InterruptedException: %1$s</string>
-    <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$s Sekunden. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
+    <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$dms. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
     <string name="statusThreadedAppUnableToConnect">Kann nicht mit Server unter %1$s:%2$s von %3$s verbinden.\n\nVersuche erneut</string>
 
     <string name="toastUnableToSetBrightness">Auto Helligkeit/ Adaptive Helligkeit kann nicht gesetzt werden</string>

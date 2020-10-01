@@ -682,7 +682,7 @@
     <string name="toastThreadedAppErrorSleepingThread">Chyba spícího vlákna, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Používáte síť %1$s, není WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
-    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$s sekundy. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
+    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
 
     <!--    Toast messages for the Throttle page-->

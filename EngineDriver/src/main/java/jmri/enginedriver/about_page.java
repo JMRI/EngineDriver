@@ -58,7 +58,7 @@ public class about_page extends Activity {
             // WiT info
             if (mainapp.withrottle_version != 0.0) {
                 s += "\nWiThrottle: v" + mainapp.withrottle_version;
-                s += String.format("    Heartbeat: %d secs", mainapp.heartbeatInterval);
+                s += String.format("    Heartbeat: %dms", mainapp.heartbeatInterval);
             }
             s += String.format("\nHost: %s", mainapp.host_ip);
             //show server type and description if set
