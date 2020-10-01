@@ -700,7 +700,8 @@ public class ImportExportPreferences {
         ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
 
         //if not updating list or no SD Card present then nothing else to do
-        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+        if ( (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
+            || (consist == null) )
             return -1;
 
         Collection<Consist.ConLoco> conLocos = consist.getLocos();
