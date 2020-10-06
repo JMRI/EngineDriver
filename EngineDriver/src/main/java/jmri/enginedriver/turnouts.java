@@ -199,7 +199,6 @@ public class turnouts extends Activity implements OnGestureListener {
                     boolean hasUserName = (username != null && !username.equals(""));
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get values from global array
-//                        String systemName = mainapp.to_system_names[pos];
                         String currentState = mainapp.to_states[pos];
                         String currentStateDesc = getCurrentStateDesc(currentState);
 
@@ -226,7 +225,6 @@ public class turnouts extends Activity implements OnGestureListener {
                 }
             }
         }
-//        updateTurnoutEntry();
     }
 
     @SuppressWarnings("unchecked")
@@ -313,6 +311,10 @@ public class turnouts extends Activity implements OnGestureListener {
                             refresh_turnout_view();
                             refreshTurnoutViewStates();
                             refreshRecentTurnoutView();
+                            //show server list first time it arrives
+                            if ("PTL".equals(com1) && !mainapp.shownRosterTurnouts) {
+                                showMethod(WHICH_METHOD_ROSTER);
+                            }
                         }
                         //update power icon
                         if ("PPA".equals(com1)) {
@@ -370,17 +372,8 @@ public class turnouts extends Activity implements OnGestureListener {
                         Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    //use preference for system name in command string unless system is MRC
-//                    if (!mainapp.getServerType().equals("MRC")) {
-//                        String hs = prefs.getString("hardware_system", getApplicationContext().getResources().getString(R.string.prefHardwareSystemDefaultValue));
-//                        entrytext = hs + "T" + entrytext;
-//                    }
                 }
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutCommandTo,
-//                        (whichCommand == 'C' ? getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToClose) : whichCommand == 'T' ? getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToThrow) : getApplicationContext().getResources().getString(R.string.toastTurnoutCommandToToggle))) +
-//                        " " + entrytext,
-//                        Toast.LENGTH_SHORT).show();
 
                 turnoutSystemName = entrytext;
                 turnoutUserName = entrytext;
@@ -390,7 +383,6 @@ public class turnouts extends Activity implements OnGestureListener {
                 if (importExportPreferences.recent_turnout_address_list.size()>0) {
                     if (!turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(0))) {
                         reloadRecents = true;
-//                        loadRecentTurnoutsList();
                     }
                 } else {
                     reloadRecents = true;
@@ -458,12 +450,6 @@ public class turnouts extends Activity implements OnGestureListener {
     public boolean onTouchEvent(MotionEvent event) {
         return myGesture.onTouchEvent(event);
     }
-
-//    public void setTitleToIncludeThrotName() {
-//        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//        setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts) + "    |    Throttle Name: " +
-//                prefs.getString("throttle_name_preference", defaultName));
-//    }
 
     /**
      * Called when the activity is first created.
@@ -600,24 +586,21 @@ public class turnouts extends Activity implements OnGestureListener {
         llAddress = findViewById(R.id.enter_turnout_address_group);
         llRoster = findViewById(R.id.turnouts_from_roster_group);
         llRecent = findViewById(R.id.turnouts_recent_group);
+        mainapp.shownRosterTurnouts = false;
 
         // -------------------------------------------------------------------
 
-        // Set up a list adapter to allow adding the list of recent consists to the UI.
+        // Set up a list adapter to allow adding the list of recent turnouts to the UI.
         recentTurnoutsList = new ArrayList<>();
         recentTurnoutsListAdapter = new RecentTurnoutsSimpleAdapter(this, recentTurnoutsList, R.layout.turnouts_recent_item,
                 new String[]{"to_recent_user_name", "to_recent_system_name"},
-                // , "to_current_state_desc"
                 new int[]{R.id.to_recent_user_name, R.id.to_recent_system_name}) {
-                // , R.id.to_current_state_desc
 
             //set up listener for each Throw state button
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
                 if (row != null) {
-//                    View v = row.findViewById(R.id.to_recent_item);
-//                    v.setOnLongClickListener(new onRecentTurnoutsListItemLongClick());
 
                     Button b = row.findViewById(R.id.turnout_recent_throw);
                     b.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_THROW));
@@ -939,7 +922,6 @@ public class turnouts extends Activity implements OnGestureListener {
                     hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
                     hm.put("turnout_source", turnoutAddressSource);
                     hm.put("turnout_server", turnoutAddressServer);
-//                recentTurnoutsList.add(hm);
                     tempRecentTurnoutsList.add(hm);
                 }
             }
@@ -991,6 +973,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 break;
             }
         }
+        //save last selection method for next time
         prefs.edit().putString("prefSelectTurnoutsMethod", whichMethod).commit();
     }
 
@@ -1069,7 +1052,6 @@ public class turnouts extends Activity implements OnGestureListener {
             return;
 
         for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= 0 ; i--) {
-//                String sName = importExportPreferences.recent_turnout_address_list.get(i);
             if (turnoutToRemoveSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
                 importExportPreferences.recent_turnout_address_list.remove(i);
                 importExportPreferences.recent_turnout_name_list.remove(i);
@@ -1111,7 +1093,6 @@ public class turnouts extends Activity implements OnGestureListener {
 
             // check if the most recently used turnout is already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
-//                String sName = importExportPreferences.recent_turnout_address_list.get(i);
                 if (turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
                     //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_turnout_address_list.remove(i);
