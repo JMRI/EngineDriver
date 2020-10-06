@@ -1,4 +1,5 @@
 **Version 2.26.114
+ * show server turnout list even if it arrives after activity started
 **Version 2.26.110
  * add HTservertype and Htserverdescription to About page
  * change targetSdkVersion from 28 to 29
