@@ -1387,7 +1387,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         FUNCTION_BUTTON_LOOK_FOR_LIGHT = getApplicationContext().getResources().getString(R.string.functionButtonLookForLight).trim();
         FUNCTION_BUTTON_LOOK_FOR_REAR = getApplicationContext().getResources().getString(R.string.functionButtonLookForRear).trim();
 
-        prefConsistFollowDefaultAction = prefs.getString("prefConsistFollowDefaulAction", getApplicationContext().getResources().getString(R.string.prefConsistFollowDefaultActionDefaultValue));
+        prefConsistFollowDefaultAction = prefs.getString("prefConsistFollowDefaultAction", getApplicationContext().getResources().getString(R.string.prefConsistFollowDefaultActionDefaultValue));
         prefConsistFollowStrings = new ArrayList<>();
         prefConsistFollowActions = new ArrayList<>();
         prefConsistFollowHeadlights = new ArrayList<>();
@@ -4067,26 +4067,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if ((result == FUNCTION_IS_LEAD_ONLY) || (result == FUNCTION_IS_LEAD_AND_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_TRAIL)) {leadOnly = true;}
             if (result == FUNCTION_IS_TRAIL_ONLY) {trailOnly = true;}
             if ((result == FUNCTION_IS_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_FOLLOW)) {followLeadFunction = true;}
-
-//            if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-//                boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
-//                if (!lab.equals("")) {
-//                    leadOnly = (selectiveLeadSound &&
-//                            (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
-//                            || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HEAD)
-//                            || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT) && !lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR)));
-//                    followLeadFunction = (lab.contains(FUNCTION_BUTTON_LOOK_FOR_LIGHT));
-//                    trailOnly = lab.contains(FUNCTION_BUTTON_LOOK_FOR_REAR);
-//                }
-//                boolean selectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
-//                boolean selectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
-//                if ((selectiveLeadSound) && (new_function == 1) && (selectiveLeadSoundF1)) {
-//                    leadOnly = true;
-//                }
-//                if ((selectiveLeadSound) && (new_function == 2) && (selectiveLeadSoundF2)) {
-//                    leadOnly = true;
-//                }
-//            }
         }
 
         @Override
@@ -4154,7 +4134,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             break;
 
                         default: { // handle the function buttons
-                            sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_TOGGLE, leadOnly, trailOnly,followLeadFunction);
+                            sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly,followLeadFunction);
                             break;
                         }
                     }
@@ -4170,39 +4150,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     // only process UP event if this is a "function" button
                     else if (function < direction_button.LEFT) {
-                        Consist con = mainapp.consists[whichThrottle];
-
-                        String addr = "";
-
-                        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-
-                            if (leadOnly)
-                                addr = con.getLeadAddr();
-                            // ***future            else if (trailOnly)
-                            //                          addr = con.getTrailAddr();
-                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, 0);
-                            // set_function_request(whichThrottle, function, 0);
-                        } else {
-
-                            //mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), this.function);
-                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, 0);
-
-                            functionNumber = getFunctionNumber(con,functionNumber,lab);
-
-                            List<Integer> functionList = new ArrayList<>();
-                            for (Consist.ConLoco l : con.getLocos()) {
-                                if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                                    functionList = l.getMatchingFunctions(functionNumber, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
-                                    if (functionList.size()>0) {
-                                        for (int i = 0; i < functionList.size(); i++) {
-                                            //mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), i);
-                                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), 0);
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
+                        sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly,followLeadFunction);
                     }
                     break;
             }

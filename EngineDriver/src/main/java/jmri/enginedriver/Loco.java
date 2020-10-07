@@ -182,7 +182,7 @@ public class Loco {
              if (functionLabels != null) {
                  for (int i = 0; i < functionLabels.size(); i++) {
                      if (functionLabels.get(i) != null) {
-                         if (functionLabels.get(i).equals(lab)) {
+                         if (functionLabels.get(i).toLowerCase().equals(lab.toLowerCase())) {
                              functionNumber = i;
                          }
                      }
@@ -226,7 +226,7 @@ public class Loco {
                 }
             }
 
-            // check the exact matcing rules
+            // check the exact matching rules
             if ( ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_EXACT))
                     && (isLead) )
             || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT))
@@ -245,22 +245,22 @@ public class Loco {
                     }
                 }
             }
-
-            // if no matching rull was found, is if the default rule applies
-            if (functionList.size()==0) {
-                if ( ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD))
-                        && (isLead) )
-                || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL))
-                        && ((isLead) || (isTrail)) )
-                || ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL))
-                || ( ( Rule.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL))
-                        && (isTrail) ) ) {
-                    functionList.add(functionNumber);
-
-                }
-            }
-
         }
+        // if no matching rule was found, the default rule applies
+        if (functionList.size()==0) {
+            if ( ( ( prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD))
+                    && (isLead) )
+            || ( ( prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL))
+                    && ((isLead) || (isTrail)) )
+            || ( prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL))
+            || ( ( prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL))
+                    && (isTrail) ) ) {
+                functionList.add(functionNumber);
+
+            }
+        }
+
+
         return functionList;
     }
 
