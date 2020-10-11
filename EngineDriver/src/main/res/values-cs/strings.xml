@@ -1039,5 +1039,8 @@
     <string name="prefThrottleSwitchWebViewSummary">Choose if the layouts should also show the Web View</string>
     <string name="prefThrottleSwitchWebViewDefaultValue" translatable="false">NONE</string>
     -->
-    
+
+    <string name="prefForceWiFiTitle">Force WiFi připojení</string>
+    <string name="prefForceWiFiSummary">Povolte tuto možnost, pokud vaše zařízení má potíže s připojením k JMRI pokud je zapnuta funkce Mobile Data.</string>
+
 </resources>

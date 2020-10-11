@@ -40,7 +40,10 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -266,6 +269,8 @@ public class threaded_application extends Application {
 
     protected int throttleLayoutViewId;
     public boolean webServerNameHasBeenChecked = false;
+
+    boolean haveForcedWiFiConnection = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -1645,16 +1650,48 @@ public class threaded_application extends Application {
                 boolean haveConnectedWifi = false;
                 boolean haveConnectedMobile = false;
 
-                ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo[] netInfo = cm.getAllNetworkInfo();
                 for (NetworkInfo ni : netInfo) {
                     if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
+
+                        if (prefs.getBoolean("prefForceWiFi", false)) {
+                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
+                            if ( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP )
+                                && (!haveForcedWiFiConnection) ) {
+
+                                Log.d("Engine_Driver", "t_a: NetworkRequest.Builder");
+                                NetworkRequest.Builder request = new NetworkRequest.Builder();
+                                request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+
+                                cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
+
+                                    @Override
+                                    public void onAvailable(Network network) {
+                                        haveForcedWiFiConnection = true;
+                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                                            ConnectivityManager.setProcessDefaultNetwork(network);
+                                        } else {
+                                            cm.bindProcessToNetwork(network);  //API23+
+                                        }
+                                    }
+                                });
+                            }
+                        }
+
                         if (ni.isConnected()) {
                             haveConnectedWifi = true;
+                        } else {
+                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
+                            if (prefs.getBoolean("prefForceWiFi", false)) {
+                                haveConnectedWifi = true;
+                            }
                         }
                     if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
                         if (ni.isConnected()) {
-                            haveConnectedMobile = true;
+                            if ((haveConnectedWifi) && (prefs.getBoolean("prefForceWiFi", false))) {
+                                haveConnectedMobile = true;
+                            }
                         }
                 }
                 return haveConnectedWifi || haveConnectedMobile;
