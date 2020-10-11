@@ -86,4 +86,6 @@
 
     <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>
 
+    <bool name="prefForceWiFiDefaultValue">false</bool>
+
 </resources>

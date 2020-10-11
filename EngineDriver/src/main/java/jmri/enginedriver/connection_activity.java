@@ -23,7 +23,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -639,14 +642,37 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
                 }
                 //determine if currently using mobile connection or wifi
-                ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                final ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo nInfo = cm.getActiveNetworkInfo();
                 switch (nInfo.getType()) {
                     case ConnectivityManager.TYPE_WIFI:
                         mainapp.client_type = "WIFI";
+
+                        if (prefs.getBoolean("prefForceWiFi", false)) {
+                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                Log.d("Engine_Driver", "c_a: NetworkRequest.Builder");
+                                NetworkRequest.Builder request = new NetworkRequest.Builder();
+                                request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
+
+                                cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
+
+                                    @Override
+                                    public void onAvailable(Network network) {
+                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                                            ConnectivityManager.setProcessDefaultNetwork(network);
+                                        } else {
+                                            cm.bindProcessToNetwork(network);  //API23+
+                                        }
+                                    }
+                                });
+                            }
+                        }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
-                        mainapp.client_type = "MOBILE";
+                        if (!prefs.getBoolean("prefForceWiFi", false)) {
+                            mainapp.client_type = "MOBILE";
+                        }
                         break;
                     case ConnectivityManager.TYPE_DUMMY:
                         mainapp.client_type = "DUMMY";

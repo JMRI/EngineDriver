@@ -771,4 +771,8 @@
     <string name="prefPauseSpeedRateSummary">Número de milissegundos entre o passo mudanças de velocidade para a ação Pausa.</string>
     <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' passo botão</string>
     <string name="prefPauseSpeedStepSummary">tamanho do passo muda para a ação Pausa.</string>
+
+    <string name="prefForceWiFiTitle">conexão WiFi vigor</string>
+    <string name="prefForceWiFiSummary">Ative esta se o seu dispositivo tem dificuldades para se conectar ao JMRI enquanto Mobile Data está activada.</string>
+
 </resources>

@@ -754,6 +754,7 @@
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
     <string name="toastConnectRemoved">Server removed from List.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
+    <string name="toastForcedWiFiFailed">Forced WifFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
@@ -928,6 +929,10 @@
     <string name="prefKidsTimerResetPasswordTitle">Reset/Disable Password</string>
     <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
     <string name="prefKidsTimerResetPasswordDefaultValue" translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
+
+
+    <string name="prefForceWiFiTitle">Force WiFi connection</string>
+    <string name="prefForceWiFiSummary">Enable this if your device has difficulties connecting to JMRI while Mobile Data is enabled.</string>
 
     <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
     <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
