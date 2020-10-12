@@ -854,7 +854,8 @@
     <string name="prefPauseSpeedStepSummary">Dimension crans si Pause</string>
     <string name="prefPauseSpeedStepTitle">\'Pause\' nb cran</string>
 
-    <string name="prefForceWiFiTitle">Force de connexion WiFi</string>
-    <string name="prefForceWiFiSummary">Activez cette option si votre appareil a des difficultés de connexion à JMRI alors que Mobile Data est activé.</string>
+    <string name="prefAllowMobileDataTitle">Autoriser la connexion mobile de données</string>
+    <string name="prefAllowMobileDataSummary">Laissez votre appareil de se connecter à JMRI sur Mobile Data.</string>
+    <string name="toastPreferencesChangedForceWiFi">préférence WiFi forcée a changé.</string>
 
 </resources>

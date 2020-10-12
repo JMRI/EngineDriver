@@ -473,6 +473,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 case "prefShowAdvancedPreferences":
                     reload();
                     break;
+
+                case "prefAllowMobileData":
+                    forceRestartAppOnPreferencesClose = true;
+                    forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
+//                    forceRestartApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
+                    break;
             }
         }
     }

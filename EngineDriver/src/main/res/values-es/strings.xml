@@ -824,4 +824,7 @@
     <string name="prefPauseSpeedRateSummary">Número de milisegundos entre cambios de paso de velocidad para la acción Pausa.</string>
     <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' paso botón</string>
     <string name="prefPauseSpeedStepSummary">Tamaño del paso cambia para la acción de Pausa.</string>
+    <string name="prefAllowMobileDataTitle">Permitir la conexión de datos móviles</string>
+    <string name="prefAllowMobileDataSummary">Permitir que el dispositivo se conecte a JMRI sobre datos móviles.</string>
+    <string name="toastPreferencesChangedForceWiFi">Forzado preferencia WiFi cambió.</string>
 </resources>

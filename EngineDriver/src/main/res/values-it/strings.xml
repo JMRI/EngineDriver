@@ -768,7 +768,8 @@
     <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' step pulsante</string>
     <string name="prefPauseSpeedStepSummary">dimensione del passo cambia per l\'azione Pausa.</string>
 
-    <string name="prefForceWiFiTitle">Connessione Forza WiFi</string>
-    <string name="prefForceWiFiSummary">Attivare questa opzione se il dispositivo ha difficoltà di collegamento al JMRI mentre Mobile Data è attivata.</string>
+    <string name="prefAllowMobileDataTitle">Consenti connessione dati mobile</string>
+    <string name="prefAllowMobileDataSummary">Consentire al dispositivo di connettersi a JMRI su Mobile Data.</string>
+    <string name="toastPreferencesChangedForceWiFi">preferenza WiFi forzata cambiato.</string>
 
 </resources>

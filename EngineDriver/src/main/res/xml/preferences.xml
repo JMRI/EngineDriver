@@ -1134,10 +1134,10 @@
             android:summary="@string/prefSocketTimeoutMsSummary"
             android:title="@string/prefSocketTimeoutMsTitle" />
         <CheckBoxPreference
-            android:defaultValue="@bool/prefForceWiFiDefaultValue"
-            android:key="prefForceWiFi"
-            android:summary="@string/prefForceWiFiSummary"
-            android:title="@string/prefForceWiFiTitle" />
+            android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
+            android:key="prefAllowMobileData"
+            android:summary="@string/prefAllowMobileDataSummary"
+            android:title="@string/prefAllowMobileDataTitle" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="prefCategoryWeb"

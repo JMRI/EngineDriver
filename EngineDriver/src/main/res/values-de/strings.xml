@@ -836,7 +836,8 @@
     <string name="prefPauseSpeedStepTitle">\\\'Pause\\\' Taste Schritt</string>
     <string name="prefPauseSpeedStepSummary">\\ \'Pause \\\' Taste Schritt Schrittgröße ändert sich für die Pause Aktion.</string>
 
-    <string name="prefForceWiFiTitle">Kraft WiFi-Verbindung</string>
-    <string name="prefForceWiFiSummary">Aktivieren Sie diese Option, wenn Ihr Gerät Schwierigkeiten Anschluss an JMRI hat, während Mobile Data aktiviert ist.</string>
+    <string name="prefAllowMobileDataTitle">Lassen Sie mobile Datenverbindung</string>
+    <string name="prefAllowMobileDataSummary">Lassen Sie das Gerät JMRI über Mobile Daten verbinden.</string>
+    <string name="toastPreferencesChangedForceWiFi">Erzwungene WiFi Präferenz geändert.</string>
 
 </resources>
