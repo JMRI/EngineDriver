@@ -1040,7 +1040,8 @@
     <string name="prefThrottleSwitchWebViewDefaultValue" translatable="false">NONE</string>
     -->
 
-    <string name="prefForceWiFiTitle">Force WiFi připojení</string>
-    <string name="prefForceWiFiSummary">Povolte tuto možnost, pokud vaše zařízení má potíže s připojením k JMRI pokud je zapnuta funkce Mobile Data.</string>
+    <string name="prefAllowMobileDataTitle">Povolit připojení k mobilní datové přenosy</string>
+    <string name="prefAllowMobileDataSummary">Aby vaše zařízení připojit k JMRI přes mobilní datové přenosy.</string>
+    <string name="toastPreferencesChangedForceWiFi">Nucený WiFi preference změnit.</string>
 
 </resources>

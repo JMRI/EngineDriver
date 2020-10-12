@@ -260,6 +260,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
     public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
     public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
+    public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -271,6 +272,7 @@ public class threaded_application extends Application {
     public boolean webServerNameHasBeenChecked = false;
 
     boolean haveForcedWiFiConnection = false;
+    boolean prefAllowMobileData = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -473,7 +475,7 @@ public class threaded_application extends Application {
                                 end_jmdns();
                             } else {
                                 //show message if using mobile data
-                                if (!client_type.equals("WIFI")) {
+                                if ((!client_type.equals("WIFI")) && (prefAllowMobileData)) {
                                     safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                                 }
                                 if (jmdns == null) {   //start jmdns if not started
@@ -1467,7 +1469,7 @@ public class threaded_application extends Application {
                             safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
                                     host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
                         }
-                        if (!client_type.equals("WIFI")) { //show additional message if using mobile data
+                        if ((!client_type.equals("WIFI")) && (prefAllowMobileData)) { //show additional message if using mobile data
                             safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                         }
                         socketOk = false;
@@ -1649,13 +1651,14 @@ public class threaded_application extends Application {
             private boolean HaveNetworkConnection() {
                 boolean haveConnectedWifi = false;
                 boolean haveConnectedMobile = false;
+                prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
                 final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo[] netInfo = cm.getAllNetworkInfo();
                 for (NetworkInfo ni : netInfo) {
                     if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
 
-                        if (prefs.getBoolean("prefForceWiFi", false)) {
+                        if (!prefAllowMobileData) {
                             // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
                             if ( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP )
                                 && (!haveForcedWiFiConnection) ) {
@@ -1683,13 +1686,13 @@ public class threaded_application extends Application {
                             haveConnectedWifi = true;
                         } else {
                             // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                            if (prefs.getBoolean("prefForceWiFi", false)) {
+                            if (prefAllowMobileData) {
                                 haveConnectedWifi = true;
                             }
                         }
                     if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
                         if (ni.isConnected()) {
-                            if ((haveConnectedWifi) && (prefs.getBoolean("prefForceWiFi", false))) {
+                            if ((haveConnectedWifi) && (prefs.getBoolean("prefAllowMobileData", false))) {
                                 haveConnectedMobile = true;
                             }
                         }
@@ -1979,6 +1982,8 @@ public class threaded_application extends Application {
         numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
         throttleLayoutViewId = R.layout.throttle;
+
+        haveForcedWiFiConnection = false;
 
         try {
             Map<String, ?> ddd = prefs.getAll();
@@ -3288,6 +3293,11 @@ end force shutdown */
             case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
                 Toast.makeText(context,
                         context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName","") ),
+                        Toast.LENGTH_LONG).show();
+                break;
+            }
+            case FORCED_RESTART_REASON_FORCE_WIFI: {
+                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesChangedForceWiFi),
                         Toast.LENGTH_LONG).show();
                 break;
             }

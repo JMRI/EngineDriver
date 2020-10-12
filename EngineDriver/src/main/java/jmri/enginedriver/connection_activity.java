@@ -112,6 +112,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     LinearLayout rootView;
     int rootViewHeight = 0;
 
+    boolean prefAllowMobileData = false;
+
     static {
         try {
             overridePendingTransition = Activity.class.getMethod("overridePendingTransition", Integer.TYPE, Integer.TYPE); //$NON-NLS-1$
@@ -421,6 +423,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             setContentView(R.layout.connection);
 
             boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
+            mainapp.haveForcedWiFiConnection = false;
 
             //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
             discovery_list = new ArrayList<>();
@@ -637,6 +640,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
                     }
                 }
+                prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
+
                 mainapp.client_ssid = wifiinfo.getSSID();
                 if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
                     mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
@@ -648,7 +653,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     case ConnectivityManager.TYPE_WIFI:
                         mainapp.client_type = "WIFI";
 
-                        if (prefs.getBoolean("prefForceWiFi", false)) {
+                        if (!prefAllowMobileData) {
                             // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 Log.d("Engine_Driver", "c_a: NetworkRequest.Builder");
@@ -670,7 +675,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
-                        if (!prefs.getBoolean("prefForceWiFi", false)) {
+                        if (prefAllowMobileData) {
                             mainapp.client_type = "MOBILE";
                         }
                         break;

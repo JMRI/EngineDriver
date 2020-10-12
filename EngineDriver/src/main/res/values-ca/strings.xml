@@ -834,7 +834,8 @@
     <string name="prefPauseSpeedStepSummary">Mida de el pas canvia per l\'acció de Pausa.</string>
     <string name="prefPauseSpeedRateTitle">\\\'Pausa\\\' taxa botó</string>
 
-    <string name="prefForceWiFiTitle">Wi-Fi vigor</string>
-    <string name="prefForceWiFiSummary">Habiliteu aquesta opció si el dispositiu té dificultats per connectar-se a JMRI mentre Mobile Data està activat.</string>
+    <string name="prefAllowMobileDataTitle">Permetre la connexió de dades mòbils</string>
+    <string name="prefAllowMobileDataSummary">Permetre que el dispositiu es connecti a JMRI sobre dades mòbils.</string>
+    <string name="toastPreferencesChangedForceWiFi">Forçat preferència WiFi va canviar.</string>
 
 </resources>
