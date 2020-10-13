@@ -1027,6 +1027,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 case message_type.RESTART_APP:
                     startNewThrottleActivity();
                     break;
+                case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();

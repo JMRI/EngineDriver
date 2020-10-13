@@ -334,6 +334,7 @@ public class turnouts extends Activity implements OnGestureListener {
                     setActivityTitle();
                     break;
                 case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();

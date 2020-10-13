@@ -1072,7 +1072,7 @@
         <item>prefRosterFilter</item>
         <item>maximum_recent_connections_preference</item>
         <item>prefHideDemoServer</item>
-        <item>prefForceWiFi</item>
+        <item>prefAllowMobileData</item>
         <item>prefConnectTimeoutMs</item>
         <item>prefSocketTimeoutMs</item>
         <item>WebOrientation</item>
