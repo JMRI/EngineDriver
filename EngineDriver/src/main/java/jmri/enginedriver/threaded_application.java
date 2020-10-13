@@ -583,6 +583,22 @@ public class threaded_application extends Application {
                         alert_activities(message_type.RESTART_APP, "");
                         break;
                     }
+
+                    case message_type.RELAUNCH_APP: {
+                        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
+                        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
+                        sharedPreferences.edit().putInt("prefForcedRestartReason", msg.arg1).commit();
+                        alert_activities(message_type.RELAUNCH_APP, "");
+
+                        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        //finish();
+                        Runtime.getRuntime().exit(0); // really force the kill
+                        break;
+                    }
+
                     //Disconnect from the WiThrottle server and Shutdown
                     case message_type.DISCONNECT: {
                         Log.d("Engine_Driver", "t_a: TA Disconnect");
@@ -1692,7 +1708,7 @@ public class threaded_application extends Application {
                         }
                     if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
                         if (ni.isConnected()) {
-                            if ((haveConnectedWifi) && (prefs.getBoolean("prefAllowMobileData", false))) {
+                            if ((haveConnectedWifi) && (prefAllowMobileData)) {
                                 haveConnectedMobile = true;
                             }
                         }
@@ -3308,7 +3324,8 @@ end force shutdown */
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT));
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_FORCE_WIFI));
     }
 
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.

@@ -62,6 +62,7 @@ public class power_control extends Activity {
                     refresh_power_control_view();
                     break;
                 case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();

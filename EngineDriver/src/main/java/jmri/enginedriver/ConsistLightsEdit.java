@@ -142,6 +142,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                     refreshConsistLists();
                     break;
                 case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();

@@ -475,9 +475,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     break;
 
                 case "prefAllowMobileData":
-                    forceRestartAppOnPreferencesClose = true;
-                    forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
-//                    forceRestartApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
+                    mainapp.haveForcedWiFiConnection = false;
+                    forceReLaunchApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
                     break;
             }
         }
@@ -501,6 +500,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         msg.what = message_type.RESTART_APP;
         msg.arg1 = forcedRestartReason;
         mainapp.comm_msg_handler.sendMessage(msg);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    void forceReLaunchApp(int forcedRestartReason) {
+        Log.d("Engine_Driver", "Preferences.forceRelaunchApp() ");
+
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        Message msg = Message.obtain();
+        msg.what = message_type.RELAUNCH_APP;
+        msg.arg1 = forcedRestartReason;
+        mainapp.comm_msg_handler.sendMessage(msg);
+
     }
 
     @SuppressLint("ApplySharedPref")
