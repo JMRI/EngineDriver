@@ -406,6 +406,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             mainapp = (threaded_application) this.getApplication();
             mainapp.connection_msg_handler = new ui_handler();
 
+            mainapp.connectedHostName = "";
+            mainapp.connectedHostip = "";
+            mainapp.connectedPort = 0;
+
             connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
             // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
 
