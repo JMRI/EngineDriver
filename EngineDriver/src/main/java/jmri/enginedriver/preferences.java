@@ -113,6 +113,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     private boolean forceRestartAppOnPreferencesClose = false;
     private int forceRestartAppOnPreferencesCloseReason = 0;
+    private boolean forceReLaunchAppOnPreferencesClose = false;
 
     SharedPreferences sharedPreferences;
     /**
@@ -161,7 +162,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
             preference = (ListPreference) findPreference("prefHostImportExport");
             preference.setEntries(prefHostImportExportEntriesFound);
             preference.setEntryValues(prefHostImportExportEntryValuesFound);
+            enableDisablePreference("prefAllowMobileData", true);
         } else {
+            enableDisablePreference("prefAllowMobileData", false);
             enableDisablePreference("prefHostImportExport", false);
         }
 
@@ -277,6 +280,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
         if (forceRestartAppOnPreferencesClose) {
             forceRestartApp(forceRestartAppOnPreferencesCloseReason);
+        }
+        if (forceReLaunchAppOnPreferencesClose) {
+            forceReLaunchApp(forceRestartAppOnPreferencesCloseReason);
         }
     }
 
@@ -476,7 +482,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
                 case "prefAllowMobileData":
                     mainapp.haveForcedWiFiConnection = false;
-                    forceReLaunchApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
+//                    forceReLaunchApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
+                    forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
+                    forceReLaunchAppOnPreferencesClose = true;
                     break;
             }
         }
