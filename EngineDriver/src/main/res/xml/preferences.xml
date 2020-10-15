@@ -861,7 +861,7 @@
                 android:defaultValue="@string/prefConsistFollowString1DefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString1Summary"
                 android:key="prefConsistFollowString1"
-                android:maxLength="20"
+                android:maxLength="80"
                 android:summary="@string/prefConsistFollowString1Summary"
                 android:title="@string/prefConsistFollowString1Title" />
 
@@ -877,7 +877,7 @@
                 android:defaultValue="@string/prefConsistFollowString2DefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString2Summary"
                 android:key="prefConsistFollowString2"
-                android:maxLength="20"
+                android:maxLength="80"
                 android:summary="@string/prefConsistFollowString2Summary"
                 android:title="@string/prefConsistFollowString2Title" />
 
@@ -893,7 +893,7 @@
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString3Summary"
                 android:key="prefConsistFollowString3"
-                android:maxLength="20"
+                android:maxLength="80"
                 android:summary="@string/prefConsistFollowString3Summary"
                 android:title="@string/prefConsistFollowString3Title" />
 
@@ -909,7 +909,7 @@
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString4Summary"
                 android:key="prefConsistFollowString4"
-                android:maxLength="20"
+                android:maxLength="80"
                 android:summary="@string/prefConsistFollowString4Summary"
                 android:title="@string/prefConsistFollowString4Title" />
 
@@ -925,7 +925,7 @@
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                 android:dialogTitle="@string/prefConsistFollowString5Summary"
                 android:key="prefConsistFollowString5"
-                android:maxLength="20"
+                android:maxLength="80"
                 android:summary="@string/prefConsistFollowString5Summary"
                 android:title="@string/prefConsistFollowString5Title" />
 
