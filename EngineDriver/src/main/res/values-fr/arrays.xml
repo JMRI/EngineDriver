@@ -26,12 +26,12 @@
 
     <string-array name="DisplaySpeedUnitsEntries">
         <item>Pourcentage</item>
-        <item>Pas de vitesse automatiques</item>
-        <item>8 pas</item>
-        <item>10 pas</item>
-        <item>14 pas</item>
-        <item>28 pas</item>
-        <item>128 pas</item>
+        <item>Crans de vitesse automatiques</item>
+        <item>8 crans</item>
+        <item>10 crans</item>
+        <item>14 crans</item>
+        <item>28 crans</item>
+        <item>128 crans</item>
     </string-array>
 
     <string-array name="WebViewLocationEntries">
@@ -213,6 +213,17 @@
         <item>5 minutes</item>
         <item>10 minutes</item>
         <item>Session terminée</item>
+    </string-array>
+
+    <string-array name="prefGamePadTypeEntries">  <!-- display version -->
+        <item >Aucun</item>
+        <item >Mocute iCade</item>
+        <item >Mocute iCade+DPAD</item>
+        <item >Mocute MTK</item>
+        <item >Mocute Android-Game</item>
+        <item >MagicseeR1 Android-Game B</item>
+        <item >Flydigi Wee 2</item>
+        <item >Utopia 360 Android-C</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">
