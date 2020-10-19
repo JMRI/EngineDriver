@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
@@ -1274,10 +1275,22 @@ public class select_loco extends Activity {
 
         set_labels();
         overrideThrottleName = "";
+
+        Handler handler = new Handler();
+        handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
     }
+
+    private Runnable showMethodTask = new Runnable() {
+        public void run() {
+            showMethod(prefSelectLocoMethod);
+        }
+    };
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
+        EditText la = findViewById(R.id.loco_address);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         switch (whichMethod) {
             default:
             case WHICH_METHOD_ADDRESS: {
@@ -1295,6 +1308,10 @@ public class select_loco extends Activity {
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(false);
+
+                la.requestFocus();
+                imm.showSoftInput(la, InputMethodManager.SHOW_IMPLICIT);
+
                 break;
             }
             case WHICH_METHOD_ROSTER: {
@@ -1316,6 +1333,8 @@ public class select_loco extends Activity {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRoster = true;
                 }
+
+                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
                 break;
             }
             case WHICH_METHOD_RECENT: {
@@ -1337,6 +1356,8 @@ public class select_loco extends Activity {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRecentLocos = true;
                 }
+
+                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
                 break;
             }
             case WHICH_METHOD_CONSIST: {
@@ -1358,6 +1379,8 @@ public class select_loco extends Activity {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRecentConsists = true;
                 }
+
+                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
                 break;
             }
         }
