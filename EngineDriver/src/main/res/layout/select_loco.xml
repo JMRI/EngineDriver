@@ -29,7 +29,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:baselineAligned="false">
 
             <RelativeLayout
                 android:id="@+id/select_loco_method_group"
@@ -127,7 +128,8 @@
                         android:textAlignment="center"
                         android:baselineAligned="false"
                         android:textSize="10sp"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        tools:ignore="SmallSp" />
 
                     <Button
                         android:id="@+id/Sl_edit_consist_lights"
@@ -141,7 +143,8 @@
                         android:textAlignment="center"
                         android:baselineAligned="false"
                         android:textSize="10sp"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -292,7 +295,7 @@
             android:id="@+id/roster_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:animateLayoutChanges="true"></jmri.enginedriver.TransparentListView>
+            android:animateLayoutChanges="true" />
     </LinearLayout>
 
     <RelativeLayout

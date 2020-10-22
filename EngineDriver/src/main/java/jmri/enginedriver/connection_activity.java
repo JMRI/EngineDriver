@@ -680,26 +680,7 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                         }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
-                        if (!prefAllowMobileData) {
-                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                Log.d("Engine_Driver", "c_a: NetworkRequest.Builder");
-                                NetworkRequest.Builder request = new NetworkRequest.Builder();
-                                request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
-
-                                cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
-
-                                    @Override
-                                    public void onAvailable(Network network) {
-                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                                            ConnectivityManager.setProcessDefaultNetwork(network);
-                                        } else {
-                                            cm.bindProcessToNetwork(network);  //API23+
-                                        }
-                                    }
-                                });
-                            }
-                        } else {
+                        if ((!mainapp.client_type.equals("WIFI")) && (prefAllowMobileData)) {
                             mainapp.client_type = "MOBILE";
                         }
                         break;
