@@ -559,7 +559,7 @@ public class select_loco extends Activity {
 
 
         if (!removingLocoOrForceReload) {
-            removingLocoOrForceReload = false;
+//            removingLocoOrForceReload = false;
 
             // check if it already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {

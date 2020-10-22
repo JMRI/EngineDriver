@@ -1684,10 +1684,8 @@ public class threaded_application extends Application {
                                 request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
                                 cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
-
                                     @Override
                                     public void onAvailable(Network network) {
-                                        haveForcedWiFiConnection = true;
                                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                                             ConnectivityManager.setProcessDefaultNetwork(network);
                                         } else {
@@ -1695,6 +1693,7 @@ public class threaded_application extends Application {
                                         }
                                     }
                                 });
+                                haveForcedWiFiConnection = true;
                             }
                         }
 
@@ -1707,10 +1706,8 @@ public class threaded_application extends Application {
                             }
                         }
                     if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
-                        if (ni.isConnected()) {
-                            if ((haveConnectedWifi) && (prefAllowMobileData)) {
-                                haveConnectedMobile = true;
-                            }
+                        if ((ni.isConnected()) && (prefAllowMobileData)) {
+                            haveConnectedMobile = true;
                         }
                 }
                 return haveConnectedWifi || haveConnectedMobile;
