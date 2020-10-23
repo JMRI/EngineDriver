@@ -1,6 +1,6 @@
 **Version 2.26.114
  * show server turnout list even if it arrives after activity started
- * force WiFi connection when the router has no internet connection
+ * Use wifi connection unless Allow Mobile Data option selected
  * set focus to address field if DCC Address selected
  * fix for complex text matching functions
 **Version 2.26.110
