@@ -819,6 +819,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 index = i;
             }
         }
+        if (index < 0) return; //bail if no matches
 
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
