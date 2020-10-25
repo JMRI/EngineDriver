@@ -900,16 +900,6 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
-    private void showHidePausePreferences() {
-        boolean enable = true;
-        if (prefHideSlider) {
-            enable = false;
-        }
-        enableDisablePreference("prefPauseSpeedButton", enable);
-        enableDisablePreference("prefPauseSpeedRate", enable);
-        enableDisablePreference("prefPauseSpeedStep", enable);
-    }
-
     private void showHideConsistRuleStylePreferences() {
         boolean enable = true;
         if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
@@ -957,7 +947,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                 || prefThrottleScreenTypeOriginal.equals("Vertical Right")
                 || prefThrottleScreenTypeOriginal.equals("Switching")
                 || prefThrottleScreenTypeOriginal.equals("Switching Left")
-                || prefThrottleScreenTypeOriginal.equals("Switching Right");
+                || prefThrottleScreenTypeOriginal.equals("Switching Right")
+                || prefThrottleScreenTypeOriginal.equals("Simple");
         enableDisablePreference("WebViewLocation", enable);
         enableDisablePreference("prefIncreaseWebViewSize", enable);
         enableDisablePreference("InitialThrotWebPage", enable);
@@ -969,6 +960,9 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         enable = prefThrottleScreenTypeOriginal.equals("Default");
         enableDisablePreference("prefDecreaseLocoNumberHeight", enable);
+
+        enable = prefThrottleScreenTypeOriginal.equals("Simple");
+        enableDisablePreference("prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
     }
 
 

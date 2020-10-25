@@ -173,6 +173,7 @@ public class throttle_switching_left_or_right extends throttle {
             vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
         }
 
+        // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
         limit_speed_button_switching_touch_listener lsstl;

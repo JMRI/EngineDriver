@@ -56,6 +56,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +91,9 @@ public class throttle_simple extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = 6;
 
     private LinearLayout[] lThrottles;
+    private LinearLayout[] lLowers;
     private LinearLayout[] Separators;
+    private ScrollView[] svFnBtns;
 
     @Override
     protected void getDirectionButtonPrefs() {
@@ -115,40 +118,119 @@ public class throttle_simple extends throttle {
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         Separators = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
+        svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
+        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++)
             switch (throttleIndex) {
                 default:
                 case 0:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
                     Separators[throttleIndex] = findViewById(R.id.separator0);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_0_SetSpeed);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
                     Separators[throttleIndex] = findViewById(R.id.separator1);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_1_SetSpeed);
                     break;
                 case 2:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
                     Separators[throttleIndex] = findViewById(R.id.separator2);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_2_SetSpeed);
                     break;
                 case 3:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_3);
                     Separators[throttleIndex] = findViewById(R.id.separator3);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_3);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_3);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_3_SetSpeed);
                     break;
                 case 4:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_4);
                     Separators[throttleIndex] = findViewById(R.id.separator4);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_4);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_4);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_4_SetSpeed);
                     break;
                 case 5:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_5);
                     Separators[throttleIndex] = findViewById(R.id.separator5);
+                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
+                    llSetSpds[throttleIndex] = (LinearLayout) findViewById(R.id.throttle_5_SetSpeed);
+                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
                     break;
             }
+
+        // set label and dcc functions (based on settings) or hide if no label
+        setAllFunctionLabelsAndListeners();
+
+        // set listeners for the limit speed buttons for each throttle
+        //----------------------------------------
+
+        limit_speed_button_touch_listener lstl;
+        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+        pause_speed_button_vertical_touch_listener psvtl;
+        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    bPauseSpeed = findViewById(R.id.pause_speed_0);
+                    break;
+                case 1:
+                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+                    bPauseSpeed = findViewById(R.id.pause_speed_1);
+                    break;
+                case 2:
+                    bLimitSpeed = findViewById(R.id.limit_speed_2);
+                    bPauseSpeed = findViewById(R.id.pause_speed_2);
+                    break;
+                case 3:
+                    bLimitSpeed = findViewById(R.id.limit_speed_3);
+                    bPauseSpeed = findViewById(R.id.pause_speed_3);
+                    break;
+                case 4:
+                    bLimitSpeed = findViewById(R.id.limit_speed_4);
+                    bPauseSpeed = findViewById(R.id.pause_speed_4);
+                    break;
+                case 5:
+                    bLimitSpeed = findViewById(R.id.limit_speed_5);
+                    bPauseSpeed = findViewById(R.id.pause_speed_5);
+                    break;
+
+            }
+            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+            lstl = new limit_speed_button_touch_listener(throttleIndex);
+            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+            isLimitSpeeds[throttleIndex] = false;
+            if (!prefLimitSpeedButton) {
+                bLimitSpeed.setVisibility(View.GONE);
+            }
+
+            bPauseSpeeds[throttleIndex] = bPauseSpeed;
+            psvtl = new pause_speed_button_vertical_touch_listener(throttleIndex);
+            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
+            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
+            if (!prefPauseSpeedButton) {
+                bPauseSpeed.setVisibility(View.GONE);
+            }
+        }
+
         sliderType = SLIDER_TYPE_VERTICAL;
     } // end of onCreate()
 
@@ -249,6 +331,8 @@ public class throttle_simple extends throttle {
         // update the direction indicators
         showDirectionIndications();
 
+        int prefSimpleThrottleLayoutShowFunctionButtonCount = preferences.getIntPrefValue(prefs, "prefSimpleThrottleLayoutShowFunctionButtonCount",
+                getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue));
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
@@ -274,6 +358,11 @@ public class throttle_simple extends throttle {
         if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
             speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
         }
+
+        Button bStop = findViewById(R.id.button_stop_0);
+        int fbsHeight = bStop.getHeight()+ (int) (3 * denScale);
+        int lLowersHeight = lLowers[0].getHeight();
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -292,6 +381,12 @@ public class throttle_simple extends throttle {
             }
             //bLSpds[throttleIndex].setText(speedButtonLeftText);
             //bRSpds[throttleIndex].setText(speedButtonRightText);
+
+            if ( (prefSimpleThrottleLayoutShowFunctionButtonCount > 0) && (lLowersHeight > 0) )  {
+                llSetSpds[throttleIndex].getLayoutParams().height
+                        = lLowersHeight - (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * fbsHeight + 20 * denScale);
+                svFnBtns[throttleIndex].getLayoutParams().height = (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * fbsHeight + 20 * denScale);
+            }
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -325,7 +420,143 @@ public class throttle_simple extends throttle {
             set_all_function_states(throttleIndex);
         }
 
+
         // Log.d("Engine_Driver","ending set_labels");
+
+    }
+
+    //listeners for the Pause Speed Button
+    protected class pause_speed_button_vertical_touch_listener implements View.OnTouchListener {
+        int whichThrottle;
+
+        protected pause_speed_button_vertical_touch_listener(int new_whichThrottle) {
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                pauseSpeed(whichThrottle);
+            }
+            return false;
+        }
+    }
+
+    protected void pauseSpeed(int whichThrottle) {
+        int speed = 0;
+
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                speed = getSpeed(whichThrottle);
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) != 0) {
+                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                    bPauseSpeeds[whichThrottle].setSelected(true);
+                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                    pauseDir[whichThrottle] = getDirection(whichThrottle);
+                    speed = 0;
+                } else {
+                    return;
+                }
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                limitedJump[whichThrottle] = false;
+                break;
+            }
+        }
+
+        if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
+            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
+        }
+    }
+
+    @Override
+    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+        boolean newEnabledState = false;
+        // avoid index and null crashes
+        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+                || bFwds[whichThrottle] == null) {
+            return;
+        }
+        if (!forceDisable) { // avoid index crash, but may simply push to next line
+            newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
+        }
+        if ((bLimitSpeeds!=null) && (bLimitSpeeds[whichThrottle]!=null)) {
+            bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+            bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
+        }
+
+        super.enable_disable_buttons(whichThrottle, forceDisable);
+
+    } // end of enable_disable_buttons
+
+
+    // helper function to enable/disable all children for a group
+    @Override
+    void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
+        // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
+        // newEnabledState);
+
+        if (vg == null) { return;}
+        if (mainapp.appIsFinishing) { return;}
+
+        ViewGroup r; // row
+        Button b; // button
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            r = (ViewGroup) vg.getChildAt(i);
+            for (int j = 0; j < r.getChildCount(); j++) {
+                b = (Button) r.getChildAt(j);
+                b.setEnabled(newEnabledState);
+            }
+        }
+    } // enable_disable_buttons_for_view
+
+    // update the appearance of all function buttons
+    @Override
+    void set_all_function_states(int whichThrottle) {
+        // Log.d("Engine_Driver","set_function_states");
+
+        if (mainapp.appIsFinishing) { return;}
+
+        LinkedHashMap<Integer, Button> fMap;
+        fMap = functionMaps[whichThrottle];
+
+        for (Integer f : fMap.keySet()) {
+            set_function_state(whichThrottle, f);
+        }
+    }
+
+
+    // update a function button appearance based on its state
+    @Override
+    void set_function_state(int whichThrottle, int function) {
+        // Log.d("Engine_Driver","starting set_function_request");
+
+        Button b;
+        boolean[] fs;   // copy of this throttle's function state array
+        b = functionMaps[whichThrottle].get(function);
+        fs = mainapp.function_states[whichThrottle];
+
+        if (b != null && fs != null) {
+            if (fs[function]) {
+                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                b.setPressed(true);
+            } else {
+                b.setTypeface(null, Typeface.NORMAL);
+                b.setPressed(false);
+            }
+        }
 
     }
 

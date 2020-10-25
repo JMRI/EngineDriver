@@ -126,6 +126,7 @@ public class throttle_vertical_left_or_right extends throttle {
             }
         }
 
+        // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
         // set listeners for the limit speed buttons for each throttle

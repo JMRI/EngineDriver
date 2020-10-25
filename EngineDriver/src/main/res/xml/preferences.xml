@@ -183,6 +183,14 @@
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
             android:title="@string/prefDecreaseLocoNumberHeightTitle" />
 
+        <ListPreference
+            android:defaultValue="@string/prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue"
+            android:key="prefSimpleThrottleLayoutShowFunctionButtonCount"
+            android:summary="@string/prefSimpleThrottleLayoutShowFunctionButtonCountSummary"
+            android:title="@string/prefSimpleThrottleLayoutShowFunctionButtonCountTitle"
+            android:entries="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntries"
+            android:entryValues="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues" />
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_webview_preference"

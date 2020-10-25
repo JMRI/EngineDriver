@@ -771,5 +771,7 @@
     <string name="prefAllowMobileDataTitle">Consenti connessione dati mobile</string>
     <string name="prefAllowMobileDataSummary">Consentire al dispositivo di connettersi a JMRI su Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">preferenza WiFi forzata cambiato.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Numero di pulsanti funzione per mostrare sul layout Throttle semplice.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Semplici pulsanti di funzione della valvola a farfalla</string>
 
 </resources>

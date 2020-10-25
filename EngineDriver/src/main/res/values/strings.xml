@@ -1062,6 +1062,10 @@
     <string name="hostNumericButton" translatable="false">12..</string>
     <string name="hostTextButton" translatable="false">Aa..</string>
 
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Simple Throttle Function Buttons</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Number of Function Buttons to show on the Simple Throttle layout.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
+
     <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>
     <string name="prefThrottleSwitchWebViewSummary">Choose if the layouts should also show the Web View</string>

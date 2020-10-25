@@ -966,6 +966,22 @@
         <item>Both First and Second Layouts</item>
     </string-array>
 
+    <string-array name="prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="prefSimpleThrottleLayoutShowFunctionButtonCountEntries" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>
@@ -977,6 +993,7 @@
         <item>increase_slider_height_preference</item>
         <item>left_slider_margin</item>
         <item>hide_slider_preference</item>
+        <item>prefSimpleThrottleLayoutShowFunctionButtons</item>
         <item>prefHideSliderAndSpeedButtons</item>
         <item>prefSwapForwardReverseButtons</item>
         <item>prefSwapForwardReverseButtonsLongPress</item>
