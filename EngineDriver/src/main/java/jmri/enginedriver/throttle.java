@@ -4636,7 +4636,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_0); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_0); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_0);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
                     lls[i] = findViewById(R.id.throttle_1);
@@ -4647,7 +4647,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_1); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_1); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_1);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_1);
                     break;
                 case 2:
                     lls[i] = findViewById(R.id.throttle_2);
@@ -4658,7 +4658,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_2); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_2); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_2);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_2);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_2);
                     break;
                 case 3:
                     lls[i] = findViewById(R.id.throttle_3);
@@ -4669,7 +4669,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_3); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_3); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_3);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_3);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_3);
                     break;
                 case 4:
                     lls[i] = findViewById(R.id.throttle_4);
@@ -4680,7 +4680,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_4); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_4); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_4);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_4);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_4);
                     break;
                 case 5:
                     lls[i] = findViewById(R.id.throttle_5);
@@ -4691,7 +4691,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_5); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_5); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_5);
-//**//                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_5);
+                    fbs[i] = (ViewGroup) findViewById(R.id.function_buttons_table_5);
                     break;
             }
 
