@@ -247,7 +247,7 @@
     <string name="toastEsuMc2NoButtonPresses">Utilisation des touches interdite: Mobile Control II en mode Stop</string>
     <string name="EsuMc2KnobAction">Active/désactive molette de commande</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilisation des libellés de fonctions par défaut?</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Affichage des libellés de fonctions par défaut au lieu de ceux définis dans JMRI.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Laisser votre appareil se connecter en Data à JMRI</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Réduire hauteur icone locomotive?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilisation de touches plus petites pour n° de loco, vitesse et sens de marche.</string>
     <string name="prefNumOfThrottles">Nombre de régulateurs</string>
@@ -361,7 +361,7 @@
     <string name="prefSpeedButtonsRepeatSummary">Délai d attente entre incréements de vitesse. Plus c est petit, plus c est rapide. Ne s applique pas au Gamepad (voir les réglages séparés pour Gamepad)</string>
 
     <string name="prefSpeedButtonsSpeedStepTitle">Incréments de vitesse</string>
-    <string name="prefSpeedButtonsSpeedStepSummary">Nombre de pas de vitesse appliqué aà chaque incrément de vitesse</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">Nombre de pas de vitesse appliqué à chaque incrément de vitesse</string>
 
     <string name="server_address">Adresse serveur</string>
     <string name="routes_route">Nom systeme de l itinéraire</string>
@@ -854,8 +854,10 @@
     <string name="prefPauseSpeedStepSummary">Dimension crans si Pause</string>
     <string name="prefPauseSpeedStepTitle">\'Pause\' nb cran</string>
 
-    <string name="prefAllowMobileDataTitle">Autoriser la connexion mobile de données</string>
+    <string name="prefAllowMobileDataTitle">Autoriser la connexion Data</string>
     <string name="prefAllowMobileDataSummary">Laissez votre appareil de se connecter à JMRI sur Mobile Data.</string>
-    <string name="toastPreferencesChangedForceWiFi">préférence WiFi forcée a changé.</string>
+    <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de touches de fonction pour afficher sur la simple mise en page des gaz.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Boutons de fonction Throttle simple</string>
 
 </resources>

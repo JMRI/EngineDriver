@@ -1043,5 +1043,7 @@
     <string name="prefAllowMobileDataTitle">Povolit připojení k mobilní datové přenosy</string>
     <string name="prefAllowMobileDataSummary">Aby vaše zařízení připojit k JMRI přes mobilní datové přenosy.</string>
     <string name="toastPreferencesChangedForceWiFi">Nucený WiFi preference změnit.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Počet funkčních tlačítek pro zobrazení na Simple škrticí uspořádání.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Jednoduché ovládání plynu Funkční tlačítka</string>
 
 </resources>

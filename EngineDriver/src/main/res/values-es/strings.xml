@@ -827,4 +827,6 @@
     <string name="prefAllowMobileDataTitle">Permitir la conexión de datos móviles</string>
     <string name="prefAllowMobileDataSummary">Permitir que el dispositivo se conecte a JMRI sobre datos móviles.</string>
     <string name="toastPreferencesChangedForceWiFi">Forzado preferencia WiFi cambió.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Número de Botones de función para mostrar en el diseño del acelerador simple.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Simples acelerador Botones de función</string>
 </resources>
