@@ -26,7 +26,8 @@
             android:layout_below="@id/ip_label"
             android:hint="@string/server_address"
             android:imeOptions="actionNext"
-            android:inputType="phone"
+            android:inputType="numberDecimal"
+            android:digits="0123456789."
             android:maxLength="60"
             android:singleLine="true" />
 
@@ -38,7 +39,8 @@
             android:layout_toRightOf="@id/host_ip"
             android:hint="@string/port"
             android:imeOptions="actionDone"
-            android:inputType="phone"
+            android:inputType="numberDecimal"
+            android:digits="0123456789"
             android:maxLength="5"
             android:singleLine="true" />
 
