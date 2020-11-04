@@ -39,6 +39,7 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -211,7 +212,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     private class HostNumericListener implements View.OnClickListener {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.host_ip);
-            entry.setInputType(InputType.TYPE_CLASS_PHONE);
+            entry.setInputType(InputType.TYPE_CLASS_NUMBER);
+            entry.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
             entry.requestFocus();
             host_numeric.setVisibility(View.GONE);
             host_text.setVisibility(View.VISIBLE);

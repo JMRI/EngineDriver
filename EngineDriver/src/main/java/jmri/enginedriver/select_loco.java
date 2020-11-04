@@ -1480,24 +1480,28 @@ public class select_loco extends Activity {
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
-    private int updateAddressEntry() {
+    private void updateAddressEntry() {
         Button ba = findViewById(R.id.acquire);
         EditText la = findViewById(R.id.loco_address);
-        int txtLen = la.getText().toString().trim().length();
-        int addr = 0;
+        String txt = la.getText().toString().trim();
+        int txtLen = txt.length();
+        int addr = -1;
         if (txtLen>0) {
-            addr = Integer.parseInt(la.getText().toString().trim());
+            try {
+                addr = Integer.parseInt(txt);
+            } catch (NumberFormatException e) {
+                la.setText(""); //clear the bad entry
+            }
         }
 
         // don't allow acquire button if nothing entered
-        if (txtLen > 0) {
+        if (addr > -1) {
             ba.setEnabled(true);
 
             // set address length
             Spinner al = findViewById(R.id.address_length);
             if (default_address_length.equals("Long") ||
                     ( default_address_length.equals("Auto") && (addr > 127)) ) {
-//                    ( default_address_length.equals("Auto") && (txtLen > 2)) ) {
                 al.setSelection(1);
             } else {
                 al.setSelection(0);
@@ -1507,7 +1511,7 @@ public class select_loco extends Activity {
             ba.setEnabled(false);
         }
 
-        return txtLen;
+        return;
     }
 
     // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
