@@ -857,7 +857,7 @@
     <string name="prefAllowMobileDataTitle">Autoriser la connexion Data</string>
     <string name="prefAllowMobileDataSummary">Laissez votre appareil de se connecter à JMRI sur Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de touches de fonction pour afficher sur la simple mise en page des gaz.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Boutons de fonction Throttle simple</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de touches de fonction (0-4) à afficher sur la simple mise en page des gaz.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Fonctions Taille de l\\\'image (Simple gaz seulement)</string>
 
 </resources>
