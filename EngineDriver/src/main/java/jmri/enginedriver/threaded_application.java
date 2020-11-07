@@ -408,31 +408,16 @@ public class threaded_application extends Application {
         }
 
         /*
-          is this a Digitrax LnWi? (based on naming convention in device
+          add configuration of digitrax LnWi or DCCEX to discovered list, since they do not provide mDNS
          */
-        boolean isDtx() {  //TODO: replace with regex
-            boolean ret = false;
-            if (client_ssid != null && client_ssid.startsWith("Dtx")) {
-                List<String> parts;
-                parts = Arrays.asList(client_ssid.split("-"));
-                if (parts.size() == 3) {
-                    ret = true;
-                }
-            }
-            return ret;
-        }
-
-        /*
-          add known configuration of digitrax LnWi to discovered list, since they do not provide jmDNS
-         */
-        void addDtxToDiscoveredList() {
-            if (client_address == null) return; //don't continue if address not yet set
-            String server_addr = client_address.substring(0, client_address.lastIndexOf("."));
+        void addFakeDiscoveredServer(String entryName, String clientAddr, String entryPort) {
+            //assume that the server is at x.y.z.1
+            String server_addr = clientAddr.substring(0, clientAddr.lastIndexOf("."));
             server_addr += ".1";
             HashMap<String, String> hm = new HashMap<>();
             hm.put("ip_address", server_addr);
-            hm.put("port", "12090");
-            hm.put("host_name", client_ssid);
+            hm.put("port", entryPort);
+            hm.put("host_name", entryName);
 
             Message service_message = Message.obtain();
             service_message.what = message_type.SERVICE_RESOLVED;
@@ -464,11 +449,16 @@ public class threaded_application extends Application {
                     // note: if the Thottle is sent in arg1, it is always expected to be a int
                     // if it is sent in arg0, it will be a string
 
-                    //Start or Stop the WiThrottle listener and required jmdns stuff
+                    //Start or Stop jmdns stuff, or add "fake" discovered servers
                     case message_type.SET_LISTENER:
-//                        getWifiInfo();
-                        if (isDtx()) {
-                            addDtxToDiscoveredList();
+                        if (client_ssid!=null &&
+                                client_ssid.matches("DCCEX_[0-9a-f]{6}$")) {
+                            //add "fake" discovered server entry for DCCEX: DCCEX_123abc
+                            addFakeDiscoveredServer(client_ssid, client_address, "2560");
+                        } else if (client_ssid!=null &&
+                                client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9]{4}-[0-9]{1,3}$")) {
+                            //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
+                            addFakeDiscoveredServer(client_ssid, client_address, "12090");
                         } else {
                             //arg1= 1 to turn on, arg1=0 to turn off
                             if (msg.arg1 == 0) {
