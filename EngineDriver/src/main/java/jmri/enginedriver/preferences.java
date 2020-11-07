@@ -441,6 +441,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     limitIntPrefValue(sharedPreferences, key, 500, 9999, "1000");
                     break;
                 case "prefThrottleScreenType":
+                    showHideThrottleSwitchPreferences();
                 case "NumThrottle":
                     showHideThrottleNumberPreference();
                     limitNumThrottles(sharedPreferences);
@@ -853,11 +854,18 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void showHideThrottleSwitchPreferences() {
+        String prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        boolean enable = prefThrottleScreenType.equals("Simple");
+
+        enableDisablePreference("prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
+    }
+
+    private void showHideSimpleThrottleLayoutShowFunctionButtonCountPreference() {
         boolean enable = true;
         if (prefThrottleSwitchButtonDisplay) {
             enable = false;
         }
-        enableDisablePreference("prefThrottleSwitchOption1", !enable);
+        enableDisablePreference("prefSimpleThrottleLayoutShowFunctionButtonCount", !enable);
         enableDisablePreference("prefThrottleSwitchOption2", !enable);
     }
 
