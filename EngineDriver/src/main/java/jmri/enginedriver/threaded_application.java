@@ -431,7 +431,7 @@ public class threaded_application extends Application {
             if (!sent)
                 service_message.recycle();
 
-            Log.d("Engine_Driver", String.format("t_a: added DigiTrax LnWi at %s to Discovered List", server_addr));
+            Log.d("Engine_Driver", String.format("t_a: added '%s' at %s to Discovered List", entryName, server_addr));
 
         }
 
