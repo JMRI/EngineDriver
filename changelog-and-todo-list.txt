@@ -2,6 +2,7 @@
  * Option to display 1-4 functions on the 'Simple' Throttle layout
  * set input type to numeric for server, port and address
  * add "discovered" server for DCC-EX access point, rewrite LnWi detection
+ * update ESU MC2 support for newest devices
 **Version 2.26.114
  * show server turnout list even if it arrives after activity started
  * Use wifi connection unless Allow Mobile Data option selected
