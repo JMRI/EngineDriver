@@ -742,7 +742,9 @@ public class threaded_application extends Application {
                     case message_type.CONNECTION_COMPLETED_CHECK:
                         //if not successfully connected by this time, kill connection
                         if (connectedHostName==null || connectedHostName.equals("")) {
-                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE, "timeout waiting for VN message, disconnecting");
+                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE,
+                                    "timeout waiting for VN message for "
+                                            + host_ip + ":" + port + ", disconnecting");
                             if (socketWiT != null) {
                                 socketWiT.disconnect(true, true);     //just close the socket
                             }
