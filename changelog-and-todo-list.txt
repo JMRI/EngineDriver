@@ -1,3 +1,4 @@
+**Version 2.26.118
 **Version 2.26.116
  * Option to display 1-4 functions on the 'Simple' Throttle layout
  * set input type to numeric for server, port and address, prevent crash
