@@ -3,6 +3,7 @@
  * set input type to numeric for server, port and address, prevent crash
  * add "discovered" server for DCC-EX access point, rewrite LnWi detection
  * update ESU Mobile Control II support for newest devices
+ * add address and port to VN timeout message
 **Version 2.26.114
  * show server turnout list even if it arrives after activity started
  * Use wifi connection unless Allow Mobile Data option selected
@@ -548,7 +549,6 @@
  */
 /*
  *   TODO: change "about" info message to show even in partial log
- *   TODO: include ip and port in VN timeout message
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -558,12 +558,10 @@
  *   TODO: support negative responses to permissions prompts, limiting functionality
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
- *   TODO: preserve state on switch between throttle and web view
  * routes
  *   TODO: use PRT titles for Active/inactive
  * turnouts
  *   TODO: support client entry/edit of username for servers without usernames
- *   TODO: show system turnout option if list arrives while on turnout page
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout/Thrown/Closed
