@@ -67,8 +67,7 @@ public interface message_type {
     int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
     int WIT_TURNOUT_NOT_DEFINED = 45;    //
     int RESTART_APP = 46;   //
-    int WIT_QUERY_SPEED = 47;   //
-    int WIT_QUERY_DIRECTION = 48;   //
+    int WIT_QUERY_SPEED_AND_DIRECTION = 47;   //
     int HTTP_SERVER_NAME_RECEIVED = 49;   //
     int CONNECTION_COMPLETED_CHECK = 50;   //
     int RELAUNCH_APP = 51;   //

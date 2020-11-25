@@ -1,4 +1,4 @@
-**Version 2.26.118
+**Version 2.27.118
 **Version 2.26.116
  * Option to display 1-4 functions on the 'Simple' Throttle layout
  * set input type to numeric for server, port and address, prevent crash
@@ -567,10 +567,12 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: use PTT titles for Turnouts/Turnout/Thrown/Closed
  * connection
+ *   TODO: add option to enable/disable sound and vibrate warning on disconnect
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
  * threaded_application
+ *   TODO: send *+ for first loco, not every loco acquired
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one

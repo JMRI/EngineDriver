@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmri.enginedriver"
     android:versionCode="118"
-    android:versionName="2.26.118" android:installLocation="auto">
+    android:versionName="2.27.118" android:installLocation="auto">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
