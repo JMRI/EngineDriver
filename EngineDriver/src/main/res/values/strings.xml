@@ -712,7 +712,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Error starting socket_WiT thread: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Error creating output stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error sleeping the thread, InterruptedException: %1$s</string>
-    <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings.\n</string>
+    <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings and Preferences.\n</string>
     <string name="statusThreadedAppNotConnected">Not connected to a network.  Check WiFi settings.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">No response from server %1$s:%2$s for %3$dms. Check that the WiThrottle server is running.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.\n\nRetrying</string>
@@ -765,8 +765,8 @@
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
     <string name="toastConnectRemoved">Server removed from List.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
-    <string name="toastForcedWiFiFailed">Forced WifFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>
-    <string name="toastPreferencesChangedForceWiFi">Forced WiFi preference changed.</string>
+    <string name="toastForcedWiFiFailed">Forced WiFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>
+    <string name="toastPreferencesChangedForceWiFi">\'Allow Mobile Data\' preference changed.</string>
 
     <!--    Toast messages for the Routes Activity -->
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>

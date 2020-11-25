@@ -711,16 +711,10 @@ public class threaded_application extends Application {
                     case message_type.WITHROTTLE_SEND:
                         withrottle_send(msg.obj.toString());
                         break;
-                    // Request the throttle's speed. whichThrottle is in arg 1
-                    case message_type.WIT_QUERY_SPEED: {
+                    // Request the throttle's speed and direction. whichThrottle is in arg 1
+                    case message_type.WIT_QUERY_SPEED_AND_DIRECTION: {
                         final int whichThrottle = msg.arg1;
-                        witRequestSpeed(whichThrottle);
-                        break;
-                    }
-                    // Request the throttle's direction. whichThrottle is in arg 1
-                    case message_type.WIT_QUERY_DIRECTION: {
-                        final int whichThrottle = msg.arg1;
-                        witRequestDir(whichThrottle);
+                        witRequestSpeedAndDir(whichThrottle);
                         break;
                     }
                     //send Q to withrottle server
