@@ -69,16 +69,16 @@ public class function_settings extends Activity implements PermissionsHelper.Per
     private String originalPrefNumberOfDefaultFunctionLabels = "29";
     private String prefNumberOfDefaultFunctionLabelsForRoster = "4";
     private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
-    private boolean prefAlwaysUseDefaultFunctionLabels = false;
+//    private boolean prefAlwaysUseDefaultFunctionLabels = false;
     private Spinner spinner;
 
     SharedPreferences prefs;
 
-    public void setTitleToIncludeThrotName() {
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
-                prefs.getString("throttle_name_preference", defaultName));
-    }
+//    public void setTitleToIncludeThrotName() {
+//        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+//        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
+//                prefs.getString("throttle_name_preference", defaultName));
+//    }
 
     /**
      * Called when the activity is first created.
@@ -106,7 +106,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         prefNumberOfDefaultFunctionLabelsForRoster = prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getApplicationContext().getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue));
         originalPrefNumberOfDefaultFunctionLabels = prefNumberOfDefaultFunctionLabels;
         originalPrefNumberOfDefaultFunctionLabelsForRoster = prefNumberOfDefaultFunctionLabelsForRoster;
-        prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+        mainapp.prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -257,7 +257,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
             }
         }
 
-        if (prefAlwaysUseDefaultFunctionLabels) {
+        if (mainapp.prefAlwaysUseDefaultFunctionLabels) {
             spinner.setSelection(0);
         } else {
             spinner.setSelection(1);
@@ -367,7 +367,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
                 }
             }
 
-            prefAlwaysUseDefaultFunctionLabels = false;
+            mainapp.prefAlwaysUseDefaultFunctionLabels = false;
             prefNumberOfDefaultFunctionLabels = "29";
             prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
@@ -414,7 +414,9 @@ public class function_settings extends Activity implements PermissionsHelper.Per
                 String label = aLbl.get(i);
                 if (label.length() > 0) {
                     Integer fnc = aFnc.get(i);
-                    settings_output.format("%s:%s\n", label, fnc);
+                    String locos = mainapp.function_consist_locos.get(i);
+                    String latching = mainapp.function_consist_latching.get(i);
+                    settings_output.format("%s:%s:%s:%s\n", label, fnc, locos, latching);
                     mainapp.function_labels_default.put(fnc, label);
                 }
             }
@@ -431,7 +433,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
         prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
         prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
-        prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();
+        prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", mainapp.prefAlwaysUseDefaultFunctionLabels).commit();
     }
 
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
@@ -471,8 +473,8 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
             int alwaysUseDefaultFunctionLabelsIndex = spinner.getSelectedItemPosition();
 
-            prefAlwaysUseDefaultFunctionLabels = alwaysUseDefaultFunctionLabelsIndex == 0;
-            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference
+            mainapp.prefAlwaysUseDefaultFunctionLabels = alwaysUseDefaultFunctionLabelsIndex == 0;
+            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", mainapp.prefAlwaysUseDefaultFunctionLabels).commit();  //reset the preference
 
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

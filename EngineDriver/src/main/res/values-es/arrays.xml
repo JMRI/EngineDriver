@@ -177,7 +177,9 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Concordancia simple de texto (original)</item>
-        <item>Concordancia de texto compleja: cadenas configurables por el usuario</item>
+        <item>Complejo texto coincidente - loco plomo siempre activado, Trail sigue las reglas siguientes</item>
+        <item>Especial exacta - El plomo y el Camino para activarse si coinciden exactamente las etiquetas de función</item>
+        <item>Especial Parcial - Plomo y Camino para activarse si coinciden parcialmente las etiquetas de función</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora delantera - Coincidencia parcial</item>
@@ -210,5 +212,16 @@
         <item>Centro - Sin escala</item>
         <item>Montar - Shrink solamente</item>
         <item>Fill - Distorsionar si es necesario</item>
+    </string-array>
+
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Loco plomo</item>
+        <item>Plomo + Trail Locos</item>
+        <item>Todos los Locos</item>
+        <item>Trail Loco</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>enclavamiento</item>
+        <item>no enclavamiento</item>
     </string-array>
 </resources>

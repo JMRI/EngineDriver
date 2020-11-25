@@ -742,7 +742,7 @@
     <string name="gamepadTestDeviceName">BT:</string>
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
     <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\n\nNeuer Versuch</string>
-    <string name="prefConsistFollowDefaultActionTitle">Standardaktion</string>
+    <string name="prefConsistFollowDefaultActionTitle">Wenn Alle Spiele Fail-Aktion</string>
     <string name="prefConsistFollowDefaultActionSummary">Welche locos im bestehen sollte auf die Funktionstasten reagieren, wenn keine der folgenden Regeln treffen sind.</string>
     <string name="prefConsistFollowAction5Summary">Welche Loks im Verbund sollten auf die gefundenen Funktionen reagieren.</string>
     <string name="prefKidsTimerRestartPasswordTitle">Neustart Passwort</string>
@@ -841,5 +841,17 @@
     <string name="toastPreferencesChangedForceWiFi">Erzwungene WiFi Präferenz geändert.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Anzahl der Funktionstasten (0-4) auf dem Simple Gas Layout zu zeigen.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funktionen Bereich Größe (Simple Nur Gas)</string>
+    <string name="functionConsistSettings">Consist Funktionseinstellungen</string>
+    <string name="functionConsistColumnLabel">Etikette</string>
+    <string name="functionConsistColumnLocos">Loco (n)</string>
+    <string name="functionConsistColumnLatching">Stromstoß</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">keiner</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">Rast</string>
+    <string name="prefFunctionConsistLocosDefaultValue">führen</string>
+    <string name="functionConsistHelpText">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
+    <string name="functionConsistHeader">Consist Funktion Aktionen</string>
+    <string name="app_name_consist_functions">Consist Funktionseinstellungen - Lokomotivführer</string>
+    <string name="prefShowTimeOnLogEntryTitle">Zeige Zeitstempel auf Log</string>
+    <string name="prefShowTimeOnLogEntrySummary">Zeigen Datum Zeit für jeden Eintrag auf dem Log-Bildschirm.</string>
 
 </resources>
