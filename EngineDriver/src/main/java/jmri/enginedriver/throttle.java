@@ -3533,7 +3533,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
             Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
             Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
-            esuThrottleFragment.moveThrottle(knobPos);
+            try {
+                esuThrottleFragment.moveThrottle(knobPos);
+            } catch (IllegalArgumentException ex) {
+                Log.e("Engine_Driver", "ESU_MCII: Problem moving throttle " + ex.getMessage());
+            }
         } else {
             Log.d("Engine_Driver", "ESU_MCII: This throttle not selected for control by knob");
         }
