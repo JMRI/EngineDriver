@@ -187,7 +187,9 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Correspondance de texte simple (original)</item>
-        <item>Correspondance de texte complexe - chaînes configurables par l utilisateur</item>
+        <item>texte correspondant complexe - loco plomb toujours activé, Trail suit les règles ci-dessous</item>
+        <item>Spécial exacte - Le plomb et tous Trail activé si elles correspondent exactement aux étiquettes de fonction</item>
+        <item>Partielle spéciale - Plomb et tous Trail activés si elles correspondent en partie les étiquettes de fonction</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
@@ -382,5 +384,16 @@
         <item>Recentrer écran</item>
         <item>Ajustement taille écran</item>
         <item>Remplissage taille écran</item>
+    </string-array>
+
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Loco Lead</item>
+        <item>Lead + Trail Locos</item>
+        <item>tous Locos</item>
+        <item>Trail Loco</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>Latching</item>
+        <item>non Accrochage</item>
     </string-array>
 </resources>

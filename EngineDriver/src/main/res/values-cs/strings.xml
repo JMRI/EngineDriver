@@ -859,7 +859,7 @@
     
     <string name="prefConsistFollowActionOtherDefaultValue">přípřež</string>
 
-    <string name="prefConsistFollowDefaultActionTitle">Výchozí akce</string>
+    <string name="prefConsistFollowDefaultActionTitle">Jsou-li všechny zápasy Fail akce</string>
     <string name="prefConsistFollowDefaultActionSummary">Která z lokomotiv by měla reagovat na tlačítko funkce pokud žádné z níže uvedených pravidel není splněno.</string>
 
 
@@ -1045,5 +1045,17 @@
     <string name="toastPreferencesChangedForceWiFi">Nucený WiFi preference změnit.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Počet funkčních tlačítek (0-4), které chcete zobrazit na Simple škrticí uspořádání.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funkce Area Size (pouze jednoduchá škrticí klapky)</string>
+    <string name="functionConsistSettings">Skládat nastavení funkcí</string>
+    <string name="functionConsistColumnLabel">Označení</string>
+    <string name="functionConsistColumnLocos">Lokomotiv (y)</string>
+    <string name="functionConsistColumnLatching">latching</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">žádný</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">aretací</string>
+    <string name="prefFunctionConsistLocosDefaultValue">Vést</string>
+    <string name="functionConsistHelpText">Používá se pouze pro \\ ‚Speciální \\‘ skládat volby funkce následující. Zvolit, jak bude text každé funkce hledali v popisky funkčních pro každou lokomotivu v sestavě.</string>
+    <string name="functionConsistHeader">Skládat Funkce Akce</string>
+    <string name="app_name_consist_functions">Skládat nastavení funkcí - strojvedoucí</string>
+    <string name="prefShowTimeOnLogEntryTitle">Zobrazovat časová razítka na Log</string>
+    <string name="prefShowTimeOnLogEntrySummary">Ukázat Datum Čas pro každou položku na obrazovce protokolu.</string>
 
 </resources>

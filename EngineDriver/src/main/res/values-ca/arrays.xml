@@ -177,7 +177,9 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Combinació de text simple (original)</item>
-        <item>Combinació de text complex: cadenes configurables per l\'usuari</item>
+        <item>Complex text coincident - boig plom sempre activat, Trail segueix les regles següents</item>
+        <item>Especial exacta - El plom i el Camí per activar si coincideixen exactament les etiquetes de funció</item>
+        <item>Especial Parcial - Plom i Camí per activar si coincideixen parcialment les etiquetes de funció</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora capdavantera - Coincidència parcial</item>
@@ -211,4 +213,16 @@
         <item>Muntar - Shrink només</item>
         <item>Fill - Distorsionar si cal</item>
     </string-array>
+
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>boig plom</item>
+        <item>Plom + Trail Bojos</item>
+        <item>Tots els Bojos</item>
+        <item>Trail Boig</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>enclavament</item>
+        <item>no enclavament</item>
+    </string-array>
+
 </resources>

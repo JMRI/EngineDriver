@@ -682,7 +682,7 @@
     <string name="fb_column_function">Esta função #</string>
     <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
     <string name="gamepadTestDeviceName">BT:</string>
-    <string name="prefConsistFollowDefaultActionTitle">Ação padrão</string>
+    <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
     <string name="edit_consist_throttle_1">Editar Consistem acelerador 1</string>
@@ -777,5 +777,17 @@
     <string name="toastPreferencesChangedForceWiFi">Forçado preferência WiFi alterado.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Número de botões de função (0-4) para mostrar no layout do acelerador simples.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funções Área Tamanho (somente simples do acelerador)</string>
+    <string name="functionConsistSettings">Consistem configurações de funções</string>
+    <string name="functionConsistColumnLabel">Rótulo</string>
+    <string name="functionConsistColumnLocos">Loco (s)</string>
+    <string name="functionConsistColumnLatching">travamento</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">Nenhum</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">trancando</string>
+    <string name="prefFunctionConsistLocosDefaultValue">conduzir</string>
+    <string name="functionConsistHelpText">Apenas usada para o \\ \'especial \\\' consistem de função seguintes opções. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
+    <string name="functionConsistHeader">Consistem Ações de função</string>
+    <string name="app_name_consist_functions">Consistem configurações de funções - Driver Motor</string>
+    <string name="prefShowTimeOnLogEntryTitle">Mostrar Timestamps em Log</string>
+    <string name="prefShowTimeOnLogEntrySummary">Mostrar Data Hora para cada entrada na tela de log.</string>
 
 </resources>

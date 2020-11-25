@@ -140,6 +140,9 @@ public class threaded_application extends Application {
     LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
     LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
     LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with no function labels
+    LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
+    LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
+
     boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
     String[] to_system_names;
     String[] to_user_names;
@@ -273,6 +276,15 @@ public class threaded_application extends Application {
 
     boolean haveForcedWiFiConnection = false;
     boolean prefAllowMobileData = false;
+
+    public boolean prefAlwaysUseDefaultFunctionLabels = false;
+    public String prefConsistFollowRuleStyle = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+
+    public boolean prefShowTimeOnLogEntry = false;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -1360,9 +1372,16 @@ public class threaded_application extends Application {
 
         //parse function state string into appropriate app variable array
         private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
-            try {
-                function_states[whichThrottle][fn] = fState;
-            } catch (ArrayIndexOutOfBoundsException ignored) {
+
+            boolean skip = (fn>2) && (prefAlwaysUseDefaultFunctionLabels)
+                    && ( (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                        || (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL) ) ) ;
+
+            if (!skip) {
+                try {
+                    function_states[whichThrottle][fn] = fState;
+                } catch (ArrayIndexOutOfBoundsException ignored) {
+                }
             }
         }
 
@@ -2005,6 +2024,10 @@ public class threaded_application extends Application {
             }
         }, "DefaultFunctionLabels").start();
         CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+
+        prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
+                getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
+
     }
 
     public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
@@ -2094,7 +2117,12 @@ end force shutdown */
 
 
     //init default function labels from the settings files or set to default
+    //also collects the loco and latching handling for the 'Special' consist function string matching
     public void set_default_function_labels(boolean getAll) {
+        String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);;
+        String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);;
+        String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);;
+
         int numberOfDefaultFunctionLabels = 29;
         int numberOfDefaultFunctionLabelsForRoster = 29;
         if (!getAll) {
@@ -2104,6 +2132,8 @@ end force shutdown */
 
         function_labels_default = new LinkedHashMap<>();
         function_labels_default_for_roster = new LinkedHashMap<>();
+        function_consist_locos = new LinkedHashMap<>();
+        function_consist_latching = new LinkedHashMap<>();
         try {
             File sdcard_path = Environment.getExternalStorageDirectory();
             File settings_file = new File(sdcard_path + "/engine_driver/function_settings.txt");
@@ -2114,12 +2144,25 @@ end force shutdown */
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
                     String temp[] = line.split(":");
-                    if (temp.length == 2) {
+                    if (temp.length >= 2) {
                         if (i <= numberOfDefaultFunctionLabels) {
                             function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
                         }
                         if (i <= numberOfDefaultFunctionLabelsForRoster) {
                             function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                        }
+                    }
+                    if (temp.length == 4) {
+                        if (i <= numberOfDefaultFunctionLabels) {
+                            function_consist_locos.put(Integer.parseInt(temp[1]), temp[2]);
+                            function_consist_latching.put(Integer.parseInt(temp[1]), temp[3]);
+                        } else {
+                            function_consist_locos.put(Integer.parseInt(temp[1]), locosDefault);
+                            if(i<2) {
+                                function_consist_latching.put(Integer.parseInt(temp[1]), latchingLightBellDefault);
+                            } else {
+                                function_consist_latching.put(Integer.parseInt(temp[1]), latchingDefault);
+                            }
                         }
                     }
                     i++;

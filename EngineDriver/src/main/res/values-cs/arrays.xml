@@ -802,7 +802,9 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Jednoduché přizpůsobení textu (původní)</item>
-        <item>Komplexní přizpůsobení textu - uživatelsky nastavitelné řetězce</item>
+        <item>Komplex textu shoda - Lead loco aktivován vždy, Trail řídí pravidly níže</item>
+        <item>Speciální Exact - Olovo a All Trail aktivován v případě, že přesně shodovat s popisky funkčních</item>
+        <item>Zvláštní Částečné - Olovo a All Trail aktivován v případě, že částečně odpovídat štítkům funkce</item>
     </string-array>
 
 
@@ -881,8 +883,17 @@
         <item>První i druhé rozvržení</item>
     </string-array>
 
-    
-    
+
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Lead Loco</item>
+        <item>Olovo + Trail Locos</item>
+        <item>All Locos</item>
+        <item>Trail Loco</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>latching</item>
+        <item>není se západkou</item>
+    </string-array>
     
     
     

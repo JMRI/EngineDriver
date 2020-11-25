@@ -884,10 +884,14 @@
     <string-array name="prefConsistFollowRuleStyleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>original</item>
         <item>complex</item>
+        <item>specialExact</item>
+        <item>specialPartial</item>
     </string-array>
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Simple text matching (original)</item>
-        <item>Complex text matching - user configurable strings</item>
+        <item>Complex text matching - Lead loco always activated, Trail follows rules below</item>
+        <item>Special Exact - Lead and All Trail activated if they exactly match the function labels</item>
+        <item>Special Partial - Lead and All Trail activated if they partially match the function labels</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -905,6 +909,28 @@
         <item>Lead Loco - Exact Match</item>
         <item>Lead+Trail Locos - Exact Match</item>
         <item>All Locos - Exact Match</item>
+    </string-array>
+
+    <string-array name="prefFunctionConsistLocosEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>lead</item>
+        <item>lead and trail</item>
+        <item>all</item>
+        <item>trail</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Lead Loco</item>
+        <item>Lead+Trail Locos</item>
+        <item>All Locos</item>
+        <item>Trail Loco</item>
+    </string-array>
+
+    <string-array name="prefFunctionConsistLatchingEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>latch</item>
+        <item>none</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>Latching </item>
+        <item>Not Latching</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

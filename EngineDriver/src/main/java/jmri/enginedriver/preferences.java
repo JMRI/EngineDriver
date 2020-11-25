@@ -102,8 +102,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     protected boolean prefHideSlider = false;
 
     private String prefConsistFollowRuleStyle = "original";
-    private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
     private ProgressDialog pDialog;
     public static final int PROGRESS_BAR_TYPE = 0;
@@ -486,6 +488,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 //                    forceReLaunchApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
                     forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
                     forceReLaunchAppOnPreferencesClose = true;
+                    break;
+
+                case "prefShowTimeOnLogEntry":
+                    mainapp.prefShowTimeOnLogEntry = sharedPreferences.getBoolean("prefShowTimeOnLogEntry",
+                            getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
                     break;
             }
         }
@@ -909,14 +916,19 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
     }
 
     private void showHideConsistRuleStylePreferences() {
-        boolean enable = true;
+        boolean enable = false;
         if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-            enable = false;
+            enable = true;
         }
 
-        enableDisablePreference("SelectiveLeadSound", !enable);
-        enableDisablePreference("SelectiveLeadSoundF1", !enable);
-        enableDisablePreference("SelectiveLeadSoundF2", !enable);
+        enableDisablePreference("SelectiveLeadSound", enable);
+        enableDisablePreference("SelectiveLeadSoundF1", enable);
+        enableDisablePreference("SelectiveLeadSoundF2", enable);
+
+        enable = false;
+        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
+            enable = true;
+        }
 
         enableDisablePreference("prefConsistFollowDefaultAction", enable);
         enableDisablePreference("prefConsistFollowString1", enable);

@@ -247,41 +247,50 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private List<Integer> prefConsistFollowHeadlights;
     private String prefConsistFollowDefaultAction = "none";
 
-    private static int FUNCTION_IS_LEAD_ONLY = 1;
-    private static int FUNCTION_IS_TRAIL_ONLY = 2;
-    private static int FUNCTION_IS_LEAD_AND_FOLLOW = 3;
-    private static int FUNCTION_IS_LEAD_AND_TRAIL = 4;
-    private static int FUNCTION_IS_FOLLOW = 5;
+    private static final int FUNCTION_IS_LEAD_ONLY = 1;
+    private static final int FUNCTION_IS_TRAIL_ONLY = 2;
+    private static final int FUNCTION_IS_LEAD_AND_FOLLOW = 3;
+    private static final int FUNCTION_IS_LEAD_AND_TRAIL = 4;
+    private static final int FUNCTION_IS_FOLLOW = 5;
 
-    private static int FUNCTION_ACTION_ON = 1;
-    private static int FUNCTION_ACTION_OFF = 2;
-    private static int FUNCTION_ACTION_TOGGLE = 3;
+    private static final int FUNCTION_ACTION_ON = 1;
+    private static final int FUNCTION_ACTION_OFF = 2;
+    private static final int FUNCTION_ACTION_TOGGLE = 3;
 
     private boolean prefSelectiveLeadSound = false;
     private boolean prefSelectiveLeadSoundF1 = false;
     private boolean prefSelectiveLeadSoundF2 = false;
 
-    private static int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
-    private static int BUTTON_PRESS_MESSAGE_UP = 0;
-    private static int BUTTON_PRESS_MESSAGE_DOWN = 1;
+    private static final int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
+    private static final int BUTTON_PRESS_MESSAGE_UP = 0;
+    private static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
 
-    private String prefConsistFollowRuleStyle = "original";
-    private static String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    private static String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+//    private String prefConsistFollowRuleStyle = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
 //    private static String CONSIST_FUNCTION_ACTION_NONE = "none";
-    private static String CONSIST_FUNCTION_ACTION_LEAD = "lead";
-    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
-    private static String CONSIST_FUNCTION_ACTION_ALL = "all";
-    private static String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
-    private static String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
-    private static String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
+    private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
+    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
+    private static final String CONSIST_FUNCTION_ACTION_ALL = "all";
+    private static final String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
+    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
+    private static final String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
 //    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD = "f lead";
 //    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
 //    private static String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
 
     private static Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
     private static Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
+
+    private static String FUNCTION_CONSIST_LATCHING = "latching";
+    private static String FUNCTION_CONSIST_NOT_LATCHING = "none";
+
+    private static int FUNCTION_CONSIST_LATCHING_NA = -1;
+    private static int FUNCTION_CONSIST_LATCHING_NO = 1;
+    private static int FUNCTION_CONSIST_LATCHING_YES = 2;
 
     // function number-to-button maps
     protected LinkedHashMap<Integer, Button>[] functionMaps;
@@ -467,7 +476,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected String prefThrottleScreenType;
 
     protected boolean prefThrottleViewImmersiveMode = false;
-    protected boolean prefAlwaysUseDefaultFunctionLabels = false;
+//    protected boolean prefAlwaysUseDefaultFunctionLabels = false;
     protected int prefNumberOfDefaultFunctionLabels = 28;
     protected boolean prefDecreaseLocoNumberHeight = false;
     protected boolean pref_increase_slider_height_preference = false;
@@ -951,7 +960,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
-                                            if ( (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
+                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
                                                     || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
                                                 set_function_state(whichThrottle, function);
                                             }
@@ -1393,7 +1402,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefConsistFollowActions = new ArrayList<>();
         prefConsistFollowHeadlights = new ArrayList<>();
 
-        prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+        mainapp.prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
 
         String prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
         String prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
@@ -1450,7 +1459,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefVolumeKeysFollowLastTouchedThrottle = prefs.getBoolean("prefVolumeKeysFollowLastTouchedThrottle", getResources().getBoolean(R.bool.prefVolumeKeysFollowLastTouchedThrottleDefaultValue));
 
         // Ignore the labels for the loco in the Roster and use the defaults... if requested in preferences
-        prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
+        mainapp.prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
         prefNumberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)));
 
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
@@ -2164,6 +2173,48 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             bStops[whichThrottle].setPressed(false);
             bStops[whichThrottle].setTypeface(null, Typeface.NORMAL);
         }
+    }
+
+    // only used for the 'Special' function label matching  AND you have custom Function Labels
+    int setFunctionButtonState(int whichThrottle, int function, boolean downPress) {
+        int isLatching = FUNCTION_CONSIST_LATCHING_NA;
+        Consist con = mainapp.consists[whichThrottle];
+
+        if ( ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) )
+//                && (con.size()>1)
+        ) {
+            int doPress = -1;
+            boolean doRelease = false;
+            if (mainapp.function_consist_latching.get(function).equals(FUNCTION_CONSIST_NOT_LATCHING)) {
+                isLatching = FUNCTION_CONSIST_LATCHING_NO;
+                if (downPress) {
+                    doPress = 1; //down
+                } else {
+                    doPress = 2; //up
+                }
+            } else { //latching
+                if (!downPress) { //only process the release
+                    doPress = 0;
+                    isLatching = FUNCTION_CONSIST_LATCHING_YES;
+                }
+            }
+
+            Button b;
+            b = functionMaps[whichThrottle].get(function);
+
+            if (b != null) {
+                if ( ((!b.isPressed()) && (doPress==0)) || (doPress==1) ) {
+                    b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                    b.setPressed(true);
+                } else if ( ((b.isPressed()) && (doPress==0)) || (doPress==2) ) {
+                    b.setTypeface(null, Typeface.NORMAL);
+                    b.setPressed(false);
+                }
+            }
+        }
+        return isLatching;
     }
 
     private boolean isSelectLocoAllowed(int whichThrottle) {
@@ -2916,10 +2967,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (action==ACTION_DOWN) {
                     GamepadFeedbackSound(false);
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 1);
-                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction);
+                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
                 } else {
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle), fKey, 0);
-                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction);
+                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED)) {
@@ -3532,7 +3583,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
             Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
             Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
-            esuThrottleFragment.moveThrottle(knobPos);
+            try {
+                esuThrottleFragment.moveThrottle(knobPos);
+            } catch (IllegalArgumentException ex) {
+                Log.e("Engine_Driver", "ESU_MCII: Problem moving throttle " + ex.getMessage());
+            }
         } else {
             Log.d("Engine_Driver", "ESU_MCII: This throttle not selected for control by knob");
         }
@@ -3940,7 +3995,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         boolean trail = false;
         boolean followLeadFunction = false;
 
-        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
 //            boolean selectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
             if (!lab.equals("")) {
                 lead = (prefSelectiveLeadSound &&
@@ -3969,11 +4024,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     }
 
-    private void sendFunctionToConsistLocos(int whichThrottle,int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction) {
+    private void sendFunctionToConsistLocos(int whichThrottle,int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching) {
         Consist con;
         con = mainapp.consists[whichThrottle];
 
-        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
+        if ( ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
+            || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+            || (!mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) )
+            && (con.size()==1) ) {
+                tempPrefConsistFollowRuleStyle = CONSIST_FUNCTION_RULE_STYLE_ORIGINAL;
+        }
+
+        if (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
 
             String addr = "";
             if (leadOnly)
@@ -4002,25 +4065,51 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                 }
             }
-        } else {
-            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
-                mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
-            } else {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
+
+        } else {  //Complex or SpecialExact or SpecialPartial
+
+            if (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) { // if Complex, always activate the lead loco
+                if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                    mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
+                } else {
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
+                }
             }
 
             function = getFunctionNumber(con,function,lab);
 
             List<Integer> functionList = new ArrayList<>();
             for (Consist.ConLoco l : con.getLocos()) {
-                if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                    functionList = l.getMatchingFunctions(function, lab, l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()), prefConsistFollowDefaultAction, prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights);
+                boolean processThisLoco = true;
+                if ((l.getAddress().equals(con.getLeadAddr()))
+                        && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                        && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                ) {  // for complex ignore the lead as we have already set it
+                    processThisLoco = false;
+                }
+
+                if (processThisLoco) {
+                    functionList = l.getMatchingFunctions(function, lab,
+                            l.getAddress().equals(con.getLeadAddr()), l.getAddress().equals(con.getTrailAddr()),
+                            tempPrefConsistFollowRuleStyle, prefConsistFollowDefaultAction,
+                            prefConsistFollowStrings, prefConsistFollowActions, prefConsistFollowHeadlights,
+                            mainapp);
                     if (functionList.size()>0) {
                         for (int i = 0; i < functionList.size(); i++) {
-                            if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
-                                mainapp.toggleFunction(mainapp.throttleIntToString(i) + l.getAddress(), functionList.get(i));
+                            if ( (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
+                                || (isLatching == FUNCTION_CONSIST_LATCHING_NA) ) {
+                                if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
+                                    mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function);
+                                } else {
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function, buttonPressMessageType);
+                                }
                             } else {
-                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function, buttonPressMessageType);
+                                if ((isLatching == FUNCTION_CONSIST_LATCHING_YES) && (buttonPressMessageType == BUTTON_PRESS_MESSAGE_UP)) {
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_DOWN);
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_UP);
+                                } else if (isLatching == FUNCTION_CONSIST_LATCHING_NO) {
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), buttonPressMessageType);
+                                }
                             }
                         }
                     }
@@ -4106,6 +4195,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //        }
 
         private void handleAction(int action) {
+            int isLatching = FUNCTION_CONSIST_LATCHING_NA;  // only used for the special consist function matching
+
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
@@ -4134,7 +4225,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                             break;
 
                         default: { // handle the function buttons
-                            sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly,followLeadFunction);
+                            isLatching = setFunctionButtonState(whichThrottle, function, true);  //special handeling for when using the default function labels, and one of 'Special' function following options
+                            sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly,followLeadFunction, isLatching);
                             break;
                         }
                     }
@@ -4150,11 +4242,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     // only process UP event if this is a "function" button
                     else if (function < direction_button.LEFT) {
-                        sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly,followLeadFunction);
+                        isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handeling for when using the default function labels, and one of 'Special' function following options
+                        sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly,followLeadFunction, isLatching);
                     }
                     break;
             }
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
         }
     }
 
@@ -5022,6 +5115,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 }
             }
             TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
+
+            boolean isSpecial = false;
+            if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
+                    && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) ) {
+                isSpecial = true;
+            }
+//            if (TMenu.findItem(R.id.function_consist_settings_mnu)!=null) {
+                TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial);
+//            }
         }
     }
 
@@ -5194,7 +5297,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 // note: we make a copy of function_labels_x because TA might change it
                 // while we are using it (causing issues during button update below)
                 function_labels_temp = mainapp.function_labels_default;
-                if (!prefAlwaysUseDefaultFunctionLabels) { //avoid npe
+                if (!mainapp.prefAlwaysUseDefaultFunctionLabels) { //avoid npe
                     if (mainapp.function_labels != null
                             && mainapp.function_labels[whichThrottle] != null
                             && mainapp.function_labels[whichThrottle].size() > 0) {
@@ -5470,6 +5573,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 return true;
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, function_settings.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+            case R.id.function_consist_settings_mnu:
+                in = new Intent().setClass(this, function_consist_settings.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;

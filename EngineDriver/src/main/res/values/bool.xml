@@ -88,4 +88,6 @@
 
     <bool name="prefAllowMobileDataDefaultValue">false</bool>
 
+    <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
+
 </resources>
