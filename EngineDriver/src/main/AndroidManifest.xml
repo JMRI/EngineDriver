@@ -109,6 +109,12 @@
             android:label="@string/app_name_functions" >
         </activity>
         <activity
+            android:name=".function_consist_settings"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
+            android:label="@string/app_name_consist_functions" >
+        </activity>
+        <activity
             android:name=".turnouts"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts"

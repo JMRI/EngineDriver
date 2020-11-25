@@ -16,11 +16,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="exit">Exit</string>
     <string name="settings">Function Defaults</string>
+    <string name="functionConsistSettings">Consist Function Settings</string>
     <string name="fb_label">Function Label</string>
     <string name="fb_column_label">Label</string>
     <string name="fb_column_function">Funct#</string>
     <string name="function_buttons">function_buttons</string>
     <string name="introMenu">Intro/Setup Wizard</string>
+
+    <string name="functionConsistColumnLabel">Label</string>
+    <string name="functionConsistColumnLocos">Loco(s)</string>
+    <string name="functionConsistColumnLatching">Latching</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">none</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">latching</string>
+    <string name="prefFunctionConsistLocosDefaultValue">lead</string>
+    <string name="functionConsistHelpText">Only used for the \'Special\' consist function following options. Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
+    <string name="functionConsistHeader">Consist Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
@@ -38,6 +48,7 @@
     <string name="app_name_web">Web - Engine Driver</string>
     <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Default Function Settings - Engine Driver</string>
+    <string name="app_name_consist_functions">Consist Function Settings - Engine Driver</string>
     <string name="app_name_preferences">Preferences - Engine Driver</string>
     <string name="app_name_select_loco">Select/Release Loco - Engine Driver</string>
     <string name="app_name_ConsistEdit">Consist Edit - Engine Driver</string>
@@ -885,7 +896,7 @@
     <string name="prefConsistFollowAction2DefaultValue" translatable="false">lead</string>
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
 
-    <string name="prefConsistFollowDefaultActionTitle">Default Action</string>
+    <string name="prefConsistFollowDefaultActionTitle">If All matches Fail Action</string>
     <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet.</string>
     <string name="prefConsistFollowDefaultActionDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
 
@@ -1065,6 +1076,9 @@
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions Area Size (Simple Throttle only)</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Number of Function Buttons (0-4) to show on the Simple Throttle layout.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
+
+    <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log</string>
+    <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen.</string>
 
     <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>

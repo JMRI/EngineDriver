@@ -250,6 +250,11 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
                 int msgStart = data.indexOf("Engine_Driver: "); //post-marshmallow format
                 if (msgStart > 0) {
                     msg = data.substring(msgStart + 15);
+                    if (mainapp.prefShowTimeOnLogEntry) {
+                        int tmStart = data.indexOf(" "); //post-marshmallow format
+                        String tm = data.substring(tmStart + 1,tmStart+12);
+                        msg = tm + " " + msg;
+                    }
                 } else {
                     msgStart = data.indexOf("): "); //pre-marshmallow format
                     if (msgStart > 0) {

@@ -194,8 +194,11 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Correspondência de texto simples (original)</item>
-        <item>Correspondência complexa de texto - sequências configuráveis ​​pelo usuário</item>
+        <item>Complexo de correspondência de texto - loco Chumbo sempre activado, Trail segue as regras abaixo</item>
+        <item>Especial Exact - Chumbo e Tudo Trail activado se eles correspondem exactamente às etiquetas de função</item>
+        <item>Especial Parcial - Chumbo e Tudo Trail ativado se eles correspondem parcialmente os rótulos de função</item>
     </string-array>
+
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Lead Loco - Partida Parcial</item>
         <item>Lead + Trail Locos - Partida Parcial</item>
@@ -227,5 +230,16 @@
         <item>Center - No Crop</item>
         <item>Fill screen - Crop if needed</item>
         <item>Fill screen - distort if needed</item>
+    </string-array>
+
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Chumbo Loco</item>
+        <item>Chumbo + Trail Locos</item>
+        <item>Todos Locos</item>
+        <item>Trail Loco</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>travamento</item>
+        <item>não Retenção</item>
     </string-array>
 </resources>

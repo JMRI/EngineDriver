@@ -641,7 +641,7 @@
     <string name="prefConsistFollowString1DefaultValue">LUZ</string>
     <string name="prefConsistFollowString2DefaultValue">SILBATO,BOZINA,CAMPANA</string>
 
-    <string name="prefConsistFollowDefaultActionTitle">Acción por defecto</string>
+    <string name="prefConsistFollowDefaultActionTitle">Si fallan Todos los partidos Acción</string>
     <string name="prefConsistFollowDefaultActionSummary">Qué locomotoras de la tracción múltiple deben de reaccionar a las teclas de funciones si no se cumple ninguna de las siguientes reglas.</string>
 
     <string name="prefConsistFollowString1Title">Luz dalantera específica de la cadena 1</string>
@@ -829,4 +829,16 @@
     <string name="toastPreferencesChangedForceWiFi">Forzado preferencia WiFi cambió.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Número de Botones de función para mostrar en el diseño del acelerador simple.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Simples acelerador Botones de función</string>
+    <string name="functionConsistSettings">Consistir en ajustes de las funciones</string>
+    <string name="functionConsistColumnLabel">Etiqueta</string>
+    <string name="functionConsistColumnLocos">Loco (s)</string>
+    <string name="functionConsistColumnLatching">enclavamiento</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">ninguna</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">enclavamiento</string>
+    <string name="prefFunctionConsistLocosDefaultValue">dirigir</string>
+    <string name="functionConsistHelpText">Sólo se utiliza para el \\ \'Especial \\\' consistirá opciones de la función siguiente. Seleccione cómo se buscará el texto de cada función en las etiquetas de función para cada loco en el consistir.</string>
+    <string name="functionConsistHeader">Consistir en acciones de funciones</string>
+    <string name="app_name_consist_functions">Consistir en ajustes de función - Controlador del motor</string>
+    <string name="prefShowTimeOnLogEntryTitle">Mostrar marcas de tiempo en registro</string>
+    <string name="prefShowTimeOnLogEntrySummary">Mostrar Fecha Hora para cada entrada en la pantalla de registro.</string>
 </resources>

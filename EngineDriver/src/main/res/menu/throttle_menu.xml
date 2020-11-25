@@ -64,6 +64,8 @@
         android:visible="false" />
     <item android:id="@+id/settings_mnu"
         android:title="@string/settings" />
+    <item android:id="@+id/function_consist_settings_mnu"
+        android:title="@string/functionConsistSettings" />
 
     <item
         android:id="@+id/edit_consists_menu"

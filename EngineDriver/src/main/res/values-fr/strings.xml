@@ -710,7 +710,7 @@
     <string name="prefConsistFollowSummary">Options pour la façon dont les fonctions se comporteront dans une UM</string>
     <string name="prefConsistFollowString1DefaultValue">LUMIÈRE</string>
     <string name="prefConsistFollowString2DefaultValue">SIFFLET, KLAXON, CLOCHE</string>
-    <string name="prefConsistFollowDefaultActionTitle">Action par défaut</string>
+    <string name="prefConsistFollowDefaultActionTitle">Si Tous les matches Fail d\'action</string>
     <string name="prefConsistFollowDefaultActionSummary">Quelles locomotives doivent réagir aux touches de fonctions si aucune des règles ci dessous n est appliquée.</string>
     <string name="prefConsistFollowString1Title">Chaine d action 1 Feux</string>
     <string name="prefConsistFollowString1Summary">Chaîne (s) séparée (s) par des virgules à rechercher dans les étiquettes de fonction des locos de l UM pour reconnaître la fonction \'Headlight \' (normalement F0).</string>
@@ -859,5 +859,17 @@
     <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de touches de fonction (0-4) à afficher sur la simple mise en page des gaz.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Fonctions Taille de l\\\'image (Simple gaz seulement)</string>
+    <string name="functionConsistSettings">Réglages de fonction constitué</string>
+    <string name="functionConsistColumnLabel">Étiquette</string>
+    <string name="functionConsistColumnLocos">Loco (s)</string>
+    <string name="functionConsistColumnLatching">Latching</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">aucun</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">verrouillage</string>
+    <string name="prefFunctionConsistLocosDefaultValue">conduire</string>
+    <string name="functionConsistHelpText">Utilisé uniquement pour le \\ « Special \\ » consistent les options suivantes de fonction. Sélectionnez la façon dont le texte de chaque fonction sera recherchée dans les étiquettes de fonction pour chaque loco dans le composent.</string>
+    <string name="functionConsistHeader">Fonction Actions constitué</string>
+    <string name="app_name_consist_functions">Réglages de fonction constitué - Pilote de moteur</string>
+    <string name="prefShowTimeOnLogEntryTitle">Afficher Horodatage sur Log</string>
+    <string name="prefShowTimeOnLogEntrySummary">Show Time Date pour chaque entrée sur l\'écran du journal.</string>
 
 </resources>

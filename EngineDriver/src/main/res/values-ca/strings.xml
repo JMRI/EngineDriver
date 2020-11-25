@@ -651,7 +651,7 @@
     <string name="prefConsistFollowAction2DefaultValue" translatable="false">lead</string>
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
 
-    <string name="prefConsistFollowDefaultActionTitle">Acció per defecte</string>
+    <string name="prefConsistFollowDefaultActionTitle">Si fallen Tots els partits Acció</string>
     <string name="prefConsistFollowDefaultActionSummary">Quines locomotores de la tracció múltiple han de reaccionar a les tecles de funció si no s\'acompleix cap de les regles següents.</string>
 
     <string name="prefConsistFollowString1Title">Llum davantera específica de la cadena 1</string>
@@ -839,5 +839,17 @@
     <string name="toastPreferencesChangedForceWiFi">Forçat preferència WiFi va canviar.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funcions Talla de la zona (només simple de l\\\'accelerador)</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de botons de funció (0-4) per mostrar en el disseny de l\'accelerador simple.</string>
+    <string name="functionConsistSettings">Consistir en ajustos de les funcions</string>
+    <string name="functionConsistColumnLabel">etiqueta</string>
+    <string name="functionConsistColumnLocos">Boig (s)</string>
+    <string name="functionConsistColumnLatching">enclavament</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">cap</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">enclavament</string>
+    <string name="prefFunctionConsistLocosDefaultValue">dirigir</string>
+    <string name="functionConsistHelpText">Només s\'utilitza per al \\ \'Especial \\\' consistirà opcions de la funció següent. Seleccioneu com es buscarà el text de cada funció en les etiquetes de funció per a cada boig en el consistir.</string>
+    <string name="functionConsistHeader">Consistir en accions de funcions</string>
+    <string name="app_name_consist_functions">Consistir en ajustos de funció - Control de l\'motor</string>
+    <string name="prefShowTimeOnLogEntryTitle">Mostra marques de temps en registre</string>
+    <string name="prefShowTimeOnLogEntrySummary">Mostra Data Hora per a cada entrada a la pantalla de registre.</string>
 
 </resources>
