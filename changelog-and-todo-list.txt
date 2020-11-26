@@ -569,7 +569,7 @@
  *   TODO: support client entry/edit of username for servers without usernames
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
- *   TODO: why don't MRC Turnout updates update the list?
+ *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
  *   TODO: add option to enable/disable sound and vibrate warning on disconnect
  *   TODO: set limit on reconnect attempts?
