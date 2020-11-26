@@ -130,14 +130,16 @@ public class reconnect_status extends Activity {
         }
         retryFirst = false;
 
-        MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        try {
-            mediaPlayer.start();
-        } catch (Exception e) {
-            Log.d("Engine_Driver", "Reconnect: Unable to play notification sound");
-        }
+        if (mainapp.prefFeedbackOnDisconnect) {
+            MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            try {
+                mediaPlayer.start();
+            } catch (Exception e) {
+                Log.d("Engine_Driver", "Reconnect: Unable to play notification sound");
+            }
 
-        mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
+            mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
+        }
 
     }
 

@@ -90,4 +90,6 @@
 
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
 
+    <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
+
 </resources>
