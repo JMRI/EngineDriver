@@ -259,6 +259,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         if (PRMenu != null) {
             mainapp.displayEStop(PRMenu);
         }
+        //disable the Routes swipe if routes not allowed or not yet connected
+        enableDisablePreference("swipe_through_routes_preference",
+                mainapp.connectedHostip == null || mainapp.connectedHostip.equals("")
+                        || mainapp.isRouteControlAllowed());
+
     }
 
     @Override

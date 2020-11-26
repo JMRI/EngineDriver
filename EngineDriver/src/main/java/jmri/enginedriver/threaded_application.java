@@ -2684,7 +2684,7 @@ end force shutdown */
     }
 
     /**
-     * Are routes allowed for this connection?
+     * Are turnouts allowed for this connection?
      * based on setting of to_state_names for now
      * this hides/shows menu options and activities
      *
