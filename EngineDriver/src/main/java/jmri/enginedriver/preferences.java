@@ -499,6 +499,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     mainapp.prefShowTimeOnLogEntry = sharedPreferences.getBoolean("prefShowTimeOnLogEntry",
                             getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
                     break;
+
+                case "prefFeedbackOnDisconnect":
+                    mainapp.prefFeedbackOnDisconnect = sharedPreferences.getBoolean("prefFeedbackOnDisconnect",
+                            getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
+                    ;
+                    break;
             }
         }
     }

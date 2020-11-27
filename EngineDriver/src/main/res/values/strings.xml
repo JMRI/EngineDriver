@@ -1086,4 +1086,7 @@
     <string name="prefThrottleSwitchWebViewDefaultValue" translatable="false">NONE</string>
     -->
 
+    <string name="prefFeedbackOnDisconnectTitle">Feedback on Disconnect</string>
+    <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect.</string>
+
 </resources>
