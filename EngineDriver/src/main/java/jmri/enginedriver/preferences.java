@@ -441,6 +441,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
                     sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
                     sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
+                    forceReLaunchAppOnPreferencesClose = true;
                     forceRestartApp(mainapp.FORCED_RESTART_REASON_LOCALE);
                     break;
                 case "prefDirectionButtonLongPressDelay":
