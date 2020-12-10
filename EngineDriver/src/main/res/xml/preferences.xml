@@ -1146,7 +1146,13 @@
             android:key="prefAllowMobileData"
             android:summary="@string/prefAllowMobileDataSummary"
             android:title="@string/prefAllowMobileDataTitle" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefFeedbackOnDisconnectDefaultValue"
+            android:key="prefFeedbackOnDisconnect"
+            android:summary="@string/prefFeedbackOnDisconnectSummary"
+            android:title="@string/prefFeedbackOnDisconnectTitle" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCategoryWeb"
         android:title="@string/prefWebTitle" >

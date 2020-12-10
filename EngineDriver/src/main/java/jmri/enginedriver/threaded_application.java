@@ -92,12 +92,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -286,6 +284,7 @@ public class threaded_application extends Application {
     private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
     public boolean prefShowTimeOnLogEntry = false;
+    public boolean prefFeedbackOnDisconnect = true;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2032,6 +2031,8 @@ public class threaded_application extends Application {
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
+        prefFeedbackOnDisconnect = prefs.getBoolean("prefFeedbackOnDisconnect",
+                getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
 
     }
 
