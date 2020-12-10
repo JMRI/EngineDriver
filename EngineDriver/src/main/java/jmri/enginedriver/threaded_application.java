@@ -55,6 +55,7 @@ import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -230,8 +231,8 @@ public class threaded_application extends Application {
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
-    public String connectedHostName = "";
-    public String connectedHostip = "";
+    @NonNull public String connectedHostName = "";
+    @NonNull public String connectedHostip = "";
     public int connectedPort = 0;
 
     public String languageCountry = "en";
@@ -746,8 +747,8 @@ public class threaded_application extends Application {
                         break;
 
                     case message_type.CONNECTION_COMPLETED_CHECK:
-                        //if not successfully connected by this time, kill connection
-                        if (connectedHostName==null || connectedHostName.equals("")) {
+                        //if not successfully connected to a 2.0+ server by this time, kill connection
+                        if (withrottle_version < 2.0) {
                             sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE,
                                     "timeout waiting for VN message for "
                                             + host_ip + ":" + port + ", disconnecting");
@@ -1021,6 +1022,8 @@ public class threaded_application extends Application {
                     if (withrottle_version >= 2.0) {
                         if (!withrottle_version.equals(old_vn)) { //only if changed
                             sendMsg(connection_msg_handler, message_type.CONNECTED);
+                        } else {
+                            Log.d("Engine_Driver", "version already set to " + withrottle_version + ", ignoring");
                         }
                     } else {
 //                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
@@ -1234,11 +1237,13 @@ public class threaded_application extends Application {
                 }  //end if i==0
                 i++;
             }  //end for
-            Log.d("Engine_Driver", "t_a: consist header, addr=" + consist_addr
-                    + ", name=" + consist_name + ", desc=" + consist_desc);
+            Log.d("Engine_Driver", "t_a: consist header, addr='" + consist_addr
+                    + "', name='" + consist_name + "', desc='" + consist_desc + "'");
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
                 consist_entries.put(consist_addr, consist_desc.toString());
+             } else {
+                Log.d("Engine_Driver","skipping empty consist '" + consist_name + "'");
             }
         }
 

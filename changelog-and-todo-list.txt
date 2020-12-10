@@ -3,9 +3,10 @@
  * Avoid crashing when updating knob position if speed-steps changed
  * new 'Special' consist function following option
  * Hide "Swipe Through Routes" Preference if Routes not supported (e.g. MRC)
+ * change VN connect timeout to explicitly check for version
 **Version 2.26.116
  * Option to display 1-4 functions on the 'Simple' Throttle layout
- * set input type to numeric for server, port and address, prevent crash
+ * set input type to numeric for server, port and loco address, prevent crashes
  * add "discovered" server for DCC-EX access point, rewrite LnWi detection
  * update ESU Mobile Control II support for newest devices
  * add address and port to VN timeout message
