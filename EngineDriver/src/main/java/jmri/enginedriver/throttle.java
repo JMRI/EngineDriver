@@ -5698,8 +5698,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 if (resultCode == select_loco.RESULT_LOCO_EDIT) {
                     ActivityConsistUpdate(resultCode, data.getExtras());
                 }
-                overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle",' '))] = data.getStringExtra("overrideThrottleName");
-
+                try {
+                    overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle",' '))] = data.getStringExtra("overrideThrottleName");
+                } catch (RuntimeException e) {
+                    Log.e("Engine_Driver", "Throttle: Call to OverrideThrottleName failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                }
                 if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
                 } else {

@@ -3154,6 +3154,8 @@ end force shutdown */
         int val;
         if(Character.isDigit(cWhichThrottle)) {  // throttle number
             val = Character.getNumericValue((cWhichThrottle));
+            if (val<0) val = 0;
+            if (val>=maxThrottles) val = maxThrottles-1;
         }
         else switch (cWhichThrottle) {          // WiT protocol deprecated throttle letter codes
             case 'T':
