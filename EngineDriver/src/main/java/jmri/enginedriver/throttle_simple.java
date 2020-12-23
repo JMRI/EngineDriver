@@ -20,67 +20,19 @@ Original version of the simple throttle is by radsolutions.
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
-import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.webkit.CookieSyncManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
-import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_N;
-import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_T;
-import static android.view.KeyEvent.KEYCODE_V;
-import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
-import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
-import static android.view.KeyEvent.KEYCODE_W;
-import static android.view.KeyEvent.KEYCODE_X;
 
 // for changing the screen brightness
 
@@ -287,10 +239,12 @@ public class throttle_simple extends throttle {
                     bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
+                tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
-                // whichVolume = 'S'; //set the next throttle to use volume control
+                tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView

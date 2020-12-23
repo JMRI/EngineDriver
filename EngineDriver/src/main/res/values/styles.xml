@@ -177,10 +177,10 @@
     </style>
 
   <style name="loco_label_style" parent="@android:style/Widget.TextView">
-    <item name="android:shadowColor">#FFFFFFFF</item>
+    <item name="android:shadowColor">@color/black</item>
     <item name="android:shadowDx">1</item>
     <item name="android:shadowDy">1</item>
-    <item name="android:shadowRadius">1</item>
+    <item name="android:shadowRadius">3</item>
   </style>
 
   <style name="fn_scrollview_style"> <!-- dummy so that the other themes can alter the spacing without impacting the default theme -->

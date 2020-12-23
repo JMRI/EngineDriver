@@ -184,6 +184,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected Button[] bStops;
     protected Button[] bRevs;
     protected Button[] bSels;
+    protected TextView[] tvbSelsLabels;
     protected Button[] bRSpds;
     protected Button[] bLSpds;
 
@@ -4507,6 +4508,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         arrow_speed_button_touch_listener asbl;
 
         bSels = new Button[mainapp.maxThrottlesCurrentScreen];
+        tvbSelsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
         bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
         bLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
 
@@ -4553,36 +4555,43 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             // set listener for select loco buttons
             Button bSel = findViewById(R.id.button_select_loco_0);
+            TextView tvbSelsLabel = findViewById(R.id.loco_label_0);
             TextView tvLeft = findViewById(R.id.loco_left_direction_indicaton_0);
             TextView tvRight = findViewById(R.id.loco_right_direction_indicaton_0);
             switch (i) {
                 case 1:
                     bSel = findViewById(R.id.button_select_loco_1);
+                    tvbSelsLabel = findViewById(R.id.loco_label_1);
                     tvLeft = findViewById(R.id.loco_left_direction_indicaton_1);
                     tvRight = findViewById(R.id.loco_right_direction_indicaton_1);
                     break;
                 case 2:
                     bSel = findViewById(R.id.button_select_loco_2);
+                    tvbSelsLabel = findViewById(R.id.loco_label_2);
                     tvLeft = findViewById(R.id.loco_left_direction_indicaton_2);
                     tvRight = findViewById(R.id.loco_right_direction_indicaton_2);
                     break;
                 case 3:
                     bSel = findViewById(R.id.button_select_loco_3);
+                    tvbSelsLabel = findViewById(R.id.loco_label_3);
                     tvLeft = findViewById(R.id.loco_left_direction_indicaton_3);
                     tvRight = findViewById(R.id.loco_right_direction_indicaton_3);
                     break;
                 case 4:
                     bSel = findViewById(R.id.button_select_loco_4);
+                    tvbSelsLabel = findViewById(R.id.loco_label_4);
                     tvLeft = findViewById(R.id.loco_left_direction_indicaton_4);
                     tvRight = findViewById(R.id.loco_right_direction_indicaton_4);
                     break;
                 case 5:
                     bSel = findViewById(R.id.button_select_loco_5);
+                    tvbSelsLabel = findViewById(R.id.loco_label_5);
                     tvLeft = findViewById(R.id.loco_left_direction_indicaton_5);
                     tvRight = findViewById(R.id.loco_right_direction_indicaton_5);
                     break;
             }
             bSels[i] = bSel;
+            tvbSelsLabels[i] = tvbSelsLabel;
             bSels[i].setClickable(true);
             sfbt = new select_function_button_touch_listener(i);
             bSels[i].setOnClickListener(sfbt);
