@@ -200,10 +200,14 @@ public class throttle_big_buttons extends throttle {
                     bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
+
+                tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
                 // whichVolume = 'S'; //set the next throttle to use volume control
+                tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
+
             }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView

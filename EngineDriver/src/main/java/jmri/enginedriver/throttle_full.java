@@ -243,9 +243,14 @@ public class throttle_full extends throttle {
                             bLabel = overrideThrottleNames[throttleIndex];
                         }
                         bLabelPlainText = bLabel;
+
                     }
                     bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
                     throttle_count++;
+
+                    tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+                } else {
+                    tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
                 }
             }
             double textScale = 1.0;

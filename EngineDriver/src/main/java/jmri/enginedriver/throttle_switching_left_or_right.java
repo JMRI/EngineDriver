@@ -22,7 +22,6 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -304,11 +303,15 @@ public class throttle_switching_left_or_right extends throttle {
                         bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
+                tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
-// whichVolume = 'S'; //set the next throttle to use volume control
+                // whichVolume = 'S'; //set the next throttle to use volume control
+                tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
             }
+
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
