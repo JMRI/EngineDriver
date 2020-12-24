@@ -94,11 +94,7 @@
                                 android:paddingLeft="6dp"
                                 android:paddingRight="0dp"
                                 android:paddingTop="2dp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="1"
-                                android:textColor="#666666" />
+                                android:text="@string/loco" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -582,11 +578,7 @@
                                 android:paddingLeft="6dp"
                                 android:paddingRight="0dp"
                                 android:paddingTop="2dp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="1"
-                                android:textColor="#666666" />
+                                android:text="@string/loco" />
                         </RelativeLayout>
 
                         <RelativeLayout

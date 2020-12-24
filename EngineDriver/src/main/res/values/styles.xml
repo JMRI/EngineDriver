@@ -894,6 +894,11 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="loco_label_style_colorful" parent="@android:style/Widget.TextView">
+    <item name="android:background">@color/transparent</item>
+    <item name="android:textColor">@color/darkTint</item>
+  </style>
+
   <style name="fn_scrollview_style_colorful">
     <item name="android:layout_marginTop">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
