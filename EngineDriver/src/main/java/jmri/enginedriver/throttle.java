@@ -1535,8 +1535,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             dirRightIndicationText[throttleIndex] = "";
         }
 
-        if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)))
-                || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals(""))) ){
+        if ( ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT)) )
+                || ((prefLeftDirectionButtons.equals("")) && (prefRightDirectionButtons.equals("")) )
+                || ((prefLeftDirectionButtons.equals(DIRECTION_BUTTON_LEFT_TEXT)) && (prefRightDirectionButtons.equals("")) )
+                || ((prefRightDirectionButtons.equals(DIRECTION_BUTTON_RIGHT_TEXT))) && ((prefLeftDirectionButtons.equals("")) )
+        ){
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 if (directionButtonsAreCurrentlyReversed(throttleIndex)) {
                     FullLeftText[throttleIndex] = DIRECTION_BUTTON_RIGHT_TEXT;
