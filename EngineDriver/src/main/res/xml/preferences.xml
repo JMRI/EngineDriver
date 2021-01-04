@@ -110,6 +110,7 @@
                 android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                 android:key="prefSwitchingThrottleSliderDeadZone"
                 android:maxLength="3"
+                android:inputType="number"
                 android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
                 android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle" />
 
@@ -313,6 +314,7 @@
                 android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
                 android:key="prefNumberOfDefaultFunctionLabels"
                 android:maxLength="2"
+                android:inputType="number"
                 android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
                 android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
 
@@ -321,6 +323,7 @@
                 android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
                 android:key="prefNumberOfDefaultFunctionLabelsForRoster"
                 android:maxLength="2"
+                android:inputType="number"
                 android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
                 android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
         </PreferenceScreen>
