@@ -1,3 +1,4 @@
+**Version 2.27.120
 **Version 2.27.118
  * merge another speed and direction request message
  * Avoid crashing when updating knob position if speed-steps changed
