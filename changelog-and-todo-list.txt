@@ -4,6 +4,13 @@
  * new 'Special' consist function following option
  * Hide "Swipe Through Routes" Preference if Routes not supported (e.g. MRC)
  * change VN connect timeout to explicitly check for version
+ * New preference to disable the sound and vibrate on disconnect
+ * Preference to show the timestamp on the log entries
+ * Bug fixes for the 'Complex' string matching consist function following option
+ * Fix - show numeric keypad for Dead Zone preference
+ * Fix - Direction button labels if default entered on one only
+ * Change - Fix 'Loco:' label on the non-original throttle layouts
+ * Change - Hide 'Loco:' label once a loco is selected
 **Version 2.26.116
  * Option to display 1-4 functions on the 'Simple' Throttle layout
  * set input type to numeric for server, port and loco address, prevent crashes
@@ -601,6 +608,7 @@
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
+ *   TODO: merge multiple loco acquisitions into single transmission (reconnect and recent consists)
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
