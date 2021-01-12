@@ -2132,8 +2132,11 @@ end force shutdown */
         int numberOfDefaultFunctionLabels = 29;
         int numberOfDefaultFunctionLabelsForRoster = 29;
         if (!getAll) {
-            numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue))) - 1;
-            numberOfDefaultFunctionLabelsForRoster = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue))) - 1;
+            try {
+                numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue))) - 1;
+                numberOfDefaultFunctionLabelsForRoster = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabelsForRoster", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsForRosterDefaultValue))) - 1;
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         function_labels_default = new LinkedHashMap<>();
@@ -2188,8 +2191,11 @@ end force shutdown */
                 }
             }
         } catch (IOException except) {
-            Log.e("settings_activity", "Could not read file " + except.getMessage());
+            Log.e("settings_activity", "Could not read file, error: " + except.getMessage());
+        } catch (NumberFormatException except) {
+            Log.e("settings_activity", "NumberFormatException reading function_settings file: " + except.getMessage());
         }
+
     }
 
     public class DownloadRosterTask extends DownloadDataTask {

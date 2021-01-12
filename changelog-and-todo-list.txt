@@ -1,4 +1,6 @@
 **Version 2.27.120
+ * avoid NumberFormat and NPE crashes reported to Play Store
+ * update Readme
 **Version 2.27.118
  * merge another speed and direction request message
  * Avoid crashing when updating knob position if speed-steps changed
