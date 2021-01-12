@@ -112,7 +112,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Button b = findViewById(R.id.fb_copy_labels_from_roster);
-        if (mainapp.function_labels[0] == null || mainapp.function_labels[0].size() == 0) {
+        if (mainapp.function_labels == null || mainapp.function_labels[0] == null || mainapp.function_labels[0].size() == 0) {
             b.setEnabled(false);  //disable button if no roster
         } else {
             //Set the button callback.
