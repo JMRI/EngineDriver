@@ -187,9 +187,9 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Correspondance de texte simple (original)</item>
-        <item>texte correspondant complexe - loco plomb toujours activé, Trail suit les règles ci-dessous</item>
-        <item>Spécial exacte - Le plomb et tous Trail activé si elles correspondent exactement aux étiquettes de fonction</item>
-        <item>Partielle spéciale - Plomb et tous Trail activés si elles correspondent en partie les étiquettes de fonction</item>
+        <item>Correspondance exacte du texte - loco de tete toujours active, les autres locos suivent les règles suivantes</item>
+        <item>Correspondance complete - Fonctions appliquees a toutes les locos en cas de correspondance exacte des libelles</item>
+        <item>Correspondance partielle - Fonctions appliquees a toutes les locos en cas de correspondance partielle des libelles</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
@@ -387,13 +387,13 @@
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
-        <item>Loco Lead</item>
-        <item>Lead + Trail Locos</item>
-        <item>tous Locos</item>
-        <item>Trail Loco</item>
+        <item>Loco de tete</item>
+        <item>Locos de tete et de queue</item>
+        <item>Toutes les locos</item>
+        <item>Loco de queue</item>
     </string-array>
     <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
-        <item>Latching</item>
-        <item>non Accrochage</item>
+        <item>Verrouillage</item>
+        <item>Deverrouillage</item>
     </string-array>
 </resources>
