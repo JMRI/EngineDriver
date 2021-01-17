@@ -239,7 +239,8 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:orientation="vertical"
-                        android:layout_weight=".5">
+                        android:layout_weight=".5"
+                        android:paddingTop="10dp">
 
                         <Button
                             android:id="@+id/right_speed_button_0"
@@ -292,7 +293,7 @@
                             style="?attr/ed_fn_scrollview_style"
                             android:layout_width="match_parent"
                             android:layout_height="fill_parent"
-                            android:paddingTop="4dp">
+                            android:paddingTop="10dp">
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -728,7 +729,7 @@
                             style="?attr/ed_fn_scrollview_style"
                             android:layout_width="match_parent"
                             android:layout_height="fill_parent"
-                            android:paddingTop="4dp">
+                            android:paddingTop="10dp">
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -993,7 +994,8 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:orientation="vertical"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        android:paddingTop="10dp">
 
                         <Button
                             android:id="@+id/right_speed_button_1"

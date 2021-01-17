@@ -317,6 +317,11 @@ public class throttle_simple extends throttle {
         int fbsHeight = bStop.getHeight()+ (int) (3 * denScale);
         int lLowersHeight = lLowers[0].getHeight();
 
+        LinearLayout.LayoutParams stopButtonParams;
+        stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+        stopButtonParams.topMargin = (int) (speedButtonHeight * 0.5);
+        stopButtonParams.height = (int) (speedButtonHeight * 0.8);
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -335,6 +340,9 @@ public class throttle_simple extends throttle {
             }
             //bLSpds[throttleIndex].setText(speedButtonLeftText);
             //bRSpds[throttleIndex].setText(speedButtonRightText);
+
+//            bStops[throttleIndex].getLayoutParams().height = (int) (speedButtonHeight * 0.8);
+            bStops[throttleIndex].setLayoutParams(stopButtonParams);
 
             if ( (prefSimpleThrottleLayoutShowFunctionButtonCount > 0) && (lLowersHeight > 0) )  {
                 llSetSpds[throttleIndex].getLayoutParams().height
