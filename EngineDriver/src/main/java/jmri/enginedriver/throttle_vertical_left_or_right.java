@@ -350,6 +350,11 @@ public class throttle_vertical_left_or_right extends throttle {
             speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
         }
 
+        LinearLayout.LayoutParams stopButtonParams;
+        stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+        stopButtonParams.topMargin = (int) (speedButtonHeight * 0.5);
+        stopButtonParams.height = (int) (speedButtonHeight * 0.8);
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -368,6 +373,9 @@ public class throttle_vertical_left_or_right extends throttle {
             }
             //bLSpds[throttleIndex].setText(speedButtonLeftText);
             //bRSpds[throttleIndex].setText(speedButtonRightText);
+
+//            bStops[throttleIndex].getLayoutParams().height = (int) (speedButtonHeight * 0.8);
+            bStops[throttleIndex].setLayoutParams(stopButtonParams);
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {

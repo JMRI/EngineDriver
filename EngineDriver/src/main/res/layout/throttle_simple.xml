@@ -237,7 +237,8 @@
                     android:id="@+id/throttle_0_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_0"
@@ -722,7 +723,8 @@
                     android:id="@+id/throttle_1_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_1"
@@ -1207,7 +1209,8 @@
                     android:id="@+id/throttle_2_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_2"
@@ -1692,7 +1695,8 @@
                     android:id="@+id/throttle_3_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_3"
@@ -2177,7 +2181,8 @@
                     android:id="@+id/throttle_4_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_4"
@@ -2662,7 +2667,8 @@
                     android:id="@+id/throttle_5_SetSpeed"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
 
                     <Button
                         android:id="@+id/right_speed_button_5"
