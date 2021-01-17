@@ -6432,9 +6432,35 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 //            }
         }
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
+        fixNumThrottles();
         forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);
     }
 
     protected void pauseSpeed(int whichThrottle) {
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void fixNumThrottles() {
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        int index = -1;
+        String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
+        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(prefThrottleScreenType)) {
+                index = i;
+            }
+        }
+        if (index < 0) return; //bail if no matches
+
+        if ( ((fixed[index] == 1) && (numThrottles != max[index]))
+                || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
+            prefs.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
