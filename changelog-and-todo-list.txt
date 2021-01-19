@@ -1,3 +1,4 @@
+**Version 2.27.122
 **Version 2.27.120
  * avoid NumberFormat and NPE crashes reported to Play Store
  * update Readme
