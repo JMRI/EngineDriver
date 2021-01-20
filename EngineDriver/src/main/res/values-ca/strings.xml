@@ -851,5 +851,7 @@
     <string name="app_name_consist_functions">Consistir en ajustos de funció - Control de l\'motor</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra marques de temps en registre</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Hora per a cada entrada a la pantalla de registre.</string>
+    <string name="prefVerticalStopButtonMarginSummary">Nombre de píxels a compensar els marges de el botó de parada dels botons de velocitat i inferior de la pantalla.</string>
+    <string name="prefVerticalStopButtonMarginTitle">El botó d\'atur marges verticals</string>
 
 </resources>

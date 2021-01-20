@@ -841,4 +841,6 @@
     <string name="app_name_consist_functions">Consistir en ajustes de función - Controlador del motor</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar marcas de tiempo en registro</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Fecha Hora para cada entrada en la pantalla de registro.</string>
+    <string name="prefVerticalStopButtonMarginSummary">Número de píxeles a compensar los márgenes del botón de parada de los botones de velocidad e inferior de la pantalla.</string>
+    <string name="prefVerticalStopButtonMarginTitle">El botón de paro márgenes verticales</string>
 </resources>

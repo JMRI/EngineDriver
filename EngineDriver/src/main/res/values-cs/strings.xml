@@ -1057,5 +1057,7 @@
     <string name="app_name_consist_functions">Skládat nastavení funkcí - strojvedoucí</string>
     <string name="prefShowTimeOnLogEntryTitle">Zobrazovat časová razítka na Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Ukázat Datum Čas pro každou položku na obrazovce protokolu.</string>
+    <string name="prefVerticalStopButtonMarginTitle">Tlačítko Stop vertikální okraje</string>
+    <string name="prefVerticalStopButtonMarginSummary">Počet pixelů na vyrovnání marže tlačítko zastavení z rychlosti tlačítky a dolní části obrazovky.</string>
 
 </resources>

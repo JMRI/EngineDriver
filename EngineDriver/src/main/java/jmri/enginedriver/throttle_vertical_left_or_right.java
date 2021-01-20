@@ -352,8 +352,10 @@ public class throttle_vertical_left_or_right extends throttle {
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        stopButtonParams.topMargin = (int) (speedButtonHeight * 0.5);
-        stopButtonParams.height = (int) (speedButtonHeight * 0.8);
+        int prefVerticalStopButtonMargin = preferences.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
+        stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
+        stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
+        stopButtonParams.height = speedButtonHeight;
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
