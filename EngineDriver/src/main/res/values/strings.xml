@@ -437,6 +437,9 @@
     <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Margin</string>
     <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders.</string>
     <string name="prefSliderLeftMarginDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefVerticalStopButtonMarginTitle">Stop Button Vertical Margins</string>
+    <string name="prefVerticalStopButtonMarginSummary">Number of pixels to offset margins of the stop button from the speed buttons and bottom of screen.</string>
+    <string name="prefVerticalStopButtonMarginDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server?</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to first WiThrottle Server discovered?</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>

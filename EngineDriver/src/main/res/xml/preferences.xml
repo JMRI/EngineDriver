@@ -114,6 +114,16 @@
                 android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
                 android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle" />
 
+            <EditTextPreference
+                android:defaultValue="@string/prefVerticalStopButtonMarginDefaultValue"
+                android:dialogTitle="@string/prefVerticalStopButtonMarginTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefVerticalStopButtonMargin"
+                android:maxLength="2"
+                android:summary="@string/prefVerticalStopButtonMarginSummary"
+                android:title="@string/prefVerticalStopButtonMarginTitle" />
+
         </PreferenceScreen>
 
         <PreferenceScreen

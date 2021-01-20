@@ -785,5 +785,7 @@
     <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni - macchinista</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra timestamp su Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>
+    <string name="prefVerticalStopButtonMarginSummary">Numero di pixel per compensare margine del pulsante di arresto dai pulsanti di velocità e inferiore dello schermo.</string>
+    <string name="prefVerticalStopButtonMarginTitle">Pulsante di arresto margini verticali</string>
 
 </resources>

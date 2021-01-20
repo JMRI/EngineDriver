@@ -987,6 +987,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         enable = !prefThrottleScreenTypeOriginal.equals("Default");
         enableDisablePreference("prefTickMarksOnSliders", enable);
+        enableDisablePreference("prefVerticalStopButtonMargin", enable);
         enableDisablePreference("prefLimitSpeedButton", enable);
         enableDisablePreference("prefLimitSpeedPercent", enable);
         enableDisablePreference("prefPauseSpeedButton", enable);

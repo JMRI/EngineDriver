@@ -871,5 +871,7 @@
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>
     <string name="prefShowTimeOnLogEntrySummary">Afficher horodatage pour toutes les entrees de la logdans la log</string>
+    <string name="prefVerticalStopButtonMarginSummary">Nombre de pixels de décalage en marge de la touche d\'arrêt des boutons de vitesse et en bas de l\'écran.</string>
+    <string name="prefVerticalStopButtonMarginTitle">Bouton d\'arrêt Les marges verticales</string>
 
 </resources>

@@ -789,5 +789,7 @@
     <string name="app_name_consist_functions">Consistem configurações de funções - Driver Motor</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar Timestamps em Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Data Hora para cada entrada na tela de log.</string>
+    <string name="prefVerticalStopButtonMarginTitle">Margens verticais botão STOP</string>
+    <string name="prefVerticalStopButtonMarginSummary">Número de pixels para compensar margens do botão de parada a partir dos botões de velocidade e inferior da tela.</string>
 
 </resources>
