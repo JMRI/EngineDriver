@@ -354,7 +354,6 @@ public class threaded_application extends Application {
         void start_jmdns() {
             //Set up to find a WiThrottle service via ZeroConf
             try {
-//                getWifiInfo();
                 if (client_address != null) {
                     WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
 
@@ -371,12 +370,10 @@ public class threaded_application extends Application {
                     Log.d("Engine_Driver", "threaded_application.start_jmdns: listener created");
 
                 } else {
-//                    show_toast_message("No local IP Address found.\nCheck your WiFi connection.", Toast.LENGTH_SHORT);
                     safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
                 }
             } catch (Exception except) {
                 Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
-//                show_toast_message("Error creating withrottle zeroconf listener: IOException: \n" + except.getMessage(), Toast.LENGTH_SHORT);
                 safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
             }
         }
@@ -451,9 +448,6 @@ public class threaded_application extends Application {
         class comm_handler extends Handler {
             //All of the work of the communications thread is initiated from this function.
 
-            /***future PowerLock
-             private PowerManager.WakeLock wl = null;
-             */
             @SuppressLint({"DefaultLocale", "ApplySharedPref"})
             public void handleMessage(Message msg) {
 //                Log.d("Engine_Driver", "threaded_application.comm_handler: message: " +msg.what);
@@ -534,14 +528,6 @@ public class threaded_application extends Application {
                             sendThrottleName();
                             sendMsgDelay(comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
                             phone = new PhoneListener();
-                        /*future Notification
-                         showNotification();
-                         */
-                        /*future  PowerLock
-                         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                         wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Engine_Driver");
-                         wl.acquire();
-                         */
                         } else {
                             host_ip = null;  //clear vars if failed to connect
                             port = 0;
@@ -596,7 +582,6 @@ public class threaded_application extends Application {
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        //finish();
                         Runtime.getRuntime().exit(0); // really force the kill
                         break;
                     }
@@ -651,8 +636,6 @@ public class threaded_application extends Application {
                         stealLoco(addr, whichThrottle);
                         break;
                     }
-                    //          case message_type.ERROR:
-                    //            break;
 
                     //Adjust the throttle's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
                     //  message sent is formatted M1A*<;>V13  was(1V13)
@@ -826,10 +809,8 @@ public class threaded_application extends Application {
 
         private void shutdown(boolean fast) {
             Log.d("Engine_Driver", "threaded_application.Shutdown");
- //  CA and stopConnection already did this!         end_jmdns();                        //jmdns should already be down but no harm in making call
             if (socketWiT != null) {
                 socketWiT.disconnect(true, fast);     //stop reading from the socket
-//                socketWiT = null;
             }
             Log.d("Engine_Driver", "threaded_application.Shutdown: socketWit down");
             saveSharedPreferencesToFileIfAllowed();
@@ -840,13 +821,11 @@ public class threaded_application extends Application {
 
             dlRosterTask.stop();
             dlMetadataTask.stop();
-//            heart.stopHeartbeat();
 
             // make sure flashlight is switched off at shutdown
             if (flashlight != null) {
                 flashlight.setFlashlightOff();
                 flashlight.teardown();
-//                flashlight = null;
             }
             flashState = false;
             Log.d("Engine_Driver", "threaded_application.Shutdown finished");
@@ -921,7 +900,6 @@ public class threaded_application extends Application {
             for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
                 if (l.isConfirmed()) {
                     String addr = l.getAddress();
-//                    String desc = l.getDesc();
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
@@ -949,7 +927,6 @@ public class threaded_application extends Application {
             Log.d("Engine_Driver", "<--:" + response_str);
 
             boolean skipAlert = false;          //set to true if the Activities do not need to be Alerted
-//            int clockDisplayTypePreference = 0;
 
             switch (response_str.charAt(0)) {
 
@@ -1025,7 +1002,6 @@ public class threaded_application extends Application {
                             Log.d("Engine_Driver", "version already set to " + withrottle_version + ", ignoring");
                         }
                     } else {
-//                        show_toast_message("WiThrottle version " + response_str.substring(2) + " not supported.", Toast.LENGTH_LONG);
                         safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
                         socketWiT.disconnect(false);
                     }
@@ -1079,7 +1055,6 @@ public class threaded_application extends Application {
                         case 'L':
                             //                  roster_list_string = response_str.substring(2);  //set app variable
                             process_roster_list(response_str);  //process roster list
-//                  dlRosterTask.get();         // not sure why we're doing this here
                             break;
 
                         case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
@@ -1156,7 +1131,6 @@ public class threaded_application extends Application {
                                 dlRosterTask.get();             // start background roster update
 
                             }
-//                            getServerNameFromWebServer();
                             webServerNameHasBeenChecked = false;
                             break;
                     }  //end switch inside P
@@ -1506,7 +1480,6 @@ public class threaded_application extends Application {
                     try {
                         inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     } catch (IOException except) {
-//                        show_toast_message("Error creating input stream, IOException: " + except.getMessage(), Toast.LENGTH_LONG);
                         safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
@@ -1520,7 +1493,6 @@ public class threaded_application extends Application {
                             this.start();
                         } catch (IllegalThreadStateException except) {
                             //ignore "already started" errors
-//                            show_toast_message("Error starting socket_WiT thread:  " + except.getMessage(), Toast.LENGTH_LONG);
                             safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
                         }
                     }
@@ -1534,7 +1506,6 @@ public class threaded_application extends Application {
                             socketOk = false;
                         }
                     } catch (IOException e) {
-//                        show_toast_message("Error creating output stream, IOException: " + e.getMessage(), Toast.LENGTH_LONG);
                         safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
                         socketOk = false;
                     }
@@ -1557,7 +1528,6 @@ public class threaded_application extends Application {
                             try {
                                 Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
                             } catch (InterruptedException e) {
-                                //                            show_toast_message("Error sleeping the thread, InterruptedException: " + e.getMessage(), Toast.LENGTH_LONG);
                                 safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
                             }
                         }
@@ -1612,7 +1582,6 @@ public class threaded_application extends Application {
                 //reconnect socket if needed
                 if (!socketGood || inboundTimeout) {
                     String status;
-//                    getWifiInfo();                  //update address in case network connection was lost
                     if (client_address == null) {
                         status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
                         Log.d("Engine_Driver", "t_a: WiT send reconnection attempt.");
@@ -1642,7 +1611,6 @@ public class threaded_application extends Application {
 
                         // if we get here without an exception then the socket is ok
                         if (reconInProg) {
-//                            getWifiInfo();          //update address in case network connection has changed
                             String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
                             sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
                             Log.d("Engine_Driver", "t_a: WiT reconnection successful.");
@@ -2093,13 +2061,6 @@ public class threaded_application extends Application {
                     if (!exitConfirmed) {                       // if user did not just confirm exit
                         addNotification(runningActivity.getIntent());
                     } else {                                    // user confirmed exit
-/* force shutdown
-                    // alternate approach
-                    // all activities are destroyed at this point, so ok to just kill app ?
-                        Log.d("Engine_Driver", "onTrimMemory: exit");
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-end force shutdown */
                     }
                 }
                 if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) { // time to kill app
@@ -2712,24 +2673,15 @@ end force shutdown */
             if ((power_state == null) || (power_state.equals("2"))) {
                 theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
                 menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_yellow);
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
-//                }
             } else if (power_state.equals("1")) {
                 theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
                 menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_green);
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
-//                }
             } else {
                 theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
                 menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.power_layout_button).setIcon(R.drawable.power_red);
-//                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
-//                }
             }
         }
     }
@@ -3317,7 +3269,6 @@ end force shutdown */
         switch (prefForcedRestartReason) {
             case FORCED_RESTART_REASON_AUTO_IMPORT:
             case FORCED_RESTART_REASON_IMPORT: {
-//routine so suppress this one                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesImportSucceeded), Toast.LENGTH_SHORT).show();
                 break;
             }
             case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
@@ -3446,5 +3397,3 @@ end force shutdown */
     }
 
 }
-
-
