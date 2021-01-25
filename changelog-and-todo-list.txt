@@ -1,4 +1,4 @@
-**Version 2.27.122
+**Version 2.28.122
  * Option to adjust the stop button spacing on the vertical throttles
 **Version 2.27.120
  * avoid NumberFormat and NPE crashes reported to Play Store
@@ -591,6 +591,7 @@
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
  * threaded_application
+ *   TODO: enforce pacing on sends for limited servers (in withrottle_send)
  *   TODO: send *+ for first loco, not every loco acquired
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
