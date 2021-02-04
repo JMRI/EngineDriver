@@ -222,7 +222,7 @@ public class web_activity extends Activity implements android.gesture.GestureOve
                     String s = msg.obj.toString();
                     String response_str = s.substring(0, Math.min(s.length(), 2));
                     if ("PW".equals(response_str)       // PW - web server port info
-                        || ("HTMRC".equals(s))) {        // If connected to the MRC Wifi adapter, treat as PW, which isn't coming
+                            || ("HTMRC".equals(s))) {        // If connected to the MRC Wifi adapter, treat as PW, which isn't coming
                         if (urlRestoreStep == 3) {
                             urlRestore(true);
                         }

@@ -205,7 +205,7 @@ public class turnouts extends Activity implements OnGestureListener {
                         boolean found = false;
                         for (int i = 0; i < turnouts_lv.getCount() && !found; i++) {
                             ViewGroup vg = (ViewGroup) turnouts_lv.getChildAt(i);  //start with the list item the button belongs to
-                            if (vg!=null) {
+                            if (vg != null) {
                                 ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
                                 TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
                                 String rowUserName = unv.getText().toString();
@@ -277,7 +277,7 @@ public class turnouts extends Activity implements OnGestureListener {
             butTog.setEnabled(false);
             //set text to "Disabled", but only do this once to avoid getting stuck in this callback
             //NOTE: field is max 8 chars, and might be translated shorter or longer, so pad and truncate
-            String disabledText = substring(getString(R.string.disabled)+"        ",0,8);
+            String disabledText = substring(getString(R.string.disabled) + "        ", 0, 8);
             if (!trn.getText().toString().equals(disabledText))
                 trn.setText(disabledText);
             trnPrefix.setEnabled(false);
@@ -381,7 +381,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 turnoutSource = WHICH_SOURCE_ADDRESS;
 
                 boolean reloadRecents = false;
-                if (importExportPreferences.recent_turnout_address_list.size()>0) {
+                if (importExportPreferences.recent_turnout_address_list.size() > 0) {
                     if (!turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(0))) {
                         reloadRecents = true;
                     }
@@ -512,11 +512,12 @@ public class turnouts extends Activity implements OnGestureListener {
         };
         turnouts_lv.setOnTouchListener(gestureListener);
 
-        turnouts_lv.setOnScrollListener(new AbsListView.OnScrollListener(){
+        turnouts_lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
+
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if(scrollState == 0) {  // scrolling has stopped
+                if (scrollState == 0) {  // scrolling has stopped
                     refreshTurnoutViewStates();
                 }
             }
@@ -636,12 +637,13 @@ public class turnouts extends Activity implements OnGestureListener {
         rbAddress = findViewById(R.id.select_turnout_method_address_button);
         rbRoster = findViewById(R.id.select_turnout_method_roster_button);
         String serverType = mainapp.getServerType();
-        if (serverType.isEmpty()) serverType = getApplicationContext().getResources().getString(R.string.server);
-        rbRoster.setText(getApplicationContext().getResources().getString(R.string.turnoutsSelectionTypeRoster,serverType));
+        if (serverType.isEmpty())
+            serverType = getApplicationContext().getResources().getString(R.string.server);
+        rbRoster.setText(getApplicationContext().getResources().getString(R.string.turnoutsSelectionTypeRoster, serverType));
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
-        if ( ((importExportPreferences.recent_turnout_address_list.size()==0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS))) ) {
+        if (((importExportPreferences.recent_turnout_address_list.size() == 0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS)))) {
             prefSelectTurnoutsMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -678,7 +680,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
         //make sure the soft keyboard is closed
         EditText trn = findViewById(R.id.turnout_entry);
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
             imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
         }
@@ -694,7 +696,7 @@ public class turnouts extends Activity implements OnGestureListener {
         if (!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
         {
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -721,7 +723,7 @@ public class turnouts extends Activity implements OnGestureListener {
         //Log.d("Engine_Driver","turnouts.onDestroy()");
         super.onDestroy();
 
-        if (mainapp.turnouts_msg_handler !=null) {
+        if (mainapp.turnouts_msg_handler != null) {
             mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
             mainapp.turnouts_msg_handler = null;
         } else {
@@ -809,7 +811,7 @@ public class turnouts extends Activity implements OnGestureListener {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
         TuMenu = menu;
-        mainapp.actionBarIconCountTurnouts=0;
+        mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerMenuOption(menu);
@@ -913,7 +915,7 @@ public class turnouts extends Activity implements OnGestureListener {
             importExportPreferences.getRecentTurnoutsListFromFile();
             for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
                 // only load the turnout if it came from the current server
-                if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip) ) {
+                if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip)) {
                     HashMap<String, String> hm = new HashMap<>();
                     String turnoutAddressString = importExportPreferences.recent_turnout_address_list.get(i);
                     String turnoutAddressSource = importExportPreferences.recent_turnout_source_list.get(i).toString();
@@ -942,7 +944,7 @@ public class turnouts extends Activity implements OnGestureListener {
             tvSelectionHeading.setVisibility(View.GONE);
             llSelectionGroup.setVisibility(View.GONE);
             whichMethod = WHICH_METHOD_ADDRESS;
-        } else{
+        } else {
             tvSelectionHeading.setVisibility(View.VISIBLE);
             llSelectionGroup.setVisibility(View.VISIBLE);
             if (!mainapp.shownRosterTurnouts) { //this server has turnouts, and this is the first time in the turnouts view for this session
@@ -1020,7 +1022,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 int i = Integer.parseInt(str);
 
                 Button b = view.findViewById(R.id.turnout_recent_toggle);
-                if (i!=WHICH_SOURCE_ROSTER) {
+                if (i != WHICH_SOURCE_ROSTER) {
                     b.setVisibility(LinearLayout.GONE);
                 } else {
                     Button bt = view.findViewById(R.id.turnout_recent_throw);
@@ -1028,7 +1030,7 @@ public class turnouts extends Activity implements OnGestureListener {
 
                     String currentState;
                     String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
-                    if (mainapp.to_user_names!=null) {
+                    if (mainapp.to_user_names != null) {
                         for (int pos = 0; pos < mainapp.to_user_names.length; pos++) {
                             String systemName = mainapp.to_system_names[pos];
                             if (systemName.equals(toAddress)) {
@@ -1050,7 +1052,7 @@ public class turnouts extends Activity implements OnGestureListener {
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
 
-        for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= 0 ; i--) {
+        for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= 0; i--) {
             if (turnoutToRemoveSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
                 importExportPreferences.recent_turnout_address_list.remove(i);
                 importExportPreferences.recent_turnout_name_list.remove(i);
@@ -1058,7 +1060,7 @@ public class turnouts extends Activity implements OnGestureListener {
                 importExportPreferences.recent_turnout_server_list.remove(i);
             }
         }
-        removingTurnoutOrForceReload=true;
+        removingTurnoutOrForceReload = true;
         saveRecentTurnoutsList(true);
         loadRecentTurnoutsList();
         showHideRecentsList();
@@ -1111,8 +1113,8 @@ public class turnouts extends Activity implements OnGestureListener {
             importExportPreferences.recent_turnout_server_list.add(0, mainapp.connectedHostip);
 
             // remove any extra ones
-            if (importExportPreferences.recent_turnout_address_list.size()>numberOfRecentTurnoutsToWrite) {
-                for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= numberOfRecentTurnoutsToWrite; i--) {
+            if (importExportPreferences.recent_turnout_address_list.size() > numberOfRecentTurnoutsToWrite) {
+                for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= numberOfRecentTurnoutsToWrite; i--) {
                     importExportPreferences.recent_turnout_address_list.remove(i);
                     importExportPreferences.recent_turnout_name_list.remove(i);
                     importExportPreferences.recent_turnout_source_list.remove(i);
@@ -1156,9 +1158,9 @@ public class turnouts extends Activity implements OnGestureListener {
 
     public void clearRecentTurnoutsList() {
 
-        for (int i = importExportPreferences.recent_turnout_address_list.size()-1; i >= 0; i--) {
+        for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= 0; i--) {
             // only load the turnout if it came from the current server
-            if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip) ) {
+            if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip)) {
                 importExportPreferences.recent_turnout_name_list.remove(i);
                 importExportPreferences.recent_turnout_address_list.remove(i);
                 importExportPreferences.recent_turnout_source_list.remove(i);
@@ -1166,7 +1168,7 @@ public class turnouts extends Activity implements OnGestureListener {
             }
         }
 
-        if (importExportPreferences.recent_turnout_address_list.size()==0) {
+        if (importExportPreferences.recent_turnout_address_list.size() == 0) {
             importExportPreferences.deleteFile(ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
             importExportPreferences.writeRecentTurnoutsListToFile(prefs);
@@ -1191,7 +1193,7 @@ public class turnouts extends Activity implements OnGestureListener {
                             if (systemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
 
                                 View view = getViewByPosition(i, recentTurnoutsListView);
-                                if (view!=null) {
+                                if (view != null) {
                                     Button b = view.findViewById(R.id.turnout_recent_toggle);
                                     Button bt = view.findViewById(R.id.turnout_recent_throw);
                                     Button bc = view.findViewById(R.id.turnout_recent_close);
@@ -1213,7 +1215,7 @@ public class turnouts extends Activity implements OnGestureListener {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
 
-        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
             return listView.getAdapter().getView(pos, null, listView);
         } else {
             final int childIndex = pos - firstListItemPosition;
@@ -1227,7 +1229,7 @@ public class turnouts extends Activity implements OnGestureListener {
         if (currentSelectTurnoutMethod.equals(WHICH_METHOD_ADDRESS)) { // not set to address/recent
             if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) { // has an SD Card
                 if (importExportPreferences.recent_turnout_address_list.size() > 0) { // if the list is empty
-                    visible=View.VISIBLE;  // hide the list
+                    visible = View.VISIBLE;  // hide the list
                 }
             }
         }

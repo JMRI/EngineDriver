@@ -378,7 +378,7 @@ public class select_loco extends Activity {
                             char com2 = response_str.charAt(2);
                             if (com2 == '+' || com2 == '-')
                                 set_labels();
-                                break;
+                            break;
                         } else { // ignore everything else
 //                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
                             break;
@@ -460,7 +460,7 @@ public class select_loco extends Activity {
             }
         }
 
-            if (!roster_name.equals("")) {// add roster selection info if present
+        if (!roster_name.equals("")) {// add roster selection info if present
             sAddr += "<;>" + roster_name;
         }
 
@@ -633,7 +633,7 @@ public class select_loco extends Activity {
             for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
                 hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i),
-                                false));
+                        false));
                 hm.put("consist", mainapp.locoAndConsistNamesCleanupHtml(importExportPreferences.consistNameList.get(i)));
                 recent_consists_list.add(hm);
             }
@@ -807,7 +807,7 @@ public class select_loco extends Activity {
         }
     }
 
-     public class edit_consist_lights_button_listener implements View.OnClickListener {
+    public class edit_consist_lights_button_listener implements View.OnClickListener {
         int _throttle;
         Activity _selectLocoActivity;
 
@@ -875,7 +875,7 @@ public class select_loco extends Activity {
                     locoSource = importExportPreferences.consistSourceList.get(position).get(i);
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false), false);
                     if ( (locoSource!=WHICH_SOURCE_ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).equals("")) ) {
-                            locoName = importExportPreferences.consistRosterNameList.get(position).get(i);
+                        locoName = importExportPreferences.consistRosterNameList.get(position).get(i);
                     }
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
@@ -1191,7 +1191,7 @@ public class select_loco extends Activity {
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
         if ( ((recent_consists_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_CONSIST)))
-           | ((importExportPreferences.recent_loco_address_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT))) ) {
+                | ((importExportPreferences.recent_loco_address_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT))) ) {
             prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -1388,16 +1388,16 @@ public class select_loco extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-   @Override
+    @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "select_loco.onDestroy() called");
         super.onDestroy();
 
         if (mainapp.select_loco_msg_handler !=null) {
-           mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
-           mainapp.select_loco_msg_handler = null;
+            mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
+            mainapp.select_loco_msg_handler = null;
         } else {
-           Log.d("Engine_Driver", "onDestroy: mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d("Engine_Driver", "onDestroy: mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -1554,21 +1554,21 @@ public class select_loco extends Activity {
         View itemView = engine_list_view.getChildAt(position - engine_list_view.getFirstVisiblePosition());
         itemView.startAnimation(anim);
         anim.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {}
+            @Override
+            public void onAnimationStart(Animation animation) {}
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    recent_engine_list.remove(position);
-                    saveRecentLocosList(true);
-                    engine_list_view.invalidateViews();
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                recent_engine_list.remove(position);
+                saveRecentLocosList(true);
+                engine_list_view.invalidateViews();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+            }
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
 
-                public void run() {}
+            public void run() {}
         });
 
         return true;
@@ -1618,99 +1618,99 @@ public class select_loco extends Activity {
         return true;
     }
 
-public class RosterSimpleAdapter extends SimpleAdapter {
-    private Context cont;
+    public class RosterSimpleAdapter extends SimpleAdapter {
+        private Context cont;
 
-    RosterSimpleAdapter(Context context,
-                        List<? extends Map<String, ?>> data, int resource,
-                        String[] from, int[] to) {
-        super(context, data, resource, from, to);
-        cont = context;
+        RosterSimpleAdapter(Context context,
+                            List<? extends Map<String, ?>> data, int resource,
+                            String[] from, int[] to) {
+            super(context, data, resource, from, to);
+            cont = context;
+        }
+
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (position > roster_list.size())
+                return convertView;
+
+            HashMap<String, String> hm = roster_list.get(position);
+            if (hm == null)
+                return convertView;
+
+            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+
+            String str = hm.get("roster_name");
+            if (str != null) {
+                TextView name = view.findViewById(R.id.roster_name_label);
+                name.setText(str);
+            }
+
+            str = hm.get("roster_address");
+            if (str != null) {
+                TextView secondLine = view.findViewById(R.id.roster_address_label);
+                secondLine.setText(hm.get("roster_address"));
+            }
+
+            String iconURL = hm.get("roster_icon");
+            if ((iconURL != null) && (iconURL.length() > 0)) {
+                ImageView imageView = view.findViewById(R.id.roster_icon_image);
+                mainapp.imageDownloader.download(iconURL, imageView);
+            } else {
+                View v = view.findViewById(R.id.roster_icon_image);
+                v.setVisibility(View.GONE);
+            }
+
+            return view;
+        }
     }
 
+    public class RecentSimpleAdapter extends SimpleAdapter {
+        private Context cont;
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (position > roster_list.size())
-            return convertView;
-
-        HashMap<String, String> hm = roster_list.get(position);
-        if (hm == null)
-            return convertView;
-
-        LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
-
-        String str = hm.get("roster_name");
-        if (str != null) {
-            TextView name = view.findViewById(R.id.roster_name_label);
-            name.setText(str);
+        RecentSimpleAdapter(Context context,
+                            List<? extends Map<String, ?>> data, int resource,
+                            String[] from, int[] to) {
+            super(context, data, resource, from, to);
+            cont = context;
         }
 
-        str = hm.get("roster_address");
-        if (str != null) {
-            TextView secondLine = view.findViewById(R.id.roster_address_label);
-            secondLine.setText(hm.get("roster_address"));
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (position > recent_engine_list.size())
+                return convertView;
+
+            HashMap<String, String> hm = recent_engine_list.get(position);
+            if (hm == null)
+                return convertView;
+
+            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+
+            String str = hm.get("engine_name");
+            if (str != null) {
+                TextView name = view.findViewById(R.id.engine_name_label);
+                name.setText(Html.fromHtml(str));
+            }
+
+            str = hm.get("engine");
+            if (str != null) {
+                TextView secondLine = view.findViewById(R.id.engine_item_label);
+                secondLine.setText(str);
+            }
+
+            String iconURL = hm.get("engine_icon");
+            if ((iconURL != null) && (iconURL.length() > 0)) {
+                ImageView imageView = view.findViewById(R.id.engine_icon_image);
+                mainapp.imageDownloader.download(iconURL, imageView);
+            } else {
+                View v = view.findViewById(R.id.engine_icon_image);
+                v.setVisibility(View.GONE);
+            }
+
+            return view;
         }
 
-        String iconURL = hm.get("roster_icon");
-        if ((iconURL != null) && (iconURL.length() > 0)) {
-            ImageView imageView = view.findViewById(R.id.roster_icon_image);
-            mainapp.imageDownloader.download(iconURL, imageView);
-        } else {
-            View v = view.findViewById(R.id.roster_icon_image);
-            v.setVisibility(View.GONE);
-        }
-
-        return view;
     }
-}
-
-public class RecentSimpleAdapter extends SimpleAdapter {
-    private Context cont;
-
-    RecentSimpleAdapter(Context context,
-                        List<? extends Map<String, ?>> data, int resource,
-                        String[] from, int[] to) {
-        super(context, data, resource, from, to);
-        cont = context;
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (position > recent_engine_list.size())
-            return convertView;
-
-        HashMap<String, String> hm = recent_engine_list.get(position);
-        if (hm == null)
-            return convertView;
-
-        LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
-
-        String str = hm.get("engine_name");
-        if (str != null) {
-            TextView name = view.findViewById(R.id.engine_name_label);
-            name.setText(Html.fromHtml(str));
-        }
-
-        str = hm.get("engine");
-        if (str != null) {
-            TextView secondLine = view.findViewById(R.id.engine_item_label);
-            secondLine.setText(str);
-        }
-
-        String iconURL = hm.get("engine_icon");
-        if ((iconURL != null) && (iconURL.length() > 0)) {
-            ImageView imageView = view.findViewById(R.id.engine_icon_image);
-            mainapp.imageDownloader.download(iconURL, imageView);
-        } else {
-            View v = view.findViewById(R.id.engine_icon_image);
-            v.setVisibility(View.GONE);
-        }
-
-        return view;
-    }
-
-}
 
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
         private Context cont;
