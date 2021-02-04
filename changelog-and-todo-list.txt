@@ -1,5 +1,7 @@
 **Version 2.28.122
  * Option to adjust the stop button spacing on the vertical throttles
+ * fix stop button not showing when slider is hidden
+ * avoid NPEs reported to Play Store
 **Version 2.27.120
  * avoid NumberFormat and NPE crashes reported to Play Store
  * update Readme

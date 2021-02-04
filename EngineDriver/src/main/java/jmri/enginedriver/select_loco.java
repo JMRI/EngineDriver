@@ -479,7 +479,7 @@ public class select_loco extends Activity {
                 return;
             }
         }
-        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
+//        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
 
         if ( (!consist.isActive()) && (numberInConsist<1) ) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
@@ -1444,6 +1444,7 @@ public class select_loco extends Activity {
     private void updateAddressEntry() {
         Button ba = findViewById(R.id.acquire);
         EditText la = findViewById(R.id.loco_address);
+        if (ba==null || la==null) return; //bail if views not found
         String txt = la.getText().toString().trim();
         int txtLen = txt.length();
         int addr = -1;
@@ -1531,7 +1532,10 @@ public class select_loco extends Activity {
     protected boolean onLongRecentListItemClick(View v, int position, long id) {
         if (importExportPreferences.recent_loco_source_list.get(position)==WHICH_SOURCE_ROSTER) {
             String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
-            RosterEntry re = mainapp.roster.get(rosterEntryName);
+            RosterEntry re = null;
+            if (mainapp.roster != null) {
+                re = mainapp.roster.get(rosterEntryName);
+            }
             if (re == null) {
                 Log.w("Engine_Driver", "Roster entry " + rosterEntryName + " not available.");
                 return true;
