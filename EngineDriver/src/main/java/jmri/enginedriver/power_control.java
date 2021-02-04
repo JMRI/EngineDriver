@@ -135,10 +135,6 @@ public class power_control extends Activity {
 
         setContentView(R.layout.power_control);
 
-//      String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//      setTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control) + "    |    Throttle Name: " + 
-//              prefs.getString("throttle_name_preference", defaultName));
-
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.power_control_msg_handler = new power_control_handler();
 

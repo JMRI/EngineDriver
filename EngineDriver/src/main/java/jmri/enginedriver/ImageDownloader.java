@@ -54,9 +54,7 @@ public class ImageDownloader {
 
     public enum Mode {NO_ASYNC_TASK, NO_DOWNLOADED_DRAWABLE, CORRECT}
 
-    //    private Mode mode = Mode.NO_ASYNC_TASK;
     private Mode mode = Mode.CORRECT;
-//    private Mode mode = Mode.NO_DOWNLOADED_DRAWABLE;
 
     /**
      * Download the specified image from the Internet and binds it to the provided ImageView. The
@@ -77,14 +75,6 @@ public class ImageDownloader {
             imageView.setImageBitmap(bitmap);
         }
     }
-
-    /*
-     * Same as download but the image is always downloaded and the cache is not used.
-     * Kept private at the moment as its interest is not clear.
-       private void forceDownload(String url, ImageView view) {
-          forceDownload(url, view, null);
-       }
-     */
 
     /**
      * Same as download but the image is always downloaded and the cache is not used.
@@ -160,7 +150,6 @@ public class ImageDownloader {
     }
 
     Bitmap downloadBitmap(String url) {
-//        final int IO_BUFFER_SIZE = 4 * 1024;
 
         // AndroidHttpClient is not allowed to be used from the main thread
         final HttpClient client = (mode == Mode.NO_ASYNC_TASK) ? new DefaultHttpClient() : new DefaultHttpClient(); //.newInstance("Android");
@@ -201,10 +190,6 @@ public class ImageDownloader {
         } catch (Exception e) {
             getRequest.abort();
             Log.w(LOG_TAG, "Error while retrieving bitmap from " + url, e);
-//        } finally {
-//            if ((client instanceof DefaultHttpClient)) {
-//                ((DefaultHttpClient) client).close();
-//            }
         }
         Log.d(LOG_TAG, "Bitmap not retrieved from " + url);
         return null;
@@ -287,7 +272,6 @@ public class ImageDownloader {
         private final WeakReference<BitmapDownloaderTask> bitmapDownloaderTaskReference;
 
         public DownloadedDrawable(BitmapDownloaderTask bitmapDownloaderTask) {
-//            super(Color.BLACK);
             bitmapDownloaderTaskReference =
                     new WeakReference<>(bitmapDownloaderTask);
         }

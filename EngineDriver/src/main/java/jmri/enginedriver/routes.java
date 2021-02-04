@@ -411,7 +411,6 @@ public class routes extends Activity implements OnGestureListener {
         ListView lv = findViewById(R.id.routes_list);
         lv.setSelectionFromTop(mainapp.routes_list_position, 0);
 
-//      setTitleToIncludeThrotName();
         if (RMenu != null) {
             mainapp.displayEStop(RMenu);
             mainapp.displayPowerStateMenuButton(RMenu);
