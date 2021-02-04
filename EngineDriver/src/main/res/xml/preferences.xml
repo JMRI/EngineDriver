@@ -120,7 +120,7 @@
                 android:digits="0123456789"
                 android:inputType="number"
                 android:key="prefVerticalStopButtonMargin"
-                android:maxLength="2"
+                android:maxLength="3"
                 android:summary="@string/prefVerticalStopButtonMarginSummary"
                 android:title="@string/prefVerticalStopButtonMarginTitle" />
 
