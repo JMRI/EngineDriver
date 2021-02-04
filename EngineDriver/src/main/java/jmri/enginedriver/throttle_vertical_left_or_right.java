@@ -346,9 +346,6 @@ public class throttle_vertical_left_or_right extends throttle {
         myImage.getLayoutParams().height = screenHeight;
 
         int speedButtonHeight = (int) (50 * denScale);
-        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
-        }
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
@@ -356,6 +353,13 @@ public class throttle_vertical_left_or_right extends throttle {
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
+
+        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            speedButtonHeight = (int) ((screenHeight
+                    - stopButtonParams.topMargin
+                    - stopButtonParams.bottomMargin
+                    - (220 * denScale)) / 2);
+        }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
