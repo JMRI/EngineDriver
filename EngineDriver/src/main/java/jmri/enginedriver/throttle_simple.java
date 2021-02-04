@@ -309,9 +309,6 @@ public class throttle_simple extends throttle {
         }
 
         int speedButtonHeight = (int) (50 * denScale);
-        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
-        }
 
         Button bStop = findViewById(R.id.button_stop_0);
         int fbsHeight = bStop.getHeight()+ (int) (3 * denScale);
@@ -323,6 +320,18 @@ public class throttle_simple extends throttle {
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
+
+        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+//            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
+//            speedButtonHeight = (int) (( vsbSpeeds[0].getLayoutParams().height + (speedButtonHeight * 2)) / 2);
+            speedButtonHeight = (int) ((screenHeight
+                    - speedButtonHeight
+                    - stopButtonParams.topMargin
+                    - stopButtonParams.bottomMargin
+                    - (prefSimpleThrottleLayoutShowFunctionButtonCount * fbsHeight + 20 * denScale)
+                    - (160 * denScale)) / 2);
+
+        }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
