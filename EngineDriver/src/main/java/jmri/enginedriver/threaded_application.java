@@ -420,6 +420,9 @@ public class threaded_application extends Application {
           add configuration of digitrax LnWi or DCCEX to discovered list, since they do not provide mDNS
          */
         void addFakeDiscoveredServer(String entryName, String clientAddr, String entryPort) {
+
+            if (clientAddr == null || clientAddr.lastIndexOf(".") < 0) return; //bail on unexpected value
+
             //assume that the server is at x.y.z.1
             String server_addr = clientAddr.substring(0, clientAddr.lastIndexOf("."));
             server_addr += ".1";
