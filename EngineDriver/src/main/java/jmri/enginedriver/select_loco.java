@@ -77,9 +77,6 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.jmrit.roster.RosterEntry;
 
-//import java.util.Arrays;
-//import java.util.Collection;
-
 public class select_loco extends Activity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
 
@@ -1071,7 +1068,6 @@ public class select_loco extends Activity {
                 return onLongListItemClick(v, pos, id);
             }
         });
-        //      refresh_roster_list();
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
         recent_engine_list = new ArrayList<>();
@@ -1113,14 +1109,10 @@ public class select_loco extends Activity {
         Button button = findViewById(R.id.acquire);
         button_listener click_listener = new button_listener();
         button.setOnClickListener(click_listener);
-
-        //Jeffrey added 7/3/2013
         button = findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
-
         button = findViewById(R.id.clear_consists_list_button);
         button.setOnClickListener(new clear_consists_list_button());
-
 
         filter_roster_text = findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
@@ -1730,7 +1722,6 @@ public class RecentSimpleAdapter extends SimpleAdapter {
             cont = context;
         }
 
-
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position > recent_consists_list.size())
                 return convertView;
@@ -1753,7 +1744,6 @@ public class RecentSimpleAdapter extends SimpleAdapter {
                 TextView secondLine = view.findViewById(R.id.consist_item_label);
                 secondLine.setText(Html.fromHtml(str));
             }
-
 
             return view;
         }
@@ -1828,6 +1818,5 @@ public class RecentSimpleAdapter extends SimpleAdapter {
         AlertDialog b = dialogBuilder.create();
         b.show();
     }
-
 
 }
