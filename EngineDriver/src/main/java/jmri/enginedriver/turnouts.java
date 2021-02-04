@@ -1024,9 +1024,7 @@ public class turnouts extends Activity implements OnGestureListener {
                     b.setVisibility(LinearLayout.GONE);
                 } else {
                     Button bt = view.findViewById(R.id.turnout_recent_throw);
-//                    bt.setVisibility(LinearLayout.GONE);
                     Button bc = view.findViewById(R.id.turnout_recent_close);
-//                    bc.setVisibility(LinearLayout.GONE);
 
                     String currentState;
                     String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
@@ -1256,8 +1254,6 @@ public class turnouts extends Activity implements OnGestureListener {
     private void setTurnoutRowButtonState(View vRow, Button bToggle, Button bThrow, Button bClose) {
         TextView snv = vRow.findViewById(R.id.to_system_name);
         String systemName = snv.getText().toString();
-//        TextView unv = vRow.findViewById(R.id.to_user_name);
-//        String userName = unv.getText().toString();
         String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
         boolean found = false;
         for (int i = 0; i < mainapp.to_system_names.length && !found; i++) {

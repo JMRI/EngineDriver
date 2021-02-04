@@ -57,8 +57,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
 
     private WebView webView;
     private String noUrl = "file:///android_asset/blank_page.html";
-//    private static final float initialScale = 1.5f;
-//    private static float scale = initialScale;        // used to restore web zoom level
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;            // first url loaded that isn't noUrl
     private Menu WMenu;
@@ -70,7 +68,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     // these are used for gesture tracking
     private float gestureStartX = 0;
     private float gestureStartY = 0;
-//    private boolean gestureFailed = false; // gesture didn't meet velocity or distance requirement
     protected boolean gestureInProgress = false; // gesture is in progress
     private long gestureLastCheckTime; // time in milliseconds that velocity was last checked
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
@@ -105,7 +102,6 @@ public class web_activity extends Activity implements android.gesture.GestureOve
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         gestureInProgress = true;
-//        gestureFailed = false;
         gestureLastCheckTime = event.getEventTime();
         mVelocityTracker.clear();
 
