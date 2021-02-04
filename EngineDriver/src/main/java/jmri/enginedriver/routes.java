@@ -400,7 +400,7 @@ public class routes extends Activity implements OnGestureListener {
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
             Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -432,7 +432,7 @@ public class routes extends Activity implements OnGestureListener {
         //Log.d("Engine_Driver","routes.onDestroy()");
         super.onDestroy();
 
-        if (mainapp.routes_msg_handler !=null) {
+        if (mainapp.routes_msg_handler != null) {
             mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
             mainapp.routes_msg_handler = null;
         } else {
@@ -450,7 +450,7 @@ public class routes extends Activity implements OnGestureListener {
 
         //make sure the soft keyboard is closed
         EditText rte = findViewById(R.id.route_entry);
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && rte != null) {
             imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
         }
@@ -533,7 +533,7 @@ public class routes extends Activity implements OnGestureListener {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
         RMenu = menu;
-        mainapp.actionBarIconCountRoutes=0;
+        mainapp.actionBarIconCountRoutes = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerMenuOption(menu);

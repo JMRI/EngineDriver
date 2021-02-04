@@ -229,8 +229,10 @@ public class threaded_application extends Application {
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
 
-    @NonNull public String connectedHostName = "";
-    @NonNull public String connectedHostip = "";
+    @NonNull
+    public String connectedHostName = "";
+    @NonNull
+    public String connectedHostip = "";
     public int connectedPort = 0;
 
     public String languageCountry = "en";
@@ -421,7 +423,8 @@ public class threaded_application extends Application {
          */
         void addFakeDiscoveredServer(String entryName, String clientAddr, String entryPort) {
 
-            if (clientAddr == null || clientAddr.lastIndexOf(".") < 0) return; //bail on unexpected value
+            if (clientAddr == null || clientAddr.lastIndexOf(".") < 0)
+                return; //bail on unexpected value
 
             //assume that the server is at x.y.z.1
             String server_addr = clientAddr.substring(0, clientAddr.lastIndexOf("."));
@@ -460,11 +463,11 @@ public class threaded_application extends Application {
 
                     //Start or Stop jmdns stuff, or add "fake" discovered servers
                     case message_type.SET_LISTENER:
-                        if (client_ssid!=null &&
+                        if (client_ssid != null &&
                                 client_ssid.matches("DCCEX_[0-9a-f]{6}$")) {
                             //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                             addFakeDiscoveredServer(client_ssid, client_address, "2560");
-                        } else if (client_ssid!=null &&
+                        } else if (client_ssid != null &&
                                 client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9]{4}-[0-9]{1,3}$")) {
                             //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
                             addFakeDiscoveredServer(client_ssid, client_address, "12090");
@@ -601,8 +604,7 @@ public class threaded_application extends Application {
                         if (msg.arg1 == 1) {
                             withrottle_send("Q");
                             shutdown(true);
-                        }
-                        else {
+                        } else {
                             // At this point TA needs to send the quit message to WiT and then shutdown.
                             // However the DISCONNECT message also tells the Throttle activity to release all throttles
                             // and that process can take some time:
@@ -705,7 +707,7 @@ public class threaded_application extends Application {
                     }
                     //send Q to withrottle server
                     case message_type.WITHROTTLE_QUIT:
-                        if(socketWiT != null && socketWiT.SocketGood())
+                        if (socketWiT != null && socketWiT.SocketGood())
                             withrottle_send("Q");
                         break;
 
@@ -791,7 +793,7 @@ public class threaded_application extends Application {
                     case message_type.HTTP_SERVER_NAME_RECEIVED:
                         String retrievedServerName = msg.obj.toString();
                         if ((!retrievedServerName.equals(connectedHostName))
-                            && (!connectedHostName.equals(demo_host)) ) {
+                                && (!connectedHostName.equals(demo_host))) {
                             updateConnectionList(retrievedServerName);
                         }
                         break;
@@ -1036,7 +1038,7 @@ public class threaded_application extends Application {
 
                 case '*':
                     try {
-                        heartbeatInterval = Integer.parseInt(response_str.substring(1))*1000;  //convert to milliseconds
+                        heartbeatInterval = Integer.parseInt(response_str.substring(1)) * 1000;  //convert to milliseconds
                     } catch (Exception e) {
                         Log.d("Engine_Driver", "t_a: process response: invalid WiT hearbeat string");
                         heartbeatInterval = 0;
@@ -1218,8 +1220,8 @@ public class threaded_application extends Application {
             //don't add empty consists to list
             if (consist_desc.length() > 0) {
                 consist_entries.put(consist_addr, consist_desc.toString());
-             } else {
-                Log.d("Engine_Driver","skipping empty consist '" + consist_name + "'");
+            } else {
+                Log.d("Engine_Driver", "skipping empty consist '" + consist_name + "'");
             }
         }
 
@@ -1354,9 +1356,9 @@ public class threaded_application extends Application {
         //parse function state string into appropriate app variable array
         private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
 
-            boolean skip = (fn>2) && (prefAlwaysUseDefaultFunctionLabels)
-                    && ( (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                        || (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL) ) ) ;
+            boolean skip = (fn > 2) && (prefAlwaysUseDefaultFunctionLabels)
+                    && ((prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)));
 
             if (!skip) {
                 try {
@@ -1379,7 +1381,7 @@ public class threaded_application extends Application {
             }
 
             //log message
-            Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n","\u21B5")); //replace newline with cr arrow
+            Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5")); //replace newline with cr arrow
 
             //perform the send
             if (socketWiT != null) {
@@ -1656,8 +1658,8 @@ public class threaded_application extends Application {
 
                         if (!prefAllowMobileData) {
                             // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                            if ( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP )
-                                && (!haveForcedWiFiConnection) ) {
+                            if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                                    && (!haveForcedWiFiConnection)) {
 
                                 Log.d("Engine_Driver", "t_a: NetworkRequest.Builder");
                                 NetworkRequest.Builder request = new NetworkRequest.Builder();
@@ -1677,14 +1679,14 @@ public class threaded_application extends Application {
                             }
                         }
 
-                        if (ni.isConnected()) {
+                    if (ni.isConnected()) {
+                        haveConnectedWifi = true;
+                    } else {
+                        // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
+                        if (prefAllowMobileData) {
                             haveConnectedWifi = true;
-                        } else {
-                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                            if (prefAllowMobileData) {
-                                haveConnectedWifi = true;
-                            }
                         }
+                    }
                     if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
                         if ((ni.isConnected()) && (prefAllowMobileData)) {
                             haveConnectedMobile = true;
@@ -1705,8 +1707,7 @@ public class threaded_application extends Application {
                     inboundTimeoutRecovery = false;
                     // force a send to start the reconnection process
                     comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
-                }
-                else {
+                } else {
                     Log.d("Engine_Driver", "t_a: WiT inbound timeout " +
                             Integer.toString(inboundTimeoutRetryCount) + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
                     // heartbeat should trigger a WiT reply so force that now
@@ -1762,7 +1763,7 @@ public class threaded_application extends Application {
                     if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
                         outInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
                     } else {
-                        outInterval = (int)(heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
+                        outInterval = (int) (heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
                         //keep values in a reasonable range
                         if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
                             outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
@@ -1775,8 +1776,7 @@ public class threaded_application extends Application {
                     int inInterval = heartbeatInterval;
                     if (heartbeatIntervalSetpoint == 0) {    // wit heartbeat is disabled so disable inbound heartbeat
                         inInterval = 0;
-                    }
-                    else {
+                    } else {
                         if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
                         if (inInterval < outInterval)
@@ -1973,7 +1973,7 @@ public class threaded_application extends Application {
         registerComponentCallbacks(lifecycleHandler);
 
         numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
-       //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
+        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
         throttleLayoutViewId = R.layout.throttle;
 
         haveForcedWiFiConnection = false;
@@ -2089,9 +2089,12 @@ public class threaded_application extends Application {
     //init default function labels from the settings files or set to default
     //also collects the loco and latching handling for the 'Special' consist function string matching
     public void set_default_function_labels(boolean getAll) {
-        String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);;
-        String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);;
-        String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);;
+        String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
+        ;
+        String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
+        ;
+        String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
+        ;
 
         int numberOfDefaultFunctionLabels = 29;
         int numberOfDefaultFunctionLabelsForRoster = 29;
@@ -2131,7 +2134,7 @@ public class threaded_application extends Application {
                             function_consist_latching.put(Integer.parseInt(temp[1]), temp[3]);
                         } else {
                             function_consist_locos.put(Integer.parseInt(temp[1]), locosDefault);
-                            if(i<2) {
+                            if (i < 2) {
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingLightBellDefault);
                             } else {
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingDefault);
@@ -2337,6 +2340,7 @@ public class threaded_application extends Application {
     public String getServerType() {
         return this.serverType;
     }
+
     public void setServerType(String serverType) {
         this.serverType = serverType;
     }
@@ -2344,6 +2348,7 @@ public class threaded_application extends Application {
     public String getServerDescription() {
         return this.serverDescription;
     }
+
     public void setServerDescription(String serverDescription) {
         this.serverDescription = serverDescription;
     }
@@ -2387,8 +2392,7 @@ public class threaded_application extends Application {
 
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
             roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Log.d("Engine_Driver", "initShared object create exception");
         }
         doFinish = false;
@@ -3014,9 +3018,9 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if (prefs.getBoolean("prefFlashlightButtonDisplay", false)) {
-            actionBarIconCountThrottle ++;
-            actionBarIconCountRoutes ++;
-            actionBarIconCountTurnouts ++;
+            actionBarIconCountThrottle++;
+            actionBarIconCountRoutes++;
+            actionBarIconCountTurnouts++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -3029,7 +3033,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if (prefs.getBoolean("prefWebViewButton", false)) {
-            actionBarIconCountThrottle ++;
+            actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -3041,12 +3045,12 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;
 
-        if ((activity.getResources().getConfiguration().orientation==ORIENTATION_PORTRAIT)
-                && (actionBarIconCount>2)) {
+        if ((activity.getResources().getConfiguration().orientation == ORIENTATION_PORTRAIT)
+                && (actionBarIconCount > 2)) {
             mi.setVisible(true);
-        } else if ((activity.getResources().getConfiguration().orientation==ORIENTATION_LANDSCAPE)
-                    && (actionBarIconCount>3)) {
-                mi.setVisible(true);
+        } else if ((activity.getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE)
+                && (actionBarIconCount > 3)) {
+            mi.setVisible(true);
         } else {
             mi.setVisible(false);
         }
@@ -3057,7 +3061,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
-            actionBarIconCountThrottle ++;
+            actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
             mi.setVisible(false);
@@ -3113,12 +3117,11 @@ public class threaded_application extends Application {
     //
     public int throttleCharToInt(char cWhichThrottle) {
         int val;
-        if(Character.isDigit(cWhichThrottle)) {  // throttle number
+        if (Character.isDigit(cWhichThrottle)) {  // throttle number
             val = Character.getNumericValue((cWhichThrottle));
-            if (val<0) val = 0;
-            if (val>=maxThrottles) val = maxThrottles-1;
-        }
-        else switch (cWhichThrottle) {          // WiT protocol deprecated throttle letter codes
+            if (val < 0) val = 0;
+            if (val >= maxThrottles) val = maxThrottles - 1;
+        } else switch (cWhichThrottle) {          // WiT protocol deprecated throttle letter codes
             case 'T':
                 val = 0;
                 break;
@@ -3133,8 +3136,8 @@ public class threaded_application extends Application {
                 Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle);
                 break;
         }
-        if(val > maxThrottlesCurrentScreen) 
-            Log.d("debug", "TA.throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle );
+        if (val > maxThrottlesCurrentScreen)
+            Log.d("debug", "TA.throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
         return val;
     }
 
@@ -3221,6 +3224,7 @@ public class threaded_application extends Application {
     public static void safeToast(final String msg_txt) {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
+
     public static void safeToast(final String msg_txt, final int length) {
         Log.d("Engine_Driver", "threaded_application.show_toast_message: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
@@ -3276,7 +3280,7 @@ public class threaded_application extends Application {
             }
             case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
                 Toast.makeText(context,
-                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName","") ), Toast.LENGTH_LONG).show();
+                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG).show();
                 break;
             }
             case FORCED_RESTART_REASON_RESET: {
@@ -3302,7 +3306,7 @@ public class threaded_application extends Application {
             }
             case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
                 Toast.makeText(context,
-                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName","") ),
+                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName", "")),
                         Toast.LENGTH_LONG).show();
                 break;
             }
@@ -3313,7 +3317,7 @@ public class threaded_application extends Application {
             }
         }
 
-        return  ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
+        return ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_BACKGROUND)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
@@ -3356,7 +3360,7 @@ public class threaded_application extends Application {
 
     public void getServerNameFromWebServer() {
         GetJsonFromUrl getJson = new GetJsonFromUrl(this);
-        getJson.execute("http://"+host_ip+":" +web_server_port+"/json/railroad");
+        getJson.execute("http://" + host_ip + ":" + web_server_port + "/json/railroad");
         webServerNameHasBeenChecked = true;
     }
 
@@ -3389,7 +3393,7 @@ public class threaded_application extends Application {
                     Message msg = Message.obtain();
                     msg.what = message_type.RESTART_APP;
                     msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
-                    Log.d("Engine_Driver","updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                    Log.d("Engine_Driver", "updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                     comm_msg_handler.sendMessage(msg);
                 } else {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
