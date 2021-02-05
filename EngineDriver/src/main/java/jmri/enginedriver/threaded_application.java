@@ -2145,15 +2145,22 @@ public class threaded_application extends Application {
                 }
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
-                if (numberOfDefaultFunctionLabels >= 0)
+                if (numberOfDefaultFunctionLabels >= 0) {
                     function_labels_default.put(0, threaded_application.context.getResources().getString(R.string.functionButton00DefaultValue));
-                if (numberOfDefaultFunctionLabels >= 1)
+                    function_consist_latching.put(0, latchingLightBellDefault);
+                }
+                if (numberOfDefaultFunctionLabels >= 1) {
                     function_labels_default.put(1, threaded_application.context.getResources().getString(R.string.functionButton01DefaultValue));
-                if (numberOfDefaultFunctionLabels >= 2)
+                    function_consist_latching.put(1, latchingLightBellDefault);
+                }
+                if (numberOfDefaultFunctionLabels >= 2) {
                     function_labels_default.put(2, threaded_application.context.getResources().getString(R.string.functionButton02DefaultValue));
+                    function_consist_latching.put(2, latchingDefault);
+                }
                 if (numberOfDefaultFunctionLabels >= 3) {
                     for (int k = 3; k <= numberOfDefaultFunctionLabels; k++) {
                         function_labels_default.put(k, Integer.toString(k));        //String.format("%d",k));
+                        function_consist_latching.put(k, latchingDefault);
                     }
                 }
             }
