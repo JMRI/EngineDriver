@@ -2064,7 +2064,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         ) {
             int doPress = -1;
             boolean doRelease = false;
-            if (mainapp.function_consist_latching.get(function).equals(FUNCTION_CONSIST_NOT_LATCHING)) {
+            if ( (mainapp.function_consist_latching.get(function) == null)
+                || (mainapp.function_consist_latching.get(function).equals(FUNCTION_CONSIST_NOT_LATCHING)) ) {
                 isLatching = FUNCTION_CONSIST_LATCHING_NO;
                 if (downPress) {
                     doPress = 1; //down
