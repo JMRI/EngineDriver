@@ -1630,7 +1630,7 @@ public class select_loco extends Activity {
 
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (position > roster_list.size())
+            if (position < 0 || position >= roster_list.size())
                 return convertView;
 
             HashMap<String, String> hm = roster_list.get(position);
