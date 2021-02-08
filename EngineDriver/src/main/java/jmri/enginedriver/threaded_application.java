@@ -1241,7 +1241,7 @@ public class threaded_application extends Application {
             int pos = -1;
             for (String sn : to_system_names) { //TODO: rewrite for better lookup
                 pos++;
-                if (sn.equals(systemName)) {
+                if (sn != null && sn.equals(systemName)) {
                     break;
                 }
             }
