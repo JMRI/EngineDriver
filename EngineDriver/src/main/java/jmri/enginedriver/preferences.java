@@ -1321,7 +1321,10 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
             } catch (Exception e) {
                 Log.e("Engine_Driver", "Preferences: Import preferences from Server Failed: " + e.getMessage());
-                dismissDialog(PROGRESS_BAR_TYPE);
+                try {
+                    dismissDialog(PROGRESS_BAR_TYPE);
+                } catch (Exception ignored) {
+                }
                 sharedPreferences.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
                 mainapp.sendMsgDelay(mainapp.preferences_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
             }
