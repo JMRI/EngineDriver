@@ -1303,11 +1303,11 @@ public class threaded_application extends Application {
             int pos = -1;
             for (String sn : rt_system_names) {
                 pos++;
-                if (sn.equals(systemName)) {
+                if (sn != null && sn.equals(systemName)) {
                     break;
                 }
             }
-            if (pos <= rt_system_names.length) {  //if found, update to new value
+            if (pos >= 0 && pos <= rt_system_names.length) {  //if found, update to new value
                 rt_states[pos] = newState;
             }
         }  //end of process_route_change
