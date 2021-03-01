@@ -1,4 +1,6 @@
 **Version 2.29.124
+ * enforce minimum spacing on most outgoing messages
+ * update Digitrax regex to handle hex ids
  * avoid IndexOutOfBoundsException, NPEs and IllegalArgumentException reported to Play Store
 **Version 2.28.122
  * Option to adjust the stop button spacing on the vertical throttles
