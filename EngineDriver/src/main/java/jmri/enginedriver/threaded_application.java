@@ -180,7 +180,8 @@ public class threaded_application extends Application {
 
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
-    static final int WITHROTTLE_SPACING_INTERVAL = 100;   //minimum desired interval (ms) between messages sent to WiThrottle server, in milliseconds
+
+    private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to WiThrottle server, in milliseconds
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
@@ -296,6 +297,8 @@ public class threaded_application extends Application {
         socket_WiT socketWiT;
         PhoneListener phone;
         heartbeat heart = new heartbeat();
+        private long lastSentMs = System.currentTimeMillis();
+        private long lastQueuedMs = System.currentTimeMillis();;
 
         comm_thread() {
             super("comm_thread");
@@ -468,7 +471,7 @@ public class threaded_application extends Application {
                             //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                             addFakeDiscoveredServer(client_ssid, client_address, "2560");
                         } else if (client_ssid != null &&
-                                client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9]{4}-[0-9]{1,3}$")) {
+                                client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
                             //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
                             addFakeDiscoveredServer(client_ssid, client_address, "12090");
                         } else {
@@ -558,7 +561,8 @@ public class threaded_application extends Application {
                             delays++;
                         }
 
-                        releaseLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
+//                        releaseLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
+                        releaseLoco(addr, whichThrottle, 0);
                         break;
                     }
 
@@ -630,7 +634,8 @@ public class threaded_application extends Application {
                             releaseLoco("*", whichThrottle, 0);
                             delays++;
                         }
-                        acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL);
+//                        acquireLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
+                        acquireLoco(addr, whichThrottle, 0);
                         break;
                     }
 
@@ -713,6 +718,7 @@ public class threaded_application extends Application {
 
                     //send heartbeat start command to withrottle server
                     case message_type.SEND_HEARTBEAT_START:
+                        heart.setHeartbeatSent(true);
                         withrottle_send("*+");
                         break;
 
@@ -873,11 +879,13 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
-            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
+//            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
+//            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
+            sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgTxt);
 
-            if (heart.getInboundInterval() > 0 && withrottle_version > 0.0) {
-                sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
+            if (heart.getInboundInterval() > 0 && withrottle_version > 0.0 && !heart.isHeartbeatSent()) {
+//                sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
+                sendMsg(comm_msg_handler, message_type.SEND_HEARTBEAT_START);
             }
         }
 
@@ -908,7 +916,8 @@ public class threaded_application extends Application {
                     String roster_name = l.getRosterName();
                     if (roster_name != null)  // add roster selection info if present
                         addr += "<;>" + roster_name;
-                    acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
+//                    acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
+                    acquireLoco(addr, whichThrottle, 0); //ask for next loco, with 0 or more delays
                     delays++;
                 }
             }
@@ -1015,9 +1024,6 @@ public class threaded_application extends Application {
                 case 'H':
                     if (response_str.charAt(1) == 'T') { //set hardware server type, HTMRC for example
                         setServerType(response_str.substring(2)); //store the type
-                        if (getServerType().equals("MRC")) {
-                            web_server_port = 80; //hardcode web port for MRC
-                        }
                     } else if (response_str.charAt(1) == 't') { //server description string "HtMy Server Details go here"
                         setServerDescription(response_str.substring(2)); //store the description
                     } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
@@ -1372,25 +1378,45 @@ public class threaded_application extends Application {
         // withrottle_send(String msg)
         //
         //send formatted msg to the socket using multithrottle format
+        //  intermessage gap enforced by requeueing messages as needed
         private void withrottle_send(String msg) {
 //            Log.d("Engine_Driver", "t_a: WiT send '" + msg + "'");
-
-            if (msg == null) {
+            if (msg == null) { //exit if no message
                 Log.d("Engine_Driver", "--> null msg");
+                return;
+            } else if (socketWiT == null) {
+                Log.e("Engine_Driver", "socketWiT is null, message '" + msg + "' not sent!");
                 return;
             }
 
-            //log message
-            Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5")); //replace newline with cr arrow
+            long now=System.currentTimeMillis();
+            long lastGap = now - lastSentMs;
 
-            //perform the send
-            if (socketWiT != null) {
+            //send if sufficient gap between messages or msg is timingSensitive, requeue if not
+            if (lastGap >= WiThrottle_Msg_Interval || timingSensitive(msg)) {
+                //perform the send
+                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5")+" (" + lastGap + ")"); //replace newline with cr arrow
+                lastSentMs = now;
                 socketWiT.Send(msg);
             } else {
-                Log.e("Engine_Driver", "socketWiT is null, message '" + msg + "' not sent!");
+                //requeue this message
+                int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (WiThrottle_Msg_Interval + 5); //extra 5 for processing
+                Log.d("Engine_Driver", "requeue:" + msg.replaceAll("\n", "\u21B5") +
+                        ", lastGap=" + lastGap + ", nextGap="+nextGap); //replace newline with cr arrow
+                sendMsgDelay(comm_msg_handler, nextGap, message_type.WITHROTTLE_SEND, msg);
+                lastQueuedMs = now + nextGap;
             }
-
         }  //end withrottle_send()
+
+        /* true indicates that message should NOT be requeued as the timing of this message
+             is critical.
+         */
+        private boolean timingSensitive(String msg) {
+            boolean ret = false;
+            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) { ret = true; } //any function key message
+            if (ret) Log.d("Engine_Driver", "timeSensitive message, not requeued: '{}'" + msg);
+            return ret;
+        }
 
         private void witSetSpeedZero(int whichThrottle) {
             witSetSpeed(whichThrottle, 0);
@@ -1739,13 +1765,17 @@ public class threaded_application extends Application {
             private int heartbeatOutboundInterval = 0;      //sends outbound heartbeat message at this rate (msec)
             private int heartbeatInboundInterval = 0;       //alerts user if there was no inbound traffic for this long (msec)
 
-            int getInboundInterval() {
-                return heartbeatInboundInterval;
+            public boolean isHeartbeatSent() {
+                return heartbeatSent;
             }
 
-            public int getOutboundInterval() {
-                return heartbeatOutboundInterval;
+            public void setHeartbeatSent(boolean heartbeatSent) {
+                this.heartbeatSent = heartbeatSent;
             }
+
+            private boolean heartbeatSent = false;
+
+            private int getInboundInterval() { return heartbeatInboundInterval;  }
 
             /***
              * startHeartbeat(timeoutInterval in milliseconds)
@@ -2347,9 +2377,14 @@ public class threaded_application extends Application {
     public String getServerType() {
         return this.serverType;
     }
-
+    /* handle server-specific settings here */
     public void setServerType(String serverType) {
         this.serverType = serverType;
+        if (serverType.equals("MRC")) {
+            web_server_port = 80; //hardcode web port for MRC
+        } else if (serverType.equals("Digitrax")) {
+//            WiThrottle_Msg_Interval = 200; //increase the interval
+        }
     }
 
     public String getServerDescription() {
