@@ -798,8 +798,9 @@ public class threaded_application extends Application {
 
                     case message_type.HTTP_SERVER_NAME_RECEIVED:
                         String retrievedServerName = msg.obj.toString();
-                        if ((!retrievedServerName.equals(connectedHostName))
-                                && (!connectedHostName.equals(demo_host))) {
+                        if (connectedHostName != null &&
+                                !retrievedServerName.equals(connectedHostName) &&
+                                !connectedHostName.equals(demo_host)) {
                             updateConnectionList(retrievedServerName);
                         }
                         break;
