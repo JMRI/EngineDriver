@@ -692,7 +692,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
                     return name.toLowerCase().startsWith("auto_");
                 }
             });
-            if (edFiles.length > 0){
+            if (edFiles != null && edFiles.length > 0){
                 for (int i=0; i<edFiles.length; i++) {
                     delete_settings_file(edFiles[i].getName());
                 }
