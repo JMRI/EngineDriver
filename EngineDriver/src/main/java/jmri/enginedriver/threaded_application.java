@@ -181,7 +181,9 @@ public class threaded_application extends Application {
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
 
-    private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to WiThrottle server, in milliseconds
+    private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
+                                                        //  WiThrottle server, can be chgd for specific servers
+                                                        //   do not exceed 200, unless slider delay is also changed
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
@@ -2384,7 +2386,7 @@ public class threaded_application extends Application {
         if (serverType.equals("MRC")) {
             web_server_port = 80; //hardcode web port for MRC
         } else if (serverType.equals("Digitrax")) {
-//            WiThrottle_Msg_Interval = 200; //increase the interval
+            WiThrottle_Msg_Interval = 200; //increase the interval for LnWi
         }
     }
 
