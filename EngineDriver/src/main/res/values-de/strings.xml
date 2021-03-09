@@ -787,7 +787,7 @@
     <string name="consistLocoFacingFront">Vorderseite</string>
     <string name="consistLocoFacingRear">Rückseite</string>
     <string name="editConsistLocoFacingLabel">Zugewandt</string>
-    <string name="toastLocoAlreadySelected">Loco bereits ausgewählt</string>
+    <string name="toastLocoAlreadySelected">Loco \'%1$s\' bereits ausgewählt</string>
     <string name="turnoutsRecentHeading">Aktuelle Weichen</string>
     <string name="turnoutsSelectionTypeAddress">Adresse / Aktuelle</string>
     <string name="turnoutsSelectionTypeHeading">Turnout Auswahlmethode</string>

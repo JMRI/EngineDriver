@@ -754,7 +754,7 @@
     <string name="toastRecentConsistsHelp">Dotykem vyberete položku záznam Soupravy,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování (pro zadané adresy) nebo zobrazte detaily Evidence.\nPřetažením doprava odeberte záznam.</string>
     <string name="toastRosterHelp">Dotykem vyberte položku záznam Evidence,\nnebo změňte způsob zápisu.\nDalší podrobnosti zobrazíte stisknutím tlačítka.</string>
     <string name="toastConnectionsListHelp">Dotykem vyberte server,\nnebo zadejte adresu serveru a port.\nPřetažením vpravo odeberete položku. </string>
-    <string name="toastLocoAlreadySelected">Lokomotiva je již vybrána</string>
+    <string name="toastLocoAlreadySelected">Lokomotiva \'%1$s\' je již vybrána</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
     <string name="toastConsistEditHelp">Dotykem změníte směr. Přetažením doprava odeberete položku.</string>

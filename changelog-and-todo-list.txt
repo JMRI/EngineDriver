@@ -599,13 +599,11 @@
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
  * threaded_application
- *   TODO: enforce pacing on sends for limited servers (in withrottle_send)
- *   TODO: send *+ for first loco, not every loco acquired
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
- *   TODO: redo hard-coded 29 in function arrays (29 is hard-coded in WiT side, so no rush)
+ *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: horizontal switching layout or option (use with webview)
@@ -625,6 +623,7 @@
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
+ *   TODO: support new "IDnGo" feature of DCC-EX
  *   TODO: merge multiple loco acquisitions into single transmission (reconnect and recent consists)
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device

@@ -722,7 +722,7 @@
     <string name="consistLocoFacingFront">Frente</string>
     <string name="consistLocoFacingRear">traseiro</string>
     <string name="editConsistLocoFacingLabel">Voltado para</string>
-    <string name="toastLocoAlreadySelected">Loco já seleccionados</string>
+    <string name="toastLocoAlreadySelected">Loco \'%1$s\' já seleccionados</string>
     <string name="turnoutsRecentHeading">Agulhas recentes</string>
     <string name="turnoutsSelectionTypeAddress">Endereço / recentes</string>
     <string name="turnoutsSelectionTypeHeading">O comparecimento às urnas Método de Selecção</string>
