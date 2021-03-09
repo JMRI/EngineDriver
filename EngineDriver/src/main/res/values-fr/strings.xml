@@ -803,7 +803,7 @@
     <string name="consistLocoFacingFront">Avant</string>
     <string name="consistLocoFacingRear">Arrière</string>
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
-    <string name="toastLocoAlreadySelected">Loco déjà supprimée</string>
+    <string name="toastLocoAlreadySelected">Loco \'%1$s\' déjà supprimée</string>
     <string name="turnoutsRecentHeading">Aiguilles récentes</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Définie</string>
     <string name="turnoutsSelectionTypeAddress">Adresse / Récente</string>

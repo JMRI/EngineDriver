@@ -775,7 +775,7 @@
     <string name="consistLocoFacingFront">Frontal anterior</string>
     <string name="consistLocoFacingRear">Frontal posterior</string>
     <string name="editConsistLocoFacingLabel">Frente a</string>
-    <string name="toastLocoAlreadySelected">Locomotora ya seleccionada</string>
+    <string name="toastLocoAlreadySelected">Locomotora \'%1$s\' ya seleccionada</string>
     <string name="turnoutsRecentHeading">Desvíos recientes</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definido</string>
     <string name="turnoutsSelectionTypeHeading">Método de selección de desvíos</string>

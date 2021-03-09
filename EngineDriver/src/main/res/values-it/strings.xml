@@ -718,7 +718,7 @@
     <string name="consistLocoFacingFront">Davanti</string>
     <string name="consistLocoFacingRear">Posteriore</string>
     <string name="editConsistLocoFacingLabel">Di fronte</string>
-    <string name="toastLocoAlreadySelected">Loco Già selezionato</string>
+    <string name="toastLocoAlreadySelected">Loco \'%1$s\' Già selezionato</string>
     <string name="turnoutsSelectionTypeAddress">Indirizzo / Recenti</string>
     <string name="turnoutsSelectionTypeHeading">Affluenza Metodo di selezione</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definito</string>
