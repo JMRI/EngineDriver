@@ -112,10 +112,9 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 hm.put("trail_label", consist.getTrailAddr().equals(l.getAddress()) ? CONSIST_EDIT_LABEL_TRAIL : "");
                 hm.put("loco_addr", l.getAddress());
                 hm.put("loco_name", l.toString());
-//                hm.put("loco_facing", l.isBackward() ? "Rear" : "Front");
                 hm.put("loco_facing", l.isBackward()
                         ? this.getResources().getString(R.string.consistLocoFacingRear)
-                        : this.getResources().getString(R.string.consistLocoFacingFront) );
+                        : this.getResources().getString(R.string.consistLocoFacingFront));
 
                 // the following is ignored if the 'complex' prefConsistFollowRuleStyle is chosen in the preferences
                 if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
@@ -177,11 +176,6 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     }
 
 
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return myGesture.onTouchEvent(event);
-//    }
-
     /**
      * Called when the activity is first created.
      */
@@ -210,14 +204,13 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         if (extras != null) {
             whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
             saveConsistsFile = extras.getChar("saveConsistsFile");
-        }
-        else {
+        } else {
             Log.d("debug", "ConsistEdit.onCreate: no bundle - whichThrottle undefined, setting to 0");
             whichThrottle = 0;
         }
 
-        if(mainapp.consists==null || mainapp.consists[whichThrottle]==null) {
-            if(mainapp.consists==null)
+        if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
+            if (mainapp.consists == null)
                 Log.d("Engine_Driver", "consistEdit onCreate consists is null");
             else
                 Log.d("Engine_Driver", "consistEdit onCreate consists[" + whichThrottle + "] is null");
@@ -233,7 +226,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 new String[]{"loco_name", "loco_addr", "lead_label", "trail_label", "loco_facing"},
                 new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden,
                         R.id.con_lead_label, R.id.con_trail_label, R.id.con_loco_facing}
-                        );
+        );
         consistLV = findViewById(R.id.consist_list);
         consistLV.setAdapter(consistListAdapter);
         consistLV.setOnTouchListener(LvSwipeDetector = new SwipeDetector());
@@ -279,7 +272,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         refreshConsistLists();
         result = RESULT_OK;
 
-        if(!mainapp.shownToastConsistEdit) {
+        if (!mainapp.shownToastConsistEdit) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
             mainapp.shownToastConsistEdit = true;
         }
@@ -308,12 +301,12 @@ public class ConsistEdit extends Activity implements OnGestureListener {
         Log.d("Engine_Driver", "ConsistEdit.onDestroy() called");
         super.onDestroy();
 
-        if (saveConsistsFile=='Y') {
+        if (saveConsistsFile == 'Y') {
             importExportPreferences.getRecentConsistsListFromFile();
             int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
             importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
         }
-        if (mainapp.consist_edit_msg_handler !=null) {
+        if (mainapp.consist_edit_msg_handler != null) {
             mainapp.consist_edit_msg_handler.removeCallbacksAndMessages(null);
             mainapp.consist_edit_msg_handler = null;
         } else {
@@ -348,7 +341,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle) );  //pass whichThrottle as an extra
+            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
             setResult(result, resultIntent);
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -409,7 +402,6 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, address, whichThrottle);   //release the loco
                         refreshConsistLists();
                     }
-//                } else {
                 }
             } else {  //no swipe
                 // When an item is clicked,
@@ -418,7 +410,7 @@ public class ConsistEdit extends Activity implements OnGestureListener {
                 String address = addrv.getText().toString();
 
                 try {
-                    consist.setBackward(address, ! consist.isBackward(address));
+                    consist.setBackward(address, !consist.isBackward(address));
                 } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
                     Log.d("Engine_Driver", "ConsistEdit selected engine " + address + " that is not in consist");
                 }

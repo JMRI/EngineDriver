@@ -63,9 +63,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     private Menu CLEMenu;
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
-    private ArrayList<ConLoco> consistObjList;
-//    private ArrayAdapter<ConLoco> consistObjListAdapter;
-//    private Spinner consistSpinner;
+//    private ArrayList<ConLoco> consistObjList;
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
@@ -79,15 +77,15 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
     public void refreshConsistLists() {
         //clear and rebuild
-        consistObjList.clear();
-        int pos = 0;
+//        consistObjList.clear();
+//        int pos = 0;
         Collection<ConLoco> cgl = consist.getLocos(); //copy from synchronized map to avoid holding it while iterating
-        for (ConLoco l : cgl) {
-            if (l.isConfirmed()) {
-                consistObjList.add(l);
-                pos++;
-            }
-        }
+//        for (ConLoco l : cgl) {
+//            if (l.isConfirmed()) {
+//                consistObjList.add(l);
+//                pos++;
+//            }
+//        }
 
         consistList.clear();
         for (ConLoco l : cgl) {
@@ -105,8 +103,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                         mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, false);
                     } else if (l.isLightOn() == LIGHT_FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
-                        // because we can't be sure if the function has been set elsewhere, force it to what we think it should be
-                        //mainapp.forceFunction(whichThrottle+l.getAddress(), 0, true);
                     } else {
                         hm.put("loco_light", LIGHT_TEXT_UNKNOWN);
                     }
@@ -193,8 +189,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         LIGHT_TEXT_FOLLOW = getApplicationContext().getResources().getString(R.string.lightsTextFollow);
         LIGHT_TEXT_UNKNOWN = getApplicationContext().getResources().getString(R.string.lightsTextUnknown);
 
-        if(mainapp.consists==null || mainapp.consists[whichThrottle]==null) {
-            if(mainapp.consists==null)
+        if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
+            if (mainapp.consists == null)
                 Log.d("Engine_Driver", "consistLightsEdit onCreate consists is null");
             else
                 Log.d("Engine_Driver", "consistLightsEdit onCreate consists[" + whichThrottle + "] is null");
@@ -229,11 +225,11 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                         light = LIGHT_FOLLOW;
                     }
                 }
-                    try {
-                        consist.setLight(address, light);
-                    } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                        Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
-                    }
+                try {
+                    consist.setLight(address, light);
+                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                }
 
                 refreshConsistLists();
             }
@@ -253,7 +249,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
                 } else {
                     light = LIGHT_FOLLOW;
                 }
-               try {
+                try {
                     consist.setLight(address, light);
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
                     Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
@@ -271,7 +267,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
 
         consistLV.setOnTouchListener(gestureListener);
 
-        consistObjList = new ArrayList<>();
+//        consistObjList = new ArrayList<>();
 
 
         //update consist list
@@ -302,13 +298,11 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
         super.onDestroy();
 
-//        loadRecentConsistsList();
         importExportPreferences.getRecentConsistsListFromFile();
         int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
-//        updateRecentConsists(whichEntryIsBeingUpdated);
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
 
-        if (mainapp.consist_lights_edit_msg_handler !=null) {
+        if (mainapp.consist_lights_edit_msg_handler != null) {
             mainapp.consist_lights_edit_msg_handler.removeCallbacksAndMessages(null);
             mainapp.consist_lights_edit_msg_handler = null;
         } else {
@@ -343,7 +337,7 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle) );  //pass whichThrottle as an extra
+            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
             setResult(result, resultIntent);
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
