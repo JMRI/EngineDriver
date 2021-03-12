@@ -32,7 +32,7 @@ import java.util.Set;
 // reverse is always false for the lead loco
 //
 //
-    public final class Consist {
+public final class Consist {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
@@ -41,7 +41,7 @@ import java.util.Set;
     private static final int WHICH_SOURCE_ADDRESS = 1;
     private static final int WHICH_SOURCE_ROSTER = 2;
 
-    public class ConLoco extends Loco {
+    public static class ConLoco extends Loco {
         private boolean backward;                        //end of loco that faces the top of the consist
         private int lightOn;                             //state of the headlight
         private int source;                              //how was the loco originally selected
@@ -54,7 +54,7 @@ import java.util.Set;
         }
 
         private ConLoco(Loco l) {
-            super( l);
+            super(l);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
             source = WHICH_SOURCE_UNKNOWN;
@@ -63,14 +63,18 @@ import java.util.Set;
         public boolean isBackward() {
             return backward;
         }
+
         public int isLightOn() {
             return lightOn;
         }
-        public int getWhichSource() { return source; }
+
+        public int getWhichSource() {
+            return source;
+        }
 
     }
 
-    private Map<String, ConLoco> con;                   //locos assigned to this consist (i.e. this throttle)
+    private final Map<String, ConLoco> con;                   //locos assigned to this consist (i.e. this throttle)
     private String leadAddr;                            //address of lead loco
     //TODO: eliminate stored leadAddr and create on the fly?
     private String trailAddr;                            //address of trail loco
@@ -265,21 +269,20 @@ import java.util.Set;
         return leadAddr;
     }
 
-    public String setLeadAddr(String addr) {
+    public void setLeadAddr(String addr) {
         if (con.containsKey(addr) && !leadAddr.equals(addr)) {
             leadAddr = addr;
         }
-        return leadAddr;
     }
 
     public String getTrailAddr() {
         return trailAddr;
     }
-    public String setTrailAddr(String addr) {
+
+    public void setTrailAddr(String addr) {
         if (con.containsKey(addr) && !trailAddr.equals(addr)) {
             trailAddr = addr;
         }
-        return trailAddr;
     }
 
     //create string description of the consist
@@ -287,6 +290,7 @@ import java.util.Set;
     public String toString() {
         return formatConsist();
     }
+
     public String toHtml() {
         return formatConsistHtml();
     }
@@ -332,7 +336,7 @@ import java.util.Set;
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
                 if (l.getValue().isConfirmed()) {
-                    formatCon.append(sep).append(l.getValue().getAddress().substring(1, l.getValue().getAddress().length()));
+                    formatCon.append(sep).append(l.getValue().getAddress().substring(1));
                     sep = ", ";
                 }
             }
@@ -342,20 +346,10 @@ import java.util.Set;
         return formatCon.toString();
     }
 
-    public void setFunctionLabels(String address, String functionLabelsString,threaded_application mainapp) {
+    public void setFunctionLabels(String address, String functionLabelsString, threaded_application mainapp) {
         ConLoco l = con.get(address);
         if (l != null)
             l.setFunctionLabels(functionLabelsString, mainapp);
 
     }
-/*
-    public String getFunctionLabel(String address, Integer functionNo) {
-        String functionLabel = "";
-        ConLoco l = con.get(address);
-        if (l != null)
-            functionLabel = l.getFunctionLabel(functionNo);
-        return functionLabel;
-    }
-*/
-
 }

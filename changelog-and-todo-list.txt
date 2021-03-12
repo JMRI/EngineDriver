@@ -595,6 +595,7 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
+ *   TODO: provide for adding/editing names of recent connections
  *   TODO: add option to enable/disable sound and vibrate warning on disconnect
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
