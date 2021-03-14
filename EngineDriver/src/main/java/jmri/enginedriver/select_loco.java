@@ -28,7 +28,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
@@ -212,8 +211,8 @@ public class select_loco extends Activity {
             Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
                 @Override
                 public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-                    String s0 = arg0.get("roster_name").replaceAll("_"," ").toLowerCase();
-                    String s1 = arg1.get("roster_name").replaceAll("_"," ").toLowerCase();
+                    String s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
+                    String s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
                     return s0.compareTo(s1);
                 }
             };
@@ -307,7 +306,7 @@ public class select_loco extends Activity {
         llEditConsist.setVisibility(View.GONE);
 
         if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
-            if (mainapp.consists[whichThrottle].size()>1) {
+            if (mainapp.consists[whichThrottle].size() > 1) {
                 llEditConsist.setVisibility(View.VISIBLE);
             }
             String vLabel = mainapp.consists[whichThrottle].toString();
@@ -422,11 +421,11 @@ public class select_loco extends Activity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquire_engine(boolean bUpdateList, int numberInConsist, int totalInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
+    void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
         String roster_name = "";
         String sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
-        if (locoSource!=WHICH_SOURCE_ADDRESS) {
+        if (locoSource != WHICH_SOURCE_ADDRESS) {
             roster_name = sWhichThrottle.substring(1);
             l.setDesc(roster_name);       //use rosterName if present
             roster_name = mainapp.findLocoNameInRoster(roster_name);  // confirm that the loco is actually in the roster
@@ -437,21 +436,21 @@ public class select_loco extends Activity {
             l.setRosterName(null); //make sure rosterName is null
             l.setFunctionLabelDefaults(mainapp, whichThrottle);
         }
-        if(mainapp.consists==null || mainapp.consists[whichThrottle]==null) {
-            if(mainapp.consists==null)
+        if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
+            if (mainapp.consists == null)
                 Log.d("Engine_Driver", "acquireEngine consists is null");
-            else if(mainapp.consists[whichThrottle]==null)
-                Log.d("Engine_Driver", "acquireEngine consists["+whichThrottle+"] is null");
+            else if (mainapp.consists[whichThrottle] == null)
+                Log.d("Engine_Driver", "acquireEngine consists[" + whichThrottle + "] is null");
             end_this_activity();
             return;
         }
 
         Consist consist = mainapp.consists[whichThrottle];
 
-        // if we already have it do nothing
-        if (consist.size()>=1) {
-            for (int i = 0; i<=consist.size();i++) {
-                if (consist.getLoco(sAddr)!=null) {
+        // if we already have it show message and request it anyway
+        if (consist.size() >= 1) {
+            for (int i = 0; i <= consist.size(); i++) {
+                if (consist.getLoco(sAddr) != null) {
                     overrideThrottleName = "";
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr)
                             , Toast.LENGTH_SHORT).show();
@@ -467,7 +466,7 @@ public class select_loco extends Activity {
 
         // user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
         // ignore the preference if a recent consist was selected
-        if (prefs.getBoolean("drop_on_acquire_preference", false) && numberInConsist<0) {
+        if (prefs.getBoolean("drop_on_acquire_preference", false) && numberInConsist < 0) {
             ConLoco cl = consist.getLoco(sAddr);
             if (cl == null) { // if the newly selected loco is different/not in the consist, release everything
                 release_loco(whichThrottle);
@@ -479,13 +478,13 @@ public class select_loco extends Activity {
         }
 //        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
 
-        if ( (!consist.isActive()) && (numberInConsist<1) ) {               // if this is the only loco in consist then just tell WiT and exit
+        if ((!consist.isActive()) && (numberInConsist < 1)) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
             consist.setWhichSource(importExportPreferences.locoAddressToString(engine_address, address_size, true), locoSource);
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-            if(numberInConsist<0) { // don't save the recents if a recent consist was selected
+            if (numberInConsist < 0) { // don't save the recents if a recent consist was selected
                 saveRecentLocosList(bUpdateList);
             }
             result = RESULT_OK;
@@ -497,7 +496,7 @@ public class select_loco extends Activity {
             if (newEngine || !cl.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
                 consist.setWhichSource(importExportPreferences.locoAddressToString(engine_address, address_size, true), locoSource);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type. REQ_LOCO_ADDR, sAddr, whichThrottle);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
@@ -505,7 +504,7 @@ public class select_loco extends Activity {
 
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
-                if (numberInConsist<0) { // don't show the Consist edit screen.  Only used for Recent Consists
+                if (numberInConsist < 0) { // don't show the Consist edit screen.  Only used for Recent Consists
                     startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
@@ -522,7 +521,7 @@ public class select_loco extends Activity {
             }
             result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
         }
-        overrideThrottleName="";
+        overrideThrottleName = "";
         end_this_activity();
     }
 
@@ -593,7 +592,7 @@ public class select_loco extends Activity {
                 String engineAddressString = importExportPreferences.locoAddressToString(
                         importExportPreferences.recent_loco_address_list.get(i),
                         importExportPreferences.recent_loco_address_size_list.get(i), false);
-                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString,importExportPreferences.recent_loco_name_list.get(i));
+                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString, importExportPreferences.recent_loco_name_list.get(i));
 
                 hm.put("engine_icon", engineIconUrl);
                 hm.put("engine", importExportPreferences.recent_loco_name_list.get(i)); // the larger loco name text
@@ -604,7 +603,7 @@ public class select_loco extends Activity {
                 recent_engine_list.add(hm);
             }
 
-            if (importExportPreferences.recent_loco_address_list.size()==0) {  // if the list is empty, hide the radio button
+            if (importExportPreferences.recent_loco_address_list.size() == 0) {  // if the list is empty, hide the radio button
                 rbRecent.setVisibility(View.GONE);
             } else {
                 rbRecent.setVisibility(View.VISIBLE);
@@ -638,7 +637,7 @@ public class select_loco extends Activity {
                 hm.put("consist", mainapp.locoAndConsistNamesCleanupHtml(importExportPreferences.consistNameList.get(i)));
                 recent_consists_list.add(hm);
             }
-            if (importExportPreferences.consistEngineAddressList.size()==0) {
+            if (importExportPreferences.consistEngineAddressList.size() == 0) {
                 myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
             } else {
                 myRadioButton.setVisibility(View.VISIBLE);
@@ -682,9 +681,9 @@ public class select_loco extends Activity {
                 }
                 tempConsistSourceList_inner.add(l.getWhichSource());
                 tempConsistRosterNameList_inner.add(rosterName);
-                tempConsistLightList_inner.add(k==0 ? LIGHT_FOLLOW : consist.isLight(addr));   // always set the first loco as 'follow'
+                tempConsistLightList_inner.add(k == 0 ? LIGHT_FOLLOW : consist.isLight(addr));   // always set the first loco as 'follow'
 
-                int lastItem = tempConsistEngineAddressList_inner.size()-1;
+                int lastItem = tempConsistEngineAddressList_inner.size() - 1;
                 oneConsistHtml.append(importExportPreferences.addOneConsistAddressHtml(
                         tempConsistEngineAddressList_inner.get(lastItem),
                         tempConsistAddressSizeList_inner.get(lastItem),
@@ -710,10 +709,10 @@ public class select_loco extends Activity {
             }
 
             // check to see if we are still building the consist
-            if ( (importExportPreferences.consistEngineAddressList.size()>0)
-                    && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size()-1) ) ) {
+            if ((importExportPreferences.consistEngineAddressList.size() > 0)
+                    && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size() - 1))) {
                 // check of the last added one is the same other then the last extra loco
-                for (int j = 0; j < tempConsistEngineAddressList_inner.size()-1; j++) {
+                for (int j = 0; j < tempConsistEngineAddressList_inner.size() - 1; j++) {
                     if ((!importExportPreferences.consistEngineAddressList.get(0).get(j).equals(tempConsistEngineAddressList_inner.get(j)))) {
                         isBuilding = false;
                     }
@@ -739,7 +738,7 @@ public class select_loco extends Activity {
             importExportPreferences.consistRosterNameList.add(0, tempConsistRosterNameList_inner);
             importExportPreferences.consistLightList.add(0, tempConsistLightList_inner);
             String consistName = consist.toString();
-            if (whichEntryIsBeingUpdated>0) { //this may already have a custom name
+            if (whichEntryIsBeingUpdated > 0) { //this may already have a custom name
                 consistName = importExportPreferences.consistNameList.get(whichEntryIsBeingUpdated - 1);
             }
             importExportPreferences.consistNameList.add(0, consistName);
@@ -766,7 +765,7 @@ public class select_loco extends Activity {
             sWhichThrottle += locoName;
             locoSource = WHICH_SOURCE_ADDRESS;
 
-            acquire_engine(true, -1, -1);
+            acquire_engine(true, -1);
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
@@ -783,7 +782,7 @@ public class select_loco extends Activity {
 
         public void onClick(View v) {
             release_loco(_throttle);
-            overrideThrottleName="";
+            overrideThrottleName = "";
             end_this_activity();
         }
     }
@@ -831,21 +830,21 @@ public class select_loco extends Activity {
     public class engine_item implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that engine.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            if(recentsSwipeDetector.swipeDetected()) {
-                if(recentsSwipeDetector.getAction() == SwipeDetector.Action.LR) {
-                    clearRecentListItem(v, position, id);
+            if (recentsSwipeDetector.swipeDetected()) {
+                if (recentsSwipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    clearRecentListItem(position);
                 }
             } else {  //no swipe
                 engine_address = importExportPreferences.recent_loco_address_list.get(position);
                 address_size = importExportPreferences.recent_loco_address_size_list.get(position);
                 locoSource = importExportPreferences.recent_loco_source_list.get(position);
                 locoName = importExportPreferences.recent_loco_name_list.get(position);
-                if (locoSource==WHICH_SOURCE_UNKNOWN ) {
-                    locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false),true);
+                if (locoSource == WHICH_SOURCE_UNKNOWN) {
+                    locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false), true);
                 }
 
                 sWhichThrottle += locoName;
-                acquire_engine(true, -1, -1);
+                acquire_engine(true, -1);
             }
         }
     }
@@ -861,9 +860,9 @@ public class select_loco extends Activity {
 
             String tempsWhichThrottle = sWhichThrottle;
 
-            if(recentConsistsSwipeDetector.swipeDetected()) {
-                if(recentConsistsSwipeDetector.getAction() == SwipeDetector.Action.LR) {
-                    clearRecentConsistsListItem(v, position, id);
+            if (recentConsistsSwipeDetector.swipeDetected()) {
+                if (recentConsistsSwipeDetector.getAction() == SwipeDetector.Action.LR) {
+                    clearRecentConsistsListItem(position);
                 }
             } else {  //no swipe
                 overrideThrottleName = importExportPreferences.consistNameList.get(position);
@@ -875,24 +874,24 @@ public class select_loco extends Activity {
                     sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
                     locoSource = importExportPreferences.consistSourceList.get(position).get(i);
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false), false);
-                    if ( (locoSource!=WHICH_SOURCE_ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).equals("")) ) {
+                    if ((locoSource != WHICH_SOURCE_ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).equals(""))) {
                         locoName = importExportPreferences.consistRosterNameList.get(position).get(i);
                     }
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
 
-                    acquire_engine(true, i, importExportPreferences.consistEngineAddressList.get(position).size());
+                    acquire_engine(true, i);
 
                     Consist consist = mainapp.consists[whichThrottle];
 
                     dir = importExportPreferences.consistDirectionList.get(position).get(i);
-                    if (dir==DIRECTION_BACKWARD) {
+                    if (dir == DIRECTION_BACKWARD) {
                         consist.setBackward(sAddr, true);
                     }
 
                     light = importExportPreferences.consistLightList.get(position).get(i);
-                    if (light!=LIGHT_UNKNOWN) {
-                        consist.setLight(sAddr,light);
+                    if (light != LIGHT_UNKNOWN) {
+                        consist.setLight(sAddr, light);
                     }
 
                 }
@@ -994,7 +993,7 @@ public class select_loco extends Activity {
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
                 overrideThrottleName = rosterNameString;
-                acquire_engine(bRosterRecent,  -1, -1);
+                acquire_engine(bRosterRecent, -1);
             }
         }
     }
@@ -1011,7 +1010,7 @@ public class select_loco extends Activity {
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
-            overrideThrottleName="";
+            overrideThrottleName = "";
             end_this_activity();
             return true;
         }
@@ -1066,7 +1065,7 @@ public class select_loco extends Activity {
         roster_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongListItemClick(v, pos, id);
+                return onLongListItemClick(pos);
             }
         });
 
@@ -1082,7 +1081,7 @@ public class select_loco extends Activity {
         engine_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRecentListItemClick(v, pos, id);
+                return onLongRecentListItemClick(pos);
             }
         });
         loadRecentLocosList(false);
@@ -1099,11 +1098,10 @@ public class select_loco extends Activity {
         consists_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRecentConsistsListItemClick(v, pos, id);
+                return onLongRecentConsistsListItemClick(pos);
             }
         });
         loadRecentConsistsList(false);
-
 
 
         // Set the button callbacks.
@@ -1191,8 +1189,8 @@ public class select_loco extends Activity {
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
-        if ( ((recent_consists_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_CONSIST)))
-                | ((importExportPreferences.recent_loco_address_list.size()==0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT))) ) {
+        if (((recent_consists_list.size() == 0) && (prefSelectLocoMethod.equals(WHICH_METHOD_CONSIST)))
+                | ((importExportPreferences.recent_loco_address_list.size() == 0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT)))) {
             prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -1236,7 +1234,7 @@ public class select_loco extends Activity {
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
     }
 
-    private Runnable showMethodTask = new Runnable() {
+    private final Runnable showMethodTask = new Runnable() {
         public void run() {
             showMethod(prefSelectLocoMethod);
         }
@@ -1394,7 +1392,7 @@ public class select_loco extends Activity {
         Log.d("Engine_Driver", "select_loco.onDestroy() called");
         super.onDestroy();
 
-        if (mainapp.select_loco_msg_handler !=null) {
+        if (mainapp.select_loco_msg_handler != null) {
             mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
             mainapp.select_loco_msg_handler = null;
         } else {
@@ -1437,11 +1435,11 @@ public class select_loco extends Activity {
     private void updateAddressEntry() {
         Button ba = findViewById(R.id.acquire);
         EditText la = findViewById(R.id.loco_address);
-        if (ba==null || la==null) return; //bail if views not found
+        if (ba == null || la == null) return; //bail if views not found
         String txt = la.getText().toString().trim();
         int txtLen = txt.length();
         int addr = -1;
-        if (txtLen>0) {
+        if (txtLen > 0) {
             try {
                 addr = Integer.parseInt(txt);
             } catch (NumberFormatException e) {
@@ -1456,7 +1454,7 @@ public class select_loco extends Activity {
             // set address length
             Spinner al = findViewById(R.id.address_length);
             if (default_address_length.equals("Long") ||
-                    ( default_address_length.equals("Auto") && (addr > 127)) ) {
+                    (default_address_length.equals("Auto") && (addr > 127))) {
                 al.setSelection(1);
             } else {
                 al.setSelection(0);
@@ -1470,7 +1468,7 @@ public class select_loco extends Activity {
     }
 
     // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
-    protected boolean onLongListItemClick(View v, int position, long id) {
+    protected boolean onLongListItemClick(int position) {
         if (mainapp.roster == null) {
             Log.w("Engine_Driver", "No roster details found.");
             return true;
@@ -1522,8 +1520,8 @@ public class select_loco extends Activity {
     }
 
     // long click for the recent loco list items.
-    protected boolean onLongRecentListItemClick(View v, int position, long id) {
-        if (importExportPreferences.recent_loco_source_list.get(position)==WHICH_SOURCE_ROSTER) {
+    protected boolean onLongRecentListItemClick(int position) {
+        if (importExportPreferences.recent_loco_source_list.get(position) == WHICH_SOURCE_ROSTER) {
             String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
             RosterEntry re = null;
             if (mainapp.roster != null) {
@@ -1541,7 +1539,7 @@ public class select_loco extends Activity {
     }
 
     //  Clears the entry from the list
-    protected boolean clearRecentListItem(View v, final int position, long id) {
+    protected void clearRecentListItem(final int position) {
 
         importExportPreferences.recent_loco_address_list.remove(position);
         importExportPreferences.recent_loco_address_size_list.remove(position);
@@ -1556,7 +1554,8 @@ public class select_loco extends Activity {
         itemView.startAnimation(anim);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -1567,22 +1566,20 @@ public class select_loco extends Activity {
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
-
-            public void run() {}
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
 
-        return true;
     }
 
     // long click for the recent consists list items.  Clears the entry from the list
-    protected boolean onLongRecentConsistsListItemClick(View v, int position, long id) {
+    protected boolean onLongRecentConsistsListItemClick(int position) {
         showEditRecentConsistsNameDialog(position);
         return true;
     }
 
     // Clears the entry from the list
-    protected boolean clearRecentConsistsListItem(View v, final int position, long id) {
+    protected void clearRecentConsistsListItem(final int position) {
         View itemView = consists_list_view.getChildAt(position - consists_list_view.getFirstVisiblePosition());
 
         importExportPreferences.consistEngineAddressList.remove(position);
@@ -1600,7 +1597,8 @@ public class select_loco extends Activity {
         itemView.startAnimation(anim);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -1611,16 +1609,14 @@ public class select_loco extends Activity {
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
-
-            public void run() {}
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
 
-        return true;
     }
 
     public class RosterSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+        private final Context cont;
 
         RosterSimpleAdapter(Context context,
                             List<? extends Map<String, ?>> data, int resource,
@@ -1667,7 +1663,7 @@ public class select_loco extends Activity {
     }
 
     public class RecentSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+        private final Context cont;
 
         RecentSimpleAdapter(Context context,
                             List<? extends Map<String, ?>> data, int resource,
@@ -1714,7 +1710,7 @@ public class select_loco extends Activity {
     }
 
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+        private final Context cont;
 
         RecentConsistsSimpleAdapter(Context context,
                                     List<? extends Map<String, ?>> data, int resource,
@@ -1770,7 +1766,7 @@ public class select_loco extends Activity {
         dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
-                if (rslt.length()>0) {
+                if (rslt.length() > 0) {
                     importExportPreferences.consistNameList.set(pos, rslt);
                     removingConsistOrForceRewite = true;
                     updateRecentConsists(true);
@@ -1802,7 +1798,7 @@ public class select_loco extends Activity {
         dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
-                if (rslt.length()>0) {
+                if (rslt.length() > 0) {
                     importExportPreferences.recent_loco_name_list.set(pos, rslt);
                     removingLocoOrForceReload = true;
                     saveRecentLocosList(true);
