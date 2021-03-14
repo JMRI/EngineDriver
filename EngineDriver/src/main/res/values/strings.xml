@@ -1092,4 +1092,16 @@
     <string name="prefFeedbackOnDisconnectTitle">Feedback on Disconnect</string>
     <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect.</string>
 
+    <string name="prefHapticFeedbackTitle">Haptic Feedback</string>
+    <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes.</string>
+    <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>
+    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>
+    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefHapticFeedbackDurationTitle">Haptic Feedback Duration</string>
+    <string name="prefHapticFeedbackDurationSummary">Duration of each vibration (in milliseconds).</string>
+    <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>  <!-- DO NOT TRANSLATE -->
+
 </resources>

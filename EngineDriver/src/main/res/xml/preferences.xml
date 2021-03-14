@@ -124,6 +124,34 @@
                 android:summary="@string/prefVerticalStopButtonMarginSummary"
                 android:title="@string/prefVerticalStopButtonMarginTitle" />
 
+            <ListPreference
+                android:defaultValue="@string/prefHapticFeedbackDefaultValue"
+                android:entries="@array/prefHapticFeedbackEntries"
+                android:entryValues="@array/prefHapticFeedbackEntryValues"
+                android:key="prefHapticFeedback"
+                android:summary="@string/prefHapticFeedbackSummary"
+                android:title="@string/prefHapticFeedbackTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefHapticFeedbackStepsDefaultValue"
+                android:dialogTitle="@string/prefHapticFeedbackStepsTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefHapticFeedbackSteps"
+                android:maxLength="3"
+                android:summary="@string/prefHapticFeedbackStepsSummary"
+                android:title="@string/prefHapticFeedbackStepsTitle" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefHapticFeedbackDurationDefaultValue"
+                android:dialogTitle="@string/prefHapticFeedbackDurationTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefHapticFeedbackDuration"
+                android:maxLength="4"
+                android:summary="@string/prefHapticFeedbackDurationSummary"
+                android:title="@string/prefHapticFeedbackDurationTitle" />
+
         </PreferenceScreen>
 
         <PreferenceScreen

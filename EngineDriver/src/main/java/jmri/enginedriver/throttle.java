@@ -1377,6 +1377,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefPauseSpeedRate = Integer.parseInt(prefs.getString("prefPauseSpeedRate", getResources().getString(R.string.prefPauseSpeedRateDefaultValue)));
         prefPauseSpeedStep = Integer.parseInt(prefs.getString("prefPauseSpeedStep", getResources().getString(R.string.prefPauseSpeedStepDefaultValue)));
 
+
+        mainapp.prefHapticFeedback = prefs.getString("prefHapticFeedback", getResources().getString(R.string.prefHapticFeedbackDefaultValue));
+        mainapp.prefHapticFeedbackSteps = Integer.parseInt(prefs.getString("prefHapticFeedbackSteps", getResources().getString(R.string.prefHapticFeedbackStepsDefaultValue)));
+        mainapp.prefHapticFeedbackDuration = Integer.parseInt(prefs.getString("prefHapticFeedbackDuration", getResources().getString(R.string.prefHapticFeedbackDurationDefaultValue)));
+
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
 
         if (isCreate) {
@@ -1813,6 +1818,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     // change speed slider by scaled value and notify server
     public void speedChangeAndNotify(int whichThrottle, int change) {
+        SeekBar throttle_slider = getThrottleSlider(whichThrottle);
+        int lastSpeed = throttle_slider.getProgress();
+
         int speed = speedChange(whichThrottle, change);
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
@@ -1820,6 +1828,21 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
+
+        if (mainapp.prefHapticFeedback.equals(mainapp.HAPTIC_FEEDBACK_SLIDER)) {
+            float zls = lastSpeed;
+            float zs = speed;
+            float ls = (zls / 126) * mainapp.prefHapticFeedbackSteps;
+            float s = (zs / 126) * mainapp.prefHapticFeedbackSteps;
+            int ils = (int) ls;
+            int is = (int) s;
+            Log.d("Engine_Driver", "haptic_test: " + speed + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
+            if ((is - ils >= 1) || (ils - is >= 1) || (zs==0) || (zs==126)) {
+                Log.d("Engine_Driver", "haptic_test: " + "beep");
+                mainapp.vibrate(25);
+            }
+        }
+
     }
 
     // set the displayed numeric speed value

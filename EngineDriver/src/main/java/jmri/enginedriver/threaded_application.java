@@ -291,6 +291,13 @@ public class threaded_application extends Application {
     public boolean prefShowTimeOnLogEntry = false;
     public boolean prefFeedbackOnDisconnect = true;
 
+    public String prefHapticFeedback = "None";
+    public int prefHapticFeedbackSteps = 10;
+    public int prefHapticFeedbackDuration = 250;
+
+    public static final String HAPTIC_FEEDBACK_NONE = "None";
+    public static final String  HAPTIC_FEEDBACK_SLIDER = "Slider";
+
     class comm_thread extends Thread {
         JmDNS jmdns = null;
         volatile boolean endingJmdns = false;

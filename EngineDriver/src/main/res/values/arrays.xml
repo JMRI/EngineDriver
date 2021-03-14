@@ -1008,6 +1008,16 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="prefHapticFeedbackEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>None</item>
+        <item>Slider</item>
+    </string-array>
+
+    <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
+        <item>None </item>
+        <item>Slider Only</item>
+    </string-array>
+
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
     <string-array name="advancedPreferences" translatable="false">
         <item>prefLocale</item>
@@ -1161,6 +1171,10 @@
         <item>prefThrottleSwitchOption1</item>
         <item>prefThrottleSwitchOption2</item>
         <item>prefThrottleSwitchButton</item>
+
+        <item>prefHapticFeedback</item>
+        <item>prefHapticFeedbackSteps</item>
+        <item>prefHapticFeedbackDuration</item>
 
     </string-array>
 
