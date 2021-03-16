@@ -3455,23 +3455,33 @@ public class threaded_application extends Application {
         }
     }
 
-    public void throttleVibration(int speed, int lastSpeed, boolean fromUser) {
-        if (fromUser) {
+//    public void throttleVibration(int speed, int lastSpeed, boolean fromUser) {
+//        if (fromUser) {
+//            if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER)) {
+//                float zls = lastSpeed;
+//                float zs = speed;
+//                float ls = (zls / 126) * prefHapticFeedbackSteps;
+//                float s = (zs / 126) * prefHapticFeedbackSteps;
+//                int ils = (int) ls;
+//                int is = (int) s;
+////                Log.d("Engine_Driver", "ta: haptic_test: " + zs + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
+//                if ((is - ils >= 1) || (ils - is >= 1) ||  ((zs==0) && (zls!=0)) || ((zs==126) && (zls!=126)) ) {
+//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
+//                    vibrate(prefHapticFeedbackDuration);
+//                }
+//            }
+//        }
+
+        public void throttleVibration(int speed, int lastSpeed) {
             if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER)) {
-                float zls = lastSpeed;
-                float zs = speed;
-                float ls = (zls / 126) * prefHapticFeedbackSteps;
-                float s = (zs / 126) * prefHapticFeedbackSteps;
-                int ils = (int) ls;
-                int is = (int) s;
-//                Log.d("Engine_Driver", "ta: haptic_test: " + zs + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
-                if ((is - ils >= 1) || (ils - is >= 1) ||  ((zs==0) && (zls!=0)) || ((zs==126) && (zls!=126)) ) {
+                if ((speed - lastSpeed >= 1) || (lastSpeed - speed >= 1)
+                        || ((speed==0) && (lastSpeed!=0))
+                        || ((speed==126) && (lastSpeed!=126)) ) {
                     Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
-                    vibrate(25);
+                    vibrate(prefHapticFeedbackDuration);
                 }
             }
-        }
 
-    }
+        }
 
 }
