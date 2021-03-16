@@ -1829,9 +1829,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
 
-        if (mainapp != null) {
-            mainapp.throttleVibration(speed,lastSpeed,true);
-        }
+//        if (mainapp != null) {
+//            mainapp.throttleVibration(speed,lastSpeed,true);
+//        }
 
     }
 
@@ -1846,7 +1846,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
+        int prevScaleSpeed = Integer.parseInt( (String) speed_label.getText());
         speed_label.setText(Integer.toString(scaleSpeed));
+        mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
     // set the displayed numeric speed value
@@ -1874,7 +1876,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 suffix = " ►";
             }
         }
+//        int prevScaleSpeed = Integer.parseInt( (String) speed_label.getText());
         speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
+//        mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
@@ -4120,9 +4124,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
 
-                    if (mainapp != null) {
-                        mainapp.throttleVibration(speed,lastSpeed,fromUser);
-                    }
+//                    if (mainapp != null) {
+//                        mainapp.throttleVibration(speed,lastSpeed,fromUser);
+//                    }
                 }
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches

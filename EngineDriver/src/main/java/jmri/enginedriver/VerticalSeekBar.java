@@ -245,8 +245,8 @@ public class VerticalSeekBar extends SeekBar {
 
         onSizeChanged(getWidth(), getHeight(), 0, 0);
 
-        if (mainapp != null) {
-            mainapp.throttleVibration(this.getProgress(),lastSpeed,fromUser);
-        }
+//        if (mainapp != null) {
+//            mainapp.throttleVibration(this.getProgress(),lastSpeed,fromUser);
+//        }
     }
 }
