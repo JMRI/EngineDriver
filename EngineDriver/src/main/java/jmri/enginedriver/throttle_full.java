@@ -29,14 +29,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 
 import java.util.LinkedHashMap;
 
 public class throttle_full extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
-    protected SeekBar[] sbSpeeds = {};
+    protected HorizontalSeekBar[] sbSpeeds = {};
 
 
     protected void removeLoco(int whichThrottle) {
@@ -126,7 +125,7 @@ public class throttle_full extends throttle {
 
         if (mainapp.appIsFinishing) { return;}
 
-        sbSpeeds = new SeekBar[mainapp.maxThrottlesCurrentScreen];
+        sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {

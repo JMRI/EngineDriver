@@ -1829,18 +1829,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
 
-        if (mainapp.prefHapticFeedback.equals(mainapp.HAPTIC_FEEDBACK_SLIDER)) {
-            float zls = lastSpeed;
-            float zs = speed;
-            float ls = (zls / 126) * mainapp.prefHapticFeedbackSteps;
-            float s = (zs / 126) * mainapp.prefHapticFeedbackSteps;
-            int ils = (int) ls;
-            int is = (int) s;
-            Log.d("Engine_Driver", "haptic_test: " + speed + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
-            if ((is - ils >= 1) || (ils - is >= 1) || (zs==0) || (zs==126)) {
-                Log.d("Engine_Driver", "haptic_test: " + "beep");
-                mainapp.vibrate(25);
-            }
+        if (mainapp != null) {
+            mainapp.throttleVibration(speed,lastSpeed,true);
         }
 
     }
@@ -4129,6 +4119,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     }
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
+
+                    if (mainapp != null) {
+                        mainapp.throttleVibration(speed,lastSpeed,fromUser);
+                    }
                 }
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches

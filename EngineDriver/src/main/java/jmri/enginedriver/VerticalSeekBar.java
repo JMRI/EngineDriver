@@ -11,7 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
 
@@ -247,19 +246,7 @@ public class VerticalSeekBar extends SeekBar {
         onSizeChanged(getWidth(), getHeight(), 0, 0);
 
         if (mainapp != null) {
-            if (mainapp.prefHapticFeedback.equals(mainapp.HAPTIC_FEEDBACK_SLIDER)) {
-                float zls = lastSpeed;
-                float zs = this.getProgress();
-                float ls = (zls / 126) * mainapp.prefHapticFeedbackSteps;
-                float s = (zs / 126) * mainapp.prefHapticFeedbackSteps;
-                int ils = (int) ls;
-                int is = (int) s;
-//                Log.d("Engine_Driver", "haptic_test: " + zs + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
-                if ((is - ils >= 1) || (ils - is >= 1) || (zs==0) || (zs==126)) {
-//                    Log.d("Engine_Driver", "haptic_test: " + "beep");
-                    mainapp.vibrate(25);
-                }
-            }
+            mainapp.throttleVibration(this.getProgress(),lastSpeed,fromUser);
         }
     }
 }
