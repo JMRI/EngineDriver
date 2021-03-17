@@ -1379,7 +1379,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
 
         mainapp.prefHapticFeedback = prefs.getString("prefHapticFeedback", getResources().getString(R.string.prefHapticFeedbackDefaultValue));
-        mainapp.prefHapticFeedbackSteps = Integer.parseInt(prefs.getString("prefHapticFeedbackSteps", getResources().getString(R.string.prefHapticFeedbackStepsDefaultValue)));
+//        mainapp.prefHapticFeedbackSteps = Integer.parseInt(prefs.getString("prefHapticFeedbackSteps", getResources().getString(R.string.prefHapticFeedbackStepsDefaultValue)));
         mainapp.prefHapticFeedbackDuration = Integer.parseInt(prefs.getString("prefHapticFeedbackDuration", getResources().getString(R.string.prefHapticFeedbackDurationDefaultValue)));
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
@@ -1876,9 +1876,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 suffix = " ►";
             }
         }
-//        int prevScaleSpeed = Integer.parseInt( (String) speed_label.getText());
+        String sPrevScaleSpeed = (String) speed_label.getText();
+        if (sPrevScaleSpeed.substring(0,1).equals("◄")) {
+            sPrevScaleSpeed = sPrevScaleSpeed.substring(1,sPrevScaleSpeed.length());
+        } else if (sPrevScaleSpeed.substring(sPrevScaleSpeed.length()-1,sPrevScaleSpeed.length()).equals("►")) {
+            sPrevScaleSpeed = sPrevScaleSpeed.substring(0,sPrevScaleSpeed.length()-1);
+        }
+        sPrevScaleSpeed = sPrevScaleSpeed.trim();
+        int prevScaleSpeed = Integer.parseInt( sPrevScaleSpeed );
         speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
-//        mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
+        mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
     //adjust maxspeedsteps from code passed from JMRI, but only if set to Auto, else do not change
@@ -4124,9 +4131,6 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
 
-//                    if (mainapp != null) {
-//                        mainapp.throttleVibration(speed,lastSpeed,fromUser);
-//                    }
                 }
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches

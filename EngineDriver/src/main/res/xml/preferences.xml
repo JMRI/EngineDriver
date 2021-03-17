@@ -132,6 +132,7 @@
                 android:summary="@string/prefHapticFeedbackSummary"
                 android:title="@string/prefHapticFeedbackTitle" />
 
+<!--
             <EditTextPreference
                 android:defaultValue="@string/prefHapticFeedbackStepsDefaultValue"
                 android:dialogTitle="@string/prefHapticFeedbackStepsTitle"
@@ -141,6 +142,7 @@
                 android:maxLength="3"
                 android:summary="@string/prefHapticFeedbackStepsSummary"
                 android:title="@string/prefHapticFeedbackStepsTitle" />
+-->
 
             <EditTextPreference
                 android:defaultValue="@string/prefHapticFeedbackDurationDefaultValue"

@@ -1011,11 +1011,13 @@
     <string-array name="prefHapticFeedbackEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Slider</item>
+        <item>Scaled</item>
     </string-array>
 
     <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
         <item>None </item>
-        <item>Slider Only</item>
+        <item>Slider - Every Step</item>
+        <item>Slider - Skip some at 28, 100, 128 Steps</item>
     </string-array>
 
     <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->

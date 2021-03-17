@@ -292,11 +292,12 @@ public class threaded_application extends Application {
     public boolean prefFeedbackOnDisconnect = true;
 
     public String prefHapticFeedback = "None";
-    public int prefHapticFeedbackSteps = 10;
+//    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
 
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String  HAPTIC_FEEDBACK_SLIDER = "Slider";
+    public static final String  HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3455,33 +3456,32 @@ public class threaded_application extends Application {
         }
     }
 
-//    public void throttleVibration(int speed, int lastSpeed, boolean fromUser) {
-//        if (fromUser) {
-//            if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER)) {
-//                float zls = lastSpeed;
-//                float zs = speed;
-//                float ls = (zls / 126) * prefHapticFeedbackSteps;
-//                float s = (zs / 126) * prefHapticFeedbackSteps;
-//                int ils = (int) ls;
-//                int is = (int) s;
-////                Log.d("Engine_Driver", "ta: haptic_test: " + zs + "  " + lastSpeed + "  ls:" + ls + " s:" + s + "  ils:" + ils + " is:" + is);
-//                if ((is - ils >= 1) || (ils - is >= 1) ||  ((zs==0) && (zls!=0)) || ((zs==126) && (zls!=126)) ) {
-//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
-//                    vibrate(prefHapticFeedbackDuration);
-//                }
-//            }
-//        }
-
         public void throttleVibration(int speed, int lastSpeed) {
-            if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER)) {
-                if ((speed - lastSpeed >= 1) || (lastSpeed - speed >= 1)
-                        || ((speed==0) && (lastSpeed!=0))
-                        || ((speed==126) && (lastSpeed!=126)) ) {
+        if ( (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
+            || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) ) {
+                int speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+                int xSpeed = speed;
+                int xLastSpeed = lastSpeed;
+                if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
+                    if (speedStepPref == 28) {
+                        xSpeed = speed / 2;
+                        xLastSpeed = lastSpeed / 2;
+                    } else if (speedStepPref == 100) {
+                        xSpeed = speed / 10;
+                        xLastSpeed = lastSpeed / 10;
+                    } else if (speedStepPref == 128) {
+                        xSpeed = speed / 6;
+                        xLastSpeed = lastSpeed / 6;
+                    }
+                }
+
+                if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
+                        || ((xSpeed == 0) && (xLastSpeed != 0))
+                        || ((xSpeed == 126) && (xLastSpeed != 126))) {
                     Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
                     vibrate(prefHapticFeedbackDuration);
                 }
             }
-
         }
 
 }
