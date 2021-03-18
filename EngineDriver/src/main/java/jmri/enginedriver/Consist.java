@@ -79,11 +79,21 @@ public final class Consist {
     //TODO: eliminate stored leadAddr and create on the fly?
     private String trailAddr;                            //address of trail loco
 
+    public boolean isWaitingOnID() {
+        return waitingOnID;
+    }
+
+    public void setWaitingOnID(boolean waitingOnID) {
+        this.waitingOnID = waitingOnID;
+    }
+
+    private boolean waitingOnID; //ED has sent a request for loco ID to the command station, waiting for response
 
     public Consist() {
         con = Collections.synchronizedMap(new LinkedHashMap<String, ConLoco>());
         leadAddr = "";
         trailAddr = "";
+        waitingOnID = false;
     }
 
     public Consist(Loco l) {
@@ -92,24 +102,24 @@ public final class Consist {
         this.add(l);
         leadAddr = l.getAddress();
         trailAddr = l.getAddress();
+        waitingOnID = false;
     }
 
     public Consist(Consist c) {
         this();
         for (ConLoco l : c.con.values()) {
-
             this.add(l);
         }
         leadAddr = c.leadAddr;
         trailAddr = c.leadAddr;
+        waitingOnID = false;
     }
 
-    //
     public void release() {
-
         con.clear();
         leadAddr = "";
         trailAddr = "";
+        waitingOnID = false;
     }
 
     public void add(String addr) {

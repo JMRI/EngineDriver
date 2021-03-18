@@ -5,17 +5,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/current_locos_group_w_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp">
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp">
 
             <TextView
                 android:id="@+id/select_loco_heading"
@@ -28,17 +29,17 @@
             android:id="@+id/current_locos_row"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:baselineAligned="false">
+            android:weightSum="1">
 
             <RelativeLayout
                 android:id="@+id/select_loco_method_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp">
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp">
 
                 <RadioGroup
                     android:id="@+id/select_loco_method_address_button_radio_group"
@@ -71,13 +72,20 @@
                         android:text="@string/LocoSelectMethodRecent"
                         android:textSize="18sp" />
 
-
                     <RadioButton
                         android:id="@+id/select_consists_method_recent_button"
                         style="?attr/floating_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecentConsist"
+                        android:textSize="18sp" />
+
+                    <RadioButton
+                        android:id="@+id/select_loco_method_idngo"
+                        style="?attr/floating_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LocoSelectMethodIDNGo"
                         android:textSize="18sp" />
                 </RadioGroup>
 
@@ -88,8 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginRight="1dp"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
@@ -98,22 +106,22 @@
                     style="?attr/ed_normal_button_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:baselineAligned="false"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:text="@string/release"
-                    android:baselineAligned="false"
-                    android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textAlignment="center" />
 
                 <LinearLayout
                     android:id="@+id/LL_edit_consist"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
                     android:layout_marginTop="2dp"
-                    android:orientation="horizontal"
+                    android:layout_marginRight="1dp"
                     android:baselineAligned="false"
+                    android:orientation="horizontal"
                     android:weightSum="1">
 
                     <Button
@@ -121,14 +129,14 @@
                         style="?attr/ed_small_button_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="0.4"
+                        android:baselineAligned="false"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:text="@string/editConsistButtonLabel"
                         android:textAlignment="center"
-                        android:baselineAligned="false"
                         android:textSize="10sp"
-                        android:layout_gravity="center_horizontal"
                         tools:ignore="SmallSp" />
 
                     <Button
@@ -136,14 +144,14 @@
                         style="?attr/ed_small_button_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="0.6"
+                        android:baselineAligned="false"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:text="@string/editConsistLightsButtonLabel"
                         android:textAlignment="center"
-                        android:baselineAligned="false"
                         android:textSize="10sp"
-                        android:layout_gravity="center_horizontal"
                         tools:ignore="SmallSp" />
                 </LinearLayout>
 
@@ -156,8 +164,8 @@
         android:id="@+id/enter_loco_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp" >
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/select_loco_label"
@@ -172,13 +180,13 @@
             style="?attr/edit_label_style"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/select_loco_label"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:digits="0123456789"
             android:hint="@string/select_loco_address"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:digits="0123456789"
             android:maxLength="4"
             android:shadowColor="#FFFFFFFF"
             android:shadowDx="1"
@@ -192,18 +200,18 @@
             style="?attr/edit_label_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/loco_address"
             android:layout_below="@+id/select_loco_label"
+            android:layout_alignBottom="@id/loco_address"
             android:layout_toRightOf="@id/loco_address"
             tools:ignore="RtlHardcoded" />
 
         <Button
-            android:id="@+id/acquire"
+            android:id="@+id/acquire_button"
             style="?attr/ed_normal_button_style"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/address_length"
             android:layout_below="@id/select_loco_label"
+            android:layout_alignBottom="@id/address_length"
             android:layout_toRightOf="@id/address_length"
             android:state_enabled="false"
             android:text="@string/acquire_button"
@@ -214,19 +222,54 @@
         android:id="@+id/enter_loco_group_help"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp" >
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/select_loco_help"
             style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
             android:padding="8sp"
             android:text="@string/LocoSelectMethodHelp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/idngo_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+
+        <TextView
+            android:id="@+id/idngo_label"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/idngo_label" />
+
+        <TextView
+            android:id="@+id/idngo_help"
+            style="?attr/floating_text_style"
+            android:layout_below="@id/idngo_label"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="8sp"
+            android:text="@string/idngo_help_text" />
+
+        <Button
+            android:id="@+id/idngo_button"
+            style="?attr/ed_normal_button_style"
+            android:layout_below="@id/idngo_help"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:state_enabled="false"
+            android:text="@string/idngo_button"
+            tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>
 
@@ -234,8 +277,8 @@
         android:id="@+id/roster_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/roster_list_heading"
@@ -251,9 +294,9 @@
             style="?attr/edit_label_style"
             android:layout_width="80sp"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:hint="@string/FilterRosterListHint"
             android:imeOptions="actionDone"
             android:inputType="text"
@@ -271,8 +314,8 @@
         android:id="@+id/roster_list_empty_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/roster_list_empty"
@@ -290,7 +333,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.44"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <jmri.enginedriver.TransparentListView
             android:id="@+id/roster_list"
@@ -303,16 +346,16 @@
         android:id="@+id/engine_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/recent_engines_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
 
-            android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/clear_Loco_List_button"
+            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/clear_Loco_List_button"
             android:text="@string/recent_engines"
             tools:ignore="RtlHardcoded" />
@@ -322,9 +365,9 @@
             style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:text="@string/clearLocoList" />
 
     </RelativeLayout>
@@ -335,30 +378,29 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
-        </ListView>
+            android:animateLayoutChanges="true"></ListView>
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/consists_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
 
         <TextView
             android:id="@+id/recent_consists_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
 
-            android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/clear_consists_list_button"
+            android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/clear_consists_list_button"
             android:text="@string/recent_consists"
             tools:ignore="RtlHardcoded" />
@@ -368,9 +410,9 @@
             style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:text="@string/clearLocoList" />
 
     </RelativeLayout>
@@ -381,25 +423,23 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/consists_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
-        </ListView>
+            android:animateLayoutChanges="true"></ListView>
     </LinearLayout>
-
 
 
     <TextView
         android:id="@+id/throttle_name_header"
         style="@style/floating_text_style"
         android:layout_width="wrap_content"
-        android:textSize="12sp"
         android:layout_height="16sp"
         android:layout_marginBottom="2dp"
-        android:text="@string/none" />
+        android:text="@string/none"
+        android:textSize="12sp" />
 
 </LinearLayout>

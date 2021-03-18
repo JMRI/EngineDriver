@@ -1102,6 +1102,10 @@
 
     <string name="prefHapticFeedbackDurationTitle">Haptic Feedback Duration</string>
     <string name="prefHapticFeedbackDurationSummary">Duration of each vibration (in milliseconds).</string>
-    <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>
+    <string name="LocoSelectMethodIDNGo">Request Loco ID</string>
+    <string name="idngo_label">Request Loco ID</string>
+    <string name="idngo_button">Request ID</string>
+    <string name="idngo_help_text">Press button to send a request to the server to identify the loco already on the programming track and return the value to this throttle.</string>  <!-- DO NOT TRANSLATE -->
 
 </resources>
