@@ -82,11 +82,9 @@ public final class Consist {
     public boolean isWaitingOnID() {
         return waitingOnID;
     }
-
     public void setWaitingOnID(boolean waitingOnID) {
         this.waitingOnID = waitingOnID;
     }
-
     private boolean waitingOnID; //ED has sent a request for loco ID to the command station, waiting for response
 
     public Consist() {

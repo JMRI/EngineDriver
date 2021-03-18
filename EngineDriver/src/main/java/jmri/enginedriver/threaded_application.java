@@ -890,11 +890,7 @@ public class threaded_application extends Application {
 
             //format multithrottle request for loco M1+L37<;>ECSX37
             String msgTxt;
-//            if (addr.equals("S99")) {
-//                msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), "*", "");
-//            } else {
-                msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-//            }
+            msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
 //            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
 //            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
             sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgTxt);
@@ -3427,6 +3423,7 @@ public class threaded_application extends Application {
         webServerNameHasBeenChecked = true;
     }
 
+    /* only DCC-EX supports the "Request Loco ID" feature now */
     public boolean supportsIDnGo() {
         return serverType.equals("DCC-EX");
     }
