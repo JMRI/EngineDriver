@@ -1,4 +1,6 @@
 **Version 2.29.126
+ * Haptic feedback on sliders (optional)
+ * Support for Request Loco ID (DCC-EX-only)
 **Version 2.29.124
  * enforce minimum spacing on most outgoing messages
  * increase minimum message spacing for LnWi
@@ -600,6 +602,7 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add confirmation dialog to clear recent connections
+ *   TODO: add "Check for Updates" link to first menu and to About page.
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also

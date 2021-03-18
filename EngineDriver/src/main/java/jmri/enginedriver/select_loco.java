@@ -84,6 +84,7 @@ public class select_loco extends Activity {
     private static final String WHICH_METHOD_ROSTER = "2";
     private static final String WHICH_METHOD_RECENT = "3";
     private static final String WHICH_METHOD_CONSIST = "4";
+    private static final String WHICH_METHOD_IDNGO = "5";
 
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
@@ -141,10 +142,12 @@ public class select_loco extends Activity {
     LinearLayout llRecent;
     RelativeLayout rlRecentConsistsHeader;
     LinearLayout llRecentConsists;
+    RelativeLayout rlIDnGo;
     RadioButton rbAddress;
     RadioButton rbRoster;
     RadioButton rbRecent;
     RadioButton rbRecentConsists;
+    RadioButton rbIDnGo;
     String prefSelectLocoMethod = WHICH_METHOD_FIRST;
 
     boolean prefRosterRecentLocoNames = true;
@@ -577,7 +580,7 @@ public class select_loco extends Activity {
 
         rbRecent = findViewById(R.id.select_loco_method_recent_button);
 
-        //if no SD Card present then there is no recent consists list
+        //if no SD Card present then there is no recent locos list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
             TextView v = findViewById(R.id.recent_engines_heading);
@@ -750,7 +753,7 @@ public class select_loco extends Activity {
 
 
     // listener for the Acquire button when entering a DCC Address
-    public class button_listener implements View.OnClickListener {
+    public class acquire_button implements View.OnClickListener {
         public void onClick(View v) {
             EditText entry = findViewById(R.id.loco_address);
             try {
@@ -770,6 +773,17 @@ public class select_loco extends Activity {
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
 
+        }
+    }
+
+    // listener for the ID 'n' Go button, when clicked, send the id request and return to Throttle
+    public class idngo_button implements View.OnClickListener {
+        public void onClick(View v) {
+            Consist consist = mainapp.consists[whichThrottle];
+            consist.setWaitingOnID(true);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, "*", whichThrottle);
+            result = RESULT_OK;
+            end_this_activity();
         }
     }
 
@@ -915,6 +929,7 @@ public class select_loco extends Activity {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearList();
                             onCreate(null);
+                            onResume();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -942,6 +957,7 @@ public class select_loco extends Activity {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearConsistsList();
                             onCreate(null);
+                            onResume();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -1103,15 +1119,15 @@ public class select_loco extends Activity {
         });
         loadRecentConsistsList(false);
 
-
-        // Set the button callbacks.
-        Button button = findViewById(R.id.acquire);
-        button_listener click_listener = new button_listener();
-        button.setOnClickListener(click_listener);
+        // Set the button listeners.
+        Button button = findViewById(R.id.acquire_button);
+        button.setOnClickListener(new acquire_button());
         button = findViewById(R.id.clear_Loco_List_button);
         button.setOnClickListener(new clear_Loco_List_button());
         button = findViewById(R.id.clear_consists_list_button);
         button.setOnClickListener(new clear_consists_list_button());
+        button = findViewById(R.id.idngo_button);
+        button.setOnClickListener(new idngo_button());
 
         filter_roster_text = findViewById(R.id.filter_roster_text);
         filter_roster_text.setText(prefRosterFilter);
@@ -1186,11 +1202,13 @@ public class select_loco extends Activity {
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
         rbRecentConsists = findViewById(R.id.select_consists_method_recent_button);
+        rbIDnGo = findViewById(R.id.select_loco_method_idngo);
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", WHICH_METHOD_FIRST);
-        // if the recent lists are empty make sure the radio button will be pointing to something valid
+        // make sure the radio button will be pointing to something valid
         if (((recent_consists_list.size() == 0) && (prefSelectLocoMethod.equals(WHICH_METHOD_CONSIST)))
-                | ((importExportPreferences.recent_loco_address_list.size() == 0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT)))) {
+                | ((importExportPreferences.recent_loco_address_list.size() == 0) && (prefSelectLocoMethod.equals(WHICH_METHOD_RECENT)))
+                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(WHICH_METHOD_IDNGO))) {
             prefSelectLocoMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -1203,6 +1221,7 @@ public class select_loco extends Activity {
         llRecent = findViewById(R.id.engine_list_wrapper);
         rlRecentConsistsHeader = findViewById(R.id.consists_list_header_group);
         llRecentConsists = findViewById(R.id.consists_list_wrapper);
+        rlIDnGo = findViewById(R.id.idngo_group);
         showMethod(prefSelectLocoMethod);
 
         RadioGroup rgLocoSelect = findViewById(R.id.select_loco_method_address_button_radio_group);
@@ -1222,6 +1241,9 @@ public class select_loco extends Activity {
                         break;
                     case R.id.select_consists_method_recent_button:
                         showMethod(WHICH_METHOD_CONSIST);
+                        break;
+                    case R.id.select_loco_method_idngo:
+                        showMethod(WHICH_METHOD_IDNGO);
                         break;
                 }
             }
@@ -1257,11 +1279,13 @@ public class select_loco extends Activity {
                 llRecent.setVisibility(View.GONE);
                 rlRecentConsistsHeader.setVisibility(View.GONE);
                 llRecentConsists.setVisibility(View.GONE);
+                rlIDnGo.setVisibility(View.GONE);
 
                 rbAddress.setChecked(true);
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(false);
+                rbIDnGo.setChecked(false);
 
                 la.requestFocus();
                 imm.showSoftInput(la, InputMethodManager.SHOW_IMPLICIT);
@@ -1278,11 +1302,13 @@ public class select_loco extends Activity {
                 llRecent.setVisibility(View.GONE);
                 rlRecentConsistsHeader.setVisibility(View.GONE);
                 llRecentConsists.setVisibility(View.GONE);
+                rlIDnGo.setVisibility(View.GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(true);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(false);
+                rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRoster) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRoster = true;
@@ -1301,11 +1327,13 @@ public class select_loco extends Activity {
                 llRecent.setVisibility(View.VISIBLE);
                 rlRecentConsistsHeader.setVisibility(View.GONE);
                 llRecentConsists.setVisibility(View.GONE);
+                rlIDnGo.setVisibility(View.GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(true);
                 rbRecentConsists.setChecked(false);
+                rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRecentLocos) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRecentLocos = true;
@@ -1324,17 +1352,41 @@ public class select_loco extends Activity {
                 llRecent.setVisibility(View.GONE);
                 rlRecentConsistsHeader.setVisibility(View.VISIBLE);
                 llRecentConsists.setVisibility(View.VISIBLE);
+                rlIDnGo.setVisibility(View.GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(false);
                 rbRecent.setChecked(false);
                 rbRecentConsists.setChecked(true);
+                rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRecentConsists) {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
                     mainapp.shownToastRecentConsists = true;
                 }
 
                 imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                break;
+            }
+            case WHICH_METHOD_IDNGO: {
+                rlAddress.setVisibility(View.GONE);
+                rlAddressHelp.setVisibility(View.GONE);
+                rlRosterHeader.setVisibility(View.GONE);
+                llRoster.setVisibility(View.GONE);
+                rlRosterEmpty.setVisibility(View.GONE);
+                rlRecentHeader.setVisibility(View.GONE);
+                llRecent.setVisibility(View.GONE);
+                rlRecentConsistsHeader.setVisibility(View.GONE);
+                llRecentConsists.setVisibility(View.GONE);
+                rlIDnGo.setVisibility(View.VISIBLE);
+
+                rbAddress.setChecked(false);
+                rbRoster.setChecked(false);
+                rbRecent.setChecked(false);
+                rbRecentConsists.setChecked(false);
+                rbIDnGo.setChecked(true);
+
+                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+
                 break;
             }
         }
@@ -1385,6 +1437,12 @@ public class select_loco extends Activity {
         updateAddressEntry();   // enable/disable buttons
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        if (mainapp.supportsIDnGo()) {
+            rbIDnGo.setVisibility(View.VISIBLE);
+        } else {
+            rbIDnGo.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -1433,7 +1491,7 @@ public class select_loco extends Activity {
     }
 
     private void updateAddressEntry() {
-        Button ba = findViewById(R.id.acquire);
+        Button ba = findViewById(R.id.acquire_button);
         EditText la = findViewById(R.id.loco_address);
         if (ba == null || la == null) return; //bail if views not found
         String txt = la.getText().toString().trim();
