@@ -636,13 +636,13 @@ public class threaded_application extends Application {
                     //Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
                     //Optional rostername if present is separated from the address by the proper delimiter
                     case message_type.REQ_LOCO_ADDR: {
-                        int delays = 0;
+//                        int delays = 0;
                         final String addr = msg.obj.toString();
                         final int whichThrottle = msg.arg1;
                         if (prefs.getBoolean("drop_on_acquire_preference",
                                 getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
                             releaseLoco("*", whichThrottle, 0);
-                            delays++;
+//                            delays++;
                         }
 //                        acquireLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
                         acquireLoco(addr, whichThrottle, 0);
@@ -889,7 +889,8 @@ public class threaded_application extends Application {
             }
 
             //format multithrottle request for loco M1+L37<;>ECSX37
-            String msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
+            String msgTxt;
+            msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
 //            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
 //            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
             sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgTxt);
@@ -969,10 +970,15 @@ public class threaded_application extends Application {
                     //loco was successfully added to a throttle
                     if (com2 == '+') {  //"MT+L2591<;>"  loco was added
                         Consist con = consists[whichThrottle];
-                        if (con.getLoco(addr) != null)
+                        if (con.getLoco(addr) != null) {
                             con.setConfirmed(addr);
-                        else
-                            Log.d("Engine_Driver", "loco " + addr + " not selected but assigned by WiT to " + whichThrottle);
+                        } else if (con.isWaitingOnID()) { //we were waiting for this response
+                            con.add(addr);
+                            con.setConfirmed(addr);
+                            Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
+                        } else {
+                            Log.d("Engine_Driver", "loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
+                        }
 
                         String consistname = getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
@@ -3415,6 +3421,11 @@ public class threaded_application extends Application {
         GetJsonFromUrl getJson = new GetJsonFromUrl(this);
         getJson.execute("http://" + host_ip + ":" + web_server_port + "/json/railroad");
         webServerNameHasBeenChecked = true;
+    }
+
+    /* only DCC-EX supports the "Request Loco ID" feature now */
+    public boolean supportsIDnGo() {
+        return serverType.equals("DCC-EX");
     }
 
     @SuppressLint("ApplySharedPref")
