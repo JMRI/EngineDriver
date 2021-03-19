@@ -57,7 +57,7 @@
     <string name="select_loco_address">Adresse</string>
     <string name="acquire_button">Acquérir</string>
     <string name="roster_list">Sélection à partir des entrées du catalogue / des UM</string>
-    <string name="recent_engines">Sélection parmi les Locomotives Récentes</string>
+    <string name="recent_engines">Sélectionner parmi les Locomotives Récentes</string>
     <string name="direction">Marche Avant</string>
     <string name="speed">Vitesse:</string>
     <string name="discovered_services">Serveurs découverts</string>
@@ -109,7 +109,7 @@
     <string name="reconnect_label">Etat de la tentative de reconnexion</string>
     <string name="reconnect_help">Essai de reconnexion automatique. Attendre la reconnexion, ou appuyer sur fleche arrière pour sortir.</string>
     <string name="reconnect_success">RECONNECTION OK, reprise du fonctionnement normal.</string>
-    <string name="fs_edit_notice">ATTENTION: les modifications du paramétrage par défaut seront perdues à la sortie du programme - aucune carte SD!</string>
+    <string name="fs_edit_notice">ATTENTION: les modifications de paramétrage seront perdues à la sortie du programme - carte SD absente!</string>
     <string name="ca_recent_conn_notice">Les connexions récentes ne sont pas disponibles - aucune carte SD.</string>
     <string name="sl_recent_engine_notice">Les dernières locomotives utilisées ne sont pas disponibles - aucune carte SD.</string>
     <string name="power">Alimentation</string>
@@ -836,7 +836,7 @@
     <string name="prefThrottleSwitchOption1Title">Bascule vers le premier type d écran régulateur</string>
     <string name="prefThrottleSwitchOption2Summary">Retour vers l affichage du précédent régulateur préféré</string>
     <string name="prefThrottleSwitchOption2Title">Bascule vers le 2eme type d affichage</string>
-    <string name="recent_consists">Sélectionner parmi les locomotives récentes</string>
+    <string name="recent_consists">Sélectionner parmi les UM récentes</string>
     <string name="prefThemeTitle">Thème/Style</string>
     <string name="prefLimitSpeedButtonPreferencesTitle">\'Vitesse Maxi\' touche préférée</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Changement Arriere Plan réussi</string>
@@ -871,7 +871,7 @@
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>
     <string name="prefShowTimeOnLogEntrySummary">Afficher horodatage pour toutes les entrees de la logdans la log</string>
-    <string name="prefVerticalStopButtonMarginSummary">Nombre de pixels de décalage en marge de la touche d\'arrêt des boutons de vitesse et en bas de l\'écran.</string>
-    <string name="prefVerticalStopButtonMarginTitle">Bouton d\'arrêt Les marges verticales</string>
+    <string name="prefVerticalStopButtonMarginSummary">Nb de pixels d ecart entre bouton STOP, regulateur et bas d ecran</string>
+    <string name="prefVerticalStopButtonMarginTitle">Marges verticales pour bouton STOP</string>
 
 </resources>
