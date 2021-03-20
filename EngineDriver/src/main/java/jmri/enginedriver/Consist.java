@@ -46,7 +46,7 @@ public final class Consist {
         private int lightOn;                             //state of the headlight
         private int source;                              //how was the loco originally selected
 
-        private ConLoco(String address) {
+        ConLoco(String address) {
             super(address);
             backward = false;
             lightOn = LIGHT_UNKNOWN;

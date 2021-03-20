@@ -1105,7 +1105,7 @@
     <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>
     <string name="LocoSelectMethodIDNGo">Request Loco ID</string>
     <string name="idngo_label">Request Loco ID</string>
-    <string name="idngo_button">Request ID</string>
-    <string name="idngo_help_text">Press button to send a request to the server to identify the loco already on the programming track and return the value to this throttle.</string>  <!-- DO NOT TRANSLATE -->
+    <string name="idngo_button">Request Loco ID</string>
+    <string name="idngo_help_text">Press button to send a request to the server to identify and acquire the loco already on the programming track and return the value to this throttle.</string>  <!-- DO NOT TRANSLATE -->
 
 </resources>

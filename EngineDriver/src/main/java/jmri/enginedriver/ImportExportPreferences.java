@@ -427,6 +427,13 @@ public class ImportExportPreferences {
 
     void getRecentLocosListFromFile() {
         Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
+        if (recent_loco_address_list == null) { //make sure arrays are valid
+            recent_loco_address_list = new ArrayList<>();
+            recent_loco_address_size_list = new ArrayList<>();
+            recent_loco_name_list = new ArrayList<>();
+            recent_loco_source_list = new ArrayList<>();
+        }
+
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
