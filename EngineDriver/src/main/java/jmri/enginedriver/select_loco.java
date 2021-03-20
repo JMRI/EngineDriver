@@ -287,12 +287,6 @@ public class select_loco extends Activity {
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
-        TextView tvThrottleNameHeader = findViewById(R.id.throttle_name_header);
-        // show throttle name
-        String s = "Throttle Name: "
-                + prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-        tvThrottleNameHeader.setText(s);
-
         // format and show currently selected locos, and hide or show Release buttons
         final int conNomTextSize = 16;
         final double minTextScale = 0.8;
@@ -345,7 +339,6 @@ public class select_loco extends Activity {
             bR.setEnabled(false);
             bR.setVisibility(View.GONE);
             llThrottle.setVisibility(View.GONE);
-            tvThrottleNameHeader.setVisibility(View.GONE);
         }
 
         if (SMenu != null) {

@@ -193,7 +193,8 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:importantForAutofill="no" />
 
         <Spinner
             android:id="@+id/address_length"
@@ -308,7 +309,8 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:importantForAutofill="no" />
 
     </RelativeLayout>
 
@@ -386,7 +388,7 @@
             android:id="@+id/engine_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"></ListView>
+            android:animateLayoutChanges="true" />
     </LinearLayout>
 
     <RelativeLayout
@@ -431,17 +433,7 @@
             android:id="@+id/consists_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"></ListView>
+            android:animateLayoutChanges="true" />
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/throttle_name_header"
-        style="@style/floating_text_style"
-        android:layout_width="wrap_content"
-        android:layout_height="16sp"
-        android:layout_marginBottom="2dp"
-        android:text="@string/none"
-        android:textSize="12sp" />
 
 </LinearLayout>
