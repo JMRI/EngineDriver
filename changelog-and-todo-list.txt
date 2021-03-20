@@ -1,3 +1,4 @@
+**Version 2.29.128
 **Version 2.29.126
  * Haptic feedback on sliders (optional)
  * Support for Request Loco ID (DCC-EX-only)
