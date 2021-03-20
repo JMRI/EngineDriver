@@ -970,11 +970,15 @@ public class threaded_application extends Application {
                     //loco was successfully added to a throttle
                     if (com2 == '+') {  //"MT+L2591<;>"  loco was added
                         Consist con = consists[whichThrottle];
-                        if (con.getLoco(addr) != null) {
+                        if (con.getLoco(addr) != null) { //found in consist
                             con.setConfirmed(addr);
                         } else if (con.isWaitingOnID()) { //we were waiting for this response
-                            con.add(addr);
+                            ConLoco conLoco = new ConLoco(addr);
+                            conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
+                            con.add(conLoco);
+                            con.setWhichSource(addr,1); //entered by address, not roster
                             con.setConfirmed(addr);
+                            addLocoToRecents(con.getLoco(addr));
                             Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
                         } else {
                             Log.d("Engine_Driver", "loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
@@ -3423,9 +3427,48 @@ public class threaded_application extends Application {
         webServerNameHasBeenChecked = true;
     }
 
-    /* only DCC-EX supports the "Request Loco ID" feature now */
+    /* only DCC-EX supports the "Request Loco ID" feature at this time */
     public boolean supportsIDnGo() {
         return serverType.equals("DCC-EX");
+    }
+
+    /* add passed-in loco to Recent Locos list and store it */
+    private void addLocoToRecents(ConLoco conLoco) {
+        // if I don't have external storage mounted, or permission to write it, just ignore, no prompt
+        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                && (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))) {
+            return;
+        }
+        ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+        importExportPreferences.getRecentLocosListFromFile();
+
+        Integer engine_address = conLoco.getIntAddress();
+        Integer address_size = conLoco.getIntAddressLength();
+        String loco_name = conLoco.getFormatAddress();
+        Integer locoSource = conLoco.getWhichSource();
+        for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+            if (engine_address.equals(importExportPreferences.recent_loco_address_list.get(i))
+                    && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
+                    && loco_name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                importExportPreferences.recent_loco_address_list.remove(i);
+                importExportPreferences.recent_loco_address_size_list.remove(i);
+                importExportPreferences.recent_loco_name_list.remove(i);
+                importExportPreferences.recent_loco_source_list.remove(i);
+                Log.d("Engine_Driver", "Loco '"+ loco_name + "' removed from Recents");
+                break;
+            }
+        }
+
+        // now append it to the beginning of the list
+        importExportPreferences.recent_loco_address_list.add(0, engine_address);
+        importExportPreferences.recent_loco_address_size_list.add(0, address_size);
+        importExportPreferences.recent_loco_name_list.add(0, loco_name);
+        importExportPreferences.recent_loco_source_list.add(0, locoSource);
+
+        importExportPreferences.writeRecentLocosListToFile(prefs);
+        Log.d("Engine_Driver", "Loco '"+ loco_name + "' added to Recents");
+
     }
 
     @SuppressLint("ApplySharedPref")

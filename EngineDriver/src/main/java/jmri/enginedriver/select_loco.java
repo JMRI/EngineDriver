@@ -540,17 +540,18 @@ public class select_loco extends Activity {
 
             // check if it already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+                Log.d("Engine_Driver", "vLocoName='"+locoName+"', address="+engine_address+", size="+address_size);
+                Log.d("Engine_Driver", "sLocoName='"+importExportPreferences.recent_loco_name_list.get(i)+
+                        "', address="+importExportPreferences.recent_loco_address_list.get(i)+", size="+importExportPreferences.recent_loco_address_size_list.get(i));
                 if (engine_address == importExportPreferences.recent_loco_address_list.get(i)
                         && address_size == importExportPreferences.recent_loco_address_size_list.get(i)
                         && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
-                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_address_list.remove(i);
-                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_address_size_list.remove(i);
-                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_name_list.remove(i);
-                    //noinspection SuspiciousListRemoveInLoop
                     importExportPreferences.recent_loco_source_list.remove(i);
+                    Log.d("Engine_Driver", "Loco '"+ locoName + "' removed from Recents");
+                    break;
                 }
             }
 
@@ -559,7 +560,7 @@ public class select_loco extends Activity {
             importExportPreferences.recent_loco_address_size_list.add(0, address_size);
             importExportPreferences.recent_loco_name_list.add(0, locoName);
             importExportPreferences.recent_loco_source_list.add(0, locoSource);
-
+            Log.d("Engine_Driver", "Loco '"+ locoName + "' added to Recents");
 
         }
 

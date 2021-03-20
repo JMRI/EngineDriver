@@ -263,11 +263,13 @@
 
         <Button
             android:id="@+id/idngo_button"
-            style="?attr/ed_normal_button_style"
-            android:layout_below="@id/idngo_help"
-            android:layout_width="fill_parent"
+            style="@style/normal_button_style"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:state_enabled="false"
+            android:layout_below="@id/idngo_help"
+            android:layout_centerInParent="true"
+            android:state_enabled="true"
+            android:padding="8sp"
             android:text="@string/idngo_button"
             tools:ignore="RtlHardcoded" />
 
