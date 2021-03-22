@@ -480,9 +480,9 @@ public class select_loco extends Activity {
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-            if (numberInConsist < 0) { // don't save the recents if a recent consist was selected
-                saveRecentLocosList(bUpdateList);
-            }
+//            if (numberInConsist < 0) { // don't save the recents if a recent consist was selected
+//                saveRecentLocosList(bUpdateList);
+//            }
             result = RESULT_OK;
             end_this_activity();
 
@@ -1436,6 +1436,11 @@ public class select_loco extends Activity {
             rbIDnGo.setVisibility(View.VISIBLE);
         } else {
             rbIDnGo.setVisibility(View.GONE);
+        }
+        if (mainapp.supportsRoster()) {
+            rbRoster.setVisibility(View.VISIBLE);
+        } else {
+            rbRoster.setVisibility(View.GONE);
         }
     }
 

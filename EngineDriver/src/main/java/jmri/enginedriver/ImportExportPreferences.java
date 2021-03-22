@@ -505,7 +505,6 @@ public class ImportExportPreferences {
             list_output = new PrintWriter(engine_list_file);
             if (mrl > 0) {
                 for (int i = 0; i < recent_loco_address_list.size() && i < mrl; i++) {
-//                    list_output.format("%d:%d\n", recent_loco_address_list.get(i), recent_loco_address_size_list.get(i));
                     list_output.format("%d:%d%d~%s\n",
                             recent_loco_address_list.get(i),
                             recent_loco_address_size_list.get(i),
@@ -518,11 +517,15 @@ public class ImportExportPreferences {
             Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Write recent locos list to file complete successfully");
         } catch (IOException except) {
             Log.e("Engine_Driver",
-                    "writeRecentLocosListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
+                    "writeRecentLocosListToFile caught IOException: "
+                            + except.getMessage());
+        } catch (NumberFormatException except) {
+            Log.e("Engine_Driver",
+                    "writeRecentLocosListToFile caught NumberFormatException: "
                             + except.getMessage());
         } catch (IndexOutOfBoundsException except) {
             Log.e("Engine_Driver",
-                    "writeRecentLocosListToFile: ImportExportPreferences: Error getting recent locos lists, IndexOutOfBoundsException: "
+                    "writeRecentLocosListToFile caught IndexOutOfBoundsException: "
                             + except.getMessage());
         }
     }

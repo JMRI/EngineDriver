@@ -1,3 +1,5 @@
+**Version 2.29.128
+ * hide "Server Roster" loco selection option if server doesn't support rosters
 **Version 2.29.126
  * Haptic feedback on sliders (optional)
  * Support for Request Loco ID (DCC-EX-only)
@@ -612,9 +614,9 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
+ *   TODO: option to use 'f' function commands
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: horizontal switching layout or option (use with webview)
- *   TODO: add some fn buttons to Simple layout
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
@@ -630,8 +632,6 @@
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
- *   TODO: support new "IDnGo" feature of DCC-EX
- *   TODO: merge multiple loco acquisitions into single transmission (reconnect and recent consists)
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
@@ -639,7 +639,7 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: auto-open the numeric keyboard when Address gets focus
+ *   TODO: don't add loco to Recent Locos until the server responds
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  * preferences:
