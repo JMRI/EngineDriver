@@ -970,9 +970,10 @@ public class threaded_application extends Application {
                     //loco was successfully added to a throttle
                     if (com2 == '+') {  //"MT+L2591<;>"  loco was added
                         Consist con = consists[whichThrottle];
-                        if (con.getLoco(addr) != null) { //found in consist
+                        if (con.getLoco(addr) != null) { //loco was added to consist in select_loco
                             con.setConfirmed(addr);
-                        } else if (con.isWaitingOnID()) { //we were waiting for this response
+                            addLocoToRecents(con.getLoco(addr));
+                        } else if (con.isWaitingOnID()) { //we were waiting for this response to get address
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
                             con.add(conLoco);
@@ -3432,9 +3433,14 @@ public class threaded_application extends Application {
         return serverType.equals("DCC-EX");
     }
 
+    /* only JMRI and MRC support Rosters at this time */
+    public boolean supportsRoster() {
+        return (serverType.equals("JMRI") || serverType.equals("MRC"));
+    }
+
     /* add passed-in loco to Recent Locos list and store it */
     private void addLocoToRecents(ConLoco conLoco) {
-        // if I don't have external storage mounted, or permission to write it, just ignore, no prompt
+        // if we don't have external storage mounted, or permission to write it, just ignore, no prompt
         if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                 && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                 && (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))) {
