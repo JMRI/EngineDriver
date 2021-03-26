@@ -265,6 +265,12 @@ public class throttle_big_buttons extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Hight of usable area
+        if (toolbar != null)  {
+            titleBar = toolbar.getHeight();
+            if (screenHeight!=0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
 //        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now

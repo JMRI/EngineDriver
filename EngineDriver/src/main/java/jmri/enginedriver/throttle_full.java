@@ -280,6 +280,12 @@ public class throttle_full extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        if (toolbar != null)  {
+            titleBar = toolbar.getHeight();
+            if (screenHeight!=0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
         //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now

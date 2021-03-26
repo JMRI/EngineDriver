@@ -130,7 +130,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
     protected static final int throttleMargin = 8; // margin between the throttles in dp
-    protected static final int titleBar = 45; // estimate of lost screen height in dp
+    protected int titleBar = 45; // estimate of lost screen height in dp
 
     // speed scale factors
     public static final int MAX_SPEED_VAL_WIT = 126;    // wit message maximum speed value, max speed slider value
@@ -557,7 +557,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
-    private Toolbar toolbar;
+    protected Toolbar toolbar;
 
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),

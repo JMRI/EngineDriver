@@ -302,6 +302,12 @@ public class throttle_simple extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        if (toolbar != null)  {
+            titleBar = toolbar.getHeight();
+            if (screenHeight!=0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
