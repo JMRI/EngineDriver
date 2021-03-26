@@ -18,13 +18,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -49,7 +50,7 @@ import java.util.HashMap;
 
 import jmri.enginedriver.Consist.ConLoco;
 
-public class ConsistLightsEdit extends Activity implements OnGestureListener {
+public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
@@ -74,6 +75,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     private GestureDetector myGesture;
 
     private SharedPreferences prefs;
+
+    private Toolbar toolbar;
 
     public void refreshConsistLists() {
         //clear and rebuild
@@ -173,7 +176,6 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.consist_lights);
         //put pointer to this activity's handler in main app's shared variable
@@ -273,7 +275,14 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         //update consist list
         refreshConsistLists();
         result = RESULT_OK;
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)); // needed in case the langauge was changed from the default
+        }
+
+    }  // end onCreate
 
     @Override
     public void onResume() {
@@ -316,7 +325,8 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
         inflater.inflate(R.menu.consist_lights_edit_menu, menu);
         CLEMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -381,6 +391,14 @@ public class ConsistLightsEdit extends Activity implements OnGestureListener {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
     }
 
 }

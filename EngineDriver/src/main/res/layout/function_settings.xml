@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
     android:orientation="horizontal"
     android:weightSum="1.0"
-    tools:ignore="RtlHardcoded,Autofill,LabelFor" >
+    tools:ignore="RtlHardcoded,Autofill,LabelFor">
+
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="0dp"

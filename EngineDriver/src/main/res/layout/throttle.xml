@@ -24,7 +24,19 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+    <!--
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:logo="@drawable/ic_launcher" />
+-->
 
     <android.gesture.GestureOverlayView
         android:id="@+id/throttle_overlay"

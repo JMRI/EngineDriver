@@ -41,11 +41,13 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -132,6 +134,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static final int RESULT_LOAD_IMG = 1;
 
+    private Toolbar toolbar;
+
     @SuppressLint("ApplySharedPref")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -141,7 +145,12 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
         mainapp = (threaded_application) getApplication();
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)); // needed in case the langauge was changed from the default
+//        toolbar = null;
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)); // needed in case the langauge was changed from the default
+//        }
 
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
@@ -299,7 +308,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         inflater.inflate(R.menu.preferences_menu, menu);
         PRMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -1396,4 +1406,11 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
 }

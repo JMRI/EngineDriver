@@ -15,17 +15,17 @@
 -->
 <resources>
 
-    <style name="app_splash" parent="android:Theme.Translucent">
+    <style name="app_splash" parent="ThemeOverlay.AppCompat">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@drawable/app_splash</item>
     </style>
 
-    <style name="app_intro" parent="@style/Theme.AppCompat">
+    <style name="app_intro" parent="Theme.AppCompat.NoActionBar">
         <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
     </style>
 
-    <style name="app_theme" parent="@android:style/Theme.Holo">
+    <style name="app_theme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
@@ -81,10 +81,12 @@
         <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+
+        <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
 
     <!-- also appears 'round' theme' -->
-    <style name="app_theme_black" parent="@android:style/Theme.Holo">
+    <style name="app_theme_black" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -146,9 +148,10 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
-    <style name="app_theme_outline" parent="@android:style/Theme.Holo">
+    <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -210,10 +213,11 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
     <!-- also appears a 'dark' theme -->
-    <style name="app_theme_ultra" parent="@android:style/Theme.Holo">
+    <style name="app_theme_ultra" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -275,9 +279,10 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
-    <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
+    <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
 
         <item name="android:windowBackground">@color/windowBackground_colorful</item>
@@ -303,7 +308,7 @@
 <!--        <item name="android:editTextBackground">@color/windowBackground_colorful</item> -->
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
-        <item name="ed_loco_label_style">@style/loco_label_style_colorful</item>
+        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_colorful</item>
         <item name="edit_func_style">@style/edit_func_style_colorful</item>
@@ -347,6 +352,7 @@
         <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
+        <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
 
 </resources>

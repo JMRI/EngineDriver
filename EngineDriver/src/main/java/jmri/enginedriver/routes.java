@@ -18,13 +18,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -58,7 +59,7 @@ import java.util.HashMap;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-public class routes extends Activity implements OnGestureListener {
+public class routes extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -74,6 +75,8 @@ public class routes extends Activity implements OnGestureListener {
 
     private GestureDetector myGesture;
     private Menu RMenu;
+
+    private Toolbar toolbar;
 
     public void refresh_route_view() {
 
@@ -300,8 +303,6 @@ public class routes extends Activity implements OnGestureListener {
             return;
         }
 
-//      setTitleToIncludeThrotName();
-
         mainapp.applyTheme(this);
 
         setContentView(R.layout.routes);
@@ -387,7 +388,14 @@ public class routes extends Activity implements OnGestureListener {
 
         //update route list
         refresh_route_view();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+    } // end onCreate
+
 
     @Override
     public void onResume() {
@@ -543,7 +551,8 @@ public class routes extends Activity implements OnGestureListener {
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountRoutes);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -623,9 +632,16 @@ public class routes extends Activity implements OnGestureListener {
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes_short) + "  " + mainapp.getFastClockTime());
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes_short) + "  " + mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes));
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes));
     }
 
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
 }

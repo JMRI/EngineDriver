@@ -43,7 +43,8 @@
             android:theme="@style/app_intro"/>
         <activity
             android:name=".connection_activity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/app_theme_black" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,122 +53,140 @@
         <activity
             android:name=".select_loco"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTop" 
-            android:label="@string/app_name_select_loco" >
+            android:launchMode="singleTop"
+            android:label="@string/app_name_select_loco"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".ConsistEdit"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop" 
-            android:label="@string/app_name_ConsistEdit" >
+            android:label="@string/app_name_ConsistEdit"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".ConsistLightsEdit"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
-            android:label="@string/app_name_ConsistLightsEdit" >
+            android:label="@string/app_name_ConsistLightsEdit"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".throttle_full"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_throttle" >
+            android:label="@string/app_name_throttle"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".throttle_simple"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_throttle" >
+            android:label="@string/app_name_throttle"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".throttle_vertical_left_or_right"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_throttle" >
+            android:label="@string/app_name_throttle"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".throttle_switching_left_or_right"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_throttle" >
+            android:label="@string/app_name_throttle"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".throttle_big_buttons"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_throttle" >
+            android:label="@string/app_name_throttle"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".function_settings"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 
-            android:label="@string/app_name_functions" >
+            android:label="@string/app_name_functions"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".function_consist_settings"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
-            android:label="@string/app_name_consist_functions" >
+            android:label="@string/app_name_consist_functions"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".turnouts"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".routes"
             android:label="@string/app_name_routes"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
-            >
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".preferences"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop" 
-            android:label="@string/app_name_preferences" >
+            android:label="@string/app_name_preferences"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".about_page"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
-            android:label="@string/app_name_about" >
+            android:label="@string/app_name_about"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".web_activity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
-            android:label="@string/app_name_web" >
+            android:label="@string/app_name_web"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".power_control"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 
-            android:label="@string/app_name_power_control" >
+            android:label="@string/app_name_power_control"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".reconnect_status"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 
-            android:label="@string/app_name_reconnect_status" >
+            android:label="@string/app_name_reconnect_status"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".logviewer.ui.LogViewerActivity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask" 
-            android:label="LogViewerActivity" >
+            android:label="LogViewerActivity"
+            android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".gamepad_test"
             android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustNothing"
-            android:label="@string/app_name_gamepad_test" >
+            android:label="@string/app_name_gamepad_test"
+            android:theme="@style/app_theme_black" >
         </activity>
     </application>
 </manifest>

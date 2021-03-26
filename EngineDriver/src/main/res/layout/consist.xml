@@ -2,8 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:keepScreenOn="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:id="@+id/consist_lead_label"
         style="?android:attr/listSeparatorTextViewStyle"

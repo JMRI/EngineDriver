@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +26,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -71,7 +72,7 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 import static android.text.TextUtils.substring;
 
-public class turnouts extends Activity implements OnGestureListener {
+public class turnouts extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -124,6 +125,8 @@ public class turnouts extends Activity implements OnGestureListener {
     String turnoutSystemName = "";
     String turnoutUserName = "";
     int turnoutSource = 0;
+
+    private Toolbar toolbar;
 
     public void refresh_turnout_view() {
         //specify logic for sort comparison (by username)
@@ -668,7 +671,13 @@ public class turnouts extends Activity implements OnGestureListener {
         //update turnout list
         refresh_turnout_view();
         refreshTurnoutViewStates();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+    } // end onCreate
 
     @Override
     public void onPause() {
@@ -821,7 +830,8 @@ public class turnouts extends Activity implements OnGestureListener {
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
-        return true;
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -1240,9 +1250,9 @@ public class turnouts extends Activity implements OnGestureListener {
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short) + "  " + mainapp.getFastClockTime());
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short) + "  " + mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts));
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts));
     }
 
     private String getCurrentStateDesc(String currentState) {
@@ -1281,4 +1291,13 @@ public class turnouts extends Activity implements OnGestureListener {
         }
         bToggle.setText(currentStateDesc);
     }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
+
 }

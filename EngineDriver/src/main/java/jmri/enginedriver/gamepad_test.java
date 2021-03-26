@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +25,8 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -62,7 +63,7 @@ import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 
-public class gamepad_test extends Activity implements OnGestureListener {
+public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu CLEMenu;
@@ -123,6 +124,8 @@ public class gamepad_test extends Activity implements OnGestureListener {
     private static String GAMEPAD_TEST_RESET = "9";
 
     private int decreaseButtonCount = 0;
+
+    private Toolbar toolbar;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -772,7 +775,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
             gamepad_test.skip_button_listener skip_click_listener = new gamepad_test.skip_button_listener();
             skipButton.setOnClickListener(skip_click_listener);
         }
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -815,7 +824,7 @@ public class gamepad_test extends Activity implements OnGestureListener {
         inflater.inflate(R.menu.gamepad_test, menu);
         CLEMenu = menu;
         //mainapp.displayEStop(menu);
-        return true;
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -884,4 +893,13 @@ public class gamepad_test extends Activity implements OnGestureListener {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
+
 }

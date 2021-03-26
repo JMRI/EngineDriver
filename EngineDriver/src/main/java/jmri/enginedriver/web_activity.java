@@ -19,7 +19,6 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +29,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -45,12 +46,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-public class web_activity extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -74,6 +76,8 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     private VelocityTracker mVelocityTracker;
 
     Button closeButton;
+
+    private Toolbar toolbar;
 
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
@@ -254,9 +258,9 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.getFastClockTime());
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
     }
 
     private void witRetry(String s) {
@@ -385,7 +389,13 @@ public class web_activity extends Activity implements android.gesture.GestureOve
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -519,7 +529,8 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
         mainapp.setPowerMenuOption(menu);
-        return true;
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -628,4 +639,14 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
+
 }

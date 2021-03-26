@@ -246,7 +246,7 @@
     <item name="android:textStyle">normal</item>
   </style>
 
-  <style name="dialogStyle_black" parent="@android:style/Theme.Holo.Dialog">
+  <style name="dialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:background">@color/transparent</item>
     <item name="android:textSize">18sp</item>
@@ -259,7 +259,7 @@
     <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item>
   </style>
 
-  <style name="alertDialogStyle_black" parent="@android:style/Theme.Holo.Dialog">
+  <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:background">@color/transparent</item>
     <item name="android:panelColorBackground">@color/solidBlack</item>
@@ -950,7 +950,7 @@
   </style>
 
   <!--  <style name="alertDialogStyle_colorful" parent="Theme.AppCompat.Light.Dialog.Alert"> -->
-  <style name="alertDialogStyle_colorful" parent="@android:style/Theme.Holo.Light.Dialog">
+  <style name="alertDialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:background">@color/transparent</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
@@ -962,7 +962,7 @@
     <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
   </style>
 
-  <style name="dialogStyle_colorful" parent="@android:style/Theme.Holo.Light.Dialog">
+  <style name="dialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:background">@color/transparent</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>

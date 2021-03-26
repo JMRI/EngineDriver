@@ -39,4 +39,6 @@
     <attr name="ed_web_view_button" format="reference" />
 
     <attr name="ed_advanced_preferences" format="reference" />
+
+    <attr name="ed_icon" format="reference" />
 </resources>

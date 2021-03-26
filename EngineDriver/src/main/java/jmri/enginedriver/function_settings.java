@@ -18,13 +18,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
@@ -53,7 +54,7 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 @SuppressLint("ApplySharedPref")
-public class function_settings extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+public class function_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -74,6 +75,8 @@ public class function_settings extends Activity implements PermissionsHelper.Per
 
     SharedPreferences prefs;
 
+    private Toolbar toolbar;
+
 //    public void setTitleToIncludeThrotName() {
 //        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 //        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
@@ -91,7 +94,6 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         //setTitleToIncludeThrotName();
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.function_settings);
         orientationChange = false;
@@ -158,7 +160,13 @@ public class function_settings extends Activity implements PermissionsHelper.Per
             v.setText(getString(R.string.fs_edit_notice));
         }
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)); // needed in case the langauge was changed from the default
+        }
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -173,6 +181,7 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onSaveInstanceState(Bundle saveState) {     //orientation change
         move_view_to_settings();        //update settings array so onCreate can use it to initialize
@@ -198,7 +207,8 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         inflater.inflate(R.menu.function_settings_menu, menu);
         FMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -524,6 +534,14 @@ public class function_settings extends Activity implements PermissionsHelper.Per
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(function_settings.this, requestCode, permissions, grantResults)) {
             Log.d("Engine_Driver", "Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
         }
     }
 

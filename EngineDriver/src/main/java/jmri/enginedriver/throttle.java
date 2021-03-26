@@ -45,7 +45,8 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.Time;
 import android.util.Log;
@@ -113,7 +114,7 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 
-public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
+public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
@@ -556,6 +557,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
+    private Toolbar toolbar;
+
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
         GREEN (MobileControl2.LED_GREEN);
@@ -780,7 +783,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, false);
                 }
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
                 if (TMenu != null) {
                     mainapp.setKidsMenuOptions(TMenu, true, 0);
                 }
@@ -791,7 +794,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
-                    }                    setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
+                    }
+                    setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
                     if (TMenu != null) {
                         mainapp.setKidsMenuOptions(TMenu, false, 0);
                     }
@@ -813,13 +817,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     bSels[throttleIndex].setEnabled(false);
                 }
                 prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
                 break;
             case KIDS_TIMER_RUNNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                 }
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
                 break;
         }
     }
@@ -4260,9 +4264,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.getFastClockTime());
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -4294,6 +4298,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         }
 
         mainapp.applyTheme(this);
+
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
         setContentView(mainapp.throttleLayoutViewId);
@@ -4770,6 +4775,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (!mainapp.webServerNameHasBeenChecked) {
             mainapp.getServerNameFromWebServer();
+        }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
         }
 
     } // end of onCreate()
@@ -5330,7 +5340,8 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             displayEsuMc2KnobMenuButton(menu);
         }
         mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -6233,6 +6244,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
             prefs.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
         }
     }
 }

@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/webview_screen"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
-    android:minWidth="1000dp"
-    android:minHeight="1000dp">
+    android:orientation="vertical">
 
-    <android.gesture.GestureOverlayView
-        android:id="@+id/web_overlay"
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:eventsInterceptionEnabled="false"
-        android:gestureColor="@color/transparent"
-        android:gestureStrokeType="single"
-        android:orientation="vertical"
-        android:uncertainGestureColor="@color/transparent">
+        android:layout_height="fill_parent"
+        android:keepScreenOn="true"
+        android:minWidth="1000dp"
+        android:minHeight="1000dp">
 
-        <WebView
-            android:id="@+id/webview"
+        <android.gesture.GestureOverlayView
+            android:id="@+id/web_overlay"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="match_parent"
+            android:eventsInterceptionEnabled="false"
+            android:gestureColor="@color/transparent"
+            android:gestureStrokeType="single"
+            android:orientation="vertical"
+            android:uncertainGestureColor="@color/transparent">
 
-        <Button
-            android:id="@+id/webview_button_close"
-            style="@style/small_button_style_outline"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:layout_alignRight="@+id/webview"
-            android:layout_alignBottom="@+id/webview"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/logviewerClose"
-            tools:ignore="RtlHardcoded" />
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
 
-    </android.gesture.GestureOverlayView>
+            <Button
+                android:id="@+id/webview_button_close"
+                style="@style/small_button_style_outline"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_alignRight="@+id/webview"
+                android:layout_alignBottom="@+id/webview"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
 
-</RelativeLayout>
+        </android.gesture.GestureOverlayView>
+
+    </RelativeLayout>
+</LinearLayout>

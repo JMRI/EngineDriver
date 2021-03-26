@@ -47,8 +47,8 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
     public void setTitleToIncludeThrotName() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
-                prefs.getString("throttle_name_preference", defaultName)));
+//        setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
+//                prefs.getString("throttle_name_preference", defaultName)));
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,8 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.logviewer_menu, menu);
         mainapp.displayEStop(menu);
-        return true;
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override

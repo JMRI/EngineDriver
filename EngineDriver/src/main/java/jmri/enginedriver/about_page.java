@@ -18,9 +18,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,10 +31,12 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
-public class about_page extends Activity {
+public class about_page extends AppCompatActivity {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
+
+    private Toolbar toolbar;
 
     /**
      * Called when the activity is first created.
@@ -45,7 +48,6 @@ public class about_page extends Activity {
         mainapp = (threaded_application) this.getApplication();
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_about)); // needed in case the language was changed from the default
 
         setContentView(R.layout.about_page);
 
@@ -94,7 +96,14 @@ public class about_page extends Activity {
         WebView webview = findViewById(R.id.about_webview);
         webview.loadUrl(getApplicationContext().getResources().getString(R.string.about_page_url));
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.showOverflowMenu();
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_about)); // needed in case the language was changed from the default
+        }
+
+    } //end onCreate
 
     @Override
     public void onResume() {
@@ -116,7 +125,8 @@ public class about_page extends Activity {
         inflater.inflate(R.menu.about_menu, menu);
         AMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -143,5 +153,11 @@ public class about_page extends Activity {
         return (super.onKeyDown(key, event));
     }
 
-
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }
 }

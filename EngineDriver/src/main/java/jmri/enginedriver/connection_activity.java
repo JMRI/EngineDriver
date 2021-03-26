@@ -36,6 +36,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -72,7 +74,7 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
 
-public class connection_activity extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+public class connection_activity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
 //    private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
     private SimpleAdapter connection_list_adapter;
@@ -114,6 +116,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
     int rootViewHeight = 0;
 
     boolean prefAllowMobileData = false;
+
+    private Toolbar toolbar;
 
     static {
         try {
@@ -425,7 +429,6 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             }
 
             mainapp.applyTheme(this);
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
 
             setContentView(R.layout.connection);
 
@@ -529,7 +532,15 @@ public class connection_activity extends Activity implements PermissionsHelper.P
                     rootViewHeight = rootView.getHeight();
                 }
             });
-        }
+
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            if (toolbar != null) {
+                setSupportActionBar(toolbar);
+                toolbar.showOverflowMenu();
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
+            }
+
+        } //end onCreate
 
         @Override
         public void onResume() {
@@ -619,7 +630,10 @@ public class connection_activity extends Activity implements PermissionsHelper.P
 
             //sets the tile to include throttle name.
             //String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+            if (toolbar != null) {
+//                setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+            }
         }
 
         /**
@@ -711,7 +725,8 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             CMenu = menu;
             mainapp.displayFlashlightMenuButton(menu);
             mainapp.setFlashlightButton(menu);
-            return true;
+
+            return super.onCreateOptionsMenu(menu);
         }
 
         @Override
@@ -962,6 +977,14 @@ public class connection_activity extends Activity implements PermissionsHelper.P
             if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
                 Log.d("Engine_Driver", "Unrecognised request - send up to super class");
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
+
+        private void setToolbarTitle(String title) {
+            if (toolbar != null) {
+                toolbar.setTitle("");
+                TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+                mTitle.setText(title);
             }
         }
     }

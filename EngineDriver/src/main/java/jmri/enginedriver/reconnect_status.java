@@ -18,23 +18,26 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.TextView;
 
-public class reconnect_status extends Activity {
+public class reconnect_status extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private String prog = "";
     private boolean backOk = true;
     private boolean retryFirst = false;
+
+    private Toolbar toolbar;
 
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
@@ -114,7 +117,6 @@ public class reconnect_status extends Activity {
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_reconnect_status)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.reconnect_page);
 
@@ -141,7 +143,13 @@ public class reconnect_status extends Activity {
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
         }
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_reconnect_status)); // needed in case the langauge was changed from the default
+        }
+
+    } //end onCreate
 
     @Override
     public void onResume() {
@@ -188,4 +196,11 @@ public class reconnect_status extends Activity {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
-}
+
+    private void setToolbarTitle(String title) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+        }
+    }}
