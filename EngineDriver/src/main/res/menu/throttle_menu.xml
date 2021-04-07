@@ -43,11 +43,11 @@
         android:visible="false"
         app:showAsAction="always" />
 
-    <item android:id="@+id/separator"
+<!--    <item android:id="@+id/separator"
         android:title="──────────"
         android:visible="true"
         app:showAsAction="never"
-        android:enabled="false"/>
+        android:enabled="false"/>-->
 
     <item android:id="@+id/turnouts_mnu"
         android:title="@string/turnouts" />
@@ -58,11 +58,13 @@
     <item android:id="@+id/power_control_mnu"
         android:title="@string/power" />
     <item android:id="@+id/preferences_mnu"
+        android:title="Old Preferences" />
+    <item android:id="@+id/settings_mnu"
         android:title="@string/preferences" />
     <item android:id="@+id/timer_mnu"
         android:title="@string/kidsTimer"
         android:visible="false" />
-    <item android:id="@+id/settings_mnu"
+    <item android:id="@+id/function_defaults_mnu"
         android:title="@string/settings" />
     <item android:id="@+id/function_consist_settings_mnu"
         android:title="@string/functionConsistSettings" />

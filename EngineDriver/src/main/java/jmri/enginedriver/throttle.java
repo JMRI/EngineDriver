@@ -783,7 +783,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, false);
                 }
-                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)
+                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
                 if (TMenu != null) {
                     mainapp.setKidsMenuOptions(TMenu, true, 0);
                 }
@@ -4264,9 +4265,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.getFastClockTime());
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short)
+                    + "  " + mainapp.getFastClockTime());
         else
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -4780,6 +4783,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
     } // end of onCreate()
@@ -4881,7 +4885,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                Intent in = new Intent().setClass(this, preferences.class);
+//                Intent in = new Intent().setClass(this, preferences.class);
+                Intent in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
@@ -5234,7 +5239,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayThrottleSwitchMenuButton(TMenu);
             mainapp.displayWebViewMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
-            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
+//            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -5339,7 +5344,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
-        mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
+//        mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -5385,6 +5390,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.settings_mnu:
+                in = new Intent().setClass(this, SettingsActivity.class);
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+            case R.id.function_defaults_mnu:
                 in = new Intent().setClass(this, function_settings.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

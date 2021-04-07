@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="engine_driver_preference"
     android:summary="@string/prefSummary"
     android:title="@string/app_name_preferences" >
+
     <CheckBoxPreference
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
         android:icon="?attr/ed_advanced_preferences"
@@ -20,14 +22,16 @@
             android:key="throttle_name_preference"
             android:maxLines="1"
             android:summary="@string/prefThrottleNameSummary"
-            android:title="@string/prefThrottleNameTitle" />
+            android:title="@string/prefThrottleNameTitle"
+            android:layout="@layout/checkbox_no_icon" />
         <ListPreference
             android:defaultValue="@string/prefThrottleOrientationDefaultValue"
             android:entries="@array/OrientationEntries"
             android:entryValues="@array/OrientationEntryValues"
             android:key="ThrottleOrientation"
             android:summary="@string/prefThrottleOrientationSummary"
-            android:title="@string/prefThrottleOrientationTitle" />
+            android:title="@string/prefThrottleOrientationTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <ListPreference
             android:defaultValue="@string/prefThemeDefaultValue"
@@ -35,7 +39,8 @@
             android:entryValues="@array/prefThemeEntryValues"
             android:key="prefTheme"
             android:summary="@string/prefThemeSummary"
-            android:title="@string/prefThemeTitle" />
+            android:title="@string/prefThemeTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <ListPreference
             android:defaultValue="@string/prefLocaleDefaultValue"
@@ -43,7 +48,8 @@
             android:entryValues="@array/prefLocaleEntryValues"
             android:key="prefLocale"
             android:summary="@string/prefLocaleSummary"
-            android:title="@string/prefLocaleTitle" />
+            android:title="@string/prefLocaleTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -55,14 +61,16 @@
             android:entryValues="@array/prefThrottleScreenTypeEntryValues"
             android:key="prefThrottleScreenType"
             android:summary="@string/prefThrottleScreenTypeSummary"
-            android:title="@string/prefThrottleScreenTypeTitle" />
+            android:title="@string/prefThrottleScreenTypeTitle"
+            android:layout="@layout/checkbox_no_icon" />
         <ListPreference
             android:defaultValue="@string/NumThrottleDefaulValue"
             android:entries="@array/NumOfThrottlesEntries"
             android:entryValues="@array/NumOfThrottlesEntryValues"
             android:key="NumThrottle"
             android:summary="@string/prefNumOfThrottlesSummary"
-            android:title="@string/prefNumOfThrottles" />
+            android:title="@string/prefNumOfThrottles"
+            android:layout="@layout/checkbox_no_icon" />
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_slider_preference"
@@ -74,7 +82,8 @@
                 android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
                 android:key="increase_slider_height_preference"
                 android:summary="@string/prefIncreaseSliderHeightSummary"
-                android:title="@string/prefIncreaseSliderHeightTitle" />
+                android:title="@string/prefIncreaseSliderHeightTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <EditTextPreference
                 android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
                 android:dialogTitle="@string/prefSliderLeftMarginTitle"
@@ -83,27 +92,32 @@
                 android:key="left_slider_margin"
                 android:maxLength="2"
                 android:summary="@string/prefSliderLeftMarginSummary"
-                android:title="@string/prefSliderLeftMarginTitle" />
+                android:title="@string/prefSliderLeftMarginTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefDisplaySpeedArrows"
                 android:key="display_speed_arrows_buttons"
                 android:summary="@string/prefDisplaySpeedArrowsSummary"
-                android:title="@string/prefDisplaySpeedArrowsTitle" />
+                android:title="@string/prefDisplaySpeedArrowsTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefHideSliderDefaultValue"
                 android:key="hide_slider_preference"
                 android:summary="@string/prefHideSliderSummary"
-                android:title="@string/prefHideSliderTitle" />
+                android:title="@string/prefHideSliderTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                 android:key="prefHideSliderAndSpeedButtons"
                 android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
-                android:title="@string/prefHideSliderAndSpeedButtonsTitle" />
+                android:title="@string/prefHideSliderAndSpeedButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
                 android:key="prefTickMarksOnSliders"
                 android:summary="@string/prefTickMarksOnSlidersSummary"
-                android:title="@string/prefTickMarksOnSlidersTitle" />
+                android:title="@string/prefTickMarksOnSlidersTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
@@ -112,7 +126,8 @@
                 android:maxLength="3"
                 android:inputType="number"
                 android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
-                android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle" />
+                android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefVerticalStopButtonMarginDefaultValue"
@@ -122,7 +137,8 @@
                 android:key="prefVerticalStopButtonMargin"
                 android:maxLength="3"
                 android:summary="@string/prefVerticalStopButtonMarginSummary"
-                android:title="@string/prefVerticalStopButtonMarginTitle" />
+                android:title="@string/prefVerticalStopButtonMarginTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefHapticFeedbackDefaultValue"
@@ -130,7 +146,8 @@
                 android:entryValues="@array/prefHapticFeedbackEntryValues"
                 android:key="prefHapticFeedback"
                 android:summary="@string/prefHapticFeedbackSummary"
-                android:title="@string/prefHapticFeedbackTitle" />
+                android:title="@string/prefHapticFeedbackTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
 <!--
             <EditTextPreference
@@ -152,7 +169,8 @@
                 android:key="prefHapticFeedbackDuration"
                 android:maxLength="4"
                 android:summary="@string/prefHapticFeedbackDurationSummary"
-                android:title="@string/prefHapticFeedbackDurationTitle" />
+                android:title="@string/prefHapticFeedbackDurationTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
         </PreferenceScreen>
 
@@ -167,13 +185,15 @@
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                 android:key="prefSwapForwardReverseButtons"
                 android:summary="@string/prefSwapForwardReverseButtonsSummary"
-                android:title="@string/prefSwapForwardReverseButtonsTitle" />
+                android:title="@string/prefSwapForwardReverseButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
                 android:key="prefSwapForwardReverseButtonsLongPress"
                 android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
-                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" />
+                android:title="@string/prefSwapForwardReverseButtonsLongPressTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefDirectionButtonLongPressDelayDefaultValue"
@@ -181,8 +201,8 @@
                 android:key="prefDirectionButtonLongPressDelay"
                 android:maxLength="4"
                 android:summary="@string/prefDirectionButtonLongPressDelaySummary"
-                android:title="@string/prefDirectionButtonLongPressDelayTitle" />
-
+                android:title="@string/prefDirectionButtonLongPressDelayTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefLeftDirectionButtonsDefaultValue"
@@ -190,14 +210,17 @@
                 android:key="prefLeftDirectionButtons"
                 android:maxLength="7"
                 android:summary="@string/prefLeftDirectionButtonsSummary"
-                android:title="@string/prefLeftDirectionButtonsTitle" />
+                android:title="@string/prefLeftDirectionButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefRightDirectionButtonsDefaultValue"
                 android:dialogTitle="@string/prefRightDirectionButtonsTitle"
                 android:key="prefRightDirectionButtons"
                 android:maxLength="7"
                 android:summary="@string/prefRightDirectionButtonsSummary"
-                android:title="@string/prefRightDirectionButtonsTitle" />
+                android:title="@string/prefRightDirectionButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefLeftDirectionButtonsShortDefaultValue"
@@ -205,14 +228,17 @@
                 android:key="prefLeftDirectionButtonsShort"
                 android:maxLength="7"
                 android:summary="@string/prefLeftDirectionButtonsShortSummary"
-                android:title="@string/prefLeftDirectionButtonsShortTitle" />
+                android:title="@string/prefLeftDirectionButtonsShortTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefRightDirectionButtonsShortDefaultValue"
                 android:dialogTitle="@string/prefRightDirectionButtonsShortTitle"
                 android:key="prefRightDirectionButtonsShort"
                 android:maxLength="7"
                 android:summary="@string/prefRightDirectionButtonsShortSummary"
-                android:title="@string/prefRightDirectionButtonsShortTitle" />
+                android:title="@string/prefRightDirectionButtonsShortTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
         </PreferenceScreen>
 
@@ -222,7 +248,8 @@
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
-            android:title="@string/prefDecreaseLocoNumberHeightTitle" />
+            android:title="@string/prefDecreaseLocoNumberHeightTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <ListPreference
             android:defaultValue="@string/prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue"
@@ -230,7 +257,8 @@
             android:summary="@string/prefSimpleThrottleLayoutShowFunctionButtonCountSummary"
             android:title="@string/prefSimpleThrottleLayoutShowFunctionButtonCountTitle"
             android:entries="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntries"
-            android:entryValues="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues" />
+            android:entryValues="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues"
+            android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -245,14 +273,18 @@
                 android:entryValues="@array/WebViewLocationEntryValues"
                 android:key="WebViewLocation"
                 android:summary="@string/prefWebViewLocationSummary"
-                android:title="@string/prefWebViewLocationTitle" />
+                android:title="@string/prefWebViewLocationTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <CheckBoxPreference
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
                 android:key="prefIncreaseWebViewSize"
                 android:summary="@string/prefIncreaseWebViewSizeSummary"
-                android:title="@string/prefIncreaseWebViewSizeTitle" />
+                android:title="@string/prefIncreaseWebViewSizeTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefInitialThrotWebPageDefaultValue"
                 android:dialogTitle="@string/prefInitialThrotWebPageSummary"
@@ -260,7 +292,8 @@
                 android:key="InitialThrotWebPage"
                 android:maxLines="1"
                 android:summary="@string/prefInitialThrotWebPageSummary"
-                android:title="@string/prefInitialThrotWebPageTitle" />
+                android:title="@string/prefInitialThrotWebPageTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -276,21 +309,27 @@
                 android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
                 android:key="prefThrottleViewImmersiveMode"
                 android:summary="@string/prefThrottleViewImmersiveModeSummary"
-                android:title="@string/prefThrottleViewImmersiveModeTitle" />
+                android:title="@string/prefThrottleViewImmersiveModeTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"
                 android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                 android:key="SwipeDownOption"
                 android:summary="@string/prefSwipeDownOptionSummary"
-                android:title="@string/prefSwipeDownOptionTitle" />
+                android:title="@string/prefSwipeDownOptionTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"
                 android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                 android:key="SwipeUpOption"
                 android:summary="@string/prefSwipeUpOptionSummary"
-                android:title="@string/prefSwipeUpOptionTitle" />
+                android:title="@string/prefSwipeUpOptionTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefScreenBrightnessDimDefaultValue"
                 android:dialogTitle="@string/prefScreenBrightnessDimTitle"
@@ -299,8 +338,10 @@
                 android:key="prefScreenBrightnessDim"
                 android:maxLength="3"
                 android:summary="@string/prefScreenBrightnessDimSummary"
-                android:title="@string/prefScreenBrightnessDimTitle" />
+                android:title="@string/prefScreenBrightnessDimTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="throttle_accelerometer_preference"
@@ -314,7 +355,9 @@
                 android:entryValues="@array/prefAccelerometerShakeEntryValues"
                 android:key="prefAccelerometerShake"
                 android:summary="@string/prefAccelerometerShakeSummary"
-                android:title="@string/prefAccelerometerShakeTitle" />
+                android:title="@string/prefAccelerometerShakeTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefAccelerometerShakeThresholdDefaultValue"
                 android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
@@ -322,7 +365,8 @@
                 android:key="prefAccelerometerShakeThreshold"
                 android:maxLength="5"
                 android:summary="@string/prefAccelerometerShakeThresholdSummary"
-                android:title="@string/prefAccelerometerShakeThresholdTitle" />
+                android:title="@string/prefAccelerometerShakeThresholdTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
         </PreferenceScreen>
 
@@ -332,7 +376,8 @@
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
-            android:title="@string/prefShowAddressInsteadOfNameTitle" />
+            android:title="@string/prefShowAddressInsteadOfNameTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -348,7 +393,9 @@
                 android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                 android:key="prefAlwaysUseDefaultFunctionLabels"
                 android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
-                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
+                android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
                 android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
@@ -356,7 +403,8 @@
                 android:maxLength="2"
                 android:inputType="number"
                 android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
-                android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
+                android:title="@string/prefNumberOfDefaultFunctionLabelsTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue"
@@ -365,9 +413,9 @@
                 android:maxLength="2"
                 android:inputType="number"
                 android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
-                android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
+                android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
-
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -385,19 +433,22 @@
                 android:key="prefVolumeSpeedButtonsSpeedStep"
                 android:maxLength="2"
                 android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
-                android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
+                android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                 android:key="prefDisableVolumeKeys"
                 android:summary="@string/prefDisableVolumeKeysSummary"
-                android:title="@string/prefDisableVolumeKeysTitle" />
+                android:title="@string/prefDisableVolumeKeysTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
                 android:key="prefVolumeKeysFollowLastTouchedThrottle"
                 android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
-                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -414,7 +465,8 @@
                 android:entryValues="@array/prefTtsWhenEntryValues"
                 android:key="prefTtsWhen"
                 android:summary="@string/prefTtsWhenSummary"
-                android:title="@string/prefTtsWhenTitle" />
+                android:title="@string/prefTtsWhenTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefTtsThrottleResponseDefaultValue"
@@ -422,7 +474,8 @@
                 android:entryValues="@array/prefTtsThrottleResponseEntryValues"
                 android:key="prefTtsThrottleResponse"
                 android:summary="@string/prefTtsThrottleResponseSummary"
-                android:title="@string/prefTtsThrottleResponseTitle" />
+                android:title="@string/prefTtsThrottleResponseTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:layout_width="wrap_content"
@@ -430,7 +483,8 @@
                 android:defaultValue="@bool/prefTtsGamepadTestDefaultValue"
                 android:key="prefTtsGamepadTest"
                 android:summary="@string/prefTtsGamepadTestSummary"
-                android:title="@string/prefTtsGamepadTestTitle" />
+                android:title="@string/prefTtsGamepadTestTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:layout_width="wrap_content"
@@ -438,7 +492,8 @@
                 android:defaultValue="@bool/prefTtsGamepadTestCompleteDefaultValue"
                 android:key="prefTtsGamepadTestComplete"
                 android:summary="@string/prefTtsGamepadTestCompleteSummary"
-                android:title="@string/prefTtsGamepadTestCompleteTitle" />
+                android:title="@string/prefTtsGamepadTestCompleteTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -455,13 +510,15 @@
                 android:entryValues="@array/prefGamePadTypeEntryValues"
                 android:key="prefGamePadType"
                 android:summary="@string/prefGamePadTypeSummary"
-                android:title="@string/prefGamePadTypeTitle" />
+                android:title="@string/prefGamePadTypeTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                 android:key="prefGamepadTestNow"
                 android:summary="@string/prefGamepadTestNowSummary"
-                android:title="@string/prefGamepadTestNowTitle" />
+                android:title="@string/prefGamepadTestNowTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
@@ -471,7 +528,8 @@
                 android:key="prefGamePadSpeedButtonsSpeedStep"
                 android:maxLength="2"
                 android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
-                android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle" />
+                android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
@@ -481,7 +539,8 @@
                 android:key="prefGamePadFeedbackVolume"
                 android:maxLength="3"
                 android:summary="@string/prefGamePadFeedbackVolumeSummary"
-                android:title="@string/prefGamePadFeedbackVolumeTitle" />
+                android:title="@string/prefGamePadFeedbackVolumeTitle"
+                android:layout="@layout/checkbox_no_icon" />
             <EditTextPreference
                 android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
                 android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
@@ -490,7 +549,9 @@
                 android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
                 android:maxLength="4"
                 android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
-                android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
+                android:title="@string/prefGamePadSpeedButtonsRepeatTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <!--    Gamepad button preferences   -->
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton1DefaultValue"
@@ -505,107 +566,138 @@
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton3"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton3Title" />
+                android:title="@string/prefGamePadButton3Title"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton2DefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton2"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton2Title" />
+                android:title="@string/prefGamePadButton2Title"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton4DefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton4"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton4Title" />
+                android:title="@string/prefGamePadButton4Title"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonStartDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonStart"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonStartTitle" />
+                android:title="@string/prefGamePadButtonStartTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonReturnDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonReturn"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonReturnTitle" />
+                android:title="@string/prefGamePadButtonReturnTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonUp"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonUpTitle" />
+                android:title="@string/prefGamePadButtonUpTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonRightDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonRight"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonRightTitle" />
+                android:title="@string/prefGamePadButtonRightTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonDownDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonDown"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonDownTitle" />
+                android:title="@string/prefGamePadButtonDownTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonLeftDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonLeft"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle" />
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonLeftShoulderDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonLeftShoulder"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle" />
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonRightShoulderDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonRightShoulder"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle" />
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonLeftTriggerDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonLeftTrigger"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle" />
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefGamePadButtonRightTriggerDefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButtonRightTrigger"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle" />
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <!--    Gamepad button preferences   -->
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
                 android:key="prefGamepadSwapForwardReverseWithScreenButtons"
                 android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
-                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" />
+                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                 android:key="prefGamepadTestEnforceTesting"
                 android:summary="@string/prefGamepadTestEnforceTestingSummary"
-                android:title="@string/prefGamepadTestEnforceTestingTitle" />
+                android:title="@string/prefGamepadTestEnforceTestingTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <CheckBoxPreference
                 android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
                 android:key="prefGamepadTestEnforceTestingSimple"
                 android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
-                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" />
+                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
         <ListPreference
@@ -614,7 +706,8 @@
             android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
             android:key="prefSelectedLocoIndicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
-            android:title="@string/prefSelectedLocoIndicatorTitle" />
+            android:title="@string/prefSelectedLocoIndicatorTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -628,12 +721,14 @@
                 android:defaultValue="@bool/prefBackgroundImageDefaultValue"
                 android:key="prefBackgroundImage"
                 android:summary="@string/prefBackgroundImageSummary"
-                android:title="@string/prefBackgroundImageTitle" />
+                android:title="@string/prefBackgroundImageTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <Preference
                 android:key="prefBackgroundImageFileNameImagePicker"
                 android:summary="@string/prefBackgroundImageFileNameSummary"
-                android:title="@string/prefBackgroundImageFileNameTitle" />
+                android:title="@string/prefBackgroundImageFileNameTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
@@ -641,7 +736,8 @@
                 android:entryValues="@array/prefBackgroundImagePositionEntryValues"
                 android:key="prefBackgroundImagePosition"
                 android:summary="@string/prefBackgroundImagePositionSummary"
-                android:title="@string/prefBackgroundImagePositionTitle" />
+                android:title="@string/prefBackgroundImagePositionTitle"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
     </PreferenceCategory>
@@ -655,6 +751,7 @@
             android:layout="@layout/checkbox_icon_right"
             android:summary="@string/prefEmerStopSummary"
             android:title="@string/prefEmerStopTitle" />
+
         <CheckBoxPreference
             android:icon="?attr/ed_power_green_button"
             android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
@@ -662,6 +759,7 @@
             android:layout="@layout/checkbox_icon_right"
             android:summary="@string/prefPowerButtonBarSummary"
             android:title="@string/prefPowerButtonBarTitle" />
+
         <CheckBoxPreference
             android:icon="?attr/ed_flashlight_on_button"
             android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
@@ -669,6 +767,7 @@
             android:layout="@layout/checkbox_icon_right"
             android:summary="@string/prefFlashlightSummary"
             android:title="@string/prefFlashlightTitle" />
+
         <ListPreference
             android:icon="?attr/ed_clock_icon"
             android:defaultValue="@string/prefDisplayClockDefaultValue"
@@ -710,7 +809,8 @@
                 android:entryValues="@array/prefThrottleScreenTypeEntryValues"
                 android:key="prefThrottleSwitchOption1"
                 android:summary="@string/prefThrottleSwitchOption1Summary"
-                android:title="@string/prefThrottleSwitchOption1Title" />
+                android:title="@string/prefThrottleSwitchOption1Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
@@ -718,7 +818,8 @@
                 android:entryValues="@array/prefThrottleScreenTypeEntryValues"
                 android:key="prefThrottleSwitchOption2"
                 android:summary="@string/prefThrottleSwitchOption2Summary"
-                android:title="@string/prefThrottleSwitchOption2Title" />
+                android:title="@string/prefThrottleSwitchOption2Title"
+                android:layout="@layout/checkbox_no_icon" />
 <!--
             <ListPreference
                 android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
@@ -741,7 +842,9 @@
             android:entryValues="@array/DisplaySpeedUnitEntryValues"
             android:key="DisplaySpeedUnits"
             android:summary="@string/prefDisplaySpeedUnitsSummary"
-            android:title="@string/prefDisplaySpeedUnitsTitle" />
+            android:title="@string/prefDisplaySpeedUnitsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
@@ -749,8 +852,8 @@
             android:maxLength="3"
             android:inputType="number"
             android:summary="@string/prefMaximumThrottleSummary"
-            android:title="@string/prefMaximumThrottleTitle" >
-        </EditTextPreference>
+            android:title="@string/prefMaximumThrottleTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <EditTextPreference
             android:defaultValue="@string/prefMaximumThrottleChangeDefaultValue"
@@ -760,8 +863,8 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefMaximumThrottleChangeSummary"
-            android:title="@string/prefMaximumThrottleChangeTitle" >
-        </EditTextPreference>
+            android:title="@string/prefMaximumThrottleChangeTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <EditTextPreference
             android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue"
@@ -771,7 +874,8 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefSpeedButtonsSpeedStepSummary"
-            android:title="@string/prefSpeedButtonsSpeedStepTitle" />
+            android:title="@string/prefSpeedButtonsSpeedStepTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <EditTextPreference
             android:defaultValue="@string/prefSpeedButtonsRepeatDefaultValue"
@@ -781,13 +885,16 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
-            android:title="@string/prefSpeedButtonsRepeatTitle" />
+            android:title="@string/prefSpeedButtonsRepeatTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefSpeedButtonsSpeedStepDecrementDefaultValue"
             android:key="prefSpeedButtonsSpeedStepDecrement"
             android:summary="@string/prefSpeedButtonsSpeedStepDecrementSummary"
-            android:title="@string/prefSpeedButtonsSpeedStepDecrementTitle" />
+            android:title="@string/prefSpeedButtonsSpeedStepDecrementTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
@@ -800,7 +907,8 @@
                 android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
                 android:key="prefLimitSpeedButton"
                 android:summary="@string/prefLimitSpeedButtonSummary"
-                android:title="@string/prefLimitSpeedButtonTitle">
+                android:title="@string/prefLimitSpeedButtonTitle"
+                android:layout="@layout/checkbox_no_icon" >
             </CheckBoxPreference>
 
             <EditTextPreference
@@ -810,13 +918,15 @@
                 android:maxLength="3"
                 android:inputType="number"
                 android:summary="@string/prefLimitSpeedPercentSummary"
-                android:title="@string/prefLimitSpeedPercentTitle" />
+                android:title="@string/prefLimitSpeedPercentTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefPauseSpeedButtonDefaultValue"
                 android:key="prefPauseSpeedButton"
                 android:summary="@string/prefPauseSpeedButtonSummary"
-                android:title="@string/prefPauseSpeedButtonTitle" />
+                android:title="@string/prefPauseSpeedButtonTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefPauseSpeedRateDefaultValue"
@@ -825,7 +935,8 @@
                 android:maxLength="4"
                 android:inputType="number"
                 android:summary="@string/prefPauseSpeedRateSummary"
-                android:title="@string/prefPauseSpeedRateTitle" />
+                android:title="@string/prefPauseSpeedRateTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefPauseSpeedStepDefaultValue"
@@ -834,7 +945,8 @@
                 android:maxLength="2"
                 android:inputType="number"
                 android:summary="@string/prefPauseSpeedStepSummary"
-                android:title="@string/prefPauseSpeedStepTitle" />
+                android:title="@string/prefPauseSpeedStepTitle"
+                android:layout="@layout/checkbox_no_icon" />
 <!--
             <CheckBoxPreference
                 android:defaultValue="@bool/prefPauseSpeedReverseDefaultValue"
@@ -848,7 +960,8 @@
             android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
             android:key="stop_on_phonecall_preference"
             android:summary="@string/prefStopOnPhonecallSummary"
-            android:title="@string/prefStopOnPhonecallTitle" />
+            android:title="@string/prefStopOnPhonecallTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -856,7 +969,8 @@
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="DirChangeWhileMovingPreference"
             android:summary="@string/prefDirChangeWhileMovingSummary"
-            android:title="@string/prefDirChangeWhileMovingTitle" />
+            android:title="@string/prefDirChangeWhileMovingTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -864,7 +978,8 @@
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
             android:summary="@string/prefStopOnDirectionChangeSummary"
-            android:title="@string/prefStopOnDirectionChangeTitle" />
+            android:title="@string/prefStopOnDirectionChangeTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
@@ -880,25 +995,28 @@
                 android:entryValues="@array/prefConsistFollowRuleStyleEntryValues"
                 android:key="prefConsistFollowRuleStyle"
                 android:summary="@string/prefConsistFollowRuleStyleSummary"
-                android:title="@string/prefConsistFollowRuleStyleTitle" />
+                android:title="@string/prefConsistFollowRuleStyleTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
                 android:key="SelectiveLeadSound"
                 android:summary="@string/prefSelectiveLeadSoundSummary"
-                android:title="@string/prefSelectiveLeadSoundTitle" >
-            </CheckBoxPreference>
+                android:title="@string/prefSelectiveLeadSoundTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                 android:key="SelectiveLeadSoundF1"
                 android:summary="@string/prefSelectiveLeadSoundF1Summary"
-                android:title="@string/prefSelectiveLeadSoundF1Title" />
+                android:title="@string/prefSelectiveLeadSoundF1Title"
+                android:layout="@layout/checkbox_no_icon" />
             <CheckBoxPreference
                 android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                 android:key="SelectiveLeadSoundF2"
                 android:summary="@string/prefSelectiveLeadSoundF2Summary"
-                android:title="@string/prefSelectiveLeadSoundF2Title" />
+                android:title="@string/prefSelectiveLeadSoundF2Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowDefaultActionDefaultValue"
@@ -906,7 +1024,8 @@
                 android:entryValues="@array/prefConsistFollowDefaultActionEntryValues"
                 android:key="prefConsistFollowDefaultAction"
                 android:summary="@string/prefConsistFollowDefaultActionSummary"
-                android:title="@string/prefConsistFollowDefaultActionTitle" />
+                android:title="@string/prefConsistFollowDefaultActionTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowString1DefaultValue"
@@ -914,7 +1033,8 @@
                 android:key="prefConsistFollowString1"
                 android:maxLength="100"
                 android:summary="@string/prefConsistFollowString1Summary"
-                android:title="@string/prefConsistFollowString1Title" />
+                android:title="@string/prefConsistFollowString1Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowAction1DefaultValue"
@@ -922,7 +1042,8 @@
                 android:entryValues="@array/prefConsistFollowEntryValues"
                 android:key="prefConsistFollowAction1"
                 android:summary="@string/prefConsistFollowAction1Summary"
-                android:title="@string/prefConsistFollowAction1Title" />
+                android:title="@string/prefConsistFollowAction1Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowString2DefaultValue"
@@ -930,7 +1051,8 @@
                 android:key="prefConsistFollowString2"
                 android:maxLength="100"
                 android:summary="@string/prefConsistFollowString2Summary"
-                android:title="@string/prefConsistFollowString2Title" />
+                android:title="@string/prefConsistFollowString2Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowAction2DefaultValue"
@@ -938,7 +1060,8 @@
                 android:entryValues="@array/prefConsistFollowEntryValues"
                 android:key="prefConsistFollowAction2"
                 android:summary="@string/prefConsistFollowAction2Summary"
-                android:title="@string/prefConsistFollowAction2Title" />
+                android:title="@string/prefConsistFollowAction2Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
@@ -946,7 +1069,8 @@
                 android:key="prefConsistFollowString3"
                 android:maxLength="100"
                 android:summary="@string/prefConsistFollowString3Summary"
-                android:title="@string/prefConsistFollowString3Title" />
+                android:title="@string/prefConsistFollowString3Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
@@ -954,7 +1078,8 @@
                 android:entryValues="@array/prefConsistFollowEntryValues"
                 android:key="prefConsistFollowAction3"
                 android:summary="@string/prefConsistFollowAction3Summary"
-                android:title="@string/prefConsistFollowAction3Title" />
+                android:title="@string/prefConsistFollowAction3Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
@@ -962,7 +1087,8 @@
                 android:key="prefConsistFollowString4"
                 android:maxLength="100"
                 android:summary="@string/prefConsistFollowString4Summary"
-                android:title="@string/prefConsistFollowString4Title" />
+                android:title="@string/prefConsistFollowString4Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
@@ -970,7 +1096,8 @@
                 android:entryValues="@array/prefConsistFollowEntryValues"
                 android:key="prefConsistFollowAction4"
                 android:summary="@string/prefConsistFollowAction4Summary"
-                android:title="@string/prefConsistFollowAction4Title" />
+                android:title="@string/prefConsistFollowAction4Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <EditTextPreference
                 android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
@@ -978,7 +1105,8 @@
                 android:key="prefConsistFollowString5"
                 android:maxLength="80"
                 android:summary="@string/prefConsistFollowString5Summary"
-                android:title="@string/prefConsistFollowString5Title" />
+                android:title="@string/prefConsistFollowString5Title"
+                android:layout="@layout/checkbox_no_icon" />
 
             <ListPreference
                 android:defaultValue="@string/prefConsistFollowActionOtherDefaultValue"
@@ -986,7 +1114,8 @@
                 android:entryValues="@array/prefConsistFollowEntryValues"
                 android:key="prefConsistFollowAction5"
                 android:summary="@string/prefConsistFollowAction5Summary"
-                android:title="@string/prefConsistFollowAction5Title" />
+                android:title="@string/prefConsistFollowAction5Title"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -1000,6 +1129,7 @@
             <PreferenceCategory
                 android:key="prefCategoryEsuMc2StopButton"
                 android:title="@string/prefEsuMc2StopButtonCategoryTitle">
+
                 <EditTextPreference
                     android:key="prefEsuMc2StopButtonDelay"
                     android:title="@string/prefEsuMc2StopButtonDelayTitle"
@@ -1008,47 +1138,60 @@
                     android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
                     android:maxLength="4"
                     android:digits="0123456789"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <CheckBoxPreference
                     android:key="prefEsuMc2StopButtonShortPress"
                     android:title="@string/prefEsuMc2StopButtonShortPressTitle"
                     android:summary="@string/prefEsuMc2StopButtonShortPressSummary"
-                    android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue" />
+                    android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue"
+                    android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
+
             <!-- Button preferences -->
             <PreferenceCategory
                 android:key="prefCategoryEsuMc2SideButton"
                 android:title="@string/prefEsuMc2ButtonsCategoryTitle">
+
                 <ListPreference
                     android:key="prefEsuMc2ButtonTL"
                     android:title="@string/prefEsuMc2ButtonTLTitle"
                     android:summary="@string/prefEsuMc2ButtonTLSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonTLDefaultValue"
                     android:entries="@array/prefEsuMc2KeyEntries"
-                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <ListPreference
                     android:key="prefEsuMc2ButtonBL"
                     android:title="@string/prefEsuMc2ButtonBLTitle"
                     android:summary="@string/prefEsuMc2ButtonBLSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonBLDefaultValue"
                     android:entries="@array/prefEsuMc2KeyEntries"
-                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <ListPreference
                     android:key="prefEsuMc2ButtonTR"
                     android:title="@string/prefEsuMc2ButtonTRTitle"
                     android:summary="@string/prefEsuMc2ButtonTRSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonTRDefaultValue"
                     android:entries="@array/prefEsuMc2KeyEntries"
-                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <ListPreference
                     android:key="prefEsuMc2ButtonBR"
                     android:title="@string/prefEsuMc2ButtonBRTitle"
                     android:summary="@string/prefEsuMc2ButtonBRSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonBRDefaultValue"
                     android:entries="@array/prefEsuMc2KeyEntries"
-                    android:entryValues="@array/prefEsuMc2KeyEntryValues" />
+                    android:entryValues="@array/prefEsuMc2KeyEntryValues"
+                    android:layout="@layout/checkbox_no_icon" />
                 <!-- Seems that ESU MCII buttons don't always register holds
                     Leaving this in anyway -->
+
                 <EditTextPreference
                     android:key="prefEsuMc2ButtonsRepeatDelay"
                     android:title="@string/prefEsuMc2ButtonsRepeatTitle"
@@ -1057,8 +1200,10 @@
                     android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
                     android:maxLength="4"
                     android:digits="0123456789"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
+
             <!-- knob zero position trim setting -->
             <PreferenceCategory
                 android:key="prefCategoryEsiMc2ControlKnob"
@@ -1071,20 +1216,26 @@
                     android:dialogTitle="@string/prefEsuMc2ZeroTrimTitle"
                     android:maxLength="3"
                     android:inputType="number"
-                    android:digits="0123456789"/>
+                    android:digits="0123456789"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <CheckBoxPreference
                     android:key="prefEsuMc2EndStopDirectionChange"
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle"
                     android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
-                    android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue" />
+                    android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <CheckBoxPreference
                     android:key="prefEsuMc2KnobButtonDisplay"
                     android:title="@string/prefEsuMc2KnobButtonTitle"
                     android:summary="@string/prefEsuMc2KnobButtonSummary"
-                    android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue" />
+                    android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue"
+                    android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCategorySelectLoco"
         android:title="@string/prefSelectLocoTitle" >
@@ -1092,38 +1243,50 @@
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
             android:summary="@string/prefStopOnReleaseSummary"
-            android:title="@string/prefStopOnReleaseTitle" />
+            android:title="@string/prefStopOnReleaseTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
             android:key="drop_on_acquire_preference"
             android:summary="@string/prefDropOnAcquireSummary"
-            android:title="@string/prefDropOnAcquireTitle" />
+            android:title="@string/prefDropOnAcquireTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefSelLocoWhileMovingDefaultValue"
             android:key="SelLocoWhileMovingPreference"
             android:summary="@string/prefSelLocoWhileMovingSummary"
-            android:title="@string/prefSelLocoWhileMovingTitle" />
+            android:title="@string/prefSelLocoWhileMovingTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
             android:entries="@array/address_size_defaultsEntries"
             android:entryValues="@array/address_size_defaultsEntryValues"
             android:key="default_address_length"
             android:summary="@string/prefDefaultAddressLengthSummary"
-            android:title="@string/prefDefaultAddressLengthTitle" />
+            android:title="@string/prefDefaultAddressLengthTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="roster_recent_locos_preference"
             android:summary="@string/prefRosterRecentLocosSummary"
-            android:title="@string/prefRosterRecentLocosTitle" />
+            android:title="@string/prefRosterRecentLocosTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
             android:key="prefRosterRecentLocoNames"
             android:summary="@string/prefRosterRecentLocoNamesSummary"
-            android:title="@string/prefRosterRecentLocoNamesTitle" />
+            android:title="@string/prefRosterRecentLocoNamesTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentLocosDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
@@ -1132,20 +1295,26 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefMaximumRecentLocosSummary"
-            android:title="@string/prefMaximumRecentLocosTitle" />
+            android:title="@string/prefMaximumRecentLocosTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="ConsistLightsLongClickPreference"
             android:summary="@string/prefConsistLightsLongClickSummary"
-            android:title="@string/prefConsistLightsLongClickTitle" />
+            android:title="@string/prefConsistLightsLongClickTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefRosterFilterDefaultValue"
             android:dialogTitle="@string/prefRosterFilterTitle"
             android:key="prefRosterFilter"
             android:maxLength="10"
             android:summary="@string/prefRosterFilterSummary"
-            android:title="@string/prefRosterFilterTitle" />
+            android:title="@string/prefRosterFilterTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCategoryConnect"
         android:title="@string/prefConnectTitle" >
@@ -1157,17 +1326,23 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
-            android:title="@string/prefMaximumRecentConnectionsTitle" />
+            android:title="@string/prefMaximumRecentConnectionsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefConnectToFirstServer"
             android:key="connect_to_first_server_preference"
             android:summary="@string/PrefConnectToFirstServerSummary"
-            android:title="@string/PrefConnectToFirstServerTitle" />
+            android:title="@string/PrefConnectToFirstServerTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"
             android:key="prefHideDemoServer"
             android:summary="@string/prefHideDemoServerSummary"
-            android:title="@string/prefHideDemoServerTitle" />
+            android:title="@string/prefHideDemoServerTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
             android:key="prefConnectTimeoutMs"
@@ -1175,7 +1350,9 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefConnectTimeoutMsSummary"
-            android:title="@string/prefConnectTimeoutMsTitle" />
+            android:title="@string/prefConnectTimeoutMsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
             android:key="prefSocketTimeoutMs"
@@ -1183,17 +1360,22 @@
             android:inputType="number"
             android:digits="0123456789"
             android:summary="@string/prefSocketTimeoutMsSummary"
-            android:title="@string/prefSocketTimeoutMsTitle" />
+            android:title="@string/prefSocketTimeoutMsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
             android:summary="@string/prefAllowMobileDataSummary"
-            android:title="@string/prefAllowMobileDataTitle" />
+            android:title="@string/prefAllowMobileDataTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefFeedbackOnDisconnectDefaultValue"
             android:key="prefFeedbackOnDisconnect"
             android:summary="@string/prefFeedbackOnDisconnectSummary"
-            android:title="@string/prefFeedbackOnDisconnectTitle" />
+            android:title="@string/prefFeedbackOnDisconnectTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1205,7 +1387,9 @@
             android:entryValues="@array/WebOrientationEntryValues"
             android:key="WebOrientation"
             android:summary="@string/prefWebOrientationSummary"
-            android:title="@string/prefWebOrientationTitle" />
+            android:title="@string/prefWebOrientationTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefInitialWebPageDefaultValue"
             android:dialogTitle="@string/prefInitialWebPageSummary"
@@ -1213,13 +1397,24 @@
             android:summary="@string/prefInitialWebPageSummary"
             android:title="@string/prefInitialWebPageTitle"
             android:inputType="text"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
             android:key="swipe_through_web_preference"
             android:summary="@string/prefSwipeThroughWebSummary"
-            android:title="@string/prefSwipeThroughWebTitle" />
+            android:title="@string/prefSwipeThroughWebTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefWebFullScreenSwipeAreaDefaultValue"
+            android:key="prefWebFullScreenSwipeArea"
+            android:summary="@string/prefWebFullScreenSwipeAreaSummary"
+            android:title="@string/prefWebFullScreenSwipeAreaTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCategoryTurnouts"
         android:title="@string/prefTurnoutsTitle" >
@@ -1230,11 +1425,14 @@
             <!--android:key="hardware_system"-->
             <!--android:summary="@string/prefHardwareSystemSummary"-->
             <!--android:title="@string/prefHardwareSystemTitle" />-->
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="hide_system_route_names_preference"
             android:summary="@string/prefHideSystemRouteNamesSummary"
-            android:title="@string/prefHideSystemRouteNamesTitle" />
+            android:title="@string/prefHideSystemRouteNamesTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="@string/prefDelimiterDefaultValue"
             android:dialogTitle="@string/prefDelimiterTitle"
@@ -1243,22 +1441,29 @@
             android:summary="@string/prefDelimiterSummary"
             android:title="@string/prefDelimiterTitle"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
             android:key="HideIfNoUserNamePreference"
             android:summary="@string/prefHideIfNoUserNameSummary"
-            android:title="@string/prefHideIfNoUserNameTitle" />
+            android:title="@string/prefHideIfNoUserNameTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
             android:key="swipe_through_turnouts_preference"
             android:summary="@string/prefSwipeThroughTurnoutsSummary"
-            android:title="@string/prefSwipeThroughTurnoutsTitle" />
+            android:title="@string/prefSwipeThroughTurnoutsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
             android:key="swipe_through_routes_preference"
             android:summary="@string/prefSwipeThroughRoutesSummary"
-            android:title="@string/prefSwipeThroughRoutesTitle" />
+            android:title="@string/prefSwipeThroughRoutesTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1277,7 +1482,9 @@
                 android:entryValues="@array/prefKidsTimerEntryValues"
                 android:key="prefKidsTimer"
                 android:summary="@string/prefKidsTimerSummary"
-                android:title="@string/prefKidsTimerTitle" />
+                android:title="@string/prefKidsTimerTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefKidsTimerRestartPasswordDefaultValue"
                 android:dialogTitle="@string/prefKidsTimerRestartPasswordTitle"
@@ -1285,7 +1492,9 @@
                 android:summary="@string/prefKidsTimerRestartPasswordSummary"
                 android:title="@string/prefKidsTimerRestartPasswordTitle"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:layout="@layout/checkbox_no_icon" />
+
             <EditTextPreference
                 android:defaultValue="@string/prefKidsTimerResetPasswordDefaultValue"
                 android:dialogTitle="@string/prefKidsTimerResetPasswordTitle"
@@ -1293,14 +1502,16 @@
                 android:summary="@string/prefKidsTimerResetPasswordSummary"
                 android:title="@string/prefKidsTimerResetPasswordTitle"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:layout="@layout/checkbox_no_icon" />
 
             <Preference
                 android:selectable="false"
                 android:enabled="true"
                 android:key="kids_Help"
                 android:title="@string/prefKidsHelpTitle"
-                android:summary="@string/prefKidsHelpSummary" />
+                android:summary="@string/prefKidsHelpSummary"
+                android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
     </PreferenceCategory>
 
@@ -1320,7 +1531,9 @@
                 android:entryValues="@array/prefImportExportEntryValues"
                 android:key="prefImportExport"
                 android:summary="@string/prefImportExportSummary"
-                android:title="@string/prefImportExportTitle" />
+                android:title="@string/prefImportExportTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <!--
             <EditTextPreference
                 android:defaultValue="@string/prefImportServerManualDefaultValue"
@@ -1331,44 +1544,54 @@
                 android:inputType="text"
                 android:maxLines="1"/>
                 -->
-            <jmri.enginedriver.importServerManualEditTextPreference
+<!--            <jmri.enginedriver.importServerManualEditTextPreference
                 android:defaultValue="@string/prefImportServerManualDefaultValue"
                 android:dialogTitle="@string/prefImportServerManualTitle"
                 android:key="prefImportServerManual"
                 android:summary="@string/prefImportServerManualSummary"
                 android:title="@string/prefImportServerManualTitle"
                 android:inputType="text"
-                android:maxLines="1"/>
+                android:maxLines="1"/>-->
+
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportServerAutoDefaultValue"
                 android:key="prefImportServerAuto"
                 android:summary="@string/prefImportServerAutoSummary"
-                android:title="@string/prefImportServerAutoTitle" />
+                android:title="@string/prefImportServerAutoTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <CheckBoxPreference
                 android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                 android:key="prefImportExportLocoList"
                 android:summary="@string/prefImportExportLocoListSummary"
-                android:title="@string/prefImportExportLocoListTitle" />
+                android:title="@string/prefImportExportLocoListTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefAutoImportExportDefaultValue"
                 android:entries="@array/prefAutoImportExportEntries"
                 android:entryValues="@array/prefAutoImportExportEntryValues"
                 android:key="prefAutoImportExport"
                 android:summary="@string/prefAutoImportExportSummary"
-                android:title="@string/prefAutoImportExportTitle" />
+                android:title="@string/prefAutoImportExportTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefHostImportExportDefaultValue"
                 android:entries="@array/prefHostImportExportEntries"
                 android:entryValues="@array/prefHostImportExportEntryValues"
                 android:key="prefHostImportExport"
                 android:summary="@string/prefHostImportExportSummary"
-                android:title="@string/prefHostImportExportTitle" />
+                android:title="@string/prefHostImportExportTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefShowTimeOnLogEntryDefaultValue"
                 android:key="prefShowTimeOnLogEntry"
                 android:summary="@string/prefShowTimeOnLogEntrySummary"
-                android:title="@string/prefShowTimeOnLogEntryTitle" />
+                android:title="@string/prefShowTimeOnLogEntryTitle"
+                android:layout="@layout/checkbox_no_icon" />
 
         </PreferenceScreen>
     </PreferenceCategory>

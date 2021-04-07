@@ -112,7 +112,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)); // needed in case the langauge was changed from the default
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     } //end onCreate

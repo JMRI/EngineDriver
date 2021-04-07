@@ -146,7 +146,9 @@ public class reconnect_status extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_reconnect_status)); // needed in case the langauge was changed from the default
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_reconnect_status)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     } //end onCreate

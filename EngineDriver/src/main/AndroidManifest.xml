@@ -147,6 +147,13 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
+            android:name=".SettingsActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:label="@string/app_name_preferences"
+            android:theme="@style/app_theme_black" >
+        </activity>
+        <activity
             android:name=".about_page"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"

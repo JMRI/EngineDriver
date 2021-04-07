@@ -16,27 +16,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EmerStop" android:title="@string/EStop"  android:visible="false"
-        app:showAsAction="ifRoom" />
-    <item android:id="@+id/flashlight_button"
-        android:title="@string/flashlightAction" android:visible="false"
-        app:showAsAction="ifRoom" />
-    <item android:id="@+id/power_layout_button"
-        android:title="@string/PowerButtonBar" android:visible="false"
-        app:showAsAction="ifRoom" />
+    <item android:id="@+id/EmerStop"
+        android:title="@string/EStop"
+        android:visible="false"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/separator"
+    <item android:id="@+id/flashlight_button"
+        android:title="@string/flashlightAction"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/power_layout_button"
+        android:title="@string/PowerButtonBar"
+        android:visible="false"
+        app:showAsAction="always" />
+
+<!--    <item android:id="@+id/separator"
         android:title="──────────"
         android:visible="true"
         app:showAsAction="never"
-        android:enabled="false"/>
+        android:enabled="false"/>-->
 
     <item android:id="@+id/throttle_mnu" android:title="@string/throttle" />
     <item android:id="@+id/routes_mnu" android:title="@string/routes" />
     <item android:id="@+id/web_mnu" android:title="@string/web" />
     <item android:id="@+id/power_control_mnu" android:title="@string/power" />
-    <item android:id="@+id/preferences_mnu" android:title="@string/preferences" />
+    <item android:id="@+id/preferences_mnu" android:title="Old Preferences" />
+    <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />
     <item android:id="@+id/exit_mnu" android:title="@string/exit" />
     <item android:id="@+id/about_mnu" android:title="@string/about" />
+
+    <item android:id="@+id/throttle_button_mnu"
+        android:title="@string/throttle"
+        app:showAsAction="always"
+        android:icon="?attr/ed_throttle_button"/>
+
 </menu>

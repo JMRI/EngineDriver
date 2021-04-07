@@ -99,8 +99,10 @@ public class about_page extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_about)); // needed in case the language was changed from the default
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_about)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     } //end onCreate

@@ -83,13 +83,10 @@
     <bool name="prefPauseSpeedReverseDefaultValue">false</bool>
 -->
     <bool name="prefBackgroundImageDefaultValue">false</bool>
-
     <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>
-
     <bool name="prefAllowMobileDataDefaultValue">false</bool>
-
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
-
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
+    <bool name="prefWebFullScreenSwipeAreaDefaultValue">false</bool>
 
 </resources>

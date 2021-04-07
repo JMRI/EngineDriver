@@ -779,6 +779,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
     } // end onCreate

@@ -4,5 +4,5 @@
 
         <item android:id="@+id/EmerStop" android:title="@string/EStop"
             android:visible="false"
-            android:showAsAction="ifRoom" />
+            android:showAsAction="always" />
 </menu>

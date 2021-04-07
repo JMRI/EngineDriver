@@ -152,7 +152,9 @@ public class power_control extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)); // needed in case the language was changed from the default
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     } // end onCreate

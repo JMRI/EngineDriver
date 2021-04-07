@@ -1255,7 +1255,9 @@ public class select_loco extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)); // needed in case the langauge was changed from the default
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     } //end OnCreate

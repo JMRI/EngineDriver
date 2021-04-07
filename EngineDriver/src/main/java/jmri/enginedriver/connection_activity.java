@@ -536,8 +536,10 @@ public class connection_activity extends AppCompatActivity implements Permission
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             if (toolbar != null) {
                 setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
                 toolbar.showOverflowMenu();
-                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)); // needed in case the langauge was changed from the default
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
+                + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
             }
 
         } //end onCreate
@@ -632,7 +634,9 @@ public class connection_activity extends AppCompatActivity implements Permission
             //String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
             if (toolbar != null) {
 //                setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
-                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+//                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
+                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
             }
         }
 
@@ -739,6 +743,11 @@ public class connection_activity extends AppCompatActivity implements Permission
                     return true;
                 case R.id.preferences_mnu:
                     in = new Intent().setClass(this, preferences.class);
+                    startActivityForResult(in, 0);
+                    connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                    return true;
+                case R.id.settings_mnu:
+                    in = new Intent().setClass(this, SettingsActivity.class);
                     startActivityForResult(in, 0);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                     return true;

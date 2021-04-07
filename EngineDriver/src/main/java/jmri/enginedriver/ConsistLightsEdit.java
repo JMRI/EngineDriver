@@ -279,7 +279,9 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)); // needed in case the langauge was changed from the default
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
         }
 
     }  // end onCreate

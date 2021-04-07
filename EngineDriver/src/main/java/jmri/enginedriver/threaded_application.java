@@ -117,7 +117,6 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
-import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
@@ -182,8 +181,8 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
 
     private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
-                                                        //  WiThrottle server, can be chgd for specific servers
-                                                        //   do not exceed 200, unless slider delay is also changed
+    //  WiThrottle server, can be chgd for specific servers
+    //   do not exceed 200, unless slider delay is also changed
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
@@ -210,6 +209,7 @@ public class threaded_application extends Application {
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler preferences_msg_handler;
+    public volatile Handler settings_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -292,12 +292,12 @@ public class threaded_application extends Application {
     public boolean prefFeedbackOnDisconnect = true;
 
     public String prefHapticFeedback = "None";
-//    public int prefHapticFeedbackSteps = 10;
+    //    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
 
     public static final String HAPTIC_FEEDBACK_NONE = "None";
-    public static final String  HAPTIC_FEEDBACK_SLIDER = "Slider";
-    public static final String  HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+    public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
+    public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -308,7 +308,8 @@ public class threaded_application extends Application {
         PhoneListener phone;
         heartbeat heart = new heartbeat();
         private long lastSentMs = System.currentTimeMillis();
-        private long lastQueuedMs = System.currentTimeMillis();;
+        private long lastQueuedMs = System.currentTimeMillis();
+        ;
 
         comm_thread() {
             super("comm_thread");
@@ -977,7 +978,7 @@ public class threaded_application extends Application {
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
                             con.add(conLoco);
-                            con.setWhichSource(addr,1); //entered by address, not roster
+                            con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
                             addLocoToRecents(con.getLoco(addr));
                             Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
@@ -1411,20 +1412,20 @@ public class threaded_application extends Application {
                 return;
             }
 
-            long now=System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             long lastGap = now - lastSentMs;
 
             //send if sufficient gap between messages or msg is timingSensitive, requeue if not
             if (lastGap >= WiThrottle_Msg_Interval || timingSensitive(msg)) {
                 //perform the send
-                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5")+" (" + lastGap + ")"); //replace newline with cr arrow
+                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
                 lastSentMs = now;
                 socketWiT.Send(msg);
             } else {
                 //requeue this message
                 int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (WiThrottle_Msg_Interval + 5); //extra 5 for processing
                 Log.d("Engine_Driver", "requeue:" + msg.replaceAll("\n", "\u21B5") +
-                        ", lastGap=" + lastGap + ", nextGap="+nextGap); //replace newline with cr arrow
+                        ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
                 sendMsgDelay(comm_msg_handler, nextGap, message_type.WITHROTTLE_SEND, msg);
                 lastQueuedMs = now + nextGap;
             }
@@ -1435,7 +1436,9 @@ public class threaded_application extends Application {
          */
         private boolean timingSensitive(String msg) {
             boolean ret = false;
-            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) { ret = true; } //any function key message
+            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
+                ret = true;
+            } //any function key message
             if (ret) Log.d("Engine_Driver", "timeSensitive message, not requeued: '{}'" + msg);
             return ret;
         }
@@ -1797,7 +1800,9 @@ public class threaded_application extends Application {
 
             private boolean heartbeatSent = false;
 
-            private int getInboundInterval() { return heartbeatInboundInterval;  }
+            private int getInboundInterval() {
+                return heartbeatInboundInterval;
+            }
 
             /***
              * startHeartbeat(timeoutInterval in milliseconds)
@@ -2399,6 +2404,7 @@ public class threaded_application extends Application {
     public String getServerType() {
         return this.serverType;
     }
+
     /* handle server-specific settings here */
     public void setServerType(String serverType) {
         this.serverType = serverType;
@@ -2915,19 +2921,36 @@ public class threaded_application extends Application {
         return uri;
     }
 
+
     public int getSelectedTheme() {
+        return getSelectedTheme(false);
+    }
+    public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
-        switch (prefTheme) {
-            case "Black":
-                return R.style.app_theme_black;
-            case "Outline":
-                return R.style.app_theme_outline;
-            case "Ultra":
-                return R.style.app_theme_ultra;
-            case "Colorful":
-                return R.style.app_theme_colorful;
-            default:
-                return R.style.app_theme;
+        if (!isPreferences) {  // not a preferences activity
+            switch (prefTheme) {
+                case "Black":
+                    return R.style.app_theme_black;
+                case "Outline":
+                    return R.style.app_theme_outline;
+                case "Ultra":
+                    return R.style.app_theme_ultra;
+                case "Colorful":
+                    return R.style.app_theme_colorful;
+                default:
+                    return R.style.app_theme;
+            }
+        } else {
+            switch (prefTheme) {
+                case "Black":
+                case "Outline":
+                case "Ultra":
+                    return R.style.app_theme_black_preferences;
+                case "Colorful":
+                    return R.style.app_theme_colorful_preferences;
+                default:
+                    return R.style.app_theme_preferences;
+            }
         }
     }
 
@@ -2937,7 +2960,10 @@ public class threaded_application extends Application {
      * @param activity the activity to set the theme for
      */
     public void applyTheme(Activity activity) {
-        int selectedTheme = getSelectedTheme();
+        applyTheme(activity, false);
+    }
+    public void applyTheme(Activity activity, boolean isPreferences) {
+        int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
         theme = activity.getTheme();
 
@@ -3105,7 +3131,7 @@ public class threaded_application extends Application {
 
     }
 
-    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
+/*    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;
 
@@ -3118,7 +3144,7 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
-    }
+    }*/
 
     public void displayThrottleSwitchMenuButton(Menu menu) {
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);

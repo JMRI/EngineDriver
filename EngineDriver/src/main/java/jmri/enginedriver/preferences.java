@@ -149,7 +149,8 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 //        toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        if (toolbar != null) {
 //            setSupportActionBar(toolbar);
-//            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)); // needed in case the langauge was changed from the default
+//        setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)
+//                + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
 //        }
 
         super.onCreate(savedInstanceState);
@@ -522,6 +523,7 @@ public class preferences extends PreferenceActivity implements OnSharedPreferenc
 
     @SuppressLint("ApplySharedPref")
     void forceRestartApp(int forcedRestartReason) {
+
         Log.d("Engine_Driver", "Preferences.forceRestartApp() ");
 
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));

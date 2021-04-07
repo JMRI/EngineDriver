@@ -26,22 +26,22 @@
 
     <string name="app_description">Engine Driver - Application pour Android. Cette application peut se connecter à un serveur JMRI, MRC ou DigiTrax WiThrottle, et à son tour contrôler vos locomotives. La vitesse, la direction et jusqu à 29 fonctions DCC sont prises en charge pour une ou deux locomotives.</string>
 
-    <string name="app_name_connect">Connection au Serveur - Engine Driver</string>
-    <string name="app_name_throttle">régulateur - Engine Driver</string>
+    <string name="app_name_connect">Connection au Serveur</string>
+    <string name="app_name_throttle">régulateur</string>
     <string name="app_name_throttle_short">régulateur</string>
-    <string name="app_name_power_control">Contrôle de l alimentation - Engine Driver</string>
-    <string name="app_name_reconnect_status">État Reconnexion - Engine Driver</string>
-    <string name="app_name_routes">Itinéraires - Engine Driver</string>
+    <string name="app_name_power_control">Contrôle de l alimentation</string>
+    <string name="app_name_reconnect_status">État Reconnexion</string>
+    <string name="app_name_routes">Itinéraires</string>
     <string name="app_name_routes_short">Itinéraires</string>
-    <string name="app_name_turnouts">Aiguilles - Engine Driver</string>
+    <string name="app_name_turnouts">Aiguilles</string>
     <string name="app_name_turnouts_short">Aiguilles</string>
-    <string name="app_name_about">A propos - Engine Driver</string>
-    <string name="app_name_functions">Paramètres par défaut de la fonction - Engine Driver</string>
-    <string name="app_name_preferences">Préférences - Engine Driver</string>
-    <string name="app_name_select_loco">Sélection / Libération Loco - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Edition Unité Multiple (UM) - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Gestion Lampes UM - Engine Driver</string>
-    <string name="app_name_gamepad_test">Test du Gamepad - Engine Driver</string>
+    <string name="app_name_about">A propos</string>
+    <string name="app_name_functions">Paramètres par défaut de la fonction</string>
+    <string name="app_name_preferences">Préférences</string>
+    <string name="app_name_select_loco">Sélection / Libération Loco</string>
+    <string name="app_name_ConsistEdit">Edition Unité Multiple (UM)</string>
+    <string name="app_name_ConsistLightsEdit">Gestion Lampes UM</string>
+    <string name="app_name_gamepad_test">Test du Gamepad</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>

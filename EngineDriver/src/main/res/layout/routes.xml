@@ -4,64 +4,91 @@
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:keepScreenOn="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/routes_screen">
 
-    <include layout="@layout/toolbar" />
-
-    <TextView
-        android:id="@+id/routes_direct_entry_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/routes_direct_entry_label" />
-    <LinearLayout
+    <android.gesture.GestureOverlayView
+        android:id="@+id/routes_overlay"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp" >
+        android:layout_height="match_parent"
+        android:eventsInterceptionEnabled="false"
+        android:gestureColor="@color/transparent"
+        android:gestureStrokeType="single"
+        android:orientation="vertical"
+        android:uncertainGestureColor="@color/transparent">
 
-        <EditText
-            android:id="@+id/route_entry"
-            android:layout_width="120sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:hint="@string/routes_route"
-            android:imeOptions="actionDone"
-            android:inputType="textCapCharacters"
-            android:maxLength="80"
-            android:singleLine="true" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/route_toggle"
-            style="?attr/ed_normal_button_style"
-            android:layout_width="60sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:text="@string/set"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
-    <TextView
-        android:id="@+id/routes_location_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/routes_location_label" />
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp" >
-	    <Spinner
-	        android:id="@+id/routes_location"
-            android:layout_width="0dip"
-	        android:layout_height="49dp"
-            android:layout_weight="1.0"
-	        android:singleLine="true" />
+            <include layout="@layout/toolbar" />
 
-    </LinearLayout>
-    <TextView
-        android:id="@+id/routes_list_label"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/routes_list_label" />
-    <ListView
-        android:id="@+id/routes_list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:id="@+id/routes" >
+
+            <TextView
+                    android:id="@+id/routes_direct_entry_label"
+                    style="?android:attr/listSeparatorTextViewStyle"
+                    android:text="@string/routes_direct_entry_label" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp" >
+
+                    <EditText
+                        android:id="@+id/route_entry"
+                        android:layout_width="120sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:hint="@string/routes_route"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="80"
+                        android:singleLine="true" />
+
+                    <Button
+                        android:id="@+id/route_toggle"
+                        style="?attr/ed_normal_button_style"
+                        android:layout_width="60sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.75"
+                        android:text="@string/set"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/routes_location_label"
+                    style="?android:attr/listSeparatorTextViewStyle"
+                    android:text="@string/routes_location_label" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp" >
+                    <Spinner
+                        android:id="@+id/routes_location"
+                        android:layout_width="0dip"
+                        android:layout_height="49dp"
+                        android:layout_weight="1.0"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/routes_list_label"
+                    style="?android:attr/listSeparatorTextViewStyle"
+                    android:text="@string/routes_list_label" />
+                <ListView
+                    android:id="@+id/routes_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+                </ListView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.gesture.GestureOverlayView>
 </LinearLayout>

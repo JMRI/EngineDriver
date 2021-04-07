@@ -248,7 +248,7 @@
 
   <style name="dialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/transparent</item>
+    <item name="android:background">@color/solidBlack</item>
     <item name="android:textSize">18sp</item>
     <item name="android:panelColorBackground">@color/solidBlack</item>
     <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
@@ -261,7 +261,7 @@
 
   <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/transparent</item>
+    <item name="android:background">@color/solidBlack</item>
     <item name="android:panelColorBackground">@color/solidBlack</item>
     <item name="android:fullBright">@color/solidBlack</item>
     <item name="android:fullDark">@color/solidBlack</item>
@@ -952,7 +952,7 @@
   <!--  <style name="alertDialogStyle_colorful" parent="Theme.AppCompat.Light.Dialog.Alert"> -->
   <style name="alertDialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/transparent</item>
+    <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
     <item name="android:textSize">18sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
@@ -1017,6 +1017,19 @@
     <item name="android:scaleX">0.9</item>
     <item name="android:scaleY">0.9</item>
     <item name="android:width">38dp</item>
+  </style>
+
+  <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">
+    <!--<item name="android:popupBackground">@color/colorPrimary</item>-->
+    <item name="android:popupBackground">@color/windowBackground_colorful</item>
+  </style>
+  <style name="ItemTextAppearance_colorful">
+    <item name="android:textColor">@color/primary_colorful</item>
+  </style>
+
+  <style name="PreferenceScreen_colorful">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:background">@color/windowBackground_colorful</item>
   </style>
 
 </resources>

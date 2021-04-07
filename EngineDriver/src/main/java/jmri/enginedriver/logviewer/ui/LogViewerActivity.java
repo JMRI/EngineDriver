@@ -69,9 +69,9 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         setListAdapter(adaptor);
 
         //Set the buttons
-        Button closeButton = findViewById(R.id.logviewer_button_close);
-        close_button_listener close_click_listener = new close_button_listener();
-        closeButton.setOnClickListener(close_click_listener);
+//        Button closeButton = findViewById(R.id.logviewer_button_close);
+//        close_button_listener close_click_listener = new close_button_listener();
+//        closeButton.setOnClickListener(close_click_listener);
 
 //        Button resetButton = findViewById(R.id.logviewer_button_reset);
 //        reset_button_listener reset_click_listener = new reset_button_listener();

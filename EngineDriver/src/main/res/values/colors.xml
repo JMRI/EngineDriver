@@ -41,6 +41,8 @@
     <color name="hoverButtonBackgroundBlue">#1E3AEC</color>
 
     <!-- Black Theme -->
+    <color name="divider_black">#4bd6d6d6</color>
+
     <color name="primary_black">@color/solidWhite</color>
     <color name="secondary_black">#AFAEAE</color>
 <!--    <color name="tertiary_black">#747474</color>
