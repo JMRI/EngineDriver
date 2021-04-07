@@ -1,4 +1,4 @@
-**Version 2.29.128
+**Version 2.30.128
  * hide "Server Roster" loco selection option if server doesn't support rosters
 **Version 2.29.126
  * Haptic feedback on sliders (optional)
