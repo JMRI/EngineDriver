@@ -392,6 +392,7 @@
         -->
 
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
     </style>
 
