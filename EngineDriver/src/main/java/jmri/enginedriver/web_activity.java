@@ -569,9 +569,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             case R.id.power_control_mnu:
                 navigateAway(false, power_control.class);
                 return true;
-            case R.id.preferences_mnu:
+/*            case R.id.preferences_mnu:
                 navigateAway(false, SettingsActivity.class);
-                return true;
+                return true;*/
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);

@@ -5384,11 +5384,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-            case R.id.preferences_mnu:
+/*            case R.id.preferences_mnu:
                 in = new Intent().setClass(this, preferences.class);
                 startActivityForResult(in, ACTIVITY_PREFS);   // reinitialize function buttons and labels on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+                return true;*/
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
