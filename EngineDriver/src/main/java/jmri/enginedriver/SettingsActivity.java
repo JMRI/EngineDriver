@@ -164,7 +164,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             toolbar.showOverflowMenu();
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)
                     + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
-            Log.d("Engine_Driver", "Settings: Set toobar");
+            Log.d("Engine_Driver", "Settings: Set toolbar");
         }
 
     }
