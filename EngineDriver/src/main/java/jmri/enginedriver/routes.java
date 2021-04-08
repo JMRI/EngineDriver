@@ -610,7 +610,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.preferences_mnu:
-                in = new Intent().setClass(this, preferences.class);
+                in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);   // refresh view on return
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
@@ -662,7 +662,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes_short)
-                    + "  " + mainapp.getFastClockTime());
+                    + "\n" + mainapp.getFastClockTime());
         else
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes)
                     + "\n" + getApplicationContext().getResources().getString(R.string.app_name));

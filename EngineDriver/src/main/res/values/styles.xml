@@ -1005,6 +1005,7 @@
     <item name="android:textStyle">bold</item>
     <item name="android:textColor">@color/primary_colorful</item>
   </style>
+
   <style name="dialogButtonBar_colorful">
     <item name="android:background">@color/buttonFillGradiantDark_colorful</item>
   </style>

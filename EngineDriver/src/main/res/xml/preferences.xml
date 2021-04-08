@@ -12,6 +12,7 @@
         android:layout="@layout/checkbox_icon_left_highlight"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
         android:title="@string/prefShowAdvancedPreferencesTitle" />
+
     <PreferenceCategory
         android:key="prefCategoryDevice"
         android:title="@string/prefCategoryDevicePageTitle">
@@ -24,6 +25,7 @@
             android:summary="@string/prefThrottleNameSummary"
             android:title="@string/prefThrottleNameTitle"
             android:layout="@layout/checkbox_no_icon" />
+
         <ListPreference
             android:defaultValue="@string/prefThrottleOrientationDefaultValue"
             android:entries="@array/OrientationEntries"

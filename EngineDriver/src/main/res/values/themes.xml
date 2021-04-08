@@ -377,6 +377,7 @@
 
 
     <style name="app_theme_preferences" parent="@style/app_theme">
+        <item name="android:windowBackground">@drawable/app_background</item>
 
         <!--
                 <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
@@ -390,6 +391,9 @@
                 <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
                 <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
         -->
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
 
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
@@ -408,11 +412,6 @@
 
     <style name="app_theme_colorful_preferences" parent="@style/app_theme_colorful">
         <item name="android:background">@color/windowBackground_colorful</item>
-
-<!--        <item name="android:textColor">@color/primary_colorful</item>
-        <item name="android:textColorPrimary">@color/primary_text_color_selector_colorful</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color_selector_colorful</item>
-        <item name="android:textColorTertiary">@color/tertiary_colorful</item>-->
 
         <item name="android:divider">@drawable/divider_colorful</item>
         <item name="android:listDivider">@drawable/divider_colorful</item>

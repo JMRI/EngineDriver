@@ -209,7 +209,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             mainapp.displayEStop(SAMenu);
         }
 
-        mainapp.applyTheme(this,true);
+//        mainapp.applyTheme(this,true);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -994,6 +994,22 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             return (f);
         }
 
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//
+//            // create ContextThemeWrapper from the original Activity Context with the custom theme
+//            final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), mainapp.getSelectedTheme(true));
+//
+//            // clone the inflater using the ContextThemeWrapper
+//            LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+//
+//            container.getContext().setTheme(mainapp.getSelectedTheme(true));
+//
+//            View view = super.onCreateView(localInflater, container, savedInstanceState);
+//
+//            return view;
+//        }
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             Log.d("Engine_Driver", "Settings: SettingsFragment onCreatePreferences()");
@@ -1005,12 +1021,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //            }
 
             prefs = parentActivity.prefs;
-
             defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
             mainapp = parentActivity.mainapp;
             if (mainapp != null) {
-                mainapp.applyTheme(parentActivity, true);
+//                mainapp.applyTheme(parentActivity, true);
 
                 if (!mainapp.isPowerControlAllowed()) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);

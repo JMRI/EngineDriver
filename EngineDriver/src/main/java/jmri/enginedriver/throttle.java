@@ -4266,7 +4266,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short)
-                    + "  " + mainapp.getFastClockTime());
+                    + "\n" + mainapp.getFastClockTime());
         else
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)
                     + "\n" + getApplicationContext().getResources().getString(R.string.app_name));

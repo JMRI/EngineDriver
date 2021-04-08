@@ -2942,12 +2942,12 @@ public class threaded_application extends Application {
             }
         } else {
             switch (prefTheme) {
+                case "Colorful":
+//                    return R.style.app_theme_colorful_preferences;
                 case "Black":
                 case "Outline":
                 case "Ultra":
                     return R.style.app_theme_black_preferences;
-                case "Colorful":
-                    return R.style.app_theme_colorful_preferences;
                 default:
                     return R.style.app_theme_preferences;
             }

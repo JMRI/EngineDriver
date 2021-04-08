@@ -510,7 +510,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
                 Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
                 if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                    Intent in = new Intent().setClass(this, preferences.class);
+                    Intent in = new Intent().setClass(this, SettingsActivity.class);
                     startActivityForResult(in, 0);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
@@ -742,7 +742,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     mainapp.checkExit(this);
                     return true;
                 case R.id.preferences_mnu:
-                    in = new Intent().setClass(this, preferences.class);
+                    in = new Intent().setClass(this, SettingsActivity.class);
                     startActivityForResult(in, 0);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                     return true;
