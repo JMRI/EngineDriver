@@ -1286,10 +1286,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short)
-                    + "\n" + mainapp.getFastClockTime());
+                    + "\n"
+                    , mainapp.getFastClockTime());
         else
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "");
     }
 
     private String getCurrentStateDesc(String currentState) {
@@ -1329,14 +1331,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         bToggle.setText(currentStateDesc);
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
-
 
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {

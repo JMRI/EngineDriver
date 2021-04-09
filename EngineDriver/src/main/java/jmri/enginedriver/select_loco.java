@@ -1257,7 +1257,8 @@ public class select_loco extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "" );
         }
 
     } //end OnCreate
@@ -1886,11 +1887,13 @@ public class select_loco extends AppCompatActivity {
         b.show();
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
 }

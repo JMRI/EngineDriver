@@ -895,12 +895,13 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
-
 }

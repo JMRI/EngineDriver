@@ -102,7 +102,8 @@ public class about_page extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_about)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "");
         }
 
     } //end onCreate
@@ -155,11 +156,13 @@ public class about_page extends AppCompatActivity {
         return (super.onKeyDown(key, event));
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
 }

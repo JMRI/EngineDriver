@@ -268,10 +268,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short)
-                    + "\n" + mainapp.getFastClockTime());
+                    + "\n"
+                    , mainapp.getFastClockTime());
         else
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "");
     }
 
     private void witRetry(String s) {
@@ -662,15 +664,13 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
-            toolbar.setVisibility(View.VISIBLE);
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
-
-            toolbarHeight = toolbar.getHeight();
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
-
 }

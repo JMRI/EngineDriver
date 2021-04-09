@@ -786,7 +786,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     enable_disable_buttons(throttleIndex, false);
                 }
                 setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)
-                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                        , "");
                 if (TMenu != null) {
                     mainapp.setKidsMenuOptions(TMenu, true, 0);
                 }
@@ -798,7 +799,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
                     }
-                    setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
+                    setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled)
+                                , "");
                     if (TMenu != null) {
                         mainapp.setKidsMenuOptions(TMenu, false, 0);
                     }
@@ -820,13 +822,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     bSels[throttleIndex].setEnabled(false);
                 }
                 prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
-                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended)
+                        , "");
                 break;
             case KIDS_TIMER_RUNNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                 }
-                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
+                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg))
+                        , "");
                 break;
         }
     }
@@ -4272,10 +4276,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short)
-                    + "\n" + mainapp.getFastClockTime());
+                    + "\n"
+                    , mainapp.getFastClockTime());
         else
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "");
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -6270,11 +6276,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
 }

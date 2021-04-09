@@ -18,16 +18,28 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="32dp"
+                android:layout_width="24dp"
                 android:layout_height="36dp"
                 android:src="?attr/ed_icon" />
+
+            <TextView
+                android:id="@+id/toolbar_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:text=""
+                android:textColor="#fff"
+                android:textSize="22dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/toolbar_title"
@@ -40,6 +52,6 @@
                 android:textColor="#fff"
                 android:textSize="12dp"
                 android:textStyle="bold" />
-        </LinearLayout>
+      </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

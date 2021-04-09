@@ -163,7 +163,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    ,"");
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
 
@@ -217,7 +218,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    , "");
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
     }
@@ -935,11 +937,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
 

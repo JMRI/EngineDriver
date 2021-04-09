@@ -539,7 +539,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
                 toolbar.showOverflowMenu();
                 setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
-                + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                        , "");
             }
 
         } //end onCreate
@@ -636,7 +637,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
 //                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
                 setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
-                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                        , "");
             }
         }
 
@@ -989,12 +991,13 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
         }
 
-        private void setToolbarTitle(String title) {
-            if (toolbar != null) {
-                toolbar.setTitle("");
-                TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-                mTitle.setText(title);
-            }
+    private void setToolbarTitle(String title, String clockText) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
-
+}

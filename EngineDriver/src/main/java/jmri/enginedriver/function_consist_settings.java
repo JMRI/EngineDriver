@@ -114,7 +114,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             toolbar.showOverflowMenu();
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name));
+                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
+                    ,"");
         }
 
     } //end onCreate
@@ -410,11 +411,13 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
     }
 
-    private void setToolbarTitle(String title) {
+    private void setToolbarTitle(String title, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(title);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
         }
     }
 }
