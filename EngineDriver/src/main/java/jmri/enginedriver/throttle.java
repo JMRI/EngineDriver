@@ -558,6 +558,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
     protected Toolbar toolbar;
+    private boolean prefFullScreenSwipeArea = false;
+    private int toolbarHeight;
 
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
@@ -1393,6 +1395,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
         }
         getKidsTimerPrefs();
+
+        prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+                getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+
     }
 
     protected void getDirectionButtonPrefs() {
@@ -5697,6 +5703,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         gestureStartX = event.getX();
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+
+        toolbarHeight = toolbar.getHeight();
+        if (prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+            if (gestureStartY > toolbarHeight) {   // not in the toolbar area
+                return;
+            }
+        }
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {

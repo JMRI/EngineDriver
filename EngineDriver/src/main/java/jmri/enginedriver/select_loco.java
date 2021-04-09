@@ -926,8 +926,7 @@ public class select_loco extends AppCompatActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearList();
-                            onCreate(null);
-                            onResume();
+                            recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -954,8 +953,9 @@ public class select_loco extends AppCompatActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearConsistsList();
-                            onCreate(null);
-                            onResume();
+//                            onCreate(null);
+//                            onResume();
+                            recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;

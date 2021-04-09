@@ -87,6 +87,6 @@
     <bool name="prefAllowMobileDataDefaultValue">false</bool>
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
-    <bool name="prefWebFullScreenSwipeAreaDefaultValue">false</bool>
+    <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
 
 </resources>

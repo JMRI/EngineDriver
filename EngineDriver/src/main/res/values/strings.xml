@@ -1096,8 +1096,8 @@
     <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes.</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefWebFullScreenSwipeAreaTitle">Disable Full Screen Web Swipe Area</string>
-    <string name="prefWebFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
+    <string name="prefFullScreenSwipeAreaTitle">Disable Full Screen Swipe Area</string>
+    <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
 
     <!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
 <!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->

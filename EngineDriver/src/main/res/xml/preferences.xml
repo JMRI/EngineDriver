@@ -1409,12 +1409,6 @@
             android:title="@string/prefSwipeThroughWebTitle"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefWebFullScreenSwipeAreaDefaultValue"
-            android:key="prefWebFullScreenSwipeArea"
-            android:summary="@string/prefWebFullScreenSwipeAreaSummary"
-            android:title="@string/prefWebFullScreenSwipeAreaTitle"
-            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1465,6 +1459,13 @@
             android:key="swipe_through_routes_preference"
             android:summary="@string/prefSwipeThroughRoutesSummary"
             android:title="@string/prefSwipeThroughRoutesTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
+            android:key="prefFullScreenSwipeArea"
+            android:summary="@string/prefFullScreenSwipeAreaSummary"
+            android:title="@string/prefFullScreenSwipeAreaTitle"
             android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 

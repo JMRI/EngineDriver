@@ -75,7 +75,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private VelocityTracker mVelocityTracker;
 
     private Toolbar toolbar;
-    private boolean prefWebFullScreenSwipeArea = false;
+    private boolean prefFullScreenSwipeArea = false;
     private int toolbarHeight;
 
 //    Button closeButton;
@@ -108,7 +108,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = toolbar.getHeight();
-        if (prefWebFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }
@@ -407,8 +407,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        prefWebFullScreenSwipeArea = prefs.getBoolean("prefWebFullScreenSwipeArea",
-                getResources().getBoolean(R.bool.prefWebFullScreenSwipeAreaDefaultValue));
+        prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+                getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
     } // end onCreate
 
