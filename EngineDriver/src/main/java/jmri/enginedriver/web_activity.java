@@ -231,6 +231,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
+
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
                     String response_str = s.substring(0, Math.min(s.length(), 2));
@@ -240,6 +241,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                             urlRestore(true);
                         }
                     }
+
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(WMenu);
+                        }
+                    }
+
                     break;
                 }
                 case message_type.WIT_CON_RETRY:
@@ -543,6 +553,14 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         inflater.inflate(R.menu.web_menu, menu);
         WMenu = menu;
         mainapp.displayEStop(menu);
+
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerMenuOption(menu);
+        mainapp.setPowerStateButton(menu);
+
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
         mainapp.setPowerMenuOption(menu);
@@ -587,6 +605,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return true;
             case R.id.about_mnu:
                 navigateAway(false, about_page.class);
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, WMenu);
+                return true;
+            case R.id.power_layout_button:
+                mainapp.powerStateMenuButton();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
