@@ -57,6 +57,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -67,6 +68,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
@@ -2540,6 +2542,14 @@ public class threaded_application extends Application {
         }
     }
 
+    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
+        if (prefs.getBoolean(swipePreferenceToCheck, false)) {
+            menu.findItem(R.id.throttle_button_mnu).setVisible(false);
+        } else {
+            menu.findItem(R.id.throttle_button_mnu).setVisible(true);
+        }
+    }
+
     /**
      * for menu passed in, set the text or hide the menu option based on connected system
      *
@@ -3570,4 +3580,15 @@ public class threaded_application extends Application {
             }
         }
 
+    public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle,  String clockText) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            tvTitle.setText(title);
+            TextView tvIconTitle = (TextView) toolbar.findViewById(R.id.toolbar_icon_title);
+            tvIconTitle.setText(iconTitle);
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
+        }
+    }
 }

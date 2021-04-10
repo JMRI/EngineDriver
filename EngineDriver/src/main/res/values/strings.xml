@@ -949,9 +949,9 @@
     <string name="prefAllowMobileDataTitle">Allow Mobile Data connection</string>
     <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
-    <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
-    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+    <string name="app_name_throttle_kids_running">%1$s sec. remaining</string>
+    <string name="app_name_throttle_kids_enabled">Timer Ready</string>
+    <string name="app_name_throttle_kids_ended">Timer Ended</string>
 
     <string name="kidsTimer">Timer</string>
     <string name="timerDialogTitle">Timer Password</string>

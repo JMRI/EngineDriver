@@ -36,7 +36,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -162,9 +161,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    ,"");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_preferences),
+                    "");
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
 
@@ -217,9 +217,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_preferences)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_preferences),
+                    "");
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
     }
@@ -937,17 +938,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
     }
 
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
-        }
-    }
-
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1024,88 +1014,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity = (SettingsActivity) a;
 //            }
 
-            prefs = parentActivity.prefs;
-            defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-
-            mainapp = parentActivity.mainapp;
-            if (mainapp != null) {
-//                mainapp.applyTheme(parentActivity, true);
-
-                if (!mainapp.isPowerControlAllowed()) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
-                }
-                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
-                }
-
-                if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
-                    getConnectionsList();
-                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
-                    preference.setEntries(prefHostImportExportEntriesFound);
-                    preference.setEntryValues(prefHostImportExportEntryValuesFound);
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", true);
-                } else {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", false);
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
-                }
-
-                if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
-                }
-
-                if ((mainapp.connectedHostip == null) || (mainapp.web_server_port == 0)) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
-                }
-
-            }
-
-
-            if (prefs != null) {
-                prefThemeOriginal = prefs.getString("prefTheme",
-                        parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-                if (mainapp.androidVersion < mainapp.minThemeVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTheme", false);
-                }
-
-                parentActivity.result = RESULT_OK;
-
-                // Disable ESU MCII preferences if not an ESU MCII
-                if (!MobileControl2.isMobileControl2()) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
-                }
-
-                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
-
-                parentActivity.deviceId = Settings.System.getString(parentActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
-                prefs.edit().putString("prefAndroidId", parentActivity.deviceId).commit();
-
-                // - - - - - - - - - - - -
-
-                prefThrottleScreenTypeOriginal = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-                showHideThrottleTypePreferences();
-                showHideThrottleNumberPreference();
-
-                prefs.edit().putBoolean("prefForcedRestart", false).commit();
-                prefs.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
-                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
-
-                if (!prefs.getString("prefImportExport", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
-                    // preference is still confused after a reload or reset
-                    prefs.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
-                }
-
-                parentActivity.prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
-
-                parentActivity.prefThrottleSwitchButtonDisplay = prefs.getBoolean("prefThrottleSwitchButtonDisplay", false);
-
-                setSwipeThroughWebPreference();
-
-// //        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
-// //        showHidePausePreferences();
-
-                advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
-                hideAdvancedPreferences();
-            }
+            setPreferencesUI();
         }
 
         @Override
@@ -1115,6 +1024,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
+
+            setPreferencesUI();
 
         }
 
@@ -1219,6 +1130,92 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                 }
             }
+        }
+
+        void setPreferencesUI() {
+            prefs = parentActivity.prefs;
+            defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+
+            mainapp = parentActivity.mainapp;
+            if (mainapp != null) {
+//                mainapp.applyTheme(parentActivity, true);
+
+                if (!mainapp.isPowerControlAllowed()) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
+                }
+                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
+                }
+
+                if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
+                    getConnectionsList();
+                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    preference.setEntries(prefHostImportExportEntriesFound);
+                    preference.setEntryValues(prefHostImportExportEntryValuesFound);
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", true);
+                } else {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", false);
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
+                }
+
+                if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
+                }
+
+                if ((mainapp.connectedHostip == null) || (mainapp.web_server_port == 0)) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
+                }
+
+            }
+
+
+            if (prefs != null) {
+                prefThemeOriginal = prefs.getString("prefTheme",
+                        parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+                if (mainapp.androidVersion < mainapp.minThemeVersion) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTheme", false);
+                }
+
+                parentActivity.result = RESULT_OK;
+
+                // Disable ESU MCII preferences if not an ESU MCII
+                if (!MobileControl2.isMobileControl2()) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
+                }
+
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
+
+                parentActivity.deviceId = Settings.System.getString(parentActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
+                prefs.edit().putString("prefAndroidId", parentActivity.deviceId).commit();
+
+                // - - - - - - - - - - - -
+
+                prefThrottleScreenTypeOriginal = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                showHideThrottleTypePreferences();
+                showHideThrottleNumberPreference();
+
+                prefs.edit().putBoolean("prefForcedRestart", false).commit();
+                prefs.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
+                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+
+                if (!prefs.getString("prefImportExport", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
+                    // preference is still confused after a reload or reset
+                    prefs.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
+                }
+
+                parentActivity.prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+
+                parentActivity.prefThrottleSwitchButtonDisplay = prefs.getBoolean("prefThrottleSwitchButtonDisplay", false);
+
+                setSwipeThroughWebPreference();
+
+// //        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+// //        showHidePausePreferences();
+
+                advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
+                hideAdvancedPreferences();
+            }
+
         }
 
         @SuppressLint("ApplySharedPref")

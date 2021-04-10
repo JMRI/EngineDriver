@@ -629,9 +629,9 @@
     <string name="prefKidsTimerTitle">Tempo limitato in esecuzione</string>
     <string name="prefKidsTimerSummary">Limita il tempo di esecuzione della locomotiva. per esempio. Ogni bambino riceverà una quantità uguale di tempo.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle: %1$s sec. residuo</string>
-    <string name="app_name_throttle_kids_enabled">Acceleratore - Timer pronto</string>
-    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+    <string name="app_name_throttle_kids_running">%1$s sec. residuo</string>
+    <string name="app_name_throttle_kids_enabled">Timer pronto</string>
+    <string name="app_name_throttle_kids_ended">Timer Ended</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le connessioni recenti.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver ha bisogno delle autorizzazioni STORAGE per memorizzare le connessioni recenti.</string>

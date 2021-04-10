@@ -308,6 +308,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (TuMenu != null) {
             mainapp.displayEStop(TuMenu);
             mainapp.displayPowerStateMenuButton(TuMenu);
+            mainapp.displayThrottleMenuButton(TuMenu, "swipe_through_turnouts_preference");
         }
 
         return txtLen;
@@ -466,10 +467,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     /**
      * Called when the activity is first created.
@@ -852,6 +853,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
@@ -1285,13 +1287,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short)
-                    + "\n"
-                    , mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_turnouts_short),
+                    mainapp.getFastClockTime());
         else
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_turnouts),
+                    "");
     }
 
     private String getCurrentStateDesc(String currentState) {
@@ -1329,16 +1333,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             bClose.setVisibility(View.GONE);
         }
         bToggle.setText(currentStateDesc);
-    }
-
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
-        }
     }
 
     @Override

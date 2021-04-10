@@ -280,9 +280,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit),
+                    "");
         }
 
     }  // end onCreate
@@ -394,16 +395,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
-    }
-
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
-        }
     }
 
 }

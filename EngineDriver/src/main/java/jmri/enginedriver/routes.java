@@ -61,7 +61,6 @@ import java.util.HashMap;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-//public class routes extends AppCompatActivity implements OnGestureListener {
 public class routes extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -94,6 +93,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private VelocityTracker mVelocityTracker;
 
     public void refresh_route_view() {
+        Log.d("Engine_Driver", "routes: refresh_route_view()");
 
         boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
@@ -169,6 +169,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void filterRouteView() {
+        Log.d("Engine_Driver", "routes: filterRouteView()");
+
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
         routes_list.clear();
@@ -186,6 +188,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private int updateRouteEntry() {
+        Log.d("Engine_Driver", "routes: updateRouteEntry()");
+
         Button butSet = findViewById(R.id.route_toggle);
         EditText rte = findViewById(R.id.route_entry);
         String route = rte.getText().toString().trim();
@@ -218,6 +222,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     class routes_handler extends Handler {
 
         public void handleMessage(Message msg) {
+            Log.d("Engine_Driver", "routes: routes_handler: handleMessage");
+
             switch (msg.what) {
                 case message_type.RESPONSE: {
                     String response_str = msg.obj.toString();
@@ -255,6 +261,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void witRetry(String s) {
+        Log.d("Engine_Driver", "routes: witRetry");
+
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
         startActivity(in);
@@ -291,10 +299,10 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
 
 //    public void setTitleToIncludeThrotName() {
@@ -309,7 +317,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        //Log.d("Engine_Driver","routes.onCreate()");
+        Log.d("Engine_Driver", "routes: onCreate");
+
         super.onCreate(savedInstanceState);
 
         mainapp = (threaded_application) getApplication();
@@ -427,7 +436,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public void onResume() {
-        //Log.d("Engine_Driver","routes.onResume()");
+        Log.d("Engine_Driver", "routes: onResume");
+
         super.onResume();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -450,6 +460,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         if (RMenu != null) {
             mainapp.displayEStop(RMenu);
             mainapp.displayPowerStateMenuButton(RMenu);
+            mainapp.displayThrottleMenuButton(RMenu, "swipe_through_routes_preference");
             mainapp.displayFlashlightMenuButton(RMenu);
             mainapp.setFlashlightButton(RMenu);
         }
@@ -465,7 +476,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
      */
     @Override
     public void onDestroy() {
-        //Log.d("Engine_Driver","routes.onDestroy()");
+        Log.d("Engine_Driver", "routes: onDestroy");
+
         super.onDestroy();
 
         if (mainapp.routes_msg_handler != null) {
@@ -478,7 +490,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public void onPause() {
-        //Log.d("Engine_Driver","routes.onPause()");
+        Log.d("Engine_Driver", "routes: onPause");
+
         super.onPause();
         //save scroll position for later restore
         ListView lv = findViewById(R.id.routes_list);
@@ -504,74 +517,17 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         return (super.onKeyDown(key, event));
     }
 
-//    @Override
-//    public boolean onDown(MotionEvent e) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//        if (e1 == null || e2 == null)
-//            return false;
-//        float deltaX = e2.getX() - e1.getX();
-//        float absDeltaX = Math.abs(deltaX);
-//        if ((absDeltaX > threaded_application.min_fling_distance) &&
-//                (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
-//                (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-//            // left to right swipe goes to throttle
-//            if (deltaX > 0.0) {
-//                this.finish();
-//                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-//            } else {
-//                // right to left swipe goes to web, then turnouts if enabled in prefs
-//                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-//                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-//                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-//                if (swipeWeb) {
-//                    Intent in = new Intent().setClass(this, web_activity.class);
-//                    startActivity(in);
-//                } else {
-//                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference", getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-//                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-//                    if (swipeTurnouts) {
-//                        Intent in = new Intent().setClass(this, turnouts.class);
-//                        startActivity(in);
-//                    }
-//                }
-//                this.finish(); //fall back to throttle
-//                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-//            }
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public void onLongPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//        return false;
-//    }
-//
-//    @Override
-//    public void onShowPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onSingleTapUp(MotionEvent e) {
-//        return false;
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Engine_Driver", "routes: onCreateOptionsMenu");
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
         RMenu = menu;
         mainapp.actionBarIconCountRoutes = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
@@ -585,6 +541,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("Engine_Driver", "routes: onOptionsItemSelected");
+
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
@@ -666,23 +624,15 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes_short)
-                    + "\n"
-                    , mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_routes_short),
+                    mainapp.getFastClockTime());
         else
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_routes)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
-    }
-
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
-        }
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_routes),
+                    "");
     }
 
     @Override

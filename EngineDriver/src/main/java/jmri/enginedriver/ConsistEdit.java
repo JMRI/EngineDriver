@@ -283,9 +283,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_ConsistEdit)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_ConsistEdit),
+                    "");
         }
     } // end onCreate
 
@@ -429,16 +430,6 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             }
 
             refreshConsistLists();
-        }
-    }
-
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
         }
     }
 

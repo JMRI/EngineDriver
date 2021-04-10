@@ -52,6 +52,14 @@
             android:summary="@string/prefLocaleSummary"
             android:title="@string/prefLocaleTitle"
             android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
+            android:key="prefFullScreenSwipeArea"
+            android:summary="@string/prefFullScreenSwipeAreaSummary"
+            android:title="@string/prefFullScreenSwipeAreaTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1461,12 +1469,6 @@
             android:title="@string/prefSwipeThroughRoutesTitle"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
-            android:key="prefFullScreenSwipeArea"
-            android:summary="@string/prefFullScreenSwipeAreaSummary"
-            android:title="@string/prefFullScreenSwipeAreaTitle"
-            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory

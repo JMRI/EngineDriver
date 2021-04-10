@@ -738,9 +738,9 @@
     <string name="prefKidsHelpSummary">- sélectionnez d abord la locomotive. \n- Le Timer commencera à la première augmentation de vitesse. \n- Vous devez revenir à cette préférence pour réinitialiser le délai (ou l effacer) après le délai. \n \nRecommandations: \n- Désactivez les touches de volume. \n- Désactiver \'Balayage des aiguillages \'. \n- Désactivation \'Balayage des itinéraires \'. \n- Désactiver EStop.</string>
     <string name="prefKidsTimerTitle">Temps maximum de fonctionnement</string>
     <string name="prefKidsTimerSummary">Reduire le temps de fonctionnement de la locomotive. Ainsi, chaque enfant aura le même temps de jeu.</string>
-    <string name="app_name_throttle_kids_running">régulateur -%1$s sec. restant</string>
-    <string name="app_name_throttle_kids_enabled">régulateur - Timer prêt</string>
-    <string name="app_name_throttle_kids_ended">régulateur - Jeu terminé</string>
+    <string name="app_name_throttle_kids_running">%1$s sec. restant</string>
+    <string name="app_name_throttle_kids_enabled">Timer prêt</string>
+    <string name="app_name_throttle_kids_ended">Jeu terminé</string>
     <string name="prefKidsTimerRestartPasswordTitle">Mot de passe pour relancer</string>
     <string name="prefKidsTimerRestartPasswordSummary">Mot de passe permettant de relancer le jeu avec une durée identique</string>
     <string name="prefKidsTimerResetPasswordTitle">Reset/désactive le mot de passe</string>

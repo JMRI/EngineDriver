@@ -45,7 +45,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import java.lang.reflect.Method;
 
@@ -277,13 +276,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short)
-                    + "\n"
-                    , mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_web_short),
+                    mainapp.getFastClockTime());
         else
-            setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_web)
-                    + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-                    , "");
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_web),
+                    "");
     }
 
     private void witRetry(String s) {
@@ -555,6 +556,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.displayEStop(menu);
 
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
 
@@ -688,13 +690,4 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    private void setToolbarTitle(String title, String clockText) {
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            mTitle.setText(title);
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
-            mClock.setText(clockText);
-        }
-    }
 }

@@ -633,9 +633,9 @@
     <string name="prefKidsTimerTitle">Corrida limitada no tempo</string>
     <string name="prefKidsTimerSummary">Restringir o tempo que o loco será executado. por exemplo. Cada criança terá uma quantidade igual de tempo.</string>
 
-    <string name="app_name_throttle_kids_running">Acelerador - %1$s seg. remanescente</string>
-    <string name="app_name_throttle_kids_enabled">Acelerador - Temporizador Pronto</string>
-    <string name="app_name_throttle_kids_ended">Acelerador - temporizador terminado</string>
+    <string name="app_name_throttle_kids_running">%1$s seg. remanescente</string>
+    <string name="app_name_throttle_kids_enabled">Temporizador Pronto</string>
+    <string name="app_name_throttle_kids_ended">Temporizador terminado</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver precisa de permissões STORAGE para ler conexões recentes.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes.</string>

@@ -48,6 +48,7 @@
     <item android:id="@+id/throttle_button_mnu"
         android:title="@string/throttle"
         app:showAsAction="always"
-        android:icon="?attr/ed_throttle_button"/>
+        android:icon="?attr/ed_throttle_button"
+        android:visible="false" />
 
 </menu>

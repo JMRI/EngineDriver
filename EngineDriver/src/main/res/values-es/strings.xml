@@ -683,9 +683,9 @@
     <string name="prefKidsTimerResetPasswordTitle">Reinicia/deshabilita contraseña</string>
     <string name="prefKidsTimerResetPasswordSummary">Contraseña para reiniciar/deshabilitar los parámetros del temporizador.</string>
 
-    <string name="app_name_throttle_kids_running">Controlador - %1$s seg. restante</string>
-    <string name="app_name_throttle_kids_enabled">Controlador - temporizador preparado</string>
-    <string name="app_name_throttle_kids_ended">Controlador - temporizador terminado</string>
+    <string name="app_name_throttle_kids_running">%1$s seg. restante</string>
+    <string name="app_name_throttle_kids_enabled">Temporizador preparado</string>
+    <string name="app_name_throttle_kids_ended">Temporizador terminado</string>
 
     <string name="kidsTimer">Temporizador</string>
     <string name="timerDialogTitle">Contraseña del temporizador</string>

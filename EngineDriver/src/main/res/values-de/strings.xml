@@ -676,9 +676,9 @@
     <string name="prefKidsTimerTitle">Zeitbegrenztes Laufen</string>
     <string name="prefKidsTimerSummary" tools:ignore="Typos">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
-    <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>
-    <string name="app_name_throttle_kids_ended">Gas - Timer beendet</string>
+    <string name="app_name_throttle_kids_running">%1$s sek. verbleibend</string>
+    <string name="app_name_throttle_kids_enabled">Timer bereit</string>
+    <string name="app_name_throttle_kids_ended">Timer beendet</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der letzten Verbindungen.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen.</string>

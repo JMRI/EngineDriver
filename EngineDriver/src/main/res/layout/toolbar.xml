@@ -8,50 +8,75 @@
     android:layout_height="56dp"
     android:background="@color/solidBlack"
     app:navigationContentDescription="Overflow Menu"
-    android:contentInsetStart="5dp"
-    android:contentInsetLeft="5dp"
     app:contentInsetLeft="5dp"
-    app:contentInsetStart="5dp">
+    app:contentInsetStart="5dp"
+    app:contentInsetStartWithNavigation="0dp"
+    >
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/toolbar_icon_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
                 android:src="?attr/ed_icon" />
+
+            <TextView
+                android:id="@+id/toolbar_icon_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:text="Engine Driver"
+                android:textColor="#fff"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/toolbar_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
                 android:text=""
                 android:textColor="#fff"
                 android:textSize="22dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:fontFamily="sans-serif-black" />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
                 android:text="Engine Driver"
                 android:textColor="#fff"
                 android:textSize="12dp"
                 android:textStyle="bold" />
-      </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

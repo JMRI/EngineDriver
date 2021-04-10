@@ -693,9 +693,9 @@
     <string name="prefKidsTimerResetPasswordSummary">Contrasenya per a reiniciar/deshabilitar els paràmetres del temporizador.</string>
 
 
-    <string name="app_name_throttle_kids_running">Controlador - %1$s seg. restant</string>
-    <string name="app_name_throttle_kids_enabled">Controlador - temporitzador preparat</string>
-    <string name="app_name_throttle_kids_ended">Controlador - temporitzador finalitzat</string>
+    <string name="app_name_throttle_kids_running">%1$s seg. restant</string>
+    <string name="app_name_throttle_kids_enabled">Ttemporitzador preparat</string>
+    <string name="app_name_throttle_kids_ended">Temporitzador finalitzat</string>
 
     <string name="kidsTimer">Temporitzador</string>
     <string name="timerDialogTitle">Contrasenya del temporitzador</string>

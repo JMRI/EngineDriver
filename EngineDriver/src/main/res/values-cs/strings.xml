@@ -905,9 +905,9 @@
     <string name="prefKidsTimerResetPasswordSummary">Heslo pro obnovu/zákaz nastavení časovače.</string>
 
 
-    <string name="app_name_throttle_kids_running">Ovladač – %1$s zbývá vteřin</string>
-    <string name="app_name_throttle_kids_enabled">Ovladač – Časovač připraven</string>
-    <string name="app_name_throttle_kids_ended">Ovladač – Časovač skončil</string>
+    <string name="app_name_throttle_kids_running">%1$s zbývá vteřin</string>
+    <string name="app_name_throttle_kids_enabled">Časovač připraven</string>
+    <string name="app_name_throttle_kids_ended">Časovač skončil</string>
 
     <string name="kidsTimer">Časovač</string>
     <string name="timerDialogTitle">Heslo časovače</string>
