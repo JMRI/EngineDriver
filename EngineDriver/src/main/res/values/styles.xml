@@ -913,6 +913,7 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+
   <style name="edit_label_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:color">@color/primary_colorful</item>
@@ -922,6 +923,33 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">2</item>
   </style>
+
+  <style name="spinner_colorful" parent="Widget.AppCompat.Spinner">
+    <item name="android:ellipsize">none</item>
+  </style>
+
+  <style name="spinner_item_colorful" parent="Widget.AppCompat.TextView.SpinnerItem">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:color">@color/primary_colorful</item>
+    <item name="android:textColorHint">@color/hint_colorful</item>
+    <item name="android:shadowColor">#dbffffff</item>
+    <item name="android:ellipsize">none</item>
+  </style>
+
+  <style name="spinner_style_colorful" parent="Widget.AppCompat.ListView.DropDown">
+    <item name="android:background">@color/buttonFillGradiantCenter_colorful</item>
+    <item name="android:divider">@color/primary_colorful</item>
+    <item name="android:dividerHeight">1px</item>
+    <item name="android:scrollbars">none</item>
+  </style>
+
+  <style name="spinner_dropdown_item_style_colorful" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:color">@color/primary_colorful</item>
+    <item name="android:textColorHint">@color/hint_colorful</item>
+    <item name="android:shadowColor">#dbffffff</item>
+  </style>
+
   <style name="edit_func_style_colorful">
     <item name="android:textSize">18sp</item>
     <item name="android:singleLine">true</item>
@@ -942,6 +970,7 @@
     <item name="android:shadowRadius">1</item>
     <item name="android:background">@color/transparent</item>
   </style>
+
   <style name="list_id_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>

@@ -25,13 +25,6 @@
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:src="?attr/ed_icon" />
-
             <TextView
                 android:id="@+id/toolbar_icon_title"
                 android:layout_width="wrap_content"
@@ -41,7 +34,15 @@
                 android:layout_marginLeft="4dp"
                 android:text="Engine Driver"
                 android:textColor="#fff"
-                android:textSize="8dp" />
+                android:textSize="8dp"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="left"
+                android:src="?attr/ed_icon" />
+
         </LinearLayout>
 
         <LinearLayout

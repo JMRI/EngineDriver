@@ -180,7 +180,6 @@
 
         <EditText
             android:id="@+id/loco_address"
-            style="?attr/edit_label_style"
             android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/select_loco_label"
@@ -201,13 +200,14 @@
 
         <Spinner
             android:id="@+id/address_length"
-            style="?attr/edit_label_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/select_loco_label"
             android:layout_alignBottom="@id/loco_address"
             android:layout_toRightOf="@id/loco_address"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"
+            android:ellipsize = "none"
+            android:text="@string/prefDefaultAddressLengthDefaultValue" />
 
         <Button
             android:id="@+id/acquire_button"
