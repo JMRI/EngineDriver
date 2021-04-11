@@ -16,6 +16,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
+    <item android:id="@+id/throttle_switch_button"
+        android:icon="?attr/ed_throttle_switch_button"
+        android:title="@string/throttleSwitchAction"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item android:id="@+id/web_view_button"
+        android:icon="?attr/ed_web_view_button"
+        android:title="@string/webViewButtonBar"
+        android:visible="false"
+        app:showAsAction="always" />
     <item android:id="@+id/EsuMc2Knob_button"
         android:title="@string/EsuMc2KnobAction"
         android:visible="false"
@@ -24,22 +34,12 @@
         android:title="@string/EStop"
         android:visible="false"
         app:showAsAction="always" />
-    <item android:id="@+id/throttle_switch_button"
-        android:icon="?attr/ed_throttle_switch_button"
-        android:title="@string/throttleSwitchAction"
-        android:visible="false"
-        app:showAsAction="always" />
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction"
         android:visible="false"
         app:showAsAction="always" />
     <item android:id="@+id/power_layout_button"
         android:title="@string/PowerButtonBar"
-        android:visible="false"
-        app:showAsAction="always" />
-    <item android:id="@+id/web_view_button"
-        android:icon="?attr/ed_web_view_button"
-        android:title="@string/webViewButtonBar"
         android:visible="false"
         app:showAsAction="always" />
 

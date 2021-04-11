@@ -110,7 +110,50 @@
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">0.2</item>
     </style>
-    <style name="edit_func_style">
+
+  <style name="spinner" parent="Widget.AppCompat.Spinner">
+    <item name="android:ellipsize">none</item>
+    <item name="android:dropDownVerticalOffset">18dip</item>
+  </style>
+
+<!--  <style name="spinner_popup_window_style" parent="Widget.AppCompat.PopupWindow">
+      <item name="android:shadowColor">@color/solidWhite</item>
+      <item name="android:shadowRadius">60</item>
+  </style>
+
+  <style name="spinner_list_popup_window_style" parent="Widget.AppCompat.ListPopupWindow">
+      <item name="android:shadowColor">@color/solidWhite</item>
+      <item name="android:shadowRadius">60</item>
+  </style>
+
+  <style name="spinner_popup_menu_style" parent="Widget.AppCompat.PopupMenu">
+    <item name="android:shadowColor">@color/solidWhite</item>
+    <item name="android:shadowRadius">60</item>
+  </style>-->
+
+  <style name="spinner_item" parent="Widget.AppCompat.TextView.SpinnerItem">
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:color">@color/primary_text</item>
+    <item name="android:textColorHint">@color/hint_text</item>
+    <item name="android:shadowColor">#dbffffff</item>
+    <item name="android:ellipsize">none</item>
+  </style>
+
+  <style name="spinner_style" parent="Widget.AppCompat.ListView.DropDown">
+    <item name="android:background">@color/black</item>
+    <item name="android:divider">@color/divider</item>
+    <item name="android:dividerHeight">1px</item>
+    <item name="android:scrollbars">none</item>
+
+  </style>
+
+  <style name="spinner_dropdown_item_style" parent="Widget.AppCompat.DropDownItem.Spinner">
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:color">@color/primary_text</item>
+    <item name="android:textColorHint">@color/hint_text</item>
+  </style>
+
+  <style name="edit_func_style">
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:maxLength">2</item>
@@ -227,9 +270,9 @@
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
     <item name="android:shadowColor">#00000000</item>
-    <item name="android:shadowDx">0</item>
-    <item name="android:shadowDy">0</item>
-    <item name="android:shadowRadius">0</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
   </style>
 
   <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar">
@@ -260,7 +303,8 @@
   </style>
 
   <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
-    <item name="android:windowBackground">@color/transparent</item>
+<!--    <item name="android:windowBackground">@color/transparent</item>-->
+    <item name="android:windowBackground">@color/solidBlack</item>
     <item name="android:background">@color/solidBlack</item>
     <item name="android:panelColorBackground">@color/solidBlack</item>
     <item name="android:fullBright">@color/solidBlack</item>
@@ -978,11 +1022,10 @@
     <item name="android:background">@color/transparent</item>
   </style>
 
-  <!--  <style name="alertDialogStyle_colorful" parent="Theme.AppCompat.Light.Dialog.Alert"> -->
-  <style name="alertDialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
-    <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/windowBackground_colorful</item>
-    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
+  <style name="alertDialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+<!--    <item name="android:windowBackground">@color/transparent</item>-->
+    <item name="android:background">@color/dialogBackground_colorful</item>
+<!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
     <item name="android:textSize">18sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
@@ -992,9 +1035,9 @@
   </style>
 
   <style name="dialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
-    <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/transparent</item>
-    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
+<!--    <item name="android:windowBackground">@color/transparent</item>-->
+    <item name="android:background">@color/dialogBackground_colorful</item>
+<!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
     <item name="android:fullBright">@color/windowBackground_colorful</item>
     <item name="android:fullDark">@color/windowBackground_colorful</item>
     <item name="android:textSize">18sp</item>
@@ -1013,8 +1056,7 @@
     <item name="android:titleTextStyle">@style/actionBarStyle_colorful.TitleTextStyle</item>
   </style>
 
-  <style name="actionBarStyle_colorful.TitleTextStyle"
-      parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+  <style name="actionBarStyle_colorful.TitleTextStyle"  parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
     <item name="android:textSize">16sp</item>
     <item name="android:textStyle">normal</item>
   </style>
@@ -1025,14 +1067,13 @@
   </style>
 
   <style name="dialogTitle_colorful">
-    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:textColor">@color/solidWhite</item>
     <item name="android:textAppearance">@style/dialogTitleText_colorful</item>
   </style>
 
   <style name="dialogTitleText_colorful">
     <item name="android:textSize">18sp</item>
     <item name="android:textStyle">bold</item>
-    <item name="android:textColor">@color/primary_colorful</item>
   </style>
 
   <style name="dialogButtonBar_colorful">

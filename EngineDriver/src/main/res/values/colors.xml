@@ -26,11 +26,12 @@
     <color name="solidBlack">#ff000000</color>
     <color name="solidWhite">#ffffffff</color>
     <color name="holoBlue">#ff33b5e5</color>
-    <color name="divider">#ffc1c1c1</color>
+    <color name="divider">#4A4A4A</color>
 
     <color name="primary_text">#ffffffff</color>
     <color name="secondary_text">#D8D8D8</color>
     <color name="tertiary_text">#ffffffff</color>
+    <color name="hint_text">#747474</color>
     <color name="primaryDisabled">#ff888888</color>
     <color name="secondaryDisabled">#ff888888</color>
 
@@ -140,6 +141,7 @@
     <color name="shadow_colorful">#d1ffffff</color>
 
     <color name="windowBackground_colorful">#fffaf6</color>
+    <color name="dialogBackground_colorful">#f5971d</color>
 
     <color name="buttonStopFillGradiantLight_colorful">#f59590</color>
     <color name="buttonStopFillGradiantCenter_colorful">#f77a74</color>

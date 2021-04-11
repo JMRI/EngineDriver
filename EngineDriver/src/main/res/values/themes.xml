@@ -45,6 +45,15 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
+
+<!--        <item name="android:popupWindowStyle">@style/spinner_popup_window_style</item>
+        <item name="android:listPopupWindowStyle">@style/spinner_list_popup_window_style</item>
+        <item name="android:popupMenuStyle">@style/spinner_popup_menu_style</item>-->
+
         <item name="edit_func_style">@style/edit_func_style</item>
         <item name="list_item_style">@style/list_item_style</item>
         <item name="list_id_style">@style/list_id_style</item>
@@ -112,6 +121,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_black</item>
         <item name="list_id_style">@style/list_id_style_black</item>
@@ -180,6 +193,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
@@ -249,6 +266,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
