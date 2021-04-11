@@ -45,7 +45,7 @@
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
                 <ImageView
@@ -58,7 +58,7 @@
                 <LinearLayout
                     android:id="@+id/throttle_screen"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="1.0"
                     android:baselineAligned="false">
