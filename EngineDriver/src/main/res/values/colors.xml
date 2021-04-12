@@ -18,6 +18,7 @@
 
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
+    <color name="darkGrey">#252525</color>
     <color name="grey">#ff888888</color>
     <color name="lightGrey">#a6a6a6</color>
 

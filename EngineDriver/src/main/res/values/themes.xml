@@ -109,7 +109,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+        <item name="dialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -181,7 +183,7 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -254,7 +256,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -326,7 +330,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_colorful</item>
         <item name="android:titleTextStyle">@style/app_title_colorful</item>
         <item name="android:dialogTheme">@style/dialogStyle_colorful</item>
+        <item name="dialogTheme">@style/dialogStyle_colorful</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
 
         <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>
@@ -432,6 +438,9 @@
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
+
+        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <!--        <item name="android:colorBackgroundFloating" tools:targetApi="23">@color/darkGrey</item>-->
     </style>
 
 

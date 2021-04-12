@@ -290,10 +290,10 @@
   </style>
 
   <style name="dialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
-    <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:background">@color/solidBlack</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:panelColorBackground">@color/solidBlack</item>
+    <item name="android:windowBackground">@color/darkGrey</item>
+    <item name="android:background">@color/darkGrey</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:panelColorBackground">@color/darkGrey</item>
     <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
     <item name="android:editTextColor">@color/solidWhite</item>
     <item name="android:textColorPrimary">@color/solidWhite</item>
@@ -302,14 +302,12 @@
     <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item>
   </style>
 
-  <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog">
+  <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog.Alert">
 <!--    <item name="android:windowBackground">@color/transparent</item>-->
-    <item name="android:windowBackground">@color/solidBlack</item>
-    <item name="android:background">@color/solidBlack</item>
-    <item name="android:panelColorBackground">@color/solidBlack</item>
-    <item name="android:fullBright">@color/solidBlack</item>
-    <item name="android:fullDark">@color/solidBlack</item>
-    <item name="android:textSize">18sp</item>
+<!--    <item name="android:windowBackground">@color/solidBlack</item>-->
+    <item name="android:background">@color/darkGrey</item>
+    <item name="android:panelColorBackground">@color/darkGrey</item>
+    <item name="android:textSize">16sp</item>
     <item name="android:textColorAlertDialogListItem">@color/solidWhite</item>
     <item name="android:textColorPrimary">@color/solidWhite</item>
     <item name="android:textColor">@color/solidWhite</item>
@@ -324,10 +322,12 @@
   <style name="dialogTitle_black">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:textAppearance">@style/dialogTitleText_black</item>
+    <item name="android:background">@color/darkGrey</item>
+    <item name="android:textSize">22sp</item>
   </style>
 
   <style name="dialogTitleText_black">
-    <item name="android:textSize">18sp</item>
+    <item name="android:textSize">22sp</item>
     <item name="android:textStyle">bold</item>
     <item name="android:textColor">@color/solidWhite</item>
   </style>
@@ -1026,7 +1026,7 @@
 <!--    <item name="android:windowBackground">@color/transparent</item>-->
     <item name="android:background">@color/dialogBackground_colorful</item>
 <!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
-    <item name="android:textSize">18sp</item>
+    <item name="android:textSize">16sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
@@ -1040,7 +1040,7 @@
 <!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
     <item name="android:fullBright">@color/windowBackground_colorful</item>
     <item name="android:fullDark">@color/windowBackground_colorful</item>
-    <item name="android:textSize">18sp</item>
+    <item name="android:textSize">16sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
@@ -1057,18 +1057,20 @@
   </style>
 
   <style name="actionBarStyle_colorful.TitleTextStyle"  parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-    <item name="android:textSize">16sp</item>
+    <item name="android:textSize">22sp</item>
     <item name="android:textStyle">normal</item>
   </style>
 
   <style name="windowTitleBackground_colorful">
     <item name="android:background">@color/windowBackground_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:textSize">22sp</item>
   </style>
 
   <style name="dialogTitle_colorful">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:textAppearance">@style/dialogTitleText_colorful</item>
+    <item name="android:textSize">22sp</item>
   </style>
 
   <style name="dialogTitleText_colorful">
