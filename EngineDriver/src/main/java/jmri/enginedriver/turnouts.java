@@ -478,14 +478,16 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
-
-        mainapp.applyTheme(this);
 
         setContentView(R.layout.turnouts);
 
@@ -727,6 +729,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "turnouts: onResume");
+        mainapp.applyTheme(this);
+
         super.onResume();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();

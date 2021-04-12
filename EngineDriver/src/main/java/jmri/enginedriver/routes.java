@@ -319,15 +319,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     public void onCreate(Bundle savedInstanceState) {
         Log.d("Engine_Driver", "routes: onCreate");
 
-        super.onCreate(savedInstanceState);
-
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
 
-        mainapp.applyTheme(this);
 
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
@@ -437,6 +438,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @Override
     public void onResume() {
         Log.d("Engine_Driver", "routes: onResume");
+
+        mainapp.applyTheme(this);
 
         super.onResume();
         if (mainapp.isForcingFinish()) {     //expedite
@@ -678,7 +681,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+        Log.d("Engine_Driver", "routes: gestureMove action " + event.getAction());
         if (gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
@@ -704,7 +707,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        Log.d("Engine_Driver", "routes: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress) {
             float deltaX = (event.getX() - gestureStartX);
@@ -765,6 +768,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
+            Log.d("Engine_Driver", "routes: Runnable");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;

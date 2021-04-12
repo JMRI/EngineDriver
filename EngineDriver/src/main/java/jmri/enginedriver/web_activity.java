@@ -302,14 +302,16 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d("Engine_Driver", "web_activity.onCreate()");
-        super.onCreate(savedInstanceState);
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+
         if (mainapp.isForcingFinish()) {        // expedite
             return;
         }
-        mainapp.applyTheme(this);
 
         setContentView(R.layout.web_activity);
 
@@ -428,6 +430,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @Override
     public void onResume() {
         Log.d("Engine_Driver", "web_activity.onResume() called");
+        mainapp.applyTheme(this);
+
         super.onResume();
 
         setActivityTitle();
