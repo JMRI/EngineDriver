@@ -125,7 +125,14 @@ public class VerticalSeekBar extends SeekBar {
             width = getWidth();
             paddingLeft = getPaddingLeft();
             paddingRight = getPaddingRight();
-            gridLeft = 30;
+
+            int startSize = 10;
+            int additionalPadding = 30;
+            if (width < 150 ) {
+                startSize = 2;
+                additionalPadding = 15;
+            }
+            gridLeft = additionalPadding;
 //            gridTop = paddingRight;
 //            gridRight = width - 30;
             gridMiddle = width / 2;
@@ -135,13 +142,13 @@ public class VerticalSeekBar extends SeekBar {
                 case TICK_TYPE_0_100:
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - 30) / (steps * steps);
+                    sizeIncrease = (gridMiddle - gridLeft - additionalPadding) / (steps * steps);
 
                     for (int i = -1; i < steps; i++) {
                         j = (steps - i);
                         d = gridBottom + i * tickSpacing;
-                        l = gridMiddle - 10 - sizeIncrease * j * j;
-                        r = gridMiddle + 10 + sizeIncrease * j * j;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
                     break;
@@ -149,21 +156,21 @@ public class VerticalSeekBar extends SeekBar {
                     int tempSteps = steps/2;
                     gridBottom = height/2 - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - 30) / (tempSteps * tempSteps);
+                    sizeIncrease = (gridMiddle - gridLeft - additionalPadding) / (tempSteps * tempSteps);
 
                     for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + (height/2) + (i * tickSpacing);
-                        l = gridMiddle - 10 - (sizeIncrease) * j * j;
-                        r = gridMiddle + 10 + (sizeIncrease) * j * j;
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 
                     for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
-                        l = gridMiddle - 10 - (sizeIncrease) * j * j;
-                        r = gridMiddle + 10 + (sizeIncrease) * j * j;
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 

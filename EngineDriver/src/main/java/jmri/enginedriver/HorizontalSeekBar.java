@@ -100,16 +100,22 @@ public class HorizontalSeekBar extends SeekBar {
             height = getHeight();
             width = getWidth();
 
+            int additionalPadding = 30;
+            int startSize = 10;
+            if (height < 100 ) {
+                startSize = 2;
+                additionalPadding = 15;
+            }
 
             gridMiddle = height / 2;
 
             tickSpacing = (width - (getPaddingLeft()*2) ) / (steps - 1);
-            sizeIncrease = (gridMiddle - getPaddingTop() - 30) / (steps * steps);
+            sizeIncrease = (gridMiddle - getPaddingTop() - additionalPadding) / (steps * steps);
 
             for (int i = -1; i < steps; i++) {
                 d = getPaddingLeft() + i * tickSpacing;
-                l = gridMiddle - 10 - sizeIncrease * i * i;
-                r = gridMiddle + 10 + sizeIncrease * i * i;
+                l = gridMiddle - startSize - sizeIncrease * i * i;
+                r = gridMiddle + startSize + sizeIncrease * i * i;
                 c.drawLine(d, l, d, r, tickPaint);   // x, y, end_x, end_y
             }
         }

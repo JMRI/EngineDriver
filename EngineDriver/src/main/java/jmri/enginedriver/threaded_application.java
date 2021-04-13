@@ -3132,7 +3132,13 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.web_view_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefWebViewButton", false)) {
+
+        String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
+        String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
+
+
+        if ( (prefs.getBoolean("prefWebViewButton", false))
+        && (!webViewLocation.equals(defaultWebViewLocation))){
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
