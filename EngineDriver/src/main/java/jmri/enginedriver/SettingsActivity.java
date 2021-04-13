@@ -206,9 +206,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
-        if (SAMenu != null) {
-            mainapp.displayEStop(SAMenu);
-        }
+//        if (SAMenu != null) {
+//            mainapp.displayEStop(SAMenu);
+//        }
 
 //        mainapp.applyTheme(this,true);
 
