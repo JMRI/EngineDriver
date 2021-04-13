@@ -676,8 +676,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.web_msg_handler != null)
-            mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        if (mainapp.routes_msg_handler != null)
+            mainapp.routes_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
     }
 
     public void gestureMove(MotionEvent event) {

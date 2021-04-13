@@ -4297,6 +4297,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint({"Recycle", "SetJavaScriptEnabled","ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mainapp = (threaded_application) this.getApplication();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
@@ -4312,16 +4316,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        mainapp = (threaded_application) this.getApplication();
-
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
             return;
         }
 
-        mainapp.applyTheme(this);
 
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
@@ -5658,7 +5658,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // touch events outside the GestureOverlayView get caught here
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // Log.d("Engine_Driver", "onTouch Title action " + event.getAction());
+//        Log.d("Engine_Driver", "onTouchEvent action: " + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 gestureStart(event);
@@ -5677,13 +5677,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+//        Log.d("Engine_Driver", "dispatchTouchEvent:");
         // if screen is locked
         if (isScreenLocked) {
             // check if we have a swipe up
             if (ev.getAction() == ACTION_DOWN) {
+//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_DOWN" );
                 gestureStart(ev);
             }
             if (ev.getAction() == ACTION_UP) {
+//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_UP" );
                 gestureEnd(ev);
             }
             // otherwise ignore the event
@@ -5717,14 +5720,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = toolbar.getHeight();
-//        if (prefFullScreenSwipeArea) {  // only allow left-right swipe in the tool bar
-//            if (gestureStartY > toolbarHeight) {   // not in the toolbar area
-//                return;
-//            }
-//        }
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {
@@ -5747,12 +5745,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.throttle_msg_handler != null)
+        if (mainapp.throttle_msg_handler != null) {
+//            Log.d("Engine_Driver","gestureStart start gesture timer");
             mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        } else {
+            Log.d("Engine_Driver","gestureStart Can't start gesture timer");
+        }
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+//        Log.d("Engine_Driver", "gestureMove action " + event.getAction() + " eventTime: " + event.getEventTime() );
         if (gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
@@ -5765,20 +5767,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+//                Log.d("Engine_Driver", "gestureMove gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
             }
+//            else {
+//                Log.d("Engine_Driver", "gestureMove event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
+//                Log.d("Engine_Driver", "gestureMove event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
+//            }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
+//                Log.d("Engine_Driver","gestureSMove restart gesture timer");
                 mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress) {
             float deltaX = (event.getX() - gestureStartX);
@@ -5877,6 +5884,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void gestureCancel(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureEnd gestureCancel");
         if (mainapp.throttle_msg_handler != null)
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
@@ -5884,6 +5892,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void gestureFailed(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureEnd gestureFailed");
         // end the gesture
         gestureInProgress = false;
         gestureFailed = true;
@@ -5897,12 +5906,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
+//            Log.d("Engine_Driver", "gestureStopped");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
                 gestureFailed = true;
                 // create a MOVE event to trigger the underlying control
                 if (vThrotScr != null) {
+//                    Log.d("Engine_Driver", "gestureStopped vThrotScr != null");
                     // use uptimeMillis() rather than 0 for time in
                     // MotionEvent.obtain() call in throttle gestureStopped:
                     MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,

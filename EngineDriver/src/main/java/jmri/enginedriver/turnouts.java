@@ -1377,8 +1377,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.web_msg_handler != null)
-            mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        if (mainapp.turnouts_msg_handler != null)
+            mainapp.turnouts_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
     }
 
     public void gestureMove(MotionEvent event) {
