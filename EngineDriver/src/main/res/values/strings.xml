@@ -1099,6 +1099,9 @@
     <string name="prefFullScreenSwipeAreaTitle">Disable Full Screen Swipe Area</string>
     <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
 
+    <string name="prefLeftRightSwipePreferencesTitle">Left/Right Swipe Preferences</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Options for swipes to change screens</string>
+
     <!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
 <!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->
 <!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->

@@ -53,12 +53,43 @@
             android:title="@string/prefLocaleTitle"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
-            android:key="prefFullScreenSwipeArea"
-            android:summary="@string/prefFullScreenSwipeAreaSummary"
-            android:title="@string/prefFullScreenSwipeAreaTitle"
-            android:layout="@layout/checkbox_no_icon" />
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefLeftRightSwipePreferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefLeftRightSwipePreferencesSummary"
+            android:title="@string/prefLeftRightSwipePreferencesTitle">
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
+                android:key="prefFullScreenSwipeArea"
+                android:summary="@string/prefFullScreenSwipeAreaSummary"
+                android:title="@string/prefFullScreenSwipeAreaTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
+                android:key="swipe_through_web_preference"
+                android:summary="@string/prefSwipeThroughWebSummary"
+                android:title="@string/prefSwipeThroughWebTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
+                android:key="swipe_through_turnouts_preference"
+                android:summary="@string/prefSwipeThroughTurnoutsSummary"
+                android:title="@string/prefSwipeThroughTurnoutsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
+                android:key="swipe_through_routes_preference"
+                android:summary="@string/prefSwipeThroughRoutesSummary"
+                android:title="@string/prefSwipeThroughRoutesTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+        </PreferenceScreen>
 
     </PreferenceCategory>
 
@@ -1410,13 +1441,6 @@
             android:maxLines="1"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
-            android:key="swipe_through_web_preference"
-            android:summary="@string/prefSwipeThroughWebSummary"
-            android:title="@string/prefSwipeThroughWebTitle"
-            android:layout="@layout/checkbox_no_icon" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1453,20 +1477,6 @@
             android:key="HideIfNoUserNamePreference"
             android:summary="@string/prefHideIfNoUserNameSummary"
             android:title="@string/prefHideIfNoUserNameTitle"
-            android:layout="@layout/checkbox_no_icon" />
-
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
-            android:key="swipe_through_turnouts_preference"
-            android:summary="@string/prefSwipeThroughTurnoutsSummary"
-            android:title="@string/prefSwipeThroughTurnoutsTitle"
-            android:layout="@layout/checkbox_no_icon" />
-
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
-            android:key="swipe_through_routes_preference"
-            android:summary="@string/prefSwipeThroughRoutesSummary"
-            android:title="@string/prefSwipeThroughRoutesTitle"
             android:layout="@layout/checkbox_no_icon" />
 
     </PreferenceCategory>
