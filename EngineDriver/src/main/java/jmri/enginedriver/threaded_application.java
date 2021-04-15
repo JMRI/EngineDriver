@@ -297,6 +297,8 @@ public class threaded_application extends Application {
     //    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
 
+    public boolean prefFullScreenSwipeArea = false;
+
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
@@ -3591,8 +3593,17 @@ public class threaded_application extends Application {
             toolbar.setTitle("");
             TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             tvTitle.setText(title);
+
             TextView tvIconTitle = (TextView) toolbar.findViewById(R.id.toolbar_icon_title);
             tvIconTitle.setText(iconTitle);
+
+            TextView tvIconHelp = (TextView) toolbar.findViewById(R.id.toolbar_icon_help);
+            if (!prefFullScreenSwipeArea) {
+                tvIconHelp.setText("");
+            } else {
+                tvIconHelp.setText("  ◄ ►");
+            }
+
             TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
             mClock.setText(clockText);
         }

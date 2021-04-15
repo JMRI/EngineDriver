@@ -1145,6 +1145,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
                 if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveModeHideToolbar", false);
                 }
 
                 if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection

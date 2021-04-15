@@ -79,11 +79,11 @@
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-
         <item name="ed_estop_button">@drawable/estop</item>
-
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
         <item name="ed_power_red_button">@drawable/power_red</item>
@@ -155,11 +155,11 @@
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -227,11 +227,11 @@
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@color/black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -302,11 +302,11 @@
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -385,11 +385,11 @@
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_colorful</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-
         <item name="ed_estop_button">@drawable/estop</item>
-
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
         <item name="ed_power_red_button">@drawable/power_red</item>

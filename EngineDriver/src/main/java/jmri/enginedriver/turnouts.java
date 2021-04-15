@@ -130,7 +130,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     int turnoutSource = 0;
 
     private Toolbar toolbar;
-    private boolean prefFullScreenSwipeArea = false;
     private int toolbarHeight;
 
     protected View turnoutsView;
@@ -706,7 +705,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mVelocityTracker = VelocityTracker.obtain();
         }
 
-        prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
     } // end onCreate
@@ -1367,7 +1366,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = toolbar.getHeight();
-        if (prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }

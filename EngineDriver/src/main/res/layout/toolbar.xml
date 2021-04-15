@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/solidBlack"
+    android:background="?attr/ed_toolbar_background"
     app:navigationContentDescription="Overflow Menu"
     app:contentInsetLeft="5dp"
     app:contentInsetStart="5dp"
@@ -20,7 +20,7 @@
         <LinearLayout
             android:id="@+id/toolbar_icon_layout"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="56dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:orientation="vertical">
@@ -42,6 +42,17 @@
                 android:layout_height="32dp"
                 android:layout_gravity="left"
                 android:src="?attr/ed_icon" />
+
+            <TextView
+                android:id="@+id/toolbar_icon_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:text=""
+                android:textColor="#fff"
+                android:textSize="8dp" />
 
         </LinearLayout>
 

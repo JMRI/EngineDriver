@@ -353,6 +353,15 @@
                 android:title="@string/prefThrottleViewImmersiveModeTitle"
                 android:layout="@layout/checkbox_no_icon" />
 
+            <CheckBoxPreference
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:defaultValue="@bool/prefThrottleViewImmersiveModeHideToolbarDefaultValue"
+                android:key="prefThrottleViewImmersiveModeHideToolbar"
+                android:summary="@string/prefThrottleViewImmersiveModeHideToolbarSummary"
+                android:title="@string/prefThrottleViewImmersiveModeHideToolbarTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <ListPreference
                 android:defaultValue="@string/prefSwipeUpOptionDefaultValue"
                 android:entries="@array/prefSwipeUpOptionsEntries"

@@ -79,7 +79,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private Menu RMenu;
 
     private Toolbar toolbar;
-    private boolean prefFullScreenSwipeArea = false;
     private int toolbarHeight;
 
     protected View routesView;
@@ -429,7 +428,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             mVelocityTracker = VelocityTracker.obtain();
         }
 
-        prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
     } // end onCreate
@@ -665,7 +664,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = toolbar.getHeight();
-        if (prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }

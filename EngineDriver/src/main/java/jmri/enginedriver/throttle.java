@@ -444,6 +444,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected String prefThrottleScreenType;
 
     protected boolean prefThrottleViewImmersiveMode = false;
+    protected boolean prefThrottleViewImmersiveModeHideToolbar = false;
     protected int prefNumberOfDefaultFunctionLabels = 28;
     protected boolean prefDecreaseLocoNumberHeight = false;
     protected boolean pref_increase_slider_height_preference = false;
@@ -558,7 +559,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
     protected Toolbar toolbar;
-    private boolean prefFullScreenSwipeArea = false;
     private int toolbarHeight;
 
     private enum EsuMc2Led {
@@ -1143,6 +1143,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 );
             }
+            if (prefThrottleViewImmersiveModeHideToolbar) {
+                toolbar.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -1153,6 +1156,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+
+            if (prefThrottleViewImmersiveModeHideToolbar) {
+                toolbar.setVisibility(View.VISIBLE);
             }
             webView.invalidate();
         }
@@ -1331,7 +1338,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // increase the web view height if the preference is set
         prefIncreaseWebViewSize = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
 
-        prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode",
+                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
+                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
         prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
@@ -1407,7 +1417,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         getKidsTimerPrefs();
 
-        prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
     }
@@ -5799,8 +5809,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (absDeltaX >= absDeltaY) {
 
                     // check if only allow left-right swipe in the tool bar
-                    if ((!prefFullScreenSwipeArea) // full screen swipe allowed
-                        || ((prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)) ) {   // not in the toolbar area
+                    if ((!mainapp.prefFullScreenSwipeArea) // full screen swipe allowed
+                        || ((mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)) ) {   // not in the toolbar area
 
                         // swipe left/right
                         if (!isScreenLocked) {
