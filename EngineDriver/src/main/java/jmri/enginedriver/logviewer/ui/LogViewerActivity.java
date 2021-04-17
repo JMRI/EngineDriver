@@ -1,8 +1,6 @@
 package jmri.enginedriver.logviewer.ui;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -10,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -37,19 +39,15 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 //import jmri.enginedriver.logviewer.R;
 
-public class LogViewerActivity extends ListActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    private LogStringAdaptor adaptor = null;
+public class LogViewerActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    private ArrayAdapter adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
 
-    public void setTitleToIncludeThrotName() {
-        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//        setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
-//                prefs.getString("throttle_name_preference", defaultName)));
-    }
+    private Menu AMenu;
+    private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +59,25 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         mainapp.applyTheme(this);
         setContentView(R.layout.log_main);
 
-        setTitleToIncludeThrotName();
+        final ListView listView = findViewById(android.R.id.list);
 
-        ArrayList<String> logarray = new ArrayList<>();
-        adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
+        ArrayList<String> logArray = new ArrayList<>();
+        adaptor = new ArrayAdapter(this, R.layout.logitem, logArray);
 
-        setListAdapter(adaptor);
+        listView.setAdapter(adaptor);
+
+        listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
+                TextView logItem = (TextView) view;
+                String logItemText = logItem.getText().toString();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
+                String text = ((TextView) view).getText().toString();
+                builder.setMessage(text);
+                builder.show();
+            }
+        } );
 
         //Set the buttons
         Button closeButton = findViewById(R.id.logviewer_button_close);
@@ -85,7 +96,23 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         logReaderTask = new LogReaderTask();
 
         logReaderTask.execute();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
+
+            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+            String name = prefs.getString("throttle_name_preference", "");
+
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name) + " | " + name,
+                    getApplicationContext().getResources().getString(R.string.app_name_log_viewer),
+                    "");
+        }
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -198,18 +225,6 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         }
     }
 
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
-        String text = ((TextView) v).getText().toString();
-
-        builder.setMessage(text);
-
-        builder.show();
-    }
 
     private class LogStringAdaptor extends ArrayAdapter<String> {
         private List<String> objects;

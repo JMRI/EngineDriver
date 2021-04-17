@@ -3606,6 +3606,41 @@ public class threaded_application extends Application {
 
             TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
             mClock.setText(clockText);
+
+//            adjustToolbarButtonSpacing(toolbar);
         }
     }
+
+//    public void adjustToolbarButtonSpacing(Toolbar toolbar){
+//
+//        // Get the ChildCount of your Toolbar
+//        int childCount = toolbar.getChildCount();
+//
+//        // Loop through the child Items
+//        for(int i = 0; i < childCount; i++){
+//            // Get the item at the current index
+//            View childView = toolbar.getChildAt(i);
+//            // If its a ViewGroup
+//            if(childView instanceof ViewGroup){
+//                // Get the child count of this view group
+//                int innerChildCount = ((ViewGroup) childView).getChildCount();
+//                // Create layout params for the ActionMenuView
+////                ActionMenuView.LayoutParams params = new ActionMenuView.LayoutParams(80, ActionMenuView.LayoutParams.WRAP_CONTENT);
+//                ActionMenuView.LayoutParams params;
+//                // Loop through the children
+//                for(int j = 0; j < innerChildCount; j++){
+//                    View grandChild = ((ViewGroup) childView).getChildAt(j);
+//                    if(grandChild instanceof ActionMenuItemView){
+//                        // set the layout parameters on each View
+//                        params = (ActionMenuView.LayoutParams) grandChild.getLayoutParams();
+//                        params.width = grandChild.getWidth() + 100;
+////                        params.rightMargin = params.rightMargin + 180;
+//                        grandChild.setLayoutParams(params);
+//                        grandChild.invalidate();
+//                    }
+//                }
+//            }
+//            childView.invalidate();
+//        }
+//    }
 }

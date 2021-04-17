@@ -54,6 +54,7 @@
     <string name="app_name_ConsistEdit">Consist Edit</string>
     <string name="app_name_ConsistLightsEdit">Consist Lights</string>
     <string name="app_name_gamepad_test">Gamepad Test</string>
+    <string name="app_name_log_viewer">Log Viewer</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
