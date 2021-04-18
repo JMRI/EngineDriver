@@ -127,14 +127,14 @@ public class VerticalSeekBar extends SeekBar {
             paddingRight = getPaddingRight();
 
             int startSize = 10;
-            int additionalPadding = 30;
-            if (width < 150 ) {
+            float endSize = width/2 - 30;
+            if (width < 150) {
                 startSize = 2;
-                additionalPadding = 15;
+                endSize = width/2 - 15;
+            } else if ( (endSize) > startSize * 9) {
+                endSize = startSize * 9;
             }
-            gridLeft = additionalPadding;
-//            gridTop = paddingRight;
-//            gridRight = width - 30;
+
             gridMiddle = width / 2;
 
             switch (tickMarkType) {
@@ -142,7 +142,7 @@ public class VerticalSeekBar extends SeekBar {
                 case TICK_TYPE_0_100:
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - additionalPadding) / (steps * steps);
+                    sizeIncrease = endSize / (steps * steps);
 
                     for (int i = -1; i < steps; i++) {
                         j = (steps - i);
@@ -156,7 +156,7 @@ public class VerticalSeekBar extends SeekBar {
                     int tempSteps = steps/2;
                     gridBottom = height/2 - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - additionalPadding) / (tempSteps * tempSteps);
+                    sizeIncrease = endSize / (tempSteps * tempSteps);
 
                     for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);

@@ -157,6 +157,8 @@
     <color name="buttonFillGradiantLight_colorful">#f1cea1</color>
     <color name="buttonFillGradiantCenter_colorful">#f2b465</color>
     <color name="buttonFillGradiantDark_colorful">#f5971d</color>
+    <color name="buttonFillGradiantVeryDark_colorful">#DD660A</color>
+    <color name="buttonFillGradiantUltraDark_colorful">#954100</color>
     <color name="buttonFillGradiantLight2_colorful">#a1d3f1</color>
     <color name="buttonFillGradiantCenter2_colorful">#71c2f2</color>
     <color name="buttonFillGradiantDark2_colorful">#1ca0ef</color>

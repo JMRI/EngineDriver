@@ -16,10 +16,10 @@
             <!-- <solid android:color="@color/buttonFill_colorful" /> -->
             <gradient
                 android:angle="225"
-                android:centerX="5%"
-                android:startColor="@color/buttonFillGradiantLight_colorful"
-                android:centerColor="@color/buttonFillGradiantCenter_colorful"
-                android:endColor="@color/buttonFillGradiantDark_colorful"
+                android:centerX="30%"
+                android:startColor="@color/buttonFillGradiantDark_colorful"
+                android:centerColor="@color/buttonFillGradiantVeryDark_colorful"
+                android:endColor="@color/buttonFillGradiantUltraDark_colorful"
                 android:type="linear"
                 />
         </shape>

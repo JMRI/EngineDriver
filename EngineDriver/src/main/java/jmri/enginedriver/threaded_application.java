@@ -3613,6 +3613,7 @@ public class threaded_application extends Application {
     }
 
 //    public void adjustToolbarButtonSpacing(Toolbar toolbar){
+//        Log.d("Engine_Driver", "ta: adjustToolbarButtonSpacing");
 //
 //        // Get the ChildCount of your Toolbar
 //        int childCount = toolbar.getChildCount();
@@ -3632,16 +3633,35 @@ public class threaded_application extends Application {
 //                for(int j = 0; j < innerChildCount; j++){
 //                    View grandChild = ((ViewGroup) childView).getChildAt(j);
 //                    if(grandChild instanceof ActionMenuItemView){
-//                        // set the layout parameters on each View
-//                        params = (ActionMenuView.LayoutParams) grandChild.getLayoutParams();
-//                        params.width = grandChild.getWidth() + 100;
-////                        params.rightMargin = params.rightMargin + 180;
-//                        grandChild.setLayoutParams(params);
-//                        grandChild.invalidate();
+//                        setToolbarItemSize(grandChild);
+//                    } else {
+//                        if(grandChild instanceof ViewGroup) {
+//                            innerChildCount = ((ViewGroup) grandChild).getChildCount();
+//                            // Loop through the children
+//                            for (int k = 0; k < innerChildCount; k++) {
+//                                View greatGrandChild = ((ViewGroup) grandChild).getChildAt(k);
+//                                if (greatGrandChild instanceof ActionMenuItemView) {
+//                                    setToolbarItemSize(greatGrandChild);
+//                                }
+//                            }
+//                        }
 //                    }
 //                }
+//                childView.invalidate();
 //            }
-//            childView.invalidate();
+//        }
+//    }
+//
+//    private void setToolbarItemSize(View actionMenuItemView) {
+//        ActionMenuView.LayoutParams params;
+//
+//        if(actionMenuItemView instanceof ActionMenuItemView) {
+//            // set the layout parameters on each View
+//            params = (ActionMenuView.LayoutParams) actionMenuItemView.getLayoutParams();
+//            params.width = actionMenuItemView.getWidth() + 100;
+////                              params.rightMargin = params.rightMargin + 180;
+//            actionMenuItemView.setLayoutParams(params);
+//            actionMenuItemView.invalidate();
 //        }
 //    }
 }
