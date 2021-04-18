@@ -2977,6 +2977,7 @@ public class threaded_application extends Application {
     public void applyTheme(Activity activity, boolean isPreferences) {
         int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
+        Log.d("Engine_Driver", "applyTheme: " + selectedTheme);
         theme = activity.getTheme();
 
     }

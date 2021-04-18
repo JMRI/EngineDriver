@@ -332,7 +332,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
         mainapp.routes_msg_handler = new routes_handler();
-//        myGesture = new GestureDetector(this);
 
         routesFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
@@ -609,7 +608,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     //handle return from menu items
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Engine_Driver", "routes: onActivityResult");
         //since we always do the same action no need to distinguish between requests
         refresh_route_view();
     }

@@ -935,6 +935,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //handle return from menu items
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests
         refresh_turnout_view();
