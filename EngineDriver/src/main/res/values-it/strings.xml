@@ -787,5 +787,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>
     <string name="prefVerticalStopButtonMarginSummary">Numero di pixel per compensare margine del pulsante di arresto dai pulsanti di velocità e inferiore dello schermo.</string>
     <string name="prefVerticalStopButtonMarginTitle">Pulsante di arresto margini verticali</string>
+    <string name="app_name_log_viewer">Log Viewer</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Swipe attraverso il web?</string>
+    <string name="prefSwipeThroughWebSummary">Includi schermata Web quando scorrendo tra le schermate.</string>
 
 </resources>

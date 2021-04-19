@@ -843,4 +843,9 @@
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Fecha Hora para cada entrada en la pantalla de registro.</string>
     <string name="prefVerticalStopButtonMarginSummary">Número de píxeles a compensar los márgenes del botón de parada de los botones de velocidad e inferior de la pantalla.</string>
     <string name="prefVerticalStopButtonMarginTitle">El botón de paro márgenes verticales</string>
+    <string name="app_name_log_viewer">Visor de registro</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Deslizar a través de la Web?</string>
+    <string name="prefSwipeThroughWebSummary">Incluir pantalla Web cuando deslizar entre las pantallas.</string>
 </resources>

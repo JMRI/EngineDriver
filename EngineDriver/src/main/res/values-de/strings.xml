@@ -855,5 +855,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Zeigen Datum Zeit für jeden Eintrag auf dem Log-Bildschirm.</string>
     <string name="prefVerticalStopButtonMarginTitle">Stopp-Taste Vertikale Ränder</string>
     <string name="prefVerticalStopButtonMarginSummary">Anzahl der Pixel zu kompensieren Ränder der Stopp-Taste aus den Tasten und Geschwindigkeit unteren Teil des Bildschirms.</string>
+    <string name="app_name_log_viewer">Eintrags Ansicht</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Swipe durch Web?</string>
+    <string name="prefSwipeThroughWebSummary">Fügen Sie Web-Bildschirm, wenn zwischen den Bildschirmen klauen.</string>
 
 </resources>

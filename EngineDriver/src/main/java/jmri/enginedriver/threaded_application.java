@@ -3646,6 +3646,7 @@ public class threaded_application extends Application {
 //                            }
 //                        }
 //                    }
+//                    grandChild.invalidate();
 //                }
 //                childView.invalidate();
 //            }

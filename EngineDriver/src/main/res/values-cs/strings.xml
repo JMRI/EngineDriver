@@ -1059,5 +1059,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Ukázat Datum Čas pro každou položku na obrazovce protokolu.</string>
     <string name="prefVerticalStopButtonMarginTitle">Tlačítko Stop vertikální okraje</string>
     <string name="prefVerticalStopButtonMarginSummary">Počet pixelů na vyrovnání marže tlačítko zastavení z rychlosti tlačítky a dolní části obrazovky.</string>
+    <string name="app_name_log_viewer">Log Viewer</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Přejeďte přes web?</string>
+    <string name="prefSwipeThroughWebSummary">Zahrnout obrazovku webového při umisťování mezi obrazovkami.</string>
 
 </resources>

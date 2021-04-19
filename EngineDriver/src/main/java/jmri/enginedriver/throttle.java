@@ -5375,7 +5375,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
-//        mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
+
+//        mainapp.adjustToolbarButtonSpacing(toolbar);
 
         return super.onCreateOptionsMenu(menu);
     }

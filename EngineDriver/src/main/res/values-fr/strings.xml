@@ -873,5 +873,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Afficher horodatage pour toutes les entrees de la logdans la log</string>
     <string name="prefVerticalStopButtonMarginSummary">Nb de pixels d ecart entre bouton STOP, regulateur et bas d ecran</string>
     <string name="prefVerticalStopButtonMarginTitle">Marges verticales pour bouton STOP</string>
+    <string name="app_name_log_viewer">log Viewer</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Feuilletez Web?</string>
+    <string name="prefSwipeThroughWebSummary">Inclure l\'écran Web lorsque glisser entre les écrans.</string>
 
 </resources>

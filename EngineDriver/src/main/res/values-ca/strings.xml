@@ -853,5 +853,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Hora per a cada entrada a la pantalla de registre.</string>
     <string name="prefVerticalStopButtonMarginSummary">Nombre de píxels a compensar els marges de el botó de parada dels botons de velocitat i inferior de la pantalla.</string>
     <string name="prefVerticalStopButtonMarginTitle">El botó d\'atur marges verticals</string>
+    <string name="app_name_log_viewer">Visor de registre</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Lliscar a través del web?</string>
+    <string name="prefSwipeThroughWebSummary">Incloure pantalla Web quan lliscar entre les pantalles.</string>
 
 </resources>

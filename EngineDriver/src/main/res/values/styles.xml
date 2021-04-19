@@ -1085,8 +1085,8 @@
   <style name="ActionButton" parent="@android:style/Widget.ActionButton">
     <item name="android:minWidth">0dip</item>
     <item name="android:minHeight">0dip</item>
-    <item name="android:paddingLeft">0dip</item>
-    <item name="android:paddingRight">0dip</item>
+    <item name="android:paddingLeft">2dip</item>
+    <item name="android:paddingRight">2dip</item>
     <item name="android:scaleX">0.9</item>
     <item name="android:scaleY">0.9</item>
     <item name="android:width">38dp</item>
