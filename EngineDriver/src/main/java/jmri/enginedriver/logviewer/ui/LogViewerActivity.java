@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import jmri.enginedriver.R;
@@ -62,7 +63,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         final ListView listView = findViewById(android.R.id.list);
 
         ArrayList<String> logArray = new ArrayList<>();
-        adaptor = new ArrayAdapter(this, R.layout.logitem, logArray);
+        adaptor = new LogStringAdaptor(this, R.layout.logitem, logArray);
 
         listView.setAdapter(adaptor);
 
@@ -111,6 +112,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     getApplicationContext().getResources().getString(R.string.app_name_log_viewer),
                     "");
         }
+
+        logAboutInfo();
 
     } // end onCreate
 
@@ -187,6 +190,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, ENGINE_DRIVER_DIR+ "logcat" + System.currentTimeMillis() + ".txt"), Toast.LENGTH_LONG).show();
+            logAboutInfo();
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -371,6 +375,40 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         public void stopTask() {
             isRunning = false;
             if (logprocess != null) logprocess.destroy();
+        }
+    }
+
+    private void logAboutInfo() {
+        // ED version info
+        Log.d("Engine_Driver", "About: Engine Driver version: " + mainapp.appVersion);
+        if (mainapp.getHostIp() != null) {
+            // WiT info
+            String s = "";
+            if (mainapp.getWithrottleVersion() != 0.0) {
+                Log.d("Engine_Driver", "About: WiThrottle: v" + mainapp.getWithrottleVersion());
+                Log.d("Engine_Driver", String.format("About: Heartbeat: %dms", mainapp.heartbeatInterval));
+            }
+            Log.d("Engine_Driver", String.format("About: Host: %s", mainapp.getHostIp() ));
+
+            //show server type and description if set
+            String sServer;
+            if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
+                sServer = mainapp.getServerDescription();
+            } else {
+                sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
+            }
+            if (!sServer.isEmpty()) {
+                Log.d("Engine_Driver","About: Server: " + sServer);
+            } else {
+                // otherwise show JMRI version info from web if populated
+                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
+                if (JmriMetadata != null && JmriMetadata.size() > 0) {
+                    Log.d("Engine_Driver", "About: JMRI v" + JmriMetadata.get("JMRIVERCANON") + "    build: " + JmriMetadata.get("JMRIVERSION"));
+                    if (JmriMetadata.get("activeProfile") != null) {
+                        Log.d("Engine_Driver", "About: Active Profile: " + JmriMetadata.get("activeProfile"));
+                    }
+                }
+            }
         }
     }
 }

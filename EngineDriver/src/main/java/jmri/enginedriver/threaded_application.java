@@ -3589,6 +3589,14 @@ public class threaded_application extends Application {
             }
         }
 
+        public String getHostIp() {
+        return host_ip;
+        }
+
+        public Double getWithrottleVersion() {
+        return withrottle_version;
+        }
+
     public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle,  String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
