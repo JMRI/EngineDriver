@@ -324,7 +324,7 @@ public class throttle_switching_horizontal extends throttle {
                         textScale = minTextScale;
                 }
             }
-            int textSize = (int) (conNomTextSize * textScale);
+            int textSize = (int) (conNomTextSize * textScale * 0.95);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 //            b.setText(bLabel);
             b.setText(Html.fromHtml(bLabel));
