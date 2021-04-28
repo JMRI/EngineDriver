@@ -1304,6 +1304,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     || prefThrottleScreenTypeOriginal.equals("Switching")
                     || prefThrottleScreenTypeOriginal.equals("Switching Left")
                     || prefThrottleScreenTypeOriginal.equals("Switching Right")
+                    || prefThrottleScreenTypeOriginal.equals("Switching Horizontal")
                     || prefThrottleScreenTypeOriginal.equals("Simple");
             parentActivity.enableDisablePreference(getPreferenceScreen(), "WebViewLocation", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseWebViewSize", enable);

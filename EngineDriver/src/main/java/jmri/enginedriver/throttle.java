@@ -177,8 +177,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected LinearLayout[] lls; // throttles
     protected LinearLayout[] llSetSpds;
+
+    protected HorizontalSeekBar[] sbSpeeds = {};
     protected VerticalSeekBar[] vsbSpeeds;
     protected VerticalSeekBar[] vsbSwitchingSpeeds;
+    protected HorizontalSeekBar[] hsbSwitchingSpeeds;
 
 
     // SPDHT for Speed Id and Direction Button Heights

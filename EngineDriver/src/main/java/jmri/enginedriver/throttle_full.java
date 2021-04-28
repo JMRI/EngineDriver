@@ -35,7 +35,6 @@ import java.util.LinkedHashMap;
 public class throttle_full extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
-    protected HorizontalSeekBar[] sbSpeeds = {};
 
 
     protected void removeLoco(int whichThrottle) {

@@ -65,6 +65,7 @@
         <item>Switching &#8211; (2 controladors)</item>
         <item>Switching &#8211; esquerra (1 controlador)</item>
         <item>Switching &#8211; dreta (1 controlador)</item>
+        <item>Switching &#8211; Horizontal (3 controlador)</item>
         <item>Simple &#8211; tablet recomanat (1&#8211;6 controladors)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
