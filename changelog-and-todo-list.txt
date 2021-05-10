@@ -614,6 +614,7 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
+ *   TODO: option to show the turnout view instead of the webview, including Recents
  *   TODO: option to use 'f' function commands
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: horizontal switching layout or option (use with webview)
@@ -628,7 +629,6 @@
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
  *   TODO: add preference to disable other hardware buttons in throttle screen
- *   TODO: option to show the turnout view instead of the webview
  *   TODO: use the renamed locos and Consists on the Throttle page
  *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
@@ -642,6 +642,7 @@
  *   TODO: don't add loco to Recent Locos until the server responds
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
+ *   TODO: let user explicitly choose the loco to pull function labels from
  * preferences:
  * log_viewer:
  *
