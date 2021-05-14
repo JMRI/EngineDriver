@@ -138,6 +138,7 @@
         <item >2</item>  <!-- Switching -->
         <item >1</item>  <!-- Switching Left -->
         <item >1</item>  <!-- Switching Right -->
+        <item >3</item>  <!-- Switching Horizontal -->
         <item >6</item>  <!-- Simple -->
     </integer-array>
 
@@ -151,6 +152,7 @@
         <item >1</item>  <!-- Switching -->
         <item >1</item>  <!-- Switching Left -->
         <item >1</item>  <!-- Switching Right -->
+        <item >0</item>  <!-- Switching Horizontal -->
         <item >0</item>  <!-- Simple -->
     </integer-array>
 
