@@ -951,6 +951,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
     }
 
+    public void loadSharedPreferences(){
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    }
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1169,8 +1173,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
                     getConnectionsList();
                     ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
-                    preference.setEntries(prefHostImportExportEntriesFound);
-                    preference.setEntryValues(prefHostImportExportEntryValuesFound);
+                    if (preference!=null) {
+                        preference.setEntries(prefHostImportExportEntriesFound);
+                        preference.setEntryValues(prefHostImportExportEntryValuesFound);
+                    }
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", true);
                 } else {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", false);
@@ -1484,9 +1490,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             Log.d(TAG, "onCreatePreferences of the sub screen " + rootKey);
 
             Activity a = getActivity();
-//            if(a instanceof SettingsActivity) {
             parentActivity = (SettingsActivity) a;
-//            }
+            if (parentActivity.prefs==null) {
+                parentActivity.loadSharedPreferences();
+            }
+
             parentActivity.isInSubScreen = true;
 
             parentActivity.setGamePadPrefLabels(getPreferenceScreen(), parentActivity.prefs);
