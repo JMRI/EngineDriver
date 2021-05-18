@@ -109,7 +109,7 @@ public class VerticalSeekBar extends SeekBar {
         if (!tickMarksChecked) {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
-            prefDisplaySpeedUnits = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            prefDisplaySpeedUnits = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
             steps = prefDisplaySpeedUnits;
             if (steps >= 100) {
@@ -125,9 +125,16 @@ public class VerticalSeekBar extends SeekBar {
             width = getWidth();
             paddingLeft = getPaddingLeft();
             paddingRight = getPaddingRight();
-            gridLeft = 30;
-//            gridTop = paddingRight;
-//            gridRight = width - 30;
+
+            int startSize = 10;
+            float endSize = width/2 - 30;
+            if (width < 150) {
+                startSize = 2;
+                endSize = width/2 - 15;
+            } else if ( (endSize) > startSize * 9) {
+                endSize = startSize * 9;
+            }
+
             gridMiddle = width / 2;
 
             switch (tickMarkType) {
@@ -135,13 +142,13 @@ public class VerticalSeekBar extends SeekBar {
                 case TICK_TYPE_0_100:
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - 30) / (steps * steps);
+                    sizeIncrease = endSize / (steps * steps);
 
                     for (int i = -1; i < steps; i++) {
                         j = (steps - i);
                         d = gridBottom + i * tickSpacing;
-                        l = gridMiddle - 10 - sizeIncrease * j * j;
-                        r = gridMiddle + 10 + sizeIncrease * j * j;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
                     break;
@@ -149,21 +156,21 @@ public class VerticalSeekBar extends SeekBar {
                     int tempSteps = steps/2;
                     gridBottom = height/2 - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
-                    sizeIncrease = (gridMiddle - gridLeft - 30) / (tempSteps * tempSteps);
+                    sizeIncrease = endSize / (tempSteps * tempSteps);
 
                     for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + (height/2) + (i * tickSpacing);
-                        l = gridMiddle - 10 - (sizeIncrease) * j * j;
-                        r = gridMiddle + 10 + (sizeIncrease) * j * j;
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 
                     for (int i = -1; i < tempSteps; i++) {
                         j = (tempSteps - i);
                         d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
-                        l = gridMiddle - 10 - (sizeIncrease) * j * j;
-                        r = gridMiddle + 10 + (sizeIncrease) * j * j;
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 

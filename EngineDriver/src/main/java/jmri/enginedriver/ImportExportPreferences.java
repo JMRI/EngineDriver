@@ -177,7 +177,7 @@ public class ImportExportPreferences {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
-        int numberOfRecentLocosToWrite = preferences.getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
 
         int prefCount = 0;
         if (prefImportExportLocoList) {  // now clean out the preference data
@@ -777,7 +777,7 @@ public class ImportExportPreferences {
 
         PrintWriter list_output;
 //        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
-        int numberOfRecentLocosToWrite = preferences.getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
         try {
 //            int numberOfRecentLocosToWrite = Integer.parseInt(smrl);
             list_output = new PrintWriter(consist_list_file);
@@ -1055,4 +1055,17 @@ public class ImportExportPreferences {
         }
     }
 
+    private int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
+        int newVal;
+        try {
+            newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+        } catch (NumberFormatException e) {
+            try {
+                newVal = Integer.parseInt(defaultVal);
+            } catch (NumberFormatException ex) {
+                newVal = 0;
+            }
+        }
+        return newVal;
+    }
 }

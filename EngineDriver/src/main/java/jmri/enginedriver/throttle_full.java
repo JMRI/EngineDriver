@@ -35,7 +35,6 @@ import java.util.LinkedHashMap;
 public class throttle_full extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
-    protected HorizontalSeekBar[] sbSpeeds = {};
 
 
     protected void removeLoco(int whichThrottle) {
@@ -280,6 +279,12 @@ public class throttle_full extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        if (toolbar != null)  {
+            titleBar = toolbar.getHeight();
+            if (screenHeight!=0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
         //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
@@ -334,7 +339,7 @@ public class throttle_full extends throttle {
             llSetSpds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = mainapp.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default

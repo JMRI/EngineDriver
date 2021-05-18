@@ -1,8 +1,6 @@
 package jmri.enginedriver.logviewer.ui;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -10,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import jmri.enginedriver.R;
@@ -37,19 +40,15 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 //import jmri.enginedriver.logviewer.R;
 
-public class LogViewerActivity extends ListActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    private LogStringAdaptor adaptor = null;
+public class LogViewerActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    private ArrayAdapter adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
     private static final String ENGINE_DRIVER_DIR = "engine_driver";
 
-    public void setTitleToIncludeThrotName() {
-        SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-        setTitle(getApplicationContext().getResources().getString(R.string.logViewerTitle,
-                prefs.getString("throttle_name_preference", defaultName)));
-    }
+    private Menu AMenu;
+    private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +60,25 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         mainapp.applyTheme(this);
         setContentView(R.layout.log_main);
 
-        setTitleToIncludeThrotName();
+        final ListView listView = findViewById(android.R.id.list);
 
-        ArrayList<String> logarray = new ArrayList<>();
-        adaptor = new LogStringAdaptor(this, R.id.txtLogString, logarray);
+        ArrayList<String> logArray = new ArrayList<>();
+        adaptor = new LogStringAdaptor(this, R.layout.logitem, logArray);
 
-        setListAdapter(adaptor);
+        listView.setAdapter(adaptor);
+
+        listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
+                TextView logItem = (TextView) view;
+                String logItemText = logItem.getText().toString();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
+                String text = ((TextView) view).getText().toString();
+                builder.setMessage(text);
+                builder.show();
+            }
+        } );
 
         //Set the buttons
         Button closeButton = findViewById(R.id.logviewer_button_close);
@@ -85,7 +97,25 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         logReaderTask = new LogReaderTask();
 
         logReaderTask.execute();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
+
+            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+            String name = prefs.getString("throttle_name_preference", "");
+
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name) + " | " + name,
+                    getApplicationContext().getResources().getString(R.string.app_name_log_viewer),
+                    "");
+        }
+
+        logAboutInfo();
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -100,7 +130,8 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.logviewer_menu, menu);
         mainapp.displayEStop(menu);
-        return true;
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -159,6 +190,7 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, ENGINE_DRIVER_DIR+ "logcat" + System.currentTimeMillis() + ".txt"), Toast.LENGTH_LONG).show();
+            logAboutInfo();
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -197,18 +229,6 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         }
     }
 
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
-        String text = ((TextView) v).getText().toString();
-
-        builder.setMessage(text);
-
-        builder.show();
-    }
 
     private class LogStringAdaptor extends ArrayAdapter<String> {
         private List<String> objects;
@@ -355,6 +375,40 @@ public class LogViewerActivity extends ListActivity implements PermissionsHelper
         public void stopTask() {
             isRunning = false;
             if (logprocess != null) logprocess.destroy();
+        }
+    }
+
+    private void logAboutInfo() {
+        // ED version info
+        Log.d("Engine_Driver", "About: Engine Driver version: " + mainapp.appVersion);
+        if (mainapp.getHostIp() != null) {
+            // WiT info
+            String s = "";
+            if (mainapp.getWithrottleVersion() != 0.0) {
+                Log.d("Engine_Driver", "About: WiThrottle: v" + mainapp.getWithrottleVersion());
+                Log.d("Engine_Driver", String.format("About: Heartbeat: %dms", mainapp.heartbeatInterval));
+            }
+            Log.d("Engine_Driver", String.format("About: Host: %s", mainapp.getHostIp() ));
+
+            //show server type and description if set
+            String sServer;
+            if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
+                sServer = mainapp.getServerDescription();
+            } else {
+                sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
+            }
+            if (!sServer.isEmpty()) {
+                Log.d("Engine_Driver","About: Server: " + sServer);
+            } else {
+                // otherwise show JMRI version info from web if populated
+                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
+                if (JmriMetadata != null && JmriMetadata.size() > 0) {
+                    Log.d("Engine_Driver", "About: JMRI v" + JmriMetadata.get("JMRIVERCANON") + "    build: " + JmriMetadata.get("JMRIVERSION"));
+                    if (JmriMetadata.get("activeProfile") != null) {
+                        Log.d("Engine_Driver", "About: Active Profile: " + JmriMetadata.get("activeProfile"));
+                    }
+                }
+            }
         }
     }
 }

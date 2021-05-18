@@ -6,6 +6,6 @@
             android:id="@+id/intro_mnu"
             android:title="@string/introMenu"
             android:visible="false"
-            android:showAsAction="ifRoom">
+            android:showAsAction="always">
         </item>
 </menu>

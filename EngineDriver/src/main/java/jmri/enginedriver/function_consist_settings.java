@@ -18,13 +18,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -48,7 +49,7 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 @SuppressLint("ApplySharedPref")
-public class function_consist_settings extends Activity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+public class function_consist_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -67,6 +68,8 @@ public class function_consist_settings extends Activity implements PermissionsHe
 
     SharedPreferences prefs;
 
+    private Toolbar toolbar;
+
     /**
      * Called when the activity is first created.
      */
@@ -76,7 +79,6 @@ public class function_consist_settings extends Activity implements PermissionsHe
         mainapp = (threaded_application) getApplication();  //save pointer to main app
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions)); // needed in case the langauge was changed from the default
 
         setContentView(R.layout.function_consist_settings);
         orientationChange = false;
@@ -106,7 +108,18 @@ public class function_consist_settings extends Activity implements PermissionsHe
             v.setText(getString(R.string.fs_edit_notice));
         }
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.showOverflowMenu();
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_functions),
+                    "");
+        }
+
+    } //end onCreate
 
     @Override
     public void onResume() {
@@ -121,6 +134,7 @@ public class function_consist_settings extends Activity implements PermissionsHe
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onSaveInstanceState(Bundle saveState) {     //orientation change
         move_view_to_settings();        //update settings array so onCreate can use it to initialize
@@ -148,7 +162,8 @@ public class function_consist_settings extends Activity implements PermissionsHe
         inflater.inflate(R.menu.function_consist_settings_menu, menu);
         FMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

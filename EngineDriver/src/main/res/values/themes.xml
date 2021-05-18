@@ -15,17 +15,19 @@
 -->
 <resources>
 
-    <style name="app_splash" parent="android:Theme.Translucent">
+    <style name="app_splash" parent="ThemeOverlay.AppCompat">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@drawable/app_splash</item>
     </style>
 
-    <style name="app_intro" parent="@style/Theme.AppCompat">
+    <style name="app_intro" parent="Theme.AppCompat.NoActionBar">
         <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
     </style>
 
-    <style name="app_theme" parent="@android:style/Theme.Holo">
+    <style name="app_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="preferenceTheme">@style/app_theme_preferences</item>
+
         <item name="android:windowBackground">@drawable/app_background</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
@@ -43,6 +45,15 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
+
+<!--        <item name="android:popupWindowStyle">@style/spinner_popup_window_style</item>
+        <item name="android:listPopupWindowStyle">@style/spinner_list_popup_window_style</item>
+        <item name="android:popupMenuStyle">@style/spinner_popup_menu_style</item>-->
+
         <item name="edit_func_style">@style/edit_func_style</item>
         <item name="list_item_style">@style/list_item_style</item>
         <item name="list_id_style">@style/list_id_style</item>
@@ -64,14 +75,15 @@
         <item name="ed_vertical_thumb">@drawable/vertical_thumb</item>
 
         <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
+        <item name="ed_throttle_button">@drawable/throttle</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-
         <item name="ed_estop_button">@drawable/estop</item>
-
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
         <item name="ed_power_red_button">@drawable/power_red</item>
@@ -81,10 +93,14 @@
         <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+
+        <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
 
     <!-- also appears 'round' theme' -->
-    <style name="app_theme_black" parent="@android:style/Theme.Holo">
+    <style name="app_theme_black" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -93,7 +109,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+        <item name="dialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -105,6 +123,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_black</item>
         <item name="list_id_style">@style/list_id_style_black</item>
@@ -129,14 +151,15 @@
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round</item>
 
         <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="ed_throttle_button">@drawable/throttle_outline</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -146,9 +169,12 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
-    <style name="app_theme_outline" parent="@android:style/Theme.Holo">
+    <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
+        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -157,7 +183,7 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/dialogStyle_black</item>
+        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -169,6 +195,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
@@ -193,14 +223,15 @@
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round_outline</item>
 
         <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="ed_throttle_button">@drawable/throttle_outline</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@color/black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -210,10 +241,13 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
     <!-- also appears a 'dark' theme -->
-    <style name="app_theme_ultra" parent="@android:style/Theme.Holo">
+    <style name="app_theme_ultra" parent="Theme.AppCompat.NoActionBar">
+        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
         <item name="android:listViewStyle">@style/EDListView_black</item>
@@ -222,7 +256,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -234,6 +270,10 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
@@ -258,14 +298,15 @@
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_ultra</item>
 
         <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
+        <item name="ed_throttle_button">@drawable/throttle_outline</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-
         <item name="ed_estop_button">@drawable/estop_outline</item>
-
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
@@ -275,9 +316,10 @@
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
+        <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
-    <style name="app_theme_colorful" parent="@android:style/Theme.Holo.Light">
+    <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
 
         <item name="android:windowBackground">@color/windowBackground_colorful</item>
@@ -288,8 +330,13 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_colorful</item>
         <item name="android:titleTextStyle">@style/app_title_colorful</item>
         <item name="android:dialogTheme">@style/dialogStyle_colorful</item>
+        <item name="dialogTheme">@style/dialogStyle_colorful</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
+
+        <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>
+        <item name="android:itemTextAppearance">@style/ItemTextAppearance_colorful</item>
 
         <!--        <item name="android:textColor">@color/solidBlack</item> -->
         <item name="android:textColorPrimary">@color/primary_text_color_selector_colorful</item>
@@ -303,9 +350,13 @@
 <!--        <item name="android:editTextBackground">@color/windowBackground_colorful</item> -->
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
-        <item name="ed_loco_label_style">@style/loco_label_style_colorful</item>
+        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_colorful</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_colorful</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style_colorful</item>
+        <item name="android:spinnerStyle">@style/spinner_colorful</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item_colorful</item>
         <item name="edit_func_style">@style/edit_func_style_colorful</item>
         <item name="list_item_style">@style/list_item_style_colorful</item>
         <item name="list_id_style">@style/list_id_style_colorful</item>
@@ -330,14 +381,15 @@
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_colorful</item>
 
         <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
+        <item name="ed_throttle_button">@drawable/throttle</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
+        <item name="ed_toolbar_background">@drawable/toolbar_background_colorful</item>
+
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-
         <item name="ed_estop_button">@drawable/estop</item>
-
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
         <item name="ed_power_red_button">@drawable/power_red</item>
@@ -347,6 +399,60 @@
         <item name="ed_web_view_button">@drawable/web_view</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
+        <item name="ed_icon">@drawable/ic_launcher</item>
+    </style>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+               Preferences Styles
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+    <style name="app_theme_preferences" parent="@style/app_theme">
+        <item name="android:windowBackground">@drawable/app_background</item>
+
+        <!--
+                <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+                <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
+                <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+                <item name="preferenceStyle">@style/Preference</item>
+                <item name="preferenceInformationStyle">@style/Preference.Information</item>
+                <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
+                <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+                <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
+                <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+                <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+        -->
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+    </style>
+
+    <style name="app_theme_black_preferences" parent="@style/app_theme_black">
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+
+        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <!--        <item name="android:colorBackgroundFloating" tools:targetApi="23">@color/darkGrey</item>-->
+    </style>
+
+
+    <style name="app_theme_colorful_preferences" parent="@style/app_theme_colorful">
+        <item name="android:background">@color/windowBackground_colorful</item>
+
+        <item name="android:divider">@drawable/divider_colorful</item>
+        <item name="android:listDivider">@drawable/divider_colorful</item>
+
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
     </style>
 
 </resources>

@@ -18,27 +18,30 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -71,7 +74,8 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 import static android.text.TextUtils.substring;
 
-public class turnouts extends Activity implements OnGestureListener {
+//public class turnouts extends AppCompatActivity implements OnGestureListener {
+public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -124,6 +128,20 @@ public class turnouts extends Activity implements OnGestureListener {
     String turnoutSystemName = "";
     String turnoutUserName = "";
     int turnoutSource = 0;
+
+    private Toolbar toolbar;
+    private int toolbarHeight;
+
+    protected View turnoutsView;
+    protected GestureOverlayView turnoutsOverlayView;
+    // these are used for gesture tracking
+    private float gestureStartX = 0;
+    private float gestureStartY = 0;
+    protected boolean gestureInProgress = false; // gesture is in progress
+    private long gestureLastCheckTime; // time in milliseconds that velocity was last checked
+    private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
+    private VelocityTracker mVelocityTracker;
+
 
     public void refresh_turnout_view() {
         //specify logic for sort comparison (by username)
@@ -289,6 +307,7 @@ public class turnouts extends Activity implements OnGestureListener {
         if (TuMenu != null) {
             mainapp.displayEStop(TuMenu);
             mainapp.displayPowerStateMenuButton(TuMenu);
+            mainapp.displayThrottleMenuButton(TuMenu, "swipe_through_turnouts_preference");
         }
 
         return txtLen;
@@ -447,10 +466,10 @@ public class turnouts extends Activity implements OnGestureListener {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     /**
      * Called when the activity is first created.
@@ -458,21 +477,23 @@ public class turnouts extends Activity implements OnGestureListener {
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
-
-        mainapp.applyTheme(this);
 
         setContentView(R.layout.turnouts);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.turnouts_msg_handler = new turnouts_handler();
 
-        myGesture = new GestureDetector(this);
+//        myGesture = new GestureDetector(this);
 
         // -------------------------------------------------------------------
 
@@ -668,7 +689,26 @@ public class turnouts extends Activity implements OnGestureListener {
         //update turnout list
         refresh_turnout_view();
         refreshTurnoutViewStates();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        turnoutsView = findViewById(R.id.select_turnout_screen);
+        // enable swipe/fling detection if enabled in Prefs
+        turnoutsOverlayView = findViewById(R.id.turnouts_overlay);
+        turnoutsOverlayView.addOnGestureListener(this);
+        turnoutsOverlayView.setEventsInterceptionEnabled(true);
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+                getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+
+    } // end onCreate
 
     @Override
     public void onPause() {
@@ -688,6 +728,9 @@ public class turnouts extends Activity implements OnGestureListener {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "turnouts: onResume");
+        mainapp.applyTheme(this);
+
         super.onResume();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -743,68 +786,68 @@ public class turnouts extends Activity implements OnGestureListener {
         return (super.onKeyDown(key, event));
     }
 
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (e1 == null || e2 == null)
-            return false;
-        float deltaX = e2.getX() - e1.getX();
-        float absDeltaX = Math.abs(deltaX);
-        if ((absDeltaX > threaded_application.min_fling_distance) &&
-                (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
-                (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-            // left to right swipe goes to web, then routes if enabled in prefs
-            if (deltaX > 0.0) {
-                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-                if (swipeWeb) {
-                    Intent in = new Intent().setClass(this, web_activity.class);
-                    startActivity(in);
-                } else {
-                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                    if (swipeRoutes) {
-                        Intent in = new Intent().setClass(this, routes.class);
-                        startActivity(in);
-                    }
-                }
-                this.finish();  //don't keep on return stack
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-            }
-            // right to left swipe goes to throttle
-            else {
-                this.finish();  //don't keep on return stack
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-                            float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
+//    @Override
+//    public boolean onDown(MotionEvent e) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//        if (e1 == null || e2 == null)
+//            return false;
+//        float deltaX = e2.getX() - e1.getX();
+//        float absDeltaX = Math.abs(deltaX);
+//        if ((absDeltaX > threaded_application.min_fling_distance) &&
+//                (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
+//                (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
+//            // left to right swipe goes to web, then routes if enabled in prefs
+//            if (deltaX > 0.0) {
+//                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+//                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+//                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+//                if (swipeWeb) {
+//                    Intent in = new Intent().setClass(this, web_activity.class);
+//                    startActivity(in);
+//                } else {
+//                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+//                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+//                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+//                    if (swipeRoutes) {
+//                        Intent in = new Intent().setClass(this, routes.class);
+//                        startActivity(in);
+//                    }
+//                }
+//                this.finish();  //don't keep on return stack
+//                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+//            }
+//            // right to left swipe goes to throttle
+//            else {
+//                this.finish();  //don't keep on return stack
+//                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+//            }
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    @Override
+//    public void onLongPress(MotionEvent e) {
+//    }
+//
+//    @Override
+//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+//                            float distanceY) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void onShowPress(MotionEvent e) {
+//    }
+//
+//    @Override
+//    public boolean onSingleTapUp(MotionEvent e) {
+//        return false;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -814,14 +857,16 @@ public class turnouts extends Activity implements OnGestureListener {
         mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
+        mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
-        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
-        return true;
+//        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -829,6 +874,7 @@ public class turnouts extends Activity implements OnGestureListener {
         // Handle all of the possible menu actions.
         Intent in;
         switch (item.getItemId()) {
+            case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
                 this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
@@ -854,9 +900,14 @@ public class turnouts extends Activity implements OnGestureListener {
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-            case R.id.preferences_mnu:
-                in = new Intent().setClass(this, preferences.class);
+/*            case R.id.preferences_mnu:
+                in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);   // refresh view on return
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;*/
+            case R.id.settings_mnu:
+                in = new Intent().setClass(this, SettingsActivity.class);
+                startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.about_mnu:
@@ -884,6 +935,7 @@ public class turnouts extends Activity implements OnGestureListener {
     }
 
     //handle return from menu items
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests
         refresh_turnout_view();
@@ -1240,9 +1292,15 @@ public class turnouts extends Activity implements OnGestureListener {
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts_short) + "  " + mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_turnouts_short),
+                    mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_turnouts));
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_turnouts),
+                    "");
     }
 
     private String getCurrentStateDesc(String currentState) {
@@ -1281,4 +1339,146 @@ public class turnouts extends Activity implements OnGestureListener {
         }
         bToggle.setText(currentStateDesc);
     }
+
+    @Override
+    public void onGesture(GestureOverlayView arg0, MotionEvent event) {
+        gestureMove(event);
+    }
+
+    @Override
+    public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
+        gestureCancel(event);
+    }
+
+    // determine if the action was long enough to be a swipe
+    @Override
+    public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
+        gestureEnd(event);
+    }
+
+    @Override
+    public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
+        gestureStart(event);
+    }
+
+    private void gestureStart(MotionEvent event) {
+        gestureStartX = event.getX();
+        gestureStartY = event.getY();
+//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+
+        toolbarHeight = toolbar.getHeight();
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+            if (gestureStartY > toolbarHeight) {   // not in the toolbar area
+                return;
+            }
+        }
+        gestureInProgress = true;
+        gestureLastCheckTime = event.getEventTime();
+        mVelocityTracker.clear();
+
+        // start the gesture timeout timer
+        if (mainapp.turnouts_msg_handler != null)
+            mainapp.turnouts_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+    }
+
+    public void gestureMove(MotionEvent event) {
+        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+        if (gestureInProgress) {
+            // stop the gesture timeout timer
+            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+
+            mVelocityTracker.addMovement(event);
+            if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
+                // monitor velocity and fail gesture if it is too low
+                gestureLastCheckTime = event.getEventTime();
+                final VelocityTracker velocityTracker = mVelocityTracker;
+                velocityTracker.computeCurrentVelocity(1000);
+                int velocityX = (int) velocityTracker.getXVelocity();
+                int velocityY = (int) velocityTracker.getYVelocity();
+                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+                if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
+                    gestureFailed(event);
+                }
+            }
+            if (gestureInProgress) {
+                // restart the gesture timeout timer
+                mainapp.turnouts_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+            }
+        }
+    }
+
+    private void gestureEnd(MotionEvent event) {
+        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+        if (gestureInProgress) {
+            float deltaX = (event.getX() - gestureStartX);
+            float absDeltaX =  Math.abs(deltaX);
+            if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes
+                // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
+                event.setAction(MotionEvent.ACTION_CANCEL);
+                // process swipe in the direction with the largest change
+                if (deltaX > 0.0) { // left to right swipe goes to throttle
+
+                    boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                            getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+//                    swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+                    if (swipeWeb) {
+                        Intent in = new Intent().setClass(this, web_activity.class);
+                        startActivity(in);
+                    }
+
+                    this.finish();  //don't keep on return stack
+                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+
+                } else { // right to left swipe
+
+                    // else falls back  to throttle
+                    this.finish();  //don't keep on return stack
+                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                }
+            } else {
+                // gesture was not long enough
+                gestureFailed(event);
+            }
+        }
+    }
+
+    private void gestureCancel(MotionEvent event) {
+        if (mainapp.turnouts_msg_handler != null)
+            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+        gestureInProgress = false;
+    }
+
+    void gestureFailed(MotionEvent event) {
+        // end the gesture
+        gestureInProgress = false;
+    }
+
+    //
+    // GestureStopped runs when more than gestureCheckRate milliseconds
+    // elapse between onGesture events (i.e. press without movement).
+    //
+    @SuppressLint("Recycle")
+    private Runnable gestureStopped = new Runnable() {
+        @Override
+        public void run() {
+            if (gestureInProgress) {
+                // end the gesture
+                gestureInProgress = false;
+                // create a MOVE event to trigger the underlying control
+                if (turnoutsView != null) {
+                    // use uptimeMillis() rather than 0 for time in
+                    // MotionEvent.obtain() call in throttle gestureStopped:
+                    MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
+                            gestureStartY, 0);
+                    try {
+                        turnoutsView.dispatchTouchEvent(event);
+                    } catch (IllegalArgumentException e) {
+                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                    }
+                }
+            }
+        }
+    };
+
 }

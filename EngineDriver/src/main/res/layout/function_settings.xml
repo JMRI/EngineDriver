@@ -3,533 +3,542 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:weightSum="1.0"
-    tools:ignore="RtlHardcoded,Autofill,LabelFor" >
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,Autofill,LabelFor">
+
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight=".5"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/fs_heading"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/fb_header" />
-
-        <TextView
-            style="?attr/floating_text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8sp"
-            android:text="@string/fb_helptext"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/fb_copy_labels_from_roster"
-            style="?attr/ed_small_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/copy_function_labels" />
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".5"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fb_number_of_default_function_labels_label"
-                style="?attr/floating_text_style"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:padding="8sp"
-                android:text="@string/prefNumberOfDefaultFunctionLabelsTitle" />
-
-            <EditText
-                android:id="@+id/fb_number_of_default_function_labels"
-                style="?attr/edit_label_style"
-                android:layout_width="60sp"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/fb_number_of_default_function_labels_label"
-                android:inputType="number"
-                android:maxLength="2"
-                android:shadowColor="#FFFFFFFF"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="0.2"
-                android:singleLine="true"
-                android:text="@string/prefNumberOfDefaultFunctionLabelsDefaultValue" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+                android:id="@+id/fs_heading"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="@string/fb_header" />
 
             <TextView
-                android:id="@+id/fb_number_of_default_function_labels_for_roster_label"
                 style="?attr/floating_text_style"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8sp"
-                android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
+                android:text="@string/fb_helptext"
+                android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/fb_number_of_default_function_labels_for_roster"
-                style="?attr/edit_label_style"
-                android:layout_width="60sp"
+            <Button
+                android:id="@+id/fb_copy_labels_from_roster"
+                style="?attr/ed_small_button_style"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/fb_number_of_default_function_labels_for_roster_label"
-                android:inputType="number"
-                android:maxLength="2"
-                android:shadowColor="#FFFFFFFF"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="0.2"
-                android:singleLine="true"
-                android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" />
-        </RelativeLayout>
+                android:text="@string/copy_function_labels" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/fb_number_of_default_function_labels_label"
+                    style="?attr/floating_text_style"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp"
+                    android:text="@string/prefNumberOfDefaultFunctionLabelsTitle" />
+
+                <EditText
+                    android:id="@+id/fb_number_of_default_function_labels"
+                    style="?attr/edit_label_style"
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/fb_number_of_default_function_labels_label"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:shadowColor="#FFFFFFFF"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="0.2"
+                    android:singleLine="true"
+                    android:text="@string/prefNumberOfDefaultFunctionLabelsDefaultValue" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/fb_number_of_default_function_labels_for_roster_label"
+                    style="?attr/floating_text_style"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8sp"
+                    android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
+
+                <EditText
+                    android:id="@+id/fb_number_of_default_function_labels_for_roster"
+                    style="?attr/edit_label_style"
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/fb_number_of_default_function_labels_for_roster_label"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:shadowColor="#FFFFFFFF"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="0.2"
+                    android:singleLine="true"
+                    android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/fb_always_use_default_function_labels_label"
+                    style="?attr/floating_text_style"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="8sp"
+                    android:text="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
+
+                <Spinner
+                    android:id="@+id/fb_always_use_default_function_labels"
+                    style="?attr/edit_label_style"
+                    android:layout_width="60dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="0dp"
+                    android:layout_toRightOf="@+id/fb_always_use_default_function_labels_label"
+                    android:entries="@array/prefYesNoEntryValues"
+                    android:entryValues="@array/prefYesNoEntryValues"
+                    android:padding="0dp"/>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/fb_reset_function_labels"
+                style="?attr/ed_small_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fbResetFunctionLabels" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/ScrollView01"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_weight=".5">
 
-            <TextView
-                android:id="@+id/fb_always_use_default_function_labels_label"
-                style="?attr/floating_text_style"
-                android:layout_width="100dp"
+            <TableLayout
+                android:id="@+id/label_func_table"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:padding="8sp"
-                android:text="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
+                android:orientation="vertical"
+                tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
 
-            <Spinner
-                android:id="@+id/fb_always_use_default_function_labels"
-                style="?attr/edit_label_style"
-                android:layout_width="60dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_margin="0dp"
-                android:layout_toRightOf="@+id/fb_always_use_default_function_labels_label"
-                android:entries="@array/prefYesNoEntryValues"
-                android:entryValues="@array/prefYesNoEntryValues"
-                android:padding="0dp"/>
-        </RelativeLayout>
+                <TableRow>
 
-        <Button
-            android:id="@+id/fb_reset_function_labels"
-            style="?attr/ed_small_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fbResetFunctionLabels" />
+                    <TextView
+                        android:layout_weight=".5"
+                        android:text="@string/fb_column_label" />
 
+                    <TextView
+                        android:layout_weight=".5"
+                        android:text="@string/fb_column_function" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton00DefaultValue"
+                         />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="00" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton01DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="01" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton02DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="02" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton03DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="03" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton04DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="04" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton05DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="05" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton06DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="06" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton07DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="07" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton08DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="08" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton09DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="09" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton10DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="10" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton11DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="11" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton12DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="12" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton13DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="13" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton14DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="14" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton15DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="15" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton16DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="16" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton17DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="17" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton18DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="18" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton19DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="19" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton20DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="20" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton21DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="21" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton22DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="22" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton23DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="23" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton24DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="24" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton25DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="25" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton26DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="26" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton27DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="27" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".5"
+                        android:text="@string/functionButton28DefaultValue" />
+
+                    <EditText
+                        style="?attr/edit_func_style"
+                        android:layout_weight=".5"
+                        android:text="28" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/ScrollView01"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".5">
-
-        <TableLayout
-            android:id="@+id/label_func_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
-
-            <TableRow>
-
-                <TextView
-                    android:layout_weight=".5"
-                    android:text="@string/fb_column_label" />
-
-                <TextView
-                    android:layout_weight=".5"
-                    android:text="@string/fb_column_function" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton00DefaultValue"
-                     />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="00" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton01DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="01" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton02DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="02" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton03DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="03" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton04DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="04" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton05DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="05" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton06DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="06" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton07DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="07" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton08DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="08" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton09DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="09" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton10DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="10" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton11DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="11" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton12DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="12" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton13DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="13" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton14DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="14" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton15DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="15" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton16DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="16" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton17DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="17" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton18DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="18" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton19DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="19" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton20DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="20" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton21DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="21" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton22DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="22" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton23DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="23" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton24DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="24" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton25DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="25" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton26DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="26" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton27DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="27" />
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".5"
-                    android:text="@string/functionButton28DefaultValue" />
-
-                <EditText
-                    style="?attr/edit_func_style"
-                    android:layout_weight=".5"
-                    android:text="28" />
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
 </LinearLayout>

@@ -24,23 +24,23 @@
     <string name="introMenu">Introduzione</string>
 
     <string name="app_description">Engine Driver - Controllo per il tuo telefono Android. Questa app può connettersi a JMRI, MRC o server Digitrax WiThrottle, e controllare gli scambi e le locomotive. Velocità, direzione, e fino a 29 funzioni DCC sono supportatte per una o due locomotive.</string>
-    <string name="app_name_intro">Introduzione - Engine Driver</string>
-    <string name="app_name_connect">Connessione al Server - Engine Driver</string>
-    <string name="app_name_throttle">Controllo - Engine Driver</string>
-    <string name="app_name_throttle_short">Controllo  </string>
-    <string name="app_name_power_control">Controllo di Energia - Engine Driver</string>
-    <string name="app_name_reconnect_status">Status Ri-connessione - Engine Driver</string>
-    <string name="app_name_routes">Rotte - Engine Driver</string>
+    <string name="app_name_intro">Introduzione</string>
+    <string name="app_name_connect">Connessione al Server</string>
+    <string name="app_name_throttle">Controllo</string>
+    <string name="app_name_throttle_short">Controllo </string>
+    <string name="app_name_power_control">Controllo di Energia</string>
+    <string name="app_name_reconnect_status">Status Ri-connessione</string>
+    <string name="app_name_routes">Rotte</string>
     <string name="app_name_routes_short">Rotte</string>
-    <string name="app_name_turnouts">Scambi - Engine Driver</string>
+    <string name="app_name_turnouts">Scambi</string>
     <string name="app_name_turnouts_short">Scambi</string>
-    <string name="app_name_about">Circa - Engine Driver</string>
-    <string name="app_name_functions">Configurazione Funzioni Default - Engine Driver</string>
-    <string name="app_name_preferences">Preferenze - Engine Driver</string>
-    <string name="app_name_select_loco">Selezione Locomotiva - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Edizione Convoglio - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Luci Convoglio - Engine Driver</string>
-    <string name="app_name_gamepad_test">Test Gamepad - Engine Driver</string>
+    <string name="app_name_about">Circa</string>
+    <string name="app_name_functions">Configurazione Funzioni Default</string>
+    <string name="app_name_preferences">Preferenze</string>
+    <string name="app_name_select_loco">Selezione Locomotiva</string>
+    <string name="app_name_ConsistEdit">Edizione Convoglio</string>
+    <string name="app_name_ConsistLightsEdit">Luci Convoglio</string>
+    <string name="app_name_gamepad_test">Test Gamepad</string>
     <string name="gamepad1_test">Test Gamepad 1</string>
     <string name="gamepad2_test">Test Gamepad 2</string>
     <string name="gamepad3_test">Test Gamepad 3</string>
@@ -629,9 +629,9 @@
     <string name="prefKidsTimerTitle">Tempo limitato in esecuzione</string>
     <string name="prefKidsTimerSummary">Limita il tempo di esecuzione della locomotiva. per esempio. Ogni bambino riceverà una quantità uguale di tempo.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle: %1$s sec. residuo</string>
-    <string name="app_name_throttle_kids_enabled">Acceleratore - Timer pronto</string>
-    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+    <string name="app_name_throttle_kids_running">%1$s sec. residuo</string>
+    <string name="app_name_throttle_kids_enabled">Timer pronto</string>
+    <string name="app_name_throttle_kids_ended">Timer Ended</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le connessioni recenti.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver ha bisogno delle autorizzazioni STORAGE per memorizzare le connessioni recenti.</string>
@@ -787,5 +787,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>
     <string name="prefVerticalStopButtonMarginSummary">Numero di pixel per compensare margine del pulsante di arresto dai pulsanti di velocità e inferiore dello schermo.</string>
     <string name="prefVerticalStopButtonMarginTitle">Pulsante di arresto margini verticali</string>
+    <string name="app_name_log_viewer">Log Viewer</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Swipe attraverso il web?</string>
+    <string name="prefSwipeThroughWebSummary">Includi schermata Web quando scorrendo tra le schermate.</string>
 
 </resources>

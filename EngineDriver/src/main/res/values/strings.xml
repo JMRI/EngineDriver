@@ -34,26 +34,27 @@
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
-    <string name="app_name_intro">Introduction - Engine Driver</string>
-    <string name="app_name_connect">Connect to Server - Engine Driver</string>
-    <string name="app_name_throttle">Throttle - Engine Driver</string>
+    <string name="app_name_intro">Introduction</string>
+    <string name="app_name_connect">Connect to Server</string>
+    <string name="app_name_throttle">Throttle</string>
     <string name="app_name_throttle_short">Throttle</string>
-    <string name="app_name_power_control">Power Control - Engine Driver</string>
-    <string name="app_name_reconnect_status">Reconnect Status - Engine Driver</string>
-    <string name="app_name_routes">Routes - Engine Driver</string>
+    <string name="app_name_power_control">Power Control</string>
+    <string name="app_name_reconnect_status">Reconnect Status</string>
+    <string name="app_name_routes">Routes</string>
     <string name="app_name_routes_short">Routes</string>
-    <string name="app_name_turnouts">Turnouts - Engine Driver</string>
+    <string name="app_name_turnouts">Turnouts</string>
     <string name="app_name_turnouts_short">Turnouts</string>
-    <string name="app_name_about">About - Engine Driver</string>
-    <string name="app_name_web">Web - Engine Driver</string>
+    <string name="app_name_about">About</string>
+    <string name="app_name_web">Web</string>
     <string name="app_name_web_short">Web</string>
-    <string name="app_name_functions">Default Function Settings - Engine Driver</string>
-    <string name="app_name_consist_functions">Consist Function Settings - Engine Driver</string>
-    <string name="app_name_preferences">Preferences - Engine Driver</string>
-    <string name="app_name_select_loco">Select/Release Loco - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Consist Edit - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Consist Lights - Engine Driver</string>
-    <string name="app_name_gamepad_test">Gamepad Test - Engine Driver</string>
+    <string name="app_name_functions">Default Function Settings</string>
+    <string name="app_name_consist_functions">Consist Function Settings</string>
+    <string name="app_name_preferences">Preferences</string>
+    <string name="app_name_select_loco">Select/Release Loco</string>
+    <string name="app_name_ConsistEdit">Consist Edit</string>
+    <string name="app_name_ConsistLightsEdit">Consist Lights</string>
+    <string name="app_name_gamepad_test">Gamepad Test</string>
+    <string name="app_name_log_viewer">Log Viewer</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
@@ -209,6 +210,8 @@
     <string name="prefIncreaseWebViewSizeSummary">Increase throttle web view size to 60% for small screens.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the toolbar in Immersive mode.</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
     <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
     <string name="prefSwipeDownOptionTitle">Swipe down action in the Throttle view?</string>
@@ -949,9 +952,9 @@
     <string name="prefAllowMobileDataTitle">Allow Mobile Data connection</string>
     <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle - %1$s sec. remaining</string>
-    <string name="app_name_throttle_kids_enabled">Throttle - Timer Ready</string>
-    <string name="app_name_throttle_kids_ended">Throttle - Timer Ended</string>
+    <string name="app_name_throttle_kids_running">%1$s sec. remaining</string>
+    <string name="app_name_throttle_kids_enabled">Timer Ready</string>
+    <string name="app_name_throttle_kids_ended">Timer Ended</string>
 
     <string name="kidsTimer">Timer</string>
     <string name="timerDialogTitle">Timer Password</string>
@@ -1096,7 +1099,13 @@
     <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes.</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
 
-<!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
+    <string name="prefFullScreenSwipeAreaTitle">Disable Full Screen Swipe Area</string>
+    <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
+
+    <string name="prefLeftRightSwipePreferencesTitle">Left/Right Swipe Preferences</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Options for swipes to change screens</string>
+
+    <!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
 <!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->
 <!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
 

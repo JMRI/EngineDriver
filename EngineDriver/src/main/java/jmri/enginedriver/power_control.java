@@ -18,13 +18,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -34,7 +35,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class power_control extends Activity {
+public class power_control extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Drawable power_on_drawable;  //hold background graphics for power button
@@ -42,6 +43,7 @@ public class power_control extends Activity {
     private Drawable power_unknown_drawable;
     private Menu PMenu;
 
+    private Toolbar toolbar;
 
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
@@ -131,7 +133,6 @@ public class power_control extends Activity {
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_power_control)); // needed in case the language was changed from the default
 
         setContentView(R.layout.power_control);
 
@@ -148,7 +149,17 @@ public class power_control extends Activity {
         button_listener click_listener = new button_listener();
         b.setOnClickListener(click_listener);
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_power_control),
+                    "");
+        }
+
+    } // end onCreate
 
     @Override
     public void onResume() {
@@ -187,7 +198,7 @@ public class power_control extends Activity {
         inflater.inflate(R.menu.power_menu, menu);
         PMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -223,4 +234,5 @@ public class power_control extends Activity {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
 }

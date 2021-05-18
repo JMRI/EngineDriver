@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:ignore="AppCompatResource" >
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EmerStop" android:title="@string/EStop"
+    <item android:id="@+id/EmerStop"
+        android:icon="?attr/ed_estop_button"
+        android:title="@string/EStop"
         android:visible="false"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

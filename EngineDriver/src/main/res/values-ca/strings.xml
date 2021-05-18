@@ -23,23 +23,23 @@
     <string name="introMenu">Introducció</string>
 
     <string name="app_description">Engine Driver - Un controlador per al teu telèfon Android. Aquesta aplicació permet connectar a servidors Withrottle com el JMRI, MRC o Digitrax, i tripular les teves locomotores. La velocitat, la direcció, i més de 29 funcions DCC estan suportades per a una o dues locomotores.</string>
-    <string name="app_name_intro">Introducció - Engine Driver</string>
-    <string name="app_name_connect">Connectar al servidor - Engine Driver</string>
-    <string name="app_name_throttle">Controlador - Engine Driver</string>
+    <string name="app_name_intro">Introducció</string>
+    <string name="app_name_connect">Connectar al servidor</string>
+    <string name="app_name_throttle">Controlador</string>
     <string name="app_name_throttle_short">Controlador</string>
-    <string name="app_name_power_control">Control de corrent - Engine Driver</string>
-    <string name="app_name_reconnect_status">Estat de reconnexió - Engine Driver</string>
-    <string name="app_name_routes">Rutes - Engine Driver</string>
+    <string name="app_name_power_control">Control de corrent</string>
+    <string name="app_name_reconnect_status">Estat de reconnexiór</string>
+    <string name="app_name_routes">Rutes</string>
     <string name="app_name_routes_short">Rutes</string>
-    <string name="app_name_turnouts">Agulles - Engine Driver</string>
+    <string name="app_name_turnouts">Agulles</string>
     <string name="app_name_turnouts_short">Agulles</string>
-    <string name="app_name_about">Quant a - Engine Driver</string>
-    <string name="app_name_functions">Paràmetres de funcions per defecte - Engine Driver</string>
-    <string name="app_name_preferences">Preferències - Engine Driver</string>
-    <string name="app_name_select_loco">Selecciona/Allibera locomotora - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Modificar tracció múltiple - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Llums de tracció múltiple - Engine Driver</string>
-    <string name="app_name_gamepad_test">Prova de gamepad - Engine Driver</string>
+    <string name="app_name_about">Quant a</string>
+    <string name="app_name_functions">Paràmetres de funcions per defecte</string>
+    <string name="app_name_preferences">Preferències</string>
+    <string name="app_name_select_loco">Selecciona/Allibera locomotora</string>
+    <string name="app_name_ConsistEdit">Modificar tracció múltiple</string>
+    <string name="app_name_ConsistLightsEdit">Llums de tracció múltiple</string>
+    <string name="app_name_gamepad_test">Prova de gamepad</string>
     <string name="gamepad1_test">Prova 1 de gamepad</string>
     <string name="gamepad2_test">Prova 2 de gamepad</string>
     <string name="gamepad3_test">Prova 3 de gamepad</string>
@@ -693,9 +693,9 @@
     <string name="prefKidsTimerResetPasswordSummary">Contrasenya per a reiniciar/deshabilitar els paràmetres del temporizador.</string>
 
 
-    <string name="app_name_throttle_kids_running">Controlador - %1$s seg. restant</string>
-    <string name="app_name_throttle_kids_enabled">Controlador - temporitzador preparat</string>
-    <string name="app_name_throttle_kids_ended">Controlador - temporitzador finalitzat</string>
+    <string name="app_name_throttle_kids_running">%1$s seg. restant</string>
+    <string name="app_name_throttle_kids_enabled">Ttemporitzador preparat</string>
+    <string name="app_name_throttle_kids_ended">Temporitzador finalitzat</string>
 
     <string name="kidsTimer">Temporitzador</string>
     <string name="timerDialogTitle">Contrasenya del temporitzador</string>
@@ -853,5 +853,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Hora per a cada entrada a la pantalla de registre.</string>
     <string name="prefVerticalStopButtonMarginSummary">Nombre de píxels a compensar els marges de el botó de parada dels botons de velocitat i inferior de la pantalla.</string>
     <string name="prefVerticalStopButtonMarginTitle">El botó d\'atur marges verticals</string>
+    <string name="app_name_log_viewer">Visor de registre</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Lliscar a través del web?</string>
+    <string name="prefSwipeThroughWebSummary">Incloure pantalla Web quan lliscar entre les pantalles.</string>
 
 </resources>

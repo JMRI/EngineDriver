@@ -29,6 +29,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -76,7 +78,7 @@ import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.jmrit.roster.RosterEntry;
 
-public class select_loco extends Activity {
+public class select_loco extends AppCompatActivity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
@@ -156,6 +158,8 @@ public class select_loco extends Activity {
     ListView engine_list_view;
 
     String overrideThrottleName;
+
+    private Toolbar toolbar;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -922,8 +926,7 @@ public class select_loco extends Activity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearList();
-                            onCreate(null);
-                            onResume();
+                            recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -950,8 +953,9 @@ public class select_loco extends Activity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearConsistsList();
-                            onCreate(null);
-                            onResume();
+//                            onCreate(null);
+//                            onResume();
+                            recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -1042,7 +1046,6 @@ public class select_loco extends Activity {
         }
 
         mainapp.applyTheme(this);
-        setTitle(getApplicationContext().getResources().getString(R.string.app_name_select_loco)); // needed in case the langauge was changed from the default
 
         setContentView(layoutViewId);
 
@@ -1248,7 +1251,18 @@ public class select_loco extends Activity {
 
         Handler handler = new Handler();
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_select_loco),
+                    "" );
+        }
+
+    } //end OnCreate
 
     private final Runnable showMethodTask = new Runnable() {
         public void run() {
@@ -1463,7 +1477,8 @@ public class select_loco extends Activity {
         inflater.inflate(R.menu.select_loco_menu, menu);
         SMenu = menu;
         mainapp.displayEStop(menu);
-        return true;
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

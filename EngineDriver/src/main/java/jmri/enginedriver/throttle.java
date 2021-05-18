@@ -45,7 +45,8 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.Time;
 import android.util.Log;
@@ -113,7 +114,7 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 
-public class throttle extends FragmentActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
+public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
@@ -129,7 +130,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
     protected static final int throttleMargin = 8; // margin between the throttles in dp
-    protected static final int titleBar = 45; // estimate of lost screen height in dp
+    protected int titleBar = 45; // estimate of lost screen height in dp
 
     // speed scale factors
     public static final int MAX_SPEED_VAL_WIT = 126;    // wit message maximum speed value, max speed slider value
@@ -151,6 +152,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final String SELECTED_LOCO_INDICATOR_VOLUME = "Volume";
     private static final String SELECTED_LOCO_INDICATOR_BOTH = "Both";
     private String prefSelectedLocoIndicator = SELECTED_LOCO_INDICATOR_NONE;
+
+    static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
+    static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
     protected SeekBar[] sbs; // seekbars
 
@@ -176,8 +180,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     protected LinearLayout[] lls; // throttles
     protected LinearLayout[] llSetSpds;
+
+    protected HorizontalSeekBar[] sbSpeeds = {};
     protected VerticalSeekBar[] vsbSpeeds;
     protected VerticalSeekBar[] vsbSwitchingSpeeds;
+    protected HorizontalSeekBar[] hsbSwitchingSpeeds;
 
 
     // SPDHT for Speed Id and Direction Button Heights
@@ -443,6 +450,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     protected String prefThrottleScreenType;
 
     protected boolean prefThrottleViewImmersiveMode = false;
+    protected boolean prefThrottleViewImmersiveModeHideToolbar = false;
     protected int prefNumberOfDefaultFunctionLabels = 28;
     protected boolean prefDecreaseLocoNumberHeight = false;
     protected boolean pref_increase_slider_height_preference = false;
@@ -555,6 +563,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
+
+    protected Toolbar toolbar;
+    private int toolbarHeight;
 
     private enum EsuMc2Led {
         RED (MobileControl2.LED_RED),
@@ -780,7 +791,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, false);
                 }
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+                mainapp.setToolbarTitle(toolbar,
+                        getApplicationContext().getResources().getString(R.string.app_name),
+                        getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                        "");
                 if (TMenu != null) {
                     mainapp.setKidsMenuOptions(TMenu, true, 0);
                 }
@@ -791,7 +805,11 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
-                    }                    setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled));
+                    }
+                    mainapp.setToolbarTitle(toolbar,
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled),
+                            getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
+                            "");
                     if (TMenu != null) {
                         mainapp.setKidsMenuOptions(TMenu, false, 0);
                     }
@@ -813,13 +831,19 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     bSels[throttleIndex].setEnabled(false);
                 }
                 prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended));
+                mainapp.setToolbarTitle(toolbar,
+                        getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended),
+                        getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
+                        "");
                 break;
             case KIDS_TIMER_RUNNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                 }
-                setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)));
+                mainapp.setToolbarTitle(toolbar,
+                        getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)),
+                        getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
+                        "");
                 break;
         }
     }
@@ -1125,6 +1149,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 );
             }
+            if (prefThrottleViewImmersiveModeHideToolbar) {
+                toolbar.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -1135,6 +1162,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+
+            if (prefThrottleViewImmersiveModeHideToolbar) {
+                toolbar.setVisibility(View.VISIBLE);
             }
             webView.invalidate();
         }
@@ -1268,7 +1299,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
 
-        prefDirectionButtonLongPressDelay = preferences.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
+        prefDirectionButtonLongPressDelay = mainapp.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
 
         FUNCTION_BUTTON_LOOK_FOR_WHISTLE = getApplicationContext().getResources().getString(R.string.functionButtonLookForWhistle).trim();
         FUNCTION_BUTTON_LOOK_FOR_HORN = getApplicationContext().getResources().getString(R.string.functionButtonLookForHorn).trim();
@@ -1313,7 +1344,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // increase the web view height if the preference is set
         prefIncreaseWebViewSize = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
 
-        prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode", getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode",
+                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
+        prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
+                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
         prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
@@ -1344,9 +1378,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 
         // set speed buttons speed step
-        prefSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
-        prefVolumeSpeedButtonsSpeedStep= preferences.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
-        prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
+        prefVolumeSpeedButtonsSpeedStep= mainapp.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefGamePadSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
@@ -1372,7 +1406,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
-        speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+        speedStepPref = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
         prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", getResources().getBoolean(R.bool.prefPauseSpeedButtonDefaultValue));
         prefPauseSpeedRate = Integer.parseInt(prefs.getString("prefPauseSpeedRate", getResources().getString(R.string.prefPauseSpeedRateDefaultValue)));
         prefPauseSpeedStep = Integer.parseInt(prefs.getString("prefPauseSpeedStep", getResources().getString(R.string.prefPauseSpeedStepDefaultValue)));
@@ -1388,6 +1422,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
         }
         getKidsTimerPrefs();
+
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+                getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+
     }
 
     protected void getDirectionButtonPrefs() {
@@ -1906,7 +1944,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 break;
         }
 
-        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         ThrottleScale esuThrottleScale = new ThrottleScale(zeroTrim, maxSpeedStep + 1);
 
         maxSpeedSteps[whichThrottle] = maxSpeedStep;
@@ -3331,7 +3369,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
             // Read current stop button delay pref value
-            delay = preferences.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
+            delay = mainapp.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
                     getApplicationContext().getResources().getString(R.string.prefEsuMc2StopButtonDelayDefaultValue));
             buttonTimer = new CountDownTimer(delay, delay) {
                 @Override
@@ -3439,7 +3477,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void updateEsuMc2ZeroTrim() {
-        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
         // first the knob
@@ -3685,7 +3723,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     protected void limitSpeed(int whichThrottle) {
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
@@ -4260,15 +4298,25 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle_short) + "  " + mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_throttle_short),
+                    mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_throttle));
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                    "");
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @SuppressLint({"Recycle", "SetJavaScriptEnabled","ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mainapp = (threaded_application) this.getApplication();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
@@ -4284,16 +4332,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             }
         }
 
-        mainapp = (threaded_application) this.getApplication();
-
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
             return;
         }
 
-        mainapp.applyTheme(this);
+
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
         setContentView(mainapp.throttleLayoutViewId);
@@ -4727,7 +4772,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // tone generator for feedback sounds
         try {
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                mainapp.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
         } catch (RuntimeException e) {
             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
         }
@@ -4737,7 +4782,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         // initialise ESU MCII
         if (IS_ESU_MCII) {
             Log.d("Engine_Driver", "ESU_MCII: Initialise fragments...");
-            int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+            int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
             esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
             esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
             esuStopButtonFragment = StopButtonFragment.newInstance();
@@ -4770,6 +4815,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
         if (!mainapp.webServerNameHasBeenChecked) {
             mainapp.getServerNameFromWebServer();
+        }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
     } // end of onCreate()
@@ -4871,7 +4922,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                Intent in = new Intent().setClass(this, preferences.class);
+                Intent in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
@@ -5183,14 +5234,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         setGamepadIndicator();
 
         // set up max speeds for throttles
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
         }
 
         // set max allowed change for throttles from prefs
-        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+        int maxChange = mainapp.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -5201,7 +5252,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 limitSpeedMax[throttleIndex] = Math.round(100 * ((float) prefLimitSpeedPercent) / 100);
             }
             //get speed steps from prefs
-            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            speedStepPref = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
             setDisplayUnitScale(throttleIndex);
 
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
@@ -5224,7 +5275,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             mainapp.displayThrottleSwitchMenuButton(TMenu);
             mainapp.displayWebViewMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
-            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
+//            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
         vThrotScrWrap.invalidate();
         // Log.d("Engine_Driver","ending set_labels");
@@ -5329,8 +5380,10 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
-        mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
-        return true;
+
+//        mainapp.adjustToolbarButtonSpacing(toolbar);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -5368,12 +5421,12 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-            case R.id.preferences_mnu:
-                in = new Intent().setClass(this, preferences.class);
-                startActivityForResult(in, ACTIVITY_PREFS);   // reinitialize function buttons and labels on return
+            case R.id.settings_mnu:
+                in = new Intent().setClass(this, SettingsActivity.class);
+                startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-            case R.id.settings_mnu:
+            case R.id.function_defaults_mnu:
                 in = new Intent().setClass(this, function_settings.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -5521,13 +5574,13 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             case ACTIVITY_CONSIST_LIGHTS:         // edit consist lights
                 break;   // nothing to do
             case ACTIVITY_PREFS: {    // edit prefs
-                if (resultCode == preferences.RESULT_GAMEPAD) { // gamepad pref changed
+                if (resultCode == RESULT_GAMEPAD) { // gamepad pref changed
                     // update tone generator volume
                     if (tg != null) {
                         tg.release();
                         try {
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                                preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                                    mainapp.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
                             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
@@ -5535,7 +5588,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                     // update GamePad Support
                     setGamepadKeys();
                 }
-                if (resultCode == preferences.RESULT_ESUMCII) { // ESU MCII pref change
+                if (resultCode == RESULT_ESUMCII) { // ESU MCII pref change
                     // update zero trim values
                     updateEsuMc2ZeroTrim();
                 }
@@ -5616,7 +5669,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     // touch events outside the GestureOverlayView get caught here
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        // Log.d("Engine_Driver", "onTouch Title action " + event.getAction());
+//        Log.d("Engine_Driver", "onTouchEvent action: " + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 gestureStart(event);
@@ -5635,13 +5688,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+//        Log.d("Engine_Driver", "dispatchTouchEvent:");
         // if screen is locked
         if (isScreenLocked) {
             // check if we have a swipe up
             if (ev.getAction() == ACTION_DOWN) {
+//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_DOWN" );
                 gestureStart(ev);
             }
             if (ev.getAction() == ACTION_UP) {
+//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_UP" );
                 gestureEnd(ev);
             }
             // otherwise ignore the event
@@ -5675,7 +5731,9 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+
+        toolbarHeight = toolbar.getHeight();
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {
@@ -5698,12 +5756,16 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.throttle_msg_handler != null)
+        if (mainapp.throttle_msg_handler != null) {
+//            Log.d("Engine_Driver","gestureStart start gesture timer");
             mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        } else {
+            Log.d("Engine_Driver","gestureStart Can't start gesture timer");
+        }
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+//        Log.d("Engine_Driver", "gestureMove action " + event.getAction() + " eventTime: " + event.getEventTime() );
         if (gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
@@ -5716,20 +5778,25 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+//                Log.d("Engine_Driver", "gestureMove gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
             }
+//            else {
+//                Log.d("Engine_Driver", "gestureMove event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
+//                Log.d("Engine_Driver", "gestureMove event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
+//            }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
+//                Log.d("Engine_Driver","gestureSMove restart gesture timer");
                 mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress) {
             float deltaX = (event.getX() - gestureStartX);
@@ -5741,44 +5808,50 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
                 if (absDeltaX >= absDeltaY) {
-                    // swipe left/right
-                    if (!isScreenLocked) {
-                        boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                        swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                        boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                                getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                        swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                        boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                                getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-                        swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
 
-                        // if any swiping is enabled, process the swipe
-                        if (swipeTurnouts || swipeRoutes || swipeWeb) {
-                            if (deltaX > 0.0) {
-                                // left to right swipe goes to turnouts, then web if enabled in prefs
-                                Intent in;
-                                if (swipeTurnouts) {
-                                    in = new Intent().setClass(this, turnouts.class);
-                                } else if (swipeWeb) {
-                                    in = new Intent().setClass(this, web_activity.class);
+                    // check if only allow left-right swipe in the tool bar
+                    if ((!mainapp.prefFullScreenSwipeArea) // full screen swipe allowed
+                        || ((mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)) ) {   // not in the toolbar area
+
+                        // swipe left/right
+                        if (!isScreenLocked) {
+                            boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+                                    getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+                            swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
+                            boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                                    getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+                            swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
+                            boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                                    getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+                            swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
+
+                            // if any swiping is enabled, process the swipe
+                            if (swipeTurnouts || swipeRoutes || swipeWeb) {
+                                if (deltaX > 0.0) {
+                                    // left to right swipe goes to turnouts, then web if enabled in prefs
+                                    Intent in;
+                                    if (swipeTurnouts) {
+                                        in = new Intent().setClass(this, turnouts.class);
+                                    } else if (swipeWeb) {
+                                        in = new Intent().setClass(this, web_activity.class);
+                                    } else {
+                                        in = new Intent().setClass(this, routes.class);
+                                    }
+                                    startActivity(in);
+                                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                                 } else {
-                                    in = new Intent().setClass(this, routes.class);
+                                    // right to left swipe goes to routes, then web if enabled in prefs
+                                    Intent in;
+                                    if (swipeRoutes) {
+                                        in = new Intent().setClass(this, routes.class);
+                                    } else if (swipeWeb) {
+                                        in = new Intent().setClass(this, web_activity.class);
+                                    } else {
+                                        in = new Intent().setClass(this, turnouts.class);
+                                    }
+                                    startActivity(in);
+                                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                                 }
-                                startActivity(in);
-                                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                            } else {
-                                // right to left swipe goes to routes, then web if enabled in prefs
-                                Intent in;
-                                if (swipeRoutes) {
-                                    in = new Intent().setClass(this, routes.class);
-                                } else if (swipeWeb){
-                                    in = new Intent().setClass(this, web_activity.class);
-                                } else {
-                                    in = new Intent().setClass(this, turnouts.class);
-                                }
-                                startActivity(in);
-                                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                             }
                         }
                     }
@@ -5822,6 +5895,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     private void gestureCancel(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureEnd gestureCancel");
         if (mainapp.throttle_msg_handler != null)
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
@@ -5829,6 +5903,7 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     }
 
     void gestureFailed(MotionEvent event) {
+//        Log.d("Engine_Driver", "gestureEnd gestureFailed");
         // end the gesture
         gestureInProgress = false;
         gestureFailed = true;
@@ -5842,12 +5917,14 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
     private Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
+//            Log.d("Engine_Driver", "gestureStopped");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
                 gestureFailed = true;
                 // create a MOVE event to trigger the underlying control
                 if (vThrotScr != null) {
+//                    Log.d("Engine_Driver", "gestureStopped vThrotScr != null");
                     // use uptimeMillis() rather than 0 for time in
                     // MotionEvent.obtain() call in throttle gestureStopped:
                     MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
@@ -6235,4 +6312,5 @@ public class throttle extends FragmentActivity implements android.gesture.Gestur
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

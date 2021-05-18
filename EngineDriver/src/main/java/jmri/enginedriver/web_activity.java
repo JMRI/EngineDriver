@@ -19,7 +19,6 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +29,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,13 +45,12 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
-public class web_activity extends Activity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -73,7 +73,11 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
     private VelocityTracker mVelocityTracker;
 
-    Button closeButton;
+    private Toolbar toolbar;
+    private int toolbarHeight;
+
+//    Button closeButton;
+
 
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
@@ -100,6 +104,13 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         gestureStartX = event.getX();
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+
+        toolbarHeight = toolbar.getHeight();
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+            if (gestureStartY > toolbarHeight) {   // not in the toolbar area
+                return;
+            }
+        }
 
         gestureInProgress = true;
         gestureLastCheckTime = event.getEventTime();
@@ -218,6 +229,7 @@ public class web_activity extends Activity implements android.gesture.GestureOve
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
+
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
                     String response_str = s.substring(0, Math.min(s.length(), 2));
@@ -227,6 +239,15 @@ public class web_activity extends Activity implements android.gesture.GestureOve
                             urlRestore(true);
                         }
                     }
+
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(WMenu);
+                        }
+                    }
+
                     break;
                 }
                 case message_type.WIT_CON_RETRY:
@@ -254,9 +275,15 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.fastClockFormat > 0)
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web_short) + "  " + mainapp.getFastClockTime());
+            mainapp.setToolbarTitle(toolbar,
+                    "",
+                    getApplicationContext().getResources().getString(R.string.app_name_web_short),
+                    mainapp.getFastClockTime());
         else
-            setTitle(getApplicationContext().getResources().getString(R.string.app_name_web));
+            mainapp.setToolbarTitle(toolbar,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_web),
+                    "");
     }
 
     private void witRetry(String s) {
@@ -274,14 +301,16 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d("Engine_Driver", "web_activity.onCreate()");
-        super.onCreate(savedInstanceState);
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        mainapp.applyTheme(this);
+
+        super.onCreate(savedInstanceState);
+
         if (mainapp.isForcingFinish()) {        // expedite
             return;
         }
-        mainapp.applyTheme(this);
 
         setContentView(R.layout.web_activity);
 
@@ -379,28 +408,40 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         });
 
         //Set the buttons
-        closeButton = findViewById(R.id.webview_button_close);
-        web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
-        closeButton.setOnClickListener(close_click_listener);
+//        closeButton = findViewById(R.id.webview_button_close);
+//        web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
+//        closeButton.setOnClickListener(close_click_listener);
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.web_msg_handler = new web_handler();
-    }
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+
+        mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
+                getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+
+    } // end onCreate
 
     @Override
     public void onResume() {
         Log.d("Engine_Driver", "web_activity.onResume() called");
+        mainapp.applyTheme(this);
+
         super.onResume();
 
         setActivityTitle();
 
-        if (closeButton != null) {
-            if (mainapp.webMenuSelected) {
-                closeButton.setVisibility(View.VISIBLE);
-            } else {
-                closeButton.setVisibility(View.GONE);
-            }
-        }
+//        if (closeButton != null) {
+//            if (mainapp.webMenuSelected) {
+//                closeButton.setVisibility(View.VISIBLE);
+//            } else {
+//                closeButton.setVisibility(View.GONE);
+//            }
+//        }
 
         if (mainapp.isForcingFinish()) {    //expedite
             this.finish();
@@ -516,16 +557,28 @@ public class web_activity extends Activity implements android.gesture.GestureOve
         inflater.inflate(R.menu.web_menu, menu);
         WMenu = menu;
         mainapp.displayEStop(menu);
+
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
+        mainapp.setPowerMenuOption(menu);
+        mainapp.setPowerStateButton(menu);
+
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
         mainapp.setPowerMenuOption(menu);
-        return true;
+
+        return  super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
+        Intent in;
         switch (item.getItemId()) {
+            case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
                 navigateAway();
                 return true;
@@ -541,8 +594,13 @@ public class web_activity extends Activity implements android.gesture.GestureOve
             case R.id.power_control_mnu:
                 navigateAway(false, power_control.class);
                 return true;
-            case R.id.preferences_mnu:
-                navigateAway(false, preferences.class);
+/*            case R.id.preferences_mnu:
+                navigateAway(false, SettingsActivity.class);
+                return true;*/
+            case R.id.settings_mnu:
+                in = new Intent().setClass(this, SettingsActivity.class);
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -552,6 +610,12 @@ public class web_activity extends Activity implements android.gesture.GestureOve
                 return true;
             case R.id.about_mnu:
                 navigateAway(false, about_page.class);
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, WMenu);
+                return true;
+            case R.id.power_layout_button:
+                mainapp.powerStateMenuButton();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -628,4 +692,5 @@ public class web_activity extends Activity implements android.gesture.GestureOve
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
 }

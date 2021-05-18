@@ -24,12 +24,13 @@
 
     <attr name="ed_fn_scrollview_style" format="reference" />
 
+    <attr name="ed_toolbar_background" format="reference" />
+
     <attr name="ed_throttle_switch_button" format="reference" />
+    <attr name="ed_throttle_button" format="reference" />
     <attr name="ed_flashlight_on_button" format="reference" />
     <attr name="ed_flashlight_off_button" format="reference" />
-
     <attr name="ed_estop_button" format="reference" />
-
     <attr name="ed_power_green_button" format="reference" />
     <attr name="ed_power_yellow_button" format="reference" />
     <attr name="ed_power_red_button" format="reference" />
@@ -39,4 +40,6 @@
     <attr name="ed_web_view_button" format="reference" />
 
     <attr name="ed_advanced_preferences" format="reference" />
+
+    <attr name="ed_icon" format="reference" />
 </resources>

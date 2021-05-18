@@ -3,620 +3,637 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:weightSum="1.0"
-    tools:ignore="RtlHardcoded,Autofill,LabelFor" >
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,Autofill,LabelFor">
+
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight=".2"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/function_consist_heading"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/functionConsistHeader" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight=".2"
+            android:orientation="vertical">
 
-        <TextView
-            style="?attr/floating_text_style"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/function_consist_heading"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="@string/functionConsistHeader" />
+
+            <TextView
+                style="?attr/floating_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="9sp"
+                android:text="@string/functionConsistHelpText"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/functionConsistReset"
+                style="?attr/ed_small_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fbResetFunctionLabels" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/ScrollView01"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8sp"
-            android:text="@string/functionConsistHelpText"
-            android:textSize="12sp" />
+            android:layout_weight=".8"
+            android:paddingLeft="5dp">
 
-        <Button
-            android:id="@+id/functionConsistReset"
-            style="?attr/ed_small_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fbResetFunctionLabels" />
+            <TableLayout
+                android:id="@+id/function_consist_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
 
+                <TableRow>  <!--Header-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_weight=".33"
+                        android:minWidth="60sp"
+                        android:text="@string/functionConsistColumnLabel"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_weight=".33"
+                        android:text="@string/functionConsistColumnLocos"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_weight=".33"
+                        android:text="@string/functionConsistColumnLatching"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <TableRow>  <!--Row 00-->
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton00DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton01DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton02DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton03DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton04DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton05DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton06DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton07DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton08DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton09DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton10DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton11DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton12DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton13DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton14DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton15DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton16DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton17DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton18DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton19DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton20DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton21DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton22DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton23DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton24DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton25DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton26DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton27DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton28DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/ScrollView01"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight=".8">
-
-        <TableLayout
-            android:id="@+id/function_consist_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
-
-            <TableRow>  <!--Header-->
-
-                <TextView
-                    android:layout_weight=".33"
-                    android:text="@string/functionConsistColumnLabel" />
-
-                <TextView
-                    android:layout_weight=".33"
-                    android:text="@string/functionConsistColumnLocos" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_weight=".33"
-                    android:text="@string/functionConsistColumnLatching" />
-
-
-            </TableRow>
-
-            <TableRow>  <!--Row 00-->
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton00DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton01DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton02DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton03DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton04DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton05DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton06DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton07DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton08DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton09DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton10DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton11DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton12DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton13DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton14DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton15DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton16DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton17DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton18DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton19DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton20DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton21DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <EditText
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton22DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton23DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton24DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton25DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton26DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton27DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    style="?attr/edit_label_style"
-                    android:layout_weight=".33"
-                    android:text="@string/functionButton28DefaultValue" />
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLocosEntries"
-                    android:entryValues="@array/prefFunctionConsistLocosEntryValues"/>
-
-                <Spinner
-                    android:layout_weight=".33"
-                    android:entries="@array/prefFunctionConsistLatchingEntries"
-                    android:entryValues="@array/prefFunctionConsistLatchingEntryValues"/>
-
-            </TableRow>
-        </TableLayout>
-    </ScrollView>
 </LinearLayout>

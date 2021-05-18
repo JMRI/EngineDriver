@@ -3,6 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+
+    <include layout="@layout/toolbar" />
+
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/power_control_label" />
@@ -10,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="4dp" >
+        android:padding="10dp" >
 
         <Button
             android:id="@+id/power_control_button"

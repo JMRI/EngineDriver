@@ -4,6 +4,8 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <include layout="@layout/toolbar" />
+
     <LinearLayout
         android:id="@+id/logviewer_screen"
         android:layout_width="fill_parent"
@@ -39,11 +41,13 @@
                 <Button
                     android:id="@+id/logviewer_button_close"
                     style="?attr/ed_normal_button_style"
+                    android:layout_gravity="left"
                     android:text="@string/logviewerClose" />
 
                 <Button
                     android:id="@+id/logviewer_button_save"
                     style="?attr/ed_normal_button_style"
+                    android:layout_gravity="right"
                     android:text="@string/logviewerSave" />
             </TableRow>
 

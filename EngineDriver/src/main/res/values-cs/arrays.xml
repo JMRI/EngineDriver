@@ -100,6 +100,7 @@
         <item >Switching &#8211; (2 ovladače)</item>
         <item >Switching &#8211; Vlevo (1 ovladač)</item>
         <item >Switching &#8211; Vpravo (1 ovladač)</item>
+        <item >Switching &#8211; Horizontal (3 ovladač)</item>
         <item tools:ignore="TypographyDashes">Jednoduchý &#8211; Tablet doporučeno (1-6 ovladače)</item>
     </string-array>
     

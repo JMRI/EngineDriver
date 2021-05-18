@@ -285,7 +285,7 @@ public class throttle_simple extends throttle {
         // update the direction indicators
         showDirectionIndications();
 
-        int prefSimpleThrottleLayoutShowFunctionButtonCount = preferences.getIntPrefValue(prefs, "prefSimpleThrottleLayoutShowFunctionButtonCount",
+        int prefSimpleThrottleLayoutShowFunctionButtonCount = mainapp.getIntPrefValue(prefs, "prefSimpleThrottleLayoutShowFunctionButtonCount",
                 getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue));
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -302,6 +302,12 @@ public class throttle_simple extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        if (toolbar != null)  {
+            titleBar = toolbar.getHeight();
+            if (screenHeight!=0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
@@ -316,7 +322,7 @@ public class throttle_simple extends throttle {
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        int prefVerticalStopButtonMargin = preferences.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
+        int prefVerticalStopButtonMargin = mainapp.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;

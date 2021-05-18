@@ -25,23 +25,23 @@
     <string name="introMenu">Einführung</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
-    <string name="app_name_intro">Einführung - Engine Driver</string>
-    <string name="app_name_connect">Verbinden mit Server - Engine Driver</string>
-    <string name="app_name_throttle">Fahrregler - Engine Driver</string>
+    <string name="app_name_intro">Einführung</string>
+    <string name="app_name_connect">Verbinden mit Server</string>
+    <string name="app_name_throttle">Fahrregler</string>
     <string name="app_name_throttle_short">Fahrregler</string>
-    <string name="app_name_power_control">Anlagenstrom - Engine Driver</string>
-    <string name="app_name_reconnect_status">Wiederverbindungsstatus - Engine Driver</string>
-    <string name="app_name_routes">Fahrstraßen - Engine Driver</string>
+    <string name="app_name_power_control">Anlagenstrom</string>
+    <string name="app_name_reconnect_status">Wiederverbindungsstatus</string>
+    <string name="app_name_routes">Fahrstraßen</string>
     <string name="app_name_routes_short">Fahrstraßen</string>
-    <string name="app_name_turnouts">Weichen - Engine Driver</string>
+    <string name="app_name_turnouts">Weichen</string>
     <string name="app_name_turnouts_short">Weichen</string>
-    <string name="app_name_about">Über  - Engine Driver</string>
-    <string name="app_name_functions">Standardfunktionseinstellungen - Engine Driver</string>
-    <string name="app_name_preferences">Voreinstellungen - Engine Driver</string>
-    <string name="app_name_select_loco">Lok Auswählen/Freigeben - Engine Driver</string>
-    <string name="app_name_ConsistEdit">Lokverbund bearbeiten - Engine Driver</string>
-    <string name="app_name_ConsistLightsEdit">Lokverbund-Lichter - Engine Driver</string>
-    <string name="app_name_gamepad_test">Gamepad-Test - Engine Driver</string>
+    <string name="app_name_about">Über</string>
+    <string name="app_name_functions">Standardfunktionseinstellungen</string>
+    <string name="app_name_preferences">Voreinstellungen</string>
+    <string name="app_name_select_loco">Lok Auswählen/Freigeben</string>
+    <string name="app_name_ConsistEdit">Lokverbund bearbeiten</string>
+    <string name="app_name_ConsistLightsEdit">Lokverbund-Lichter</string>
+    <string name="app_name_gamepad_test">Gamepad-Test</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
@@ -676,9 +676,9 @@
     <string name="prefKidsTimerTitle">Zeitbegrenztes Laufen</string>
     <string name="prefKidsTimerSummary" tools:ignore="Typos">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
 
-    <string name="app_name_throttle_kids_running">Throttle - %1$s sek. verbleibend</string>
-    <string name="app_name_throttle_kids_enabled">Gas - Timer bereit</string>
-    <string name="app_name_throttle_kids_ended">Gas - Timer beendet</string>
+    <string name="app_name_throttle_kids_running">%1$s sek. verbleibend</string>
+    <string name="app_name_throttle_kids_enabled">Timer bereit</string>
+    <string name="app_name_throttle_kids_ended">Timer beendet</string>
 
     <string name="permissionsReadRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Lesen der letzten Verbindungen.</string>
     <string name="permissionsStoreRecentConnections">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen.</string>
@@ -855,5 +855,10 @@
     <string name="prefShowTimeOnLogEntrySummary">Zeigen Datum Zeit für jeden Eintrag auf dem Log-Bildschirm.</string>
     <string name="prefVerticalStopButtonMarginTitle">Stopp-Taste Vertikale Ränder</string>
     <string name="prefVerticalStopButtonMarginSummary">Anzahl der Pixel zu kompensieren Ränder der Stopp-Taste aus den Tasten und Geschwindigkeit unteren Teil des Bildschirms.</string>
+    <string name="app_name_log_viewer">Eintrags Ansicht</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefSwipeThroughWebTitle">Swipe durch Web?</string>
+    <string name="prefSwipeThroughWebSummary">Fügen Sie Web-Bildschirm, wenn zwischen den Bildschirmen klauen.</string>
 
 </resources>

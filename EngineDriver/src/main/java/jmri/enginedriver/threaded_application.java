@@ -57,6 +57,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -67,6 +68,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
@@ -117,7 +119,6 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
-import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
@@ -182,8 +183,8 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
 
     private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
-                                                        //  WiThrottle server, can be chgd for specific servers
-                                                        //   do not exceed 200, unless slider delay is also changed
+    //  WiThrottle server, can be chgd for specific servers
+    //   do not exceed 200, unless slider delay is also changed
 
     public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
 
@@ -210,6 +211,7 @@ public class threaded_application extends Application {
     public volatile Handler power_control_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler preferences_msg_handler;
+    public volatile Handler settings_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -292,12 +294,14 @@ public class threaded_application extends Application {
     public boolean prefFeedbackOnDisconnect = true;
 
     public String prefHapticFeedback = "None";
-//    public int prefHapticFeedbackSteps = 10;
+    //    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
 
+    public boolean prefFullScreenSwipeArea = false;
+
     public static final String HAPTIC_FEEDBACK_NONE = "None";
-    public static final String  HAPTIC_FEEDBACK_SLIDER = "Slider";
-    public static final String  HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+    public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
+    public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -308,7 +312,8 @@ public class threaded_application extends Application {
         PhoneListener phone;
         heartbeat heart = new heartbeat();
         private long lastSentMs = System.currentTimeMillis();
-        private long lastQueuedMs = System.currentTimeMillis();;
+        private long lastQueuedMs = System.currentTimeMillis();
+        ;
 
         comm_thread() {
             super("comm_thread");
@@ -977,7 +982,7 @@ public class threaded_application extends Application {
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
                             con.add(conLoco);
-                            con.setWhichSource(addr,1); //entered by address, not roster
+                            con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
                             addLocoToRecents(con.getLoco(addr));
                             Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
@@ -1411,20 +1416,20 @@ public class threaded_application extends Application {
                 return;
             }
 
-            long now=System.currentTimeMillis();
+            long now = System.currentTimeMillis();
             long lastGap = now - lastSentMs;
 
             //send if sufficient gap between messages or msg is timingSensitive, requeue if not
             if (lastGap >= WiThrottle_Msg_Interval || timingSensitive(msg)) {
                 //perform the send
-                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5")+" (" + lastGap + ")"); //replace newline with cr arrow
+                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
                 lastSentMs = now;
                 socketWiT.Send(msg);
             } else {
                 //requeue this message
                 int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (WiThrottle_Msg_Interval + 5); //extra 5 for processing
                 Log.d("Engine_Driver", "requeue:" + msg.replaceAll("\n", "\u21B5") +
-                        ", lastGap=" + lastGap + ", nextGap="+nextGap); //replace newline with cr arrow
+                        ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
                 sendMsgDelay(comm_msg_handler, nextGap, message_type.WITHROTTLE_SEND, msg);
                 lastQueuedMs = now + nextGap;
             }
@@ -1435,7 +1440,9 @@ public class threaded_application extends Application {
          */
         private boolean timingSensitive(String msg) {
             boolean ret = false;
-            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) { ret = true; } //any function key message
+            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
+                ret = true;
+            } //any function key message
             if (ret) Log.d("Engine_Driver", "timeSensitive message, not requeued: '{}'" + msg);
             return ret;
         }
@@ -1797,7 +1804,9 @@ public class threaded_application extends Application {
 
             private boolean heartbeatSent = false;
 
-            private int getInboundInterval() { return heartbeatInboundInterval;  }
+            private int getInboundInterval() {
+                return heartbeatInboundInterval;
+            }
 
             /***
              * startHeartbeat(timeoutInterval in milliseconds)
@@ -2399,6 +2408,7 @@ public class threaded_application extends Application {
     public String getServerType() {
         return this.serverType;
     }
+
     /* handle server-specific settings here */
     public void setServerType(String serverType) {
         this.serverType = serverType;
@@ -2531,6 +2541,14 @@ public class threaded_application extends Application {
             menu.findItem(R.id.power_layout_button).setVisible(true);
         } else {
             menu.findItem(R.id.power_layout_button).setVisible(false);
+        }
+    }
+
+    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
+        if (prefs.getBoolean(swipePreferenceToCheck, false)) {
+            menu.findItem(R.id.throttle_button_mnu).setVisible(false);
+        } else {
+            menu.findItem(R.id.throttle_button_mnu).setVisible(true);
         }
     }
 
@@ -2675,7 +2693,6 @@ public class threaded_application extends Application {
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);
             setGamepadTestMenuOption(menu, gamepadCount);
-            setMenuItemById(menu, R.id.preferences_mnu, true);
             setMenuItemById(menu, R.id.logviewer_menu, true);
             setMenuItemById(menu, R.id.exit_mnu, true);
             setMenuItemById(menu, R.id.timer_mnu, false);
@@ -2915,19 +2932,36 @@ public class threaded_application extends Application {
         return uri;
     }
 
+
     public int getSelectedTheme() {
+        return getSelectedTheme(false);
+    }
+    public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
-        switch (prefTheme) {
-            case "Black":
-                return R.style.app_theme_black;
-            case "Outline":
-                return R.style.app_theme_outline;
-            case "Ultra":
-                return R.style.app_theme_ultra;
-            case "Colorful":
-                return R.style.app_theme_colorful;
-            default:
-                return R.style.app_theme;
+        if (!isPreferences) {  // not a preferences activity
+            switch (prefTheme) {
+                case "Black":
+                    return R.style.app_theme_black;
+                case "Outline":
+                    return R.style.app_theme_outline;
+                case "Ultra":
+                    return R.style.app_theme_ultra;
+                case "Colorful":
+                    return R.style.app_theme_colorful;
+                default:
+                    return R.style.app_theme;
+            }
+        } else {
+            switch (prefTheme) {
+                case "Colorful":
+//                    return R.style.app_theme_colorful_preferences;
+                case "Black":
+                case "Outline":
+                case "Ultra":
+                    return R.style.app_theme_black_preferences;
+                default:
+                    return R.style.app_theme_preferences;
+            }
         }
     }
 
@@ -2937,8 +2971,12 @@ public class threaded_application extends Application {
      * @param activity the activity to set the theme for
      */
     public void applyTheme(Activity activity) {
-        int selectedTheme = getSelectedTheme();
+        applyTheme(activity, false);
+    }
+    public void applyTheme(Activity activity, boolean isPreferences) {
+        int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
+        Log.d("Engine_Driver", "applyTheme: " + selectedTheme);
         theme = activity.getTheme();
 
     }
@@ -3096,7 +3134,13 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.web_view_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefWebViewButton", false)) {
+
+        String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
+        String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
+
+
+        if ( (prefs.getBoolean("prefWebViewButton", false))
+        && (!webViewLocation.equals(defaultWebViewLocation))){
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3105,7 +3149,7 @@ public class threaded_application extends Application {
 
     }
 
-    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
+/*    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;
 
@@ -3118,7 +3162,7 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
-    }
+    }*/
 
     public void displayThrottleSwitchMenuButton(Menu menu) {
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);
@@ -3317,6 +3361,9 @@ public class threaded_application extends Application {
             case "Switching Left":
             case "Switching Right":
                 throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
+                break;
+            case "Switching Horizontal":
+                throttle = new Intent().setClass(this, throttle_switching_horizontal.class);
                 break;
             case "Big Left":
             case "Big Right":
@@ -3519,7 +3566,7 @@ public class threaded_application extends Application {
         public void throttleVibration(int speed, int lastSpeed) {
         if ( (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
             || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) ) {
-                int speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+                int speedStepPref = getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
                 int xSpeed = speed;
                 int xLastSpeed = lastSpeed;
                 if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
@@ -3544,4 +3591,102 @@ public class threaded_application extends Application {
             }
         }
 
+    public String getHostIp() {
+        return host_ip;
+        }
+
+    public Double getWithrottleVersion() {
+        return withrottle_version;
+        }
+
+    static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
+        int newVal;
+        try {
+            newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+        } catch (NumberFormatException e) {
+            try {
+                newVal = Integer.parseInt(defaultVal);
+            } catch (NumberFormatException ex) {
+                newVal = 0;
+            }
+        }
+        return newVal;
+    }
+
+    public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle,  String clockText) {
+        if (toolbar != null) {
+            toolbar.setTitle("");
+            TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            tvTitle.setText(title);
+
+            TextView tvIconTitle = (TextView) toolbar.findViewById(R.id.toolbar_icon_title);
+            tvIconTitle.setText(iconTitle);
+
+            TextView tvIconHelp = (TextView) toolbar.findViewById(R.id.toolbar_icon_help);
+            if (!prefFullScreenSwipeArea) {
+                tvIconHelp.setText("");
+            } else {
+                tvIconHelp.setText("  ◄ ►");
+            }
+
+            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            mClock.setText(clockText);
+
+//            adjustToolbarButtonSpacing(toolbar);
+        }
+    }
+
+//    public void adjustToolbarButtonSpacing(Toolbar toolbar){
+//        Log.d("Engine_Driver", "ta: adjustToolbarButtonSpacing");
+//
+//        // Get the ChildCount of your Toolbar
+//        int childCount = toolbar.getChildCount();
+//
+//        // Loop through the child Items
+//        for(int i = 0; i < childCount; i++){
+//            // Get the item at the current index
+//            View childView = toolbar.getChildAt(i);
+//            // If its a ViewGroup
+//            if(childView instanceof ViewGroup){
+//                // Get the child count of this view group
+//                int innerChildCount = ((ViewGroup) childView).getChildCount();
+//                // Create layout params for the ActionMenuView
+////                ActionMenuView.LayoutParams params = new ActionMenuView.LayoutParams(80, ActionMenuView.LayoutParams.WRAP_CONTENT);
+//                ActionMenuView.LayoutParams params;
+//                // Loop through the children
+//                for(int j = 0; j < innerChildCount; j++){
+//                    View grandChild = ((ViewGroup) childView).getChildAt(j);
+//                    if(grandChild instanceof ActionMenuItemView){
+//                        setToolbarItemSize(grandChild);
+//                    } else {
+//                        if(grandChild instanceof ViewGroup) {
+//                            innerChildCount = ((ViewGroup) grandChild).getChildCount();
+//                            // Loop through the children
+//                            for (int k = 0; k < innerChildCount; k++) {
+//                                View greatGrandChild = ((ViewGroup) grandChild).getChildAt(k);
+//                                if (greatGrandChild instanceof ActionMenuItemView) {
+//                                    setToolbarItemSize(greatGrandChild);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    grandChild.invalidate();
+//                }
+//                childView.invalidate();
+//            }
+//        }
+//    }
+//
+//    private void setToolbarItemSize(View actionMenuItemView) {
+//        ActionMenuView.LayoutParams params;
+//
+//        if(actionMenuItemView instanceof ActionMenuItemView) {
+//            // set the layout parameters on each View
+//            params = (ActionMenuView.LayoutParams) actionMenuItemView.getLayoutParams();
+//            params.width = actionMenuItemView.getWidth() + 100;
+////                              params.rightMargin = params.rightMargin + 180;
+//            actionMenuItemView.setLayoutParams(params);
+//            actionMenuItemView.invalidate();
+//        }
+//    }
 }

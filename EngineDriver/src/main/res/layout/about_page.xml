@@ -4,6 +4,9 @@
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
     android:orientation="vertical" >
+
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:id="@+id/about_info"
         style="?attr/floating_text_style"

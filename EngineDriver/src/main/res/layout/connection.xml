@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/connection_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true">
+
+    <include layout="@layout/toolbar" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -20,7 +23,6 @@
 
         <EditText
             android:id="@+id/host_ip"
-            style="?attr/listSeparatorTextViewStyle"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/ip_label"
@@ -46,7 +48,6 @@
 
         <TextView
             android:id="@+id/port_title"
-            style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/port"

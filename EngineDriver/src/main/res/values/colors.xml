@@ -18,6 +18,7 @@
 
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
+    <color name="darkGrey">#252525</color>
     <color name="grey">#ff888888</color>
     <color name="lightGrey">#a6a6a6</color>
 
@@ -26,11 +27,12 @@
     <color name="solidBlack">#ff000000</color>
     <color name="solidWhite">#ffffffff</color>
     <color name="holoBlue">#ff33b5e5</color>
-    <color name="divider">#ffc1c1c1</color>
+    <color name="divider">#4A4A4A</color>
 
     <color name="primary_text">#ffffffff</color>
     <color name="secondary_text">#D8D8D8</color>
     <color name="tertiary_text">#ffffffff</color>
+    <color name="hint_text">#747474</color>
     <color name="primaryDisabled">#ff888888</color>
     <color name="secondaryDisabled">#ff888888</color>
 
@@ -41,6 +43,8 @@
     <color name="hoverButtonBackgroundBlue">#1E3AEC</color>
 
     <!-- Black Theme -->
+    <color name="divider_black">#4bd6d6d6</color>
+
     <color name="primary_black">@color/solidWhite</color>
     <color name="secondary_black">#AFAEAE</color>
 <!--    <color name="tertiary_black">#747474</color>
@@ -138,6 +142,7 @@
     <color name="shadow_colorful">#d1ffffff</color>
 
     <color name="windowBackground_colorful">#fffaf6</color>
+    <color name="dialogBackground_colorful">#f5971d</color>
 
     <color name="buttonStopFillGradiantLight_colorful">#f59590</color>
     <color name="buttonStopFillGradiantCenter_colorful">#f77a74</color>
@@ -152,6 +157,8 @@
     <color name="buttonFillGradiantLight_colorful">#f1cea1</color>
     <color name="buttonFillGradiantCenter_colorful">#f2b465</color>
     <color name="buttonFillGradiantDark_colorful">#f5971d</color>
+    <color name="buttonFillGradiantVeryDark_colorful">#DD660A</color>
+    <color name="buttonFillGradiantUltraDark_colorful">#954100</color>
     <color name="buttonFillGradiantLight2_colorful">#a1d3f1</color>
     <color name="buttonFillGradiantCenter2_colorful">#71c2f2</color>
     <color name="buttonFillGradiantDark2_colorful">#1ca0ef</color>

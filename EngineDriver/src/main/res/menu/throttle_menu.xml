@@ -13,41 +13,42 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:ignore="AppCompatResource" >
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EsuMc2Knob_button"
-        android:title="@string/EsuMc2KnobAction"
-        android:visible="false"
-        android:showAsAction="ifRoom" />
-    <item android:id="@+id/EmerStop"
-        android:title="@string/EStop"
-        android:visible="false"
-        android:showAsAction="ifRoom" />
     <item android:id="@+id/throttle_switch_button"
         android:icon="?attr/ed_throttle_switch_button"
         android:title="@string/throttleSwitchAction"
         android:visible="false"
-        android:showAsAction="ifRoom" />
-    <item android:id="@+id/flashlight_button"
-        android:title="@string/flashlightAction"
-        android:visible="false"
-        android:showAsAction="ifRoom" />
-    <item android:id="@+id/power_layout_button"
-        android:title="@string/PowerButtonBar"
-        android:visible="false"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
     <item android:id="@+id/web_view_button"
         android:icon="?attr/ed_web_view_button"
         android:title="@string/webViewButtonBar"
         android:visible="false"
-        android:showAsAction="ifRoom" />
-
-    <item android:id="@+id/separator"
-        android:title="──────────"
-        android:visible="true"
-        android:showAsAction="never"
-        android:enabled="false"/>
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/EsuMc2Knob_button"
+        android:title="@string/EsuMc2KnobAction"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/EmerStop"
+        android:title="@string/EStop"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/flashlight_button"
+        android:title="@string/flashlightAction"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/power_layout_button"
+        android:title="@string/PowerButtonBar"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/turnouts_mnu"
         android:title="@string/turnouts" />
@@ -57,20 +58,21 @@
         android:title="@string/web" />
     <item android:id="@+id/power_control_mnu"
         android:title="@string/power" />
-    <item android:id="@+id/preferences_mnu"
+    <item android:id="@+id/settings_mnu"
         android:title="@string/preferences" />
     <item android:id="@+id/timer_mnu"
         android:title="@string/kidsTimer"
         android:visible="false" />
-    <item android:id="@+id/settings_mnu"
+    <item android:id="@+id/function_defaults_mnu"
         android:title="@string/settings" />
     <item android:id="@+id/function_consist_settings_mnu"
-        android:title="@string/functionConsistSettings" />
+        android:title="@string/functionConsistSettings"
+        android:visible="false" />
 
     <item
         android:id="@+id/edit_consists_menu"
         android:visible="false"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/edit_consist_menu">
         <menu>
             <item android:id="@+id/EditConsist0_menu" android:title="@string/edit_consist_throttle_1" android:visible="false" />
@@ -90,7 +92,7 @@
 
     <item
         android:id="@+id/gamepad_test_menu"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/gamepad_test_menu"
         android:visible="false">
         <menu>
