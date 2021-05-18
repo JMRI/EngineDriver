@@ -687,7 +687,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         // tone generator for feedback sounds
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                mainapp.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
 
         // set listener for select loco buttons
         bDpadUp = findViewById(R.id.gamepad_test_dpad_up);

@@ -1394,20 +1394,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             return null;
         }
 
-        static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
-            int newVal;
-            try {
-                newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
-            } catch (NumberFormatException e) {
-                try {
-                    newVal = Integer.parseInt(defaultVal);
-                } catch (NumberFormatException ex) {
-                    newVal = 0;
-                }
-            }
-            return newVal;
-        }
-
         private void getConnectionsList() {
             boolean foundDemoHost = false;
             String host_name;

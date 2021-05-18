@@ -14,7 +14,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:ignore="AppCompatResource" >
 
     <item android:id="@+id/intro_mnu" android:title="@string/introMenu" />
-    <item android:id="@+id/preferences_mnu" android:title="Old Preferences" />
     <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
     <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList" />
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />

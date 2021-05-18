@@ -153,6 +153,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String SELECTED_LOCO_INDICATOR_BOTH = "Both";
     private String prefSelectedLocoIndicator = SELECTED_LOCO_INDICATOR_NONE;
 
+    static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
+    static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
+
     protected SeekBar[] sbs; // seekbars
 
     protected ViewGroup[] fbs; // function button tables
@@ -1296,7 +1299,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
 
-        prefDirectionButtonLongPressDelay = preferences.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
+        prefDirectionButtonLongPressDelay = mainapp.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
 
         FUNCTION_BUTTON_LOOK_FOR_WHISTLE = getApplicationContext().getResources().getString(R.string.functionButtonLookForWhistle).trim();
         FUNCTION_BUTTON_LOOK_FOR_HORN = getApplicationContext().getResources().getString(R.string.functionButtonLookForHorn).trim();
@@ -1375,9 +1378,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 
         // set speed buttons speed step
-        prefSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
-        prefVolumeSpeedButtonsSpeedStep= preferences.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
-        prefGamePadSpeedButtonsSpeedStep = preferences.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
+        prefVolumeSpeedButtonsSpeedStep= mainapp.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefGamePadSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
@@ -1403,7 +1406,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
-        speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+        speedStepPref = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
         prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", getResources().getBoolean(R.bool.prefPauseSpeedButtonDefaultValue));
         prefPauseSpeedRate = Integer.parseInt(prefs.getString("prefPauseSpeedRate", getResources().getString(R.string.prefPauseSpeedRateDefaultValue)));
         prefPauseSpeedStep = Integer.parseInt(prefs.getString("prefPauseSpeedStep", getResources().getString(R.string.prefPauseSpeedStepDefaultValue)));
@@ -1941,7 +1944,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
         }
 
-        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         ThrottleScale esuThrottleScale = new ThrottleScale(zeroTrim, maxSpeedStep + 1);
 
         maxSpeedSteps[whichThrottle] = maxSpeedStep;
@@ -3366,7 +3369,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
             esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
             // Read current stop button delay pref value
-            delay = preferences.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
+            delay = mainapp.getIntPrefValue(prefs,"prefEsuMc2StopButtonDelay",
                     getApplicationContext().getResources().getString(R.string.prefEsuMc2StopButtonDelayDefaultValue));
             buttonTimer = new CountDownTimer(delay, delay) {
                 @Override
@@ -3474,7 +3477,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void updateEsuMc2ZeroTrim() {
-        int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+        int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
         // first the knob
@@ -3720,7 +3723,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     protected void limitSpeed(int whichThrottle) {
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
@@ -4769,7 +4772,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // tone generator for feedback sounds
         try {
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                preferences.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                mainapp.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
         } catch (RuntimeException e) {
             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
         }
@@ -4779,7 +4782,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // initialise ESU MCII
         if (IS_ESU_MCII) {
             Log.d("Engine_Driver", "ESU_MCII: Initialise fragments...");
-            int zeroTrim = preferences.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+            int zeroTrim = mainapp.getIntPrefValue(prefs,"prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
             esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
             esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
             esuStopButtonFragment = StopButtonFragment.newInstance();
@@ -4919,7 +4922,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-//                Intent in = new Intent().setClass(this, preferences.class);
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -5232,14 +5234,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         setGamepadIndicator();
 
         // set up max speeds for throttles
-        int maxThrottle = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
         }
 
         // set max allowed change for throttles from prefs
-        int maxChange = preferences.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+        int maxChange = mainapp.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -5250,7 +5252,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 limitSpeedMax[throttleIndex] = Math.round(100 * ((float) prefLimitSpeedPercent) / 100);
             }
             //get speed steps from prefs
-            speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            speedStepPref = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
             setDisplayUnitScale(throttleIndex);
 
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
@@ -5419,11 +5421,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-/*            case R.id.preferences_mnu:
-                in = new Intent().setClass(this, preferences.class);
-                startActivityForResult(in, ACTIVITY_PREFS);   // reinitialize function buttons and labels on return
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;*/
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
@@ -5577,13 +5574,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case ACTIVITY_CONSIST_LIGHTS:         // edit consist lights
                 break;   // nothing to do
             case ACTIVITY_PREFS: {    // edit prefs
-                if (resultCode == preferences.RESULT_GAMEPAD) { // gamepad pref changed
+                if (resultCode == RESULT_GAMEPAD) { // gamepad pref changed
                     // update tone generator volume
                     if (tg != null) {
                         tg.release();
                         try {
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                                preferences.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                                    mainapp.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
                             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
@@ -5591,7 +5588,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     // update GamePad Support
                     setGamepadKeys();
                 }
-                if (resultCode == preferences.RESULT_ESUMCII) { // ESU MCII pref change
+                if (resultCode == RESULT_ESUMCII) { // ESU MCII pref change
                     // update zero trim values
                     updateEsuMc2ZeroTrim();
                 }

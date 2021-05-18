@@ -2693,7 +2693,6 @@ public class threaded_application extends Application {
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);
             setGamepadTestMenuOption(menu, gamepadCount);
-            setMenuItemById(menu, R.id.preferences_mnu, true);
             setMenuItemById(menu, R.id.logviewer_menu, true);
             setMenuItemById(menu, R.id.exit_mnu, true);
             setMenuItemById(menu, R.id.timer_mnu, false);
@@ -3567,7 +3566,7 @@ public class threaded_application extends Application {
         public void throttleVibration(int speed, int lastSpeed) {
         if ( (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
             || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) ) {
-                int speedStepPref = preferences.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+                int speedStepPref = getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
                 int xSpeed = speed;
                 int xLastSpeed = lastSpeed;
                 if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
@@ -3592,13 +3591,27 @@ public class threaded_application extends Application {
             }
         }
 
-        public String getHostIp() {
+    public String getHostIp() {
         return host_ip;
         }
 
-        public Double getWithrottleVersion() {
+    public Double getWithrottleVersion() {
         return withrottle_version;
         }
+
+    static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
+        int newVal;
+        try {
+            newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+        } catch (NumberFormatException e) {
+            try {
+                newVal = Integer.parseInt(defaultVal);
+            } catch (NumberFormatException ex) {
+                newVal = 0;
+            }
+        }
+        return newVal;
+    }
 
     public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle,  String clockText) {
         if (toolbar != null) {

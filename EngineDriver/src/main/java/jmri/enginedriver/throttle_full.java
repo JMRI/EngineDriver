@@ -339,7 +339,7 @@ public class throttle_full extends throttle {
             llSetSpds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = mainapp.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default

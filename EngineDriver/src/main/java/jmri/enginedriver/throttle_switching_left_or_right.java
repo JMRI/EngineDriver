@@ -73,7 +73,7 @@ public class throttle_switching_left_or_right extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        maxThrottlePcnt = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
@@ -417,7 +417,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        int prefVerticalStopButtonMargin = preferences.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
+        int prefVerticalStopButtonMargin = mainapp.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;

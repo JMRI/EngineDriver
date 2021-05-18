@@ -72,7 +72,7 @@ public class throttle_switching_horizontal extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        maxThrottlePcnt = preferences.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
@@ -397,7 +397,7 @@ public class throttle_switching_horizontal extends throttle {
             llSetSpds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = preferences.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = mainapp.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
