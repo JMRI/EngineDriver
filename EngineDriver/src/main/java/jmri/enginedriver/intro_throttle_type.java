@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -74,8 +73,10 @@ public class intro_throttle_type extends Fragment {
         v.setText(nameEntries[7]);
         v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_right_name);
         v.setText(nameEntries[8]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_simple_name);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_horizontal_name);
         v.setText(nameEntries[9]);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_simple_name);
+        v.setText(nameEntries[10]);
 
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
@@ -90,7 +91,8 @@ public class intro_throttle_type extends Fragment {
         else if (nameEntryValues[6].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_name); }
         else if (nameEntryValues[7].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_left_name); }
         else if (nameEntryValues[8].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_right_name); }
-        else if (nameEntryValues[9].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_simple_name); }
+        else if (nameEntryValues[9].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_horizontal_name); }
+        else if (nameEntryValues[10].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_simple_name); }
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -108,7 +110,8 @@ public class intro_throttle_type extends Fragment {
                 else if (checkedId == R.id.intro_throttle_type_switching_name) { Choice = 6; }
                 else if (checkedId == R.id.intro_throttle_type_switching_left_name) { Choice = 7; }
                 else if (checkedId == R.id.intro_throttle_type_switching_right_name) { Choice = 8; }
-                else if (checkedId == R.id.intro_throttle_type_simple_name) { Choice = 9; }
+                else if (checkedId == R.id.intro_throttle_type_switching_horizontal_name) { Choice = 9; }
+                else if (checkedId == R.id.intro_throttle_type_simple_name) { Choice = 10; }
                 prefs.edit().putString("prefThrottleScreenType", nameEntryValues[Choice]).commit();
          }
         });
