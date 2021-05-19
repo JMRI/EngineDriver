@@ -1182,6 +1182,9 @@
         <item>prefHapticFeedbackSteps</item>
         <item>prefHapticFeedbackDuration</item>
 
+        <item>prefCategoryWeb</item>
+        <item>prefCategoryTurnouts</item>
+
     </string-array>
 
 </resources>
