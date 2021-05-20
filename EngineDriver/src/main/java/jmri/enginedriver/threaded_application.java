@@ -1962,9 +1962,18 @@ public class threaded_application extends Application {
      */
     private void addNotification(Intent notificationIntent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String CHANNEL_ID = "ed_channel_01";// The id of the channel.
+            String CHANNEL_ID = "ed_channel_HIGH";// The id of the channel.
+            String CHANNEL_ID_DEFAULT = "ed_channel_DEFAULT";// The id of the channel without sound.
+            String channelId = CHANNEL_ID;
             CharSequence name = this.getString(R.string.notification_title);// The user-visible name of the channel.
             int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            boolean prefFeedbackWhenGoingToBackground = prefs.getBoolean("prefFeedbackWhenGoingToBackground", getResources().getBoolean(R.bool.prefFeedbackWhenGoingToBackgroundDefaultValue));
+            if (!prefFeedbackWhenGoingToBackground) {
+                importance = NotificationManager.IMPORTANCE_DEFAULT;
+                channelId = CHANNEL_ID_DEFAULT;
+            }
+
             NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
@@ -1977,7 +1986,7 @@ public class threaded_application extends Application {
                             .setContentText(this.getString(R.string.notification_text))
                             .setContentIntent(contentIntent)
                             .setOngoing(true)
-                            .setChannelId(CHANNEL_ID)
+                            .setChannelId(channelId)
                             .build();
 
             // Add as notification

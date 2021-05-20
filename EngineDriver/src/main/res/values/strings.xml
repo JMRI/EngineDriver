@@ -1095,6 +1095,9 @@
     <string name="prefFeedbackOnDisconnectTitle">Feedback on Disconnect</string>
     <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect.</string>
 
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Alert when the app is sent to the background.</string>
+
     <string name="prefHapticFeedbackTitle">Haptic Feedback</string>
     <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes.</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
