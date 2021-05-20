@@ -1963,18 +1963,21 @@ public class threaded_application extends Application {
     private void addNotification(Intent notificationIntent) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String CHANNEL_ID = "ed_channel_HIGH";// The id of the channel.
-            String CHANNEL_ID_DEFAULT = "ed_channel_DEFAULT";// The id of the channel without sound.
-            String channelId = CHANNEL_ID;
+            String CHANNEL_ID_QUIET = "ed_channel_HIGH_quiet";// The id of the channel without sound.
+            String channelId;
             CharSequence name = this.getString(R.string.notification_title);// The user-visible name of the channel.
-            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel;
 
             boolean prefFeedbackWhenGoingToBackground = prefs.getBoolean("prefFeedbackWhenGoingToBackground", getResources().getBoolean(R.bool.prefFeedbackWhenGoingToBackgroundDefaultValue));
-            if (!prefFeedbackWhenGoingToBackground) {
-                importance = NotificationManager.IMPORTANCE_DEFAULT;
-                channelId = CHANNEL_ID_DEFAULT;
+            if (prefFeedbackWhenGoingToBackground) {
+                channelId = CHANNEL_ID;
+                mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
+            } else {
+                channelId = CHANNEL_ID_QUIET;
+                mChannel = new NotificationChannel(CHANNEL_ID_QUIET, name, NotificationManager.IMPORTANCE_DEFAULT);
+                mChannel.setSound(null, null);
             }
 
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT);
