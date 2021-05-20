@@ -1426,6 +1426,13 @@
             android:summary="@string/prefFeedbackOnDisconnectSummary"
             android:title="@string/prefFeedbackOnDisconnectTitle"
             android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
+            android:key="prefFeedbackWhenGoingToBackground"
+            android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
+            android:title="@string/prefFeedbackWhenGoingToBackgroundTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory
