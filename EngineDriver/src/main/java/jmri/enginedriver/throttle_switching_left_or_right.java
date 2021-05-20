@@ -945,6 +945,7 @@ public class throttle_switching_left_or_right extends throttle {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
+                vsbSwitchingSpeeds[whichThrottle].touchFromUser = false;
                 limitSpeed(whichThrottle);
             }
             return false;
