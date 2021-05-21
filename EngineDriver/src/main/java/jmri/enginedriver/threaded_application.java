@@ -194,9 +194,9 @@ public class threaded_application extends Application {
     private static final String demo_port = "44444";
 
     String client_address; //address string of the client address
-    Inet4Address client_address_inet4; //inet4 value of the client address
-    String client_ssid = "UNKNOWN";    //string of the connected SSID
-    String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
+    public Inet4Address client_address_inet4; //inet4 value of the client address
+    public String client_ssid = "UNKNOWN";    //string of the connected SSID
+    public String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
