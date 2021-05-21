@@ -379,6 +379,17 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     private void logAboutInfo() {
+        Log.d("Engine_Driver", "----------------------------------");
+        // device info
+        Log.d("Engine_Driver", "About: Device: "
+                + String.format("OS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT));
+        if (mainapp.client_address_inet4 != null) {
+            Log.d("Engine_Driver", "About: Network: "
+                    + String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/", "")));
+            Log.d("Engine_Driver", "About: Network: "
+                    + String.format("SSID: %s Net: %s ", mainapp.client_ssid, mainapp.client_type));
+        }
+
         // ED version info
         Log.d("Engine_Driver", "About: Engine Driver version: " + mainapp.appVersion);
         if (mainapp.getHostIp() != null) {
@@ -410,5 +421,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 }
             }
         }
+        Log.d("Engine_Driver", "----------------------------------");
     }
 }
