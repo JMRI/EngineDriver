@@ -1171,6 +1171,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
                         ;
                         break;
+
+                    case "prefThrottleViewImmersiveModeHideToolbar":
+                        parentActivity.forceReLaunchAppOnPreferencesClose =true;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_IMMERSIVE_MODE;                        break;
                 }
             }
         }

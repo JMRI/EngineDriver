@@ -270,6 +270,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
     public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
     public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
+    public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;

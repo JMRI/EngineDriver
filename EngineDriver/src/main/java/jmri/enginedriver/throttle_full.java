@@ -279,7 +279,7 @@ public class throttle_full extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
-        if (toolbar != null)  {
+        if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
             titleBar = toolbar.getHeight();
             if (screenHeight!=0) {
                 screenHeight = screenHeight - titleBar;

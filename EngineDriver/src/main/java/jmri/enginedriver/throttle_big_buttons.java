@@ -265,7 +265,7 @@ public class throttle_big_buttons extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
-        if (toolbar != null)  {
+        if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
             titleBar = toolbar.getHeight();
             if (screenHeight!=0) {
                 screenHeight = screenHeight - titleBar;

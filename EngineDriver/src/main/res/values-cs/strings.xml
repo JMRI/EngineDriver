@@ -924,7 +924,7 @@
     <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro čtení nastavení funkcí.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro uložení nastavení funkcí.</string>
-    <string name="permissionsWriteSettings">Engine Driver potřebuje oprávnění WRITE SETTINGS pro změnu jasu obrazovky.</string>
+    <string name="permissionsWriteSettings">Engine Driver potřebuje oprávnění ALLOW MODIFYING SYSTEM SETTINGS pro změnu jasu obrazovky.</string>
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_FINE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
