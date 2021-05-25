@@ -1152,6 +1152,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (prefThrottleViewImmersiveModeHideToolbar) {
                 toolbar.setVisibility(View.GONE);
             }
+            webView.invalidate();
         }
     }
 
@@ -1163,10 +1164,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
             }
-
-            if (prefThrottleViewImmersiveModeHideToolbar) {
-                toolbar.setVisibility(View.VISIBLE);
-            }
+            toolbar.setVisibility(View.VISIBLE);
             webView.invalidate();
         }
     }
