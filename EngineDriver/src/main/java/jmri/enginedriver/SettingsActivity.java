@@ -1173,6 +1173,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
 
                     case "prefThrottleViewImmersiveModeHideToolbar":
+                        mainapp.prefThrottleViewImmersiveModeHideToolbar = sharedPreferences.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
+                                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
                         parentActivity.forceReLaunchAppOnPreferencesClose =true;
                         parentActivity.forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_IMMERSIVE_MODE;                        break;
                 }

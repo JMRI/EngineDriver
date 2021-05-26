@@ -1424,6 +1424,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
+        mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
+                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
     }
 
     protected void getDirectionButtonPrefs() {
@@ -5809,7 +5811,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                     // check if only allow left-right swipe in the tool bar
                     if ((!mainapp.prefFullScreenSwipeArea) // full screen swipe allowed
-                        || ((mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)) ) {   // not in the toolbar area
+                        || ( (mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)
+                                && ( (!mainapp.prefThrottleViewImmersiveModeHideToolbar)
+                                      || ( (mainapp.prefThrottleViewImmersiveModeHideToolbar) && (!immersiveModeIsOn) ) ) )
+                        ) {   // not in the toolbar area  or the tollbar is hidden
 
                         // swipe left/right
                         if (!isScreenLocked) {

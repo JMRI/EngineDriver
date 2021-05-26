@@ -299,6 +299,7 @@ public class threaded_application extends Application {
     public int prefHapticFeedbackDuration = 250;
 
     public boolean prefFullScreenSwipeArea = false;
+    public boolean prefThrottleViewImmersiveModeHideToolbar = true;
 
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
