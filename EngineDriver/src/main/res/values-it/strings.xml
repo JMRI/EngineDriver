@@ -15,7 +15,7 @@
 
       translations provided by Roberto Falorni
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="exit">Uscita</string>
     <string name="settings">Funzioni Standard</string>
@@ -642,7 +642,7 @@
     <string name="permissionsReadPhoneState">Engine Driver ha bisogno delle autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per leggere le impostazioni della funzione.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le impostazioni delle funzioni.</string>
-    <string name="permissionsVIBRATE">Macchinista ha bisogno di autorizzazioni vibrano di fornire un feedback aggiuntivo.</string>
+    <string name="permissionsVIBRATE">Engine Driver ha bisogno di autorizzazioni vibrano di fornire un feedback aggiuntivo.</string>
     <string name="permissionsConnectToServer">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le connessioni recenti e le autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
     <string name="permissionsGotoAppSettings">Si prega di abilitare queste autorizzazioni dalle impostazioni dell\'app.</string>
     <string name="permissionsAppSettingsButton">Impostazioni dell\'app</string>
@@ -737,7 +737,7 @@
     <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
     <string name="dialogImportPreferencesQuestion">Confermare che si desidera preferenze di importazione. \nALL sarà perso preferenze correnti.</string>
-    <string name="permissionsReadImages">Macchinista ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
+    <string name="permissionsReadImages">Engine Driver ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Nessun immagine è stata selezionata</string>
     <string name="prefBackgroundImageFileNameSummary">Immettere il nome del file di immagine di sfondo.</string>
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
@@ -771,7 +771,7 @@
     <string name="prefAllowMobileDataTitle">Consenti connessione dati mobile</string>
     <string name="prefAllowMobileDataSummary">Consentire al dispositivo di connettersi a JMRI su Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">preferenza WiFi forzata cambiato.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Numero di tasti di funzione (0-4) per mostrare sul layout Throttle semplice.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Numero di tasti di funzione (0-4) per mostrare sul layout Throttle semplice.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funzioni Area Size (solo semplice Throttle)</string>
     <string name="functionConsistSettings">Consistono Funzione Impostazioni</string>
     <string name="functionConsistColumnLabel">Etichetta</string>
@@ -792,5 +792,37 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Swipe attraverso il web?</string>
     <string name="prefSwipeThroughWebSummary">Includi schermata Web quando scorrendo tra le schermate.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Swipe attraverso il web disabilitato.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Dati mobili</string>
+    <string name="prefTurnMobileDataOnOffSummary">Attivare Mobile Data off all\'inizio del macchinista e di nuovo in a distanza.</string>
+    <string name="webViewButtonBar">Web View Pulsante</string>
+    <string name="webViewAction">Mostra / Nascondi Web View</string>
+    <string name="prefWebViewButtonSummary">Visualizza Mostra Nascondi Web pulsante Visualizza / nella barra di azione? \\n(richiede \'acceleratore Web View\' preferenza da abilitare)</string>
+    <string name="prefWebViewButtonTitle">Mostra / Nascondi Web pulsante Vista?</string>
+    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsWriteSettings">Engine Driver ha bisogno Scrivere i settings autorizzazioni per modificare la luminosità dello schermo.</string>
+    <string name="permissionsSystemSettingsButton">Impostazioni di sistema</string>
+    <string name="prefCategoryDevicePageTitle">preferenze dei dispositivi</string>
+    <string name="prefFeedbackOnDisconnectTitle">Feedback su Disconnect</string>
+    <string name="prefFeedbackOnDisconnectSummary">Riproduci suono e vibrazione sulla disconnessione inaspettata.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">sfondo Alert</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">avviso sonoro quando l\'applicazione viene inviato al fondo.</string>
+    <string name="prefHapticFeedbackTitle">feedback tattile</string>
+    <string name="prefHapticFeedbackSummary">feedback tattile su cambi di velocità.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Swipe Area Disabilita tutto schermo</string>
+    <string name="prefFullScreenSwipeAreaSummary">Se selezionato, solo la barra degli strumenti può essere strisciato agli schermi di cambiamento</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Preferenze sinistra / destra Swipe</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Opzioni per fendenti agli schermi di cambiamento</string>
+    <string name="prefHapticFeedbackDurationTitle">Haptic feedback Durata</string>
+    <string name="prefHapticFeedbackDurationSummary">Durata di ogni vibrazione (in millisecondi).</string>
+    <string name="LocoSelectMethodIDNGo">Richiedi Loco ID</string>
+    <string name="idngo_label">Richiedi Loco ID</string>
+    <string name="idngo_button">Richiedi Loco ID</string>
+    <string name="idngo_help_text">Premere il pulsante per inviare una richiesta al server per identificare e acquisire la locomotiva già sul binario di programmazione e restituire il valore a questo gas.</string>
+    <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Fare clic sul pulsante qui sotto - Concedere l\'autorizzazione - Clicca \'Indietro\' di tornare qui...</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorare questo se si don \\ \'t bisogno Engine Driver di modificare la luminosità.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver ha bisogno di autorizzazioni ACCESS_FINE_LOCATION recuperare SSID corrente della connessione Wi-Fi.</string>
 
 </resources>
