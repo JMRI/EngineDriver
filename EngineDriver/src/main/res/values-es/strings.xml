@@ -625,11 +625,11 @@
     <string name="prefImportExportErrorReadingList">Error leyendo la lista de conexiones recientes:</string>
     <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'engine_driver/%1$s\'! No has guardado la preferencias para este host.</string>
     <string name="prefImportExportErrorNotConnected">No cenectado a un host.</string>
-    <string name="logViewerTitle">Actividad en visualizador de Log | Nombre de controlador: %1$s</string>
+    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">DELANTERA</string>
-    <string name="ConsistEditLabelTrail">TRASERA</string>
+    <string name="ConsistEditLabelTrail">SENDERO</string>
 
     <string name="prefConsistFollowRuleStyleTitle">Funciones de tracción múltiple: sigue el estilo de la regla</string>
     <string name="prefConsistFollowRuleStyleSummary" tools:ignore="Typos">Qué estilo de reglas a seguir de tracción múltiple cuando se presionan las teclas de funcion.</string>
@@ -848,4 +848,31 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Deslizar a través de la Web?</string>
     <string name="prefSwipeThroughWebSummary">Incluir pantalla Web cuando deslizar entre las pantallas.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Swipe a través de la web deshabilitado.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Datos móviles</string>
+    <string name="prefTurnMobileDataOnOffSummary">Convertir datos móviles fuera al comienzo del controlador del motor y volver a encender en el cierre.</string>
+    <string name="webViewButtonBar">Vista Web Button</string>
+    <string name="webViewAction">Mostrar / Ocultar vista Web</string>
+    <string name="prefWebViewButtonSummary">La pantalla muestra el botón Ocultar / Web Ver en la barra de acción? \\ n(requiere \'acelerador Web\' preferencia a estar habilitado)</string>
+    <string name="prefWebViewButtonTitle">Mostrar / Ocultar el botón Web?</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsSystemSettingsButton">Ajustes del sistema</string>
+    <string name="prefCategoryDevicePageTitle">de preferencias del dispositivo</string>
+    <string name="prefFeedbackOnDisconnectTitle">Retroalimentación sobre Desconectar</string>
+    <string name="prefFeedbackOnDisconnectSummary">Reproducir sonido y vibración en desconexión inesperada.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de fondo</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">alerta audible cuando la aplicación se envía al fondo.</string>
+    <string name="prefHapticFeedbackTitle">Respuesta táctil</string>
+    <string name="prefHapticFeedbackSummary">retroalimentación háptica en los cambios de velocidad.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Desactivar pantalla completa Área Flagelo</string>
+    <string name="prefFullScreenSwipeAreaSummary">Si está marcada, sólo la barra de herramientas puede pasarse para pantallas de cambio</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Preferencias izquierda / derecha Swipe</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Las opciones para golpes a las pantallas de cambio</string>
+    <string name="prefHapticFeedbackDurationTitle">Comentarios háptica Duración</string>
+    <string name="prefHapticFeedbackDurationSummary">Duración de cada vibración (en milisegundos).</string>
+    <string name="LocoSelectMethodIDNGo">Solicitar Loco ID</string>
+    <string name="idngo_label">Solicitar Loco ID</string>
+    <string name="idngo_button">Solicitar Loco ID</string>
+    <string name="idngo_help_text">pulse el botón para enviar una petición al servidor para identificar y adquirir la locomotora que ya están en la vía de programación y devolver el valor a este acelerador.</string>
 </resources>

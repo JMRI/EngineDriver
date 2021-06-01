@@ -857,7 +857,7 @@
     <string name="prefAllowMobileDataTitle">Autoriser la connexion Data</string>
     <string name="prefAllowMobileDataSummary">Laissez votre appareil de se connecter à JMRI sur Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de touches de fonctions (0-4) affichees sur egulateur simple.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Nombre de touches de fonctions (0-4) affichees sur egulateur simple.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Taille zone touches de fonctions (regulateur simple)</string>
     <string name="functionConsistSettings">Réglage Unité Multiple</string>
     <string name="functionConsistColumnLabel">Libellé</string>
@@ -878,5 +878,31 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Feuilletez Web?</string>
     <string name="prefSwipeThroughWebSummary">Inclure l\'écran Web lorsque glisser entre les écrans.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Feuilletez web désactivé.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Données mobiles</string>
+    <string name="prefTurnMobileDataOnOffSummary">Transformez vos données mobiles hors au début du pilote moteur et retour sur à proximité.</string>
+    <string name="webViewButtonBar">Web Bouton Afficher</string>
+    <string name="webViewAction">Afficher / Masquer Web Voir</string>
+    <string name="prefWebViewButtonSummary">Afficher bouton Afficher / Masquer Web Afficher dans la barre d\'action? \\n(nécessite « accélérateur Web View » préférence être activé)</string>
+    <string name="prefWebViewButtonTitle">Bouton Afficher / Masquer Web View?</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="prefCategoryDevicePageTitle">Préférences d\'unité</string>
+    <string name="prefFeedbackOnDisconnectTitle">Commentaires sur Déconnecter</string>
+    <string name="prefFeedbackOnDisconnectSummary">Lire le son et vibrent à la déconnexion inattendue.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">contexte alerte</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Alerte sonore lorsque l\'application est envoyé à l\'arrière-plan.</string>
+    <string name="prefHapticFeedbackTitle">haptique</string>
+    <string name="prefHapticFeedbackSummary">retour haptique sur les changements de vitesse.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Désactiver plein écran Swipe Zone</string>
+    <string name="prefFullScreenSwipeAreaSummary">Si elle est cochée, seule la barre d\'outils peut être glissée sur les écrans de changement</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Préférences Gauche / Droite Swipe</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Options pour les écrans à grands coups de changement</string>
+    <string name="prefHapticFeedbackDurationTitle">Haptique Durée Feedback</string>
+    <string name="prefHapticFeedbackDurationSummary">Durée de chaque vibration (en millisecondes).</string>
+    <string name="LocoSelectMethodIDNGo">Demande ID Loco</string>
+    <string name="idngo_label">Demande ID Loco</string>
+    <string name="idngo_button">Demande ID Loco</string>
+    <string name="idngo_help_text">Appuyez sur le bouton pour envoyer une demande au serveur pour identifier et acquérir la loco déjà sur la piste de programmation et retourner la valeur à cette manette des gaz.</string>
 
 </resources>

@@ -839,7 +839,7 @@
     <string name="prefAllowMobileDataTitle">Lassen Sie mobile Datenverbindung</string>
     <string name="prefAllowMobileDataSummary">Lassen Sie das Gerät JMRI über Mobile Daten verbinden.</string>
     <string name="toastPreferencesChangedForceWiFi">Erzwungene WiFi Präferenz geändert.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Anzahl der Funktionstasten (0-4) auf dem Simple Gas Layout zu zeigen.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Anzahl der Funktionstasten (0-4) auf dem Simple Gas Layout zu zeigen.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funktionen Bereich Größe (Simple Nur Gas)</string>
     <string name="functionConsistSettings">Consist Funktionseinstellungen</string>
     <string name="functionConsistColumnLabel">Etikette</string>
@@ -848,7 +848,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">keiner</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">Rast</string>
     <string name="prefFunctionConsistLocosDefaultValue">führen</string>
-    <string name="functionConsistHelpText">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
+    <string name="functionConsistHelpText" tools:ignore="Typos">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
     <string name="functionConsistHeader">Consist Funktion Aktionen</string>
     <string name="app_name_consist_functions">Consist Funktionseinstellungen - Lokomotivführer</string>
     <string name="prefShowTimeOnLogEntryTitle">Zeige Zeitstempel auf Log</string>
@@ -860,5 +860,37 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Swipe durch Web?</string>
     <string name="prefSwipeThroughWebSummary">Fügen Sie Web-Bildschirm, wenn zwischen den Bildschirmen klauen.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Swipe durch Web deaktiviert.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Mobile Daten</string>
+    <string name="prefTurnMobileDataOnOffSummary">Schalten Mobile Data off am Anfang der Lokomotivführer und wieder zu schließen.</string>
+    <string name="webViewButtonBar">Web View-Taste</string>
+    <string name="webViewAction">Show / Hide Webansicht</string>
+    <string name="prefWebViewButtonTitle">Show / Hide Web View-Taste?</string>
+    <string name="prefWebViewButtonSummary">Anzeigen Show / Hide Webansicht Schaltfläche in der Aktionsleiste? \\ n(erfordert \'Drosselklappen Webansicht Präferenz aktiviert sein)</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsWriteSettings">Engine Driver muss Berechtigungen WRITE EINStELLUNGEN Helligkeit ändern.</string>
+    <string name="permissionsSystemSettingsButton">Systemeinstellungen</string>
+    <string name="prefThrottleSwitchButtonPreferencesTitle">Drosselklappenschalter-Knopf Voreinstellungen</string>
+    <string name="prefCategoryDevicePageTitle">Geräteeinstellungen</string>
+    <string name="prefFeedbackOnDisconnectTitle">Feedback zu trennen</string>
+    <string name="prefFeedbackOnDisconnectSummary">Wiedergabe starten und Vibrieren auf unerwartete trennen.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Hintergrund Alarm</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Akustischer Alarm, wenn die App in den Hintergrund gesendet wird.</string>
+    <string name="prefHapticFeedbackTitle">haptisches Feedback</string>
+    <string name="prefHapticFeedbackSummary">Haptisches Feedback auf Geschwindigkeitsänderungen.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Disable Vollbild Swipe Gebiet</string>
+    <string name="prefFullScreenSwipeAreaSummary">Wenn diese Option aktiviert, kann nur die Symbolleiste ändern Bildschirme geklaut werden</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Links / Rechts Swipe Preferences</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Optionen für Seitenhiebe zu ändern Bildschirme</string>
+    <string name="prefHapticFeedbackDurationTitle">Haptisches Feedback Dauer</string>
+    <string name="prefHapticFeedbackDurationSummary">Dauer jeder Schwingung (in Millisekunden).</string>
+    <string name="LocoSelectMethodIDNGo">Anfordern Loco ID</string>
+    <string name="idngo_label">Anfordern Loco ID</string>
+    <string name="idngo_button">Anfordern Loco ID</string>
+    <string name="idngo_help_text">Drücken Sie die Taste eine Anfrage an den Server zu identifizieren und zu erwerben, die Lok bereits auf dem Programmiergleis und gibt den Wert an diese Drossel zu senden.</string>
+    <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Klicken Sie den Button. - die Erlaubnis erteilen. - Klicken Sie auf \\\'Zurück \\‘ hier zurückzukehren...</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorieren Sie diese, wenn Sie don\\\'t Notwendigkeit Lokomotivführer, um die Helligkeit zu verändern.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver muss ACCESS_FINE_LOCATION Berechtigungen aktuelle WLAN SSID abzurufen.</string>
 
 </resources>

@@ -646,7 +646,7 @@
     <string name="permissionsReadPhoneState">Engine Driver precisa de permissões PHONE para pausar as operações quando estiver em uma chamada.</string>
     <string name="permissionsReadFunctionSettings">Engine Driver precisa de permissões STORAGE para ler as configurações das funções.</string>
     <string name="permissionsStoreFunctionSettings">Engine Driver precisa de permissões STORAGE para armazenar configurações de função.</string>
-    <string name="permissionsVIBRATE">Motorista do motor precisa de permissões vibrar para fornecer feedback adicional.</string>
+    <string name="permissionsVIBRATE">Engine Driver precisa de permissões vibrar para fornecer feedback adicional.</string>
     <string name="permissionsConnectToServer">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes e permissões PHONE para pausar operações quando em uma chamada.</string>
     <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>
     <string name="permissionsAppSettingsButton">Configurações do aplicativo</string>
@@ -741,7 +741,7 @@
     <string name="dialogResetPreferencesQuestion">Confirme que deseja redefinir todas as preferências. \nTodas as preferências atuais serão perdidos.</string>
     <string name="dialogConfirmImportPreferencesTitle">Preferências de importação</string>
     <string name="dialogImportPreferencesQuestion">Confirme que deseja preferências de importação. \nTodas as preferências atuais serão perdidos.</string>
-    <string name="permissionsReadImages">Motorista do motor precisa de permissões de armazenamento para imagens de fundo carga.</string>
+    <string name="permissionsReadImages">Engine Driver precisa de permissões de armazenamento para imagens de fundo carga.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Nenhuma imagem foi selecionada</string>
     <string name="prefBackgroundImageFileNameSummary">Digite o nome do arquivo de imagem de fundo.</string>
     <string name="prefBackgroundImageFileNameTitle">Fundo Nome do Arquivo de Imagem</string>
@@ -775,7 +775,7 @@
     <string name="prefAllowMobileDataTitle">Permitir conexão de dados móveis</string>
     <string name="prefAllowMobileDataSummary">Permitir que o dispositivo se conectar a JMRI sobre Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">Forçado preferência WiFi alterado.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Número de botões de função (0-4) para mostrar no layout do acelerador simples.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Número de botões de função (0-4) para mostrar no layout do acelerador simples.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funções Área Tamanho (somente simples do acelerador)</string>
     <string name="functionConsistSettings">Consistem configurações de funções</string>
     <string name="functionConsistColumnLabel">Rótulo</string>
@@ -796,5 +796,37 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Passe através da Web?</string>
     <string name="prefSwipeThroughWebSummary">Incluir tela Web Ao passar entre as telas.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Passe através da web desativado.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Dados móveis</string>
+    <string name="prefTurnMobileDataOnOffSummary">Vire Mobile Data off no início do Motor Motorista e voltar no próximo.</string>
+    <string name="webViewButtonBar">Web View Botão</string>
+    <string name="webViewAction">Show / Hide Vista Web</string>
+    <string name="prefWebViewButtonTitle">Show / Hide botão Web View?</string>
+    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
+    <string name="prefWebViewButtonSummary">Mostrar Mostrar Esconder botão / Web Ver na barra de ação? \\ n(requer \'acelerador Web View\' preferência a ser ativado)</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsWriteSettings">Engine Driver precisa de definições de permissões WRITE para mudar o brilho da tela.</string>
+    <string name="permissionsSystemSettingsButton">Configurações do sistema</string>
+    <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
+    <string name="prefFeedbackOnDisconnectTitle">Comentários sobre Disconnect</string>
+    <string name="prefFeedbackOnDisconnectSummary">Reproduzir som e vibrar em desconexão inesperada.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta fundo</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">alerta sonoro quando o aplicativo é enviado para o fundo.</string>
+    <string name="prefHapticFeedbackTitle">haptic feedback</string>
+    <string name="prefHapticFeedbackSummary">haptic feedback sobre as mudanças de velocidade.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Desativar tela cheia Área Swipe</string>
+    <string name="prefFullScreenSwipeAreaSummary">Se marcada, somente a barra de ferramentas pode ser fraudado para telas de mudança</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Preferências Esquerda / Direita Swipe</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Opções para furtos a telas de mudança</string>
+    <string name="prefHapticFeedbackDurationTitle">Haptic feedback Duração</string>
+    <string name="prefHapticFeedbackDurationSummary">Duração de cada vibração (em milissegundos).</string>
+    <string name="LocoSelectMethodIDNGo">Solicitar Loco ID</string>
+    <string name="idngo_label">Solicitar Loco ID</string>
+    <string name="idngo_button">Solicitar Loco ID</string>
+    <string name="idngo_help_text">Pressione o botão para enviar um pedido ao servidor para identificar e adquirir o loco já no caminho de programação e retornar o valor para este acelerador.</string>
+    <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Clique no botão abaixo - Conceder a permissão - Clique em \'Voltar\' para voltar aqui...</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorar esta se você don\\\'t \'Engine Driver necessidade do motor para alterar o brilho.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver do motor precisa de permissões ACCESS_FINE_LOCATION para recuperar SSID wi-fi atual.</string>
 
 </resources>

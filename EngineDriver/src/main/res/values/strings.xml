@@ -974,7 +974,7 @@
     <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\\\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
@@ -1080,7 +1080,7 @@
     <string name="hostTextButton" translatable="false">Aa..</string>
 
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions Area Size (Simple Throttle only)</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Number of Function Buttons (0-4) to show on the Simple Throttle layout.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
 
     <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log</string>

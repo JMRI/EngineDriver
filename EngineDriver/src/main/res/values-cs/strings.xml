@@ -15,7 +15,7 @@
 
       translations provided by Petr Šídlo
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Konec</string>
     <string name="settings">Nastavení funkcí</string>
     <string name="fb_label">Funkce štítek</string>
@@ -36,8 +36,6 @@
     <string name="app_name_turnouts">Výhybky – Engine Driver</string>
     <string name="app_name_turnouts_short">Výhybky</string>
     <string name="app_name_about">O aplikaci – Engine Driver</string>
-    <string name="app_name_web">Web – Engine Driver</string>
-    <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Výchozí nastavení funkcí – Engine Driver</string>
     <string name="app_name_preferences">Předvolby – Engine Driver</string>
     <string name="app_name_select_loco">Vybrat/Vzdát se Lokomotivy – Engine Driver</string>
@@ -1043,7 +1041,7 @@
     <string name="prefAllowMobileDataTitle">Povolit připojení k mobilní datové přenosy</string>
     <string name="prefAllowMobileDataSummary">Aby vaše zařízení připojit k JMRI přes mobilní datové přenosy.</string>
     <string name="toastPreferencesChangedForceWiFi">Nucený WiFi preference změnit.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Počet funkčních tlačítek (0-4), které chcete zobrazit na Simple škrticí uspořádání.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Počet funkčních tlačítek (0-4), které chcete zobrazit na Simple škrticí uspořádání.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funkce Area Size (pouze jednoduchá škrticí klapky)</string>
     <string name="functionConsistSettings">Skládat nastavení funkcí</string>
     <string name="functionConsistColumnLabel">Označení</string>
@@ -1064,5 +1062,26 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Přejeďte přes web?</string>
     <string name="prefSwipeThroughWebSummary">Zahrnout obrazovku webového při umisťování mezi obrazovkami.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Přejeďte přes web zakázán.</string>
+    <string name="prefTurnMobileDataOnOffTitle">Dades mòbils</string>
+    <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="prefFeedbackOnDisconnectTitle">Zpětná vazba na Odpojit</string>
+    <string name="prefFeedbackOnDisconnectSummary">Přehrát zvuk a vibrovat na nečekaném odpojení.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Alert pozadí</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Zvukový signál, když je aplikace poslán do pozadí.</string>
+    <string name="prefHapticFeedbackTitle">Hmatová zpětná vazba</string>
+    <string name="prefHapticFeedbackSummary">Hmatová odezva na změny rychlosti.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Zakázat Full Screen Swipe Area</string>
+    <string name="prefFullScreenSwipeAreaSummary">Je-li zaškrtnuto, pouze panel nástrojů může být udeřil ke změně obrazovek</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Left / Right Swipe Preferences</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Možnosti ohání ke změně obrazovek</string>
+    <string name="prefHapticFeedbackDurationTitle">Hmatová odezva Trvání</string>
+    <string name="prefHapticFeedbackDurationSummary">Trvání každého vibrací (v milisekundách).</string>
+    <string name="LocoSelectMethodIDNGo">Vyžádat Loco ID</string>
+    <string name="idngo_label">Vyžádat Loco ID</string>
+    <string name="idngo_button">Vyžádat Loco ID</string>
+    <string name="idngo_help_text">Stisknutím tlačítka odeslat požadavek na server k identifikaci a získání lokomotiva již na programovací koleji a vrátí hodnotu tohoto plynu.</string>
 
 </resources>

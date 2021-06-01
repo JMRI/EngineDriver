@@ -13,7 +13,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
       translations provided by Luis Zamora (eldelinux)
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Sortir</string>
     <string name="settings">Funcions per defecte</string>
     <string name="fb_label">Etiquetes de funcions</string>
@@ -838,7 +838,7 @@
     <string name="prefAllowMobileDataSummary">Permetre que el dispositiu es connecti a JMRI sobre dades mòbils.</string>
     <string name="toastPreferencesChangedForceWiFi">Forçat preferència WiFi va canviar.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funcions Talla de la zona (només simple de l\\\'accelerador)</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">Nombre de botons de funció (0-4) per mostrar en el disseny de l\'accelerador simple.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Nombre de botons de funció (0-4) per mostrar en el disseny de l\'accelerador simple.</string>
     <string name="functionConsistSettings">Consistir en ajustos de les funcions</string>
     <string name="functionConsistColumnLabel">etiqueta</string>
     <string name="functionConsistColumnLocos">Boig (s)</string>
@@ -858,5 +858,25 @@
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeThroughWebTitle">Lliscar a través del web?</string>
     <string name="prefSwipeThroughWebSummary">Incloure pantalla Web quan lliscar entre les pantalles.</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Swipe a través del web deshabilitat.</string>
+    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per a les imatges de fons de càrrega.</string>
+    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="prefCategoryDevicePageTitle">de preferències de dispositiu</string>
+    <string name="prefFeedbackOnDisconnectTitle">Retroalimentació sobre Desconnectar</string>
+    <string name="prefFeedbackOnDisconnectSummary">Reproduir so i vibració en desconnexió inesperada.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de fons</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">alerta audible quan l\'aplicació s\'envia a fons.</string>
+    <string name="prefHapticFeedbackTitle">Resposta tàctil</string>
+    <string name="prefHapticFeedbackSummary">retroalimentació hàptica en els canvis de velocitat.</string>
+    <string name="prefFullScreenSwipeAreaTitle">Desactivar pantalla completa Àrea Flagel</string>
+    <string name="prefFullScreenSwipeAreaSummary">Si està marcada, només la barra d\'eines pot passar-se per a pantalles de canvi</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Preferències esquerra / dreta Swipe</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Les opcions per cops a les pantalles de canvi</string>
+    <string name="prefHapticFeedbackDurationTitle">Comentaris hàptica Durada</string>
+    <string name="prefHapticFeedbackDurationSummary">Durada de cada vibració (en milisegons).</string>
+    <string name="LocoSelectMethodIDNGo">Sol·licitar Boig ID</string>
+    <string name="idngo_label">Sol·licitar Boig ID</string>
+    <string name="idngo_button">Sol·licitar Boig ID</string>
+    <string name="idngo_help_text">premi el botó per enviar una petició a servidor per identificar i adquirir la locomotora que ja són a la via de programació i tornar el valor a aquest accelerador.</string>
 
 </resources>
