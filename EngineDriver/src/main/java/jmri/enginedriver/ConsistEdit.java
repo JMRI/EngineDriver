@@ -153,6 +153,12 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         char com2 = response_str.charAt(2);
                         if (com1 == 'M' && (com2 == '+' || com2 == '-'))
                             refreshConsistLists();
+
+                        String comA = response_str.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(comA)) {
+                            mainapp.setPowerStateButton(CEMenu);
+                        }
                     }
                     break;
                 case message_type.WIT_CON_RETRY:
@@ -303,6 +309,13 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        if (CEMenu != null) {
+            mainapp.displayFlashlightMenuButton(CEMenu);
+            mainapp.setFlashlightButton(CEMenu);
+            mainapp.displayPowerStateMenuButton(CEMenu);
+            mainapp.setPowerStateButton(CEMenu);
+        }
     }
 
     /**
@@ -332,6 +345,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         inflater.inflate(R.menu.consist_edit_menu, menu);
         CEMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(CEMenu);
+        mainapp.setFlashlightButton(CEMenu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -343,6 +360,16 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, CEMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(CEMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

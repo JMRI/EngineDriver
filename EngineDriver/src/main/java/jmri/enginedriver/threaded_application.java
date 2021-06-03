@@ -212,6 +212,11 @@ public class threaded_application extends Application {
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler preferences_msg_handler;
     public volatile Handler settings_msg_handler;
+    public volatile Handler logviewer_msg_handler;
+    public volatile Handler about_page_msg_handler;
+    public volatile Handler function_settings_msg_handler;
+    public volatile Handler function_consist_settings_msg_handler;
+    public volatile Handler gamepad_test_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -2558,6 +2563,18 @@ public class threaded_application extends Application {
         }
     }
 
+    public void powerControlNotAllowedDialog(Menu pMenu) {
+        AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
+        b.setMessage(getApplicationContext().getResources().getString(R.string.powerWillNotWork));
+        b.setCancelable(true);
+        b.setNegativeButton("OK", null);
+        AlertDialog alert = b.create();
+        alert.show();
+        displayPowerStateMenuButton(pMenu);
+    }
+
     public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
         if (prefs.getBoolean(swipePreferenceToCheck, false)) {
             menu.findItem(R.id.throttle_button_mnu).setVisible(false);
@@ -2856,6 +2873,30 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(select_loco_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(settings_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(logviewer_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(about_page_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(function_settings_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(function_consist_settings_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(gamepad_test_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
     }

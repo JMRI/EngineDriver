@@ -31,12 +31,6 @@
         android:visible="false"
         app:showAsAction="always" />
 
-<!--    <item android:id="@+id/separator"
-        android:title="──────────"
-        android:visible="true"
-        app:showAsAction="never"
-        android:enabled="false"/>-->
-
     <item android:id="@+id/throttle_mnu" android:title="@string/throttle" />
     <item android:id="@+id/turnouts_mnu" android:title="@string/turnouts" />
     <item android:id="@+id/web_mnu" android:title="@string/web" />

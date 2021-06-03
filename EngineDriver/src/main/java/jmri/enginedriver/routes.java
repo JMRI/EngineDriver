@@ -597,7 +597,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 mainapp.sendEStopMsg();
                 return true;
             case R.id.power_layout_button:
-                mainapp.powerStateMenuButton();
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(RMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, RMenu);

@@ -5374,6 +5374,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         TMenu = menu;
         mainapp.actionBarIconCountThrottle=0;
         mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setPowerMenuOption(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
         mainapp.setFlashlightButton(menu);
         mainapp.displayThrottleSwitchMenuButton(menu);
         mainapp.displayWebViewMenuButton(menu);
@@ -5457,15 +5460,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
-                    AlertDialog.Builder b = new AlertDialog.Builder(this);
-                    b.setIcon(android.R.drawable.ic_dialog_alert);
-                    b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
-                    b.setMessage(getApplicationContext().getResources().getString(R.string.powerWillNotWork));
-                    b.setCancelable(true);
-                    b.setNegativeButton("OK", null);
-                    AlertDialog alert = b.create();
-                    alert.show();
-                    mainapp.displayPowerStateMenuButton(TMenu);
+                    mainapp.powerControlNotAllowedDialog(TMenu);
                 } else {
                     mainapp.powerStateMenuButton();
                 }

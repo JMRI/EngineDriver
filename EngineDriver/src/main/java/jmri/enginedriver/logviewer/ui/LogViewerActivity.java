@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -98,6 +101,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         logReaderTask.execute();
 
+        //put pointer to this activity's handler in main app's shared variable
+        mainapp.logviewer_msg_handler = new logviewer_handler();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -123,6 +129,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
         }
+
+        if (AMenu != null) {
+            mainapp.displayFlashlightMenuButton(AMenu);
+            mainapp.setFlashlightButton(AMenu);
+//            mainapp.displayPowerStateMenuButton(AMenu);
+//            mainapp.setPowerStateButton(AMenu);
+        }
     }
 
     @Override
@@ -130,6 +143,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.logviewer_menu, menu);
         mainapp.displayEStop(menu);
+        AMenu = menu;
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return  super.onCreateOptionsMenu(menu);
     }
@@ -141,6 +159,16 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, AMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(AMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -169,6 +197,27 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //
 //        }
 //    }
+
+    @SuppressLint("HandlerLeak")
+    class logviewer_handler extends Handler {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case message_type.RESPONSE: {    //handle messages from WiThrottle server
+                    String s = msg.obj.toString();
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(AMenu);
+                        }
+                    }
+                    break;
+                }
+
+            }
+        }
+    }
 
     public class save_button_listener implements View.OnClickListener {
         public void onClick(View v) {

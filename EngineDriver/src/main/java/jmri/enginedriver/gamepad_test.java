@@ -25,6 +25,8 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -66,7 +68,7 @@ import static android.view.KeyEvent.KEYCODE_X;
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu CLEMenu;
+    private Menu GPTMenu;
 
     private GestureDetector myGesture;
 
@@ -776,6 +778,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             skipButton.setOnClickListener(skip_click_listener);
         }
 
+        //put pointer to this activity's handler in main app's shared variable
+        mainapp.gamepad_test_msg_handler = new gamepad_test_handler();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -788,11 +793,16 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public void onResume() {
         super.onResume();
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (CLEMenu != null) {
-            mainapp.displayEStop(CLEMenu);
+        if (GPTMenu != null) {
+            mainapp.displayEStop(GPTMenu);
+            mainapp.displayFlashlightMenuButton(GPTMenu);
+            mainapp.setFlashlightButton(GPTMenu);
+            mainapp.displayPowerStateMenuButton(GPTMenu);
+            mainapp.setPowerStateButton(GPTMenu);
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
     }
 
     /**
@@ -823,8 +833,13 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.gamepad_test, menu);
-        CLEMenu = menu;
-        //mainapp.displayEStop(menu);
+        GPTMenu = menu;
+        mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
+
         return  super.onCreateOptionsMenu(menu);
     }
 
@@ -836,8 +851,39 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
                 return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, GPTMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(GPTMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    class gamepad_test_handler extends Handler {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case message_type.RESPONSE: {    //handle messages from WiThrottle server
+                    String s = msg.obj.toString();
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(GPTMenu);
+                        }
+                    }
+                    break;
+                }
+
+            }
         }
     }
 

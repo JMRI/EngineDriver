@@ -228,9 +228,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
-//        if (SAMenu != null) {
-//            mainapp.displayEStop(SAMenu);
-//        }
+        if (SAMenu != null) {
+            mainapp.displayEStop(SAMenu);
+            mainapp.displayFlashlightMenuButton(SAMenu);
+            mainapp.setFlashlightButton(SAMenu);
+            mainapp.displayPowerStateMenuButton(SAMenu);
+            mainapp.setPowerStateButton(SAMenu);
+        }
 
 //        mainapp.applyTheme(this,true);
 
@@ -513,6 +517,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public void handleMessage(Message msg) {
 // //            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
+                case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
+                    String response_str = msg.obj.toString();
+                    if (response_str.length() >= 3) {
+                        char com1 = response_str.charAt(0);
+                        char com2 = response_str.charAt(2);
+
+                        String comA = response_str.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(comA)) {
+                            mainapp.setPowerStateButton(SAMenu);
+                        }
+                    }
+                    break;
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File Found");
                     loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
@@ -679,6 +696,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         inflater.inflate(R.menu.settings_menu, menu);
         SAMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -690,6 +711,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, SAMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(SAMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

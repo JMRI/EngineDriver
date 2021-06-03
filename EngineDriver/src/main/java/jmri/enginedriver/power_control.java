@@ -172,6 +172,8 @@ public class power_control extends AppCompatActivity {
 
         if (PMenu != null) {
             mainapp.displayEStop(PMenu);
+            mainapp.displayFlashlightMenuButton(PMenu);
+            mainapp.setFlashlightButton(PMenu);
         }
         //update power state
         refresh_power_control_view();
@@ -198,6 +200,9 @@ public class power_control extends AppCompatActivity {
         inflater.inflate(R.menu.power_menu, menu);
         PMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(PMenu);
+        mainapp.setFlashlightButton(PMenu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -208,6 +213,16 @@ public class power_control extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, PMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(PMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
