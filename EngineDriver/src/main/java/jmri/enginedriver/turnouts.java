@@ -924,7 +924,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.sendEStopMsg();
                 return true;
             case R.id.power_layout_button:
-                mainapp.powerStateMenuButton();
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(TuMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TuMenu);

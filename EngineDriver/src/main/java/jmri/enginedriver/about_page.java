@@ -20,6 +20,8 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -96,6 +98,9 @@ public class about_page extends AppCompatActivity {
         WebView webview = findViewById(R.id.about_webview);
         webview.loadUrl(getApplicationContext().getResources().getString(R.string.about_page_url));
 
+        //put pointer to this activity's handler in main app's shared variable
+        mainapp.about_page_msg_handler = new about_page_handler();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -120,6 +125,10 @@ public class about_page extends AppCompatActivity {
 
         if (AMenu != null) {
             mainapp.displayEStop(AMenu);
+            mainapp.displayFlashlightMenuButton(AMenu);
+            mainapp.setFlashlightButton(AMenu);
+            mainapp.displayPowerStateMenuButton(AMenu);
+            mainapp.setPowerStateButton(AMenu);
         }
     }
 
@@ -129,6 +138,10 @@ public class about_page extends AppCompatActivity {
         inflater.inflate(R.menu.about_menu, menu);
         AMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(AMenu);
+        mainapp.setFlashlightButton(AMenu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -140,6 +153,16 @@ public class about_page extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, AMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(AMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -155,6 +178,27 @@ public class about_page extends AppCompatActivity {
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    @SuppressLint("HandlerLeak")
+    class about_page_handler extends Handler {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case message_type.RESPONSE: {    //handle messages from WiThrottle server
+                    String s = msg.obj.toString();
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(AMenu);
+                        }
+                    }
+                    break;
+                }
+
+            }
+        }
     }
 
 }

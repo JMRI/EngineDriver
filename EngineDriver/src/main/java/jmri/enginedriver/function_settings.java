@@ -23,6 +23,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -160,6 +162,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             v.setText(getString(R.string.fs_edit_notice));
         }
 
+        //put pointer to this activity's handler in main app's shared variable
+        mainapp.function_settings_msg_handler = new function_settings_handler();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -182,6 +187,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         if (FMenu != null) {
             mainapp.displayEStop(FMenu);
+            mainapp.displayFlashlightMenuButton(FMenu);
+            mainapp.setFlashlightButton(FMenu);
+            mainapp.displayPowerStateMenuButton(FMenu);
+            mainapp.setPowerStateButton(FMenu);
         }
     }
 
@@ -211,6 +220,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         inflater.inflate(R.menu.function_settings_menu, menu);
         FMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -223,8 +236,39 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
                 return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, FMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(FMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    class function_settings_handler extends Handler {
+
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case message_type.RESPONSE: {    //handle messages from WiThrottle server
+                    String s = msg.obj.toString();
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(FMenu);
+                        }
+                    }
+                    break;
+                }
+
+            }
         }
     }
 

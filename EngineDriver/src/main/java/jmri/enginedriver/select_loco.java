@@ -367,6 +367,13 @@ public class select_loco extends AppCompatActivity {
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
 //                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
+                    if (response_str.length() >= 3) {
+                        String comA = response_str.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(comA)) {
+                            mainapp.setPowerStateButton(SMenu);
+                        }
+                    }
                     if (response_str.length() >= 1) {
                         char com1 = response_str.charAt(0);
                         if (com1 == 'R') {                                  //refresh labels when any roster response is received
@@ -1456,6 +1463,13 @@ public class select_loco extends AppCompatActivity {
         } else {
             rbRoster.setVisibility(View.GONE);
         }
+
+        if (SMenu != null) {
+            mainapp.displayFlashlightMenuButton(SMenu);
+            mainapp.setFlashlightButton(SMenu);
+            mainapp.displayPowerStateMenuButton(SMenu);
+            mainapp.setPowerStateButton(SMenu);
+        }
     }
 
     @Override
@@ -1477,6 +1491,10 @@ public class select_loco extends AppCompatActivity {
         inflater.inflate(R.menu.select_loco_menu, menu);
         SMenu = menu;
         mainapp.displayEStop(menu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -1488,6 +1506,16 @@ public class select_loco extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                return true;
+            case R.id.flashlight_button:
+                mainapp.toggleFlashlight(this, SMenu);
+                return true;
+            case R.id.power_layout_button:
+                if (!mainapp.isPowerControlAllowed()) {
+                    mainapp.powerControlNotAllowedDialog(SMenu);
+                } else {
+                    mainapp.powerStateMenuButton();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
