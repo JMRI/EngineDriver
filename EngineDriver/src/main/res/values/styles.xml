@@ -1085,11 +1085,12 @@
   <style name="ActionButton" parent="@android:style/Widget.ActionButton">
     <item name="android:minWidth">0dip</item>
     <item name="android:minHeight">0dip</item>
-    <item name="android:paddingLeft">2dip</item>
-    <item name="android:paddingRight">2dip</item>
+    <item name="android:drawablePadding">2dp</item>
+    <item name="android:paddingLeft">2dp</item>
+    <item name="android:paddingRight">2dp</item>
     <item name="android:scaleX">0.9</item>
     <item name="android:scaleY">0.9</item>
-    <item name="android:width">38dp</item>
+    <item name="android:width">46dp</item>
   </style>
 
   <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">
