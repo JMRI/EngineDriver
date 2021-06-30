@@ -790,7 +790,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, false);
                     bSels[throttleIndex].setEnabled(true);
-                    bRevs[throttleIndex].setEnabled(true);
+                    enable_disable_buttons(throttleIndex, false);
                 }
                 mainapp.setToolbarTitle(toolbar,
                         getApplicationContext().getResources().getString(R.string.app_name),
