@@ -948,6 +948,15 @@
     <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
     <string name="prefKidsTimerResetPasswordDefaultValue" translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefKidsTimerEnableReverseTitle">Allow Reverse</string>
+    <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button.</string>
+
+    <string name="prefKidsTimerButtonTitle">Show Timer Button?</string>
+    <string name="prefKidsTimerButtonSummary">Display the Timer Button to activate the timer.</string>
+
+    <string name="prefKidsTimerButtonDefaultTitle">Default for Button</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the toollbar Button to activate the timer.</string>
+    <string name="prefKidsTimerButtonDefaultDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAllowMobileDataTitle">Allow Mobile Data connection</string>
     <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data.</string>

@@ -49,6 +49,12 @@
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/timer_button"
+        android:title="@string/kidsTimer"
+        android:icon="?attr/ed_timer_button"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/turnouts_mnu"
         android:title="@string/turnouts" />

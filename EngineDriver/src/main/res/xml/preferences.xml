@@ -1536,6 +1536,30 @@
                 android:maxLines="1"
                 android:layout="@layout/checkbox_no_icon" />
 
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefKidsTimerEnableReverseDefaultValue"
+                android:key="prefKidsTimerEnableReverse"
+                android:summary="@string/prefKidsTimerEnableReverseSummary"
+                android:title="@string/prefKidsTimerEnableReverseTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:icon="?attr/ed_timer_button"
+                android:defaultValue="@bool/prefKidsTimerButtonDefaultValue"
+                android:key="prefKidsTimerButton"
+                android:layout="@layout/checkbox_icon_right"
+                android:summary="@string/prefKidsTimerButtonSummary"
+                android:title="@string/prefKidsTimerButtonTitle" />
+
+            <ListPreference
+                android:defaultValue="@string/prefKidsTimerButtonDefaultDefaultValue"
+                android:entries="@array/prefKidsTimerEntries"
+                android:entryValues="@array/prefKidsTimerEntryValues"
+                android:key="prefKidsTimerButtonDefault"
+                android:summary="@string/prefKidsTimerButtonDefaultSummary"
+                android:title="@string/prefKidsTimerButtonDefaultTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
             <Preference
                 android:selectable="false"
                 android:enabled="true"

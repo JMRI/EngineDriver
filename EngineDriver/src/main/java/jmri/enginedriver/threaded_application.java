@@ -64,7 +64,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -309,6 +311,12 @@ public class threaded_application extends Application {
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+
+    public static final int KIDS_TIMER_DISABLED = 0;
+    public static final int KIDS_TIMER_STARTED = 1;
+    public static final int KIDS_TIMER_ENABLED = 2;
+    public static final int KIDS_TIMER_RUNNNING = 3;
+    public static final int KIDS_TIMER_ENDED = 999;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2719,6 +2727,7 @@ public class threaded_application extends Application {
                 }
             }
         } else {
+            menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
             setWebMenuOption(menu);
             setRoutesMenuOption(menu);
@@ -3185,17 +3194,28 @@ public class threaded_application extends Application {
 
     }
 
+    public void displayTimerMenuButton(Menu menu, int kidsTimerRunning) {
+        MenuItem mi = menu.findItem(R.id.timer_button);
+        if (mi == null) return;
+
+        if ((prefs.getBoolean("prefKidsTimerButton", false))
+            && !((kidsTimerRunning == KIDS_TIMER_RUNNNING) || (kidsTimerRunning == KIDS_TIMER_ENABLED)) ) {
+            actionBarIconCountThrottle++;
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+    }
+
     public void displayWebViewMenuButton(Menu menu) {
         MenuItem mi = menu.findItem(R.id.web_view_button);
         if (mi == null) return;
 
-
         String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
         String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
 
-
         if ( (prefs.getBoolean("prefWebViewButton", false))
-        && (!webViewLocation.equals(defaultWebViewLocation))){
+                && (!webViewLocation.equals(defaultWebViewLocation))){
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3690,6 +3710,20 @@ public class threaded_application extends Application {
 //            adjustToolbarButtonSpacing(toolbar);
         }
     }
+
+    public void hideSoftKeyboard(View view) {
+        // Check if no view has focus:
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void hideSoftKeyboardAfterDialog() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
 
 //    public void adjustToolbarButtonSpacing(Toolbar toolbar){
 //        Log.d("Engine_Driver", "ta: adjustToolbarButtonSpacing");

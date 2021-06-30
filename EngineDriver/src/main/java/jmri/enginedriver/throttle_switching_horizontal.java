@@ -792,7 +792,7 @@ public class throttle_switching_horizontal extends throttle {
 //            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
             setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
-            kidsTimerActions(KIDS_TIMER_STARTED,0);
+            kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
         }
     }
 
