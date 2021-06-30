@@ -1361,7 +1361,7 @@ public class threaded_application extends Application {
         }  //end of process_route_change
 
         //parse route list into appropriate app variable array
-        //  PRL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+        //  PRL[<SystemName><UserName><State>]repeat where state 1=Unknown,2=Active,4=Inactive,8=Inconsistent
         //  PRL]\[LT12}|{my12}|{1
         private void process_route_list(String response_str) {
 
