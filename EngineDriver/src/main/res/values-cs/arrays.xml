@@ -705,11 +705,11 @@
     
     
     <string-array name="prefThemeEntries">  <!-- display version -->
-        <item>Výchozí téma</item>
-        <item>Vysoký kontrast téma</item>
-        <item>Obrysy vysoký kontrast téma</item>
-        <item>Tmavé téma</item>
-        <item>Plnobarevné téma</item>
+        <item>Výchozí</item>
+        <item>Vysoký kontrast</item>
+        <item>Obrysy vysoký kontrast</item>
+        <item>Tmavé</item>
+        <item>Plnobarevné</item>
     </string-array>
 
 

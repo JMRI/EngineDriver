@@ -162,6 +162,27 @@
                                             tools:ignore="HardcodedText" />
 
                                         <TextView
+                                            android:id="@+id/direction_indicator_forward_0"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignTop="@id/speed_value_label_0"
+                                            android:layout_toLeftOf="@id/speed_value_label_0"
+                                            android:paddingTop="4dp"
+                                            android:text="@string/directionIndicatorForward"
+                                            android:textSize="14sp"
+                                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                                        <TextView
+                                            android:id="@+id/direction_indicator_reverse_0"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignBaseline="@id/speed_value_label_0"
+                                            android:layout_toLeftOf="@id/speed_value_label_0"
+                                            android:text="@string/directionIndicatorReverse"
+                                            android:textSize="14sp"
+                                            tools:ignore="HardcodedText,RtlHardcoded" />
+
+                                        <TextView
                                             android:id="@+id/volume_indicator_0"
                                             style="?attr/floating_text_style"
                                             android:layout_width="wrap_content"

@@ -60,7 +60,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsSlider"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
@@ -71,7 +71,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsSliderAndButtons"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
 
 
@@ -83,7 +83,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/introButtonsNoSlider"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
 
 

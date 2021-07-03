@@ -122,7 +122,6 @@
                                     android:layout_height="wrap_content"
                                     android:enabled="false"
                                     android:paddingLeft="2dp"
-                                    android:paddingRight="0dp"
                                     android:paddingTop="2dp"
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
@@ -134,10 +133,32 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="28sp"
                                     tools:ignore="RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_forward_0"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignTop="@id/speed_value_label_0"
+                                    android:layout_toLeftOf="@id/speed_value_label_0"
+                                    android:paddingTop="4dp"
+                                    android:text="@string/directionIndicatorForward"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_reverse_0"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/speed_value_label_0"
+                                    android:layout_toLeftOf="@id/speed_value_label_0"
+                                    android:text="@string/directionIndicatorReverse"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_0"
@@ -529,6 +550,27 @@
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
                                     tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_forward_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignTop="@id/speed_value_label_1"
+                                    android:layout_toLeftOf="@id/speed_value_label_1"
+                                    android:paddingTop="4dp"
+                                    android:text="@string/directionIndicatorForward"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_reverse_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/speed_value_label_1"
+                                    android:layout_toLeftOf="@id/speed_value_label_1"
+                                    android:text="@string/directionIndicatorReverse"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_1"
@@ -943,6 +985,27 @@
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
                                     tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_forward_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignTop="@id/speed_value_label_2"
+                                    android:layout_toLeftOf="@id/speed_value_label_2"
+                                    android:paddingTop="4dp"
+                                    android:text="@string/directionIndicatorForward"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
+
+                                <TextView
+                                    android:id="@+id/direction_indicator_reverse_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/speed_value_label_2"
+                                    android:layout_toLeftOf="@id/speed_value_label_2"
+                                    android:text="@string/directionIndicatorReverse"
+                                    android:textSize="14sp"
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_2"

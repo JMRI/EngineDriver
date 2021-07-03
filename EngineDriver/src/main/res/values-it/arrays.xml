@@ -141,11 +141,11 @@
     </string-array>
 
     <string-array name="prefThemeEntries">
-        <item>Tema Iniziale</item>
-        <item>Tema Alto Contrasto</item>
-        <item>Tema Bordi di Alto Contrasto</item>
-        <item>Tema Scuro</item>
-        <item>Tema dei colori</item>
+        <item>Iniziale</item>
+        <item>Alto Contrasto</item>
+        <item>Bordi di Alto Contrasto</item>
+        <item>Scuro</item>
+        <item>Dei colori</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Niente (Usare solo \'v\',\'1\')</item>

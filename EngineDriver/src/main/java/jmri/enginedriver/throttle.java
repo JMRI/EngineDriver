@@ -171,6 +171,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected TextView[] tvSpdLabs; // labels
     protected TextView[] tvSpdVals;
 
+    protected TextView[] tvDirectionIndicatorForwards;
+    protected TextView[] tvDirectionIndicatorReverses;
+
     protected TextView[] tvVols; // volume indicators
 
     protected TextView[] tvLeftDirInds; // direction indicators
@@ -1915,28 +1918,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
 
-        String prefix = "";
-        String suffix;
-        suffix = "    ";
         int dir = getDirection(whichThrottle);
+        if (tvDirectionIndicatorForwards[whichThrottle] != null) {   //not all layouts have the indicators
+            int showForword = View.GONE;
+            int showReverse = View.GONE;
 
-        if (speed > 0) {
-            if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
-                    || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
-                prefix = "◄ ";
-            } else {
-                suffix = " ►";
+            if (speed > 0) {
+                if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
+                        || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
+                    showForword = View.VISIBLE;
+                } else {
+                    showReverse = View.VISIBLE;
+                }
             }
+            tvDirectionIndicatorForwards[whichThrottle].setVisibility(showForword);
+            tvDirectionIndicatorReverses[whichThrottle].setVisibility(showReverse);
         }
+
         String sPrevScaleSpeed = (String) speed_label.getText();
-        if (sPrevScaleSpeed.substring(0,1).equals("◄")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(1,sPrevScaleSpeed.length());
-        } else if (sPrevScaleSpeed.substring(sPrevScaleSpeed.length()-1,sPrevScaleSpeed.length()).equals("►")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(0,sPrevScaleSpeed.length()-1);
-        }
-        sPrevScaleSpeed = sPrevScaleSpeed.trim();
         int prevScaleSpeed = Integer.parseInt( sPrevScaleSpeed );
-        speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
+        speed_label.setText(Integer.toString(scaleSpeed));
         mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
@@ -4422,6 +4423,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
         lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];

@@ -111,9 +111,13 @@ public class throttle_switching_left_or_right extends throttle {
             switch (throttleIndex) {
                 case 0:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
+                    tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
                     break;
                 case 1:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_1);
+                    tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_1);
                     break;
             }
 
