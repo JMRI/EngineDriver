@@ -1187,6 +1187,8 @@
         <item>prefCategoryWeb</item>
         <item>prefCategoryTurnouts</item>
 
+        <item>prefFeedbackWhenGoingToBackground</item>
+
     </string-array>
 
 </resources>

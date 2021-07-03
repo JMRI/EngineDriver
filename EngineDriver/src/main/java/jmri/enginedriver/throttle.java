@@ -787,7 +787,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void kidsTimerActions(int action, int arg) {
         switch (action) {
             case threaded_application.KIDS_TIMER_DISABLED:
-                speedUpdateAndNotify(0);
+                if (arg == 0) { // not onResume
+                    speedUpdateAndNotify(0);
+                }
                 if (kidsTimer!=null) kidsTimer.cancel();
                 kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -1825,7 +1827,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
-    }
+
+    } // end incrementSpeed
 
     protected void setAutoIncrementDecrement(int whichThrottle, int dir) {
         switch (dir) {
@@ -4941,8 +4944,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (kidsTimerRunning == threaded_application.KIDS_TIMER_ENDED) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             }
+
             if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,0);
+                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,1);
             }
         }
 
@@ -4961,7 +4965,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
-    }
+    } // end onResume
 
     private void showHideConsistMenus(){
         if (mainapp.consists==null) {
@@ -6066,7 +6070,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 });
         alert.show();
 
-    }
+    } // end showTimerPasswordDialog
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
