@@ -127,11 +127,11 @@
         <item>Auto Import nur beim Verbinden</item>
     </string-array>
     <string-array name="prefThemeEntries">
-        <item>Standard Motiv</item>
-        <item>Kontrastreiches Motiv</item>
-        <item>Kontrastreiches Hervorgehobenes Motiv</item>
-        <item>Dunkles Motiv</item>
-        <item>Farben Motiv</item>
+        <item>Standard</item>
+        <item>Kontrastreiches</item>
+        <item>Kontrastreiches Hervorgehobenes</item>
+        <item>Dunkles</item>
+        <item>Farben</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Keine (Benütze nur \'v\',\'1\')</item>

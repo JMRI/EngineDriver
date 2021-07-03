@@ -127,11 +127,11 @@
         <item>Auto importar tant sols al connectar</item>
     </string-array>
     <string-array name="prefThemeEntries">
-        <item>Tema per defecte</item>
-        <item>Tema d\'alt contrast</item>
-        <item>Tema de vores d\'alt contrast</item>
-        <item>Tema fosc</item>
-        <item>Tema de colors</item>
+        <item>Per defecte</item>
+        <item>D\'alt contrast</item>
+        <item>De vores d\'alt contrast</item>
+        <item>Fosc</item>
+        <item>De colors</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Cap (utilitza només \'v\',\'1\')</item>

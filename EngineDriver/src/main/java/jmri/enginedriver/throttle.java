@@ -171,6 +171,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected TextView[] tvSpdLabs; // labels
     protected TextView[] tvSpdVals;
 
+    protected TextView[] tvDirectionIndicatorForwards;
+    protected TextView[] tvDirectionIndicatorReverses;
+
     protected TextView[] tvVols; // volume indicators
 
     protected TextView[] tvLeftDirInds; // direction indicators
@@ -784,22 +787,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void kidsTimerActions(int action, int arg) {
         switch (action) {
             case threaded_application.KIDS_TIMER_DISABLED:
-                speedUpdateAndNotify(0);
-                if (kidsTimer!=null) kidsTimer.cancel();
-                kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    enable_disable_buttons(throttleIndex, false);
-                    bSels[throttleIndex].setEnabled(true);
-                    enable_disable_buttons(throttleIndex, false);
+                if (arg == 0) { // not onResume
+                    speedUpdateAndNotify(0);
+                    if (kidsTimer!=null) kidsTimer.cancel();
+                    kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                        enable_disable_buttons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(true);
+                        enable_disable_buttons(throttleIndex, false);
+                    }
+                    mainapp.setToolbarTitle(toolbar,
+                            getApplicationContext().getResources().getString(R.string.app_name),
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                            "");
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    }
+                    mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
-                mainapp.setToolbarTitle(toolbar,
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.app_name_throttle),
-                        "");
-                if (TMenu != null) {
-                    mainapp.setKidsMenuOptions(TMenu, true, 0);
-                }
-                mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 break;
 
             case threaded_application.KIDS_TIMER_ENABLED:
@@ -1822,7 +1827,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
-    }
+
+    } // end incrementSpeed
 
     protected void setAutoIncrementDecrement(int whichThrottle, int dir) {
         switch (dir) {
@@ -1915,28 +1921,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
 
-        String prefix = "";
-        String suffix;
-        suffix = "    ";
         int dir = getDirection(whichThrottle);
+        if (tvDirectionIndicatorForwards[whichThrottle] != null) {   //not all layouts have the indicators
+            int showForword = View.GONE;
+            int showReverse = View.GONE;
 
-        if (speed > 0) {
-            if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
-                    || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
-                prefix = "◄ ";
-            } else {
-                suffix = " ►";
+            if (speed > 0) {
+                if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
+                        || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
+                    showForword = View.VISIBLE;
+                } else {
+                    showReverse = View.VISIBLE;
+                }
             }
+            tvDirectionIndicatorForwards[whichThrottle].setVisibility(showForword);
+            tvDirectionIndicatorReverses[whichThrottle].setVisibility(showReverse);
         }
+
         String sPrevScaleSpeed = (String) speed_label.getText();
-        if (sPrevScaleSpeed.substring(0,1).equals("◄")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(1,sPrevScaleSpeed.length());
-        } else if (sPrevScaleSpeed.substring(sPrevScaleSpeed.length()-1,sPrevScaleSpeed.length()).equals("►")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(0,sPrevScaleSpeed.length()-1);
-        }
-        sPrevScaleSpeed = sPrevScaleSpeed.trim();
         int prevScaleSpeed = Integer.parseInt( sPrevScaleSpeed );
-        speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
+        speed_label.setText(Integer.toString(scaleSpeed));
         mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
@@ -4422,6 +4426,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
         lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -4938,8 +4944,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (kidsTimerRunning == threaded_application.KIDS_TIMER_ENDED) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             }
+
             if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,0);
+                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,1);
             }
         }
 
@@ -4958,7 +4965,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
-    }
+    } // end onResume
 
     private void showHideConsistMenus(){
         if (mainapp.consists==null) {
@@ -6063,7 +6070,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 });
         alert.show();
 
-    }
+    } // end showTimerPasswordDialog
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
