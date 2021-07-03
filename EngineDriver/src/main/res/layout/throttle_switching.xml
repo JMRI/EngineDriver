@@ -143,6 +143,7 @@
 
                                     <TextView
                                         android:id="@+id/direction_indicator_forward_0"
+                                        style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignTop="@id/speed_value_label_0"
@@ -154,6 +155,7 @@
 
                                     <TextView
                                         android:id="@+id/direction_indicator_reverse_0"
+                                        style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignBaseline="@id/speed_value_label_0"
@@ -817,6 +819,7 @@
 
                                     <TextView
                                         android:id="@+id/direction_indicator_forward_1"
+                                        style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignTop="@id/speed_value_label_1"
@@ -828,6 +831,7 @@
 
                                     <TextView
                                         android:id="@+id/direction_indicator_reverse_1"
+                                        style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignBaseline="@id/speed_value_label_1"
