@@ -789,22 +789,22 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case threaded_application.KIDS_TIMER_DISABLED:
                 if (arg == 0) { // not onResume
                     speedUpdateAndNotify(0);
+                    if (kidsTimer!=null) kidsTimer.cancel();
+                    kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                        enable_disable_buttons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(true);
+                        enable_disable_buttons(throttleIndex, false);
+                    }
+                    mainapp.setToolbarTitle(toolbar,
+                            getApplicationContext().getResources().getString(R.string.app_name),
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                            "");
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    }
+                    mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
-                if (kidsTimer!=null) kidsTimer.cancel();
-                kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    enable_disable_buttons(throttleIndex, false);
-                    bSels[throttleIndex].setEnabled(true);
-                    enable_disable_buttons(throttleIndex, false);
-                }
-                mainapp.setToolbarTitle(toolbar,
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.app_name_throttle),
-                        "");
-                if (TMenu != null) {
-                    mainapp.setKidsMenuOptions(TMenu, true, 0);
-                }
-                mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 break;
 
             case threaded_application.KIDS_TIMER_ENABLED:
