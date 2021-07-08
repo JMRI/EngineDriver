@@ -892,5 +892,11 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Klicken Sie den Button. - die Erlaubnis erteilen. - Klicken Sie auf \\\'Zurück \\‘ hier zurückzukehren...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorieren Sie diese, wenn Sie don\\\'t Notwendigkeit Lokomotivführer, um die Helligkeit zu verändern.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver muss ACCESS_FINE_LOCATION Berechtigungen aktuelle WLAN SSID abzurufen.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Standardzeit, wenn Sie die TOOLLBAR-Taste verwenden, um den Timer zu aktivieren.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Standard für Button.</string>
+    <string name="prefKidsTimerButtonSummary">Zeigen Sie die Timer-Taste an, um den Timer zu aktivieren.</string>
+    <string name="prefKidsTimerButtonTitle">Timer-Taste anzeigen?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Aktivieren Sie die umgekehrte Taste.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
 
 </resources>

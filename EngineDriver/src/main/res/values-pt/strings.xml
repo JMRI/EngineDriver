@@ -828,5 +828,11 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Clique no botão abaixo - Conceder a permissão - Clique em \'Voltar\' para voltar aqui...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorar esta se você don\\\'t \'Engine Driver necessidade do motor para alterar o brilho.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver do motor precisa de permissões ACCESS_FINE_LOCATION para recuperar SSID wi-fi atual.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permitir inverso</string>
+    <string name="prefKidsTimerEnableReverseSummary">Ative o botão inverso.</string>
+    <string name="prefKidsTimerButtonTitle">Mostrar o botão do temporizador?</string>
+    <string name="prefKidsTimerButtonSummary">Exibe o botão do temporizador para ativar o temporizador.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Padrão para botão</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Tempo padrão se estiver usando o botão ToollBar para ativar o temporizador.</string>
 
 </resources>

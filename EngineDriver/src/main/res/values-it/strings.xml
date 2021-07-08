@@ -824,5 +824,11 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Fare clic sul pulsante qui sotto - Concedere l\'autorizzazione - Clicca \'Indietro\' di tornare qui...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorare questo se si don \\ \'t bisogno Engine Driver di modificare la luminosità.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver ha bisogno di autorizzazioni ACCESS_FINE_LOCATION recuperare SSID corrente della connessione Wi-Fi.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Tempo predefinito Se si utilizza il pulsante TOOLLBAR per attivare il timer.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Predefinito per il pulsante</string>
+    <string name="prefKidsTimerButtonSummary">Visualizza il pulsante TIMER per attivare il timer.</string>
+    <string name="prefKidsTimerButtonTitle">Mostra il pulsante TIMER?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Abilita il pulsante inversione.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Consentire il retro.</string>
 
 </resources>

@@ -1083,5 +1083,11 @@
     <string name="idngo_label">Vyžádat Loco ID</string>
     <string name="idngo_button">Vyžádat Loco ID</string>
     <string name="idngo_help_text">Stisknutím tlačítka odeslat požadavek na server k identifikaci a získání lokomotiva již na programovací koleji a vrátí hodnotu tohoto plynu.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Výchozí čas, pokud používáte tlačítko ToollBar pro aktivaci časovače.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Výchozí nastavení pro tlačítko</string>
+    <string name="prefKidsTimerButtonSummary">Zobrazte tlačítko časovače pro aktivaci časovače.</string>
+    <string name="prefKidsTimerButtonTitle">Zobrazit časovače?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Povolit tlačítko zpět.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
 
 </resources>
