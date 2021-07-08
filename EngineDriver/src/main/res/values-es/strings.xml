@@ -875,4 +875,10 @@
     <string name="idngo_label">Solicitar Loco ID</string>
     <string name="idngo_button">Solicitar Loco ID</string>
     <string name="idngo_help_text">pulse el botón para enviar una petición al servidor para identificar y adquirir la locomotora que ya están en la vía de programación y devolver el valor a este acelerador.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Tiempo predeterminado Si usa el botón de ToollBar para activar el temporizador.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Predeterminado para el botón</string>
+    <string name="prefKidsTimerButtonSummary">Muestra el botón TIMER para activar el temporizador.</string>
+    <string name="prefKidsTimerButtonTitle">Mostrar botón de temporizador?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Habilitar el botón Reverso.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permitir el reverso</string>
 </resources>

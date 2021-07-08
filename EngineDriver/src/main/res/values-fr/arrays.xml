@@ -397,4 +397,10 @@
         <item>Verrouillage</item>
         <item>Deverrouillage</item>
     </string-array>
+
+    <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Curseur: cran par cran</item>
+        <item>Curseur: plus rapide à 28, 100 et 128 crans</item>
+    </string-array>
 </resources>

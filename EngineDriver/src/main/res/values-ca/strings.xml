@@ -878,5 +878,11 @@
     <string name="idngo_label">Sol·licitar Boig ID</string>
     <string name="idngo_button">Sol·licitar Boig ID</string>
     <string name="idngo_help_text">premi el botó per enviar una petició a servidor per identificar i adquirir la locomotora que ja són a la via de programació i tornar el valor a aquest accelerador.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">L\\\'hora predeterminada si utilitzeu el botó TOOLLBAR per activar el temporitzador.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Predeterminat per al botó</string>
+    <string name="prefKidsTimerButtonSummary">Mostra el botó temporitzador per activar el temporitzador.</string>
+    <string name="prefKidsTimerButtonTitle">Mostra el botó de temporitzador?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Activa el botó invers.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
 
 </resources>
