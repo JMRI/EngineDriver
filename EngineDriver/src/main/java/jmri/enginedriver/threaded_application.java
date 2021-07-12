@@ -131,6 +131,7 @@ public class threaded_application extends Application {
 
     public comm_thread commThread;
     volatile String host_ip = null; //The IP address of the WiThrottle server.
+    volatile String logged_host_ip = null;
     private volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
     volatile int web_server_port = 0; //default port for jmri web server
