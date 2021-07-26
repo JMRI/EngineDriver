@@ -415,6 +415,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.connectedHostName = "";
             mainapp.connectedHostip = "";
             mainapp.connectedPort = 0;
+            mainapp.logged_host_ip = null;
 
             connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
             // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
