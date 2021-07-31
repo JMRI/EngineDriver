@@ -21,6 +21,8 @@ package jmri.enginedriver;
 // Main java file.
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -120,8 +122,6 @@ import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
-
-import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
@@ -3558,7 +3558,7 @@ public class threaded_application extends Application {
 
     /* only JMRI and MRC support Rosters at this time */
     public boolean supportsRoster() {
-        return (serverType.equals("JMRI") || serverType.equals("MRC"));
+        return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC"));
     }
 
     /* add passed-in loco to Recent Locos list and store it */
