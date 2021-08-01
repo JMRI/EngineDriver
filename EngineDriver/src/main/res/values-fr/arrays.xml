@@ -134,8 +134,8 @@
         <item>Thème par défaut</item>
         <item>Standard</item>
         <item>Fort contraste avec bords</item>
-        <item>Foncé</item>
-        <item>Coloré</item>
+        <item>Thème foncé</item>
+        <item>Thème en couleurs</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">

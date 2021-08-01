@@ -830,5 +830,6 @@
     <string name="prefKidsTimerButtonTitle">Mostra il pulsante TIMER?</string>
     <string name="prefKidsTimerEnableReverseSummary">Abilita il pulsante inversione.</string>
     <string name="prefKidsTimerEnableReverseTitle">Consentire il retro.</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confermare che vuoi rimuovere tutti i recenti connessioni</string>
 
 </resources>

@@ -898,5 +898,6 @@
     <string name="prefKidsTimerButtonTitle">Timer-Taste anzeigen?</string>
     <string name="prefKidsTimerEnableReverseSummary">Aktivieren Sie die umgekehrte Taste.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Bestätigen Sie, dass Sie alle jüngsten Verbindungen entfernen möchten</string>
 
 </resources>
