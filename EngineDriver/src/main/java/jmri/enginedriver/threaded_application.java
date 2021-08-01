@@ -3575,6 +3575,9 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
+        if (conLoco.getIsFromRoster()) {
+            loco_name = conLoco.getRosterName();
+        }
         Integer locoSource = conLoco.getWhichSource();
         for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
             if (engine_address.equals(importExportPreferences.recent_loco_address_list.get(i))
