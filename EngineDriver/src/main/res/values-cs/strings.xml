@@ -1089,5 +1089,6 @@
     <string name="prefKidsTimerButtonTitle">Zobrazit časovače?</string>
     <string name="prefKidsTimerEnableReverseSummary">Povolit tlačítko zpět.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Potvrďte, že chcete odstranit všechna nedávná připojení</string>
 
 </resources>

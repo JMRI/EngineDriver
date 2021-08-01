@@ -437,7 +437,7 @@
     <string name="prefAccelerometerShakeTitle">Action si agité</string>
     <string name="prefAccelerometerShakeSummary">Options quand le terminal est agité</string>
 
-    <string name="prefAccelerometerShakeThresholdTitle">Seuil d agitation</string>
+    <string name="prefAccelerometerShakeThresholdTitle">Seuil de mouvement</string>
     <string name="prefAccelerometerShakeThresholdSummary">Seuil à partir duquel le mouvement sera pris en compte. (1.5&#8211;3.5)  Une valeur basse correspond à un faible mouvement. \Nécessite un redémarrage d Engine Driver pour prise en compte si modifié.</string>
 
     <string name="functionButton00DefaultValue">Lampes</string>
@@ -859,7 +859,7 @@
     <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Nombre de touches de fonctions (0-4) affichees sur egulateur simple.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Taille zone touches de fonctions (regulateur simple)</string>
-    <string name="functionConsistSettings">Réglage Unité Multiple</string>
+    <string name="functionConsistSettings">Paramétrage Unité Multiple (UM)</string>
     <string name="functionConsistColumnLabel">Libellé</string>
     <string name="functionConsistColumnLocos">Loco(s)</string>
     <string name="functionConsistColumnLatching">Verrouillage</string>
@@ -904,11 +904,12 @@
     <string name="idngo_label">Demander l ID de la loco</string>
     <string name="idngo_button">Demander l ID de la loco</string>
     <string name="idngo_help_text">Appuyez sur la touche pour demander au serveur d identifier puis d acquerir la loco située sur voie de programmation et retourner celle-ci au régulateur.</string>
-    <string name="prefKidsTimerButtonDefaultSummary">Temps par défaut Si vous utilisez le bouton ToollBar pour activer la minuterie.</string>
-    <string name="prefKidsTimerButtonDefaultTitle">Bouton de valeur par défaut</string>
-    <string name="prefKidsTimerButtonSummary">Affichez le bouton TIMER pour activer la minuterie.</string>
-    <string name="prefKidsTimerButtonTitle">Afficher le bouton de la minuterie?</string>
-    <string name="prefKidsTimerEnableReverseSummary">Activez le bouton Reverse.</string>
-    <string name="prefKidsTimerEnableReverseTitle">Permettre l\'inverse</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Durée minuterie si activation via barre d outils</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Valeur par défaut de la touche</string>
+    <string name="prefKidsTimerButtonSummary">Affiche la touche TIMER pour activer la minuterie</string>
+    <string name="prefKidsTimerButtonTitle">Affichage de la touche TIMER?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Activavtion touche REVERSE</string>
+    <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmez que vous voulez supprimer toutes les connexions récentes</string>
 
 </resources>

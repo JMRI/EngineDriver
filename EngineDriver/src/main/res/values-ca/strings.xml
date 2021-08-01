@@ -884,5 +884,6 @@
     <string name="prefKidsTimerButtonTitle">Mostra el botó de temporitzador?</string>
     <string name="prefKidsTimerEnableReverseSummary">Activa el botó invers.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmeu que voleu eliminar totes les connexions recents</string>
 
 </resources>

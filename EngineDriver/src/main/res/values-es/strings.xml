@@ -881,4 +881,5 @@
     <string name="prefKidsTimerButtonTitle">Mostrar botón de temporizador?</string>
     <string name="prefKidsTimerEnableReverseSummary">Habilitar el botón Reverso.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir el reverso</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme que desea eliminar todas las conexiones recientes.</string>
 </resources>

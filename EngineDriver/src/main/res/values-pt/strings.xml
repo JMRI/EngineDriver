@@ -834,5 +834,6 @@
     <string name="prefKidsTimerButtonSummary">Exibe o botão do temporizador para ativar o temporizador.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Padrão para botão</string>
     <string name="prefKidsTimerButtonDefaultSummary">Tempo padrão se estiver usando o botão ToollBar para ativar o temporizador.</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme se você deseja remover todas as conexões recentes</string>
 
 </resources>

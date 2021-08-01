@@ -1051,6 +1051,7 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want remove all the Recent Locomotives</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirm that you want remove all the Recent Connections</string>
 
     <string name="dialogConfirmResetPreferencesTitle">Reset Preferences</string>
     <string name="dialogResetPreferencesQuestion">Confirm that you want reset all preferences.\nALL current preferences will be lost.</string>
