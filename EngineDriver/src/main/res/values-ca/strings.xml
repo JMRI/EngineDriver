@@ -868,6 +868,7 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de segon terme</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Alerta audible quan l\'aplicació s\'envia a segon terme</string>
     <string name="prefHapticFeedbackTitle">Resposta tàctil</string>
+
     <string name="prefHapticFeedbackSummary">Retroalimentació tàctil en els canvis de velocitat</string>
     <string name="prefFullScreenSwipeAreaTitle">Desactivar l\'Àrea de Lliscament de Pantalla Completa</string>
     <string name="prefFullScreenSwipeAreaSummary">Si està marcada, només la barra d\'eines pot lliscar per les  pantalles</string>
@@ -879,4 +880,11 @@
     <string name="idngo_label">Sol·licitar ID de Locomotora</string>
     <string name="idngo_button">Sol·licitar ID de Locomotora</string>
     <string name="idngo_help_text">Premi el botó per enviar una petició al servidor per identificar i adquirir la Locomotora que ja està a la via de programació i tornar el valor a aquest Controlador</string>
+    <string name="prefKidsTimerButtonDefaultSummary">L\\\'hora predeterminada si utilitzeu el botó TOOLLBAR per activar el temporitzador.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Predeterminat per al botó</string>
+    <string name="prefKidsTimerButtonSummary">Mostra el botó temporitzador per activar el temporitzador.</string>
+    <string name="prefKidsTimerButtonTitle">Mostra el botó de temporitzador?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Activa el botó invers.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmeu que voleu eliminar totes les connexions recents</string>
 </resources>

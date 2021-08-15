@@ -62,6 +62,7 @@
 
     <style name="loco_select_button_style" parent="normal_button_style">
       <item name="android:textColor">@color/btn_loco_select_text_states</item>
+      <item name="fontFamily">sans-serif-condensed</item>
     </style>
 
     <style name="small_button_style" parent="@android:style/Widget.Button">
@@ -401,6 +402,7 @@
   </style>
   <style name="loco_select_button_style_black" parent="normal_button_style_black">
     <item name="android:textColor">@color/btn_loco_select_text_states</item>
+    <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="small_button_style_black" parent="@android:style/Widget.Button">
@@ -561,6 +563,7 @@
   </style>
   <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
     <item name="android:textColor">@color/btn_loco_select_text_states_outline</item>
+    <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="small_button_style_outline" parent="@android:style/Widget.Button">
@@ -699,6 +702,7 @@
   </style>
   <style name="loco_select_button_style_ultra" parent="normal_button_style_ultra">
     <item name="android:textColor">@color/btn_loco_select_text_states_ultra</item>
+    <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="stop_button_style_ultra" parent="@android:style/Widget.Button">
@@ -867,6 +871,7 @@
   </style>
   <style name="loco_select_button_style_colorful" parent="normal_button_style_colorful">
     <item name="android:textColor">@color/btn_loco_select_text_states_colorful</item>
+    <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="stop_button_style_colorful" parent="@android:style/Widget.Button">
@@ -1085,11 +1090,12 @@
   <style name="ActionButton" parent="@android:style/Widget.ActionButton">
     <item name="android:minWidth">0dip</item>
     <item name="android:minHeight">0dip</item>
-    <item name="android:paddingLeft">2dip</item>
-    <item name="android:paddingRight">2dip</item>
+    <item name="android:drawablePadding">2dp</item>
+    <item name="android:paddingLeft">2dp</item>
+    <item name="android:paddingRight">2dp</item>
     <item name="android:scaleX">0.9</item>
     <item name="android:scaleY">0.9</item>
-    <item name="android:width">38dp</item>
+    <item name="android:width">46dp</item>
   </style>
 
   <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">

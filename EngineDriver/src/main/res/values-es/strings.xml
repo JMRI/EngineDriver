@@ -864,6 +864,7 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de segundo plano</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Alerta audible cuando la aplicación se envía a segundo plano</string>
     <string name="prefHapticFeedbackTitle">Respuesta táctil</string>
+
     <string name="prefHapticFeedbackSummary">Retroalimentación táctil en los cambios de velocidad</string>
     <string name="prefFullScreenSwipeAreaTitle">Deshabilitar el Área de Deslizamiento de Pantalla Completa</string>
     <string name="prefFullScreenSwipeAreaSummary">Si está marcada, sólo la barra de herramientas puede deslizarse por las pantallas</string>
@@ -875,4 +876,11 @@
     <string name="idngo_label">Solicitar ID de Locomotora</string>
     <string name="idngo_button">Solicitar ID de Locomotora</string>
     <string name="idngo_help_text">Pulse el botón para enviar una petición al servidor para identificar y adquirir la Locomotora que ya está en la vía de programación y devolver el valor a este Controlador</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Tiempo predeterminado Si usa el botón de ToollBar para activar el temporizador.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Predeterminado para el botón</string>
+    <string name="prefKidsTimerButtonSummary">Muestra el botón TIMER para activar el temporizador.</string>
+    <string name="prefKidsTimerButtonTitle">Mostrar botón de temporizador?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Habilitar el botón Reverso.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permitir el reverso</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme que desea eliminar todas las conexiones recientes.</string>
 </resources>

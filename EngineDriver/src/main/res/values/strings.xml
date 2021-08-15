@@ -948,6 +948,15 @@
     <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
     <string name="prefKidsTimerResetPasswordDefaultValue" translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefKidsTimerEnableReverseTitle">Allow Reverse</string>
+    <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button.</string>
+
+    <string name="prefKidsTimerButtonTitle">Show Timer Button?</string>
+    <string name="prefKidsTimerButtonSummary">Display the Timer Button to activate the timer.</string>
+
+    <string name="prefKidsTimerButtonDefaultTitle">Default for Button</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the toollbar Button to activate the timer.</string>
+    <string name="prefKidsTimerButtonDefaultDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAllowMobileDataTitle">Allow Mobile Data connection</string>
     <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data.</string>
@@ -1042,6 +1051,7 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want remove all the Recent Locomotives</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirm that you want remove all the Recent Connections</string>
 
     <string name="dialogConfirmResetPreferencesTitle">Reset Preferences</string>
     <string name="dialogResetPreferencesQuestion">Confirm that you want reset all preferences.\nALL current preferences will be lost.</string>
@@ -1119,5 +1129,8 @@
     <string name="idngo_label">Request Loco ID</string>
     <string name="idngo_button">Request Loco ID</string>
     <string name="idngo_help_text">Press button to send a request to the server to identify and acquire the loco already on the programming track and return the value to this throttle.</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="directionIndicatorForward" translatable="false">"▲ "</string>  <!-- DO NOT TRANSLATE -->
+    <string name="directionIndicatorReverse" translatable="false">"▼ "</string>  <!-- DO NOT TRANSLATE -->
 
 </resources>

@@ -185,7 +185,7 @@
               <item >VRBoxiC</item>
               <item >VRBoxiC-rotate</item>
       -->
-        <item>MagicseeR1B</item>
+        <item tools:ignore="Typos">MagicseeR1B</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
     </string-array>
@@ -208,7 +208,7 @@
         <item >VRBOX/iOS- C Mode</item>
         <item >VRBOX/iOS- C Mode - DPAD rotated</item>
 -->
-        <item>MagicseeR1 Android-Game B</item>
+        <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
     </string-array>
@@ -661,7 +661,7 @@
         <item>prefGamePadButtonLeft</item>
         <item>prefGamePadButtonRight</item>
         <item>prefGamePadButtonStart</item>
-        <item>prefGamePadButton1</item>
+        <item tools:ignore="Typos">prefGamePadButton1</item>
         <item>prefGamePadButton3</item>
         <item>prefGamePadButton2</item>
         <item>prefGamePadButton4</item>
@@ -793,11 +793,11 @@
         <item>Colorful</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
-        <item>Default Theme</item>
-        <item>High Contrast Theme</item>
-        <item>High Contrast Outline Theme</item>
-        <item>Dark Theme</item>
-        <item>Colorful Theme</item>
+        <item>Default</item>
+        <item>High Contrast</item>
+        <item>Outline</item>
+        <item>Dark</item>
+        <item>Colorful</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1072,7 +1072,7 @@
         <item>prefGamePadSpeedButtonsSpeedStep</item>
         <item>prefGamePadFeedbackVolume</item>
         <item>prefGamePadSpeedArrowsThrottleRepeatDelay</item>
-        <item>prefGamePadButton1</item>
+        <item tools:ignore="Typos">prefGamePadButton1</item>
         <item>prefGamePadButton3</item>
         <item>prefGamePadButton2</item>
         <item>prefGamePadButton4</item>
@@ -1097,11 +1097,11 @@
         <item>prefStopOnDirectionChange</item>
         <item>prefConsistFollowRuleStyle</item>
         <item>SelectiveLeadSound</item>
-        <item>SelectiveLeadSoundF1</item>
+        <item tools:ignore="Typos">SelectiveLeadSoundF1</item>
         <item>SelectiveLeadSoundF2</item>
         <item>prefConsistFollowDefaultAction</item>
-        <item>prefConsistFollowString1</item>
-        <item>prefConsistFollowAction1</item>
+        <item tools:ignore="Typos">prefConsistFollowString1</item>
+        <item tools:ignore="Typos">prefConsistFollowAction1</item>
         <item>prefConsistFollowString2</item>
         <item>prefConsistFollowAction2</item>
         <item>prefConsistFollowString3</item>
@@ -1174,7 +1174,7 @@
         <item>prefBackgroundImageGroup</item>
 
         <item>prefThrottleSwitchButtonDisplay</item>
-        <item>prefThrottleSwitchOption1</item>
+        <item tools:ignore="Typos">prefThrottleSwitchOption1</item>
         <item>prefThrottleSwitchOption2</item>
         <item>prefThrottleSwitchButton</item>
 
@@ -1186,6 +1186,8 @@
 
         <item>prefCategoryWeb</item>
         <item>prefCategoryTurnouts</item>
+
+        <item>prefFeedbackWhenGoingToBackground</item>
 
     </string-array>
 

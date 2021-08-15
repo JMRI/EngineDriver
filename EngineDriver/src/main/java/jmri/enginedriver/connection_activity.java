@@ -19,7 +19,9 @@ package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -415,6 +417,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.connectedHostName = "";
             mainapp.connectedHostip = "";
             mainapp.connectedPort = 0;
+            mainapp.logged_host_ip = null;
 
             connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
             // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
@@ -830,14 +833,36 @@ public class connection_activity extends AppCompatActivity implements Permission
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                 Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
             } else {
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
 
-                if (connections_list_file.exists()) {
-                    //noinspection ResultOfMethodCallIgnored
-                    connections_list_file.delete();
-                    importExportConnectionList.connections_list.clear();
-                }
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    //@Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                File sdcard_path = Environment.getExternalStorageDirectory();
+                                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+
+                                if (connections_list_file.exists()) {
+                                    //noinspection ResultOfMethodCallIgnored
+                                    connections_list_file.delete();
+                                    importExportConnectionList.connections_list.clear();
+                                    recreate();
+                                }
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder ab = new AlertDialog.Builder(connection_activity.this);
+                ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+                        .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConnectionsConfirmClearQuestions))
+                        .setPositiveButton(R.string.yes, dialogClickListener)
+                        .setNegativeButton(R.string.cancel, dialogClickListener);
+                ab.show();
+
             }
         }
 

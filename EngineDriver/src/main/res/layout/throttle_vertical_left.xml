@@ -84,14 +84,14 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:baselineAligned="false"
-                                android:orientation="vertical"
+                                android:orientation="horizontal"
                                 android:weightSum="1.0">
 
                                 <RelativeLayout
                                     android:id="@+id/loco_cell_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="40dp"
-                                    android:layout_weight=".73">
+                                    android:layout_weight=".25">
 
                                     <Button
                                         android:id="@+id/button_select_loco_0"
@@ -114,7 +114,7 @@
                                     android:id="@+id/speed_cell_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight=".27">
+                                    android:layout_weight=".75">
 
                                     <TextView
                                         android:id="@+id/speed_label_0"

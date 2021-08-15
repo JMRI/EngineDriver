@@ -83,6 +83,7 @@
                     android:drawableLeft="@drawable/intro_theme_outline"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:textSize="18sp"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 
@@ -93,6 +94,7 @@
                     android:drawableLeft="@drawable/intro_theme_ultra"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:textSize="18sp"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 
@@ -103,6 +105,7 @@
                     android:drawableLeft="@drawable/intro_theme_colorful"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:textSize="18sp"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 

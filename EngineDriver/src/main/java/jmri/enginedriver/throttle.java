@@ -171,6 +171,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected TextView[] tvSpdLabs; // labels
     protected TextView[] tvSpdVals;
 
+    protected TextView[] tvDirectionIndicatorForwards;
+    protected TextView[] tvDirectionIndicatorReverses;
+
     protected TextView[] tvVols; // volume indicators
 
     protected TextView[] tvLeftDirInds; // direction indicators
@@ -517,19 +520,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected static final String THEME_DEFAULT = "Default";
     private boolean isRestarting = false;
 
-    private static final int KIDS_TIMER_DISABLED = 0;
-    protected static final int KIDS_TIMER_STARTED = 1;
-    private static final int KIDS_TIMER_ENABLED = 2;
-    private static final int KIDS_TIMER_RUNNNING = 3;
-    private static final int KIDS_TIMER_ENDED = 999;
     private static final String PREF_KIDS_TIMER_NONE = "0";
     private static final String PREF_KIDS_TIMER_ENDED = "999";
     private String prefKidsTimer = PREF_KIDS_TIMER_NONE;
+    private String prefKidsTimerButtonDefault = "1";
     private int prefKidsTime = 0;  // in milliseconds
-    private int kidsTimerRunning = KIDS_TIMER_DISABLED;
+    private int kidsTimerRunning = 0;
     private MyCountDownTimer kidsTimer;
     private String prefKidsTimerResetPassword = "9999";
     private String prefKidsTimerRestartPassword = "0000";
+    private boolean prefKidsTimerEnableReverse = false;
     private String passwordText = "";
 
 
@@ -786,25 +786,38 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint("ApplySharedPref")
     protected void kidsTimerActions(int action, int arg) {
         switch (action) {
-            case KIDS_TIMER_DISABLED:
-                kidsTimerRunning = KIDS_TIMER_DISABLED;
-                for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    enable_disable_buttons(throttleIndex, false);
-                }
-                mainapp.setToolbarTitle(toolbar,
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.app_name_throttle),
-                        "");
-                if (TMenu != null) {
-                    mainapp.setKidsMenuOptions(TMenu, true, 0);
+            case threaded_application.KIDS_TIMER_DISABLED:
+                if (arg == 0) { // not onResume
+                    speedUpdateAndNotify(0);
+                    if (kidsTimer!=null) kidsTimer.cancel();
+                    kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
+                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                        enable_disable_buttons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(true);
+                        enable_disable_buttons(throttleIndex, false);
+                    }
+                    mainapp.setToolbarTitle(toolbar,
+                            getApplicationContext().getResources().getString(R.string.app_name),
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                            "");
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    }
+                    mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
                 break;
-            case KIDS_TIMER_ENABLED:
-                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
-                    kidsTimerRunning = KIDS_TIMER_ENABLED;
+
+            case threaded_application.KIDS_TIMER_ENABLED:
+                if (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING) {  // reset the timer if it is already running
+                    speedUpdateAndNotify(0);
+                    if (kidsTimer!=null) kidsTimer.cancel();
+                }
+//                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+                    kidsTimerRunning = threaded_application.KIDS_TIMER_ENABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
+                        if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                     }
                     mainapp.setToolbarTitle(toolbar,
                             getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled),
@@ -813,22 +826,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (TMenu != null) {
                         mainapp.setKidsMenuOptions(TMenu, false, 0);
                     }
-                }
+//                }
+                mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 break;
-            case KIDS_TIMER_STARTED:
-                if ((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING)) {
-                    kidsTimerRunning = KIDS_TIMER_RUNNNING;
+
+            case threaded_application.KIDS_TIMER_STARTED:
+                if ((prefKidsTime>0) && (kidsTimerRunning != threaded_application.KIDS_TIMER_RUNNNING)) {
+                    kidsTimerRunning = threaded_application.KIDS_TIMER_RUNNNING;
                     kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
                     kidsTimer.start();
                 }
                 break;
-            case KIDS_TIMER_ENDED:
+            case threaded_application.KIDS_TIMER_ENDED:
                 speedUpdateAndNotify(0);
-                kidsTimerRunning = KIDS_TIMER_ENDED;
+                kidsTimerRunning = threaded_application.KIDS_TIMER_ENDED;
                 if (kidsTimer!=null) kidsTimer.cancel();
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, true);
                     bSels[throttleIndex].setEnabled(false);
+                    if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
                 prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
                 mainapp.setToolbarTitle(toolbar,
@@ -836,9 +852,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
                 break;
-            case KIDS_TIMER_RUNNNING:
+            case threaded_application.KIDS_TIMER_RUNNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
+                    if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
                 mainapp.setToolbarTitle(toolbar,
                         getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)),
@@ -1024,16 +1041,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     promptForSteal( msg.obj.toString(), msg.arg1);
                     break;
                 case message_type.KIDS_TIMER_ENABLE:
-                    kidsTimerActions(KIDS_TIMER_ENABLED,0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED,0);
                     break;
                 case message_type.KIDS_TIMER_START:
-                    kidsTimerActions(KIDS_TIMER_STARTED,0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
                     break;
                 case message_type.KIDS_TIMER_TICK:
-                    kidsTimerActions(KIDS_TIMER_RUNNNING,msg.arg1);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_RUNNNING,msg.arg1);
                     break;
                 case message_type.KIDS_TIMER_END:
-                    kidsTimerActions(KIDS_TIMER_ENDED,0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_ENDED,0);
                     break;
                 case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
                     Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
@@ -1287,6 +1304,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
         prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
+        prefKidsTimerEnableReverse = prefs.getBoolean("prefKidsTimerEnableReverse", getResources().getBoolean(R.bool.prefKidsTimerEnableReverseDefaultValue));
+        prefKidsTimerButtonDefault = prefs.getString("prefKidsTimerButtonDefault", getResources().getString(R.string.prefKidsTimerButtonDefaultDefaultValue));
     }
 
     // get all the preferences that should be read when the activity is created or resumes
@@ -1807,8 +1826,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
         }
 
-        kidsTimerActions(KIDS_TIMER_STARTED,0);
-    }
+        kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+
+    } // end incrementSpeed
 
     protected void setAutoIncrementDecrement(int whichThrottle, int dir) {
         switch (dir) {
@@ -1901,28 +1921,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
 
-        String prefix = "";
-        String suffix;
-        suffix = "    ";
         int dir = getDirection(whichThrottle);
+        if (tvDirectionIndicatorForwards[whichThrottle] != null) {   //not all layouts have the indicators
+            int showForword = View.GONE;
+            int showReverse = View.GONE;
 
-        if (speed > 0) {
-            if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
-                    || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
-                prefix = "◄ ";
-            } else {
-                suffix = " ►";
+            if (speed > 0) {
+                if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
+                        || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
+                    showForword = View.VISIBLE;
+                } else {
+                    showReverse = View.VISIBLE;
+                }
             }
+            tvDirectionIndicatorForwards[whichThrottle].setVisibility(showForword);
+            tvDirectionIndicatorReverses[whichThrottle].setVisibility(showReverse);
         }
+
         String sPrevScaleSpeed = (String) speed_label.getText();
-        if (sPrevScaleSpeed.substring(0,1).equals("◄")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(1,sPrevScaleSpeed.length());
-        } else if (sPrevScaleSpeed.substring(sPrevScaleSpeed.length()-1,sPrevScaleSpeed.length()).equals("►")) {
-            sPrevScaleSpeed = sPrevScaleSpeed.substring(0,sPrevScaleSpeed.length()-1);
-        }
-        sPrevScaleSpeed = sPrevScaleSpeed.trim();
         int prevScaleSpeed = Integer.parseInt( sPrevScaleSpeed );
-        speed_label.setText(prefix + Integer.toString(scaleSpeed) + suffix);
+        speed_label.setText(Integer.toString(scaleSpeed));
         mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
     }
 
@@ -2232,9 +2250,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean tIsEnabled = lls[whichThrottle].isEnabled();
         int dir = dirs[whichThrottle];
 
+        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
+                && (!prefKidsTimerEnableReverse)) {
+        }
+
         if (getConsist(whichThrottle).isActive()) {
             boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
             boolean locoChangeAllowed = tIsEnabled && isSelectLocoAllowed(whichThrottle);
+
+            if (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING) {
+                locoChangeAllowed = false;
+                if (!prefKidsTimerEnableReverse) {
+                    dirChangeAllowed = false;
+                }
+            }
+
             if (dirChangeAllowed) {
                 bFwd.setEnabled(true);
                 bRev.setEnabled(true);
@@ -2277,8 +2307,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
         bFwds[whichThrottle].setEnabled(newEnabledState);
-        bRevs[whichThrottle].setEnabled(newEnabledState);
         bStops[whichThrottle].setEnabled(newEnabledState);
+        if ( (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
+            && (!prefKidsTimerEnableReverse)) {
+            bRevs[whichThrottle].setEnabled(false);
+        } else {
+            bRevs[whichThrottle].setEnabled(newEnabledState);
+        }
         tvSpdLabs[whichThrottle].setEnabled(newEnabledState);
         tvSpdVals[whichThrottle].setEnabled(newEnabledState);
         bLSpds[whichThrottle].setEnabled(newEnabledState);
@@ -4207,7 +4242,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void onStopTrackingTouch(SeekBar sb) {
             limitedJump[whichThrottle] = false;
             setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
-            kidsTimerActions(KIDS_TIMER_STARTED,0);
+            kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
         }
     }
 
@@ -4391,6 +4426,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
         lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -4901,14 +4938,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+        if (((prefKidsTime>0) && (kidsTimerRunning != threaded_application.KIDS_TIMER_RUNNNING))) {
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
         } else {
-            if (kidsTimerRunning == KIDS_TIMER_ENDED) {
+            if (kidsTimerRunning == threaded_application.KIDS_TIMER_ENDED) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             }
+
             if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                kidsTimerActions(KIDS_TIMER_DISABLED,0);
+                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,1);
             }
         }
 
@@ -4927,7 +4965,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
-    }
+    } // end onResume
 
     private void showHideConsistMenus(){
         if (mainapp.consists==null) {
@@ -5272,6 +5310,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
+            mainapp.displayTimerMenuButton(TMenu, kidsTimerRunning);
             mainapp.displayThrottleSwitchMenuButton(TMenu);
             mainapp.displayWebViewMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
@@ -5374,6 +5413,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         TMenu = menu;
         mainapp.actionBarIconCountThrottle=0;
         mainapp.displayFlashlightMenuButton(menu);
+        mainapp.displayTimerMenuButton(menu, kidsTimerRunning);
         mainapp.setPowerMenuOption(menu);
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerStateButton(menu);
@@ -5523,6 +5563,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case R.id.timer_mnu:
                 showTimerPasswordDialog();
                 return true;
+            case R.id.timer_button:
+                prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
+                prefKidsTimer = prefKidsTimerButtonDefault;
+                prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
+                kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED, 0);
+                return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
                 return true;
@@ -5592,7 +5638,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                 getKidsTimerPrefs();
                 if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                    kidsTimerActions(KIDS_TIMER_DISABLED,0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,0);
                 }
 
                 redrawVerticalSliders();
@@ -6001,28 +6047,30 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 Log.d("", "Password Value : " + passwordText);
 
                 if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
-                    kidsTimerActions(KIDS_TIMER_ENDED, 0);
-                    kidsTimerActions(KIDS_TIMER_DISABLED, 0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_ENDED, 0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED, 0);
                     prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
                     getKidsTimerPrefs();
                 }
 
                 if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
-                    kidsTimerActions(KIDS_TIMER_ENABLED, 0);
+                    kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED, 0);
                 }
 
+                mainapp.hideSoftKeyboardAfterDialog();
             }
         });
 
         alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        mainapp.hideSoftKeyboardAfterDialog();
 //                        return;
                     }
                 });
         alert.show();
 
-    }
+    } // end showTimerPasswordDialog
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {

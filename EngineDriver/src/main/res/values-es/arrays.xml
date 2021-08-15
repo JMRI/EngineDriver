@@ -127,11 +127,11 @@
         <item>Auto importar sólo al conectar</item>
     </string-array>
     <string-array name="prefThemeEntries">
-        <item>Tema por defecto</item>
-        <item>Tema de alto contraste</item>
-        <item>Tema de bordes de alto contraste</item>
-        <item>Tema oscuro</item>
-        <item>Tema de colores</item>
+        <item>Por defecto</item>
+        <item>De alto contraste</item>
+        <item>De bordes de alto contraste</item>
+        <item>Oscuro</item>
+        <item>De colores</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Ninguno (Utiliza solo \'v\',\'1\')</item>

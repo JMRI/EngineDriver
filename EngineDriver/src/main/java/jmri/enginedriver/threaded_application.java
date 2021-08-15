@@ -21,6 +21,8 @@ package jmri.enginedriver;
 // Main java file.
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -64,7 +66,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -119,8 +123,6 @@ import jmri.enginedriver.util.PermissionsHelper;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
-import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
-
 //The application will start up a thread that will handle network communication in order to ensure that the UI is never blocked.
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
@@ -129,6 +131,7 @@ public class threaded_application extends Application {
 
     public comm_thread commThread;
     volatile String host_ip = null; //The IP address of the WiThrottle server.
+    volatile String logged_host_ip = null;
     private volatile int port = 0; //The TCP port that the WiThrottle server is running on
     Double withrottle_version = 0.0; //version of withrottle server
     volatile int web_server_port = 0; //default port for jmri web server
@@ -309,6 +312,12 @@ public class threaded_application extends Application {
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+
+    public static final int KIDS_TIMER_DISABLED = 0;
+    public static final int KIDS_TIMER_STARTED = 1;
+    public static final int KIDS_TIMER_ENABLED = 2;
+    public static final int KIDS_TIMER_RUNNNING = 3;
+    public static final int KIDS_TIMER_ENDED = 999;
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -1353,7 +1362,7 @@ public class threaded_application extends Application {
         }  //end of process_route_change
 
         //parse route list into appropriate app variable array
-        //  PRL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+        //  PRL[<SystemName><UserName><State>]repeat where state 1=Unknown,2=Active,4=Inactive,8=Inconsistent
         //  PRL]\[LT12}|{my12}|{1
         private void process_route_list(String response_str) {
 
@@ -2719,6 +2728,7 @@ public class threaded_application extends Application {
                 }
             }
         } else {
+            menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
             setWebMenuOption(menu);
             setRoutesMenuOption(menu);
@@ -3185,17 +3195,28 @@ public class threaded_application extends Application {
 
     }
 
+    public void displayTimerMenuButton(Menu menu, int kidsTimerRunning) {
+        MenuItem mi = menu.findItem(R.id.timer_button);
+        if (mi == null) return;
+
+        if ((prefs.getBoolean("prefKidsTimerButton", false))
+            && !((kidsTimerRunning == KIDS_TIMER_RUNNNING) || (kidsTimerRunning == KIDS_TIMER_ENABLED)) ) {
+            actionBarIconCountThrottle++;
+            mi.setVisible(true);
+        } else {
+            mi.setVisible(false);
+        }
+    }
+
     public void displayWebViewMenuButton(Menu menu) {
         MenuItem mi = menu.findItem(R.id.web_view_button);
         if (mi == null) return;
 
-
         String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
         String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
 
-
         if ( (prefs.getBoolean("prefWebViewButton", false))
-        && (!webViewLocation.equals(defaultWebViewLocation))){
+                && (!webViewLocation.equals(defaultWebViewLocation))){
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3537,7 +3558,7 @@ public class threaded_application extends Application {
 
     /* only JMRI and MRC support Rosters at this time */
     public boolean supportsRoster() {
-        return (serverType.equals("JMRI") || serverType.equals("MRC"));
+        return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC"));
     }
 
     /* add passed-in loco to Recent Locos list and store it */
@@ -3554,6 +3575,9 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
+        if (conLoco.getIsFromRoster()) {
+            loco_name = conLoco.getRosterName();
+        }
         Integer locoSource = conLoco.getWhichSource();
         for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
             if (engine_address.equals(importExportPreferences.recent_loco_address_list.get(i))
@@ -3690,6 +3714,20 @@ public class threaded_application extends Application {
 //            adjustToolbarButtonSpacing(toolbar);
         }
     }
+
+    public void hideSoftKeyboard(View view) {
+        // Check if no view has focus:
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void hideSoftKeyboardAfterDialog() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
 
 //    public void adjustToolbarButtonSpacing(Toolbar toolbar){
 //        Log.d("Engine_Driver", "ta: adjustToolbarButtonSpacing");

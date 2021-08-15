@@ -1,5 +1,16 @@
+**Version 2.30.130
 **Version 2.30.128
+ * Add confirmation dialog to Clear Consists
+ * FIX - Locos selected from roster written to Recents without name
+ * FIX - Roster entry option did not show for earlier version of JMRI
+ * All connections logged to connections_log.txt
  * hide "Server Roster" loco selection option if server doesn't support rosters
+ * ActionBar replaced with Toolbar.  Activity labels repositioned over the app icon
+ * All button style menu actions will always fit on the toolbar
+ * Toolbar can be used for left and right swipes
+ * Option for Left and right swipes to only be allowed on the toolbar
+ * Toolbar buttons added to all screens
+ * compileSdkVersion 29 added
 **Version 2.29.126
  * Haptic feedback on sliders (optional)
  * Support for Request Loco ID (DCC-EX-only)
@@ -649,7 +660,6 @@
  *   add Light control page
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   resend roster list when items are added or removed, by adding listeners to WiT
- *   support resend of function and direction commands, even when WiT knows it has already sent (may be there now)
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
  *

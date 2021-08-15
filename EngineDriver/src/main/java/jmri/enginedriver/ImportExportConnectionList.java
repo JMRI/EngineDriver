@@ -4,19 +4,21 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.prefs.Preferences;
+import java.util.Locale;
 
 import static jmri.enginedriver.threaded_application.context;
 
@@ -199,6 +201,35 @@ class ImportExportConnectionList {
             } catch (IOException except) {
                 errMsg = except.getMessage();
             }
+
+            if (mainapp.logged_host_ip == null) {
+                mainapp.logged_host_ip = connected_hostip;
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateAndTime = sdf.format(new Date());
+
+                    File path = Environment.getExternalStorageDirectory();
+                    File engine_driver_dir = new File(path, "engine_driver");
+                    //noinspection ResultOfMethodCallIgnored
+                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+
+                    String connection_log_file_name = "engine_driver/connections_log.txt";
+
+                    PrintWriter log_output = new PrintWriter(new FileWriter(path + "/" + connection_log_file_name, true));
+
+                    if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
+                            || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {
+                        log_output.printf("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, currentDateAndTime);
+                    } else {
+                        log_output.printf("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, currentDateAndTime);
+                    }
+
+                    log_output.close();
+                } catch (IOException except) {
+                    errMsg = except.getMessage();
+                }
+            }
+
             return errMsg;
         }
 
