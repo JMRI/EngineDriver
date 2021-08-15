@@ -762,7 +762,7 @@
     <string name="edit_consist_lights_throttle_5">Edita llums de la TM Regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
     <string name="LocoSelectMethodRecentConsist">Tracció múltiples recents</string>
-    <string name="toastSelectConsistsConfirmClear">Confirma que vols eliminar totes les traccions múltiples recents prement la tecla \'Esborrar llista\' DE NOU</string>
+    <string name="toastSelectConsistsConfirmClear">Confirma que vols eliminar totes les Traccions Múltiples recents prement la tecla \'Esborrar llista\' DE NOU</string>
     <string name="toastRecentConsistsHelp">Toca per seleccionar Tracció Múltiple.\nUn toc llarg per canviar el nom.\nLliscar cap a la dreta per eliminar una entrada</string>
     <string name="toastRecentsHelp">Toca per seleccionar una entrada recent.\nUn toc llarg per canviar el nom.\nLliscar cap a la dreta per eliminar una entrada</string>
     <string name="toastRosterHelp">Toca per seleccionar una entradda de la flota.\nUn toc llarg per a més detalls</string>
@@ -795,7 +795,7 @@
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvia la zona morta del control lliscant</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Estableix la mida de la zona morta en el control lliscant de velocitat</string>
     <string name="dialogConfirmClearTitle">Neteja la llista</string>
-    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmeu que voleu eliminar totes les traccions múltiples recents</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmeu que voleu eliminar totes les Traccions Múltiples recents</string>
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmeu que voleu eliminar totes les Locomotores recents</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmeu que voleu eliminar totes les agulles recents</string>
 

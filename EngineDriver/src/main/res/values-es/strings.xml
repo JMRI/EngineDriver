@@ -756,12 +756,12 @@
     <string name="prefLimitSpeedPercentTitle">Límite de velocidad a \%</string>
     <string name="prefLimitSpeedPercentSummary">Ajusta el \% de la aceleración que la velocidad se limitará a</string>
     <string name="limitSpeedButtonLabel">Límite de velocidad</string>
-    <string name="toastSelectConsistsConfirmClear">Confirma que quieres eliminar todos las tracciones múltiples recientes pulsando la tecla \'Borrar lista\' DE NUEVO</string>
+    <string name="toastSelectConsistsConfirmClear">Confirma que quieres eliminar todos las Tracciones Múltiples recientes pulsando la tecla \'Borrar lista\' DE NUEVO</string>
     <string name="toastRecentConsistsHelp">Toque para seleccionar.\nUn toque largo para cambiar el nombre.\nDesliza hacia la derecha para eliminar una entrada</string>
     <string name="toastRecentsHelp">Toque para seleccionar.\nUn toque largo para cambiar el nombre.\nDesliza hacia la derecha para eliminar una entrada</string>
     <string name="toastRosterHelp">Toque para seleccionar.\nUn toque largo para más detalles</string>
     <string name="RecentConsistsNameEditText">Introduzca un nombre para la Tracción Múltiple</string>
-    <string name="RecentConsistsNameEditTitle">Nombres recientes de tracciones múltiples</string>
+    <string name="RecentConsistsNameEditTitle">Nombres recientes de Tracciones Múltiples</string>
     <string name="RecentsNameEditText">Introduzca un nombre para una Locomotora</string>
     <string name="RecentsNameEditTitle">Nombres recientes de Locomotoras</string>
     <string name="rosterDetailsDialogTitle">"Detalles de la flota para "</string>
