@@ -88,7 +88,7 @@
         <item>Selecciona endavant/enrere</item>
         <item>Augmenta velocitat</item>
         <item>Disminueix velocitat</item>
-        <item>límit de velocitat</item>
+        <item>Límit de velocitat</item>
         <item>Pausa</item>
         <item>Proper controlador</item>
         <item>Funció 00/Llum</item>
@@ -143,7 +143,7 @@
         <item>Amaga vista web\n(requereix preferències \'Vista Web del Controlador\')</item>
         <item>Bloqueja i atenua la pantalla</item>
         <item>Atenua la pantalla</item>
-        <item>Següent controlador -per botons de volum</item>
+        <item>Següent controlador -per botons de volum-</item>
         <item>Atura-ho tot</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
@@ -156,7 +156,7 @@
         <item>Bloqueja i atenua la pantalla</item>
         <item>Atenuar la Pantalla</item>
         <item>Activació-desactivació temporal del mode inmersiu</item>
-        <item >Disposició de les pantalles interruptor de l\'accelerador</item>
+        <item>Canviar el diseny de la pantalla del controlador</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Cap</item>
@@ -178,24 +178,24 @@
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Combinació de text simple (original)</item>
-        <item>Complex text coincident - boig plom sempre activat, Trail segueix les regles següents</item>
-        <item>Especial exacta - El plom i el Camí per activar si coincideixen exactament les etiquetes de funció</item>
-        <item>Especial Parcial - Plom i Camí per activar si coincideixen parcialment les etiquetes de funció</item>
+        <item>Text complex coincident - Locomotora capdavantera sempre acticada, Trail segueix les regles següents</item>
+        <item>Especial exacta - Capdavantera i tota la resta activat si coincideixen exactament les etiquetes de funció</item>
+        <item>Especial Parcial - Capdavantera i tota la resta activat si coincideixen parcialment les etiquetes de funció</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora capdavantera - Coincidència parcial</item>
-        <item>Locomotora capdavantera + Posterior - Coincidència parcial</item>
-        <item>Totes les locomotores - Coincidència parcial</item>
-        <item>Capdavantera locomotores - Coincidència exacta</item>
-        <item>Locomotora capdavantera + Posterior: Coincidència Exacta</item>
-        <item>Totes les locomotores - Coincidència exacta</item>
+        <item>Locomotora capdavantera + resta - Coincidència parcial</item>
+        <item>Totes les Locomotores - Coincidència parcial</item>
+        <item>Capdavantera Locomotores - Coincidència exacta</item>
+        <item>Locomotora capdavantera + resta: Coincidència Exacta</item>
+        <item>Totes les Locomotores - Coincidència exacta</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>No facis res</item>
-        <item>Locomotora capdavantera: El mateix número de funció</item>
-        <item>Locomotora capdavantera + posterior - El mateix número de funció</item>
-        <item>Totes les locomotores: El mateix número de funció</item>
+        <item>Locomotora capdavantera - El mateix número de funció</item>
+        <item>Locomotora capdavantera + resta - El mateix número de funció</item>
+        <item>Totes les Locomotores - El mateix número de funció</item>
     </string-array>
 
     <string-array name="prefKidsTimerEntries"> <!-- display version -->
@@ -208,18 +208,18 @@
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>Adapta la mida de la imatge</item>
-        <item>Adapta a la pantalla - Retalla si cal</item>
-        <item>Centre - Sense escala</item>
-        <item>Muntar - Shrink només</item>
-        <item>Fill - Distorsionar si cal</item>
+        <item>Adapta - Escapça/engrandeix</item>
+        <item>Omplena - Retalla si cal</item>
+        <item>Centra - Sense escalar</item>
+        <item>Adapta - Només escapçar</item>
+        <item>Omplena - Distorsionar si cal</item>
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
-        <item>boig plom</item>
-        <item>Plom + Trail Bojos</item>
-        <item>Tots els Bojos</item>
-        <item>Trail Boig</item>
+        <item>Locomotora capdavantera</item>
+        <item>>Locomotora capdavantera + resta de Locomotores</item>
+        <item>Totes les Locomotores</item>
+        <item>Resta de Locomotores</item>
     </string-array>
     <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
         <item>enclavament</item>
