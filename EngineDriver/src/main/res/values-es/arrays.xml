@@ -143,7 +143,7 @@
         <item>Esconde la vista web\n(requiere preferencias \'Vista web del controlador\')</item>
         <item>Bloquea y atenua la pantalla</item>
         <item>Atenua la pantalla</item>
-        <item>Siguiente controlador -para botones de volúmen</item>
+        <item>Siguiente controlador -para botones de volúmen-</item>
         <item>Detiene todo</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
@@ -156,7 +156,7 @@
         <item>Bloquea y atenua la pantalla</item>
         <item>Atenuar la pantalla</item>
         <item>Activación-desactivación temporal del modo inmersivo</item>
-        <item >Disposición de las pantallas interruptor del acelerador</item>
+        <item>Cambiar el diseño de la pantalla del controlador</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Ninguno</item>
@@ -185,17 +185,17 @@
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora delantera - Coincidencia parcial</item>
         <item>Locomotora delantera + trasera - Coincidencia parcial</item>
-        <item>Todas las locomotoras - Coincidencia parcial</item>
+        <item>Todas las Locomotoras - Coincidencia parcial</item>
         <item>Locomotora delantera - Coincidencia exacta</item>
         <item>Locomotora delantera + trasera - Coincidencia exacta</item>
-        <item>Todas las locomotoras - Coincidencia exacta</item>
+        <item>Todas las Locomotoras - Coincidencia exacta</item>
     </string-array>
 
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>No hacer nada</item>
         <item>Locomotora delantera - Mismo número de función</item>
-        <item>Locomotora delantera + trasera - Mismo número de función</item>
-        <item>Todas las locomotoras - Mismo número de función</item>
+        <item>Locomotora delantera + resto - Mismo número de función</item>
+        <item>Todas las Locomotoras - Mismo número de función</item>
     </string-array>
 
     <string-array name="prefKidsTimerEntries"> <!-- mostrar versión -->
@@ -216,10 +216,10 @@
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
-        <item>Loco plomo</item>
-        <item>Plomo + Trail Locos</item>
-        <item>Todos los Locos</item>
-        <item>Trail Loco</item>
+        <item>Locomotora delantera</item>
+        <item>Locomotora delantera + resto de Locomotoras</item>
+        <item>Todas las Locomotoras</item>
+        <item>Resto de Locomotoras</item>
     </string-array>
     <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
         <item>enclavamiento</item>
