@@ -92,7 +92,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private VelocityTracker mVelocityTracker;
 
     public void refresh_route_view() {
-        Log.d("Engine_Driver", "routes: refresh_route_view()");
+//        Log.d("Engine_Driver", "routes: refresh_route_view()");
 
         boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
@@ -168,7 +168,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void filterRouteView() {
-        Log.d("Engine_Driver", "routes: filterRouteView()");
+//        Log.d("Engine_Driver", "routes: filterRouteView()");
 
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
@@ -187,7 +187,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private int updateRouteEntry() {
-        Log.d("Engine_Driver", "routes: updateRouteEntry()");
+//        Log.d("Engine_Driver", "routes: updateRouteEntry()");
 
         Button butSet = findViewById(R.id.route_toggle);
         EditText rte = findViewById(R.id.route_entry);
@@ -221,7 +221,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     class routes_handler extends Handler {
 
         public void handleMessage(Message msg) {
-            Log.d("Engine_Driver", "routes: routes_handler: handleMessage");
+//            Log.d("Engine_Driver", "routes: routes_handler: handleMessage");
 
             switch (msg.what) {
                 case message_type.RESPONSE: {
@@ -260,7 +260,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void witRetry(String s) {
-        Log.d("Engine_Driver", "routes: witRetry");
+//        Log.d("Engine_Driver", "routes: witRetry");
 
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
@@ -316,7 +316,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "routes: onCreate");
+//        Log.d("Engine_Driver", "routes: onCreate");
 
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -435,7 +435,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public void onResume() {
-        Log.d("Engine_Driver", "routes: onResume");
+//        Log.d("Engine_Driver", "routes: onResume");
 
         mainapp.applyTheme(this);
 
@@ -477,7 +477,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "routes: onDestroy");
+//        Log.d("Engine_Driver", "routes: onDestroy");
 
         super.onDestroy();
 
@@ -491,7 +491,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public void onPause() {
-        Log.d("Engine_Driver", "routes: onPause");
+//        Log.d("Engine_Driver", "routes: onPause");
 
         super.onPause();
         //save scroll position for later restore
@@ -520,7 +520,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("Engine_Driver", "routes: onCreateOptionsMenu");
+//        Log.d("Engine_Driver", "routes: onCreateOptionsMenu");
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
@@ -542,7 +542,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("Engine_Driver", "routes: onOptionsItemSelected");
+//        Log.d("Engine_Driver", "routes: onOptionsItemSelected");
 
         // Handle all of the possible menu actions.
         Intent in;
@@ -614,7 +614,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     //handle return from menu items
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Engine_Driver", "routes: onActivityResult");
+//        Log.d("Engine_Driver", "routes: onActivityResult");
         //since we always do the same action no need to distinguish between requests
         refresh_route_view();
     }
@@ -685,7 +685,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     public void gestureMove(MotionEvent event) {
-        Log.d("Engine_Driver", "routes: gestureMove action " + event.getAction());
+//        Log.d("Engine_Driver", "routes: gestureMove action " + event.getAction());
         if (gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
@@ -711,7 +711,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void gestureEnd(MotionEvent event) {
-        Log.d("Engine_Driver", "routes: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        Log.d("Engine_Driver", "routes: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
         if (gestureInProgress) {
             float deltaX = (event.getX() - gestureStartX);
@@ -772,7 +772,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-            Log.d("Engine_Driver", "routes: Runnable");
+//            Log.d("Engine_Driver", "routes: Runnable");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
