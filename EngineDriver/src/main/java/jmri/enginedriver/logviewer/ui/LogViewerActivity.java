@@ -428,27 +428,23 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     private void logAboutInfo() {
-        Log.d("Engine_Driver", "----------------------------------");
+        String s = "";
         // device info
-        Log.d("Engine_Driver", "About: Device: "
-                + String.format("OS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT));
+        s += "About: " + String.format("OS:%s, SDK:%s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
         if (mainapp.client_address_inet4 != null) {
-            Log.d("Engine_Driver", "About: Network: "
-                    + String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/", "")));
-            Log.d("Engine_Driver", "About: Network: "
-                    + String.format("SSID: %s Net: %s ", mainapp.client_ssid, mainapp.client_type));
+            s += ", " + String.format("IP:%s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format(" SSID:%s Net:%s", mainapp.client_ssid, mainapp.client_type);
         }
 
         // ED version info
-        Log.d("Engine_Driver", "About: Engine Driver version: " + mainapp.appVersion);
+        s += ", EngineDriver: " + mainapp.appVersion;
         if (mainapp.getHostIp() != null) {
             // WiT info
-            String s = "";
             if (mainapp.getWithrottleVersion() != 0.0) {
-                Log.d("Engine_Driver", "About: WiThrottle: v" + mainapp.getWithrottleVersion());
-                Log.d("Engine_Driver", String.format("About: Heartbeat: %dms", mainapp.heartbeatInterval));
+                s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
+                s +=  String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
             }
-            Log.d("Engine_Driver", String.format("About: Host: %s", mainapp.getHostIp() ));
+            s += String.format(", Host:%s", mainapp.getHostIp() );
 
             //show server type and description if set
             String sServer;
@@ -458,18 +454,18 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
             }
             if (!sServer.isEmpty()) {
-                Log.d("Engine_Driver","About: Server: " + sServer);
+                s += ", Server:" + sServer;
             } else {
                 // otherwise show JMRI version info from web if populated
                 HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
                 if (JmriMetadata != null && JmriMetadata.size() > 0) {
-                    Log.d("Engine_Driver", "About: JMRI v" + JmriMetadata.get("JMRIVERCANON") + "    build: " + JmriMetadata.get("JMRIVERSION"));
+                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
                     if (JmriMetadata.get("activeProfile") != null) {
-                        Log.d("Engine_Driver", "About: Active Profile: " + JmriMetadata.get("activeProfile"));
+                        s += ", Active Profile:" + JmriMetadata.get("activeProfile");
                     }
                 }
             }
         }
-        Log.d("Engine_Driver", "----------------------------------");
+        Log.d("Engine_Driver", s);
     }
 }

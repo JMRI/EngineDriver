@@ -57,14 +57,14 @@ public class about_page extends AppCompatActivity {
         TextView v = findViewById(R.id.about_info);
         String s;
         // ED version info
-        s = "Engine Driver: " + mainapp.appVersion;
+        s = "EngineDriver:" + mainapp.appVersion;
         if (mainapp.host_ip != null) {
             // WiT info
             if (mainapp.withrottle_version != 0.0) {
-                s += "\nWiThrottle: v" + mainapp.withrottle_version;
-                s += String.format("    Heartbeat: %dms", mainapp.heartbeatInterval);
+                s += ", WiThrottle:v" + mainapp.withrottle_version;
+                s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
             }
-            s += String.format("\nHost: %s", mainapp.host_ip);
+            s += String.format(", Host:%s", mainapp.host_ip);
             //show server type and description if set
             String sServer;
             if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
@@ -73,23 +73,23 @@ public class about_page extends AppCompatActivity {
                 sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
             }
             if (!sServer.isEmpty()) {
-                s += String.format("\nServer: %s", sServer);
+                s += String.format(", Server:%s", sServer);
             } else {
                 // otherwise show JMRI version info from web if populated
                 HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
                 if (JmriMetadata != null && JmriMetadata.size() > 0) {
-                    s += "\nJMRI v" + JmriMetadata.get("JMRIVERCANON") + "    build: " + JmriMetadata.get("JMRIVERSION");
+                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
                     if (JmriMetadata.get("activeProfile") != null) {
-                        s += "\nActive Profile: " + JmriMetadata.get("activeProfile");
+                        s += ", ActiveProfile:" + JmriMetadata.get("activeProfile");
                     }
                 }
             }
         }
-        s += String.format("\nSSID: %s Net: %s ", mainapp.client_ssid, mainapp.client_type);
+        s += String.format(", SSID:%s, Net:%s", mainapp.client_ssid, mainapp.client_type);
         if (mainapp.client_address_inet4 != null) {
-            s += String.format("IP: %s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format(", IP:%s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
         }
-        s += String.format("\nOS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+        s += String.format(", OS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
 
         // show info
         v.setText(s);

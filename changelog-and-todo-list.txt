@@ -1,4 +1,6 @@
 **Version 2.30.130
+ * shortened About string
+ * avoid crashes reported to Play Store
 **Version 2.30.128
  * Add confirmation dialog to Clear Consists
  * FIX - Locos selected from roster written to Recents without name
@@ -606,6 +608,7 @@
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
  *   TODO: use PRT titles for Active/inactive
+ *   TODO: determine why double-click needed sometimes
  * turnouts
  *   TODO: support client entry/edit of username for servers without usernames
  *   TODO: combine loco control and turnout control in one page
@@ -625,21 +628,18 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
+ *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: option to show the turnout view instead of the webview, including Recents
  *   TODO: option to use 'f' function commands
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
- *   TODO: clear loco buttons on connect and reconnect until actual MT+ received
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: support webview on Top
  *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
- *   TODO: respect "Max Throttle %" from roster entry
- *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released" 
- *   TODO: add preference to disable other hardware buttons in throttle screen
- *   TODO: use the renamed locos and Consists on the Throttle page
+ *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
  *   TODO: User request to have re-arrangeable function buttons
  * select_loco:
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)

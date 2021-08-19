@@ -1904,9 +1904,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
-        int prevScaleSpeed = Integer.parseInt( (String) speed_label.getText());
-        speed_label.setText(Integer.toString(scaleSpeed));
-        mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
+        try {
+            int prevScaleSpeed = Integer.parseInt( (String) speed_label.getText());
+            speed_label.setText(Integer.toString(scaleSpeed));
+            mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
+        } catch (NumberFormatException | ClassCastException e) {
+            Log.e("Engine_Driver", "problem showing speed: " + e.getMessage());
+        }
     }
 
     // set the displayed numeric speed value
@@ -5361,7 +5365,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
                 for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                    if (throttleIndex == whichVolume && mainapp.consists[throttleIndex].isActive()) {
+                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
+                          && (mainapp.consists[throttleIndex].isActive()) ) {
                         if (key == KEYCODE_VOLUME_UP) {
                             if (repeatCnt == 0) {
                                 mVolumeKeysAutoIncrement = true;
