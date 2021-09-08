@@ -507,8 +507,8 @@
     <string name="toastShakeWebViewUnavailable">Vista Web deve ser abilitada nas preferências primeiro</string>
     <string name="toastShakeScreenLocked">Tela Controlador Bloqueada - Agitar para desbloquear</string>
     <string name="toastShakeScreenDimmed">Tela Controlador Esmaecida - Agitar para reativar</string>
-    <string name="toastSwipeUpScreenLocked">Tela Controlador Bloqueada - Deslizar para desbloquear</string>
-    <string name="toastSwipeUpScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
+    <string name="toastSwipeUpDownScreenLocked">Tela Controlador Bloqueada - Deslizar para desbloquear</string>
+    <string name="toastSwipeUpDownScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
     <string name="toastThrottleAlertEstop">Alerta: Locomotiva %1$s está Configurada em estado de ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">A importação automática de preferências do servidor da Web do JMRI foi bem-sucedida.</string>

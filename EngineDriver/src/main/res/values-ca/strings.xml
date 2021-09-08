@@ -471,8 +471,8 @@
     <string name="toastShakeWebViewUnavailable">La vista web ha d\'estar habilitada en les preferències primer</string>
     <string name="toastShakeScreenLocked">Pantalla de Controlador bloquejada - Sacseja de nou per a desbloquejar-la</string>
     <string name="toastShakeScreenDimmed">Pantalla del Controlador atenua - Sacseja de nou per restaurar-ho</string>
-    <string name="toastSwipeUpScreenLocked">Pantalla del Controlador bloquejada - Llisca cap amunt per a desbloquejar</string>
-    <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador aclarida - Llisca cap amunt per a restaurar</string>
+    <string name="toastSwipeUpDownScreenLocked">Pantalla del Controlador bloquejada - Llisca cap amunt per a desbloquejar</string>
+    <string name="toastSwipeUpDownScreenDimmed">Pantalla del Controlador aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza canvis en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit</string>

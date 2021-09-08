@@ -520,8 +520,8 @@
     <string name="toastShakeWebViewUnavailable">La vue Web doit etre activée dans les préférences</string>
     <string name="toastShakeScreenLocked">Ecran verrouillé - Agiter à nouveau pour déverrouiller.</string>
     <string name="toastShakeScreenDimmed">Luminosité réduite. Agiter à nouveau pour augmenter.</string>
-    <string name="toastSwipeUpScreenLocked">Ecran verrouillé - Faire glisser vers le haut pour deverrouiller.</string>
-    <string name="toastSwipeUpScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
+    <string name="toastSwipeUpDownScreenLocked">Ecran verrouillé - Faire glisser vers le haut pour deverrouiller.</string>
+    <string name="toastSwipeUpDownScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s en arret URGENCE</string>
     <string name="toastPreferencesOutsideLimits">Valeur entrée hors limites (%1$s-%2$s). Reset à %3$s.</string>

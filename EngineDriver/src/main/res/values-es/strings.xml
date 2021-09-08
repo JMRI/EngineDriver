@@ -466,8 +466,8 @@
     <string name="toastShakeWebViewUnavailable">La vista web debe estar habilitada en las preferencias primero</string>
     <string name="toastShakeScreenLocked">Pantalla de Controlador bloqueada - Agita de nuevo para desbloquearla</string>
     <string name="toastShakeScreenDimmed">Pantalla del Controlador atenuada - Agitalo de nuevo para restaurarlo</string>
-    <string name="toastSwipeUpScreenLocked">Pantalla del Controlador bloqueada - Desliza hacia arriba para desbloquear</string>
-    <string name="toastSwipeUpScreenDimmed">Pantalla del Controlador atenuada - Desliza hacia arriba para restaurar</string>
+    <string name="toastSwipeUpDownScreenLocked">Pantalla del Controlador bloqueada - Desliza hacia arriba para desbloquear</string>
+    <string name="toastSwipeUpDownScreenDimmed">Pantalla del Controlador atenuada - Desliza hacia arriba para restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalmente oculta. Para ocultarla permanentemente realiza el cambio en las preferencias</string>
     <string name="toastThrottleAlertEstop">Atención: Engine %1$s establecido a ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">La importación automática de preferencias desde el servidor web JMRI se realizó correctamente</string>

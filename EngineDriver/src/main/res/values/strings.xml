@@ -734,8 +734,8 @@
     <string name="toastShakeWebViewUnavailable">Web View must be enabled in the preferences first</string>
     <string name="toastShakeScreenLocked">Throttle Screen Locked - Shake again to unlock</string>
     <string name="toastShakeScreenDimmed">Throttle Screen Dimmed - Shake again to restore</string>
-    <string name="toastSwipeUpScreenLocked">Throttle Screen Locked - Swipe up to unlock</string>
-    <string name="toastSwipeUpScreenDimmed">Throttle Screen Dimmed - Swipe up to restore</string>
+    <string name="toastSwipeUpDownScreenLocked">Throttle Screen Locked - Swipe again to unlock</string>
+    <string name="toastSwipeUpDownScreenDimmed">Throttle Screen Dimmed - Swipe again to restore</string>
     <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>

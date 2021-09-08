@@ -694,8 +694,8 @@
     <string name="toastShakeWebViewUnavailable">Zobrazení webu musí být nejdříve povoleno v předvolbách</string>
     <string name="toastShakeScreenLocked">Obrazovka ovladače zamčena – znovu zatřeste pro odemčení</string>
     <string name="toastShakeScreenDimmed">Obrazovka ovladače setmělá – znovu zatřeste pro obnovení</string>
-    <string name="toastSwipeUpScreenLocked">Obrazovka ovladače zamčena – přetáhněte pro odemčení</string>
-    <string name="toastSwipeUpScreenDimmed">Obrazovka ovladače setmělá – přetáhněte pro obnovení</string>
+    <string name="toastSwipeUpDownScreenLocked">Obrazovka ovladače zamčena – přetáhněte pro odemčení</string>
+    <string name="toastSwipeUpDownScreenDimmed">Obrazovka ovladače setmělá – přetáhněte pro obnovení</string>
     <string name="toastSwipeUpViewHidden">Zobrazení webu je dočasně skryto. Pro trvalé skrytí proveďte změnu v předvolbách</string>
     <string name="toastThrottleAlertEstop">Upozornění: Lokomotiva %1$s je nastavena na ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z webového serveru byl úspěšný.</string>

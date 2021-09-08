@@ -496,8 +496,8 @@
     <string name="toastShakeWebViewUnavailable" tools:ignore="Typos">Web Anzeige muß zuerst in den Voreinstellungen ermöglicht werden.</string>
     <string name="toastShakeScreenLocked">Fahrregler Bildschirm blockiert - Schüttle nochmals zum Freigeben.</string>
     <string name="toastShakeScreenDimmed">Fahrregler Bildschirm gedimmt - Schüttle nochmals zum Wiederherstellen.</string>
-    <string name="toastSwipeUpScreenLocked">Fahrregler Bildschirm blockiert - Wische nach oben um Blockierung aufzuheben.</string>
-    <string name="toastSwipeUpScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
+    <string name="toastSwipeUpDownScreenLocked">Fahrregler Bildschirm blockiert - Wische nach oben um Blockierung aufzuheben.</string>
+    <string name="toastSwipeUpDownScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
     <string name="toastSwipeUpViewHidden">Web Ansicht temporär ausgeblendet. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastThrottleAlertEstop">Warnung: Lok %1$s hat NOT-STOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatischer Import von Voreinstellungen vom JMRI-Webserver erfolgreich.</string>

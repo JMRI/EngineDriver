@@ -5918,10 +5918,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             showHideWebView(getApplicationContext().getResources().getString(R.string.toastSwipeUpViewHidden));
                             break;
                         case SWIPE_UP_OPTION_LOCK:
-                            setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenLocked));
+                            setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpDownScreenLocked));
                             break;
                         case SWIPE_UP_OPTION_DIM:
-                            setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpScreenDimmed));
+                            setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpDownScreenDimmed));
                             break;
                         case SWIPE_UP_OPTION_IMMERSIVE:
                             if (immersiveModeIsOn) {
