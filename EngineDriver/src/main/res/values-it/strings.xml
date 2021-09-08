@@ -503,8 +503,8 @@
     <string name="toastShakeWebViewUnavailable">Vista Webe deve essere abilitata nelle preferenze per primo</string>
     <string name="toastShakeScreenLocked">Schermo Controllore Bloccato - Scuotere per sbloccare</string>
     <string name="toastShakeScreenDimmed">Schermo Controllore Scurito - Scuotere per ripristinare</string>
-    <string name="toastSwipeUpScreenLocked">Schermo Controllore Bloccato - Scorrere per sbloccare</string>
-    <string name="toastSwipeUpScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
+    <string name="toastSwipeUpDownScreenLocked">Schermo Controllore Bloccato - Scorrere per sbloccare</string>
+    <string name="toastSwipeUpDownScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporaneamente nascosta.  Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastThrottleAlertEstop">Avviso: Locomotiva %1$s é impostata in stato di ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Importazione automatica delle preferenze dal server Web JMRI riuscita.</string>
