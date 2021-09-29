@@ -772,7 +772,7 @@
     <string name="prefAllowMobileDataSummary">Consentire al dispositivo di connettersi a JMRI su Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">preferenza WiFi forzata cambiato.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Numero di tasti di funzione (0-4) per mostrare sul layout Throttle semplice.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funzioni Area Size (solo semplice Throttle)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funzioni Area Size</string>
     <string name="functionConsistSettings">Consistono Funzione Impostazioni</string>
     <string name="functionConsistColumnLabel">Etichetta</string>
     <string name="functionConsistColumnLocos">Loco (s)</string>

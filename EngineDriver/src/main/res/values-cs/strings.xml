@@ -1042,7 +1042,7 @@
     <string name="prefAllowMobileDataSummary">Aby vaše zařízení připojit k JMRI přes mobilní datové přenosy.</string>
     <string name="toastPreferencesChangedForceWiFi">Nucený WiFi preference změnit.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Počet funkčních tlačítek (0-4), které chcete zobrazit na Simple škrticí uspořádání.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funkce Area Size (pouze jednoduchá škrticí klapky)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funkce Area Size</string>
     <string name="functionConsistSettings">Skládat nastavení funkcí</string>
     <string name="functionConsistColumnLabel">Označení</string>
     <string name="functionConsistColumnLocos">Lokomotiv (y)</string>

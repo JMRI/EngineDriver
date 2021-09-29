@@ -828,7 +828,7 @@
     <string name="prefAllowMobileDataSummary">Permitir que el dispositivo se conecte a JMRI mediante datos móviles</string>
     <string name="toastPreferencesChangedForceWiFi">Has cambiado la preferencia de \'Permitir Datos Móviles\'</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Número de botones de funciones (0-4) para mostrar en el diseño del Controlador Simple</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Tamaño del área de funciones (Sólo Controlador Simple)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Tamaño del área de funciones</string>
     <string name="functionConsistSettings">Ajustes de las funciones de Tracción Múltiple</string>
     <string name="functionConsistColumnLabel">Etiqueta</string>
     <string name="functionConsistColumnLocos">Locomotora(s)</string>

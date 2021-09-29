@@ -838,7 +838,7 @@
     <string name="prefAllowMobileDataTitle">Permetre la connexió mitjançant dades mòbils</string>
     <string name="prefAllowMobileDataSummary">Permetre que el dispositiu es connecti a JMRI mitjanánt dades mòbils</string>
     <string name="toastPreferencesChangedForceWiFi">Has canviat la preferència de \'Permetre Dades Mòbils\'</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Mida de l\'àrea de funcions (només Controlador Simple)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Mida de l\'àrea de funcions</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Nombre de botons de funció (0-4) per mostrar en el disseny del Controlador Simple</string>
     <string name="functionConsistSettings">Ajustaments de les funcions de les Traccions Múltiples</string>
     <string name="functionConsistColumnLabel">Etiqueta</string>

@@ -858,7 +858,7 @@
     <string name="prefAllowMobileDataSummary">Laissez votre appareil de se connecter à JMRI sur Mobile Data.</string>
     <string name="toastPreferencesChangedForceWiFi">Les préférences WiFi ont été modifiées</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Nombre de touches de fonctions (0-4) affichees sur egulateur simple.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Taille zone touches de fonctions (regulateur simple)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Taille zone touches de fonctions</string>
     <string name="functionConsistSettings">Paramétrage Unité Multiple (UM)</string>
     <string name="functionConsistColumnLabel">Libellé</string>
     <string name="functionConsistColumnLocos">Loco(s)</string>

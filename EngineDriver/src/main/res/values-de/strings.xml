@@ -840,7 +840,7 @@
     <string name="prefAllowMobileDataSummary">Lassen Sie das Gerät JMRI über Mobile Daten verbinden.</string>
     <string name="toastPreferencesChangedForceWiFi">Erzwungene WiFi Präferenz geändert.</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Anzahl der Funktionstasten (0-4) auf dem Simple Gas Layout zu zeigen.</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funktionen Bereich Größe (Simple Nur Gas)</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Funktionen Bereich Größe</string>
     <string name="functionConsistSettings">Consist Funktionseinstellungen</string>
     <string name="functionConsistColumnLabel">Etikette</string>
     <string name="functionConsistColumnLocos">Loco (n)</string>
