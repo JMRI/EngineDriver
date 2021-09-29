@@ -469,40 +469,6 @@
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
-            android:key="volume_preferences"
-            android:layout="@layout/checkbox_icon_left_highlight"
-            android:persistent="false"
-            android:summary="@string/prefVolumeSummary"
-            android:title="@string/prefVolumeTitle">
-
-            <EditTextPreference
-                android:defaultValue="@string/prefVolumeSpeedButtonsSpeedStepDefaultValue"
-                android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:key="prefVolumeSpeedButtonsSpeedStep"
-                android:maxLength="2"
-                android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
-                android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
-                android:key="prefDisableVolumeKeys"
-                android:summary="@string/prefDisableVolumeKeysSummary"
-                android:title="@string/prefDisableVolumeKeysTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
-                android:key="prefVolumeKeysFollowLastTouchedThrottle"
-                android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
-                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle"
-                android:layout="@layout/checkbox_no_icon" />
-        </PreferenceScreen>
-
-        <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
             android:key="prefTts"
             android:layout="@layout/checkbox_icon_left_highlight"
             android:persistent="false"
@@ -543,210 +509,6 @@
                 android:key="prefTtsGamepadTestComplete"
                 android:summary="@string/prefTtsGamepadTestCompleteSummary"
                 android:title="@string/prefTtsGamepadTestCompleteTitle"
-                android:layout="@layout/checkbox_no_icon" />
-        </PreferenceScreen>
-
-        <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
-            android:key="gamepad_preferences"
-            android:layout="@layout/checkbox_icon_left_highlight"
-            android:persistent="false"
-            android:summary="@string/prefGamePadSummary"
-            android:title="@string/prefGamePadTitle">
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadTypeDefaultValue"
-                android:entries="@array/prefGamePadTypeEntries"
-                android:entryValues="@array/prefGamePadTypeEntryValues"
-                android:key="prefGamePadType"
-                android:summary="@string/prefGamePadTypeSummary"
-                android:title="@string/prefGamePadTypeTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
-                android:key="prefGamepadTestNow"
-                android:summary="@string/prefGamepadTestNowSummary"
-                android:title="@string/prefGamepadTestNowTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <EditTextPreference
-                android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
-                android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:key="prefGamePadSpeedButtonsSpeedStep"
-                android:maxLength="2"
-                android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
-                android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <EditTextPreference
-                android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
-                android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:key="prefGamePadFeedbackVolume"
-                android:maxLength="3"
-                android:summary="@string/prefGamePadFeedbackVolumeSummary"
-                android:title="@string/prefGamePadFeedbackVolumeTitle"
-                android:layout="@layout/checkbox_no_icon" />
-            <EditTextPreference
-                android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
-                android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
-                android:digits="0123456789"
-                android:inputType="number"
-                android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
-                android:maxLength="4"
-                android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
-                android:title="@string/prefGamePadSpeedButtonsRepeatTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <!--    Gamepad button preferences   -->
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButton1DefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButton1"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton1Title" />
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButton3DefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButton3"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton3Title"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButton2DefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButton2"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton2Title"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButton4DefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButton4"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton4Title"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonStartDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonStart"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonStartTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonReturnDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonReturn"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonReturnTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonUp"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonUpTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonRightDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonRight"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonRightTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonDownDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonDown"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonDownTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonLeftDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonLeft"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonLeftShoulderDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonLeftShoulder"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonRightShoulderDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonRightShoulder"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonLeftTriggerDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonLeftTrigger"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <ListPreference
-                android:defaultValue="@string/prefGamePadButtonRightTriggerDefaultValue"
-                android:entries="@array/prefGamePadKeyEntries"
-                android:entryValues="@array/prefGamePadKeyEntryValues"
-                android:key="prefGamePadButtonRightTrigger"
-                android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButtonLeftTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <!--    Gamepad button preferences   -->
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
-                android:key="prefGamepadSwapForwardReverseWithScreenButtons"
-                android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
-                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
-                android:key="prefGamepadTestEnforceTesting"
-                android:summary="@string/prefGamepadTestEnforceTestingSummary"
-                android:title="@string/prefGamepadTestEnforceTestingTitle"
-                android:layout="@layout/checkbox_no_icon" />
-
-            <CheckBoxPreference
-                android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
-                android:key="prefGamepadTestEnforceTestingSimple"
-                android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
-                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle"
                 android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
@@ -791,6 +553,7 @@
         </PreferenceScreen>
 
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="prefCategoryThrottleStatusRow"
         android:title="@string/prefThrottleStatusTitle">
@@ -1168,6 +931,250 @@
                 android:layout="@layout/checkbox_no_icon" />
         </PreferenceScreen>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefCategoryThrottleAdditionalControl"
+        android:title="@string/prefThrottleAdditionalControlTitle">
+
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="volume_preferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefVolumeSummary"
+            android:title="@string/prefVolumeTitle">
+
+            <EditTextPreference
+                android:defaultValue="@string/prefVolumeSpeedButtonsSpeedStepDefaultValue"
+                android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefVolumeSpeedButtonsSpeedStep"
+                android:maxLength="2"
+                android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
+                android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
+                android:key="prefDisableVolumeKeys"
+                android:summary="@string/prefDisableVolumeKeysSummary"
+                android:title="@string/prefDisableVolumeKeysTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
+                android:key="prefVolumeKeysFollowLastTouchedThrottle"
+                android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
+                android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle"
+                android:layout="@layout/checkbox_no_icon" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="gamepad_preferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefGamePadSummary"
+            android:title="@string/prefGamePadTitle">
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadTypeDefaultValue"
+                android:entries="@array/prefGamePadTypeEntries"
+                android:entryValues="@array/prefGamePadTypeEntryValues"
+                android:key="prefGamePadType"
+                android:summary="@string/prefGamePadTypeSummary"
+                android:title="@string/prefGamePadTypeTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
+                android:key="prefGamepadTestNow"
+                android:summary="@string/prefGamepadTestNowSummary"
+                android:title="@string/prefGamepadTestNowTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
+                android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefGamePadSpeedButtonsSpeedStep"
+                android:maxLength="2"
+                android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
+                android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
+                android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefGamePadFeedbackVolume"
+                android:maxLength="3"
+                android:summary="@string/prefGamePadFeedbackVolumeSummary"
+                android:title="@string/prefGamePadFeedbackVolumeTitle"
+                android:layout="@layout/checkbox_no_icon" />
+            <EditTextPreference
+                android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
+                android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
+                android:digits="0123456789"
+                android:inputType="number"
+                android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
+                android:maxLength="4"
+                android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
+                android:title="@string/prefGamePadSpeedButtonsRepeatTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <!--    Gamepad button preferences   -->
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton1DefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButton1"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton1Title" />
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton3DefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButton3"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton3Title"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton2DefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButton2"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton2Title"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButton4DefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButton4"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButton4Title"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonStartDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonStart"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonStartTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonReturnDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonReturn"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonReturnTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonUpDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonUp"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonUpTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRight"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonRightTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonDownDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonDown"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonDownTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeft"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightShoulderDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightShoulder"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonLeftTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonLeftTrigger"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <ListPreference
+                android:defaultValue="@string/prefGamePadButtonRightTriggerDefaultValue"
+                android:entries="@array/prefGamePadKeyEntries"
+                android:entryValues="@array/prefGamePadKeyEntryValues"
+                android:key="prefGamePadButtonRightTrigger"
+                android:summary="@string/prefGamePadButtonSummary"
+                android:title="@string/prefGamePadButtonLeftTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <!--    Gamepad button preferences   -->
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
+                android:key="prefGamepadSwapForwardReverseWithScreenButtons"
+                android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
+                android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
+                android:key="prefGamepadTestEnforceTesting"
+                android:summary="@string/prefGamepadTestEnforceTestingSummary"
+                android:title="@string/prefGamepadTestEnforceTestingTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
+                android:key="prefGamepadTestEnforceTestingSimple"
+                android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
+                android:title="@string/prefGamepadTestEnforceTestingSimpleTitle"
+                android:layout="@layout/checkbox_no_icon" />
+        </PreferenceScreen>
+
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
@@ -1284,6 +1291,7 @@
                     android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
         </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory

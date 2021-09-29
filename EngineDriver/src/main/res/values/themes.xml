@@ -246,7 +246,7 @@
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
     </style>
 
-    <!-- also appears a 'dark' theme -->
+    <!-- appears as 'dark' theme -->
     <style name="app_theme_ultra" parent="Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_black_preferences</item>
 
@@ -430,6 +430,8 @@
         <item name="android:divider">@drawable/divider_black</item>
         <item name="android:listDivider">@drawable/divider_black</item>
 
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style</item>
+
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
@@ -438,6 +440,8 @@
     <style name="app_theme_black_preferences" parent="@style/app_theme_black">
         <item name="android:divider">@drawable/divider_black</item>
         <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
 
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
