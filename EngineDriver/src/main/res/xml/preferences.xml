@@ -1034,7 +1034,8 @@
                 android:entryValues="@array/prefGamePadKeyEntryValues"
                 android:key="prefGamePadButton1"
                 android:summary="@string/prefGamePadButtonSummary"
-                android:title="@string/prefGamePadButton1Title" />
+                android:title="@string/prefGamePadButton1Title"
+                android:layout="@layout/checkbox_no_icon"  />
             <ListPreference
                 android:defaultValue="@string/prefGamePadButton3DefaultValue"
                 android:entries="@array/prefGamePadKeyEntries"

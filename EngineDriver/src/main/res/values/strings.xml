@@ -88,11 +88,11 @@
 
     <string name="fbResetFunctionLabels">Reset All</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Number of Default Functions</string>
-    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the Server roster.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the Server roster</string>
     <string name="prefNumberOfDefaultFunctionLabelsDefaultValue" translatable="false">29</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Number of Default Functions for Roster</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for Server Roster Entries with no function Labels.</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for Server Roster Entries with no function Labels</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Right on a loco to remove it from the consist.  Press Back Arrow when done.</string>
@@ -172,78 +172,78 @@
     <string name="prefSummary">Preferences for Engine Driver</string>
     <string name="preferences">Preferences</string>
     <string name="prefSwipeUpDownTitle">Swipe Up-Down Preferences</string>
-    <string name="prefSwipeUpDownSummary">Options for swipe Up-Down on the Throttle Screen.</string>
+    <string name="prefSwipeUpDownSummary">Options for swipe up or down on the Throttle screen</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>
     <string name="prefThrottleNameDefaultValue" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle Server)</string>
     <string name="prefThrottleOrientationTitle">Screen orientation</string>
     <string name="prefThrottleOrientationDefaultValue" translatable="false">Portrait</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
-    <string name="prefThrottlePageTitle">Throttle Page Appearance Preferences</string>
+    <string name="prefThrottlePageTitle">Throttle Screen Appearance Preferences</string>
     <string name="prefThrottleAdditionalControlTitle">Additional Throttle Control Source Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
-    <string name="prefThrottleStatusTitle">Throttle Page Status Row Preferences</string>
+    <string name="prefThrottleStatusTitle">Throttle Screen Status Row Preferences</string>
 
     <string name="prefSliderTitle">Speed Slider and Buttons Preferences</string>
-    <string name="prefSliderSummary">Options for Speed Slider and Speed Buttons</string>
+    <string name="prefSliderSummary">Options for Speed Slider and Speed buttons</string>
 
-    <string name="prefDirectionTitle">Direction button Preferences</string>
-    <string name="prefDirectionSummary">Options for the Direction Buttons</string>
+    <string name="prefDirectionTitle">Direction Button Preferences</string>
+    <string name="prefDirectionSummary">Options for the Direction buttons</string>
 
     <string name="prefIncreaseSliderHeightTitle">Increase Slider/Speed Height?</string>
-    <string name="prefIncreaseSliderHeightSummary">Use a taller slider, or speed buttons, for throttles.</string>
+    <string name="prefIncreaseSliderHeightSummary">Use a taller Slider, or Speed buttons, for throttles</string>
 
     <string name="prefHideSliderTitle">Hide Speed Slider?</string>
-    <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead.</string>
+    <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead</string>
 
     <string name="prefHideSliderAndSpeedButtonsTitle">Hide Slider AND Speed Buttons?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons.</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons</string>
 
     <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
-    <string name="prefDirChangeWhileMovingSummary">Allow direction change when moving.</string>
+    <string name="prefDirChangeWhileMovingSummary">Allow direction changes when moving</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
-    <string name="prefStopOnDirectionChangeSummary">Stop train if you change direction while moving.</string>
+    <string name="prefStopOnDirectionChangeSummary">Stop loco if you change direction while moving</string>
     <string name="prefSelLocoWhileMovingTitle">Allow loco select while moving?</string>
-    <string name="prefSelLocoWhileMovingSummary">Enables Loco button when moving.</string>
-    <string name="prefShowAddressInsteadOfNameTitle">Show Loco Address instead of Name?</string>
-    <string name="prefShowAddressInsteadOfNameSummary">Show the loco DCC Address instead of the Loco Name on the Throttle page.</string>
-    <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Increase throttle web view size to 60% for small screens.</string>
+    <string name="prefSelLocoWhileMovingSummary">Enables Loco Select button when moving</string>
+    <string name="prefShowAddressInsteadOfNameTitle">Loco Address instead of Name?</string>
+    <string name="prefShowAddressInsteadOfNameSummary">Show loco DCC Address(es) instead of the Roster Name(s) on the Throttle screen</string>
+    <string name="prefIncreaseWebViewSizeTitle">Larger throttle Web View?</string>
+    <string name="prefIncreaseWebViewSizeSummary">Increase throttle Web View size to 60% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
-    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the toolbar in Immersive mode.</string>
-    <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle view?</string>
-    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle view.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the Toolbar in immersive mode</string>
+    <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle screen?</string>
+    <string name="prefSwipeUpOptionSummary">What should happen when you swipe up on the Throttle screen.</string>
     <string name="prefSwipeDownOptionTitle">Swipe down action in the Throttle view?</string>
-    <string name="prefSwipeDownOptionSummary">What should happen when you swipe down on the Throttle view.</string>
+    <string name="prefSwipeDownOptionSummary">What should happen when you swipe down on the Throttle screen.</string>
 
     <!--     Volume preferences  -->
     <string name="prefVolumeTitle">Volume Button Preferences</string>
-    <string name="prefVolumeSummary">Using Volume buttons to control speed</string>
+    <string name="prefVolumeSummary">Use Volume buttons to control speed</string>
 
-    <string name="prefVolumeSpeedButtonsSpeedStepTitle">Speed button change amount</string>
-    <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed.</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepTitle">Speed button Change Amount</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed</string>
     <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad Preferences</string>
-    <string name="prefGamePadSummary">Choose the Gamepad type and other options</string>
+    <string name="prefGamePadSummary">Choose the Gamepad type and related options</string>
     <string name="prefGamePadTypeTitle">Gamepad type</string>
-    <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad.</string>
+    <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>
-    <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button.</string>
+    <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button</string>
 
     <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
-    <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks.</string>
+    <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button repeat delay</string>
+    <string name="prefGamePadSpeedButtonsRepeatTitle">Speed button Repeat Delay</string>
     <string name="prefGamePadSpeedButtonsRepeatSummary">How long between repeats on Gamepad speed buttons.  Smaller is faster.</string>
     <string name="prefGamePadSpeedButtonsRepeatDefaultValue" translatable="false">300</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Speed button change amount</string>
-    <string name="prefGamePadSpeedButtonsSpeedStepSummary">How much Gamepad buttons jump throttle speed.</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Speed button Change Amount</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">How much each press of the Gamepad buttons changes the throttle speed</string>
     <string name="prefGamePadSpeedButtonsSpeedStepDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
     <!--    Gamepad button preferences   -->
@@ -257,7 +257,7 @@
     <string name="prefGamePadButtonRightTitle">Gamepad DPAD Right action</string>
     <string name="prefGamePadButtonDownTitle">Gamepad DPAD Down action</string>
     <string name="prefGamePadButtonLeftTitle">Gamepad DPAD Left action</string>
-    <string name="prefGamePadButtonSummary">Choose the action when you press the button.</string>
+    <string name="prefGamePadButtonSummary">Choose the action when you press the button</string>
     <string name="prefGamePadButton1DefaultValue" translatable="false">Stop</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButton2DefaultValue" translatable="false">Function 00/Light</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButton3DefaultValue" translatable="false">Function 01/Bell</string>  <!-- DO NOT TRANSLATE -->
@@ -280,16 +280,16 @@
     <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
-    <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button</string>
     <string name="prefEsuMc2ButtonTLDefaultValue" translatable="false">Increase Speed</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonBLTitle">Bottom-left button action</string>
-    <string name="prefEsuMc2ButtonBLSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonBLSummary">Choose the action when you press the button</string>
     <string name="prefEsuMc2ButtonBLDefaultValue" translatable="false">Decrease Speed</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonTRTitle">Top-right button action</string>
-    <string name="prefEsuMc2ButtonTRSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonTRSummary">Choose the action when you press the button</string>
     <string name="prefEsuMc2ButtonTRDefaultValue" translatable="false">Forward/Reverse Toggle</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonBRTitle">Bottom-right button action</string>
-    <string name="prefEsuMc2ButtonBRSummary">Choose the action when you press the button.</string>
+    <string name="prefEsuMc2ButtonBRSummary">Choose the action when you press the button</string>
     <string name="prefEsuMc2ButtonBRDefaultValue" translatable="false">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2ButtonsRepeatTitle">Button repeat delay</string>
     <string name="prefEsuMc2ButtonsRepeatSummary">How long between repeats on device side buttons.\nSmaller is faster.</string>
@@ -305,9 +305,9 @@
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Direction Change at end-stop</string>
-    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position.</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at counter-clockwise end-stop position</string>
     <string name="prefEsuMc2KnobButtonTitle">Show disable Knob button</string>
-    <string name="prefEsuMc2KnobButtonSummary">Allow the control knob to be disabled by an action button on the throttle screen.</string>
+    <string name="prefEsuMc2KnobButtonSummary">Allow the control knob to be disabled by an action button on the throttle screen</string>
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
@@ -318,60 +318,60 @@
     <!-- ESU MCII Messages -->
 
     <string name="prefDefaultFunctionsTitle">Default Function Preferences</string>
-    <string name="prefDefaultFunctionsSummary">When and how the default function labels are displayed.</string>
+    <string name="prefDefaultFunctionsSummary">When and how the default Function Labels are displayed</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default function labels instead of labels from roster entries.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default Function Labels instead of labels from roster entries</string>
 
-    <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. Height?</string>
-    <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the loco Number, speed and direction buttons.</string>
+    <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
-    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display.\n(Limited by the selected Throttle Screen Layout.)</string>
+    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
-    <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
+    <string name="prefThrottleScreenTypeTitle">Throttle Screen layout</string>
     <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen layout.\n(The number in brackets after the name is the number of throttles the layout can support.)</string>
     <string name="prefThrottleScreenTypeDefault" translatable="false">Default</string>
 
-    <string name="prefMaximumThrottleTitle">Maximum Throttle Percentage</string>
+    <string name="prefMaximumThrottleTitle">Maximum throttle Percentage</string>
     <string name="prefMaximumThrottleDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in % in ALL sliders</string>
-    <string name="prefMaximumThrottleChangeTitle">Maximum Throttle Change</string>
+    <string name="prefMaximumThrottleChangeTitle">Maximum throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue" translatable="false">25</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefMaximumThrottleChangeSummary">Maximum Allowed throttle change in %</string>
+    <string name="prefMaximumThrottleChangeSummary">Maximum allowed throttle change in %</string>
     <string name="prefWebViewTitle">Throttle Web View Preferences</string>
     <string name="prefWebViewSummary">Options for Throttle Web View appearance</string>
-    <string name="prefInitialThrotWebPageTitle">Initial Throttle Web Page</string>
+    <string name="prefInitialThrotWebPageTitle">Initial throttle Web Page</string>
     <string name="prefInitialThrotWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefInitialThrotWebPageSummary">Initial Throttle Web Page (such as \'/panel/\')</string>
+    <string name="prefInitialThrotWebPageSummary">Initial throttle Web Page (such as \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Throttle Web View?</string>
     <string name="prefWebViewLocationDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefWebViewLocationSummary">Include web view on Throttle pane</string>
+    <string name="prefWebViewLocationSummary">Include web view on Throttle screen</string>
     <string name="prefSelectLocoTitle">Select Loco Preferences</string>
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
-    <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound</string>
+    <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound?</string>
     <string name="prefSelectiveLeadSoundF1Summary">For the \'Selective Lead Unit Sound\' option</string>
-    <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound</string>
+    <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound?</string>
     <string name="prefSelectiveLeadSoundF2Summary">For the \'Selective Lead Unit Sound\' option</string>
-    <string name="prefStopOnPhonecallTitle">Stop On Phonecall?</string>
+    <string name="prefStopOnPhonecallTitle">Stop on Phonecall?</string>
     <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
-    <string name="prefStopOnReleaseTitle">Stop On Release?</string>
+    <string name="prefStopOnReleaseTitle">Stop on Release?</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
-    <string name="prefSwipeThroughRoutesTitle">Swipe Through Routes?</string>
-    <string name="prefSwipeThroughRoutesSummary">Include Routes screen when swiping between screens.</string>
-    <string name="prefSwipeThroughWebTitle">Swipe Through Web?</string>
-    <string name="prefSwipeThroughWebSummary">Include Web screen when swiping between screens.</string>
+    <string name="prefSwipeThroughRoutesTitle">Swipe through Routes?</string>
+    <string name="prefSwipeThroughRoutesSummary">Include Routes screen when swiping between screens</string>
+    <string name="prefSwipeThroughWebTitle">Swipe through Web?</string>
+    <string name="prefSwipeThroughWebSummary">Include Web Screen when swiping between screens</string>
     <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Turnouts?</string>
-    <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts screen when swiping between screens.</string>
-    <string name="prefDropOnAcquireTitle">Drop Loco Before Acquire?</string>
-    <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco.</string>
-    <string name="prefHideIfNoUserNameTitle">Hide If No User Name?</string>
-    <string name="prefHideIfNoUserNameSummary">Omit Turnout/Route from list if the user name is empty.</string>
+    <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts Screen when swiping between screens</string>
+    <string name="prefDropOnAcquireTitle">Drop Loco before acquire?</string>
+    <string name="prefDropOnAcquireSummary">Drop current loco before acquiring new loco</string>
+    <string name="prefHideIfNoUserNameTitle">Hide if no user name?</string>
+    <string name="prefHideIfNoUserNameSummary">Omit Turnout/Route from list if the user name is empty</string>
 
     <string name="prefRosterRecentLocosTitle">Roster in Recent Locos?</string>
     <string name="prefRosterRecentLocosSummary">Include roster selections in Recent list?</string>
     <string name="prefRosterRecentLocoNamesTitle">Roster Names in Recent Locos?</string>
-    <string name="prefRosterRecentLocoNamesSummary">Include Loco names from the roster in Recent list if a matching address is found?</string>
+    <string name="prefRosterRecentLocoNamesSummary">Include Loco names from the roster in Recent list if a matching address is found</string>
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
@@ -392,17 +392,17 @@
     <string name="prefMaximumRecentLocosSummary">Maximum Recent Locos to show in list</string>
     <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
     <string name="prefDefaultAddressLengthDefaultValue" translatable="false">Auto</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits).</string>
+    <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits)</string>
     <string name="prefWebTitle">Web Preferences</string>
     <string name="prefDisplaySpeedUnitsTitle">Speed Units</string>
     <string name="prefDisplaySpeedUnitsDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage or by speed steps?</string>
+    <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage, or by a specific number of steps</string>
     <string name="prefWebOrientationTitle">Web Screen Orientation</string>
     <string name="prefWebOrientationDefaultValue" translatable="false">Auto-Rotate</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefWebOrientationSummary">Web screen orientation</string>
+    <string name="prefWebOrientationSummary">Select the Web Screen orientation</string>
     <string name="prefInitialWebPageTitle">Initial Web Page</string>
     <string name="prefInitialWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefInitialWebPageSummary">Initial Web Page (such as \'/panel\')</string>
+    <string name="prefInitialWebPageSummary">Enter the initial Web Page (such as \'/panel\')</string>
     <string name="prefConnectTitle">Connect Preferences</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
     <string name="prefMaximumRecentConnectionsDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
@@ -419,7 +419,7 @@
     <string name="prefHardwareSystemDefaultValue" translatable="false">L</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>
     <string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
-    <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list.</string>
+    <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list</string>
     <string name="prefDelimiterTitle">Location Delimiter</string>
     <string name="prefDelimiterDefaultValue" translatable="false">:</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
@@ -432,50 +432,50 @@
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
     <string name="clearConsistsList">Clear Consists List</string>
-    <string name="prefEmerStopTitle">Show Emergency Stop button?</string>
-    <string name="prefEmerStopSummary">Show loco emergency stop button in action bar?</string>
+    <string name="prefEmerStopTitle">Emergency Stop button?</string>
+    <string name="prefEmerStopSummary">Show loco Emergency Stop button in action bar</string>
     <string name="EStop">Estop</string>
     <string name="PowerButtonBar">power_button</string>
-    <string name="prefPowerButtonBarTitle">Show layout power button?</string>
-    <string name="prefPowerButtonBarSummary">Display layout power button in action bar?</string>
+    <string name="prefPowerButtonBarTitle">Layout Power button?</string>
+    <string name="prefPowerButtonBarSummary">Show Layout Power button in action bar</string>
     <string name="prefSliderLeftMarginTitle">Throttle Speed Slider Margin</string>
-    <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders.</string>
+    <string name="prefSliderLeftMarginSummary">Number of pixels to offset margins of throttle speed sliders</string>
     <string name="prefSliderLeftMarginDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefVerticalStopButtonMarginTitle">Stop Button Vertical Margins</string>
     <string name="prefVerticalStopButtonMarginSummary">Number of pixels to offset margins of the stop button from the speed buttons and bottom of screen.</string>
     <string name="prefVerticalStopButtonMarginDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
-    <string name="PrefConnectToFirstServerTitle">Auto-Connect to First WiThrottle Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Connect automatically to first WiThrottle Server discovered?</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connect to WiThrottle Server?</string>
+    <string name="PrefConnectToFirstServerSummary">Connect automatically to \'first\' WiThrottle Server discovered</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
-    <string name="prefDisplayClockSummary">Set Format for Fast Clock Display in action bar.</string>
+    <string name="prefDisplayClockSummary">Set format for Fast Clock display in action bar</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
     <string name="LeftButton">&lt;&lt;</string>
     <string name="RightButton">&gt;&gt;</string>
     <string name="DownButton">--</string>
     <string name="UpButton">++</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
-    <string name="prefDisplaySpeedArrowsSummary">Display buttons next to speed sliders to change loco speed?</string>
+    <string name="prefDisplaySpeedArrowsSummary">Display buttons next to Speed Sliders to change loco speed</string>
 
-    <string name="prefSelectedLocoIndicatorTitle">Additional Selected Loco Indicator</string>
-    <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method.</string>
+    <string name="prefSelectedLocoIndicatorTitle">Additional selected loco Indicator</string>
+    <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method</string>
     <string name="prefSelectedLocoIndicatorDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefDisableVolumeKeysTitle">Disable Volume keys</string>
-    <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed. </string>
+    <string name="prefDisableVolumeKeysTitle">Disable Volume keys?</string>
+    <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed</string>
 
-    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow Touch</string>
-    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">The Volume keys speed control will follow the last touched throttle.</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow touch?</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">The Volume keys speed control will follow the last touched throttle</string>
 
-    <string name="prefSpeedButtonsRepeatTitle">Speed button repeat delay</string>
-    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.  Smaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
+    <string name="prefSpeedButtonsRepeatTitle">Speed button Repeat Delay</string>
+    <string name="prefSpeedButtonsRepeatSummary">How long between repeats on speed buttons.\nSmaller is faster. Excludes gamepad buttons. (See separate gamepad setting.)</string>
     <string name="prefSpeedButtonsRepeatDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSpeedButtonsSpeedStepTitle">Speed button change amount</string>
-    <string name="prefSpeedButtonsSpeedStepSummary">How much Speed arrows jump throttle speed.</string>
+    <string name="prefSpeedButtonsSpeedStepTitle">Speed button Change Amount</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">How much Speed buttons jump throttle speed</string>
     <string name="prefSpeedButtonsSpeedStepDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed step on decrement</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Force the speed step to be used when long pressing a lower speed on the slider.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed step on Decrement?</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Force the speed step to be used when long pressing a lower speed on the slider.\nIf not checked, the speed will immediately jump to the touched speed.</string>
 
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
@@ -492,23 +492,23 @@
     <string name="throttle_name">Throttle Name: %1$s</string>
 
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>
-    <string name="prefShowAdvancedPreferencesSummary">Show or hide less common preferences.</string>
+    <string name="prefShowAdvancedPreferencesSummary">Show or hide less common preferences</string>
 
-    <string name="prefConsistLightsLongClickTitle">Control Consist lights on long click</string>
+    <string name="prefConsistLightsLongClickTitle">Control consist Lights on long click</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
-    <string name="consistLights_help">Click on a Loco to toggle the lights for that Loco \'Off\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
+    <string name="consistLights_help">Click on a Loco to toggle the Lights for that Loco \'Off\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
 
-    <string name="prefThrottleImportExportTitle">Import/Export/Reset Preferences</string>
-    <string name="prefThrottleImportExportSummary">Import/Export/Reset Preferences</string>
+    <string name="prefThrottleImportExportTitle">Import/Export/Reset &amp; Log Preferences</string>
+    <string name="prefThrottleImportExportSummary">Import/Export/Reset and Log Preferences</string>
 
     <string name="prefImportExportTitle">Import, Export or Reset</string>
-    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them. \nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
+    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'engine_driver/\' folder, or \'Reset\' them.\nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
     <string name="prefImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefImportExportLocoListTitle">Include recent loco list</string>
-    <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'.</string>
+    <string name="prefImportExportLocoListTitle">Include recent loco list?</string>
+    <string name="prefImportExportLocoListSummary">Include the locos in the recent loco list in \'Imports\' and \'Exports\'</string>
 
-    <string name="prefAutoImportExportTitle">Auto host specific import/export</string>
+    <string name="prefAutoImportExportTitle">Auto host specific import/export?</string>
     <string name="prefAutoImportExportSummary">On every connection to a host, AUTOMATICALLY \'Import\' preferences for that host, and optionally \'Export\' them on disconnect. \n(To constantly reset back to a known state, set to \'Auto import on connect only\' after the first time, or after a manual save (below).)</string>
     <string name="prefAutoImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
@@ -521,70 +521,70 @@
     <string name="prefImportExportErrorReadingFrom">Import from \'engine_driver/%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
-    <string name="prefImportServerManualTitle">Import from current Server (Manually)</string>
+    <string name="prefImportServerManualTitle">Import from current Server (manually)</string>
     <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'/engine_driver/\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
     <string name="prefImportServerManualDefaultValue" translatable="false">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefImportServerAutoTitle">Auto import from all Servers</string>
+    <string name="prefImportServerAutoTitle">Auto import from all Servers?</string>
     <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'/engine_driver/auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
 
     <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
     <string name="importServerAutoDialogPositiveButton">Full</string>
     <string name="importServerAutoDialogNeutralButton">Partial</string>
 
-    <string name="prefSwapForwardReverseButtonsTitle">Swap Direction Buttons</string>
-    <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction Buttons for all throttles.</string>
+    <string name="prefSwapForwardReverseButtonsTitle">Swap Direction buttons?</string>
+    <string name="prefSwapForwardReverseButtonsSummary">Permanently swap the two Direction buttons for all throttles</string>
 
-    <string name="prefSwapForwardReverseButtonsLongPressTitle">Long press Swap Direction Buttons</string>
-    <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction Buttons with a long press of any Direction Button.</string>
+    <string name="prefSwapForwardReverseButtonsLongPressTitle">Long press Swap Direction buttons?</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">Temporarily swap the two Direction buttons with a long press of any Direction button</string>
 
-    <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Swap Direction Buttons with Screen Buttons</string>
-    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction Buttons if the Screen Direction buttons are swapped.</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Swap Direction buttons with Screen buttons?</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Temporarily swap the two Gamepad Direction buttons if the Screen Direction buttons are swapped</string>
 
-    <string name="prefGamepadTestEnforceTestingTitle">Enforce Gamepad Testing</string>
-    <string name="prefGamepadTestEnforceTestingSummary">Test each gamepad every time they are connected.</string>
+    <string name="prefGamepadTestEnforceTestingTitle">Enforce Gamepad Testing?</string>
+    <string name="prefGamepadTestEnforceTestingSummary">Test each gamepad every time they are connected</string>
 
-    <string name="prefGamepadTestEnforceTestingSimpleTitle">Use Simple Test</string>
-    <string name="prefGamepadTestEnforceTestingSimpleSummary">Only test that you can reduce speed.</string>
+    <string name="prefGamepadTestEnforceTestingSimpleTitle">Use Simple Test?</string>
+    <string name="prefGamepadTestEnforceTestingSimpleSummary">Only test that you can reduce speed</string>
 
-    <string name="prefLeftDirectionButtonsTitle">Left Direction Button label</string>
+    <string name="prefLeftDirectionButtonsTitle">Left Direction button Label</string>
     <string name="prefLeftDirectionButtonsSummary">Labels for all LEFT direction buttons. Enter \'Forward\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsDefaultValue">Forward</string>
 
-    <string name="prefRightDirectionButtonsTitle">Right Direction Button label</string>
+    <string name="prefRightDirectionButtonsTitle">Right Direction button Label</string>
     <string name="prefRightDirectionButtonsSummary">Labels for all RIGHT direction buttons. Enter \'Reverse\' or blank for normal behaviour.</string>
     <string name="prefRightDirectionButtonsDefaultValue">Reverse</string>
 
-    <string name="prefLeftDirectionButtonsShortTitle">Short Left Direction Button label</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Short Left Direction button Label</string>
     <string name="prefLeftDirectionButtonsShortSummary">Short Labels for all LEFT direction buttons. Enter \'Fwd\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsShortDefaultValue">Fwd</string>
 
-    <string name="prefRightDirectionButtonsShortTitle">Short Right Direction Button label</string>
+    <string name="prefRightDirectionButtonsShortTitle">Short Right Direction button Label</string>
     <string name="prefRightDirectionButtonsShortSummary">Labels for all Short RIGHT direction buttons. Enter \'Rev\' or blank for normal behaviour.</string>
     <string name="prefRightDirectionButtonsShortDefaultValue">Rev</string>
 
-    <string name="prefTickMarksOnSlidersTitle">Tick Marks on Speed Sliders</string>
-    <string name="prefTickMarksOnSlidersSummary">Show or hide tick marks on the background of the speed sliders.</string>
+    <string name="prefTickMarksOnSlidersTitle">Tick Marks on Speed Sliders?</string>
+    <string name="prefTickMarksOnSlidersSummary">Show tick marks on the background of the Speed Sliders</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
-    <string name="prefThemeSummary">Select a visual appearance for this app.</string>
+    <string name="prefThemeSummary">Select a visual appearance for this app</string>
     <string name="prefThemeDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>
-    <string name="prefHideDemoServerSummary">Hide the demo server \'jmri.mstevetodd.com\' in the connection list.</string>
+    <string name="prefHideDemoServerSummary">Hide the Demo Server \'jmri.mstevetodd.com\' in the connection list</string>
 
-    <string name="prefDirectionButtonsTitle">Direction Button labels</string>
-    <string name="prefDirectionButtonsSummary">Labels for all direction buttons.</string>
+    <string name="prefDirectionButtonsTitle">Direction button Labels</string>
+    <string name="prefDirectionButtonsSummary">Labels for all Direction buttons</string>
     <string name="prefDirectionButtonsDefaultValue">Forward</string>
 
-    <string name="prefDirectionButtonLongPressDelayTitle">Direction Button Long Press Delay</string>
-    <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons.</string>
+    <string name="prefDirectionButtonLongPressDelayTitle">Direction button Long Press Delay</string>
+    <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons</string>
     <string name="prefDirectionButtonLongPressDelayDefaultValue" translatable="false">1500</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAccelerometerTitle">Accelerometer Preferences</string>
-    <string name="prefAccelerometerSummary">Options for device motion on the Throttle Page</string>
+    <string name="prefAccelerometerSummary">Options for device motion on the Throttle screen</string>
     <string name="prefAccelerometerShakeTitle">Shake Action</string>
-    <string name="prefAccelerometerShakeSummary">Options for when you shake the device.</string>
+    <string name="prefAccelerometerShakeSummary">Options for when you shake the device</string>
     <string name="prefAccelerometerShakeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAccelerometerShakeThresholdTitle">Shake Threshold</string>
@@ -592,32 +592,32 @@
     <string name="prefAccelerometerShakeThresholdDefaultValue" translatable="false">2.0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLocaleTitle">Localisation</string>
-    <string name="prefLocaleSummary">Choose the language to use for this app.</string>
+    <string name="prefLocaleSummary">Choose the Language to use for this app</string>
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Speed\' and \'Pause\' button Preferences</string>
-    <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button</string>
-    <string name="prefLimitSpeedButtonSummary">Show a button to temporarily restrict the maximum speed on an individual throttle.</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Speed\' &amp; \'Pause\' button Preferences</string>
+    <string name="prefLimitSpeedButtonTitle">Show \'Limit Speed\' button?</string>
+    <string name="prefLimitSpeedButtonSummary">Show a button to temporarily restrict the maximum speed on an individual throttle</string>
 
-    <string name="prefPauseSpeedButtonTitle">Show \'Pause\' button</string>
-    <string name="prefPauseSpeedButtonSummary">Show a button to slow and stop the locomotive, then return to speed on release.</string>
+    <string name="prefPauseSpeedButtonTitle">Show \'Pause\' button?</string>
+    <string name="prefPauseSpeedButtonSummary">Show a button to slow and stop the locomotive, then return to original speed on next press</string>
 
-    <string name="prefPauseSpeedRateTitle">\'Pause\' button rate</string>
-    <string name="prefPauseSpeedRateSummary">Number of milliseconds between speed step changes for the Pause action.</string>
+    <string name="prefPauseSpeedRateTitle">\'Pause\' button Rate</string>
+    <string name="prefPauseSpeedRateSummary">Number of milliseconds between speed step changes for the Pause action</string>
     <string name="prefPauseSpeedRateDefaultValue" translatable="false">300</string>
 
-    <string name="prefPauseSpeedStepTitle">\'Pause\' button step</string>
-    <string name="prefPauseSpeedStepSummary">Step size changes for the Pause action.</string>
+    <string name="prefPauseSpeedStepTitle">\'Pause\' button Step</string>
+    <string name="prefPauseSpeedStepSummary">Step size changes for the Pause action</string>
     <string name="prefPauseSpeedStepDefaultValue" translatable="false">2</string>
 <!--
     <string name="prefPauseSpeedReverseTitle">Change direction after pause</string>
     <string name="prefPauseSpeedReverseSummary">Select if the loco should change direction after pausing.</string>
 -->
     <string name="prefLimitSpeedPercentTitle">\'Limit Speed\' button \%</string>
-    <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be temporarily limited to.</string>
+    <string name="prefLimitSpeedPercentSummary">Set the \% of the throttle that the speed will be temporarily limited to</string>
     <string name="prefLimitSpeedPercentDefaultValue" translatable="false">50</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Switching Throttle Dead Zone</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">Switching throttle Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Set the size of the dead zone on the slider of the Switching Throttle Screen</string>
     <string name="prefSwitchingThrottleSliderDeadZoneDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
 
@@ -684,7 +684,7 @@
     <string name="gamepadTestFunctionLabel">Function:</string>
     <string name="gamepadTestCompleteLabel">Test status:</string>
     <string name="gamepadTestDeviceName">BT:</string>
-    <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this page.</string>
+    <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
@@ -706,8 +706,8 @@
 
     <!--    Gamepad test page -->
 
-    <string name="prefGamepadTestNowTitle">Test Gamepad Setting Now!</string>
-    <string name="prefGamepadTestNowSummary">Allows you to confirm that the chosen setting works correctly.\nTest page will launch IMMEDIATELY on selection.</string>
+    <string name="prefGamepadTestNowTitle">Test Gamepad settings now!</string>
+    <string name="prefGamepadTestNowSummary">Allows you to confirm that the chosen setting works correctly.\nTest screen will launch IMMEDIATELY on selection.</string>
 
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>
@@ -821,21 +821,21 @@
     <string name="prefTtsSummary">Options to speak key events</string>
 
     <string name="prefTtsWhenTitle">Voice Response</string>
-    <string name="prefTtsWhenSummary">When to speak key events and actions using Text to Speech (TTS).</string>
+    <string name="prefTtsWhenSummary">When to speak key events and actions using Text to Speech (TTS)</string>
     <string name="prefTtsWhenDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTtsThrottleResponseTitle">On Gamepad Throttle change</string>
-    <string name="prefTtsThrottleResponseSummary">When you select a different throttle on the gamepad.</string>
+    <string name="prefTtsThrottleResponseSummary">When you select a different throttle on the gamepad</string>
     <string name="prefTtsThrottleResponseDefaultValue" translatable="false">Throttle</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefTtsGamepadTestTitle">On Gamepad Test</string>
-    <string name="prefTtsGamepadTestSummary">When the gamepad test page is launched. </string>
+    <string name="prefTtsGamepadTestTitle">On Gamepad Test start</string>
+    <string name="prefTtsGamepadTestSummary">When the gamepad test screen is launched </string>
 
     <string name="prefTtsGamepadTestCompleteTitle">On Gamepad Test complete</string>
-    <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test page is finished. </string>
+    <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test screen is finished </string>
 
     <string name="prefTurnMobileDataOnOffTitle">Mobile Data</string>
-    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close. </string>
+    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close </string>
 
     <string name="TtsVolumeThrottle">Throttle</string>
     <string name="TtsGamepadThrottle">Throttle</string>
@@ -870,18 +870,19 @@
     <string name="functionButtonLookForRear">REAR</string>
 
     <string name="throttleSwitchAction">Switch Throttle Screen Layouts</string>
+
     <string name="flashlightAction">Flashlight</string>
     <string name="flashlightStateOn">Flashlight is ON</string>
     <string name="flashlightStateOff">Flashlight is Off</string>
-    <string name="prefFlashlightSummary">Display flashlight button in action bar?</string>
-    <string name="prefFlashlightTitle">Show flashlight button?</string>
+    <string name="prefFlashlightSummary">Show Flashlight button in action bar</string>
+    <string name="prefFlashlightTitle">Flashlight button?</string>
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
     <string name="webViewButtonBar">Web View Button</string>
     <string name="webViewAction">Show/Hide Web View</string>
-    <string name="prefWebViewButtonSummary">Display Show/Hide Web View button in action bar?\n(requires \'Throttle Web View\' preference to be enabled)</string>
-    <string name="prefWebViewButtonTitle">Show/Hide Web View button?</string>
+    <string name="prefWebViewButtonSummary">Show button in action bar to show/hide Web View.\n(requires \'Throttle Web View\' preference to be enabled)</string>
+    <string name="prefWebViewButtonTitle">Web View button?</string>
 
     <string name="logViewerTitle">LogViewerActivity | %1$s</string>
 
@@ -894,7 +895,7 @@
     <string name="prefConsistFollowRuleStyleDefaultValue" translatable="false">original</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefConsistFollowTitle">Consist Function Follow Preferences</string>
-    <string name="prefConsistFollowSummary">Options for how functions will behave in a Consist.</string>
+    <string name="prefConsistFollowSummary">Options for how functions will behave in a consist.</string>
 
     <string name="prefConsistFollowString1DefaultValue">LIGHT</string>
     <string name="prefConsistFollowString2DefaultValue">WHISTLE,HORN,BELL</string>
@@ -933,34 +934,34 @@
     <string name="prefConsistFollowAction5Title">Action for String 5</string>
     <string name="prefConsistFollowAction5Summary">Which locos in the consist should react to the found functions.</string>
 
-    <string name="prefKidsSectionTitle">Children\'s Preferences</string>
-    <string name="prefKidsSectionSummary">Options for young children.</string>
+    <string name="prefKidsSectionTitle">Children\'s (Timer) Preferences</string>
+    <string name="prefKidsSectionSummary">Options for young children.\nTime controlled running.</string>
     <string name="prefKidsHelpTitle">Notes for the Timer:</string>
     <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendations:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
     <string name="prefKidsTimerTitle">Time limited running</string>
-    <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child will get an equal amount of time.</string>
+    <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child (operator) will get an equal amount of time.</string>
     <string name="prefKidsTimerDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefKidsTimerRestartPasswordTitle">Restart Password</string>
-    <string name="prefKidsTimerRestartPasswordSummary">Password to restart the timer with the current settings.</string>
+    <string name="prefKidsTimerRestartPasswordSummary">Password to restart the timer with the current settings</string>
     <string name="prefKidsTimerRestartPasswordDefaultValue" translatable="false">0000</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefKidsTimerResetPasswordTitle">Reset/Disable Password</string>
-    <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings.</string>
+    <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings</string>
     <string name="prefKidsTimerResetPasswordDefaultValue" translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefKidsTimerEnableReverseTitle">Allow Reverse</string>
-    <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Allow Reverse?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button</string>
 
-    <string name="prefKidsTimerButtonTitle">Show Timer Button?</string>
-    <string name="prefKidsTimerButtonSummary">Display the Timer Button to activate the timer.</string>
+    <string name="prefKidsTimerButtonTitle">Show Timer button?</string>
+    <string name="prefKidsTimerButtonSummary">Display the Timer Button to activate the timer</string>
 
-    <string name="prefKidsTimerButtonDefaultTitle">Default for Button</string>
-    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the toollbar Button to activate the timer.</string>
+    <string name="prefKidsTimerButtonDefaultTitle">Default time for Button</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the toollbar Button to activate the timer</string>
     <string name="prefKidsTimerButtonDefaultDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefAllowMobileDataTitle">Allow Mobile Data connection</string>
-    <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data.</string>
+    <string name="prefAllowMobileDataTitle">Mobile Data connection?</string>
+    <string name="prefAllowMobileDataSummary">Allow your device to connect to JMRI over Mobile Data</string>
 
     <string name="app_name_throttle_kids_running">%1$s sec. remaining</string>
     <string name="app_name_throttle_kids_enabled">Timer Ready</string>
@@ -1005,9 +1006,9 @@
     <string name="introThrottleNameSummary">Set a name for this device</string>
     <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>
 
-    <string name="introThemeSummary">Choose the colors and appearance of the whole app.</string>
-    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen.</string>
-    <string name="introThrottleTypeSummary2">Depending on the chosen layout, you will be limited on the number of individual throttles (1 to 6) on the screen.</string>
+    <string name="introThemeSummary">Choose the colors and appearance of the whole app</string>
+    <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen</string>
+    <string name="introThrottleTypeSummary2">Depending on the chosen layout, you will be limited on the number of individual throttles (1 to 6) on the screen</string>
 
     <string name="introFinishTitle">Ready to use</string>
     <string name="introFinishSummary">Engine Driver is now ready to connect.</string>
@@ -1016,12 +1017,12 @@
     <string name="introFinishSummary3">You can make additional changes to the appearance and behaviour of the app from the \'Preferences\' menu.</string>
 
     <string name="introButtonsTitle">Speed Sliders and Buttons</string>
-    <string name="introButtonsSummary">Choose how to control the speed of your trains.</string>
+    <string name="introButtonsSummary">Choose how to control the speed of your trains</string>
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
-    <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\'.)</string>
+    <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
 
-    <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction.</string>
+    <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
     <string name="edit_consist_menu">\≡ Edit Consist</string>
     <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
     <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
@@ -1062,7 +1063,7 @@
 
     <string name="prefBackgroundImagePreferencesTitle">Background Image Preferences</string>
     <string name="prefBackgroundImageTitle">Background Image</string>
-    <string name="prefBackgroundImageSummary">Show a background image on the Throttle page</string>
+    <string name="prefBackgroundImageSummary">Show a background image on the Throttle screen</string>
 
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
     <string name="prefBackgroundImageFileNameSummary">Enter the name of the background image file.</string>
@@ -1074,15 +1075,15 @@
     <string name="prefBackgroundImagePositionDefaultValue" translatable="false">FIT_CENTER</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefThrottleSwitchButtonPreferencesTitle">Layout Switch Button Preferences</string>
-    <string name="prefThrottleSwitchButtonTitle">Layout Switch Button</string>
-    <string name="prefThrottleSwitchButtonSummary">Display the Throttle Layout Switch Button in the throttle screen to allow quick changing of throttle layouts.</string>
+    <string name="prefThrottleSwitchButtonTitle">Show Layout Switch button?</string>
+    <string name="prefThrottleSwitchButtonSummary">Show the Throttle Layout Switch button in the Throttle Screen action bar to allow quick changing of Throttle Layouts</string>
 
-    <string name="prefThrottleSwitchOption1Title">Layout Switch First Screen Layout</string>
-    <string name="prefThrottleSwitchOption1Summary">Layout Switch Button will switch between this throttle layout and the next preference.</string>
+    <string name="prefThrottleSwitchOption1Title">First Screen Layout</string>
+    <string name="prefThrottleSwitchOption1Summary">Layout Switch Button will switch between this throttle layout and the next preference</string>
     <string name="prefThrottleSwitchOption1DefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefThrottleSwitchOption2Title">Layout Switch Second Screen Layout</string>
-    <string name="prefThrottleSwitchOption2Summary">Layout Switch Button will switch between the throttle layout in the previous preference and this one.</string>
+    <string name="prefThrottleSwitchOption2Title">Second Screen Layout</string>
+    <string name="prefThrottleSwitchOption2Summary">Layout Switch Button will switch between the throttle layout in the previous preference and this one</string>
     <string name="prefThrottleSwitchOption2DefaultValue" translatable="false">Switching</string>
 
     <string name="prefCategoryDevicePageTitle">Device Preferences</string>
@@ -1090,12 +1091,12 @@
     <string name="hostNumericButton" translatable="false">12..</string>
     <string name="hostTextButton" translatable="false">Aa..</string>
 
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions Area Size</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout.</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions area size</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
 
-    <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log</string>
-    <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen.</string>
+    <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log?</string>
+    <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>
 
     <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>
@@ -1104,16 +1105,16 @@
     -->
 
     <string name="prefFeedbackOnDisconnectTitle">Feedback on Disconnect</string>
-    <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect.</string>
+    <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect</string>
 
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
-    <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
     <string name="prefHapticFeedbackTitle">Haptic Feedback</string>
-    <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes.</string>
+    <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefFullScreenSwipeAreaTitle">Disable Full Screen Swipe Area</string>
+    <string name="prefFullScreenSwipeAreaTitle">Disable full screen Swipe?</string>
     <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
 
     <string name="prefLeftRightSwipePreferencesTitle">Left/Right Swipe Preferences</string>
