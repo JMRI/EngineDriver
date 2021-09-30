@@ -27,8 +27,8 @@
     <string name="turnouts_turnout">Point</string>
 
     <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Points?</string>
-    <string name="prefSwipeThroughTurnoutsSummary">Include Points screen when swiping between screens.</string>
-    <string name="prefHideIfNoUserNameSummary">Omit Point/Route from list if the user name is empty.</string>
+    <string name="prefSwipeThroughTurnoutsSummary">Include Points screen when swiping between screens</string>
+    <string name="prefHideIfNoUserNameSummary">Omit Point/Route from list if the user name is empty</string>
 
     <string name="prefTurnoutsTitle">Points and Routes Preferences</string>
     <string name="prefHardwareSystemTitle">Points Hardware System</string>
@@ -36,13 +36,11 @@
     <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry Point commands</string>
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Point and Route names</string>
 
-    <string name="prefPowerButtonBarSummary">Display layout power button in Throttle, Point and Routes screens?</string>
-
     <!--    Toast message for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid point number.</string>
     <string name="toastTurnoutCommandTo">Command sent to %1$s point</string>
 
-    <string name="introThemeSummary">Choose the colours and appearance of the whole app.</string>
+    <string name="introThemeSummary">Choose the colours and appearance of the whole app</string>
 
     <string name="turnoutsRecentHeading">Recent Points</string>
     <string name="turnoutsSelectionTypeHeading">Points Selection Method</string>
