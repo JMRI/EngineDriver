@@ -17,6 +17,22 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.InputDevice.getDevice;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
+import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
+import static android.view.KeyEvent.KEYCODE_W;
+import static android.view.KeyEvent.KEYCODE_X;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -97,22 +113,6 @@ import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
-
-import static android.view.InputDevice.getDevice;
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
-import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_BACK;
-import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_N;
-import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_T;
-import static android.view.KeyEvent.KEYCODE_V;
-import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
-import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
-import static android.view.KeyEvent.KEYCODE_W;
-import static android.view.KeyEvent.KEYCODE_X;
 
 public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
@@ -2254,9 +2254,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean tIsEnabled = lls[whichThrottle].isEnabled();
         int dir = dirs[whichThrottle];
 
-        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
-                && (!prefKidsTimerEnableReverse)) {
-        }
+//        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
+//                && (!prefKidsTimerEnableReverse)) {
+//        }
 
         if (getConsist(whichThrottle).isActive()) {
             boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
@@ -3946,7 +3946,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
             || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
             || (!mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) )
-            && (con.size()==1) ) {
+            && (con.size()==1)
+            && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
+        ) {
                 tempPrefConsistFollowRuleStyle = CONSIST_FUNCTION_RULE_STYLE_ORIGINAL;
         }
 
@@ -3994,6 +3996,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if ((l.getAddress().equals(con.getLeadAddr()))
                         && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
                         && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                        && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
                 ) {  // for complex ignore the lead as we have already set it
                     processThisLoco = false;
                 }
@@ -4009,9 +4012,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if ( (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
                                 || (isLatching == FUNCTION_CONSIST_LATCHING_NA) ) {
                                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
-                                    mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function);
+                                    mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i));
                                 } else {
-                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function, buttonPressMessageType);
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), buttonPressMessageType);
                                 }
                             } else {
                                 if ((isLatching == FUNCTION_CONSIST_LATCHING_YES) && (buttonPressMessageType == BUTTON_PRESS_MESSAGE_UP)) {
