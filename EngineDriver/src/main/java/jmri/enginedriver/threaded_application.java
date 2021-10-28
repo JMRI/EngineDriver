@@ -3664,7 +3664,7 @@ public class threaded_application extends Application {
                 if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
                         || ((xSpeed == 0) && (xLastSpeed != 0))
                         || ((xSpeed == 126) && (xLastSpeed != 126))) {
-                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
+//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
                     vibrate(prefHapticFeedbackDuration);
                 }
             }
