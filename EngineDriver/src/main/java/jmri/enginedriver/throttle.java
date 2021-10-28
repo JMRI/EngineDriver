@@ -5780,7 +5780,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = toolbar.getHeight();
 
@@ -5794,7 +5794,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         && (gestureStartY >= sliderTopLeftY[throttleIndex])
                         && (gestureStartY <= sliderBottomRightY[throttleIndex])
                 ) {
-                    Log.d("Engine_Driver","exiting gestureStart on slider: " + gestureStartX + ", " + gestureStartY);
+//                    Log.d("Engine_Driver","exiting gestureStart on slider: " + gestureStartX + ", " + gestureStartY);
                     return;
                 }
             }

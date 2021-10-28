@@ -686,7 +686,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     public void gestureMove(MotionEvent event) {
 //        Log.d("Engine_Driver", "routes: gestureMove action " + event.getAction());
-        if (gestureInProgress) {
+        if (mainapp!=null && mainapp.routes_msg_handler!=null && gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
 

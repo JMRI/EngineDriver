@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    buildToolsVersion '31.0.0'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "jmri.enginedriver"
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
-        minSdkVersion 15
+        minSdkVersion 16
         compileSdkVersion 29
         targetSdkVersion 29
     }

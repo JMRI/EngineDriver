@@ -1194,7 +1194,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearRecentTurnoutsList();
-                            onCreate(null);
+                            recentTurnoutsListAdapter.notifyDataSetChanged();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -1387,7 +1387,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     public void gestureMove(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
-        if (gestureInProgress) {
+        if (mainapp!=null && mainapp.turnouts_msg_handler!=null && gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
 
