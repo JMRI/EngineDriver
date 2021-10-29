@@ -6372,7 +6372,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
         // separate versions of this exist for the switching throttle layouts
-        int speed;
+        int speed = 0;
         if (!useScale) {
                 speed = getSpeed(whichThrottle);
             } else {
