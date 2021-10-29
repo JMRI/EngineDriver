@@ -879,7 +879,11 @@ public class throttle_switching_left_or_right extends throttle {
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
-        return getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+        int speed = 0;
+        if (vsbSwitchingSpeeds[whichThrottle].isEnabled()) {
+            speed = getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+        }
+        return speed;
     }
 
     int getSpeedFromSliderPosition(int sliderPosition, int whichThrottle, boolean useScale) {

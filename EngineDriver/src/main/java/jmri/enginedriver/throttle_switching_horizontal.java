@@ -932,7 +932,11 @@ public class throttle_switching_horizontal extends throttle {
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
-        return getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+        int speed = 0;
+        if (hsbSwitchingSpeeds[whichThrottle].isEnabled()) {
+            speed = getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+        }
+        return speed;
     }
 
     int getSpeedFromSliderPosition(int sliderPosition, int whichThrottle, boolean useScale) {
