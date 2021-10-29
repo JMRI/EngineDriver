@@ -934,6 +934,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                             if (dir != curDir) { // lead/consist direction changed from outside of ED
                                                 showDirectionRequest(whichThrottle, dir);       // update requested direction indication
                                                 setEngineDirection(whichThrottle, dir, true);   // update rest of consist to match new direction
+                                                // needed for the switching throttle layouts
+                                                speedUpdate(whichThrottle,
+                                                        getSpeedFromCurrentSliderPosition(whichThrottle, false));
                                             }
                                         } else {
                                             int locoDir = curDir;               // calc correct direction for this (non-lead) loco
@@ -6367,4 +6370,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
+    int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        // separate versions of this exist for the switching throttle layouts
+        int speed;
+        if (!useScale) {
+                speed = getSpeed(whichThrottle);
+            } else {
+                speed = getScaleSpeed(whichThrottle);
+        }
+        return speed;
+    }
 }

@@ -548,6 +548,12 @@ public class throttle_switching_horizontal extends throttle {
         // update the direction indicators
         showDirectionIndications();
 
+        // update the switching sliders if necessary
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            speedUpdate(throttleIndex,
+                    getSpeedFromCurrentSliderPosition(throttleIndex,false));
+        }
+
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_all_function_states(throttleIndex);
@@ -556,7 +562,7 @@ public class throttle_switching_horizontal extends throttle {
 
         // Log.d("Engine_Driver","ending set_labels");
 
-    }
+    } // end set_labels
 
     @Override
     void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
@@ -925,6 +931,9 @@ public class throttle_switching_horizontal extends throttle {
         return (getDirection(whichThrottle) == direction);
     }
 
+    int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+    }
 
     int getSpeedFromSliderPosition(int sliderPosition, int whichThrottle, boolean useScale) {
         int speed;
