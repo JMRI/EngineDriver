@@ -364,6 +364,12 @@ public class throttle_switching_left_or_right extends throttle {
         // update the direction indicators
         showDirectionIndications();
 
+        // update the switching sliders if necessary
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            speedUpdate(throttleIndex,
+                    getSpeedFromCurrentSliderPosition(throttleIndex,false));
+        }
+
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
@@ -872,6 +878,9 @@ public class throttle_switching_left_or_right extends throttle {
         return (getDirection(whichThrottle) == direction);
     }
 
+    int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
+    }
 
     int getSpeedFromSliderPosition(int sliderPosition, int whichThrottle, boolean useScale) {
         int speed;
