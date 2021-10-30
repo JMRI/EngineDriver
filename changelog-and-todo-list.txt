@@ -1,6 +1,7 @@
 **Version 2.30.130
  * shortened About string
  * avoid crashes reported to Play Store
+ * FIX - Switching layouts sometimes not updating correctly for direction changes
  * bump minSdkVersion from 15 to 16
 **Version 2.30.128
  * Add confirmation dialog to Clear Consists
@@ -597,7 +598,6 @@
  *   added html About page
  */
 /*
- *   TODO: change "about" info message to show even in partial log
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -650,7 +650,6 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: don't add loco to Recent Locos until the server responds
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

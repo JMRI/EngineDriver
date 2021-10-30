@@ -8,6 +8,7 @@ android {
     defaultConfig {
         applicationId "jmri.enginedriver"
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
+        // also Steve's Kyocera Event requires 15
         minSdkVersion 16
         compileSdkVersion 29
         targetSdkVersion 29
