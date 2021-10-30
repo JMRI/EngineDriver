@@ -1,3 +1,4 @@
+**Version 2.30.134
 **Version 2.30.130
  * shortened About string
  * avoid crashes reported to Play Store
