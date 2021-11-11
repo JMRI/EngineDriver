@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.75" >
+        android:layout_weight="0.65">
 
         <TextView
             android:id="@+id/rt_user_name"
             style="?attr/list_item_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
             android:paddingTop="15dp"
+            android:paddingBottom="4dp"
             android:text="testing string string string string"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <TextView
             android:id="@+id/rt_system_name_hidden"
             android:layout_width="wrap_content"
@@ -37,6 +38,7 @@
         style="?attr/ed_list_button_style"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.25"
+        android:layout_weight="0.35"
+        android:autoSizeTextType="uniform"
         android:text="testing" />
 </LinearLayout>
