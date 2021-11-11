@@ -599,6 +599,7 @@
  *   added html About page
  */
 /*
+ *   TODO: handle gamepad input even outside of Throttle activity
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -609,7 +610,7 @@
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  * routes
- *   TODO: use PRT titles for Active/inactive
+ *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
  * turnouts
  *   TODO: support client entry/edit of username for servers without usernames
@@ -630,6 +631,8 @@
  *   TODO: check for error on send and do something with it 
  *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
+ *   TODO: add voice control
+ *   TODO: dynamically shrink the "other" throttle when not in use to maximize # of funcs shown
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: option to show the turnout view instead of the webview, including Recents
  *   TODO: option to use 'f' function commands
