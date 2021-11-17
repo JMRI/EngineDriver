@@ -1645,6 +1645,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "prefAccelerometerShakeThreshold":
                         parentActivity.limitFloatPrefValue(getPreferenceScreen(), sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_SHAKE_THRESHOLD;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
                     case "hide_slider_preference":

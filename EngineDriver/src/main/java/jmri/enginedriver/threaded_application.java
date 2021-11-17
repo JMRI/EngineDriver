@@ -280,6 +280,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
     public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
     public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
+    public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 13;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -3513,7 +3514,8 @@ public class threaded_application extends Application {
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_FORCE_WIFI)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_DEAD_ZONE));
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_DEAD_ZONE)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_SHAKE_THRESHOLD));
     }
 
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.

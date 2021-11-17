@@ -581,7 +581,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons</string>
     <string name="prefDirectionButtonLongPressDelayDefaultValue" translatable="false">1500</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefAccelerometerTitle">Accelerometer Preferences</string>
+    <string name="prefAccelerometerTitle">Accelerometer (Shake) Preferences</string>
     <string name="prefAccelerometerSummary">Options for device motion on the Throttle screen</string>
     <string name="prefAccelerometerShakeTitle">Shake Action</string>
     <string name="prefAccelerometerShakeSummary">Options for when you shake the device</string>
