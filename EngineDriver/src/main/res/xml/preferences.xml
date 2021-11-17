@@ -164,6 +164,7 @@
                 android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
                 android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                 android:key="prefSwitchingThrottleSliderDeadZone"
+                android:digits="0123456789"
                 android:maxLength="3"
                 android:inputType="number"
                 android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
