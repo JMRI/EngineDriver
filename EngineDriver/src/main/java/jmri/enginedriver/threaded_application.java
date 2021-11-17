@@ -279,6 +279,8 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
     public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
     public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
+    public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
+    public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 13;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -3504,13 +3506,16 @@ public class threaded_application extends Application {
             }
         }
 
+        // include in this list if the Settings Activity should NOT be launched
         return ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_BACKGROUND)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
                 && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_FORCE_WIFI));
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_FORCE_WIFI)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_DEAD_ZONE)
+                && (prefForcedRestartReason != FORCED_RESTART_REASON_SHAKE_THRESHOLD));
     }
 
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.

@@ -143,16 +143,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Engine_Driver", "Settings: onCreate()");
 
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.settings_activity);
-//
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.settings_preferences_frame, new SettingsFragment())
-//                    .commit();
-//        }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -424,7 +414,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         if (!res) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
         }
-// //        fixAndReloadImportExportPreference(sharedPreferences);
         forceRestartApp(forceRestartReason);
         return res;
     }
@@ -515,7 +504,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @SuppressLint("ApplySharedPref")
         public void handleMessage(Message msg) {
-// //            SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
             switch (msg.what) {
                 case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
                     String response_str = msg.obj.toString();
@@ -752,7 +740,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 forceRestartAppOnPreferencesClose = true;
                 forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_BACKGROUND;
-// //                forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
             }
             else {
                 Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
@@ -766,7 +753,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     protected boolean limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         boolean isValid = true;
-// //            EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
@@ -793,7 +779,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     protected boolean limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         boolean isValid = true;
-//        EditTextPreference prefText = (EditTextPreference) getPreferenceScreen().findPreference(key);
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
             Float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
@@ -833,13 +818,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public void limitNumThrottles(SharedPreferences sharedPreferences) {
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-
-//        if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
-//            SharedPreferences.Editor prefEdit = sharedPreferences.edit();
-//            prefEdit.commit();
-//            forceRestartAppOnPreferencesClose = true;
-//            forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH;
-//        }
 
         int index = -1;
         String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
@@ -906,7 +884,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
         for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
-// //            Preference thisPref = getPreferenceScreen().findPreference(gamePadPrefButtonReferences[i]);
             Preference thisPref = (Preference) prefScreen.findPreference(gamePadPrefButtonReferences[i]);
             if (thisPref != null) {
                 thisPref.setTitle(gamePadPrefLabels[i]);
@@ -1029,8 +1006,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
         private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
-//        private String prefThrottleScreenType = "Default";
-//        private String prefThrottleScreenTypeOriginal = "Default";
         private String prefThemeOriginal = "Default";
 
         private static final String PREF_IMPORT_ALL_FULL = "Yes";
@@ -1057,22 +1032,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             f.setArguments(args);
             return (f);
         }
-
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//
-//            // create ContextThemeWrapper from the original Activity Context with the custom theme
-//            final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), mainapp.getSelectedTheme(true));
-//
-//            // clone the inflater using the ContextThemeWrapper
-//            LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-//
-//            container.getContext().setTheme(mainapp.getSelectedTheme(true));
-//
-//            View view = super.onCreateView(localInflater, container, savedInstanceState);
-//
-//            return view;
-//        }
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -1113,10 +1072,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     .unregisterOnSharedPreferenceChangeListener(this);
         }
 
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key)
-        {
-//            threaded_application mainapp = (threaded_application) this.getApplication();
-
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
@@ -1192,7 +1148,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "prefAllowMobileData":
                         parentActivity.mainapp.haveForcedWiFiConnection = false;
-// //                    forceReLaunchApp(mainapp.FORCED_RESTART_REASON_FORCE_WIFI);
                         parentActivity.forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
                         parentActivity.forceReLaunchAppOnPreferencesClose = true;
                         break;
@@ -1293,9 +1248,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity.prefThrottleSwitchButtonDisplay = prefs.getBoolean("prefThrottleSwitchButtonDisplay", false);
 
                 setSwipeThroughWebPreference();
-
-// //        prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
-// //        showHidePausePreferences();
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
                 hideAdvancedPreferences();
@@ -1428,8 +1380,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (!prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedPreference1 : advancedPreferences) {
 // //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
-
-// //                    Preference advancedPreference = getPreferenceScreen().findPreference(advancedPreference1);
                     Preference advancedPreference = (Preference) findPreference(advancedPreference1);
                     if (advancedPreference != null) {
                         removePreference(advancedPreference);
@@ -1676,7 +1626,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefBackgroundImagePosition":
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_BACKGROUND;
-// //                    forceRestartApp(mainapp.FORCED_RESTART_REASON_BACKGROUND);
                         break;
 
                     case "prefTtsWhen":
@@ -1696,6 +1645,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "prefAccelerometerShakeThreshold":
                         parentActivity.limitFloatPrefValue(getPreferenceScreen(), sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_SHAKE_THRESHOLD;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
                     case "hide_slider_preference":
@@ -1733,6 +1684,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
                         break;
 
+                    case "prefSwitchingThrottleSliderDeadZone":
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_DEAD_ZONE;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        break;
 
                 }
             }
