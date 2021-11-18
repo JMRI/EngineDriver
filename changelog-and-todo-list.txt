@@ -622,8 +622,8 @@
  *   TODO: add option to enable/disable sound and vibrate warning on disconnect
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
- *   TODO: add confirmation dialog to clear recent connections
  *   TODO: add "Check for Updates" link to first menu and to About page.
+ *   TODO: Add option to choose which server to automatically connect to
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
