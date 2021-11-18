@@ -1012,7 +1012,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         private static final String PREF_IMPORT_ALL_PARTIAL = "No";
         private static final String PREF_IMPORT_ALL_RESET = "-";
 
-        private String[] advancedPreferences;
+        public String[] advancedPreferences;
 
         public static final int RESULT_LOAD_IMG = 1;
 
@@ -1155,7 +1155,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefFeedbackOnDisconnect":
                         mainapp.prefFeedbackOnDisconnect = sharedPreferences.getBoolean("prefFeedbackOnDisconnect",
                                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
-                        ;
                         break;
 
                     case "prefThrottleViewImmersiveModeHideToolbar":
@@ -1363,7 +1362,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
 
-        private void removePreference(Preference preference) {
+        public void removePreference(Preference preference) {
             try {
                 PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
                 if (parent != null)
@@ -1480,6 +1479,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         private static final String TAG = SettingsSubScreenFragment.class.getName();
         public static final String PAGE_ID = "page_id";
         SettingsActivity parentActivity;
+        public String[] advancedSubPreferences;
 
         public static SettingsSubScreenFragment newInstance(String pageId) {
             SettingsSubScreenFragment f = new SettingsSubScreenFragment();
@@ -1517,6 +1517,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
 
+            advancedSubPreferences = getResources().getStringArray(R.array.advancedSubPreferences);
+            hideAdvancedSubPreferences();
         }
 
         @Override
@@ -1556,6 +1558,29 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 super.onPreferenceTreeClick(preference);
             }
             return false;
+        }
+
+        public void removeSubPreference(Preference preference) {
+            try {
+                    //Doesn't have a parent
+                    getPreferenceScreen().removePreference(preference);
+            } catch (Exception except) {
+                Log.d("Engine_Driver", "Settings: removePreference: failed: " + preference);
+                return;
+            }
+        }
+        private void hideAdvancedSubPreferences() {
+            if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
+                for (String advancedSubPreference1 : advancedSubPreferences) {
+// //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
+                    Preference advancedSubPreference = (Preference) findPreference(advancedSubPreference1);
+                    if (advancedSubPreference != null) {
+                        removeSubPreference(advancedSubPreference);
+                    } else {
+                        Log.d("Engine_Driver", "Settings: '" + advancedSubPreference1 + "' not found.");
+                    }
+                }
+            }
         }
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
