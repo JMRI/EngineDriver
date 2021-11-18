@@ -1024,46 +1024,151 @@
         <item>Slider - Skip some at 28, 100, 128 Steps</item>
     </string-array>
 
-    <!-- always put any categories last.  i.e. preferences, then sub categories, then categories -->
+    <!-- always put any categories after the preferences in the category.  i.e. preferences and PreferenceScreens, then categories -->
+    <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
     <string-array name="advancedPreferences" translatable="false">
+        <!-- Device Preferences -->
         <item>prefLocale</item>
-        <item>prefCategoryThrottleStatusRow</item>
+
+        <!-- Throttle Screen Appearance Preferences -->
+        <item>prefDecreaseLocoNumberHeight</item>
+        <item>throttle_webview_preference</item>  <!-- PreferenceScreen -->
+        <item>swipe_up_down_preferences</item>  <!-- PreferenceScreen -->
+        <item>throttle_direction_preference</item>   <!-- PreferenceScreen -->
+        <item>throttle_accelerometer_preference</item>  <!-- PreferenceScreen -->
+        <item>prefShowAddressInsteadOfName</item>
+        <item>default_function_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefTts</item>  <!-- PreferenceScreen -->
+        <item>prefSelectedLocoIndicator</item>
+        <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
+        <item>prefBackgroundImageGroup</item> <!-- PreferenceScreen -->
+
+        <!-- Status Row Preferences -->
+        <!-- <item>prefCategoryThrottleStatusRow</item> -->
         <item>show_emergency_stop_menu_preference</item>
-        <item>show_layout_power_button_preference</item>
+        <!-- <item>show_layout_power_button_preference</item> -->
         <item>prefFlashlightButtonDisplay</item>
         <item>ClockDisplayTypePreference</item>
+        <item>prefWebViewButton</item>
+        <item>prefThrottleSwitchButton</item>  <!-- PreferenceScreen -->
+
+        <!-- Throttle Control Preferences -->
+        <item>maximum_throttle_preference</item>
+        <item>maximum_throttle_change_preference</item>
+        <item>speed_arrows_throttle_repeat_delay</item>
+        <item>DirChangeWhileMovingPreference</item>
+        <item>prefStopOnDirectionChange</item>
+        <item>prefSpeedButtonsSpeedStepDecrement</item>
+        <item>prefLimitSpeedButtonPreferences</item>  <!-- PreferenceScreen -->
+        <item>consist_follow_preferences</item>  <!-- PreferenceScreen -->
+
+        <!-- Additional Throttle Control Preferences -->
+        <item>gamepad_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefEsuMc2</item>  <!-- PreferenceScreen -->
+
+        <!-- Select Loco Preferences -->
+        <item>stop_on_release_preference</item>
+        <item>drop_on_acquire_preference</item>
+        <item>SelLocoWhileMovingPreference</item>
+        <item>default_address_length</item>
+        <item>roster_recent_locos_preference</item>
+        <item>prefRosterRecentLocoNames</item>
+        <item>maximum_recent_locos_preference</item>
+        <item>ConsistLightsLongClickPreference</item>
+        <item>prefRosterFilter</item>
+        <item>prefCategorySelectLoco</item> <!-- Category -->
+
+        <!-- Connect Preferences -->
+        <item>prefFeedbackWhenGoingToBackground</item>
+        <item>maximum_recent_connections_preference</item>
+        <item>prefHideDemoServer</item>
+        <item>prefAllowMobileData</item>
+        <item>prefConnectTimeoutMs</item>
+        <item>prefSocketTimeoutMs</item>
+        <item>prefFeedbackOnDisconnect</item>
+
+        <!-- Web Preferences -->
+        <item>WebOrientation</item>
+        <item>InitialWebPage</item>
+        <item>prefCategoryWeb</item> <!-- Category -->
+
+        <!-- Turnouts and Routes Preferences -->
+        <item>hide_system_route_names_preference</item>
+        <item>DelimiterPreference</item>
+        <item>HideIfNoUserNamePreference</item>
+        <item>prefCategoryTurnouts</item> <!-- Category -->
+
+        <!-- Children's Timer Preferences -->
+        <item>kids_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefCategoryChildren</item> <!-- Category -->
+
+        <!-- Import Export Preferences -->
+
+
+    </string-array>
+
+    <!-- no need to include the sub preference here if the whole PreferenceScreen is hidden-->
+    <string-array name="advancedSubPreferences" translatable="false">
         <item>increase_slider_height_preference</item>
         <item>left_slider_margin</item>
         <item>hide_slider_preference</item>
-        <item>prefSimpleThrottleLayoutShowFunctionButtons</item>
         <item>prefHideSliderAndSpeedButtons</item>
-        <item>prefSwapForwardReverseButtons</item>
+        <item>hide_slider_preference</item>
+        <item>prefTickMarksOnSliders</item>
+        <item>prefSwitchingThrottleSliderDeadZone</item>
+        <item>prefVerticalStopButtonMargin</item>
+        <item>prefHapticFeedback</item>
+        <item>prefHapticFeedbackSteps</item>
+        <item>prefHapticFeedbackDuration</item>
+
+        <item>prefFullScreenSwipeArea</item>
+
+        <item>prefImportServerManual</item>
+        <item>prefImportServerAuto</item>
+        <item>prefImportExportLocoList</item>
+        <item>prefAutoImportExport</item>
+        <item>prefHostImportExport</item>
+        <item>prefShowTimeOnLogEntry</item>
+
+        <!-- <item>prefConsistFollowRuleStyle</item>
+        <item>SelectiveLeadSound</item>
+        <item tools:ignore="Typos">SelectiveLeadSoundF1</item>
+        <item>SelectiveLeadSoundF2</item> -->
+
+
+        <!-- <item>prefThrottleSwitchButtonDisplay</item>
+        <item tools:ignore="Typos">prefThrottleSwitchOption1</item>
+        <item>prefThrottleSwitchOption2</item> -->
+
+        <!-- <item>prefAlwaysUseDefaultFunctionLabels</item>
+        <item>prefNumberOfDefaultFunctionLabels</item>
+        <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
+        <item>prefSpeedButtonsSpeedStepDecrement</item> -->
+
+        <!-- <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item> -->
+
+        <!-- <item>prefThrottleViewImmersiveMode</item>
+        <item>SwipeUpOption</item>
+        <item>prefScreenBrightnessDim</item>
+        <item>prefAccelerometerShake</item>
+        <item>prefAccelerometerShakeThreshold</item> -->
+
+        <!-- <item>WebViewLocation</item>
+        <item>prefIncreaseWebViewSize</item>
+        <item>InitialThrotWebPage</item> -->
+
+        <!-- <item>prefLimitSpeedButton</item>
+        <item>prefLimitSpeedPercent</item> -->
+
+        <!-- <item>prefSwapForwardReverseButtons</item>
         <item>prefSwapForwardReverseButtonsLongPress</item>
         <item>prefDirectionButtonLongPressDelay</item>
         <item>prefLeftDirectionButtons</item>
         <item>prefRightDirectionButtons</item>
         <item>prefLeftDirectionButtonsShort</item>
-        <item>prefRightDirectionButtonsShort</item>
-        <item>prefDecreaseLocoNumberHeight</item>
-        <item>WebViewLocation</item>
-        <item>prefIncreaseWebViewSize</item>
-        <item>InitialThrotWebPage</item>
-        <item>prefThrottleViewImmersiveMode</item>
-        <item>SwipeUpOption</item>
-        <item>prefScreenBrightnessDim</item>
-        <item>prefAccelerometerShake</item>
-        <item>prefAccelerometerShakeThreshold</item>
-        <item>prefShowAddressInsteadOfName</item>
-        <item>prefAlwaysUseDefaultFunctionLabels</item>
-        <item>prefNumberOfDefaultFunctionLabels</item>
-        <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
-        <item>prefSpeedButtonsSpeedStepDecrement</item>
+        <item>prefRightDirectionButtonsShort</item> -->
 
-        <item>prefLimitSpeedButton</item>
-        <item>prefLimitSpeedPercent</item>
-        <item>prefLimitSpeedButtonPreferences</item>
-
-        <item>prefTtsWhen</item>
+        <!-- <item>prefTtsWhen</item>
         <item>prefTtsThrottleResponse</item>
         <item>prefTtsGamepadTest</item>
         <item>prefTtsGamepadTestComplete</item>
@@ -1088,18 +1193,9 @@
         <item>prefGamePadButtonRightTrigger</item>
         <item>prefGamepadSwapForwardReverseWithScreenButtons</item>
         <item>prefGamepadTestEnforceTesting</item>
-        <item>prefGamepadTestEnforceTestingSimple</item>
-        <item>prefSelectedLocoIndicator</item>
-        <item>maximum_throttle_preference</item>
-        <item>maximum_throttle_change_preference</item>
-        <item>speed_arrows_throttle_repeat_delay</item>
-        <item>DirChangeWhileMovingPreference</item>
-        <item>prefStopOnDirectionChange</item>
-        <item>prefConsistFollowRuleStyle</item>
-        <item>SelectiveLeadSound</item>
-        <item tools:ignore="Typos">SelectiveLeadSoundF1</item>
-        <item>SelectiveLeadSoundF2</item>
-        <item>prefConsistFollowDefaultAction</item>
+        <item>prefGamepadTestEnforceTestingSimple</item> -->
+
+        <!-- <item>prefConsistFollowDefaultAction</item>
         <item tools:ignore="Typos">prefConsistFollowString1</item>
         <item tools:ignore="Typos">prefConsistFollowAction1</item>
         <item>prefConsistFollowString2</item>
@@ -1109,8 +1205,12 @@
         <item>prefConsistFollowString4</item>
         <item>prefConsistFollowAction4</item>
         <item>prefConsistFollowString5</item>
-        <item>prefConsistFollowAction5</item>
-        <item>prefEsuMc2StopButtonDelay</item>
+        <item>prefConsistFollowAction5</item> -->
+
+        <!-- <item>prefCategoryEsuMc2StopButton</item>
+        <item>prefCategoryEsiMc2ControlKnob</item> -->
+
+        <!-- <item>prefEsuMc2StopButtonDelay</item>
         <item>prefEsuMc2StopButtonShortPress</item>
         <item>prefEsuMc2ButtonTL</item>
         <item>prefEsuMc2ButtonBL</item>
@@ -1119,75 +1219,16 @@
         <item>prefEsuMc2ButtonsRepeatDelay</item>
         <item>prefEsuMc2ZeroTrim</item>
         <item>prefEsuMc2EndStopDirectionChange</item>
-        <item>prefEsuMc2KnobButtonDisplay</item>
-        <item>stop_on_release_preference</item>
-        <item>drop_on_acquire_preference</item>
-        <item>SelLocoWhileMovingPreference</item>
-        <item>default_address_length</item>
-        <item>roster_recent_locos_preference</item>
-        <item>prefRosterRecentLocoNames</item>
-        <item>maximum_recent_locos_preference</item>
-        <item>ConsistLightsLongClickPreference</item>
-        <item>prefRosterFilter</item>
-        <item>maximum_recent_connections_preference</item>
-        <item>prefHideDemoServer</item>
-        <item>prefAllowMobileData</item>
-        <item>prefConnectTimeoutMs</item>
-        <item>prefSocketTimeoutMs</item>
-        <item>WebOrientation</item>
-        <item>InitialWebPage</item>
-        <item>hide_system_route_names_preference</item>
-        <item>DelimiterPreference</item>
-        <item>HideIfNoUserNamePreference</item>
-        <item>prefKidsTimer</item>
+        <item>prefEsuMc2KnobButtonDisplay</item> -->
+
+        <!-- <item>prefBackgroundImage</item>
+        <item>prefBackgroundImageFileName</item>
+        <item>prefBackgroundImagePosition</item> -->
+
+        <!-- <item>prefKidsTimer</item>
         <item>prefKidsTimerRestartPassword</item>
         <item>prefKidsTimerResetPassword</item>
-        <item>kids_Help</item>
-        <item>prefImportServerManual</item>
-        <item>prefImportServerAuto</item>
-        <item>prefImportExportLocoList</item>
-        <item>prefAutoImportExport</item>
-        <item>prefHostImportExport</item>
-
-        <item>prefSwitchingThrottleSliderDeadZone</item>
-
-        <item>prefCategoryEsuMc2StopButton</item>
-        <item>prefCategoryEsiMc2ControlKnob</item>
-
-        <item>throttle_direction_preference</item>
-        <item>throttle_webview_preference</item>
-        <item>swipe_up_down_preferences</item>
-        <item>throttle_accelerometer_preference</item>
-        <item>default_function_preferences</item>
-        <item>prefTts</item>
-        <item>gamepad_preferences</item>
-        <item>consist_follow_preferences</item>
-        <item>prefEsuMc2</item>
-        <item>kids_preferences</item>
-
-        <item>prefCategorySelectLoco</item>
-        <item>prefCategoryChildren</item>
-
-        <item>prefBackgroundImage</item>
-        <item>prefBackgroundImageFileName</item>
-        <item>prefBackgroundImagePosition</item>
-        <item>prefBackgroundImageGroup</item>
-
-        <item>prefThrottleSwitchButtonDisplay</item>
-        <item tools:ignore="Typos">prefThrottleSwitchOption1</item>
-        <item>prefThrottleSwitchOption2</item>
-        <item>prefThrottleSwitchButton</item>
-
-        <item>prefHapticFeedback</item>
-        <item>prefHapticFeedbackSteps</item>
-        <item>prefHapticFeedbackDuration</item>
-
-        <item>prefFeedbackWhenGoingToBackground</item>
-
-        <item>prefCategoryWeb</item>
-        <item>prefCategoryTurnouts</item>
-
-        <item>prefFeedbackWhenGoingToBackground</item>
+        <item>kids_Help</item> -->
 
     </string-array>
 
