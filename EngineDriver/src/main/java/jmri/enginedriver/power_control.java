@@ -149,6 +149,11 @@ public class power_control extends AppCompatActivity {
         button_listener click_listener = new button_listener();
         b.setOnClickListener(click_listener);
 
+        Button closeButton = findViewById(R.id.power_button_close);
+        close_button_listener close_click_listener = new close_button_listener();
+        closeButton.setOnClickListener(close_click_listener);
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -248,6 +253,12 @@ public class power_control extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    public class close_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            finish();
+        }
     }
 
 }
