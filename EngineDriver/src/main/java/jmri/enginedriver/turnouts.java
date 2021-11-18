@@ -106,6 +106,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static final String TURNOUT_THROW = "T";
     private static final String TURNOUT_CLOSE = "C";
 
+    private static final String TURNOUT_STATE_UNKNOWN = "1";
     private static final String TURNOUT_STATE_UNKNOWN_LABEL = "   ???";
 
     ListView turnouts_lv;
@@ -1309,7 +1310,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     private String getCurrentStateDesc(String currentState) {
         String currentStateDesc = mainapp.to_state_names.get(currentState);
-        if (currentStateDesc == null) {
+        if (currentState.equals(TURNOUT_STATE_UNKNOWN) || currentStateDesc == null) {
             currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
         }
         return currentStateDesc;
