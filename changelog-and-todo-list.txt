@@ -1,4 +1,8 @@
 **Version 2.30.134
+ * Cleanup of the Power Screen
+ * Dead Zone Preference Fix
+ * handle improved state labels (JMRI change)
+ * Rework Advanced Preferences feature
 **Version 2.30.130
  * shortened About string
  * avoid crashes reported to Play Store
