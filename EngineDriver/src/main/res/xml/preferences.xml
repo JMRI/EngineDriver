@@ -15,6 +15,8 @@
 
     <PreferenceCategory
         android:key="prefCategoryDevice"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_device_black"
         android:title="@string/prefCategoryDevicePageTitle">
         <EditTextPreference
             android:defaultValue="@string/prefThrottleNameDefaultValue"
@@ -95,7 +97,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryThrottleAppearance"
-        android:title="@string/prefThrottlePageTitle">
+        android:title="@string/prefThrottlePageTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_throttle_screen_black">
         <ListPreference
             android:defaultValue="@string/prefThrottleScreenTypeDefault"
             android:entries="@array/prefThrottleScreenTypeEntries"
@@ -164,7 +168,6 @@
                 android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
                 android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                 android:key="prefSwitchingThrottleSliderDeadZone"
-                android:digits="0123456789"
                 android:maxLength="3"
                 android:inputType="number"
                 android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
@@ -557,7 +560,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryThrottleStatusRow"
-        android:title="@string/prefThrottleStatusTitle">
+        android:title="@string/prefThrottleStatusTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_status_row_black">
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:icon="?attr/ed_estop_button"
@@ -649,7 +654,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryThrottleControl"
-        android:title="@string/prefThrottleTitle" >
+        android:title="@string/prefThrottleTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_control_black">
         <ListPreference
             android:defaultValue="@string/prefDisplaySpeedUnitsDefaultValue"
             android:entries="@array/DisplaySpeedUnitsEntries"
@@ -936,7 +943,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryThrottleAdditionalControl"
-        android:title="@string/prefThrottleAdditionalControlTitle">
+        android:title="@string/prefThrottleAdditionalControlTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_control_additional_black">
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
@@ -1298,7 +1307,9 @@
 
     <PreferenceCategory
         android:key="prefCategorySelectLoco"
-        android:title="@string/prefSelectLocoTitle" >
+        android:title="@string/prefSelectLocoTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_select_black" >
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="stop_on_release_preference"
@@ -1377,7 +1388,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryConnect"
-        android:title="@string/prefConnectTitle" >
+        android:title="@string/prefConnectTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_connect_black" >
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
@@ -1447,7 +1460,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryWeb"
-        android:title="@string/prefWebTitle" >
+        android:title="@string/prefWebTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_web_black" >
         <ListPreference
             android:defaultValue="@string/prefWebOrientationDefaultValue"
             android:entries="@array/WebOrientationEntries"
@@ -1471,7 +1486,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryTurnouts"
-        android:title="@string/prefTurnoutsTitle" >
+        android:title="@string/prefTurnoutsTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_turnouts_black" >
         <!--<ListPreference-->
             <!--android:defaultValue="@string/prefHardwareSystemDefaultValue"-->
             <!--android:entries="@array/hardware_system_namesEntries"-->
@@ -1509,7 +1526,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryChildren"
-        android:title="@string/prefKidsSectionTitle" >
+        android:title="@string/prefKidsSectionTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_timer_black">
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
@@ -1582,7 +1601,9 @@
 
     <PreferenceCategory
         android:key="prefCategoryImportExport"
-        android:title="@string/prefThrottleImportExportTitle" >
+        android:title="@string/prefThrottleImportExportTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_import_black" >
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
