@@ -1110,8 +1110,8 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
-    <string name="prefHapticFeedbackTitle">Haptic Feedback</string>
-    <string name="prefHapticFeedbackSummary">Haptic feedback on speed changes</string>
+    <string name="prefHapticFeedbackTitle">Haptic Feedback (Vibration)</string>
+    <string name="prefHapticFeedbackSummary">Haptic feedback (vibrate) on speed changes</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefFullScreenSwipeAreaTitle">Disable full screen Swipe?</string>
