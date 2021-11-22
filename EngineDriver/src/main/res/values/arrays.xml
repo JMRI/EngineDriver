@@ -1038,8 +1038,6 @@
         <item>throttle_accelerometer_preference</item>  <!-- PreferenceScreen -->
         <item>prefShowAddressInsteadOfName</item>
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
-        <item>prefTts</item>  <!-- PreferenceScreen -->
-        <item>prefSelectedLocoIndicator</item>
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
         <item>prefBackgroundImageGroup</item> <!-- PreferenceScreen -->
 
@@ -1065,6 +1063,8 @@
         <!-- Additional Throttle Control Preferences -->
         <item>gamepad_preferences</item>  <!-- PreferenceScreen -->
         <item>prefEsuMc2</item>  <!-- PreferenceScreen -->
+        <item>prefSelectedLocoIndicator</item>
+        <item>prefTts</item>  <!-- PreferenceScreen -->
 
         <!-- Select Loco Preferences -->
         <item>stop_on_release_preference</item>
@@ -1130,106 +1130,6 @@
         <item>prefAutoImportExport</item>
         <item>prefHostImportExport</item>
         <item>prefShowTimeOnLogEntry</item>
-
-        <!-- <item>prefConsistFollowRuleStyle</item>
-        <item>SelectiveLeadSound</item>
-        <item tools:ignore="Typos">SelectiveLeadSoundF1</item>
-        <item>SelectiveLeadSoundF2</item> -->
-
-
-        <!-- <item>prefThrottleSwitchButtonDisplay</item>
-        <item tools:ignore="Typos">prefThrottleSwitchOption1</item>
-        <item>prefThrottleSwitchOption2</item> -->
-
-        <!-- <item>prefAlwaysUseDefaultFunctionLabels</item>
-        <item>prefNumberOfDefaultFunctionLabels</item>
-        <item>prefNumberOfDefaultFunctionLabelsForRoster</item>
-        <item>prefSpeedButtonsSpeedStepDecrement</item> -->
-
-        <!-- <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item> -->
-
-        <!-- <item>prefThrottleViewImmersiveMode</item>
-        <item>SwipeUpOption</item>
-        <item>prefScreenBrightnessDim</item>
-        <item>prefAccelerometerShake</item>
-        <item>prefAccelerometerShakeThreshold</item> -->
-
-        <!-- <item>WebViewLocation</item>
-        <item>prefIncreaseWebViewSize</item>
-        <item>InitialThrotWebPage</item> -->
-
-        <!-- <item>prefLimitSpeedButton</item>
-        <item>prefLimitSpeedPercent</item> -->
-
-        <!-- <item>prefSwapForwardReverseButtons</item>
-        <item>prefSwapForwardReverseButtonsLongPress</item>
-        <item>prefDirectionButtonLongPressDelay</item>
-        <item>prefLeftDirectionButtons</item>
-        <item>prefRightDirectionButtons</item>
-        <item>prefLeftDirectionButtonsShort</item>
-        <item>prefRightDirectionButtonsShort</item> -->
-
-        <!-- <item>prefTtsWhen</item>
-        <item>prefTtsThrottleResponse</item>
-        <item>prefTtsGamepadTest</item>
-        <item>prefTtsGamepadTestComplete</item>
-        <item>prefGamePadType</item>
-        <item>prefGamepadTestNow</item>
-        <item>prefGamePadSpeedButtonsSpeedStep</item>
-        <item>prefGamePadFeedbackVolume</item>
-        <item>prefGamePadSpeedArrowsThrottleRepeatDelay</item>
-        <item tools:ignore="Typos">prefGamePadButton1</item>
-        <item>prefGamePadButton3</item>
-        <item>prefGamePadButton2</item>
-        <item>prefGamePadButton4</item>
-        <item>prefGamePadButtonStart</item>
-        <item>prefGamePadButtonReturn</item>
-        <item>prefGamePadButtonUp</item>
-        <item>prefGamePadButtonRight</item>
-        <item>prefGamePadButtonDown</item>
-        <item>prefGamePadButtonLeft</item>
-        <item>prefGamePadButtonLeftShoulder</item>
-        <item>prefGamePadButtonRightShoulder</item>
-        <item>prefGamePadButtonLeftTrigger</item>
-        <item>prefGamePadButtonRightTrigger</item>
-        <item>prefGamepadSwapForwardReverseWithScreenButtons</item>
-        <item>prefGamepadTestEnforceTesting</item>
-        <item>prefGamepadTestEnforceTestingSimple</item> -->
-
-        <!-- <item>prefConsistFollowDefaultAction</item>
-        <item tools:ignore="Typos">prefConsistFollowString1</item>
-        <item tools:ignore="Typos">prefConsistFollowAction1</item>
-        <item>prefConsistFollowString2</item>
-        <item>prefConsistFollowAction2</item>
-        <item>prefConsistFollowString3</item>
-        <item>prefConsistFollowAction3</item>
-        <item>prefConsistFollowString4</item>
-        <item>prefConsistFollowAction4</item>
-        <item>prefConsistFollowString5</item>
-        <item>prefConsistFollowAction5</item> -->
-
-        <!-- <item>prefCategoryEsuMc2StopButton</item>
-        <item>prefCategoryEsiMc2ControlKnob</item> -->
-
-        <!-- <item>prefEsuMc2StopButtonDelay</item>
-        <item>prefEsuMc2StopButtonShortPress</item>
-        <item>prefEsuMc2ButtonTL</item>
-        <item>prefEsuMc2ButtonBL</item>
-        <item>prefEsuMc2ButtonTR</item>
-        <item>prefEsuMc2ButtonBR</item>
-        <item>prefEsuMc2ButtonsRepeatDelay</item>
-        <item>prefEsuMc2ZeroTrim</item>
-        <item>prefEsuMc2EndStopDirectionChange</item>
-        <item>prefEsuMc2KnobButtonDisplay</item> -->
-
-        <!-- <item>prefBackgroundImage</item>
-        <item>prefBackgroundImageFileName</item>
-        <item>prefBackgroundImagePosition</item> -->
-
-        <!-- <item>prefKidsTimer</item>
-        <item>prefKidsTimerRestartPassword</item>
-        <item>prefKidsTimerResetPassword</item>
-        <item>kids_Help</item> -->
 
     </string-array>
 
