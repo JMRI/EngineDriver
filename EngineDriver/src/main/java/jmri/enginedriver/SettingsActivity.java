@@ -1560,15 +1560,36 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             return false;
         }
 
+        private PreferenceGroup getParent(PreferenceGroup groupToSearchIn, Preference preference) {
+            for (int i = 0; i < groupToSearchIn.getPreferenceCount(); ++i) {
+                Preference child = groupToSearchIn.getPreference(i);
+
+                if (child == preference)
+                    return groupToSearchIn;
+
+                if (child instanceof PreferenceGroup) {
+                    PreferenceGroup childGroup = (PreferenceGroup)child;
+                    PreferenceGroup result = getParent(childGroup, preference);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
         public void removeSubPreference(Preference preference) {
             try {
-                    //Doesn't have a parent
+                PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
+                if (parent != null)
+                    parent.removePreference(preference);
+                else //Doesn't have a parent
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
-                Log.d("Engine_Driver", "Settings: removePreference: failed: " + preference);
+                Log.d("Engine_Driver", "Settings: removeSubPreference: failed: " + preference);
                 return;
             }
         }
+
         private void hideAdvancedSubPreferences() {
             if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedSubPreference1 : advancedSubPreferences) {
