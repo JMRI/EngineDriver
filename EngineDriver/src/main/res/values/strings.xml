@@ -325,7 +325,7 @@
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
-    <string name="prefNumOfThrottlesSummary">Choose how many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
+    <string name="prefNumOfThrottlesSummary">How many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen layout</string>
@@ -592,7 +592,7 @@
     <string name="prefAccelerometerShakeThresholdDefaultValue" translatable="false">2.0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLocaleTitle">Localisation</string>
-    <string name="prefLocaleSummary">Choose the Language to use for this app</string>
+    <string name="prefLocaleSummary">Language to use for this app</string>
     <string name="prefLocaleDefaultValue" translatable="false">Default</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Speed\' &amp; \'Pause\' button Preferences</string>
@@ -1091,7 +1091,7 @@
     <string name="hostNumericButton" translatable="false">12..</string>
     <string name="hostTextButton" translatable="false">Aa..</string>
 
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions area size</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Functions Buttons area size</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
 
