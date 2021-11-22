@@ -200,7 +200,9 @@
                     android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>
+
             <PreferenceCategory
+                android:key="prefCategoryHapticFeedback"
                 android:title="@string/prefHapticFeedbackTitle"
                 android:layout="@layout/category_icon_left"
                 android:icon="@drawable/category_haptic_black" >
