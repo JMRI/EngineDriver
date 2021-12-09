@@ -84,6 +84,19 @@
         <item>Auto-Rotate</item>
     </string-array>
 
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Fast Steam</item>
+        <item>Slow Steam</item>
+        <item>Diesel</item>
+    </string-array>
+    <string-array name="deviceSoundsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>none</item>
+        <item>steam</item>
+        <item>steamSlow</item>
+        <item>diesel</item>
+    </string-array>
+
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->
         <item >One</item>
         <item >Two</item>

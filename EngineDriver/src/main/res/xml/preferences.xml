@@ -1486,6 +1486,23 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="prefCategoryDeviceSounds"
+        android:title="@string/prefDeviceSoundsTitle"
+        android:layout="@layout/category_icon_left"
+        android:icon="@drawable/category_loco_sounds_black" >
+
+        <ListPreference
+            android:defaultValue="@string/prefDeviceSoundsDefaultValue"
+            android:entries="@array/deviceSoundsEntries"
+            android:entryValues="@array/deviceSoundsEntryValues"
+            android:key="prefDeviceSounds"
+            android:summary="@string/prefDeviceSoundsSummary"
+            android:title="@string/prefDeviceSoundsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="prefCategoryConnect"
         android:title="@string/prefConnectTitle"
         android:layout="@layout/category_icon_left"
