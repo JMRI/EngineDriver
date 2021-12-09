@@ -347,6 +347,9 @@
     <string name="prefWebViewLocationDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefWebViewLocationSummary">Include web view on Throttle screen</string>
     <string name="prefSelectLocoTitle">Select Loco Preferences</string>
+    <string name="prefDeviceSoundsSummary">Play basic loco sounds in the phone on function button press</string>
+    <string name="prefDeviceSoundsTitle">In Phone Loco Sounds</string>
+    <string name="prefDeviceSoundsDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
     <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound?</string>

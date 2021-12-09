@@ -41,6 +41,9 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -320,6 +323,29 @@ public class threaded_application extends Application {
     public static final int KIDS_TIMER_ENABLED = 2;
     public static final int KIDS_TIMER_RUNNNING = 3;
     public static final int KIDS_TIMER_ENDED = 999;
+
+    public SoundPool soundPool;
+    public int[] sounds = {0,0,0,0,0,0,0,0,0,0,0};  // Bell, Horn_Start, Horn_Loop, Horn_End, Whistle_Start, Whistle_Loop, Whistle_End
+    public int[] soundsStreamId = {0,0,0,0,0,0,0,0,0,0,0};
+    public boolean[] soundsPlaying = {false,false,false,false,false,false,false,false,false,false,false};
+    public static final int SOUND_BELL_START = 0;
+    public static final int SOUND_BELL_LOOP = 1;
+    public static final int SOUND_BELL_END = 2;
+    public static final int SOUND_HORN_START = 3;
+    public static final int SOUND_HORN_LOOP = 4;
+    public static final int SOUND_HORN_END = 5;
+    public static final int SOUND_WHISTLE_START = 6;
+    public static final int SOUND_WHISTLE_LOOP = 7;
+    public static final int SOUND_WHISTLE_END = 8;
+    public String prefDeviceSounds = "none";
+
+    public int [] soundsSteam = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    public int [] soundsSteamStreamId = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    public boolean[] soundsSteamPlaying = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+
+    public int [] soundsDiesel645turbo = {0,0,0,0,0};
+    public int [] soundsDiesel645turboStreamId = {0,0,0,0,0};
+    public boolean[] soundsDiesel645turboPlaying = {false,false,false,false,false};
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -653,6 +679,8 @@ public class threaded_application extends Application {
                                 shutdown(false);
                             }
                         }
+
+                        soundPool.autoPause();
                         break;
                     }
 
@@ -2096,7 +2124,56 @@ public class threaded_application extends Application {
         prefFeedbackOnDisconnect = prefs.getBoolean("prefFeedbackOnDisconnect",
                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
 
-    }
+        // setup the soundPool for the in device loco sounds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes
+                    .Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            soundPool = new SoundPool
+                    .Builder()
+                    .setMaxStreams(4)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
+        }
+
+        sounds[SOUND_BELL_START] = soundPool.load(this, R.raw.bell_start,1);
+        sounds[SOUND_BELL_LOOP] = soundPool.load(this, R.raw.bell_loop,1);
+        sounds[SOUND_BELL_END] = soundPool.load(this, R.raw.bell_end,1);
+        sounds[SOUND_HORN_START] = soundPool.load(this, R.raw.horn_start,1);
+        sounds[SOUND_HORN_LOOP] = soundPool.load(this, R.raw.horn_loop,1);
+        sounds[SOUND_HORN_END] = soundPool.load(this, R.raw.horn_end,1);
+        sounds[SOUND_WHISTLE_START] = soundPool.load(this, R.raw.whistle_start,1);
+        sounds[SOUND_WHISTLE_LOOP] = soundPool.load(this, R.raw.whistle_loop,1);
+        sounds[SOUND_WHISTLE_END] = soundPool.load(this, R.raw.whistle_end,1);
+
+        soundsSteam[0] = soundPool.load(this, R.raw.steam_loco_stationary_med,1);
+        soundsSteam[1] = soundPool.load(this, R.raw.steam_piston_stroke3,1);
+        soundsSteam[2] = soundPool.load(this, R.raw.steam_loop_30rpm,1);
+        soundsSteam[3] = soundPool.load(this, R.raw.steam_loop_35rpm,1);
+        soundsSteam[4] = soundPool.load(this, R.raw.steam_loop_40rpm,1);
+        soundsSteam[5] = soundPool.load(this, R.raw.steam_loop_50rpm,1);
+        soundsSteam[6] = soundPool.load(this, R.raw.steam_loop_60rpm,1);
+        soundsSteam[7] = soundPool.load(this, R.raw.steam_loop_75rpm,1);
+        soundsSteam[8] = soundPool.load(this, R.raw.steam_loop_90rpm,1);
+        soundsSteam[9] = soundPool.load(this, R.raw.steam_loop_100rpm,1);
+        soundsSteam[10] = soundPool.load(this, R.raw.steam_loop_125rpm,1);
+        soundsSteam[11] = soundPool.load(this, R.raw.steam_loop_150rpm,1);
+        soundsSteam[12] = soundPool.load(this, R.raw.steam_loop_175rpm,1);
+        soundsSteam[13] = soundPool.load(this, R.raw.steam_loop_200rpm,1);
+        soundsSteam[14] = soundPool.load(this, R.raw.steam_loop_250rpm,1);
+        soundsSteam[15] = soundPool.load(this, R.raw.steam_loop_300rpm,1);
+
+        soundsDiesel645turbo[0] = soundPool.load(this, R.raw.diesel_645turbo_idle,1);
+        soundsDiesel645turbo[1] = soundPool.load(this, R.raw.diesel_645turbo_d1_d2,1);
+        soundsDiesel645turbo[2] = soundPool.load(this, R.raw.diesel_645turbo_d2_d3,1);
+        soundsDiesel645turbo[3] = soundPool.load(this, R.raw.diesel_645turbo_d3_d4,1);
+        soundsDiesel645turbo[4] = soundPool.load(this, R.raw.diesel_645turbo_d4,1);
+
+    } // end onCreate
 
     public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
         private boolean isInBackground = true;

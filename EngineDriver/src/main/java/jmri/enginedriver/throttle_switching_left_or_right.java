@@ -640,6 +640,7 @@ public class throttle_switching_left_or_right extends throttle {
                         jumpDir = dir; // save ultimate target direction
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
+                        doLocoSound(whichThrottle);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
                             setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
@@ -680,6 +681,7 @@ public class throttle_switching_left_or_right extends throttle {
 //                    Log.d("Engine_Driver", "onProgressChanged -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
+                    doLocoSound(whichThrottle);
 
 //                    Log.d("Engine_Driver", "onProgressChange: fromUser: " + fromUser + " vsbSwitchingSpeeds[wt].touchFromUser: " +vsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
                 }
@@ -817,6 +819,7 @@ public class throttle_switching_left_or_right extends throttle {
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
+        doLocoSound(whichThrottle);
 
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedChange -  speed: " + speed + " change: " + change);
 
@@ -840,6 +843,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
+        doLocoSound(whichThrottle);
 
 //        Log.d("Engine_Driver","throttle_switching_left_or_right - speedUpdate -  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
@@ -858,6 +862,7 @@ public class throttle_switching_left_or_right extends throttle {
             sliderPosition = getNewSliderPositionFromSpeed(speedWiT, whichThrottle, false);
             vsbSwitchingSpeeds[whichThrottle].setProgress(sliderPosition);
         }
+        doLocoSound(whichThrottle);
     }
 
 
