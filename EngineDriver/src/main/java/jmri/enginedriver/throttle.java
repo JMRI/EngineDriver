@@ -960,6 +960,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     } else if (com3 == 'F') { // function key
                                         try {
                                             int function = Integer.parseInt(ls[1].substring(2));
+                                            doFunctionSound(whichThrottle, function);
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
@@ -1448,6 +1449,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
+
+        mainapp.prefDeviceSounds = prefs.getString("prefDeviceSounds", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+
     }
 
     protected void getDirectionButtonPrefs() {
@@ -1581,16 +1585,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // process WiT speed report
     // update speed slider if didn't just send a speed update to WiT
     void speedUpdateWiT(int whichThrottle, int speedWiT) {
-        if (speedWiT < 0)
-            speedWiT = 0;
-            if (!changeTimers[whichThrottle].delayInProg) {
-                sbs[whichThrottle].setProgress(speedWiT);
-                // Now update ESU MCII Knob position
-                if (IS_ESU_MCII) {
-                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for WiT speed report");
-                    setEsuThrottleKnobPosition(whichThrottle, speedWiT);
-                }
+        if (speedWiT < 0) speedWiT = 0;
+        if (!changeTimers[whichThrottle].delayInProg) {
+            sbs[whichThrottle].setProgress(speedWiT);
+            // Now update ESU MCII Knob position
+            if (IS_ESU_MCII) {
+                Log.d("Engine_Driver", "ESU_MCII: Move knob request for WiT speed report");
+                setEsuThrottleKnobPosition(whichThrottle, speedWiT);
             }
+        }
+        doLocoSound(whichThrottle);
     }
 
     SeekBar getThrottleSlider(int whichThrottle) {
@@ -1613,6 +1617,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (speed < 0)
             speed = 0;
         getThrottleSlider(whichThrottle).setProgress(speed);
+        doLocoSound(whichThrottle);
     }
 
     // get the current speed of the throttle from the slider
@@ -1673,6 +1678,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
+        doLocoSound(whichThrottle);
         return speed;
     }
 
@@ -1717,6 +1723,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speedUpdateAndNotify(whichThrottle, speed);
                 break;
         }
+        doLocoSound(whichThrottle);
     }
 
 
@@ -1778,6 +1785,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep);
                 break;
         }
+        doLocoSound(whichThrottle);
     }
 
     public void incrementSpeed(int whichThrottle, int from) {
@@ -1830,6 +1838,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+        doLocoSound(whichThrottle);
 
     } // end incrementSpeed
 
@@ -1875,6 +1884,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed update");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
+        doLocoSound(whichThrottle);
     }
 
     // change speed slider by scaled value and notify server
@@ -1894,6 +1904,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //            mainapp.throttleVibration(speed,lastSpeed,true);
 //        }
 
+        doLocoSound(whichThrottle);
     }
 
     // set the displayed numeric speed value
@@ -2328,6 +2339,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
         if (!newEnabledState) {
             sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
+            doLocoSound(whichThrottle);
         }
         sbs[whichThrottle].setEnabled(newEnabledState);
     } // end of enable_disable_buttons
@@ -4046,6 +4058,119 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return result;
     }
 
+    void doFunctionSound(int whichThrottle, int function) {
+        Log.d("Engine_Driver", "doFunctionSound: whichThrottle: " + whichThrottle + " function: " + function);
+        if (whichThrottle==0) {  // only dealing with the first throttle for now
+            int rslt = -1;
+            Button b;
+
+            if (!mainapp.prefDeviceSounds.equals("none")) {
+                boolean[] fs;   // copy of this throttle's function state array
+
+                b = functionMaps[whichThrottle].get(function);
+                fs = mainapp.function_states[whichThrottle];
+
+                if (b != null && fs != null) {
+//                  if ((lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN)))) {
+                    if (function == 2) {
+                        if (mainapp.prefDeviceSounds.contains("steam")) {
+                            rslt = threaded_application.SOUND_WHISTLE_LOOP;
+                        } else {
+                            rslt = threaded_application.SOUND_HORN_LOOP;
+                        }
+//                  } else if (lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL)) {
+                    } else if (function == 1) {
+                        rslt = threaded_application.SOUND_BELL_LOOP;
+                    }
+
+                    if (rslt >= 0) {
+                        if (fs[function]) {
+                            startSound(rslt, -1);
+                        } else {
+                            if (mainapp.soundsPlaying[rslt]) {
+                                stopSound(rslt);
+                                startSound(rslt + 1, 0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void doLocoSound(int whichThrottle) {
+        Log.d("Engine_Driver", "doLocoSound: whichThrottle: " + whichThrottle);
+        if (whichThrottle==0) { // only dealing with the first throttle for now
+
+            if (mainapp.consists[whichThrottle].isActive()) {
+                int rslt = -1;
+                float speed;
+                if (mainapp.prefDeviceSounds.contains("steam")) {
+                    int steps = 15; // ignoring 0 speed
+                    if (mainapp.prefDeviceSounds.equals("steamSlow")) {
+                        steps = 9; // ignoring 0 speed
+                    }
+                    speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
+                    speed = (float) ((float) (speed / 126 * steps) + 0.99);
+                    rslt = (int) speed;
+
+                    if (!mainapp.soundsSteamPlaying[rslt]) {
+
+                        for (int i = 0; i <= 15; i++) {
+                            if (i != rslt) {
+                                mainapp.soundPool.stop(mainapp.soundsSteamStreamId[i]);
+                                mainapp.soundsSteamPlaying[i] = false;
+                            } else {
+                                if (!mainapp.soundsSteamPlaying[i]) {
+                                    mainapp.soundsSteamStreamId[i] = mainapp.soundPool.play(mainapp.soundsSteam[i], 1, 1, 0, -1, 1);
+                                    mainapp.soundsSteamPlaying[i] = true;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
+                    speed = (float) ((float) (speed / 126 * 4) + 0.99);
+                    rslt = (int) speed;
+
+                    if (!mainapp.soundsDiesel645turboPlaying[rslt]) {
+
+                        for (int i = 0; i <= 4; i++) {
+                            if (i != rslt) {
+                                mainapp.soundPool.stop(mainapp.soundsDiesel645turboStreamId[i]);
+                                mainapp.soundsDiesel645turboPlaying[i] = false;
+                            } else {
+                                if (!mainapp.soundsDiesel645turboPlaying[i]) {
+                                    mainapp.soundsDiesel645turboStreamId[i] = mainapp.soundPool.play(mainapp.soundsDiesel645turbo[i], 1, 1, 0, -1, 1);
+                                    mainapp.soundsDiesel645turboPlaying[i] = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                mainapp.soundPool.autoPause();
+            }
+        }
+    }
+
+    void startSound(int mSound, int loop) {
+        if (!mainapp.soundsPlaying[mSound]) {
+            mainapp.soundsStreamId[mSound] = mainapp.soundPool.play(mainapp.sounds[mSound], 1, 1, 0, loop, 1);
+        }
+        if (loop!=0) {
+            mainapp.soundsPlaying[mSound] = true;
+        }
+        Log.d("Engine_Driver", "soundPool - started: " + mSound );
+    }
+
+    void stopSound(int mSound) {
+        if (mainapp.soundsPlaying[mSound]) {
+            mainapp.soundPool.stop(mainapp.soundsStreamId[mSound]);
+        }
+        mainapp.soundsPlaying[mSound] = false;
+        Log.d("Engine_Driver", "soundPool - stopped: " + mSound );
+    }
 
     protected class function_button_touch_listener implements View.OnTouchListener {
     int function;
@@ -4098,6 +4223,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         private void handleAction(int action) {
+            Log.d("Engine_Driver", "handleAction - soundPool - action: " + action );
             int isLatching = FUNCTION_CONSIST_LATCHING_NA;  // only used for the special consist function matching
 
             switch (action) {
@@ -4128,7 +4254,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
 
                         default: { // handle the function buttons
-                            isLatching = setFunctionButtonState(whichThrottle, function, true);  //special handeling for when using the default function labels, and one of 'Special' function following options
+//                            doSound(whichThrottle, function, lab, action);
+                            isLatching = setFunctionButtonState(whichThrottle, function, true);  //special handling for when using the default function labels, and one of 'Special' function following options
                             sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly,followLeadFunction, isLatching);
                             break;
                         }
@@ -4139,13 +4266,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 // handle stopping of function on key-up
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-
                     if (function == function_button.STOP) {
                         set_stop_button(whichThrottle, false);
                     }
                     // only process UP event if this is a "function" button
                     else if (function < direction_button.LEFT) {
-                        isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handeling for when using the default function labels, and one of 'Special' function following options
+//                        doSound(whichThrottle, function, lab, action);
+                        isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handling for when using the default function labels, and one of 'Special' function following options
                         sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly,followLeadFunction, isLatching);
                     }
                     break;
@@ -4213,11 +4340,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
+                    doLocoSound(whichThrottle);
 
                 }
                 else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches
                     throttle.setProgress(lastSpeed);
+                    doLocoSound(whichThrottle);
                 }
                 // Now update ESU MCII Knob position
                 if (IS_ESU_MCII) {
@@ -4233,6 +4362,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
                         limitedJump[whichThrottle] = false;
                         throttle.setProgress(jumpSpeed);
+                        doLocoSound(whichThrottle);
                     }
                 }
                 setDisplayedSpeed(whichThrottle, speed);
