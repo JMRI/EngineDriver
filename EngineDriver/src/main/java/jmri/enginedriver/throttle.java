@@ -1450,8 +1450,32 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
-        mainapp.prefDeviceSounds = prefs.getString("prefDeviceSounds", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        mainapp.prefDeviceSoundsVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsVolume", "100"));
+        mainapp.prefDeviceSoundsVolume = mainapp.prefDeviceSoundsVolume / 100;
 
+        for (int i = 0; i <= 1; i++) {
+            mainapp.soundsLocoSubType[i] = 0;
+            switch (mainapp.prefDeviceSounds[i]) {
+                case "steam":
+                    mainapp.soundsLocoType[i] = 0;
+                    break;
+                case "steamSlow":
+                    mainapp.soundsLocoType[i] = 0;
+                    mainapp.soundsLocoSubType[i] = 1;
+                    break;
+                case "diesel645turbo":
+                    mainapp.soundsLocoType[i] = 1;
+                    break;
+                case "diesel7FDL":
+                    mainapp.soundsLocoType[i] = 2;
+                    break;
+                case "dieselNW2":
+                    mainapp.soundsLocoType[i] = 3;
+                    break;
+            }
+        }
     }
 
     protected void getDirectionButtonPrefs() {
@@ -4060,90 +4084,97 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     void doFunctionSound(int whichThrottle, int function) {
         Log.d("Engine_Driver", "doFunctionSound: whichThrottle: " + whichThrottle + " function: " + function);
-        if (whichThrottle==0) {  // only dealing with the first throttle for now
+        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {  // only dealing with the first two throttles for now
             int rslt = -1;
             Button b;
 
-            if (!mainapp.prefDeviceSounds.equals("none")) {
-                boolean[] fs;   // copy of this throttle's function state array
+            if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
+//                boolean[] fs;   // copy of this throttle's function state array
 
-                b = functionMaps[whichThrottle].get(function);
-                fs = mainapp.function_states[whichThrottle];
+//                b = functionMaps[whichThrottle].get(function);
+//                fs = mainapp.function_states[whichThrottle];
 
-                if (b != null && fs != null) {
-//                  if ((lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || (lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN)))) {
+//                if (b != null && fs != null) {
+                if (functionMaps[whichThrottle].get(function) != null && mainapp.function_states[whichThrottle] != null) {
                     if (function == 2) {
-                        if (mainapp.prefDeviceSounds.contains("steam")) {
+                        if (mainapp.prefDeviceSounds[whichThrottle].contains("steam")) {
                             rslt = threaded_application.SOUND_WHISTLE_LOOP;
                         } else {
                             rslt = threaded_application.SOUND_HORN_LOOP;
                         }
-//                  } else if (lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL)) {
                     } else if (function == 1) {
                         rslt = threaded_application.SOUND_BELL_LOOP;
                     }
 
                     if (rslt >= 0) {
-                        if (fs[function]) {
+//                        if (fs[function]) {
+                        if (mainapp.function_states[whichThrottle][function]) {
                             startSound(rslt, -1);
                         } else {
-                            if (mainapp.soundsPlaying[rslt]) {
-                                stopSound(rslt);
-                                startSound(rslt + 1, 0);
+                            boolean otherThrottleIsPlayingThisSound = false;
+                            for (int i = 0; i< threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+                                if (functionMaps[i].get(function) != null && mainapp.function_states[i] != null) {
+                                    if ((i != whichThrottle) && (mainapp.function_states[i][function])) {
+                                        otherThrottleIsPlayingThisSound = true; // this button on another throttle is pressed, so don't stop the sound
+                                    }
+                                }
+                            }
+                            if (!otherThrottleIsPlayingThisSound) {
+                                if (mainapp.soundsPlaying[rslt]) {
+                                    stopSound(rslt);
+                                    startSound(rslt + 1, 0);
+                                }
                             }
                         }
                     }
                 }
             }
+
         }
     }
 
     void doLocoSound(int whichThrottle) {
         Log.d("Engine_Driver", "doLocoSound: whichThrottle: " + whichThrottle);
-        if (whichThrottle==0) { // only dealing with the first throttle for now
+        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
 
             if (mainapp.consists[whichThrottle].isActive()) {
-                int rslt = -1;
-                float speed;
-                if (mainapp.prefDeviceSounds.contains("steam")) {
-                    int steps = 15; // ignoring 0 speed
-                    if (mainapp.prefDeviceSounds.equals("steamSlow")) {
-                        steps = 9; // ignoring 0 speed
-                    }
-                    speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
-                    speed = (float) ((float) (speed / 126 * steps) + 0.99);
-                    rslt = (int) speed;
+                int stepForThisThrottle = -1;
 
-                    if (!mainapp.soundsSteamPlaying[rslt]) {
+                int locoType = mainapp.soundsLocoType[whichThrottle];
+                int locoTypeThrottleCounter = 0;
+                int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
+                int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
 
-                        for (int i = 0; i <= 15; i++) {
-                            if (i != rslt) {
-                                mainapp.soundPool.stop(mainapp.soundsSteamStreamId[i]);
-                                mainapp.soundsSteamPlaying[i] = false;
-                            } else {
-                                if (!mainapp.soundsSteamPlaying[i]) {
-                                    mainapp.soundsSteamStreamId[i] = mainapp.soundPool.play(mainapp.soundsSteam[i], 1, 1, 0, -1, 1);
-                                    mainapp.soundsSteamPlaying[i] = true;
+                stepForThisThrottle = getLocoSoundStep(whichThrottle);
+
+                if (!mainapp.soundsLocoPlaying[locoType][stepForThisThrottle]) {
+
+                    for (int stepCounter = 0; stepCounter <= steps; stepCounter++) {
+
+                        if (stepCounter != stepForThisThrottle) { // not the current step for this throttle
+
+                            boolean otherThrottleIsPlayingThisSound = false;
+                            for (int throttleCounter = 0; throttleCounter<threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleCounter++) {
+                                locoTypeThrottleCounter = mainapp.soundsLocoType[throttleCounter];
+                                if ( (throttleCounter != whichThrottle)
+                                    && (locoType == locoTypeThrottleCounter)
+                                    && (getLocoSoundStep(throttleCounter) == stepCounter) ) {
+                                    otherThrottleIsPlayingThisSound = true; // this sound is being played for another throttle, so don't stop the sound
+                                    break;
                                 }
                             }
-                        }
-                    }
-                } else {
-                    speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
-                    speed = (float) ((float) (speed / 126 * 4) + 0.99);
-                    rslt = (int) speed;
+                            if (!otherThrottleIsPlayingThisSound) {
+                                mainapp.soundPool.stop(mainapp.soundsLocoStreamId[locoType][stepCounter]);
+                                mainapp.soundsLocoPlaying[locoType][stepCounter] = false;
+                            }
 
-                    if (!mainapp.soundsDiesel645turboPlaying[rslt]) {
-
-                        for (int i = 0; i <= 4; i++) {
-                            if (i != rslt) {
-                                mainapp.soundPool.stop(mainapp.soundsDiesel645turboStreamId[i]);
-                                mainapp.soundsDiesel645turboPlaying[i] = false;
-                            } else {
-                                if (!mainapp.soundsDiesel645turboPlaying[i]) {
-                                    mainapp.soundsDiesel645turboStreamId[i] = mainapp.soundPool.play(mainapp.soundsDiesel645turbo[i], 1, 1, 0, -1, 1);
-                                    mainapp.soundsDiesel645turboPlaying[i] = true;
-                                }
+                        } else {
+                            if (!mainapp.soundsLocoPlaying[locoType][stepCounter]) {
+                                mainapp.soundsLocoStreamId[locoType][stepCounter] =
+                                        mainapp.soundPool.play(mainapp.soundsLoco[locoType][stepCounter],
+                                        mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume,
+                                        0, -1, 1);
+                                mainapp.soundsLocoPlaying[locoType][stepCounter] = true;
                             }
                         }
                     }
@@ -4154,9 +4185,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
+    int getLocoSoundStep(int whichThrottle) {
+        int rslt = 0;
+        int locoType = mainapp.soundsLocoType[whichThrottle];
+        int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
+        int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
+
+        float speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
+        speed = (float) ((float) (speed / 126 * steps) + 0.99);
+        rslt = (int) speed;
+
+        return rslt;
+    }
+
     void startSound(int mSound, int loop) {
         if (!mainapp.soundsPlaying[mSound]) {
-            mainapp.soundsStreamId[mSound] = mainapp.soundPool.play(mainapp.sounds[mSound], 1, 1, 0, loop, 1);
+            mainapp.soundsStreamId[mSound]
+                    = mainapp.soundPool.play(mainapp.sounds[mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
         }
         if (loop!=0) {
             mainapp.soundsPlaying[mSound] = true;

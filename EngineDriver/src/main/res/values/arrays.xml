@@ -88,13 +88,17 @@
         <item>None</item>
         <item>Fast Steam</item>
         <item>Slow Steam</item>
-        <item>Diesel</item>
+        <item>Diesel (EMD 645 Turbo)</item>
+        <item>Diesel (GE 7FDL)</item>
+        <item>Diesel (EMD NW2)</item>
     </string-array>
     <string-array name="deviceSoundsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>steam</item>
         <item>steamSlow</item>
-        <item>diesel</item>
+        <item>diesel645turbo</item>
+        <item>diesel7FDL</item>
+        <item>dieselNW2</item>
     </string-array>
 
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->

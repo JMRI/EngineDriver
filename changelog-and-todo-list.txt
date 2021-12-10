@@ -4,7 +4,7 @@
  * handle improved state labels (JMRI change)
  * Rework Advanced Preferences feature
  * icons for the preference categories
- * basic 'in device' loco sounds preference (loco 0 only)
+ * basic 'in device' loco sounds preferences (loco 0 & 1 only)
 **Version 2.30.130
  * shortened About string
  * avoid crashes reported to Play Store
