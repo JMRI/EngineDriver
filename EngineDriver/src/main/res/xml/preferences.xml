@@ -1487,7 +1487,7 @@
 
     <PreferenceCategory
         android:key="prefCategoryDeviceSounds"
-        android:title="@string/prefDeviceSoundsTitle"
+        android:title="@string/prefDeviceSoundsCategoryTitle"
         android:layout="@layout/category_icon_left"
         android:icon="@drawable/category_loco_sounds_black" >
 
@@ -1495,10 +1495,31 @@
             android:defaultValue="@string/prefDeviceSoundsDefaultValue"
             android:entries="@array/deviceSoundsEntries"
             android:entryValues="@array/deviceSoundsEntryValues"
-            android:key="prefDeviceSounds"
-            android:summary="@string/prefDeviceSoundsSummary"
-            android:title="@string/prefDeviceSoundsTitle"
+            android:key="prefDeviceSounds0"
+            android:summary="@string/prefDeviceSounds0Summary"
+            android:title="@string/prefDeviceSounds0Title"
             android:layout="@layout/checkbox_no_icon" />
+
+        <ListPreference
+            android:defaultValue="@string/prefDeviceSoundsDefaultValue"
+            android:entries="@array/deviceSoundsEntries"
+            android:entryValues="@array/deviceSoundsEntryValues"
+            android:key="prefDeviceSounds1"
+            android:summary="@string/prefDeviceSounds1Summary"
+            android:title="@string/prefDeviceSounds1Title"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:dialogTitle="@string/prefDeviceSoundsVolumeTitle"
+            android:key="prefDeviceSoundsVolume"
+            android:maxLength="3"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefDeviceSoundsVolumeSummary"
+            android:title="@string/prefDeviceSoundsVolumeTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
 
     </PreferenceCategory>
 

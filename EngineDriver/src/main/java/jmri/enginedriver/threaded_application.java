@@ -337,15 +337,33 @@ public class threaded_application extends Application {
     public static final int SOUND_WHISTLE_START = 6;
     public static final int SOUND_WHISTLE_LOOP = 7;
     public static final int SOUND_WHISTLE_END = 8;
-    public String prefDeviceSounds = "none";
+    public String prefDeviceSounds[] = {"none","none"};  //currently only supporting two throttles
+    public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
+    public float prefDeviceSoundsVolume = 1;
 
-    public int [] soundsSteam = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    public int [] soundsSteamStreamId = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    public boolean[] soundsSteamPlaying = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+//    public int [] soundsSteam = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+//    public int [] soundsSteamStreamId = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+//    public boolean[] soundsSteamPlaying = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
-    public int [] soundsDiesel645turbo = {0,0,0,0,0};
-    public int [] soundsDiesel645turboStreamId = {0,0,0,0,0};
-    public boolean[] soundsDiesel645turboPlaying = {false,false,false,false,false};
+    public int soundsLocoType[] = {0,0};  //currently only supporting two throttles
+    public int soundsLocoSubType[] = {0,0};  //currently only supporting two throttles
+
+    public int [][] soundsLoco = {
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+    public int [][] soundsLocoStreamId = {
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+    public boolean[][] soundsLocoPlaying = {   //currently only supporting two throttles
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
+    public int [][] soundsLocoSteps = {{15,9},{4,4},{7,7},{2,2}};
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2133,11 +2151,12 @@ public class threaded_application extends Application {
                     .build();
             soundPool = new SoundPool
                     .Builder()
-                    .setMaxStreams(4)
+                    .setMaxStreams(8)
                     .setAudioAttributes(audioAttributes)
                     .build();
         } else {
-            soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC,0);
+            soundPool = new SoundPool(8,
+                    AudioManager.STREAM_MUSIC,0);
         }
 
         sounds[SOUND_BELL_START] = soundPool.load(this, R.raw.bell_start,1);
@@ -2150,28 +2169,42 @@ public class threaded_application extends Application {
         sounds[SOUND_WHISTLE_LOOP] = soundPool.load(this, R.raw.whistle_loop,1);
         sounds[SOUND_WHISTLE_END] = soundPool.load(this, R.raw.whistle_end,1);
 
-        soundsSteam[0] = soundPool.load(this, R.raw.steam_loco_stationary_med,1);
-        soundsSteam[1] = soundPool.load(this, R.raw.steam_piston_stroke3,1);
-        soundsSteam[2] = soundPool.load(this, R.raw.steam_loop_30rpm,1);
-        soundsSteam[3] = soundPool.load(this, R.raw.steam_loop_35rpm,1);
-        soundsSteam[4] = soundPool.load(this, R.raw.steam_loop_40rpm,1);
-        soundsSteam[5] = soundPool.load(this, R.raw.steam_loop_50rpm,1);
-        soundsSteam[6] = soundPool.load(this, R.raw.steam_loop_60rpm,1);
-        soundsSteam[7] = soundPool.load(this, R.raw.steam_loop_75rpm,1);
-        soundsSteam[8] = soundPool.load(this, R.raw.steam_loop_90rpm,1);
-        soundsSteam[9] = soundPool.load(this, R.raw.steam_loop_100rpm,1);
-        soundsSteam[10] = soundPool.load(this, R.raw.steam_loop_125rpm,1);
-        soundsSteam[11] = soundPool.load(this, R.raw.steam_loop_150rpm,1);
-        soundsSteam[12] = soundPool.load(this, R.raw.steam_loop_175rpm,1);
-        soundsSteam[13] = soundPool.load(this, R.raw.steam_loop_200rpm,1);
-        soundsSteam[14] = soundPool.load(this, R.raw.steam_loop_250rpm,1);
-        soundsSteam[15] = soundPool.load(this, R.raw.steam_loop_300rpm,1);
+        soundsLoco[0][0] = soundPool.load(this, R.raw.steam_loco_stationary_med,1);
+        soundsLoco[0][1] = soundPool.load(this, R.raw.steam_piston_stroke3,1);
+        soundsLoco[0][2] = soundPool.load(this, R.raw.steam_loop_30rpm,1);
+        soundsLoco[0][3] = soundPool.load(this, R.raw.steam_loop_35rpm,1);
+        soundsLoco[0][4] = soundPool.load(this, R.raw.steam_loop_40rpm,1);
+        soundsLoco[0][5] = soundPool.load(this, R.raw.steam_loop_50rpm,1);
+        soundsLoco[0][6] = soundPool.load(this, R.raw.steam_loop_60rpm,1);
+        soundsLoco[0][7] = soundPool.load(this, R.raw.steam_loop_75rpm,1);
+        soundsLoco[0][8] = soundPool.load(this, R.raw.steam_loop_90rpm,1);
+        soundsLoco[0][9] = soundPool.load(this, R.raw.steam_loop_100rpm,1);
+        soundsLoco[0][10] = soundPool.load(this, R.raw.steam_loop_125rpm,1);
+        soundsLoco[0][11] = soundPool.load(this, R.raw.steam_loop_150rpm,1);
+        soundsLoco[0][12] = soundPool.load(this, R.raw.steam_loop_175rpm,1);
+        soundsLoco[0][13] = soundPool.load(this, R.raw.steam_loop_200rpm,1);
+        soundsLoco[0][14] = soundPool.load(this, R.raw.steam_loop_250rpm,1);
+        soundsLoco[0][15] = soundPool.load(this, R.raw.steam_loop_300rpm,1);
 
-        soundsDiesel645turbo[0] = soundPool.load(this, R.raw.diesel_645turbo_idle,1);
-        soundsDiesel645turbo[1] = soundPool.load(this, R.raw.diesel_645turbo_d1_d2,1);
-        soundsDiesel645turbo[2] = soundPool.load(this, R.raw.diesel_645turbo_d2_d3,1);
-        soundsDiesel645turbo[3] = soundPool.load(this, R.raw.diesel_645turbo_d3_d4,1);
-        soundsDiesel645turbo[4] = soundPool.load(this, R.raw.diesel_645turbo_d4,1);
+        soundsLoco[1][0] = soundPool.load(this, R.raw.diesel_645turbo_idle,1);
+        soundsLoco[1][1] = soundPool.load(this, R.raw.diesel_645turbo_d1_d2,1);
+        soundsLoco[1][2] = soundPool.load(this, R.raw.diesel_645turbo_d2_d3,1);
+        soundsLoco[1][3] = soundPool.load(this, R.raw.diesel_645turbo_d3_d4,1);
+        soundsLoco[1][4] = soundPool.load(this, R.raw.diesel_645turbo_d4,1);
+
+        soundsLoco[2][0] = soundPool.load(this, R.raw.diesel_7fdl_idle_1a,1);
+        soundsLoco[2][1] = soundPool.load(this, R.raw.diesel_7fdl_idle_2a,1);
+        soundsLoco[2][2] = soundPool.load(this, R.raw.diesel_7fdl_idle_3a,1);
+        soundsLoco[2][3] = soundPool.load(this, R.raw.diesel_7fdl_idle_4a,1);
+        soundsLoco[2][4] = soundPool.load(this, R.raw.diesel_7fdl_idle_5a,1);
+        soundsLoco[2][5] = soundPool.load(this, R.raw.diesel_7fdl_idle_6a,1);
+        soundsLoco[2][6] = soundPool.load(this, R.raw.diesel_7fdl_idle_7a,1);
+        soundsLoco[2][7] = soundPool.load(this, R.raw.diesel_7fdl_idle_8a,1);
+
+        soundsLoco[3][0] = soundPool.load(this, R.raw.diesel_nw7_motor,1);
+        soundsLoco[3][1] = soundPool.load(this, R.raw.diesel_nw7_motor_2,1);
+        soundsLoco[3][2] = soundPool.load(this, R.raw.diesel_nw7_motor_1,1);
+
 
     } // end onCreate
 
