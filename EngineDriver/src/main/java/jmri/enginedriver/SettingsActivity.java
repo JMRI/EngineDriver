@@ -1100,6 +1100,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefSocketTimeoutMs":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
                         break;
+                    case "prefDeviceSoundsVolume":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
                     case "ThrottleOrientation":
                         setSwipeThroughWebPreference(); //disable web swipe if Auto-Web
                         //if mode was fixed (Port or Land) won't get callback so need explicit call here
