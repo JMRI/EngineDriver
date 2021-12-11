@@ -86,8 +86,9 @@
 
     <string-array name="deviceSoundsEntries">  <!-- display version -->
         <item>None</item>
-        <item>Fast Steam</item>
-        <item>Slow Steam</item>
+        <item>Generic Steam (Fast)</item>
+        <item>Generic Steam (Slow)</item>
+        <item>Steam (Class 64)</item>
         <item>Diesel (EMD 645 Turbo)</item>
         <item>Diesel (GE 7FDL)</item>
         <item>Diesel (EMD NW2)</item>
@@ -96,6 +97,7 @@
         <item>none</item>
         <item>steam</item>
         <item>steamSlow</item>
+        <item>steamClass64</item>
         <item>diesel645turbo</item>
         <item>diesel7FDL</item>
         <item>dieselNW2</item>

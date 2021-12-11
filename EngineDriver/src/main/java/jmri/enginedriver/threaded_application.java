@@ -325,30 +325,26 @@ public class threaded_application extends Application {
     public static final int KIDS_TIMER_ENDED = 999;
 
     public SoundPool soundPool;
-    public int[] sounds = {0,0,0,0,0,0,0,0,0,0,0};  // Bell, Horn_Start, Horn_Loop, Horn_End, Whistle_Start, Whistle_Loop, Whistle_End
-    public int[] soundsStreamId = {0,0,0,0,0,0,0,0,0,0,0};
-    public boolean[] soundsPlaying = {false,false,false,false,false,false,false,false,false,false,false};
-    public static final int SOUND_BELL_START = 0;
-    public static final int SOUND_BELL_LOOP = 1;
-    public static final int SOUND_BELL_END = 2;
-    public static final int SOUND_HORN_START = 3;
-    public static final int SOUND_HORN_LOOP = 4;
-    public static final int SOUND_HORN_END = 5;
-    public static final int SOUND_WHISTLE_START = 6;
-    public static final int SOUND_WHISTLE_LOOP = 7;
-    public static final int SOUND_WHISTLE_END = 8;
+
     public String prefDeviceSounds[] = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
     public float prefDeviceSoundsVolume = 1;
 
-//    public int [] soundsSteam = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-//    public int [] soundsSteamStreamId = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-//    public boolean[] soundsSteamPlaying = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
-
     public int soundsLocoType[] = {0,0};  //currently only supporting two throttles
     public int soundsLocoSubType[] = {0,0};  //currently only supporting two throttles
+    public int soundsBellType[] = {0,0};  //currently only supporting two throttles
+    public int soundsHornType[] = {0,0};  //currently only supporting two throttles
 
-    public int [][] soundsLoco = {
+    public int[][] soundsBell = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsBellStreamId = {{0,0,0},{0,0,0},{0,0,0}};
+    public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false},{false,false,false}};
+
+    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0}};
+    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
+
+    public int [][] soundsLoco = { // need one for each type of loco availble to select
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -357,13 +353,22 @@ public class threaded_application extends Application {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-    public boolean[][] soundsLocoPlaying = {   //currently only supporting two throttles
+    public boolean[][] soundsLocoPlaying = {
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
-    public int [][] soundsLocoSteps = {{15,9},{4,4},{7,7},{2,2}};
+
+    public int [][] soundsLocoSteps =
+            {{15,9}, // steam fast, slow
+            {4,4}, // 645 turbo
+            {7,7}, // 7FDL
+            {2,2}, // NW7
+            {6,6} // steam Class 64
+            };
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -375,7 +380,6 @@ public class threaded_application extends Application {
         heartbeat heart = new heartbeat();
         private long lastSentMs = System.currentTimeMillis();
         private long lastQueuedMs = System.currentTimeMillis();
-        ;
 
         comm_thread() {
             super("comm_thread");
@@ -2159,15 +2163,22 @@ public class threaded_application extends Application {
                     AudioManager.STREAM_MUSIC,0);
         }
 
-        sounds[SOUND_BELL_START] = soundPool.load(this, R.raw.bell_start,1);
-        sounds[SOUND_BELL_LOOP] = soundPool.load(this, R.raw.bell_loop,1);
-        sounds[SOUND_BELL_END] = soundPool.load(this, R.raw.bell_end,1);
-        sounds[SOUND_HORN_START] = soundPool.load(this, R.raw.horn_start,1);
-        sounds[SOUND_HORN_LOOP] = soundPool.load(this, R.raw.horn_loop,1);
-        sounds[SOUND_HORN_END] = soundPool.load(this, R.raw.horn_end,1);
-        sounds[SOUND_WHISTLE_START] = soundPool.load(this, R.raw.whistle_start,1);
-        sounds[SOUND_WHISTLE_LOOP] = soundPool.load(this, R.raw.whistle_loop,1);
-        sounds[SOUND_WHISTLE_END] = soundPool.load(this, R.raw.whistle_end,1);
+//        soundsBell[0][0] = soundPool.load(this, R.raw.bell_start,1);
+        soundsBell[0][1] = soundPool.load(this, R.raw.bell_loop,1);
+        soundsBell[0][2] = soundPool.load(this, R.raw.bell_end,1);
+//        soundsBell[1][0] = soundPool.load(this, R.raw.bell_br_64_glocke_22_start,1);
+        soundsBell[1][1] = soundPool.load(this, R.raw.bell_br_64_glocke_22_loop,1);
+        soundsBell[1][2] = soundPool.load(this, R.raw.bell_br_64_glocke_22_end,1);
+
+//        soundsHorn[0][0] = soundPool.load(this, R.raw.horn_start,1);
+        soundsHorn[0][1] = soundPool.load(this, R.raw.horn_loop,1);
+        soundsHorn[0][2] = soundPool.load(this, R.raw.horn_end,1);
+//        soundsHorn[1][0] = soundPool.load(this, R.raw.whistle_start,1);
+        soundsHorn[1][1] = soundPool.load(this, R.raw.whistle_loop,1);
+        soundsHorn[1][0] = soundPool.load(this, R.raw.whistle_end,1);
+//        soundsHorn[2][0] = soundPool.load(this, R.raw.whistle_class64_long_start,1);
+        soundsHorn[2][1] = soundPool.load(this, R.raw.whistle_class64_long_mid,1);
+        soundsHorn[2][0] = soundPool.load(this, R.raw.whistle_class64_long_end,1);
 
         soundsLoco[0][0] = soundPool.load(this, R.raw.steam_loco_stationary_med,1);
         soundsLoco[0][1] = soundPool.load(this, R.raw.steam_piston_stroke3,1);
@@ -2205,6 +2216,13 @@ public class threaded_application extends Application {
         soundsLoco[3][1] = soundPool.load(this, R.raw.diesel_nw7_motor_2,1);
         soundsLoco[3][2] = soundPool.load(this, R.raw.diesel_nw7_motor_1,1);
 
+        soundsLoco[4][0] = soundPool.load(this, R.raw.steam_class64_idle_sound,1);
+        soundsLoco[4][1] = soundPool.load(this, R.raw.steam_class64_chuff1_1_4,1);
+        soundsLoco[4][2] = soundPool.load(this, R.raw.steam_class64_chuff2_1_4,1);
+        soundsLoco[4][3] = soundPool.load(this, R.raw.steam_class64_chuff3_1_4,1);
+        soundsLoco[4][4] = soundPool.load(this, R.raw.steam_class64_chuff4_1_4,1);
+        soundsLoco[4][5] = soundPool.load(this, R.raw.steam_class64_chuff5_1_4,1);
+        soundsLoco[4][6] = soundPool.load(this, R.raw.steam_class64_chuff6_1_4,1);
 
     } // end onCreate
 
