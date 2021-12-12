@@ -1460,19 +1460,35 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             switch (mainapp.prefDeviceSounds[i]) {
                 case "steam":
                     mainapp.soundsLocoType[i] = 0;
+                    mainapp.soundsBellType[i] = 0;
+                    mainapp.soundsHornType[i] = 1;
                     break;
                 case "steamSlow":
                     mainapp.soundsLocoType[i] = 0;
                     mainapp.soundsLocoSubType[i] = 1;
+                    mainapp.soundsBellType[i] = 0;
+                    mainapp.soundsHornType[i] = 1;
+                    break;
+                case "steamClass64":
+                    mainapp.soundsLocoType[i] = 4;
+                    mainapp.soundsLocoSubType[i] = 1;
+                    mainapp.soundsBellType[i] = 1;
+                    mainapp.soundsHornType[i] = 2;
                     break;
                 case "diesel645turbo":
                     mainapp.soundsLocoType[i] = 1;
+                    mainapp.soundsBellType[i] = 0;
+                    mainapp.soundsHornType[i] = 0;
                     break;
                 case "diesel7FDL":
                     mainapp.soundsLocoType[i] = 2;
+                    mainapp.soundsBellType[i] = 0;
+                    mainapp.soundsHornType[i] = 0;
                     break;
                 case "dieselNW2":
                     mainapp.soundsLocoType[i] = 3;
+                    mainapp.soundsBellType[i] = 0;
+                    mainapp.soundsHornType[i] = 0;
                     break;
             }
         }
@@ -4082,57 +4098,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return result;
     }
 
-    void doFunctionSound(int whichThrottle, int function) {
-        Log.d("Engine_Driver", "doFunctionSound: whichThrottle: " + whichThrottle + " function: " + function);
-        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {  // only dealing with the first two throttles for now
-            int rslt = -1;
-            Button b;
-
-            if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-//                boolean[] fs;   // copy of this throttle's function state array
-
-//                b = functionMaps[whichThrottle].get(function);
-//                fs = mainapp.function_states[whichThrottle];
-
-//                if (b != null && fs != null) {
-                if (functionMaps[whichThrottle].get(function) != null && mainapp.function_states[whichThrottle] != null) {
-                    if (function == 2) {
-                        if (mainapp.prefDeviceSounds[whichThrottle].contains("steam")) {
-                            rslt = threaded_application.SOUND_WHISTLE_LOOP;
-                        } else {
-                            rslt = threaded_application.SOUND_HORN_LOOP;
-                        }
-                    } else if (function == 1) {
-                        rslt = threaded_application.SOUND_BELL_LOOP;
-                    }
-
-                    if (rslt >= 0) {
-//                        if (fs[function]) {
-                        if (mainapp.function_states[whichThrottle][function]) {
-                            startSound(rslt, -1);
-                        } else {
-                            boolean otherThrottleIsPlayingThisSound = false;
-                            for (int i = 0; i< threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
-                                if (functionMaps[i].get(function) != null && mainapp.function_states[i] != null) {
-                                    if ((i != whichThrottle) && (mainapp.function_states[i][function])) {
-                                        otherThrottleIsPlayingThisSound = true; // this button on another throttle is pressed, so don't stop the sound
-                                    }
-                                }
-                            }
-                            if (!otherThrottleIsPlayingThisSound) {
-                                if (mainapp.soundsPlaying[rslt]) {
-                                    stopSound(rslt);
-                                    startSound(rslt + 1, 0);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
     void doLocoSound(int whichThrottle) {
         Log.d("Engine_Driver", "doLocoSound: whichThrottle: " + whichThrottle);
         if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
@@ -4198,23 +4163,77 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return rslt;
     }
 
-    void startSound(int mSound, int loop) {
-        if (!mainapp.soundsPlaying[mSound]) {
-            mainapp.soundsStreamId[mSound]
-                    = mainapp.soundPool.play(mainapp.sounds[mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
+    void doFunctionSound(int whichThrottle, int function) {
+        Log.d("Engine_Driver", "doFunctionSound: whichThrottle: " + whichThrottle + " function: " + function);
+        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {  // only dealing with the first two throttles for now
+
+            if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
+                if (functionMaps[whichThrottle].get(function) != null && mainapp.function_states[whichThrottle] != null) {
+                    if ((function == 1) || function == 2) {
+                        if (mainapp.function_states[whichThrottle][function]) {
+                            if (function == 2) {
+                                startHornSound(mainapp.soundsHornType[whichThrottle],1, -1);
+                            } else {
+                                startBellSound(mainapp.soundsBellType[whichThrottle],1, -1);
+                            }
+                        } else {
+                            boolean otherThrottleIsPlayingThisSound = false;
+                            for (int i = 0; i< threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+                                if ( (functionMaps[i].get(function) != null && mainapp.function_states[i] != null) ) {
+                                    if ( (i != whichThrottle) && (mainapp.function_states[i][function])
+                                            && (mainapp.soundsHornType[whichThrottle]==mainapp.soundsHornType[i]) ) {
+                                        otherThrottleIsPlayingThisSound = true; // this button on another throttle is pressed, so don't stop the sound
+                                    }
+                                }
+                            }
+                            if (!otherThrottleIsPlayingThisSound) {
+                                if (function == 2) {
+                                    stopHornSound(mainapp.soundsHornType[whichThrottle], 1);
+                                    startHornSound(mainapp.soundsHornType[whichThrottle],2, 0);
+                                } else {
+                                    stopBellSound(mainapp.soundsBellType[whichThrottle], 1);
+                                    startBellSound(mainapp.soundsBellType[whichThrottle],2, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        if (loop!=0) {
-            mainapp.soundsPlaying[mSound] = true;
-        }
-        Log.d("Engine_Driver", "soundPool - started: " + mSound );
     }
 
-    void stopSound(int mSound) {
-        if (mainapp.soundsPlaying[mSound]) {
-            mainapp.soundPool.stop(mainapp.soundsStreamId[mSound]);
+    void startBellSound(int type, int mSound, int loop) {
+        if (!mainapp.soundsBellPlaying[type][mSound]) {
+            mainapp.soundsBellStreamId[type][mSound]
+                    = mainapp.soundPool.play(mainapp.soundsBell[type][mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
         }
-        mainapp.soundsPlaying[mSound] = false;
-        Log.d("Engine_Driver", "soundPool - stopped: " + mSound );
+        if (loop!=0) {
+            mainapp.soundsBellPlaying[type][mSound] = true;
+        }
+    }
+
+    void stopBellSound(int type, int mSound) {
+        if (mainapp.soundsBellPlaying[type][mSound]) {
+            mainapp.soundPool.stop(mainapp.soundsBellStreamId[type][mSound]);
+        }
+        mainapp.soundsBellPlaying[type][mSound] = false;
+    }
+
+    void startHornSound(int type, int mSound, int loop) {
+        if (!mainapp.soundsHornPlaying[type][mSound]) {
+            mainapp.soundsHornStreamId[type][mSound]
+                    = mainapp.soundPool.play(mainapp.soundsHorn[type][mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
+        }
+        if (loop!=0) {
+            mainapp.soundsHornPlaying[type][mSound] = true;
+        }
+    }
+
+    void stopHornSound(int type, int mSound) {
+        if (mainapp.soundsHornPlaying[type][mSound]) {
+            mainapp.soundPool.stop(mainapp.soundsHornStreamId[type][mSound]);
+        }
+        mainapp.soundsHornPlaying[type][mSound] = false;
     }
 
     protected class function_button_touch_listener implements View.OnTouchListener {
