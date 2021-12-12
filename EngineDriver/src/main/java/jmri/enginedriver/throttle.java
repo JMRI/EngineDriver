@@ -47,8 +47,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -1338,11 +1340,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         String prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
         String prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_HEADLIGHT );
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT );
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
@@ -1380,7 +1382,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
         locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
 
-        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 /100;
+        screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 / 100;
 
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
@@ -1400,7 +1402,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // set speed buttons speed step
         prefSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
-        prefVolumeSpeedButtonsSpeedStep= mainapp.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefVolumeSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = mainapp.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
 
@@ -1455,41 +1457,46 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSoundsVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsVolume", "100"));
         mainapp.prefDeviceSoundsVolume = mainapp.prefDeviceSoundsVolume / 100;
 
-        for (int i = 0; i <= 1; i++) {
-            mainapp.soundsLocoSubType[i] = 0;
-            switch (mainapp.prefDeviceSounds[i]) {
-                case "steam":
-                    mainapp.soundsLocoType[i] = 0;
-                    mainapp.soundsBellType[i] = 0;
-                    mainapp.soundsHornType[i] = 1;
-                    break;
-                case "steamSlow":
-                    mainapp.soundsLocoType[i] = 0;
-                    mainapp.soundsLocoSubType[i] = 1;
-                    mainapp.soundsBellType[i] = 0;
-                    mainapp.soundsHornType[i] = 1;
-                    break;
-                case "steamClass64":
-                    mainapp.soundsLocoType[i] = 4;
-                    mainapp.soundsLocoSubType[i] = 1;
-                    mainapp.soundsBellType[i] = 1;
-                    mainapp.soundsHornType[i] = 2;
-                    break;
-                case "diesel645turbo":
-                    mainapp.soundsLocoType[i] = 1;
-                    mainapp.soundsBellType[i] = 0;
-                    mainapp.soundsHornType[i] = 0;
-                    break;
-                case "diesel7FDL":
-                    mainapp.soundsLocoType[i] = 2;
-                    mainapp.soundsBellType[i] = 0;
-                    mainapp.soundsHornType[i] = 0;
-                    break;
-                case "dieselNW2":
-                    mainapp.soundsLocoType[i] = 3;
-                    mainapp.soundsBellType[i] = 0;
-                    mainapp.soundsHornType[i] = 0;
-                    break;
+        if ( (!mainapp.prefDeviceSounds[0].equals("none")) && (!mainapp.prefDeviceSounds[1].equals("none")) ) {
+            for (int i = 0; i <= 1; i++) {
+                mainapp.soundsLocoSubType[i] = 0;
+                switch (mainapp.prefDeviceSounds[i]) {
+                    case "steam":
+                        mainapp.soundsLocoType[i] = 0;
+                        mainapp.soundsBellType[i] = 0;
+                        mainapp.soundsHornType[i] = 1;
+                        break;
+                    case "steamSlow":
+                        mainapp.soundsLocoType[i] = 0;
+                        mainapp.soundsLocoSubType[i] = 1;
+                        mainapp.soundsBellType[i] = 0;
+                        mainapp.soundsHornType[i] = 1;
+                        break;
+                    case "steamClass64":
+                        mainapp.soundsLocoType[i] = 4;
+                        mainapp.soundsLocoSubType[i] = 1;
+                        mainapp.soundsBellType[i] = 1;
+                        mainapp.soundsHornType[i] = 2;
+                        break;
+                    case "diesel645turbo":
+                        mainapp.soundsLocoType[i] = 1;
+                        mainapp.soundsBellType[i] = 0;
+                        mainapp.soundsHornType[i] = 0;
+                        break;
+                    case "diesel7FDL":
+                        mainapp.soundsLocoType[i] = 2;
+                        mainapp.soundsBellType[i] = 0;
+                        mainapp.soundsHornType[i] = 0;
+                        break;
+                    case "dieselNW2":
+                        mainapp.soundsLocoType[i] = 3;
+                        mainapp.soundsBellType[i] = 0;
+                        mainapp.soundsHornType[i] = 0;
+                        break;
+                }
+            }
+            if (mainapp.soundsReloadSounds) {
+                loadSounds();
             }
         }
     }
@@ -4144,8 +4151,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                     }
                 }
-            } else {
-                mainapp.soundPool.autoPause();
             }
         }
     }
@@ -4165,7 +4170,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     void doFunctionSound(int whichThrottle, int function) {
         Log.d("Engine_Driver", "doFunctionSound: whichThrottle: " + whichThrottle + " function: " + function);
-        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {  // only dealing with the first two throttles for now
+        if ( (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)  // only dealing with the first two throttles for now
+            && (mainapp.consists[whichThrottle].isActive()) ) {
 
             if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
                 if (functionMaps[whichThrottle].get(function) != null && mainapp.function_states[whichThrottle] != null) {
@@ -4187,12 +4193,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 }
                             }
                             if (!otherThrottleIsPlayingThisSound) {
+                                boolean wasPlayingSound;
                                 if (function == 2) {
+                                    wasPlayingSound = mainapp.soundsHornPlaying[mainapp.soundsHornType[whichThrottle]][1];
                                     stopHornSound(mainapp.soundsHornType[whichThrottle], 1);
-                                    startHornSound(mainapp.soundsHornType[whichThrottle],2, 0);
+                                    if (wasPlayingSound) startHornSound(mainapp.soundsHornType[whichThrottle],2, 0);
                                 } else {
+                                    wasPlayingSound = mainapp.soundsBellPlaying[mainapp.soundsBellType[whichThrottle]][1];
                                     stopBellSound(mainapp.soundsBellType[whichThrottle], 1);
-                                    startBellSound(mainapp.soundsBellType[whichThrottle],2, 0);
+                                    if (wasPlayingSound) startBellSound(mainapp.soundsBellType[whichThrottle],2, 0);
                                 }
                             }
                         }
@@ -6574,4 +6583,92 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         return speed;
     }
+
+
+    public void loadSounds() {
+        if (mainapp.soundPool!=null) {
+            mainapp.stopAllSounds();
+        }
+
+        // setup the soundPool for the in device loco sounds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes
+                    .Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            mainapp.soundPool = new SoundPool
+                    .Builder()
+                    .setMaxStreams(8)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            mainapp.soundPool = new SoundPool(8,
+                    AudioManager.STREAM_MUSIC,0);
+        }
+
+//        mainapp.soundsBell[0][0] = mainapp.soundPool.load(this, R.raw.bell_start,1);
+        mainapp.soundsBell[0][1] = mainapp.soundPool.load(this, R.raw.bell_loop,1);
+        mainapp.soundsBell[0][2] = mainapp.soundPool.load(this, R.raw.bell_end,1);
+//        mainapp.soundsBell[1][0] = mainapp.soundPool.load(this, R.raw.bell_br_64_glocke_22_start,1);
+        mainapp.soundsBell[1][1] = mainapp.soundPool.load(this, R.raw.bell_br_64_glocke_22_loop,1);
+        mainapp.soundsBell[1][2] = mainapp.soundPool.load(this, R.raw.bell_br_64_glocke_22_end,1);
+
+//        mainapp.soundsHorn[0][0] = mainapp.soundPool.load(this, R.raw.horn_start,1);
+        mainapp.soundsHorn[0][1] = mainapp.soundPool.load(this, R.raw.horn_loop,1);
+        mainapp.soundsHorn[0][2] = mainapp.soundPool.load(this, R.raw.horn_end,1);
+//        mainapp.soundsHorn[1][0] = mainapp.soundPool.load(this, R.raw.whistle_start,1);
+        mainapp.soundsHorn[1][1] = mainapp.soundPool.load(this, R.raw.whistle_loop,1);
+        mainapp.soundsHorn[1][2] = mainapp.soundPool.load(this, R.raw.whistle_end,1);
+//        mainapp.soundsHorn[2][0] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_start,1);
+        mainapp.soundsHorn[2][1] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_mid,1);
+        mainapp.soundsHorn[2][2] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_end,1);
+
+        mainapp.soundsLoco[0][0] = mainapp.soundPool.load(this, R.raw.steam_loco_stationary_med,1);
+        mainapp.soundsLoco[0][1] = mainapp.soundPool.load(this, R.raw.steam_piston_stroke3,1);
+        mainapp.soundsLoco[0][2] = mainapp.soundPool.load(this, R.raw.steam_loop_30rpm,1);
+        mainapp.soundsLoco[0][3] = mainapp.soundPool.load(this, R.raw.steam_loop_35rpm,1);
+        mainapp.soundsLoco[0][4] = mainapp.soundPool.load(this, R.raw.steam_loop_40rpm,1);
+        mainapp.soundsLoco[0][5] = mainapp.soundPool.load(this, R.raw.steam_loop_50rpm,1);
+        mainapp.soundsLoco[0][6] = mainapp.soundPool.load(this, R.raw.steam_loop_60rpm,1);
+        mainapp.soundsLoco[0][7] = mainapp.soundPool.load(this, R.raw.steam_loop_75rpm,1);
+        mainapp.soundsLoco[0][8] = mainapp.soundPool.load(this, R.raw.steam_loop_90rpm,1);
+        mainapp.soundsLoco[0][9] = mainapp.soundPool.load(this, R.raw.steam_loop_100rpm,1);
+        mainapp.soundsLoco[0][10] = mainapp.soundPool.load(this, R.raw.steam_loop_125rpm,1);
+        mainapp.soundsLoco[0][11] = mainapp.soundPool.load(this, R.raw.steam_loop_150rpm,1);
+        mainapp.soundsLoco[0][12] = mainapp.soundPool.load(this, R.raw.steam_loop_175rpm,1);
+        mainapp.soundsLoco[0][13] = mainapp.soundPool.load(this, R.raw.steam_loop_200rpm,1);
+        mainapp.soundsLoco[0][14] = mainapp.soundPool.load(this, R.raw.steam_loop_250rpm,1);
+        mainapp.soundsLoco[0][15] = mainapp.soundPool.load(this, R.raw.steam_loop_300rpm,1);
+
+        mainapp.soundsLoco[1][0] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_idle,1);
+        mainapp.soundsLoco[1][1] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d1_d2,1);
+        mainapp.soundsLoco[1][2] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d2_d3,1);
+        mainapp.soundsLoco[1][3] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d3_d4,1);
+        mainapp.soundsLoco[1][4] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d4,1);
+
+        mainapp.soundsLoco[2][0] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_1a,1);
+        mainapp.soundsLoco[2][1] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_2a,1);
+        mainapp.soundsLoco[2][2] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_3a,1);
+        mainapp.soundsLoco[2][3] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_4a,1);
+        mainapp.soundsLoco[2][4] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_5a,1);
+        mainapp.soundsLoco[2][5] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_6a,1);
+        mainapp.soundsLoco[2][6] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_7a,1);
+        mainapp.soundsLoco[2][7] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_8a,1);
+
+        mainapp.soundsLoco[3][0] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor,1);
+        mainapp.soundsLoco[3][1] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor_2,1);
+        mainapp.soundsLoco[3][2] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor_1,1);
+
+        mainapp.soundsLoco[4][0] = mainapp.soundPool.load(this, R.raw.steam_class64_idle_sound,1);
+        mainapp.soundsLoco[4][1] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff1_1_4,1);
+        mainapp.soundsLoco[4][2] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff2_1_4,1);
+        mainapp.soundsLoco[4][3] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff3_1_4,1);
+        mainapp.soundsLoco[4][4] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff4_1_4,1);
+        mainapp.soundsLoco[4][5] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff5_1_4,1);
+        mainapp.soundsLoco[4][6] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff6_1_4,1);
+
+        mainapp.soundsReloadSounds = false;
+    }
+
 }
