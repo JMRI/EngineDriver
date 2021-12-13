@@ -3840,22 +3840,24 @@ public class threaded_application extends Application {
 //    }
 
     void stopAllSounds() {
-        for (int type=0; type<3; type++) {
-            for (int mSound = 0; mSound < 3; mSound++) {
-                soundPool.stop(soundsBellStreamId[type][mSound]);
-                soundsBellPlaying[type][mSound] = false;
-                soundPool.stop(soundsHornStreamId[type][mSound]);
-                soundsHornPlaying[type][mSound] = false;
+        if (soundPool!=null) {
+            for (int type = 0; type < 3; type++) {
+                for (int mSound = 0; mSound < 3; mSound++) {
+                    soundPool.stop(soundsBellStreamId[type][mSound]);
+                    soundsBellPlaying[type][mSound] = false;
+                    soundPool.stop(soundsHornStreamId[type][mSound]);
+                    soundsHornPlaying[type][mSound] = false;
+                }
             }
-        }
 
-        for (int type=0; type<5; type++) {
-            for (int mSound = 0; mSound < 16; mSound++) {
-                soundPool.stop(soundsLocoStreamId[type][mSound]);
-                soundsLocoPlaying[type][mSound] = false;
+            for (int type = 0; type < 5; type++) {
+                for (int mSound = 0; mSound < 16; mSound++) {
+                    soundPool.stop(soundsLocoStreamId[type][mSound]);
+                    soundsLocoPlaying[type][mSound] = false;
+                }
             }
+            soundPool.release();
         }
-        soundPool.release();
     } // end stopAllSounds
 
 }

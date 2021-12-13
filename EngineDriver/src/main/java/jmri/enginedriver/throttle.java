@@ -1457,7 +1457,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSoundsVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsVolume", "100"));
         mainapp.prefDeviceSoundsVolume = mainapp.prefDeviceSoundsVolume / 100;
 
-        if ( (!mainapp.prefDeviceSounds[0].equals("none")) && (!mainapp.prefDeviceSounds[1].equals("none")) ) {
+        if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
             for (int i = 0; i <= 1; i++) {
                 mainapp.soundsLocoSubType[i] = 0;
                 switch (mainapp.prefDeviceSounds[i]) {
@@ -1498,6 +1498,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (mainapp.soundsReloadSounds) {
                 loadSounds();
             }
+        } else {
+            mainapp.stopAllSounds();
         }
     }
 
@@ -4109,44 +4111,47 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d("Engine_Driver", "doLocoSound: whichThrottle: " + whichThrottle);
         if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
 
-            if (mainapp.consists[whichThrottle].isActive()) {
-                int stepForThisThrottle = -1;
+            if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
 
-                int locoType = mainapp.soundsLocoType[whichThrottle];
-                int locoTypeThrottleCounter = 0;
-                int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
-                int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
+                if (mainapp.consists[whichThrottle].isActive()) {
+                    int stepForThisThrottle = -1;
 
-                stepForThisThrottle = getLocoSoundStep(whichThrottle);
+                    int locoType = mainapp.soundsLocoType[whichThrottle];
+                    int locoTypeThrottleCounter = 0;
+                    int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
+                    int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
 
-                if (!mainapp.soundsLocoPlaying[locoType][stepForThisThrottle]) {
+                    stepForThisThrottle = getLocoSoundStep(whichThrottle);
 
-                    for (int stepCounter = 0; stepCounter <= steps; stepCounter++) {
+                    if (!mainapp.soundsLocoPlaying[locoType][stepForThisThrottle]) {
 
-                        if (stepCounter != stepForThisThrottle) { // not the current step for this throttle
+                        for (int stepCounter = 0; stepCounter <= steps; stepCounter++) {
 
-                            boolean otherThrottleIsPlayingThisSound = false;
-                            for (int throttleCounter = 0; throttleCounter<threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleCounter++) {
-                                locoTypeThrottleCounter = mainapp.soundsLocoType[throttleCounter];
-                                if ( (throttleCounter != whichThrottle)
-                                    && (locoType == locoTypeThrottleCounter)
-                                    && (getLocoSoundStep(throttleCounter) == stepCounter) ) {
-                                    otherThrottleIsPlayingThisSound = true; // this sound is being played for another throttle, so don't stop the sound
-                                    break;
+                            if (stepCounter != stepForThisThrottle) { // not the current step for this throttle
+
+                                boolean otherThrottleIsPlayingThisSound = false;
+                                for (int throttleCounter = 0; throttleCounter < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleCounter++) {
+                                    locoTypeThrottleCounter = mainapp.soundsLocoType[throttleCounter];
+                                    if ((throttleCounter != whichThrottle)
+                                            && (locoType == locoTypeThrottleCounter)
+                                            && (getLocoSoundStep(throttleCounter) == stepCounter)) {
+                                        otherThrottleIsPlayingThisSound = true; // this sound is being played for another throttle, so don't stop the sound
+                                        break;
+                                    }
                                 }
-                            }
-                            if (!otherThrottleIsPlayingThisSound) {
-                                mainapp.soundPool.stop(mainapp.soundsLocoStreamId[locoType][stepCounter]);
-                                mainapp.soundsLocoPlaying[locoType][stepCounter] = false;
-                            }
+                                if (!otherThrottleIsPlayingThisSound) {
+                                    mainapp.soundPool.stop(mainapp.soundsLocoStreamId[locoType][stepCounter]);
+                                    mainapp.soundsLocoPlaying[locoType][stepCounter] = false;
+                                }
 
-                        } else {
-                            if (!mainapp.soundsLocoPlaying[locoType][stepCounter]) {
-                                mainapp.soundsLocoStreamId[locoType][stepCounter] =
-                                        mainapp.soundPool.play(mainapp.soundsLoco[locoType][stepCounter],
-                                        mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume,
-                                        0, -1, 1);
-                                mainapp.soundsLocoPlaying[locoType][stepCounter] = true;
+                            } else {
+                                if (!mainapp.soundsLocoPlaying[locoType][stepCounter]) {
+                                    mainapp.soundsLocoStreamId[locoType][stepCounter] =
+                                            mainapp.soundPool.play(mainapp.soundsLoco[locoType][stepCounter],
+                                                    mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume,
+                                                    0, -1, 1);
+                                    mainapp.soundsLocoPlaying[locoType][stepCounter] = true;
+                                }
                             }
                         }
                     }
@@ -4296,7 +4301,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         private void handleAction(int action) {
-            Log.d("Engine_Driver", "handleAction - soundPool - action: " + action );
+            Log.d("Engine_Driver", "handleAction - action: " + action );
             int isLatching = FUNCTION_CONSIST_LATCHING_NA;  // only used for the special consist function matching
 
             switch (action) {
