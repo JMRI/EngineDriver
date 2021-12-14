@@ -6302,14 +6302,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
             switch (requestCode) {
-                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for READ_SERVER_AUTO_PREFERENCES");
-                    autoImportUrlAskToImportImpl();
-                    break;
-                case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
-                    Log.d("Engine_Driver", "Got permission for STORE_SERVER_AUTO_PREFERENCES");
-                    autoImportFromURLImpl();
-                    break;
+//                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
+//                    Log.d("Engine_Driver", "Got permission for READ_SERVER_AUTO_PREFERENCES");
+//                    autoImportUrlAskToImportImpl();
+//                    break;
+//                case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
+//                    Log.d("Engine_Driver", "Got permission for STORE_SERVER_AUTO_PREFERENCES");
+//                    autoImportFromURLImpl();
+//                    break;
                 default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
@@ -6326,7 +6326,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void autoImportFromURL() {
-        navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
+//        navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
+        autoImportFromURLImpl();
     }
 
     public void autoImportFromURLImpl() {
@@ -6422,7 +6423,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
 
     private void autoImportUrlAskToImport() {
-        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
+//        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
+        autoImportUrlAskToImportImpl();
     }
 
     private void autoImportUrlAskToImportImpl() {
@@ -6498,7 +6500,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected void loadBackgroundImage() {
         if (prefBackgroundImage) {
-            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_PREFERENCES)) {
+//            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_PREFERENCES)) {
+            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_IMAGES)) {
                 loadBackgroundImageImpl();
             }
         }
@@ -6509,6 +6512,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         try {
             File sdcard_path = Environment.getExternalStorageDirectory();
             File image_file = new File(prefBackgroundImageFileName);
+//            File image_file = new File(getApplicationContext().getExternalFilesDir(null), prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
             switch (prefBackgroundImagePosition){
                 case "FIT_CENTER":

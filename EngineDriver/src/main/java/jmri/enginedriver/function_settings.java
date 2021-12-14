@@ -17,12 +17,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -276,7 +277,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     //function_labels_default was loaded from settings file by TA
     //(and updated by saveSettings() when required) so just copy it
     void initSettings() {
-        navigateToHandler(PermissionsHelper.READ_FUNCTION_SETTINGS);
+//        navigateToHandler(PermissionsHelper.READ_FUNCTION_SETTINGS);
+        initSettingsImpl();
     }
 
     private void initSettingsImpl() {
@@ -452,7 +454,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     }
 
     void saveSettings() {
-        navigateToHandler(PermissionsHelper.STORE_FUNCTION_SETTINGS);
+//        navigateToHandler(PermissionsHelper.STORE_FUNCTION_SETTINGS);
+        saveSettingsImpl();
     }
 
     //save function and labels to file
@@ -461,8 +464,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
         //Save the valid function labels to the settings.txt file.
-        File sdcard_path = Environment.getExternalStorageDirectory();
-        File settings_file = new File(sdcard_path, "engine_driver/function_settings.txt");
+//        File sdcard_path = Environment.getExternalStorageDirectory();
+//        File settings_file = new File(sdcard_path, "engine_driver/function_settings.txt");
+        File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
         PrintWriter settings_output;
         String errMsg = "";
         try {
@@ -562,14 +566,14 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             }
         } else {
             switch (requestCode) {
-                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
-                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
-                    saveSettingsImpl();
-                    break;
-                case PermissionsHelper.READ_FUNCTION_SETTINGS:
-                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
-                    initSettingsImpl();
-                    break;
+//                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
+//                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+//                    saveSettingsImpl();
+//                    break;
+//                case PermissionsHelper.READ_FUNCTION_SETTINGS:
+//                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+//                    initSettingsImpl();
+//                    break;
                 default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
