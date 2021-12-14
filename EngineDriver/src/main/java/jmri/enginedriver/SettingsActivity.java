@@ -21,6 +21,8 @@ was rewritten to support AppCompat.V7
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -73,7 +75,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
-import jmri.enginedriver.util.PermissionsHelper;
 
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
@@ -462,8 +463,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void delete_auto_import_settings_files() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File sdcard_path = Environment.getExternalStorageDirectory();
-            File dir = new File(sdcard_path, ENGINE_DRIVER_DIR); // in case the folder does not already exist
+//            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File dir = new File(sdcard_path, ENGINE_DRIVER_DIR); // in case the folder does not already exist
+            File dir = new File(context.getExternalFilesDir(null), ENGINE_DRIVER_DIR);
             File[] edFiles = dir.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File folder, String name) {
@@ -480,8 +482,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void delete_settings_file(String file_name) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File sdcard_path = Environment.getExternalStorageDirectory();
-            File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
+//            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
+            File settings_file = new File(context.getExternalFilesDir(null), file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
                     Log.d("Engine_Driver", "Settings: " + file_name + " deleted");
@@ -652,9 +655,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     protected void loadImagefromGallery() {
-        if (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_PREFERENCES)) {
+//        if (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_PREFERENCES)) {
             loadImagefromGalleryImpl();
-        }
+//        }
     }
 
     public void loadImagefromGalleryImpl() {
@@ -1421,8 +1424,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             String errMsg;
 
             try {
-                File sdcard_path = Environment.getExternalStorageDirectory();
-                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+//                File sdcard_path = Environment.getExternalStorageDirectory();
+//                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+                File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
                 if (connections_list_file.exists()) {
                     BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));

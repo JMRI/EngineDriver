@@ -1,15 +1,15 @@
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -19,8 +19,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import static jmri.enginedriver.threaded_application.context;
 
 class ImportExportConnectionList {
     public ArrayList<HashMap<String, String>> connections_list;
@@ -47,8 +45,9 @@ class ImportExportConnectionList {
         String errMsg;
 
         try {
-            File sdcard_path = Environment.getExternalStorageDirectory();
-            File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+//            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+            File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
             if (connections_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
@@ -148,12 +147,13 @@ class ImportExportConnectionList {
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
                 return errMsg;
             try {
-                File path = Environment.getExternalStorageDirectory();
-                File engine_driver_dir = new File(path, "engine_driver");
-                //noinspection ResultOfMethodCallIgnored
-                engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
-                File connections_list_file = new File(path, "engine_driver/connections_list.txt");
+//                File path = Environment.getExternalStorageDirectory();
+//                File engine_driver_dir = new File(path, "engine_driver");
+//                //noinspection ResultOfMethodCallIgnored
+//                engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//
+//                File connections_list_file = new File(path, "engine_driver/connections_list.txt");
+                File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
                 if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
@@ -208,14 +208,16 @@ class ImportExportConnectionList {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
                     String currentDateAndTime = sdf.format(new Date());
 
-                    File path = Environment.getExternalStorageDirectory();
-                    File engine_driver_dir = new File(path, "engine_driver");
-                    //noinspection ResultOfMethodCallIgnored
-                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
+//                    File path = Environment.getExternalStorageDirectory();
+//                    File engine_driver_dir = new File(path, "engine_driver");
+//                    //noinspection ResultOfMethodCallIgnored
+//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//
                     String connection_log_file_name = "engine_driver/connections_log.txt";
-
-                    PrintWriter log_output = new PrintWriter(new FileWriter(path + "/" + connection_log_file_name, true));
+//
+//                    PrintWriter log_output = new PrintWriter(new FileWriter(path + "/" + connection_log_file_name, true));
+                    File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);
+                    PrintWriter log_output = new PrintWriter(connections_log_file);
 
                     if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                             || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {

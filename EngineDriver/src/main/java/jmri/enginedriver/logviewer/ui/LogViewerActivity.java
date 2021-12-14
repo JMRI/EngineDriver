@@ -1,12 +1,13 @@
 package jmri.enginedriver.logviewer.ui;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -48,7 +49,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
-    private static final String ENGINE_DRIVER_DIR = "engine_driver";
+    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\data\\files";
 
     private Menu AMenu;
     private Toolbar toolbar;
@@ -226,15 +227,18 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     private void saveLogFile() {
-        navigateToHandler(PermissionsHelper.STORE_LOG_FILES);
+//        navigateToHandler(PermissionsHelper.STORE_LOG_FILES);
+        saveLogFileImpl();
     }
 
     private void saveLogFileImpl() {
-        File path = Environment.getExternalStorageDirectory();
-        File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
-        engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//        File path = Environment.getExternalStorageDirectory();
+//        File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
+//        engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//
+//        File logFile = new File( engine_driver_dir, "logcat" + System.currentTimeMillis() + ".txt" );
+        File logFile = new File(context.getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
 
-        File logFile = new File( engine_driver_dir, "logcat" + System.currentTimeMillis() + ".txt" );
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
@@ -259,10 +263,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             // Only need to consider relevant request codes initiated by this Activity
             //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
-                case PermissionsHelper.STORE_LOG_FILES:
-                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to saveSharedPreferencesToFileImpl()");
-                    saveLogFileImpl();
-                    break;
+//                case PermissionsHelper.STORE_LOG_FILES:
+//                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to saveSharedPreferencesToFileImpl()");
+//                    saveLogFileImpl();
+//                    break;
                 default:
                     // do nothing
                     Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);

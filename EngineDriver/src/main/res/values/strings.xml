@@ -980,17 +980,18 @@
     <string name="timerDialogMessage">Password :</string>
     <string name="timerDialogHint">Restart or Reset Pwd</string>
 
-    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>
-    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>
-    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>
-    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>
+<!--    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>-->
+<!--    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>-->
+<!--    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>-->
+<!--    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>-->
     <string name="permissionsReadImages">Engine Driver needs STORAGE permissions to load background images.</string>
-    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>
-    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>
-    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>
+    <string name="permissionsReadLegacyFiles">Engine Driver needs STORAGE permissions to load legacy (old location) settings.</string>
+<!--    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>-->
+<!--    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>-->
+<!--    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>-->
     <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
-    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>
-    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>
+<!--    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>-->
+<!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\\\'t need Engine Driver to alter the brightness.</string>
@@ -1010,6 +1011,13 @@
 
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
+
+    <string name="introAndroid11Title">Android 11 Changes</string>
+    <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the
+        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder.
+        \nYour data will be automatically copied to this new folder.</string>
+    <string name="introAndroid11Summary1">Engine Driver does not have the rights to delete the original files in \'\\engine_driver\' but they are no longer needed or used so you can delete them manually if you wish.</string>
+    <string name="introAndroid11Summary2">Note: if you uninstall the app, all the files in this new folder (including any exported preferences) will be automatically deleted.</string>
 
     <string name="introThrottleNameSummary">Set a name for this device</string>
     <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>
