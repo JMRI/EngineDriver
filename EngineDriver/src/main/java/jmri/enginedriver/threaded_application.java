@@ -23,7 +23,6 @@ package jmri.enginedriver;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -128,7 +127,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "6";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "7";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
     volatile String host_ip = null; //The IP address of the WiThrottle server.
@@ -2253,8 +2252,9 @@ public class threaded_application extends Application {
         function_consist_locos = new LinkedHashMap<>();
         function_consist_latching = new LinkedHashMap<>();
         try {
-            File sdcard_path = Environment.getExternalStorageDirectory();
-            File settings_file = new File(sdcard_path + "/engine_driver/function_settings.txt");
+//            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File settings_file = new File(sdcard_path + "/engine_driver/function_settings.txt");
+            File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
                 //read settings into local arrays
@@ -3572,9 +3572,9 @@ public class threaded_application extends Application {
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
     // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
     private void saveSharedPreferencesToFileIfAllowed() {
-        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
+//        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
             saveSharedPreferencesToFileImpl();
-        }
+//        }
     }
 
     private void saveSharedPreferencesToFileImpl() {
@@ -3620,9 +3620,10 @@ public class threaded_application extends Application {
     /* add passed-in loco to Recent Locos list and store it */
     private void addLocoToRecents(ConLoco conLoco) {
         // if we don't have external storage mounted, or permission to write it, just ignore, no prompt
-        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                && (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))) {
+//        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+//                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+//                && (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))) {
+        if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             return;
         }
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
@@ -3662,8 +3663,8 @@ public class threaded_application extends Application {
     @SuppressLint("ApplySharedPref")
     private void updateConnectionList(String retrievedServerName) {
         // if I don't have permissions, don't ask, just ignore
-        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
+//        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+//                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
             ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
             importExportConnectionList.connections_list.clear();
@@ -3694,8 +3695,7 @@ public class threaded_application extends Application {
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
                 }
             }
-
-        }
+//        }
     }
 
         public void throttleVibration(int speed, int lastSpeed) {

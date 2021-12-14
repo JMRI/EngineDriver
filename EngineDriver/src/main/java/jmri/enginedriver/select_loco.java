@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,7 +28,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -1410,8 +1411,9 @@ public class select_loco extends AppCompatActivity {
 
     //Clears recent connection list of locos
     public void clearList() {
-        File sdcard_path = Environment.getExternalStorageDirectory();
-        File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
+//        File sdcard_path = Environment.getExternalStorageDirectory();
+//        File engine_list_file = new File(sdcard_path + "/engine_driver/recent_engine_list.txt");
+        File engine_list_file = new File(context.getExternalFilesDir(null), "recent_engine_list.txt");
 
         if (engine_list_file.exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -1421,8 +1423,9 @@ public class select_loco extends AppCompatActivity {
     }
 
     public void clearConsistsList() {
-        File sdcard_path = Environment.getExternalStorageDirectory();
-        File consists_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
+//        File sdcard_path = Environment.getExternalStorageDirectory();
+//        File consists_list_file = new File(sdcard_path + "/engine_driver/recent_consist_list.txt");
+        File consists_list_file = new File(context.getExternalFilesDir(null), "recent_consist_list.txt");
 
         if (consists_list_file.exists()) {
             //noinspection ResultOfMethodCallIgnored
