@@ -353,8 +353,10 @@
     <string name="prefDeviceSounds1Summary">Play basic loco sounds in the phone for Throttle 2</string>
     <string name="prefDeviceSounds1Title">Throttle 2 Loco Sounds</string>
     <string name="prefDeviceSoundsDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefDeviceSoundsVolumeSummary">Volume for basic loco sounds in the phone</string>
-    <string name="prefDeviceSoundsVolumeTitle">In Phone Loco Sound Volume</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary">Volume for basic loco engine sounds in the phone</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary">Volume for basic Bell/Horn/Whistle sounds in the phone</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">In Phone Other Sounds Volume</string>
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
     <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound?</string>

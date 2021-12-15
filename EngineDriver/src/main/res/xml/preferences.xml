@@ -1511,15 +1511,25 @@
 
         <EditTextPreference
             android:defaultValue="100"
-            android:dialogTitle="@string/prefDeviceSoundsVolumeTitle"
-            android:key="prefDeviceSoundsVolume"
+            android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
+            android:key="prefDeviceSoundsLocoVolume"
             android:maxLength="3"
             android:inputType="number"
             android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsVolumeSummary"
-            android:title="@string/prefDeviceSoundsVolumeTitle"
+            android:summary="@string/prefDeviceSoundsLocoVolumeSummary"
+            android:title="@string/prefDeviceSoundsLocoVolumeTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <EditTextPreference
+            android:defaultValue="100"
+            android:dialogTitle="@string/prefDeviceSoundsBellHornVolumeTitle"
+            android:key="prefDeviceSoundsBellHornVolume"
+            android:maxLength="3"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefDeviceSoundsBellHornVolumeSummary"
+            android:title="@string/prefDeviceSoundsBellHornVolumeTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
     </PreferenceCategory>
 
