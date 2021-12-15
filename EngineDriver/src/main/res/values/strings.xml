@@ -353,8 +353,10 @@
     <string name="prefDeviceSounds1Summary">Play basic loco sounds in the phone for Throttle 2</string>
     <string name="prefDeviceSounds1Title">Throttle 2 Loco Sounds</string>
     <string name="prefDeviceSoundsDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefDeviceSoundsVolumeSummary">Volume for basic loco sounds in the phone</string>
-    <string name="prefDeviceSoundsVolumeTitle">In Phone Loco Sound Volume</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary">Volume for basic loco engine sounds in the phone</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary">Volume for basic Bell/Horn/Whistle sounds in the phone</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">In Phone Other Sounds Volume</string>
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
     <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound?</string>
@@ -1016,8 +1018,8 @@
     <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the
         Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder.
         \nYour data will be automatically copied to this new folder.</string>
-    <string name="introAndroid11Summary1">Engine Driver does not have the rights to delete the original files in \'\\engine_driver\' but they are no longer needed or used so you can delete them manually if you wish.</string>
-    <string name="introAndroid11Summary2">Note: if you uninstall the app, all the files in this new folder (including any exported preferences) will be automatically deleted.</string>
+    <string name="introAndroid11Summary1">Engine Driver is unable to delete the original files in \'\\engine_driver\' but they are no longer needed or used. So you can delete them manually if you wish.</string>
+    <string name="introAndroid11Summary2">Note: if you uninstall the app, ALL the files in this new folder (including any exported preferences) will be automatically deleted. So it is important to copy the files elsewhere BEFORE deleting the app.</string>
 
     <string name="introThrottleNameSummary">Set a name for this device</string>
     <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>

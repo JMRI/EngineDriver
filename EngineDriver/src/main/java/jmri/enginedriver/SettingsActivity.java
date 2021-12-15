@@ -1107,7 +1107,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDeviceSounds1":
                         mainapp.soundsReloadSounds = true;
                         break;
-                    case "prefDeviceSoundsVolume":
+                    case "prefDeviceSoundsLocoVolume":
+                    case "prefDeviceSoundsBellHornVolume":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
                         break;
                     case "ThrottleOrientation":

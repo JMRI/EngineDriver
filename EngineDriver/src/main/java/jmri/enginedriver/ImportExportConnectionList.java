@@ -213,7 +213,8 @@ class ImportExportConnectionList {
 //                    //noinspection ResultOfMethodCallIgnored
 //                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
 //
-                    String connection_log_file_name = "engine_driver/connections_log.txt";
+//                    String connection_log_file_name = "engine_driver/connections_log.txt";
+                    String connection_log_file_name = "connections_log.txt";
 //
 //                    PrintWriter log_output = new PrintWriter(new FileWriter(path + "/" + connection_log_file_name, true));
                     File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);

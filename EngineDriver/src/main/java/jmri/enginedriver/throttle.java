@@ -1454,8 +1454,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
-        mainapp.prefDeviceSoundsVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsVolume", "100"));
-        mainapp.prefDeviceSoundsVolume = mainapp.prefDeviceSoundsVolume / 100;
+        mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsLocoVolume", "100"));
+        mainapp.prefDeviceSoundsBellHornVolume = Integer.parseInt(prefs.getString("prefDeviceSoundsBellHornVolume", "100"));
+        mainapp.prefDeviceSoundsLocoVolume = mainapp.prefDeviceSoundsLocoVolume / 100;
+        mainapp.prefDeviceSoundsBellHornVolume = mainapp.prefDeviceSoundsBellHornVolume / 100;
 
         if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
             for (int i = 0; i <= 1; i++) {
@@ -1620,6 +1622,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         disable_buttons(whichThrottle);         // direction and slider
         set_function_labels_and_listeners_for_view(whichThrottle);
         set_labels();
+        doLocoSound(whichThrottle);
     }
 
     void queryAllSpeedsAndDirectionsWiT() {
@@ -4113,7 +4116,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
 
-                if (mainapp.consists[whichThrottle].isActive()) {
+//                if (mainapp.consists[whichThrottle].isActive()) {
                     int stepForThisThrottle = -1;
 
                     int locoType = mainapp.soundsLocoType[whichThrottle];
@@ -4121,9 +4124,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
                     int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
 
-                    stepForThisThrottle = getLocoSoundStep(whichThrottle);
+                    boolean rslt = false;
+                    if (mainapp.consists[whichThrottle].isActive()) {
+                        stepForThisThrottle = getLocoSoundStep(whichThrottle);
+                        if (!mainapp.soundsLocoPlaying[locoType][stepForThisThrottle]) {
+                            rslt = true;
+                        }
+                    } else { // inactive
+                        rslt = true;
+                    }
 
-                    if (!mainapp.soundsLocoPlaying[locoType][stepForThisThrottle]) {
+                    if (rslt) {
 
                         for (int stepCounter = 0; stepCounter <= steps; stepCounter++) {
 
@@ -4145,23 +4156,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 }
 
                             } else {
-                                if (!mainapp.soundsLocoPlaying[locoType][stepCounter]) {
-                                    mainapp.soundsLocoStreamId[locoType][stepCounter] =
-                                            mainapp.soundPool.play(mainapp.soundsLoco[locoType][stepCounter],
-                                                    mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume,
-                                                    0, -1, 1);
-                                    mainapp.soundsLocoPlaying[locoType][stepCounter] = true;
+                                if (stepForThisThrottle >= 0) {  // ignore if throttle is inactive
+                                    if (!mainapp.soundsLocoPlaying[locoType][stepCounter]) {
+                                        mainapp.soundsLocoStreamId[locoType][stepCounter] =
+                                                mainapp.soundPool.play(mainapp.soundsLoco[locoType][stepCounter],
+                                                        mainapp.prefDeviceSoundsLocoVolume, mainapp.prefDeviceSoundsLocoVolume,
+                                                        0, -1, 1);
+                                        mainapp.soundsLocoPlaying[locoType][stepCounter] = true;
+                                    }
                                 }
                             }
                         }
                     }
-                }
+//                }
             }
         }
     }
 
     int getLocoSoundStep(int whichThrottle) {
-        int rslt = 0;
+        int rslt;
         int locoType = mainapp.soundsLocoType[whichThrottle];
         int locoSubType = mainapp.soundsLocoSubType[whichThrottle];
         int steps = mainapp.soundsLocoSteps[locoType][locoSubType];
@@ -4219,7 +4232,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void startBellSound(int type, int mSound, int loop) {
         if (!mainapp.soundsBellPlaying[type][mSound]) {
             mainapp.soundsBellStreamId[type][mSound]
-                    = mainapp.soundPool.play(mainapp.soundsBell[type][mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
+                    = mainapp.soundPool.play(mainapp.soundsBell[type][mSound],
+                    mainapp.prefDeviceSoundsBellHornVolume, mainapp.prefDeviceSoundsBellHornVolume, 0, loop, 1);
         }
         if (loop!=0) {
             mainapp.soundsBellPlaying[type][mSound] = true;
@@ -4236,7 +4250,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void startHornSound(int type, int mSound, int loop) {
         if (!mainapp.soundsHornPlaying[type][mSound]) {
             mainapp.soundsHornStreamId[type][mSound]
-                    = mainapp.soundPool.play(mainapp.soundsHorn[type][mSound], mainapp.prefDeviceSoundsVolume, mainapp.prefDeviceSoundsVolume, 0, loop, 1);
+                    = mainapp.soundPool.play(mainapp.soundsHorn[type][mSound],
+                    mainapp.prefDeviceSoundsBellHornVolume, mainapp.prefDeviceSoundsBellHornVolume, 0, loop, 1);
         }
         if (loop!=0) {
             mainapp.soundsHornPlaying[type][mSound] = true;
