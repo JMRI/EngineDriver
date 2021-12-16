@@ -831,5 +831,18 @@
     <string name="prefKidsTimerEnableReverseSummary">Abilita il pulsante inversione.</string>
     <string name="prefKidsTimerEnableReverseTitle">Consentire il retro.</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confermare che vuoi rimuovere tutti i recenti connessioni</string>
+    <string name="introAndroid11Title">Android 11 modifiche</string>
+    <string name="introAndroid11Summary">A causa delle modifiche applicate da Google per Android 11, la posizione in cui i file del driver del motore sono memorizzati devono essere spostati dalla cartella \'\\engine_driver\' alla cartella \'\\Android\\data\\jmri.enginedriver\\data\\files\'. \ N I tuoi dati verranno automaticamente copiati in questa nuova cartella.</string>
+    <string name="introAndroid11Summary1">Il driver del motore non è in grado di eliminare i file originali in \'\\engine_driver\' ma non sono più necessari o utilizzati. Quindi puoi cancellarli manualmente se lo desideri.</string>
+    <string name="introAndroid11Summary2">Nota: se si disinstalla l\'app, tutti i file in questa nuova cartella (incluse eventuali preferenze esportate) verranno automaticamente eliminati. Quindi è importante copiare i file altrove prima di eliminare l\'app.</string>
+    <string name="prefDeviceSoundsCategoryTitle">Nel telefono Loco suona il volume</string>
+    <string name="prefDeviceSounds0Summary">Gioca a BASIC Loco Sounds nel telefono per Throttle 1</string>
+    <string name="prefDeviceSounds0Title">Throttle 1 Loco Sounds</string>
+    <string name="prefDeviceSounds1Summary">Gioca a BASIC Loco Sounds nel telefono per Throttle 2</string>
+    <string name="prefDeviceSounds1Title">Throttle 2 Loco Sounds</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume per il motore Loco Sounds nel telefono (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Nel telefono Loco suona il volume</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume per Bell/Horn/Whistle Sounds nel telefono (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">Nel telefono Altro volume dei suoni</string>
 
 </resources>

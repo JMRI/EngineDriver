@@ -911,5 +911,18 @@
     <string name="prefKidsTimerEnableReverseSummary">Activavtion touche REVERSE</string>
     <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmez que vous voulez supprimer toutes les connexions récentes</string>
+    <string name="introAndroid11Title">Android 11 changements</string>
+    <string name="introAndroid11Summary">En raison de modifications appliquées par Google pour Android 11, l\'emplacement où les fichiers de pilotes de moteur sont stockés doivent être déplacés à partir du dossier \'\\engine_driver\' au dossier \'\\Android\\data\\jmri.enginedriver\\data\\files\'. \nVos données seront automatiquement copiées dans ce nouveau dossier.</string>
+    <string name="introAndroid11Summary1">Le pilote du moteur est incapable de supprimer les fichiers d\'origine dans \'\\engine_driver\', mais ils ne sont plus nécessaires ni utilisés. Donc, vous pouvez les supprimer manuellement si vous le souhaitez.</string>
+    <string name="introAndroid11Summary2">Remarque: Si vous désinstallez l\'application, tous les fichiers de ce nouveau dossier (y compris les préférences exportées) seront automatiquement supprimés. Il est donc important de copier les fichiers ailleurs avant de supprimer l\'application.</string>
+    <string name="prefDeviceSoundsCategoryTitle">Dans le téléphone Loco Sounds Volume</string>
+    <string name="prefDeviceSounds0Summary">Lire des sons de base loco dans le téléphone pour le papillon 1</string>
+    <string name="prefDeviceSounds0Title">Papillon 1 sons loco</string>
+    <string name="prefDeviceSounds1Summary">Play Basic Loco Sounds au téléphone pour le papillon 2</string>
+    <string name="prefDeviceSounds1Title">Papillon 2 sons loco</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume pour sons du moteur LOCO dans le téléphone (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Dans le téléphone Loco Sounds Volume</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume des sons de cloche/corne/sifflet au téléphone (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">Dans le téléphone autre volume de sons</string>
 
 </resources>
