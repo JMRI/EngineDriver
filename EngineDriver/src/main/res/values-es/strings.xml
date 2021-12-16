@@ -883,4 +883,17 @@
     <string name="prefKidsTimerEnableReverseSummary">Habilitar el botón Reverso.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir el reverso</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme que desea eliminar todas las conexiones recientes.</string>
+    <string name="introAndroid11Title">CAMBIOS DE ANDROID 11</string>
+    <string name="introAndroid11Summary">Debido a los cambios ejecutados por Google para Android 11, la ubicación donde los archivos del controlador del motor se almacenan deben moverse desde la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\jmri.enginedriver\\data\\files\'. \nSus datos se copiarán automáticamente a esta nueva carpeta.</string>
+    <string name="introAndroid11Summary1">El controlador del motor no puede eliminar los archivos originales en \'\\engine_driver\', pero ya no son necesarios o utilizados. Así que puedes borrarlos manualmente si lo deseas.El controlador del motor no puede eliminar los archivos originales en XXXX, pero ya no son necesarios o utilizados. Así que puedes borrarlos manualmente si lo deseas.</string>
+    <string name="introAndroid11Summary2">Nota: Si desinstala la aplicación, todos los archivos de esta nueva carpeta (incluidas las preferencias exportadas) se eliminarán automáticamente. Por lo tanto, es importante copiar los archivos en otro lugar antes de eliminar la aplicación.</string>
+    <string name="prefDeviceSoundsCategoryTitle">En el teléfono LOCO suena el volumen</string>
+    <string name="prefDeviceSounds0Summary">Play Basic Loco sonidos en el teléfono para el acelerador 1</string>
+    <string name="prefDeviceSounds0Title">Acelerador 1 sonidos locos</string>
+    <string name="prefDeviceSounds1Summary">Play Basic Loco sonidos en el teléfono para el acelerador 2</string>
+    <string name="prefDeviceSounds1Title">Acelerador 2 sonidos locos</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volumen para los sonidos del motor LOCO en el teléfono (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">En el teléfono LOCO suena el volumen</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volumen para sonidos de campana/bocina/silbato en el teléfono (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">En el teléfono Otros Sonidos Volumen</string>
 </resources>

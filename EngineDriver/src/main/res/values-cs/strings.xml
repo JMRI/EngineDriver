@@ -1090,5 +1090,18 @@
     <string name="prefKidsTimerEnableReverseSummary">Povolit tlačítko zpět.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Potvrďte, že chcete odstranit všechna nedávná připojení</string>
+    <string name="introAndroid11Title">Android 11 změn</string>
+    <string name="introAndroid11Summary">Kvůli změnám vynuceným společností Google pro Android 11, umístění, kde jsou uloženy soubory ovladače motoru, musí být přesunuty ze složky \'\\engine_driver\' na \'\\Android\\data\\jmri.enginedriver\\data\\files\' složku. \nVaše data budou automaticky zkopírována do této nové složky.</string>
+    <string name="introAndroid11Summary1">Ovladač motoru není schopen odstranit původní soubory v \'\\engine_driver\', ale již nejsou potřebné nebo používány. Takže je můžete odstranit ručně, pokud si přejete.</string>
+    <string name="introAndroid11Summary2">Poznámka: Pokud aplikaci odinstalujete, budou automaticky vymazány všechny soubory v této nové složce (včetně exportovaných předvoleb). Takže je důležité zkopírovat soubory jinde před vymazáním aplikace.</string>
+    <string name="prefDeviceSoundsCategoryTitle">V telefonu lokomoti zvuku hlasitosti</string>
+    <string name="prefDeviceSounds0Summary">Hrát základní lokomoti zvuky v telefonu pro škrticí klapku 1</string>
+    <string name="prefDeviceSounds0Title">Triptle 1 loko zvuky</string>
+    <string name="prefDeviceSounds1Summary">Zahrajte si základní lokomoti zvuky v telefonu pro škrticí klapku 2</string>
+    <string name="prefDeviceSounds1Title">Triptle 2 loko zvuky</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Hlasitost pro lokální motor zvuku v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">V telefonu lokomoti zvuku hlasitosti</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Hlasitost zvuku/houkaček/píšťalky v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">V telefonu Jiné zvuky hlasitosti</string>
 
 </resources>

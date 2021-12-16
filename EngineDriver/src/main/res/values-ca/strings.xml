@@ -887,4 +887,17 @@
     <string name="prefKidsTimerEnableReverseSummary">Activa el botó invers.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmeu que voleu eliminar totes les connexions recents</string>
+    <string name="introAndroid11Title">Canvis Android 11</string>
+    <string name="introAndroid11Summary">A causa dels canvis aplicats per Google per a Android 11, la ubicació on s\'emmagatzemen els fitxers del controlador del motor han de ser traslladats de la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\jmri.enginedriver\\data\\files\'. Les vostres dades es copiaran automàticament a aquesta nova carpeta.</string>
+    <string name="introAndroid11Summary1">El controlador del motor no pot eliminar els fitxers originals a \'\\engine_driver\', però ja no es necessiten ni s\'utilitzaran. Per tant, podeu eliminar-los manualment si ho desitgeu.</string>
+    <string name="introAndroid11Summary2">Nota: Si desinstal·leu l\'aplicació, tots els fitxers d\'aquesta nova carpeta (incloses les preferències exportades) s\'eliminaran automàticament. Per tant, és important copiar els fitxers en altres llocs abans de suprimir l\'aplicació.</string>
+    <string name="prefDeviceSoundsCategoryTitle">Al telèfon de telèfon sona el volum</string>
+    <string name="prefDeviceSounds0Summary">Juga Basic Loco sona al telèfon per accelerar-se 1</string>
+    <string name="prefDeviceSounds0Title">Accés 1 Loco sona</string>
+    <string name="prefDeviceSounds1Summary">Juga Basic Loco sona al telèfon per accelerar-se 2</string>
+    <string name="prefDeviceSounds1Title">Accés 2 Loco Sounds</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volum per a sons del motor Loco al telèfon (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Al telèfon de telèfon sona el volum</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volum de Bell/Horn/Whistle Sounds al telèfon (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">Al telèfon Altres sons Volum</string>
 </resources>

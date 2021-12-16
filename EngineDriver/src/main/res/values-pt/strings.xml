@@ -676,7 +676,6 @@
     <string name="introButtonsSliderAndButtons">Slider and Buttons \n(não é possível com \'Botões Grandes\'.)</string>
     <string name="introButtonsNoSlider">Botões de velocidade apenas</string>
 
-    <string name="introbackButtonPress">Por favor, reinicie o aplicativo Driver do Motor para concluir a Introdução.</string>
     <string name="consist_trail_label">Locomotiva chumbo</string>
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
@@ -835,5 +834,18 @@
     <string name="prefKidsTimerButtonDefaultTitle">Padrão para botão</string>
     <string name="prefKidsTimerButtonDefaultSummary">Tempo padrão se estiver usando o botão ToollBar para ativar o temporizador.</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme se você deseja remover todas as conexões recentes</string>
+    <string name="introAndroid11Title">Alterações Android 11.</string>
+    <string name="introAndroid11Summary">Devido a alterações aplicadas pelo Google para o Android 11, o local onde os arquivos de driver do motor são armazenados precisam ser movidos da pasta \'\\engine_driver\' para a pasta YYY. \nSeus dados serão automaticamente copiados para esta nova pasta.</string>
+    <string name="introAndroid11Summary1">O driver do motor não consegue excluir os arquivos originais em \'\\engine_driver\', mas eles não são mais necessários ou usados. Então você pode apagá-los manualmente se desejar.</string>
+    <string name="introAndroid11Summary2">Nota: Se você desinstalar o aplicativo, todos os arquivos nesta nova pasta (incluindo quaisquer preferências exportadas) serão automaticamente excluídas. Portanto, é importante copiar os arquivos em outro lugar antes de excluir o aplicativo.</string>
+    <string name="prefDeviceSoundsCategoryTitle">No telefone loco sons de volume</string>
+    <string name="prefDeviceSounds0Summary">Reproduzir Sons de Loco Básico no telefone para o acelerador 1</string>
+    <string name="prefDeviceSounds0Title">Acelerador 1 loco sons</string>
+    <string name="prefDeviceSounds1Summary">Jogar Basic Loco Sounds no telefone para o acelerador 2</string>
+    <string name="prefDeviceSounds1Title">Throttle 2 sons loco</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume para o motor de loco sons no telefone (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">No telefone loco sons de volume</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume para sino/chifre/apito sons no telefone (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">No telefone outro volume de sons</string>
 
 </resources>
