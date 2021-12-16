@@ -702,7 +702,7 @@ public class threaded_application extends Application {
                             }
                         }
 
-                        soundPool.autoPause();
+                        if (soundPool!=null) {soundPool.autoPause();}
                         break;
                     }
 
