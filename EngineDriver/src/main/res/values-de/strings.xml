@@ -899,5 +899,18 @@
     <string name="prefKidsTimerEnableReverseSummary">Aktivieren Sie die umgekehrte Taste.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Bestätigen Sie, dass Sie alle jüngsten Verbindungen entfernen möchten</string>
+    <string name="introAndroid11Title">Android 11 ändert sich</string>
+    <string name="introAndroid11Summary">Durch Änderungen, die von Google für Android 11 erzwungen werden, muss der Speicherort, an dem die Motortreiberdateien gespeichert sind, vom \'\\engine_driver\' Ordner in den \'\\Android\\data\\jmri.enginedriver\\data\\files\' Ordner verschoben werden. \nIhre Daten werden automatisch in diesen neuen Ordner kopiert.</string>
+    <string name="introAndroid11Summary1">Der Engine-Treiber kann die Originaldateien in \'\\engine_driver\' nicht löschen, jedoch nicht mehr benötigt oder verwendet. So können Sie sie manuell löschen, wenn Sie möchten.</string>
+    <string name="introAndroid11Summary2">Hinweis: Wenn Sie die App deinstallieren, werden alle Dateien in diesem neuen Ordner (einschließlich aller exportierten Voreinstellungen) automatisch gelöscht. Daher ist es wichtig, die Dateien an anderer Stelle zu kopieren, bevor Sie die App löschen.</string>
+    <string name="prefDeviceSoundsCategoryTitle">Im Telefon Loco klingt das Volumen</string>
+    <string name="prefDeviceSounds0Summary">Play Basic Loco-Sounds im Telefon für Drossel 1</string>
+    <string name="prefDeviceSounds0Title">Drosselklappe 1 Look Sounds</string>
+    <string name="prefDeviceSounds1Summary">Play Basic Loco-Sounds im Telefon für Drossel 2</string>
+    <string name="prefDeviceSounds1Title">Drossel 2 Look Sounds</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume für Look-Engine-Sounds im Telefon (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Im Telefon Loco klingt das Volumen</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volumen für Glocke/Horn/Whistle Sounds im Telefon (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle">Andere Sounds-Lautstärke</string>
 
 </resources>
