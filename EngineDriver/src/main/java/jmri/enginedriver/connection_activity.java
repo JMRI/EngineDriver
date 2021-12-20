@@ -1055,29 +1055,31 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
-        if (!connection_file.exists()) {
+        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
 
             String[] childFiles = legacy_dir.list();
-            for (int i = 0; i < childFiles.length; i++) {
-                try {
+            if (childFiles!=null) {
+                for (int i = 0; i < childFiles.length; i++) {
+                    try {
 //                File legacy_file = new File(sdcard_path, "engine_driver/" + filename);
-                    File legacy_file = new File(sdcard_path, "engine_driver/" + childFiles[i]);
-                    File new_file = new File(context.getExternalFilesDir(null), childFiles[i]);
+                        File legacy_file = new File(sdcard_path, "engine_driver/" + childFiles[i]);
+                        File new_file = new File(context.getExternalFilesDir(null), childFiles[i]);
 
-                    if (legacy_file.exists()) {
-                        if (!new_file.exists()) {
-                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found:" + childFiles[i]);
+                        if (legacy_file.exists()) {
+                            if (!new_file.exists()) {
+                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found:" + childFiles[i]);
 //                    Files.copy(legacy_file.getPath(),new_file.getPath(),REPLACE_EXISTING);
-                            copyFileUsingStream(legacy_file, new_file);
+                                copyFileUsingStream(legacy_file, new_file);
+                            } else {
+                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found but new file exists:" + childFiles[i]);
+                            }
                         } else {
-                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found but new file exists:" + childFiles[i]);
+                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file not found:" + childFiles[i]);
                         }
-                    } else {
-                        Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file not found:" + childFiles[i]);
-                    }
 
-                } catch (Exception e) {
-                    Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - copy failed: " + childFiles[i]);
+                    } catch (Exception e) {
+                        Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - copy failed: " + childFiles[i]);
+                    }
                 }
             }
         }

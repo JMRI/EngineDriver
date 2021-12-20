@@ -128,6 +128,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public static final int ACTIVITY_CONSIST = 2;
     public static final int ACTIVITY_CONSIST_LIGHTS = 3;
     public static final int ACTIVITY_GAMEPAD_TEST = 4;
+    public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
 
     private static final int GONE = 8;
     private static final int VISIBLE = 0;
@@ -4145,7 +4146,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     locoTypeThrottleCounter = mainapp.soundsLocoType[throttleCounter];
                                     if ((throttleCounter != whichThrottle)
                                             && (locoType == locoTypeThrottleCounter)
-                                            && (getLocoSoundStep(throttleCounter) == stepCounter)) {
+                                            && (getLocoSoundStep(throttleCounter) == stepCounter)
+                                            && (mainapp.consists[throttleCounter].isActive())
+                                    ) {
                                         otherThrottleIsPlayingThisSound = true; // this sound is being played for another throttle, so don't stop the sound
                                         break;
                                     }
@@ -5815,6 +5818,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case R.id.EsuMc2Knob_button:
                 toggleEsuMc2Knob(this, TMenu);
                 return true;
+
+            case R.id.device_sounds_menu:
+                in = new Intent().setClass(this, device_sounds_settings.class);
+                startActivityForResult(in, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -5918,6 +5928,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 } else {
                     Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
                 }
+                break;
+            }
+            case ACTIVITY_DEVICE_SOUNDS_SETTINGS: {
+                mainapp.soundsReloadSounds = true;
+                loadSounds();
                 break;
             }
         }

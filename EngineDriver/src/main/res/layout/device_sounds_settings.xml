@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,Autofill,LabelFor">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/logviewer_screen"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dss_heading"
+                    style="?android:attr/listSeparatorTextViewStyle"
+                    android:text="@string/prefDeviceSoundsCategoryTitle" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/dss_throttle0_label"
+                        style="?attr/floating_text_style"
+                        android:layout_width="0dp"
+                        android:layout_weight=".4"
+                        android:layout_height="wrap_content"
+                        android:padding="8sp"
+                        android:text="@string/prefDeviceSounds0Summary"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/dss_throttle0"
+                        android:layout_width="0dp"
+                        android:layout_weight=".6"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded"
+                        android:ellipsize = "none"
+                        android:text="@string/prefDefaultAddressLengthDefaultValue" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/dss_throttle1_label"
+                        style="?attr/floating_text_style"
+                        android:layout_width="0dp"
+                        android:layout_weight=".4"
+                        android:layout_height="wrap_content"
+                        android:padding="8sp"
+                        android:text="@string/prefDeviceSounds1Summary"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/dss_throttle1"
+                        android:layout_width="0dp"
+                        android:layout_weight=".6"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded"
+                        android:ellipsize = "none"
+                        android:text="@string/prefDefaultAddressLengthDefaultValue" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp">
+
+            <TableRow android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/device_sounds_settings_button_close"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_gravity="left"
+                    android:text="@string/logviewerClose" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
