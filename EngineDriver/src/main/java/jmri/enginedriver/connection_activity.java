@@ -1051,11 +1051,16 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     protected void checkForLegacyFilesImpl() {
         File sdcard_path = Environment.getExternalStorageDirectory();
-        File legacy_dir = new File(sdcard_path, "engine_driver/");
+        File legacy_dir = new File(sdcard_path, "engine_driver");
+        if (legacy_dir.isDirectory()) {
+            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy folder found:");
+        }
 
         File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+        File legacyConnection_file = new File(sdcard_path, "engine_driver/connections_list.txt");
 
-        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
+//        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
+        if ( (!connection_file.exists()) && (legacyConnection_file.exists()) ) {
 
             String[] childFiles = legacy_dir.list();
             if (childFiles!=null) {

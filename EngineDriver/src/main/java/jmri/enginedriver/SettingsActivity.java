@@ -1449,6 +1449,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         }
                     }
                     list_reader.close();
+                } else {
+                    Log.d("settingActivity", "getConnectionsList: Recent connections not found");
                 }
             } catch (IOException except) {
                 errMsg = except.getMessage();

@@ -92,8 +92,8 @@ class ImportExportConnectionList {
                     }
                 }
                 list_reader.close();
-
-
+            } else {
+                Log.d("connection_activity", "Recent connections not found");
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
