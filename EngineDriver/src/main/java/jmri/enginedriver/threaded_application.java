@@ -220,6 +220,7 @@ public class threaded_application extends Application {
     public volatile Handler function_settings_msg_handler;
     public volatile Handler function_consist_settings_msg_handler;
     public volatile Handler gamepad_test_msg_handler;
+    public volatile Handler device_sounds_settings_msg_handler;
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -323,16 +324,16 @@ public class threaded_application extends Application {
 
     public SoundPool soundPool;
 
-    public String prefDeviceSounds[] = {"none","none"};  //currently only supporting two throttles
+    public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
     public float prefDeviceSoundsLocoVolume = 1;
     public float prefDeviceSoundsBellHornVolume = 1;
     public boolean soundsReloadSounds = true;
 
-    public int soundsLocoType[] = {0,0};  //currently only supporting two throttles
-    public int soundsLocoSubType[] = {0,0};  //currently only supporting two throttles
-    public int soundsBellType[] = {0,0};  //currently only supporting two throttles
-    public int soundsHornType[] = {0,0};  //currently only supporting two throttles
+    public int[] soundsLocoType = {0,0};  //currently only supporting two throttles
+    public int[] soundsLocoSubType = {0,0};  //currently only supporting two throttles
+    public int[] soundsBellType = {0,0};  //currently only supporting two throttles
+    public int[] soundsHornType = {0,0};  //currently only supporting two throttles
 
     public int[][] soundsBell = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0},{0,0,0}};
@@ -342,7 +343,7 @@ public class threaded_application extends Application {
     public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0}};
     public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
 
-    public int [][] soundsLoco = { // need one for each type of loco available to select
+    public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -362,7 +363,7 @@ public class threaded_application extends Application {
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
 
     public int [][] soundsLocoSteps =
-            {{15,9}, // steam fast, slow
+            {{15,9}, // steam fast AND steam slow
             {4,4}, // 645 turbo
             {7,7}, // 7FDL
             {2,2}, // NW7
@@ -2961,6 +2962,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(gamepad_test_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(device_sounds_settings_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
     }
