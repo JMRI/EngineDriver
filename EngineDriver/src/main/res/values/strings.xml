@@ -329,8 +329,8 @@
     <string name="prefNumOfThrottlesSummary">How many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
     <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
 
-    <string name="prefThrottleScreenTypeTitle">Throttle Screen layout</string>
-    <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen layout.\n(The number in brackets after the name is the number of throttles the layout can support.)</string>
+    <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
+    <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen Layout.\n(The number in brackets after the name is the number of throttles the layout can support.)</string>
     <string name="prefThrottleScreenTypeDefault" translatable="false">Default</string>
 
     <string name="prefMaximumThrottleTitle">Maximum throttle Percentage</string>
