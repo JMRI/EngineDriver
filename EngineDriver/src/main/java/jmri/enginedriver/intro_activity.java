@@ -20,11 +20,14 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,6 +36,8 @@ import android.widget.Toast;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
+
+import java.io.File;
 
 import jmri.enginedriver.util.PermissionsHelper;
 
@@ -68,10 +73,7 @@ public class intro_activity extends AppIntro2 {
         sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
-        Fragment fragment98 = new intro_alert();
-        addSlide(fragment98);
-
-        int slideNumber = 2;  // how many preceding slides
+        int slideNumber = 1;  // how many preceding slides
 //        if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_CONNECTION_LIST)) ||
 //                (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.STORE_CONNECTION_LIST)) ) {
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_LEGACY_FILES)) {
@@ -134,6 +136,18 @@ public class intro_activity extends AppIntro2 {
 //                slideNumber = slideNumber + 1;
 //                askForPermissions(new String[]{Manifest.permission.WRITE_SETTINGS}, slideNumber);
             }
+        }
+
+        // only show this slide if there is no connections_list in the Scoped Storage area
+        try {
+            File sdcard_path = Environment.getExternalStorageDirectory();
+            File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+            if (!connection_file.exists()) {
+                Fragment fragment98 = new intro_alert();
+                addSlide(fragment98);
+            }
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "intro_activity: check for legacy files failed");
         }
 
         Fragment fragment0 = new intro_throttle_name();
