@@ -49,7 +49,6 @@ import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -3593,9 +3592,9 @@ public class threaded_application extends Application {
                 String exportedPreferencesFileName = this.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-                    File path = Environment.getExternalStorageDirectory();
-                    File engine_driver_dir = new File(path, "engine_driver");
-                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//                    File path = Environment.getExternalStorageDirectory();
+//                    File engine_driver_dir = new File(path, "engine_driver");
+//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                     importExportPreferences.saveSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
