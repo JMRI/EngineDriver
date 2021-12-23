@@ -955,9 +955,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-                    File path = Environment.getExternalStorageDirectory();
-                    File engine_driver_dir = new File(path, "engine_driver");
-                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//                    File path = Environment.getExternalStorageDirectory();
+//                    File engine_driver_dir = new File(path, "engine_driver");
+//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
 
                     importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }

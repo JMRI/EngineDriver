@@ -21,12 +21,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static java.lang.Math.min;
-
 import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -260,10 +259,10 @@ public class ImportExportPreferences {
             }
 
 
-            File path = Environment.getExternalStorageDirectory();
-            File engine_driver_dir = new File(path, "engine_driver");
-
-            File src = new File(path, "engine_driver/" + exportedPreferencesFileName);
+//            File path = Environment.getExternalStorageDirectory();
+//            File engine_driver_dir = new File(path, "engine_driver");
+//            File src = new File(path, "engine_driver/" + exportedPreferencesFileName);
+            File src = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
             if (src.exists()) {
                 srcExists = true;
