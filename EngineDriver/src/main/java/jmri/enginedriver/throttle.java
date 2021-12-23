@@ -1461,43 +1461,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSoundsBellHornVolume = mainapp.prefDeviceSoundsBellHornVolume / 100;
 
         if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
-            for (int i = 0; i <= 1; i++) {
-                mainapp.soundsLocoSubType[i] = 0;
-                switch (mainapp.prefDeviceSounds[i]) {
-                    case "steam":
-                        mainapp.soundsLocoType[i] = 0;
-                        mainapp.soundsBellType[i] = 0;
-                        mainapp.soundsHornType[i] = 1;
-                        break;
-                    case "steamSlow":
-                        mainapp.soundsLocoType[i] = 0;
-                        mainapp.soundsLocoSubType[i] = 1;
-                        mainapp.soundsBellType[i] = 0;
-                        mainapp.soundsHornType[i] = 1;
-                        break;
-                    case "steamClass64":
-                        mainapp.soundsLocoType[i] = 4;
-                        mainapp.soundsLocoSubType[i] = 1;
-                        mainapp.soundsBellType[i] = 1;
-                        mainapp.soundsHornType[i] = 2;
-                        break;
-                    case "diesel645turbo":
-                        mainapp.soundsLocoType[i] = 1;
-                        mainapp.soundsBellType[i] = 0;
-                        mainapp.soundsHornType[i] = 0;
-                        break;
-                    case "diesel7FDL":
-                        mainapp.soundsLocoType[i] = 2;
-                        mainapp.soundsBellType[i] = 0;
-                        mainapp.soundsHornType[i] = 0;
-                        break;
-                    case "dieselNW2":
-                        mainapp.soundsLocoType[i] = 3;
-                        mainapp.soundsBellType[i] = 0;
-                        mainapp.soundsHornType[i] = 0;
-                        break;
-                }
-            }
+            setSoundsTypes();
             if (mainapp.soundsReloadSounds) {
                 loadSounds();
             }
@@ -6662,6 +6626,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        mainapp.soundsHorn[2][0] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_start,1);
         mainapp.soundsHorn[2][1] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_mid,1);
         mainapp.soundsHorn[2][2] = mainapp.soundPool.load(this, R.raw.whistle_class64_long_end,1);
+//        mainapp.soundsHorn[3][0] = mainapp.soundPool.load(this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_start,1);
+        mainapp.soundsHorn[3][1] = mainapp.soundPool.load(this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_loop,1);
+        mainapp.soundsHorn[3][2] = mainapp.soundPool.load(this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_end,1);
 
         mainapp.soundsLoco[0][0] = mainapp.soundPool.load(this, R.raw.steam_loco_stationary_med,1);
         mainapp.soundsLoco[0][1] = mainapp.soundPool.load(this, R.raw.steam_piston_stroke3,1);
@@ -6679,12 +6646,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.soundsLoco[0][13] = mainapp.soundPool.load(this, R.raw.steam_loop_200rpm,1);
         mainapp.soundsLoco[0][14] = mainapp.soundPool.load(this, R.raw.steam_loop_250rpm,1);
         mainapp.soundsLoco[0][15] = mainapp.soundPool.load(this, R.raw.steam_loop_300rpm,1);
+        mainapp.soundsLocoSteps[0][0] = 15;
+        mainapp.soundsLocoSteps[0][1] = 7; // not used
 
         mainapp.soundsLoco[1][0] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_idle,1);
         mainapp.soundsLoco[1][1] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d1_d2,1);
         mainapp.soundsLoco[1][2] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d2_d3,1);
         mainapp.soundsLoco[1][3] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d3_d4,1);
         mainapp.soundsLoco[1][4] = mainapp.soundPool.load(this, R.raw.diesel_645turbo_d4,1);
+        mainapp.soundsLocoSteps[1][0] = 4;
+        mainapp.soundsLocoSteps[1][1] = 4; // not used
 
         mainapp.soundsLoco[2][0] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_1a,1);
         mainapp.soundsLoco[2][1] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_2a,1);
@@ -6694,10 +6665,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.soundsLoco[2][5] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_6a,1);
         mainapp.soundsLoco[2][6] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_7a,1);
         mainapp.soundsLoco[2][7] = mainapp.soundPool.load(this, R.raw.diesel_7fdl_idle_8a,1);
+        mainapp.soundsLocoSteps[2][0] = 7; // fast steam
+        mainapp.soundsLocoSteps[2][1] = 9; // slow steam
 
         mainapp.soundsLoco[3][0] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor,1);
         mainapp.soundsLoco[3][1] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor_2,1);
         mainapp.soundsLoco[3][2] = mainapp.soundPool.load(this, R.raw.diesel_nw7_motor_1,1);
+        mainapp.soundsLocoSteps[3][0] = 2;
+        mainapp.soundsLocoSteps[3][1] = 2; // not used
 
         mainapp.soundsLoco[4][0] = mainapp.soundPool.load(this, R.raw.steam_class64_idle_sound,1);
         mainapp.soundsLoco[4][1] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff1_1_4,1);
@@ -6706,8 +6681,56 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.soundsLoco[4][4] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff4_1_4,1);
         mainapp.soundsLoco[4][5] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff5_1_4,1);
         mainapp.soundsLoco[4][6] = mainapp.soundPool.load(this, R.raw.steam_class64_chuff6_1_4,1);
+        mainapp.soundsLocoSteps[4][0] = 6;
+        mainapp.soundsLocoSteps[4][1] = 6; // not used
+
+        mainapp.soundsLoco[5][0] = mainapp.soundPool.load(this, R.raw.steam_class94_idle2a,1);
+        mainapp.soundsLoco[5][1] = mainapp.soundPool.load(this, R.raw.steam_class94_speed0a_1_4,1);
+        mainapp.soundsLoco[5][2] = mainapp.soundPool.load(this, R.raw.steam_class94_speed2g_1_4,1);
+        mainapp.soundsLoco[5][3] = mainapp.soundPool.load(this, R.raw.steam_class94_speed3g_1_4,1);
+        mainapp.soundsLoco[5][4] = mainapp.soundPool.load(this, R.raw.steam_class94_speed4g_1_4,1);
+        mainapp.soundsLoco[5][5] = mainapp.soundPool.load(this, R.raw.steam_class94_speed5g_1_4,1);
+        mainapp.soundsLocoSteps[5][0] = 5;
+        mainapp.soundsLocoSteps[5][1] = 5; // not used
 
         mainapp.soundsReloadSounds = false;
     }
 
+    void setSoundsTypes() {
+        for (int i = 0; i <= 1; i++) {
+            mainapp.soundsLocoSubType[i] = 0;
+            mainapp.soundsLocoType[i] = 0;
+            mainapp.soundsBellType[i] = 0;
+            mainapp.soundsHornType[i] = 0;
+
+            switch (mainapp.prefDeviceSounds[i]) {
+                case "steam":
+                    mainapp.soundsHornType[i] = 1;
+                    break;
+                case "steamSlow":
+                    mainapp.soundsLocoSubType[i] = 1;
+                    mainapp.soundsHornType[i] = 1;
+                    break;
+                case "steamClass64":
+                    mainapp.soundsLocoType[i] = 4;
+                    mainapp.soundsBellType[i] = 1;
+                    mainapp.soundsHornType[i] = 2;
+                    break;
+                case "steamClass94":
+                    mainapp.soundsLocoType[i] = 5;
+                    mainapp.soundsHornType[i] = 3;
+                    break;
+                case "diesel645turbo":
+                    mainapp.soundsLocoType[i] = 1;
+                    break;
+                case "diesel7FDL":
+                    mainapp.soundsLocoType[i] = 2;
+                    break;
+                case "dieselNW2":
+                    mainapp.soundsLocoType[i] = 3;
+                    break;
+            }
+
+        }
+    }
 }

@@ -338,11 +338,12 @@ public class threaded_application extends Application {
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0},{0,0,0}};
     public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false},{false,false,false}};
 
-    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0}};
-    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
+    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -353,21 +354,25 @@ public class threaded_application extends Application {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     public boolean[][] soundsLocoPlaying = {
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
 
-    public int [][] soundsLocoSteps =
-            {{15,9}, // steam fast AND steam slow
-            {4,4}, // 645 turbo
-            {7,7}, // 7FDL
-            {2,2}, // NW7
-            {6,6} // steam Class 64
-            };
+    public int [][] soundsLocoSteps = new int[6][2];
+//    public int [][] soundsLocoSteps =
+//            {{15,9}, // steam fast AND steam slow
+//            {4,4}, // 645 turbo
+//            {7,7}, // 7FDL
+//            {2,2}, // NW7
+//            {6,6}, // steam Class 64
+//            {5,5} // steam Class 94
+//            };
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
