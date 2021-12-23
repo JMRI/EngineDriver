@@ -5,6 +5,7 @@
  * Rework Advanced Preferences feature
  * icons for the preference categories
  * basic 'in device' loco sounds preferences (loco 0 & 1 only)
+ * Move to Scoped Storage. (Enforced by Google for Android 11.) Engine Driver's data files are now stored in ../Android/data/jmri.enginedriver/files/
 **Version 2.30.130
  * shortened About string
  * avoid crashes reported to Play Store
