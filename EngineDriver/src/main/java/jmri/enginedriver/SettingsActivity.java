@@ -330,11 +330,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         sharedPreferences.edit().putString("prefImportExport", IMPORT_EXPORT_OPTION_NONE).commit();  //reset the preference
         boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
-            File path = Environment.getExternalStorageDirectory();
-            File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
-            engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
-            File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
+//            File path = Environment.getExternalStorageDirectory();
+//            File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
+//            engine_driver_dir.mkdir();            // create directory if it doesn't exist
+//            File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
+            File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
                 overwiteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);

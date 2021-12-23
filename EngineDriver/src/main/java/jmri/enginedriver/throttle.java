@@ -4142,7 +4142,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if (stepCounter != stepForThisThrottle) { // not the current step for this throttle
 
                                 boolean otherThrottleIsPlayingThisSound = false;
-                                for (int throttleCounter = 0; throttleCounter < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleCounter++) {
+                                for (int throttleCounter = 0; ((throttleCounter < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) && (throttleCounter < mainapp.maxThrottlesCurrentScreen)) ; throttleCounter++) {
                                     locoTypeThrottleCounter = mainapp.soundsLocoType[throttleCounter];
                                     if ((throttleCounter != whichThrottle)
                                             && (locoType == locoTypeThrottleCounter)
@@ -4205,7 +4205,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             }
                         } else {
                             boolean otherThrottleIsPlayingThisSound = false;
-                            for (int i = 0; i< threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+                            for (int i = 0; ((i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) && (i < mainapp.maxThrottlesCurrentScreen)); i++) {
                                 if ( (functionMaps[i].get(function) != null && mainapp.function_states[i] != null) ) {
                                     if ( (i != whichThrottle) && (mainapp.function_states[i][function])
                                             && (mainapp.soundsHornType[whichThrottle]==mainapp.soundsHornType[i]) ) {
