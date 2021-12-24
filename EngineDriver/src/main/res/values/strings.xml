@@ -358,6 +358,10 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume for Bell/Horn/Whistle sounds in the phone (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">In Phone Other Sounds Volume</string>
+
+    <string name="prefDeviceSoundsButtonSummary">Show a action bar button to change the in phone loco sounds options</string>
+    <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>
+
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist. (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
     <string name="prefSelectiveLeadSoundF1Title">Always treat F1 as Sound?</string>
