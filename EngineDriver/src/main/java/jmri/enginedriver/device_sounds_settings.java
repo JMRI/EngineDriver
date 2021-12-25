@@ -26,6 +26,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -40,11 +42,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
 
@@ -57,13 +60,47 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private int result;
     String[] deviceSoundsEntryValuesArray;
     String[] deviceSoundsEntriesArray; // display version
-
+    private EditText etDeviceSoundsLocoVolume;
+    private EditText etDeviceSoundsBellHornVolume;
+    String prefDeviceSoundsLocoVolume;
+    String prefDeviceSoundsBellHornVolume;
     private SharedPreferences prefs;
     private Toolbar toolbar;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return myGesture.onTouchEvent(event);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
+        String sVal = defaultVal;
+        boolean isValid = true;
+        int newVal = maxVal;
+        try {
+            newVal = Integer.parseInt(et.getText().toString().trim());
+            if (newVal > maxVal) {
+                prefs.edit().putString(key, Integer.toString(maxVal)).commit();
+                sVal = Integer.toString(maxVal);
+                et.setText(sVal);
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+            } else if (newVal < minVal) {
+                prefs.edit().putString(key, Integer.toString(minVal)).commit();
+                sVal = Integer.toString(minVal);
+                et.setText(sVal);
+                isValid = false;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+            }
+        } catch (NumberFormatException e) {
+            prefs.edit().putString(key, defaultVal).commit();
+            sVal = defaultVal;
+            et.setText(sVal);
+            isValid = false;
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+        }
+        if (isValid) sVal = Integer.toString(newVal);
+        return sVal;
     }
 
     public class spinner_listener_0 implements AdapterView.OnItemSelectedListener {
@@ -153,25 +190,54 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp.device_sounds_settings_msg_handler = new device_sounds_settings_handler();
 
         deviceSoundsEntryValuesArray = this.getResources().getStringArray(R.array.deviceSoundsEntryValues);
-        final List<String> deviceSoundsList = new ArrayList<>(Arrays.asList(deviceSoundsEntryValuesArray));
+//        final List<String> deviceSoundsList = new ArrayList<>(Arrays.asList(deviceSoundsEntryValuesArray));
         deviceSoundsEntriesArray = this.getResources().getStringArray(R.array.deviceSoundsEntries);
-        final List<String> deviceSoundsEntriesList = new ArrayList<>(Arrays.asList(deviceSoundsEntriesArray));
+//        final List<String> deviceSoundsEntriesList = new ArrayList<>(Arrays.asList(deviceSoundsEntriesArray));
 
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        prefDeviceSoundsLocoVolume = prefs.getString("prefDeviceSoundsLocoVolume", "100");
+        prefDeviceSoundsBellHornVolume = prefs.getString("prefDeviceSoundsBellHornVolume", "100");
 
         // throttle 0
         dssThrottle0Index = Arrays.asList(deviceSoundsEntryValuesArray).indexOf(mainapp.prefDeviceSounds[0]);
         if (dssThrottle0Index<0) dssThrottle0Index=0;
-        Spinner spinner0 = findViewById(R.id.dss_throttle0);
-        spinner0.setSelection(dssThrottle0Index);
+//        Spinner spinner0 = findViewById(R.id.dss_throttle0);
+        dss_throttle0.setSelection(dssThrottle0Index);
         // throttle 1
         dssThrottle1Index = Arrays.asList(deviceSoundsEntryValuesArray).indexOf(mainapp.prefDeviceSounds[1]);
         if (dssThrottle1Index<0) dssThrottle1Index=0;
-        Spinner spinner1 = findViewById(R.id.dss_throttle1);
-        spinner1.setSelection(dssThrottle1Index);
+//        Spinner spinner1 = findViewById(R.id.dss_throttle1);
+        dss_throttle1.setSelection(dssThrottle1Index);
 
+        etDeviceSoundsLocoVolume = findViewById(R.id.dss_DeviceSoundsLocoVolume);
+        etDeviceSoundsLocoVolume.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        etDeviceSoundsLocoVolume.setText(prefDeviceSoundsLocoVolume);
 
+        etDeviceSoundsBellHornVolume = findViewById(R.id.dss_DeviceSoundsBellHornVolume);
+        etDeviceSoundsBellHornVolume.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        etDeviceSoundsBellHornVolume.setText(prefDeviceSoundsBellHornVolume);
+
+        if (mainapp.maxThrottlesCurrentScreen<2) {
+            dss_throttle1.setEnabled(false);
+            dss_throttle1.setAlpha(0.5f);
+            TextView dss_throttle1_label = findViewById(R.id.dss_throttle1_label);
+            dss_throttle1_label.setAlpha(0.5f);
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -209,6 +275,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            saveNumberEntries();
             finish();
         }
     }
@@ -278,9 +345,21 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         }
     }
 
+    @SuppressLint("ApplySharedPref")
+    void saveNumberEntries() {
+        prefDeviceSoundsLocoVolume = limitIntEditValue("prefDeviceSoundsLocoVolume", etDeviceSoundsLocoVolume, 1, 100, "100");
+        prefDeviceSoundsBellHornVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsBellHornVolume, 1, 100, "100");
+        mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(prefDeviceSoundsLocoVolume);
+        mainapp.prefDeviceSoundsBellHornVolume = Integer.parseInt(prefDeviceSoundsBellHornVolume);
+        prefs.edit().putString("prefDeviceSoundsLocoVolume", prefDeviceSoundsLocoVolume).commit();  //reset the preference
+        prefs.edit().putString("prefDeviceSoundsBellHornVolume", prefDeviceSoundsBellHornVolume).commit();  //reset the preference
+    }
+
     //Always go to throttle if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        saveNumberEntries();
+
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
             setResult(result, resultIntent);

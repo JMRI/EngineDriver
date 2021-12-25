@@ -323,6 +323,7 @@ public class threaded_application extends Application {
 
     public SoundPool soundPool;
 
+    public boolean prefDeviceSoundsButton = false;
     public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
     public float prefDeviceSoundsLocoVolume = 1;
@@ -3285,7 +3286,23 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
+    }
 
+    public void displayDeviceSoundsThrottleButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.device_sounds_button);
+        if (mi != null) {
+            boolean rslt = false;
+            if (prefDeviceSoundsButton) {
+                rslt = true;
+            }
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
     }
 
 /*    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
@@ -3870,4 +3887,18 @@ public class threaded_application extends Application {
         }
     } // end stopAllSounds
 
+        public static void log_dTrace(String label, StackTraceElement[] e) {
+        String method = "";
+        int doNext = 0;
+        for (StackTraceElement s : e) {
+            if (doNext == 1) {
+                method = s.getMethodName();
+            }
+            if (doNext == 2) {
+                Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
+                return;
+            }
+            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; };
+        }
+    }
 }
