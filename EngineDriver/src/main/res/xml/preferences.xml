@@ -662,6 +662,16 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
+
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_in_device_sounds_button"
+            android:defaultValue="@bool/prefDeviceSoundsButtonDefaultValue"
+            android:key="prefDeviceSoundsButton"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefDeviceSoundsButtonSummary"
+            android:title="@string/prefDeviceSoundsButtonTitle" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

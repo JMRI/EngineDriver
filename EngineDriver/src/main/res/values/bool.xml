@@ -94,4 +94,6 @@
     <bool name="prefKidsTimerEnableReverseDefaultValue">false</bool>
     <bool name="prefKidsTimerButtonDefaultValue">false</bool>
 
+    <bool name="prefDeviceSoundsButtonDefaultValue">false</bool>
+
 </resources>

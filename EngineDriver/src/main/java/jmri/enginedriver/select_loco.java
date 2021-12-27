@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.View.GONE;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -101,9 +102,11 @@ public class select_loco extends AppCompatActivity {
     private static final int DIRECTION_FORWARD = 0;
     private static final int DIRECTION_BACKWARD = 1;
 
-    private static final int LIGHT_OFF = 0;
+//    private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
     private static final int LIGHT_UNKNOWN = 2;
+
+    public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
 
     // recent consists
     ArrayList<HashMap<String, String>> recent_consists_list;
@@ -234,15 +237,15 @@ public class select_loco extends AppCompatActivity {
             v = findViewById(R.id.roster_list);
             v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list_empty);
-            v.setVisibility(View.GONE);
+            v.setVisibility(GONE);
 
         } else { // hide roster section if nothing to show
             View v = findViewById(R.id.roster_list_heading);
-            v.setVisibility(View.GONE);
+            v.setVisibility(GONE);
             v = findViewById(R.id.filter_roster_text);
-            v.setVisibility(View.GONE);
+            v.setVisibility(GONE);
             v = findViewById(R.id.roster_list);
-            v.setVisibility(View.GONE);
+            v.setVisibility(GONE);
             v = findViewById(R.id.roster_list_empty);
             v.setVisibility(View.VISIBLE);
         } // if roster_entries not null
@@ -305,7 +308,7 @@ public class select_loco extends AppCompatActivity {
 
         bR.setVisibility(View.VISIBLE);
         llThrottle.setVisibility(View.VISIBLE);
-        llEditConsist.setVisibility(View.GONE);
+        llEditConsist.setVisibility(GONE);
 
         if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
             if (mainapp.consists[whichThrottle].size() > 1) {
@@ -342,8 +345,8 @@ public class select_loco extends AppCompatActivity {
             bR.setEnabled(true);
         } else {
             bR.setEnabled(false);
-            bR.setVisibility(View.GONE);
-            llThrottle.setVisibility(View.GONE);
+            bR.setVisibility(GONE);
+            llThrottle.setVisibility(GONE);
         }
 
         if (SMenu != null) {
@@ -591,7 +594,7 @@ public class select_loco extends AppCompatActivity {
             //alert user that recent locos list requires SD Card
             TextView v = findViewById(R.id.recent_engines_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
-            rbRecent.setVisibility(View.GONE); // if the list is empty, hide the radio button
+            rbRecent.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
 
             importExportPreferences.getRecentLocosListFromFile();
@@ -613,7 +616,7 @@ public class select_loco extends AppCompatActivity {
             }
 
             if (importExportPreferences.recent_loco_address_list.size() == 0) {  // if the list is empty, hide the radio button
-                rbRecent.setVisibility(View.GONE);
+                rbRecent.setVisibility(GONE);
             } else {
                 rbRecent.setVisibility(View.VISIBLE);
             }
@@ -636,7 +639,7 @@ public class select_loco extends AppCompatActivity {
             //alert user that recent locos list requires SD Card
             TextView v = findViewById(R.id.recent_consists_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
-            myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
+            myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
             importExportPreferences.getRecentConsistsListFromFile();
             for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
@@ -647,7 +650,7 @@ public class select_loco extends AppCompatActivity {
                 recent_consists_list.add(hm);
             }
             if (importExportPreferences.consistEngineAddressList.size() == 0) {
-                myRadioButton.setVisibility(View.GONE); // if the list is empty, hide the radio button
+                myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
             } else {
                 myRadioButton.setVisibility(View.VISIBLE);
             }
@@ -843,6 +846,23 @@ public class select_loco extends AppCompatActivity {
             startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
 
+        }
+    }
+
+    // listener for the ID 'n' Go button, when clicked, send the id request and return to Throttle
+    public class device_sounds_button_listener implements View.OnClickListener {
+        Activity _selectLocoActivity;
+
+        device_sounds_button_listener(Activity selectLocoActivity) {
+            _selectLocoActivity = selectLocoActivity;
+        }
+
+        public void onClick(View v) {
+            Intent deviceSounds = new Intent().setClass(_selectLocoActivity, device_sounds_settings.class);
+            startActivityForResult(deviceSounds, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+            result = RESULT_OK;
+            end_this_activity();
         }
     }
 
@@ -1203,6 +1223,12 @@ public class select_loco extends AppCompatActivity {
         button = findViewById(R.id.Sl_edit_consist_lights);
         button.setOnClickListener(new edit_consist_lights_button_listener(whichThrottle, this));
 
+        // loco sounds button
+        button = findViewById(R.id.Sl_device_sounds);
+        button.setOnClickListener(new device_sounds_button_listener(this));
+//        if ( (mainapp.prefDeviceSounds[0].equals("none")) && (mainapp.prefDeviceSounds[1].equals("none")) ) {
+//            button.setVisibility(GONE);
+//        }
 
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
@@ -1288,14 +1314,14 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_ADDRESS: {
                 rlAddress.setVisibility(View.VISIBLE);
                 rlAddressHelp.setVisibility(View.VISIBLE);
-                rlRosterHeader.setVisibility(View.GONE);
-                llRoster.setVisibility(View.GONE);
-                rlRosterEmpty.setVisibility(View.GONE);
-                rlRecentHeader.setVisibility(View.GONE);
-                llRecent.setVisibility(View.GONE);
-                rlRecentConsistsHeader.setVisibility(View.GONE);
-                llRecentConsists.setVisibility(View.GONE);
-                rlIDnGo.setVisibility(View.GONE);
+                rlRosterHeader.setVisibility(GONE);
+                llRoster.setVisibility(GONE);
+                rlRosterEmpty.setVisibility(GONE);
+                rlRecentHeader.setVisibility(GONE);
+                llRecent.setVisibility(GONE);
+                rlRecentConsistsHeader.setVisibility(GONE);
+                llRecentConsists.setVisibility(GONE);
+                rlIDnGo.setVisibility(GONE);
 
                 rbAddress.setChecked(true);
                 rbRoster.setChecked(false);
@@ -1309,16 +1335,16 @@ public class select_loco extends AppCompatActivity {
                 break;
             }
             case WHICH_METHOD_ROSTER: {
-                rlAddress.setVisibility(View.GONE);
-                rlAddressHelp.setVisibility(View.GONE);
+                rlAddress.setVisibility(GONE);
+                rlAddressHelp.setVisibility(GONE);
                 rlRosterHeader.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
                 rlRosterEmpty.setVisibility(View.VISIBLE);
-                rlRecentHeader.setVisibility(View.GONE);
-                llRecent.setVisibility(View.GONE);
-                rlRecentConsistsHeader.setVisibility(View.GONE);
-                llRecentConsists.setVisibility(View.GONE);
-                rlIDnGo.setVisibility(View.GONE);
+                rlRecentHeader.setVisibility(GONE);
+                llRecent.setVisibility(GONE);
+                rlRecentConsistsHeader.setVisibility(GONE);
+                llRecentConsists.setVisibility(GONE);
+                rlIDnGo.setVisibility(GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(true);
@@ -1334,16 +1360,16 @@ public class select_loco extends AppCompatActivity {
                 break;
             }
             case WHICH_METHOD_RECENT: {
-                rlAddress.setVisibility(View.GONE);
-                rlAddressHelp.setVisibility(View.GONE);
-                rlRosterHeader.setVisibility(View.GONE);
-                llRoster.setVisibility(View.GONE);
-                rlRosterEmpty.setVisibility(View.GONE);
+                rlAddress.setVisibility(GONE);
+                rlAddressHelp.setVisibility(GONE);
+                rlRosterHeader.setVisibility(GONE);
+                llRoster.setVisibility(GONE);
+                rlRosterEmpty.setVisibility(GONE);
                 rlRecentHeader.setVisibility(View.VISIBLE);
                 llRecent.setVisibility(View.VISIBLE);
-                rlRecentConsistsHeader.setVisibility(View.GONE);
-                llRecentConsists.setVisibility(View.GONE);
-                rlIDnGo.setVisibility(View.GONE);
+                rlRecentConsistsHeader.setVisibility(GONE);
+                llRecentConsists.setVisibility(GONE);
+                rlIDnGo.setVisibility(GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(false);
@@ -1359,16 +1385,16 @@ public class select_loco extends AppCompatActivity {
                 break;
             }
             case WHICH_METHOD_CONSIST: {
-                rlAddress.setVisibility(View.GONE);
-                rlAddressHelp.setVisibility(View.GONE);
-                rlRosterHeader.setVisibility(View.GONE);
-                llRoster.setVisibility(View.GONE);
-                rlRosterEmpty.setVisibility(View.GONE);
-                rlRecentHeader.setVisibility(View.GONE);
-                llRecent.setVisibility(View.GONE);
+                rlAddress.setVisibility(GONE);
+                rlAddressHelp.setVisibility(GONE);
+                rlRosterHeader.setVisibility(GONE);
+                llRoster.setVisibility(GONE);
+                rlRosterEmpty.setVisibility(GONE);
+                rlRecentHeader.setVisibility(GONE);
+                llRecent.setVisibility(GONE);
                 rlRecentConsistsHeader.setVisibility(View.VISIBLE);
                 llRecentConsists.setVisibility(View.VISIBLE);
-                rlIDnGo.setVisibility(View.GONE);
+                rlIDnGo.setVisibility(GONE);
 
                 rbAddress.setChecked(false);
                 rbRoster.setChecked(false);
@@ -1384,15 +1410,15 @@ public class select_loco extends AppCompatActivity {
                 break;
             }
             case WHICH_METHOD_IDNGO: {
-                rlAddress.setVisibility(View.GONE);
-                rlAddressHelp.setVisibility(View.GONE);
-                rlRosterHeader.setVisibility(View.GONE);
-                llRoster.setVisibility(View.GONE);
-                rlRosterEmpty.setVisibility(View.GONE);
-                rlRecentHeader.setVisibility(View.GONE);
-                llRecent.setVisibility(View.GONE);
-                rlRecentConsistsHeader.setVisibility(View.GONE);
-                llRecentConsists.setVisibility(View.GONE);
+                rlAddress.setVisibility(GONE);
+                rlAddressHelp.setVisibility(GONE);
+                rlRosterHeader.setVisibility(GONE);
+                llRoster.setVisibility(GONE);
+                rlRosterEmpty.setVisibility(GONE);
+                rlRecentHeader.setVisibility(GONE);
+                llRecent.setVisibility(GONE);
+                rlRecentConsistsHeader.setVisibility(GONE);
+                llRecentConsists.setVisibility(GONE);
                 rlIDnGo.setVisibility(View.VISIBLE);
 
                 rbAddress.setChecked(false);
@@ -1459,12 +1485,12 @@ public class select_loco extends AppCompatActivity {
         if (mainapp.supportsIDnGo()) {
             rbIDnGo.setVisibility(View.VISIBLE);
         } else {
-            rbIDnGo.setVisibility(View.GONE);
+            rbIDnGo.setVisibility(GONE);
         }
         if (mainapp.supportsRoster()) {
             rbRoster.setVisibility(View.VISIBLE);
         } else {
-            rbRoster.setVisibility(View.GONE);
+            rbRoster.setVisibility(GONE);
         }
 
         if (SMenu != null) {
@@ -1607,7 +1633,7 @@ public class select_loco extends AppCompatActivity {
         if ((iconURL != null) && (iconURL.length() > 0)) {
             mainapp.imageDownloader.download(iconURL, imageView);
         } else {
-            imageView.setVisibility(View.GONE);
+            imageView.setVisibility(GONE);
         }
 
         Button buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
@@ -1758,7 +1784,7 @@ public class select_loco extends AppCompatActivity {
                 mainapp.imageDownloader.download(iconURL, imageView);
             } else {
                 View v = view.findViewById(R.id.roster_icon_image);
-                v.setVisibility(View.GONE);
+                v.setVisibility(GONE);
             }
 
             return view;
@@ -1804,7 +1830,7 @@ public class select_loco extends AppCompatActivity {
                 mainapp.imageDownloader.download(iconURL, imageView);
             } else {
                 View v = view.findViewById(R.id.engine_icon_image);
-                v.setVisibility(View.GONE);
+                v.setVisibility(GONE);
             }
 
             return view;

@@ -323,6 +323,7 @@ public class threaded_application extends Application {
 
     public SoundPool soundPool;
 
+    public boolean prefDeviceSoundsButton = false;
     public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
     public float prefDeviceSoundsLocoVolume = 1;
@@ -338,11 +339,12 @@ public class threaded_application extends Application {
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0},{0,0,0}};
     public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false},{false,false,false}};
 
-    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0}};
-    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
+    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -353,21 +355,25 @@ public class threaded_application extends Application {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     public boolean[][] soundsLocoPlaying = {
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
             {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
 
-    public int [][] soundsLocoSteps =
-            {{15,9}, // steam fast AND steam slow
-            {4,4}, // 645 turbo
-            {7,7}, // 7FDL
-            {2,2}, // NW7
-            {6,6} // steam Class 64
-            };
+    public int [][] soundsLocoSteps = new int[6][2];
+//    public int [][] soundsLocoSteps =
+//            {{15,9}, // steam fast AND steam slow
+//            {4,4}, // 645 turbo
+//            {7,7}, // 7FDL
+//            {2,2}, // NW7
+//            {6,6}, // steam Class 64
+//            {5,5} // steam Class 94
+//            };
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3280,7 +3286,23 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
+    }
 
+    public void displayDeviceSoundsThrottleButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.device_sounds_button);
+        if (mi != null) {
+            boolean rslt = false;
+            if (prefDeviceSoundsButton) {
+                rslt = true;
+            }
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
     }
 
 /*    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
@@ -3865,4 +3887,18 @@ public class threaded_application extends Application {
         }
     } // end stopAllSounds
 
+        public static void log_dTrace(String label, StackTraceElement[] e) {
+        String method = "";
+        int doNext = 0;
+        for (StackTraceElement s : e) {
+            if (doNext == 1) {
+                method = s.getMethodName();
+            }
+            if (doNext == 2) {
+                Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
+                return;
+            }
+            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; };
+        }
+    }
 }
