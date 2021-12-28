@@ -3641,7 +3641,7 @@ public class threaded_application extends Application {
 
     /* only JMRI and MRC support Rosters at this time */
     public boolean supportsRoster() {
-        return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC"));
+        return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
 
     /* add passed-in loco to Recent Locos list and store it */
