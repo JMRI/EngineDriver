@@ -8,8 +8,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="in_device_sounds_0_outline.svg"
-   inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\in_device_sounds_1_outline.png"
+   sodipodi:docname="in_device_sounds_outline.svg"
+   inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\in_device_sounds_outline.png"
    inkscape:export-xdpi="14.4"
    inkscape:export-ydpi="14.4"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -73,9 +73,9 @@
      fit-margin-right="1"
      fit-margin-bottom="1"
      units="mm"
-     inkscape:window-width="1600"
-     inkscape:window-height="816"
-     inkscape:window-x="1592"
+     inkscape:window-width="1920"
+     inkscape:window-height="996"
+     inkscape:window-x="3192"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0" />
@@ -157,17 +157,9 @@
          transform="matrix(0.61871659,0.61871659,-0.61871659,0.61871659,382.8425,177.48605)"
          id="g42" />
       <path
-         style="fill:#ffffff;stroke-width:2.34316"
-         d="m 152.6244,416.21721 c -5.23497,-14.35898 -4.37714,-34.19483 1.98975,-46.00883 6.87631,-12.75929 108.09036,-113.30889 126.8413,-126.00859 20.32293,-13.76443 37.29856,-20.9707 60.58721,-25.71977 92.19159,-18.79983 180.2215,38.62563 199.09063,129.87482 6.97246,33.71808 3.60447,69.17864 -9.52441,100.2798 -11.47657,27.18697 -21.4618,39.37558 -81.02309,98.90176 -54.32267,54.28953 -55.10323,54.97963 -67.16204,59.29683 -14.66384,5.24969 -26.93599,5.15284 -41.48098,-0.32744 -9.24725,-3.48418 -14.28856,-7.52785 -34.47769,-27.65484 l -23.64674,-23.57399 53.01975,-53.01975 53.01978,-53.01978 26.50988,26.50988 26.50987,26.5099 17.0928,-17.09283 c 22.78676,-22.78673 31.82088,-36.33405 40.27724,-60.39858 14.05474,-39.99598 6.98021,-85.41434 -18.66137,-119.80579 -34.11425,-45.75537 -93.7207,-64.28951 -146.78642,-45.64202 -24.06456,8.45639 -37.61184,17.49048 -60.39861,40.27724 l -17.0928,17.0928 26.50988,26.5099 26.50987,26.50988 -53.01975,53.01974 -53.01978,53.01976 -23.59377,-23.62692 c -21.28318,-21.313 -24.03252,-24.82887 -28.07011,-35.90355 z"
+         style="fill:#ffffff;stroke-width:2.68873"
+         d="m 124.93121,535.85666 c -6.00702,-16.47664 -5.02268,-39.23788 2.2832,-52.79421 7.89043,-14.64103 124.03154,-130.0197 145.54787,-144.59235 23.32016,-15.79441 42.79935,-24.06346 69.52261,-29.51292 105.78802,-21.57243 206.80059,44.32214 228.45254,149.02877 8.00076,38.69082 4.13606,79.38111 -10.92907,115.06907 -13.16914,31.19651 -24.62699,45.18269 -92.97238,113.4878 -62.33419,62.29616 -63.22986,63.08803 -77.06711,68.04193 -16.82646,6.02392 -30.90851,5.91278 -47.5986,-0.37573 -10.61103,-3.99803 -16.39584,-8.63806 -39.56246,-31.73338 l -27.13416,-27.05068 60.8391,-60.83911 60.83915,-60.83914 30.41956,30.41956 30.41954,30.41958 19.61365,-19.61368 c 26.14735,-26.14732 36.51383,-41.6926 46.21733,-69.30617 16.12754,-45.89459 8.00965,-98.01125 -21.41355,-137.47476 -39.14542,-52.50337 -107.54264,-73.77093 -168.43449,-52.37331 -27.61361,9.70354 -43.15884,20.06998 -69.3062,46.21733 l -19.61365,19.61365 30.41956,30.41958 30.41954,30.41956 -60.8391,60.8391 -60.83914,60.83912 -27.07339,-27.11142 c -24.42202,-24.45624 -27.57683,-28.49063 -32.20989,-41.19861 z"
          id="path152" />
-      <text
-         xml:space="preserve"
-         transform="matrix(0.89251813,0.89251813,-0.89251813,0.89251813,416.75295,-161.91234)"
-         id="text2418"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:266.667px;line-height:1.25;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect2420);fill:#ffffff;fill-opacity:1;stroke:none"><tspan
-           x="462"
-           y="525.05238"
-           id="tspan4818">1</tspan></text>
     </g>
   </g>
 </svg>

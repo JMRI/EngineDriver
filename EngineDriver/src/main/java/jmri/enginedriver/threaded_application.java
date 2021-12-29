@@ -116,6 +116,7 @@ import javax.jmdns.ServiceListener;
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
 import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
+import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -325,55 +326,43 @@ public class threaded_application extends Application {
 
     public boolean prefDeviceSoundsButton = false;
     public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
+    public String[] prefDeviceSoundsCurrentlyLoaded = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
+    public float prefDeviceSoundsMomentum = 1000;
     public float prefDeviceSoundsLocoVolume = 1;
-    public float prefDeviceSoundsBellHornVolume = 1;
+    public float prefDeviceSoundsBellVolume = 1;
+    public float prefDeviceSoundsHornVolume = 1;
     public boolean soundsReloadSounds = true;
 
-    public int[] soundsLocoType = {0,0};  //currently only supporting two throttles
-    public int[] soundsLocoSubType = {0,0};  //currently only supporting two throttles
-    public int[] soundsBellType = {0,0};  //currently only supporting two throttles
-    public int[] soundsHornType = {0,0};  //currently only supporting two throttles
+    public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
+    public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
+    public double[][] soundsBellStartTime = {{0,0,0},{0,0,0}};
+    public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false}};
 
-    public int[][] soundsBell = {{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsBellStreamId = {{0,0,0},{0,0,0},{0,0,0}};
-    public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false},{false,false,false}};
-
-    public int[][] soundsHorn = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
-    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false},{false,false,false},{false,false,false}}; // Start, Loop, End
+    public int[][] soundsHorn = {{0,0,0},{0,0,0}};  // Start, Loop, End
+    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0}};
+    public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
+    public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
+    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false}}; // Start, Loop, End
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     public int [][] soundsLocoStreamId = {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+    public int [][] soundsLocoDuration = {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-    public boolean[][] soundsLocoPlaying = {
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-            {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
+    public double [][] soundsLocoStartTime = {
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+    public int [] soundsLocoCurrentlyPlaying = {-1,-1};
 
-    public int [][] soundsLocoSteps = new int[6][2];
-//    public int [][] soundsLocoSteps =
-//            {{15,9}, // steam fast AND steam slow
-//            {4,4}, // 645 turbo
-//            {7,7}, // 7FDL
-//            {2,2}, // NW7
-//            {6,6}, // steam Class 64
-//            {5,5} // steam Class 94
-//            };
+    public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
+
+    public int [] soundsLocoSteps = new int[2];
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -2238,11 +2227,8 @@ public class threaded_application extends Application {
     //also collects the loco and latching handling for the 'Special' consist function string matching
     public void set_default_function_labels(boolean getAll) {
         String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
-        ;
         String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
-        ;
         String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
-        ;
 
         int numberOfDefaultFunctionLabels = 29;
         int numberOfDefaultFunctionLabelsForRoster = 29;
@@ -3868,26 +3854,30 @@ public class threaded_application extends Application {
 
     void stopAllSounds() {
         if (soundPool!=null) {
-            for (int type = 0; type < 3; type++) {
-                for (int mSound = 0; mSound < 3; mSound++) {
+            for (int type = 0; type < soundsBellStreamId.length; type++) {
+                for (int mSound = 0; mSound < soundsBellStreamId.length; mSound++) {
                     soundPool.stop(soundsBellStreamId[type][mSound]);
                     soundsBellPlaying[type][mSound] = false;
+                }
+            }
+            for (int type = 0; type < soundsHornStreamId.length; type++) {
+                for (int mSound = 0; mSound < soundsHornStreamId.length; mSound++) {
                     soundPool.stop(soundsHornStreamId[type][mSound]);
                     soundsHornPlaying[type][mSound] = false;
                 }
             }
 
-            for (int type = 0; type < 5; type++) {
-                for (int mSound = 0; mSound < 16; mSound++) {
+            for (int type = 0; type < soundsLocoStreamId.length; type++) {
+                for (int mSound = 0; mSound < soundsLocoStreamId.length; mSound++) {
                     soundPool.stop(soundsLocoStreamId[type][mSound]);
-                    soundsLocoPlaying[type][mSound] = false;
+//                    soundsLocoPlaying[type][mSound] = false;
                 }
             }
             soundPool.release();
         }
     } // end stopAllSounds
 
-        public static void log_dTrace(String label, StackTraceElement[] e) {
+    public static void log_dTrace(String label, StackTraceElement[] e) {
         String method = "";
         int doNext = 0;
         for (StackTraceElement s : e) {
@@ -3898,7 +3888,7 @@ public class threaded_application extends Application {
                 Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
                 return;
             }
-            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; };
+            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
         }
     }
 }

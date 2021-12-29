@@ -1075,7 +1075,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     .unregisterOnSharedPreferenceChangeListener(this);
         }
 
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
+        @SuppressLint("ApplySharedPref")
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
@@ -1108,8 +1109,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         mainapp.soundsReloadSounds = true;
                         break;
                     case "prefDeviceSoundsLocoVolume":
-                    case "prefDeviceSoundsBellHornVolume":
+                    case "prefDeviceSoundsBellVolume":
+                    case "prefDeviceSoundsHornVolume":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
+                    case "prefDeviceSoundsMomentum":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 2000, "1000");
                         break;
                     case "ThrottleOrientation":
                         setSwipeThroughWebPreference(); //disable web swipe if Auto-Web

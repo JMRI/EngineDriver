@@ -60,10 +60,14 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private int result;
     String[] deviceSoundsEntryValuesArray;
     String[] deviceSoundsEntriesArray; // display version
+    private EditText etDeviceSoundsMomentum;
     private EditText etDeviceSoundsLocoVolume;
-    private EditText etDeviceSoundsBellHornVolume;
+    private EditText etDeviceSoundsBellVolume;
+    private EditText etDeviceSoundsHornVolume;
+    String prefDeviceSoundsMomentum;
     String prefDeviceSoundsLocoVolume;
-    String prefDeviceSoundsBellHornVolume;
+    String prefDeviceSoundsBellVolume;
+    String prefDeviceSoundsHornVolume;
     private SharedPreferences prefs;
     private Toolbar toolbar;
 
@@ -196,8 +200,10 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        prefDeviceSoundsMomentum = prefs.getString("prefDeviceSoundsMomentum", getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         prefDeviceSoundsLocoVolume = prefs.getString("prefDeviceSoundsLocoVolume", "100");
-        prefDeviceSoundsBellHornVolume = prefs.getString("prefDeviceSoundsBellHornVolume", "100");
+        prefDeviceSoundsBellVolume = prefs.getString("prefDeviceSoundsBellVolume", "100");
+        prefDeviceSoundsHornVolume = prefs.getString("prefDeviceSoundsHornVolume", "100");
 
         // throttle 0
         dssThrottle0Index = Arrays.asList(deviceSoundsEntryValuesArray).indexOf(mainapp.prefDeviceSounds[0]);
@@ -210,6 +216,17 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 //        Spinner spinner1 = findViewById(R.id.dss_throttle1);
         dss_throttle1.setSelection(dssThrottle1Index);
 
+        etDeviceSoundsMomentum = findViewById(R.id.dss_DeviceSoundsMomentum);
+        etDeviceSoundsMomentum.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        etDeviceSoundsMomentum.setText(prefDeviceSoundsMomentum);
+
         etDeviceSoundsLocoVolume = findViewById(R.id.dss_DeviceSoundsLocoVolume);
         etDeviceSoundsLocoVolume.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -221,8 +238,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         });
         etDeviceSoundsLocoVolume.setText(prefDeviceSoundsLocoVolume);
 
-        etDeviceSoundsBellHornVolume = findViewById(R.id.dss_DeviceSoundsBellHornVolume);
-        etDeviceSoundsBellHornVolume.addTextChangedListener(new TextWatcher() {
+        etDeviceSoundsBellVolume = findViewById(R.id.dss_DeviceSoundsBellVolume);
+        etDeviceSoundsBellVolume.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -230,7 +247,18 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        etDeviceSoundsBellHornVolume.setText(prefDeviceSoundsBellHornVolume);
+        etDeviceSoundsBellVolume.setText(prefDeviceSoundsBellVolume);
+
+        etDeviceSoundsHornVolume = findViewById(R.id.dss_DeviceSoundsHornVolume);
+        etDeviceSoundsHornVolume.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+        etDeviceSoundsHornVolume.setText(prefDeviceSoundsHornVolume);
 
         if (mainapp.maxThrottlesCurrentScreen<2) {
             dss_throttle1.setEnabled(false);
@@ -276,6 +304,11 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             saveNumberEntries();
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
             finish();
         }
     }
@@ -305,7 +338,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -347,12 +379,18 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     @SuppressLint("ApplySharedPref")
     void saveNumberEntries() {
+        prefDeviceSoundsMomentum = limitIntEditValue("prefDeviceSoundsMomentum", etDeviceSoundsMomentum, 0, 2000, getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         prefDeviceSoundsLocoVolume = limitIntEditValue("prefDeviceSoundsLocoVolume", etDeviceSoundsLocoVolume, 1, 100, "100");
-        prefDeviceSoundsBellHornVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsBellHornVolume, 1, 100, "100");
+        prefDeviceSoundsBellVolume = limitIntEditValue("prefDeviceSoundsBellVolume", etDeviceSoundsBellVolume, 1, 100, "100");
+        prefDeviceSoundsHornVolume = limitIntEditValue("prefDeviceSoundsHornVolume", etDeviceSoundsHornVolume, 1, 100, "100");
+        mainapp.prefDeviceSoundsMomentum = Integer.parseInt(prefDeviceSoundsMomentum);
         mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(prefDeviceSoundsLocoVolume);
-        mainapp.prefDeviceSoundsBellHornVolume = Integer.parseInt(prefDeviceSoundsBellHornVolume);
+        mainapp.prefDeviceSoundsBellVolume = Integer.parseInt(prefDeviceSoundsBellVolume);
+        mainapp.prefDeviceSoundsHornVolume = Integer.parseInt(prefDeviceSoundsHornVolume);
+        prefs.edit().putString("prefDeviceSoundsMomentum", prefDeviceSoundsMomentum).commit();  //reset the preference
         prefs.edit().putString("prefDeviceSoundsLocoVolume", prefDeviceSoundsLocoVolume).commit();  //reset the preference
-        prefs.edit().putString("prefDeviceSoundsBellHornVolume", prefDeviceSoundsBellHornVolume).commit();  //reset the preference
+        prefs.edit().putString("prefDeviceSoundsBellVolume", prefDeviceSoundsBellVolume).commit();  //reset the preference
+        prefs.edit().putString("prefDeviceSoundsHornVolume", prefDeviceSoundsHornVolume).commit();  //reset the preference
     }
 
     //Always go to throttle if back button pressed
