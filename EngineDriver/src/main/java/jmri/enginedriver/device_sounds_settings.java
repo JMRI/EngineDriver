@@ -379,7 +379,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     @SuppressLint("ApplySharedPref")
     void saveNumberEntries() {
-        prefDeviceSoundsMomentum = limitIntEditValue("prefDeviceSoundsMomentum", etDeviceSoundsMomentum, 1, 2000, getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
+        prefDeviceSoundsMomentum = limitIntEditValue("prefDeviceSoundsMomentum", etDeviceSoundsMomentum, 0, 2000, getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         prefDeviceSoundsLocoVolume = limitIntEditValue("prefDeviceSoundsLocoVolume", etDeviceSoundsLocoVolume, 1, 100, "100");
         prefDeviceSoundsBellVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsBellVolume, 1, 100, "100");
         prefDeviceSoundsHornVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsHornVolume, 1, 100, "100");
