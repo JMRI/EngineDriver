@@ -1520,6 +1520,28 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <EditTextPreference
+            android:defaultValue="@string/prefDeviceSoundsMomentumDefaultValue"
+            android:dialogTitle="@string/prefDeviceSoundsMomentumTitle"
+            android:key="prefDeviceSoundsMomentum"
+            android:maxLength="4"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefDeviceSoundsMomentumSummary"
+            android:title="@string/prefDeviceSoundsMomentumTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
+            android:key="prefDeviceSoundsBellVolume"
+            android:maxLength="3"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefDeviceSoundsBellVolumeSummary"
+            android:title="@string/prefDeviceSoundsBellVolumeTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <EditTextPreference
             android:defaultValue="100"
             android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
             android:key="prefDeviceSoundsLocoVolume"
@@ -1532,13 +1554,24 @@
 
         <EditTextPreference
             android:defaultValue="100"
-            android:dialogTitle="@string/prefDeviceSoundsBellHornVolumeTitle"
-            android:key="prefDeviceSoundsBellHornVolume"
+            android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
+            android:key="prefDeviceSoundsBellVolume"
             android:maxLength="3"
             android:inputType="number"
             android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsBellHornVolumeSummary"
-            android:title="@string/prefDeviceSoundsBellHornVolumeTitle"
+            android:summary="@string/prefDeviceSoundsBellVolumeSummary"
+            android:title="@string/prefDeviceSoundsBellVolumeTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:dialogTitle="@string/prefDeviceSoundsHornVolumeTitle"
+            android:key="prefDeviceSoundsHornVolume"
+            android:maxLength="3"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefDeviceSoundsHornVolumeSummary"
+            android:title="@string/prefDeviceSoundsHornVolumeTitle"
             android:layout="@layout/checkbox_no_icon" />
 
     </PreferenceCategory>

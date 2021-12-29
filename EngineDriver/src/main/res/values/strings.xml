@@ -356,8 +356,13 @@
     <string name="prefDeviceSoundsDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume for Loco engine sounds in the phone (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume for Bell/Horn/Whistle sounds in the phone (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle">In Phone Other Sounds Volume</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Volume for Bell sounds in the phone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">In Phone Bell Sounds Volume</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Volume for Horn/Whistle sounds in the phone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">In Phone Horn/Whistle Sounds Volume</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Delay (momentum) per step change in milliseconds (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
+    <string name="prefDeviceSoundsMomentumDefaultValue">750</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show a action bar button to change the in phone loco sounds options</string>
     <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>
