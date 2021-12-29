@@ -4104,6 +4104,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if ((mSound >= 0)) {
                         if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == SOUNDS_NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
                             soundStart(SOUNDS_TYPE_LOCO, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE, true);
+                            mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
                         } else {
                             soundQueueNextLocoSound(whichThrottle, mSound);
                         }

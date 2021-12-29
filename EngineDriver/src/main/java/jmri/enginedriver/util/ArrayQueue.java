@@ -89,6 +89,12 @@ public final class ArrayQueue {
     public void emptyQueue() {
         front = 0;
         rear = 0;
+        lastValueAdded = -1;
+    }
+
+    // use to preload the lastAddedValue
+    public void setLastAddedValue(int value) {
+        lastValueAdded = value;
     }
 
     // print queue elements
