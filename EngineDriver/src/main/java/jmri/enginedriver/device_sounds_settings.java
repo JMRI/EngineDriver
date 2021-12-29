@@ -202,8 +202,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         prefDeviceSoundsMomentum = prefs.getString("prefDeviceSoundsMomentum", getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         prefDeviceSoundsLocoVolume = prefs.getString("prefDeviceSoundsLocoVolume", "100");
-        prefDeviceSoundsBellVolume = prefs.getString("prefDeviceSoundsBellHornVolume", "100");
-        prefDeviceSoundsHornVolume = prefs.getString("prefDeviceSoundsBellHornVolume", "100");
+        prefDeviceSoundsBellVolume = prefs.getString("prefDeviceSoundsBellVolume", "100");
+        prefDeviceSoundsHornVolume = prefs.getString("prefDeviceSoundsHornVolume", "100");
 
         // throttle 0
         dssThrottle0Index = Arrays.asList(deviceSoundsEntryValuesArray).indexOf(mainapp.prefDeviceSounds[0]);
