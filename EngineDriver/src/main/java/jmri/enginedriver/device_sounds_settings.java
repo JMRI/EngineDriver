@@ -381,8 +381,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     void saveNumberEntries() {
         prefDeviceSoundsMomentum = limitIntEditValue("prefDeviceSoundsMomentum", etDeviceSoundsMomentum, 0, 2000, getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         prefDeviceSoundsLocoVolume = limitIntEditValue("prefDeviceSoundsLocoVolume", etDeviceSoundsLocoVolume, 1, 100, "100");
-        prefDeviceSoundsBellVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsBellVolume, 1, 100, "100");
-        prefDeviceSoundsHornVolume = limitIntEditValue("prefDeviceSoundsBellHornVolume", etDeviceSoundsHornVolume, 1, 100, "100");
+        prefDeviceSoundsBellVolume = limitIntEditValue("prefDeviceSoundsBellVolume", etDeviceSoundsBellVolume, 1, 100, "100");
+        prefDeviceSoundsHornVolume = limitIntEditValue("prefDeviceSoundsHornVolume", etDeviceSoundsHornVolume, 1, 100, "100");
         mainapp.prefDeviceSoundsMomentum = Integer.parseInt(prefDeviceSoundsMomentum);
         mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(prefDeviceSoundsLocoVolume);
         mainapp.prefDeviceSoundsBellVolume = Integer.parseInt(prefDeviceSoundsBellVolume);
