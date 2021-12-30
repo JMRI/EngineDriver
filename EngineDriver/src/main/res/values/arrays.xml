@@ -1099,6 +1099,13 @@
         <item>prefRosterFilter</item>
         <item>prefCategorySelectLoco</item> <!-- Category -->
 
+        <!-- In Phone Sound Preferences -->
+        <item>prefDeviceSoundsMomentum</item>
+        <item>prefDeviceSoundsLocoVolume</item>
+        <item>prefDeviceSoundsLocoVolume</item>
+        <item>prefDeviceSoundsBellVolume</item>
+        <item>prefDeviceSoundsHornVolume</item>
+
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>
         <item>maximum_recent_connections_preference</item>

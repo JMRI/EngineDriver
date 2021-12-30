@@ -363,6 +363,7 @@
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Delay (momentum) per step change in milliseconds (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
     <string name="prefDeviceSoundsMomentumDefaultValue">750</string>
+    <string name="deviceSoundsMuteButton">Mute</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show a action bar button to change the in phone loco sounds options</string>
     <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>

@@ -190,7 +190,6 @@ public class throttle_vertical_left_or_right extends throttle {
 
 //             show or hide the pause speed buttons
             if (!prefPauseSpeedButton) {
-//            if ((!prefPauseSpeedButton) || (prefHideSlider)) {
                 bPauseSpeeds[throttleIndex].setVisibility(View.GONE);
             } else {
                 bPauseSpeeds[throttleIndex].setVisibility(View.VISIBLE);
