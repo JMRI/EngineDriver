@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -112,11 +113,14 @@ public class throttle_big_buttons extends throttle {
 
         limit_speed_button_touch_listener lstl;
         Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+        pause_speed_button_vertical_touch_listener psvtl;
+        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
                     bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    bPauseSpeed = findViewById(R.id.pause_speed_0);
                     break;
 //                case 1:
 //                    bLimitSpeed = findViewById(R.id.limit_speed_1);
@@ -131,6 +135,15 @@ public class throttle_big_buttons extends throttle {
             if (!prefLimitSpeedButton) {
                 bLimitSpeed.setVisibility(View.GONE);
             }
+
+            bPauseSpeeds[throttleIndex] = bPauseSpeed;
+            psvtl = new pause_speed_button_vertical_touch_listener(throttleIndex);
+            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
+            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
+            if (!prefPauseSpeedButton) {
+                bPauseSpeed.setVisibility(View.GONE);
+            }
+
         }
         sliderType = SLIDER_TYPE_VERTICAL;   // they are not visible
     } // end of onCreate()
@@ -387,4 +400,61 @@ public class throttle_big_buttons extends throttle {
         }
 
     }
+
+    //listeners for the Pause Speed Button
+    protected class pause_speed_button_vertical_touch_listener implements View.OnTouchListener {
+        int whichThrottle;
+
+        protected pause_speed_button_vertical_touch_listener(int new_whichThrottle) {
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                pauseSpeed(whichThrottle);
+            }
+            return false;
+        }
+    }
+
+    protected void pauseSpeed(int whichThrottle) {
+        int speed = 0;
+
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                speed = getSpeed(whichThrottle);
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) != 0) {
+                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                    bPauseSpeeds[whichThrottle].setSelected(true);
+                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                    pauseDir[whichThrottle] = getDirection(whichThrottle);
+                    speed = 0;
+                } else {
+                    return;
+                }
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                limitedJump[whichThrottle] = false;
+                break;
+            }
+        }
+
+        if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
+            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
+        }
+    }
+
 }

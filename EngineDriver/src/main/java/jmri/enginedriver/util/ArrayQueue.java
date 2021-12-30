@@ -35,7 +35,7 @@ public final class ArrayQueue {
         return rslt;
     }
 
-    public boolean enqueueWithIntermediateSteps(int data) {
+    public boolean enqueueWithIntermediateSteps(int data, boolean directionChange) {
         boolean rslt = false;
         // check queue is full or not
         if (capacity == rear) {
@@ -59,8 +59,18 @@ public final class ArrayQueue {
                     lastValueAdded = data;
                     rslt = true;
                 }
-//            } else {
+            } else {
+                if ( (data>0) && (directionChange) ) {
+                    for (int i = data - 1; i >= 0; i--) {
+                        enqueue(i);
+                    }
+                    for (int i = 1; i <= data; i++) {
+                        enqueue(i);
+                    }
+                    rslt = true;
+                } else {
 //                Log.d("Engine_Driver", "ArrayQueue: enqueueWithIntermediateSteps: Queue already contains value: "+data);
+                }
             }
         }
         return rslt;
@@ -89,6 +99,12 @@ public final class ArrayQueue {
     public void emptyQueue() {
         front = 0;
         rear = 0;
+        lastValueAdded = -1;
+    }
+
+    // use to preload the lastAddedValue
+    public void setLastAddedValue(int value) {
+        lastValueAdded = value;
     }
 
     // print queue elements

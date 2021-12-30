@@ -472,7 +472,13 @@
                                     <Button
                                         style="?attr/ed_fn_button_style"
                                         android:text="@string/functionButton28DefaultValue" />
+
+                                    <Button
+                                        android:id="@+id/device_sounds_mute_0"
+                                        style="?attr/ed_fn_button_style"
+                                        android:text="@string/deviceSoundsMuteButton" />
                                 </TableRow>
+
                             </TableLayout>
                         </ScrollView>
 
@@ -899,18 +905,24 @@
                                         style="?attr/ed_fn_button_style"
                                         android:text="@string/functionButton28DefaultValue" />
 
-                                    <Button
-                                        style="?attr/ed_fn_button_style"
-                                        android:text="@string/functionButton29DefaultValue" />
+<!--                                    <Button-->
+<!--                                        style="?attr/ed_fn_button_style"-->
+<!--                                        android:text="@string/functionButton29DefaultValue" />-->
+
+<!--                                    <Button-->
+<!--                                        style="?attr/ed_fn_button_style"-->
+<!--                                        android:text="@string/functionButton30DefaultValue" />-->
+
+<!--                                    <Button-->
+<!--                                        style="?attr/ed_fn_button_style"-->
+<!--                                        android:text="@string/functionButton31DefaultValue" />-->
 
                                     <Button
+                                        android:id="@+id/device_sounds_mute_1"
                                         style="?attr/ed_fn_button_style"
-                                        android:text="@string/functionButton30DefaultValue" />
-
-                                    <Button
-                                        style="?attr/ed_fn_button_style"
-                                        android:text="@string/functionButton31DefaultValue" />
+                                        android:text="@string/deviceSoundsMuteButton" />
                                 </TableRow>
+
                             </TableLayout>
                         </ScrollView>
 
