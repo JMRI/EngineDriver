@@ -338,13 +338,13 @@ public class threaded_application extends Application {
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
     public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
     public double[][] soundsBellStartTime = {{0,0,0},{0,0,0}};
-    public boolean[][] soundsBellPlaying = {{false,false,false},{false,false,false}};
+    public int [] soundsBellCurrentlyPlaying = {-1,-1};
 
     public int[][] soundsHorn = {{0,0,0},{0,0,0}};  // Start, Loop, End
     public int[][] soundsHornStreamId = {{0,0,0},{0,0,0}};
     public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
     public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
-    public boolean[][] soundsHornPlaying = {{false,false,false},{false,false,false}}; // Start, Loop, End
+    public int [] soundsHornCurrentlyPlaying = {-1,-1};
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -359,6 +359,7 @@ public class threaded_application extends Application {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
     public int [] soundsLocoCurrentlyPlaying = {-1,-1};
+    public int [] soundsLocoLastDirection = {1,1};
 
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
@@ -3857,13 +3858,13 @@ public class threaded_application extends Application {
             for (int type = 0; type < soundsBellStreamId.length; type++) {
                 for (int mSound = 0; mSound < soundsBellStreamId.length; mSound++) {
                     soundPool.stop(soundsBellStreamId[type][mSound]);
-                    soundsBellPlaying[type][mSound] = false;
+//                    soundsBellPlaying[type][mSound] = false;
                 }
             }
             for (int type = 0; type < soundsHornStreamId.length; type++) {
                 for (int mSound = 0; mSound < soundsHornStreamId.length; mSound++) {
                     soundPool.stop(soundsHornStreamId[type][mSound]);
-                    soundsHornPlaying[type][mSound] = false;
+//                    soundsHornPlaying[type][mSound] = false;
                 }
             }
 
@@ -3872,6 +3873,12 @@ public class threaded_application extends Application {
                     soundPool.stop(soundsLocoStreamId[type][mSound]);
 //                    soundsLocoPlaying[type][mSound] = false;
                 }
+            }
+
+            for (int j = 0; j<2; j++) {
+                soundsLocoCurrentlyPlaying[j] = -1;
+                soundsBellCurrentlyPlaying[j] = -1;
+                soundsHornCurrentlyPlaying[j] = -1;
             }
             soundPool.release();
         }
