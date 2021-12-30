@@ -7051,7 +7051,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (bMutes!=null) {
                 if (bMutes[whichThrottle] != null) {
                     if (mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-                        bMutes[whichThrottle].setVisibility(View.GONE);
+                        bMutes[whichThrottle].setVisibility(View.GONE); 
                     } else {
                         bMutes[whichThrottle].setVisibility(View.VISIBLE);
                     }
