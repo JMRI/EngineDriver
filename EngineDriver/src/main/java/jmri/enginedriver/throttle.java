@@ -927,6 +927,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
                                     set_function_labels_and_listeners_for_view(whichThrottle);
                                     enable_disable_buttons_for_view(fbs[whichThrottle], true);
+                                    soundsShowHideMuteButton(whichThrottle);
                                     set_labels();
                                 } else if (com2 == '-') { // if loco removed
                                     removeLoco(whichThrottle);
@@ -2377,6 +2378,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         bLSpds[whichThrottle].setEnabled(newEnabledState);
         bRSpds[whichThrottle].setEnabled(newEnabledState);
         enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
+        soundsShowHideMuteButton(whichThrottle);
         if (!newEnabledState) {
             sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
             doLocoSound(whichThrottle);
