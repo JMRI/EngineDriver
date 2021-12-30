@@ -4208,6 +4208,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void startBellHornSound(int soundType, int whichThrottle) {
+//        Log.d("Engine_Driver", "startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
         if (soundIsPlaying(soundType,whichThrottle) < 0) { // check if the loop sound is not currently playing
             soundStart(soundType,whichThrottle,SOUNDS_BELL_HORN_START, 0);
             // queue up the loop sound to be played when the start sound is finished
@@ -4218,7 +4219,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void stopBellHornSound(int soundType, int whichThrottle) {
-        if (soundIsPlaying(soundType,whichThrottle) > 0) { // check if the loop sound is currently playing
+//        Log.d("Engine_Driver", "stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
+        if (soundIsPlaying(soundType,whichThrottle) == 0) {
+            // if the start sound is currently playing need to do something special
+            // as the loop is probably scheduled to run but has not started yet
+            mainapp.comm_msg_handler.postDelayed(
+                    new SoundScheduleSoundToStop(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP),
+                    mainapp.soundsBellDuration[whichThrottle][SOUNDS_BELL_HORN_START]+100);
+
+        } else if (soundIsPlaying(soundType,whichThrottle) == 1) { // check if the loop sound is currently playing
             int expectedEndTime = soundStop(soundType,whichThrottle,SOUNDS_BELL_HORN_LOOP, false);
             // queue up the end sound
             mainapp.comm_msg_handler.postDelayed(
@@ -4228,7 +4237,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void soundStart(int soundType, int whichThrottle, int mSound, int loop) {
-//        Log.d("Engine_Driver", "soundStart: soundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+//        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
         switch (soundType) {
             default:
             case SOUNDS_TYPE_LOCO: // loco
@@ -4388,7 +4397,30 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
+    public class SoundScheduleSoundToStop implements Runnable {
+        int whichThrottle;
+        int soundType;
+        int mSound;
 
+        public SoundScheduleSoundToStop(int SoundType, int WhichThrottle, int MSound) {
+            whichThrottle = WhichThrottle;
+            soundType = SoundType;
+            mSound = MSound;
+        }
+
+        @Override
+        public void run() {
+//            Log.d("Engine_Driver", "SoundScheduleSoundToStop.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
+            switch (soundType) {
+                default:
+                    break;
+                case SOUNDS_TYPE_HORN: // horn
+                case SOUNDS_TYPE_BELL: // bell
+                    soundStop(soundType, whichThrottle, mSound, false);
+                    break;
+            }
+        }
+    }
 
     protected class function_button_touch_listener implements View.OnTouchListener {
     int function;
