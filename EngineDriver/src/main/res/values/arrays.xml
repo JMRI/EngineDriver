@@ -177,6 +177,20 @@
         <item >0</item>  <!-- Simple -->
     </integer-array>
 
+    <integer-array name="prefThrottleScreenTypeSupportsWebView" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item >0</item>  <!-- Default -->  <!-- "0" supports WebView -->
+        <item >0</item>  <!-- Vertical -->
+        <item >1</item>  <!-- Big Left -->
+        <item >1</item>  <!-- Big Right -->
+        <item >0</item>  <!-- Vertical Left -->
+        <item >0</item>  <!-- Vertical Right -->
+        <item >0</item>  <!-- Switching -->
+        <item >0</item>  <!-- Switching Left -->
+        <item >0</item>  <!-- Switching Right -->
+        <item >0</item>  <!-- Switching Horizontal -->
+        <item >1</item>  <!-- Simple -->
+    </integer-array>
+
     <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >0</item>
         <item >1</item>

@@ -242,6 +242,7 @@ public class threaded_application extends Application {
     public int numThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
+    public boolean currentScreenSupportsWebView = true;
 
     @NonNull
     public String connectedHostName = "";
@@ -3267,7 +3268,8 @@ public class threaded_application extends Application {
         String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
 
         if ( (prefs.getBoolean("prefWebViewButton", false))
-                && (!webViewLocation.equals(defaultWebViewLocation))){
+                && (!webViewLocation.equals(defaultWebViewLocation))
+                && (currentScreenSupportsWebView)){
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
