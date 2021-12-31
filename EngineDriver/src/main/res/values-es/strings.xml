@@ -896,4 +896,15 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">En el teléfono LOCO suena el volumen</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volumen para sonidos de campana/bocina/silbato en el teléfono (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">En el teléfono Otros Sonidos Volumen</string>
+    <string name="prefThrottleAdditionalControlTitle">Preferencias de fuentes de control de aceleración adicionales</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volumen para campana sonidos en el teléfono (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">En la campana de teléfono suena volumen</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volumen para cuerno / silbato sonidos en el teléfono (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">En Teléfono Cuerno / Silidos Sonidos Volumen</string>
+    <string name="prefDeviceSoundsMomentumSummary">Retraso (impulso) por cambio de paso en milisegundos (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">En el impulso telefónico</string>
+    <string name="deviceSoundsMuteButton">Silencio</string>
+    <string name="prefDeviceSoundsButtonSummary">Mostrar un botón de la barra de acción para cambiar las opciones de sonidos de LOCO de teléfono.</string>
+    <string name="prefDeviceSoundsButtonTitle">En el botón de sonidos telefónicos</string>
+    <string name="deviceSoundsMenu">Suena loco</string>
 </resources>

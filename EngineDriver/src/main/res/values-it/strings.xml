@@ -844,5 +844,16 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">Nel telefono Loco suona il volume</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume per Bell/Horn/Whistle Sounds nel telefono (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">Nel telefono Altro volume dei suoni</string>
+    <string name="prefThrottleAdditionalControlTitle">Altre preferenze di sorgente di controllo dell\'acceleratore</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volume per suoni di campana nel telefono (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">Nel volume della campana del telefono</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volume per suoni di corno / fischietto nel telefono (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">Nel telefono Horn / Whistle Sounds Volume</string>
+    <string name="prefDeviceSoundsMomentumSummary">Ritardo (slancio) per cambio di passo in millisecondi (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">Nel momento del telefono</string>
+    <string name="deviceSoundsMuteButton">Muto</string>
+    <string name="prefDeviceSoundsButtonSummary">Mostra un pulsante della barra di azione per modificare le opzioni dei suoni del telefono del telefono</string>
+    <string name="prefDeviceSoundsButtonTitle">Nel pulsante dei suoni del telefono</string>
+    <string name="deviceSoundsMenu">Loco Sounds</string>
 
 </resources>
