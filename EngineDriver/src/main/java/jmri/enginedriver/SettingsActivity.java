@@ -822,16 +822,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        int index = -1;
+        int index = getThrottleScreenTypeArrayIndex(sharedPreferences);
         String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
-        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
         int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
         int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(prefThrottleScreenType)) {
-                index = i;
-            }
-        }
+
         if (index < 0) return; //bail if no matches
 
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
@@ -842,7 +837,36 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
             reload();
         }
+    }
 
+    boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
+        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        boolean supportsWebView = false;
+
+        int index = getThrottleScreenTypeArrayIndex(sharedPreferences);
+        int[] supportWebView = this.getResources().getIntArray(R.array.prefThrottleScreenTypeSupportsWebView);
+
+        if (index < 0) return supportsWebView; //bail if no matches
+
+        if (supportWebView[index] == 0) {
+            supportsWebView = true;
+        }
+        return supportsWebView;
+    }
+
+    int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences) {
+        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        int index = -1;
+        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(prefThrottleScreenType)) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 
     private void setGamePadPrefLabels(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
@@ -1146,8 +1170,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
                         parentActivity.checkThrottleScreenType(sharedPreferences);
                         parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                        showHideThrottleWebViewPreferences(sharedPreferences);
                     case "NumThrottle":
-                        showHideThrottleNumberPreference();
+                        showHideThrottleNumberPreference(sharedPreferences);
                         parentActivity.limitNumThrottles(sharedPreferences);
                         break;
 
@@ -1247,7 +1272,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
 
                 showHideThrottleTypePreferences();
-                showHideThrottleNumberPreference();
+                showHideThrottleNumberPreference(prefs);
+                showHideThrottleWebViewPreferences(prefs);
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
@@ -1284,24 +1310,23 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 sharedPreferences.edit().putString(key, ((String) val)).commit();
         }
 
-        private void showHideThrottleNumberPreference() {
+        private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
             boolean enable = true;
             parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-            int index = 0;
-            String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+            int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
             int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
-            for (int i = 0; i < arr.length; i++) {
-                if (arr[i].equals(parentActivity.prefThrottleScreenType)) {
-                    index = i;
-                }
-            }
 
             if ((index<fixed.length) && (fixed[index] == 0)) {
                 enable = false;
             }
 
             parentActivity.enableDisablePreference(getPreferenceScreen(), "NumThrottle", !enable);
+        }
 
+        private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
+            boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
         }
 
         private void showHideSimpleThrottleLayoutShowFunctionButtonCountPreference() {

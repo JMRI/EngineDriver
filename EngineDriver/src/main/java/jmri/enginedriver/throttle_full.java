@@ -118,6 +118,7 @@ public class throttle_full extends throttle {
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
 
         mainapp.throttleLayoutViewId = R.layout.throttle;
         super.onCreate(savedInstanceState);

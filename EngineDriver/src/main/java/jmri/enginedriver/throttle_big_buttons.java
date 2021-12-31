@@ -60,6 +60,7 @@ public class throttle_big_buttons extends throttle {
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = false;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {

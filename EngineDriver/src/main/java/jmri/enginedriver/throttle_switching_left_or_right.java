@@ -86,6 +86,8 @@ public class throttle_switching_left_or_right extends throttle {
 
         mainapp = (threaded_application) this.getApplication();
 
+        mainapp.currentScreenSupportsWebView = true;
+
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching":

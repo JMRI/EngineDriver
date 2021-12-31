@@ -61,6 +61,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
