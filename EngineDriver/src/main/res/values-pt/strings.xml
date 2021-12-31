@@ -847,5 +847,16 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">No telefone loco sons de volume</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume para sino/chifre/apito sons no telefone (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">No telefone outro volume de sons</string>
+    <string name="prefThrottleAdditionalControlTitle">Preferências adicionais de fonte de controle do acelerador</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volume para sino soa no telefone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">No sino do telefone soa o volume</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volume para o chifre / apito sons no telefone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">No Telefone Horn / Whistle Sounds Volume</string>
+    <string name="prefDeviceSoundsMomentumSummary">Atraso (Momentum) por mudança de passo em milissegundos (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">No momento do telefone</string>
+    <string name="deviceSoundsMuteButton">Mudo</string>
+    <string name="prefDeviceSoundsButtonSummary">Mostrar um botão de barra de ação para alterar as opções de sons de loco no telefone</string>
+    <string name="prefDeviceSoundsButtonTitle">No botão de sons do telefone</string>
+    <string name="deviceSoundsMenu">Loco sons</string>
 
 </resources>

@@ -912,5 +912,16 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">Im Telefon Loco klingt das Volumen</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volumen für Glocke/Horn/Whistle Sounds im Telefon (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">Andere Sounds-Lautstärke</string>
+    <string name="prefThrottleAdditionalControlTitle">Zusätzliche Drosselklappen-Kontrollquelleneinstellungen</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volumen für Bell-Sounds im Telefon (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">In der Telefonklitzung ertönt das Volumen</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volumen für Horn / Whistle-Sounds im Telefon (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">Im Telefonhorn / Pfeife ertönt das Volumen</string>
+    <string name="prefDeviceSoundsMomentumSummary">Verzögerung (Momentum) pro Schrittwechsel in Millisekunden (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">Im Telefon Impuls</string>
+    <string name="deviceSoundsMuteButton">Stumm</string>
+    <string name="prefDeviceSoundsButtonSummary">Zeigen Sie eine Action-Bar-Taste, um die LocO-Sounds in Telefon-Look zu ändern</string>
+    <string name="prefDeviceSoundsButtonTitle">Im Telefon Sounds-Taste</string>
+    <string name="deviceSoundsMenu">Loco-Sounds</string>
 
 </resources>

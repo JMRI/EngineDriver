@@ -1103,5 +1103,16 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">V telefonu lokomoti zvuku hlasitosti</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Hlasitost zvuku/houkaček/píšťalky v telefonu (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">V telefonu Jiné zvuky hlasitosti</string>
+    <string name="prefThrottleAdditionalControlTitle">Další preference zdroje řízení škrticí klapky</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Hlasitost zvonek zvuku v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">V telefonním zvonku zvuku</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Hlasitost pro zvuky Horn / Whistle v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">V telefonu Horn / Whistle Zvuky hlasitosti</string>
+    <string name="prefDeviceSoundsMomentumSummary">Zpoždění (hybnost) za krok Změna milisekund (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">V telefonu hybnosti</string>
+    <string name="deviceSoundsMuteButton">Ztlumit</string>
+    <string name="prefDeviceSoundsButtonSummary">Zobrazte tlačítko ACCE BUNKU pro změnu možností v telefonu Loco Sounds</string>
+    <string name="prefDeviceSoundsButtonTitle">V telefonu zvuky</string>
+    <string name="deviceSoundsMenu">Loco Sounds</string>
 
 </resources>

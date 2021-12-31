@@ -924,5 +924,16 @@
     <string name="prefDeviceSoundsLocoVolumeTitle">Dans le téléphone Loco Sounds Volume</string>
     <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume des sons de cloche/corne/sifflet au téléphone (1-100)</string>
     <string name="prefDeviceSoundsBellHornVolumeTitle">Dans le téléphone autre volume de sons</string>
+    <string name="prefThrottleAdditionalControlTitle">Préférences de source d\'accélérateur supplémentaires</string>
+    <string name="deviceSoundsMuteButton">Muet</string>
+    <string name="prefDeviceSoundsButtonSummary">Afficher une barre d\'action pour modifier les options de sons sur le téléphone téléphonique</string>
+    <string name="prefDeviceSoundsButtonTitle">Bouton Sounds du téléphone</string>
+    <string name="deviceSoundsMenu">Sounds Loco</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volume des sons de cloche au téléphone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">Dans le téléphone Bell sonne le volume</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volume des sons de corne / sifflet au téléphone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">Dans le volume du corne / sifflet de sifflet</string>
+    <string name="prefDeviceSoundsMomentumSummary">Délai (élan) par étape Changement de millisecondes (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">Dans le mauvais moment</string>
 
 </resources>
