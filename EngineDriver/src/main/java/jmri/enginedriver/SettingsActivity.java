@@ -835,7 +835,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_LONG).show();
-            reload();
+//            reload();
         }
     }
 
