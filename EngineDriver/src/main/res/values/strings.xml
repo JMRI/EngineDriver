@@ -208,8 +208,8 @@
     <string name="prefSelLocoWhileMovingSummary">Enables Loco Select button when moving</string>
     <string name="prefShowAddressInsteadOfNameTitle">Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show loco DCC Address(es) instead of the Roster Name(s) on the Throttle screen</string>
-    <string name="prefIncreaseWebViewSizeTitle">Larger throttle Web View?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Increase throttle Web View size to 60% for small screens</string>
+    <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
+    <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
@@ -340,7 +340,7 @@
     <string name="prefMaximumThrottleChangeDefaultValue" translatable="false">25</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleChangeSummary">Maximum allowed throttle change in %</string>
     <string name="prefWebViewTitle">Throttle Web View Preferences</string>
-    <string name="prefWebViewSummary">Options for Throttle Web View appearance</string>
+    <string name="prefWebViewSummary">Options for Throttle Web View appearance (Web page that will appear at the bottom of the Throttle Screen)</string>
     <string name="prefInitialThrotWebPageTitle">Initial throttle Web Page</string>
     <string name="prefInitialThrotWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefInitialThrotWebPageSummary">Initial throttle Web Page (such as \'/panel/\')</string>
@@ -414,16 +414,16 @@
     <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
     <string name="prefDefaultAddressLengthDefaultValue" translatable="false">Auto</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDefaultAddressLengthSummary">Default Loco Address Length, (Auto will set based on # of digits)</string>
-    <string name="prefWebTitle">Web Preferences</string>
+    <string name="prefWebTitle">Web Screen Preferences</string>
     <string name="prefDisplaySpeedUnitsTitle">Speed Units</string>
     <string name="prefDisplaySpeedUnitsDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage, or by a specific number of steps</string>
     <string name="prefWebOrientationTitle">Web Screen Orientation</string>
     <string name="prefWebOrientationDefaultValue" translatable="false">Auto-Rotate</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefWebOrientationSummary">Select the Web Screen orientation</string>
-    <string name="prefInitialWebPageTitle">Initial Web Page</string>
+    <string name="prefInitialWebPageTitle">Initial Web Screen Page</string>
     <string name="prefInitialWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefInitialWebPageSummary">Enter the initial Web Page (such as \'/panel\')</string>
+    <string name="prefInitialWebPageSummary">Enter the initial Web Page (such as \'/panel\') for the Web Screen</string>
     <string name="prefConnectTitle">Connect Preferences</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
     <string name="prefMaximumRecentConnectionsDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
@@ -754,13 +754,13 @@
     <string name="toastDirectionButtonsSwapped">Direction Buttons temporarily swapped. To permanently swap them, change in preferences</string>
     <string name="toastImmersiveModeDisabled">Immersive mode temporarily disabled. To disable permanently change in preferences</string>
     <string name="toastThrottleScreenUnlocked">Throttle Screen Unlocked</string>
-    <string name="toastShakeWebViewHidden">Web View temporarily hidden. Shake again to show. To hide permanently change in preferences</string>
-    <string name="toastShakeWebViewUnavailable">Web View must be enabled in the preferences first</string>
+    <string name="toastShakeWebViewHidden">Throttle Web View temporarily hidden. Shake again to show. To hide permanently change in preferences</string>
+    <string name="toastShakeWebViewUnavailable">Throttle Web View must be enabled in the preferences first</string>
     <string name="toastShakeScreenLocked">Throttle Screen Locked - Shake again to unlock</string>
     <string name="toastShakeScreenDimmed">Throttle Screen Dimmed - Shake again to restore</string>
     <string name="toastSwipeUpDownScreenLocked">Throttle Screen Locked - Swipe again to unlock</string>
     <string name="toastSwipeUpDownScreenDimmed">Throttle Screen Dimmed - Swipe again to restore</string>
-    <string name="toastSwipeUpViewHidden">Web View temporarily hidden. To hide permanently change in preferences</string>
+    <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
 
@@ -769,12 +769,12 @@
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
     <string name="toastPreferencesImportServerManualFailed">Preferences Import from Server failed! Check the file is correct. (%1$s)</string>
-    <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server Succeeded. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Preferences Import from file Succeeded.</string>
-    <string name="toastPreferencesThemeChangeSucceeded">Theme Change Succeeded.</string>
-    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Layout change Succeeded.</string>
-    <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change Succeeded.</string>
-    <string name="toastPreferencesBackgroundChangeSucceeded">Background Change Succeeded.</string>
+    <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server succeeded. (%1$s)</string>
+    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Theme Change succeeded.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Throttle Layout change succeeded.</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change succeeded.</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Background Change succeeded.</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Swipe through web disabled.</string>
 
     <!--    Toast messages for the Turnout Activity -->
@@ -813,7 +813,7 @@
     <!--    Toast messages for the Select Loco Activity -->
     <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
     <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
-    <string name="toastNumThrottles">Chosen Throttle Screen Layout does not support that many throttles. Reducing to %1$s.</string>
+    <string name="toastNumThrottles">Chosen Throttle Screen Layout does not support that many throttles. Changing to %1$s.</string>
     <string name="toastRecentsHelp">Touch to select a Recent Entry,\n  or change entry method.\nLong press to rename.\nSwipe Right to remove an entry.</string>
     <string name="toastRecentConsistsHelp">Touch to select a Consist Entry,\n  or change entry method.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Right to remove an entry.</string>
     <string name="toastRosterHelp">Touch to select a Roster Entry,\n  or change entry method.\nLong press for details.</string>
@@ -902,10 +902,10 @@
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
-    <string name="webViewButtonBar">Web View Button</string>
-    <string name="webViewAction">Show/Hide Web View</string>
-    <string name="prefWebViewButtonSummary">Show button in action bar to show/hide Web View.\n(requires \'Throttle Web View\' preference to be enabled)</string>
-    <string name="prefWebViewButtonTitle">Web View button?</string>
+    <string name="webViewButtonBar">Throttle Web View Button</string>
+    <string name="webViewAction">Show/Hide Throttle Web View</string>
+    <string name="prefWebViewButtonSummary">Show button in action bar to show/hide Throttle Web View.\n(requires \'Throttle Web View\' preference to be enabled)</string>
+    <string name="prefWebViewButtonTitle">Throttle Web View button?</string>
 
     <string name="logViewerTitle">LogViewerActivity | %1$s</string>
 

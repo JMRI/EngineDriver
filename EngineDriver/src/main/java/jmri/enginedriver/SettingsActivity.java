@@ -138,6 +138,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
     private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
+    private boolean ignoreThisThrottleNumChange = false;
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @Override
@@ -250,7 +251,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @Override
     protected void onDestroy() {
-        Log.d("Engine_Driver", "preferences.onDestroy() called");
+        Log.d("Engine_Driver", "settings.onDestroy() called");
         super.onDestroy();
         if (mainapp.settings_msg_handler !=null) {
             mainapp.settings_msg_handler.removeCallbacksAndMessages(null);
@@ -268,7 +269,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "Settings: forceRestartApp() ");
+        Log.d("Engine_Driver", "Settings: forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -683,6 +684,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Engine_Driver", "Settings: onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
         SAMenu = menu;
@@ -721,6 +723,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Engine_Driver", "Settings: onActivityResult()");
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // When an Image is picked
@@ -755,6 +758,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     protected boolean limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+        Log.d("Engine_Driver", "Settings: limitIntPrefValue()");
         boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
@@ -781,6 +785,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     protected boolean limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
+        Log.d("Engine_Driver", "Settings: limitFloatPrefValue()");
         boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
@@ -807,6 +812,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void checkThrottleScreenType(SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "Settings: checkThrottleScreenType()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
@@ -818,7 +824,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
-    public void limitNumThrottles(SharedPreferences sharedPreferences) {
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "Settings: limitNumThrottles()");
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
@@ -831,15 +838,24 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
-// //            Log.d("Engine_Driver", "Settings: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
+            Log.d("Engine_Driver", "Settings: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
-            reload();
+            if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
+            }
+            ListPreference p = (ListPreference) prefScreen.findPreference("NumThrottle");
+            if (p != null) {
+                ignoreThisThrottleNumChange = true;
+                Log.d("Engine_Driver", "Settings: limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
+                p.setValue(textNumbers[max[index]-1]);
+                p.setValueIndex(max[index]-1);
+            }
         }
     }
 
     boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "Settings: throttleScreenTypeSupportsWebView()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         boolean supportsWebView = false;
 
@@ -855,6 +871,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences) {
+        Log.d("Engine_Driver", "Settings: getThrottleScreenTypeArrayIndex()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = -1;
@@ -939,6 +956,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void enableDisablePreference(PreferenceScreen prefScreen, String key, boolean enable) {
+        Log.d("Engine_Driver", "Settings: enableDisablePreference(): key: " + key);
         Preference p = prefScreen.findPreference(key);
         if (p != null) {
             p.setSelectable(enable);
@@ -1000,6 +1018,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
+        Log.d("Engine_Driver", "Settings: showHideThrottleSwitchPreferences()");
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType",
                 getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         boolean enable = prefThrottleScreenType.equals("Simple");
@@ -1101,6 +1120,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @SuppressLint("ApplySharedPref")
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.d("Engine_Driver", "Settings: onSharedPreferenceChanged(): key: " + key);
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
@@ -1173,7 +1193,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         showHideThrottleWebViewPreferences(sharedPreferences);
                     case "NumThrottle":
                         showHideThrottleNumberPreference(sharedPreferences);
-                        parentActivity.limitNumThrottles(sharedPreferences);
+                        if (!parentActivity.ignoreThisThrottleNumChange) {
+                            parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences);
+                        }
+                        parentActivity.ignoreThisThrottleNumChange = false;
                         break;
 
                     case "prefTheme":
@@ -1208,6 +1231,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         void setPreferencesUI() {
+            Log.d("Engine_Driver", "Settings: setPreferencesUI()");
             prefs = parentActivity.prefs;
             defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
@@ -1311,6 +1335,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
+            Log.d("Engine_Driver", "Settings: showHideThrottleNumberPreference()");
             boolean enable = true;
             parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
             int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
@@ -1324,6 +1349,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
+            Log.d("Engine_Driver", "Settings: showHideThrottleWebViewPreferences()");
             boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
@@ -1357,6 +1383,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 
         private void showHideThrottleTypePreferences() {
+            Log.d("Engine_Driver", "Settings: showHideThrottleTypePreferences()");
             boolean enable = true;
             if ((parentActivity.prefThrottleScreenType.equals("Simple")) || (parentActivity.prefThrottleScreenType.equals("Vertical"))
                     || (parentActivity.prefThrottleScreenType.equals("Vertical Left"))  || (parentActivity.prefThrottleScreenType.equals("Vertical Right"))

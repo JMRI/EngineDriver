@@ -282,7 +282,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
     public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
     public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
-    public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 13;
+    public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 14;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -3093,7 +3093,7 @@ public class threaded_application extends Application {
     public void applyTheme(Activity activity, boolean isPreferences) {
         int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
-        Log.d("Engine_Driver", "applyTheme: " + selectedTheme);
+        Log.d("Engine_Driver", "t_a: applyTheme: " + selectedTheme);
         theme = activity.getTheme();
 
     }
@@ -3159,7 +3159,7 @@ public class threaded_application extends Application {
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } catch (Exception e) {
-            Log.e("Engine_Driver", "setActivityOrientation: Unable to change Orientation: " + e.getMessage());
+            Log.e("Engine_Driver", "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
         }
         return true;
     }

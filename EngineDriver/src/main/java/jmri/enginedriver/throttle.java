@@ -4141,15 +4141,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if (mainapp.soundsLocoQueue[whichThrottle].enqueueWithIntermediateSteps(mSound, wasDirectionChange) ) {
             if (queueCount == 0){
-                soundScheduleNextLocoSound(whichThrottle,mSound);
+                soundScheduleNextLocoSound(whichThrottle,mSound, -1);
             }
         }
     }
 
-    void soundScheduleNextLocoSound(int whichThrottle, int mSound) {
+    void soundScheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime ) {
 //        Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
-        int expectedEndTime = soundStop(SOUNDS_TYPE_LOCO, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], false);
+        int expectedEndTime;
+        if (forcedExpectedEndTime>0) {
+            expectedEndTime = forcedExpectedEndTime;
+        } else { // != -1
+            expectedEndTime = soundStop(SOUNDS_TYPE_LOCO, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], false);
+        }
         int nextSound = mainapp.soundsLocoQueue[whichThrottle].frontOfQueue();
 
         if (nextSound >= 0) {
@@ -4387,7 +4392,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     soundStart(soundType, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
                     mainapp.soundsLocoQueue[whichThrottle].dequeue();
                     if (mainapp.soundsLocoQueue[whichThrottle].queueCount()>0) {  // if there are more on the queue, start the process to stop the one you just started
-                        soundScheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue());
+                        soundScheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue(), -1);
                     }
                     break;
                 case SOUNDS_TYPE_HORN: // horn
@@ -6040,7 +6045,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!mainapp.consists[i].isActive()) {
                         soundsStopAllSoundsForLoco(i);
                     }
-                    soundsShowHideMuteButton(i);
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist
@@ -6124,9 +6128,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case ACTIVITY_DEVICE_SOUNDS_SETTINGS: {
                 mainapp.soundsReloadSounds = true;
                 loadSounds();
-                for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
-                    doLocoSound(i);
-                }
+//                for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+//                    doLocoSound(i);
+//                }
                 break;
             }
         }
@@ -6135,7 +6139,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
         set_labels();
-
+        soundsShowHideAllMuteButtons();
     }
 
     private void ActivityConsistUpdate(int resultCode, Bundle extras) {
@@ -6802,7 +6806,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
             prefs.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -6833,6 +6837,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         for (int i = 0; i <= 1; i++) {
             mainapp.soundsLocoQueue[i] = new ArrayQueue(30);
+            mainapp.soundsLocoQueue[i].emptyQueue();
             mainapp.soundsLocoCurrentlyPlaying[i] = -1;
         }
 
@@ -7022,9 +7027,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.soundPool.stop(mainapp.soundsBellStreamId[whichThrottle][i]);
                 mainapp.soundPool.stop(mainapp.soundsHornStreamId[whichThrottle][i]);
             }
-
             mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = -1;
-            mainapp.soundsLocoQueue[whichThrottle].emptyQueue();
         }
     }
 
@@ -7048,6 +7051,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             soundsMuteUnmuteCurrentSounds(whichThrottle);
             return false;
+        }
+    }
+
+    void soundsShowHideAllMuteButtons() {
+        for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+            soundsShowHideMuteButton(i);
         }
     }
 

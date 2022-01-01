@@ -327,6 +327,13 @@
                                         android:layout_marginLeft="5dp"
                                         android:text="@string/pauseSpeedButtonLabel" />
 
+                                    <Button
+                                        android:id="@+id/device_sounds_mute_0"
+                                        style="?attr/ed_normal_button_style"
+                                        android:layout_width="fill_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:text="@string/deviceSoundsMuteButton" />
+
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_0"
                                         android:layout_width="fill_parent"
@@ -812,6 +819,13 @@
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
                                         android:text="@string/pauseSpeedButtonLabel" />
+
+                                    <Button
+                                        android:id="@+id/device_sounds_mute_1"
+                                        style="?attr/ed_normal_button_style"
+                                        android:layout_width="fill_parent"
+                                        android:layout_marginLeft="5dp"
+                                        android:text="@string/deviceSoundsMuteButton" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_1"
