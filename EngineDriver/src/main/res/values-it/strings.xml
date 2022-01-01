@@ -855,5 +855,6 @@
     <string name="prefDeviceSoundsButtonSummary">Mostra un pulsante della barra di azione per modificare le opzioni dei suoni del telefono del telefono</string>
     <string name="prefDeviceSoundsButtonTitle">Nel pulsante dei suoni del telefono</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
+    <string name="app_name_device_sounds_settings">Nei suoni del telefono del telefono</string>
 
 </resources>

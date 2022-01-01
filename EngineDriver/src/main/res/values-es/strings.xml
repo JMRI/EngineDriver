@@ -907,4 +907,5 @@
     <string name="prefDeviceSoundsButtonSummary">Mostrar un botón de la barra de acción para cambiar las opciones de sonidos de LOCO de teléfono.</string>
     <string name="prefDeviceSoundsButtonTitle">En el botón de sonidos telefónicos</string>
     <string name="deviceSoundsMenu">Suena loco</string>
+    <string name="app_name_device_sounds_settings">En el teléfono LOCO sonidos</string>
 </resources>

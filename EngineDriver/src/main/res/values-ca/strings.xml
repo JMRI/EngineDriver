@@ -911,4 +911,5 @@
     <string name="prefDeviceSoundsButtonSummary">Mostra un botó d\'acció de barra per canviar les opcions del telèfon de Loco sona</string>
     <string name="prefDeviceSoundsButtonTitle">Al botó de sons del telèfon</string>
     <string name="deviceSoundsMenu">Loco sona</string>
+    <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
 </resources>
