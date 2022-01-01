@@ -858,5 +858,6 @@
     <string name="prefDeviceSoundsButtonSummary">Mostrar um botão de barra de ação para alterar as opções de sons de loco no telefone</string>
     <string name="prefDeviceSoundsButtonTitle">No botão de sons do telefone</string>
     <string name="deviceSoundsMenu">Loco sons</string>
+    <string name="app_name_device_sounds_settings">Em sons de loco de telefone</string>
 
 </resources>

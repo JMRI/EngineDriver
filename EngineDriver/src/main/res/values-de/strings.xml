@@ -923,5 +923,6 @@
     <string name="prefDeviceSoundsButtonSummary">Zeigen Sie eine Action-Bar-Taste, um die LocO-Sounds in Telefon-Look zu ändern</string>
     <string name="prefDeviceSoundsButtonTitle">Im Telefon Sounds-Taste</string>
     <string name="deviceSoundsMenu">Loco-Sounds</string>
+    <string name="app_name_device_sounds_settings">In Telefon-Loco-Sounds</string>
 
 </resources>

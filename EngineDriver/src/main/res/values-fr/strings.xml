@@ -705,7 +705,7 @@
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
     <string name="prefConsistFollowRuleStyleTitle">Fonctions d unités multiples (UM) - respecter la règle</string>
-    <string name="prefConsistFollowRuleStyleSummary">Quel style de règles à suivre dans l UM pour les fonctions.</string>
+    <string name="prefConsistFollowRuleStyleSummary">Style de règles à appliquer aux fonctions en UM:. Si choix des règles par défaut, cela s\'applique à la loco de tête</string>
     <string name="prefConsistFollowTitle">Fonction UM Définition des préférences</string>
     <string name="prefConsistFollowSummary">Options pour la façon dont les fonctions se comporteront dans une UM</string>
     <string name="prefConsistFollowString1DefaultValue">LUMIÈRE</string>
@@ -910,30 +910,29 @@
     <string name="prefKidsTimerButtonTitle">Affichage de la touche TIMER?</string>
     <string name="prefKidsTimerEnableReverseSummary">Activavtion touche REVERSE</string>
     <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
-    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmez que vous voulez supprimer toutes les connexions récentes</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmer la suppression des dernières connexions</string>
     <string name="introAndroid11Title">Android 11 changements</string>
-    <string name="introAndroid11Summary">En raison de modifications appliquées par Google pour Android 11, l\'emplacement où les fichiers de pilotes de moteur sont stockés doivent être déplacés à partir du dossier \'\\engine_driver\' au dossier \'\\Android\\data\\jmri.enginedriver\\data\\files\'. \nVos données seront automatiquement copiées dans ce nouveau dossier.</string>
-    <string name="introAndroid11Summary1">Le pilote du moteur est incapable de supprimer les fichiers d\'origine dans \'\\engine_driver\', mais ils ne sont plus nécessaires ni utilisés. Donc, vous pouvez les supprimer manuellement si vous le souhaitez.</string>
-    <string name="introAndroid11Summary2">Remarque: Si vous désinstallez l\'application, tous les fichiers de ce nouveau dossier (y compris les préférences exportées) seront automatiquement supprimés. Il est donc important de copier les fichiers ailleurs avant de supprimer l\'application.</string>
-    <string name="prefDeviceSoundsCategoryTitle">Dans le téléphone Loco Sounds Volume</string>
-    <string name="prefDeviceSounds0Summary">Lire des sons de base loco dans le téléphone pour le papillon 1</string>
-    <string name="prefDeviceSounds0Title">Papillon 1 sons loco</string>
-    <string name="prefDeviceSounds1Summary">Play Basic Loco Sounds au téléphone pour le papillon 2</string>
-    <string name="prefDeviceSounds1Title">Papillon 2 sons loco</string>
-    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume pour sons du moteur LOCO dans le téléphone (1-100)</string>
-    <string name="prefDeviceSoundsLocoVolumeTitle">Dans le téléphone Loco Sounds Volume</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume des sons de cloche/corne/sifflet au téléphone (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle">Dans le téléphone autre volume de sons</string>
-    <string name="prefThrottleAdditionalControlTitle">Préférences de source d\'accélérateur supplémentaires</string>
+    <string name="introAndroid11Summary">Suite aux modifications apportées à Android 11, l emplacement des fichiers Engine Driver est déplacé du repertoire  \'\\engine_driver\' vers \'\\Android\\data\\jmri.enginedriver\\data\\files\'. \nVos données seront automatiquement copiées dans ce nouveau repertoire.</string>
+    <string name="introAndroid11Summary1">Engine Driver ne peux pas supprimer les fichiers initiaux du repertoire \'\\engine_driver\', mais ils ne servent plus. Vous pouvez donc les supprimer si besoin.</string>
+    <string name="introAndroid11Summary2">Note: si vous désinstallez cette appli, TOUS les fichiers de ce nouveau repertoire, y compris les preferences seront automatiquement detruits. Il est donc important de les copier autre part avant suppressions de l appli.</string>
+    <string name="prefDeviceSoundsCategoryTitle">Sons des locomotives sur le téléphone</string>
+    <string name="prefDeviceSounds0Summary">Appliquer les sons de base de la loco sur régulateur Wi 1</string>
+    <string name="prefDeviceSounds0Title">Sons loco sur regulateur Wi 1</string>
+    <string name="prefDeviceSounds1Summary">Appliquer les sons de base de la loco sur régulateur Wi 2</string>
+    <string name="prefDeviceSounds1Title">Sons loco sur regulateur Wi 2</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume sonore Moteur des locomotives (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Volume sonore locomotive dans le telephone</string>
+    <string name="prefThrottleAdditionalControlTitle">Préférences additionnelles des régulateurs</string>
     <string name="deviceSoundsMuteButton">Muet</string>
-    <string name="prefDeviceSoundsButtonSummary">Afficher une barre d\'action pour modifier les options de sons sur le téléphone téléphonique</string>
-    <string name="prefDeviceSoundsButtonTitle">Bouton Sounds du téléphone</string>
-    <string name="deviceSoundsMenu">Sounds Loco</string>
-    <string name="prefDeviceSoundsBellVolumeSummary">Volume des sons de cloche au téléphone (1-100)</string>
-    <string name="prefDeviceSoundsBellVolumeTitle">Dans le téléphone Bell sonne le volume</string>
-    <string name="prefDeviceSoundsHornVolumeSummary">Volume des sons de corne / sifflet au téléphone (1-100)</string>
-    <string name="prefDeviceSoundsHornVolumeTitle">Dans le volume du corne / sifflet de sifflet</string>
-    <string name="prefDeviceSoundsMomentumSummary">Délai (élan) par étape Changement de millisecondes (0-2000)</string>
-    <string name="prefDeviceSoundsMomentumTitle">Dans le mauvais moment</string>
+    <string name="prefDeviceSoundsButtonSummary">Afficher bouton pour reglage sons loco via telephone</string>
+    <string name="prefDeviceSoundsButtonTitle">Bouton reglage sons loco via telephone</string>
+    <string name="deviceSoundsMenu">Sons locomotives via telephone</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Réglage sonore de la cloche dans telephone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">Volume sonore son de la cloche</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Réglage sonore Klaxon/Sifflet dans telephone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">Volume sonore son Klaxon/Sifflet</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Délai (inertie) entre pas de vitesse en millisecondes (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">Delai (inertie) via telephone</string>
+    <string name="app_name_device_sounds_settings">Sons locomotives via telephone</string>
 
 </resources>

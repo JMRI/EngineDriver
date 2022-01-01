@@ -1114,5 +1114,6 @@
     <string name="prefDeviceSoundsButtonSummary">Zobrazte tlačítko ACCE BUNKU pro změnu možností v telefonu Loco Sounds</string>
     <string name="prefDeviceSoundsButtonTitle">V telefonu zvuky</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
+    <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
 
 </resources>
