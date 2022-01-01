@@ -268,7 +268,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "Settings: forceRestartApp() ");
+        Log.d("Engine_Driver", "Settings: forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -834,7 +834,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 // //            Log.d("Engine_Driver", "Settings: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_LONG).show();
             reload();
         }
     }
