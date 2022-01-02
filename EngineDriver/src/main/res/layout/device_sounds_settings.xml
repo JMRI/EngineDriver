@@ -118,7 +118,8 @@
                  <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsLocoVolume_label"
@@ -130,22 +131,16 @@
                         android:text="@string/prefDeviceSoundsLocoVolumeSummary"
                          />
 
-                    <EditText
-                        android:id="@+id/dss_DeviceSoundsLocoVolume"
-                        style="?attr/edit_label_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".3"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:shadowColor="#FFFFFFFF"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="0.2"
-                        android:singleLine="true"
-                        android:text="100"
-                        android:textSize="18sp"
-                        tools:ignore="HardcodedText" />
+                     <Spinner
+                         android:id="@+id/dss_DeviceSoundsLocoVolume"
+                         android:layout_width="0dp"
+                         android:layout_weight=".3"
+                         android:layout_height="wrap_content"
+                         android:ellipsize="none"
+                         android:paddingLeft="20dp"
+                         android:paddingRight="20dp"
+                         android:text="100"
+                         tools:ignore="RtlHardcoded" />
 
                 </LinearLayout>
 
@@ -164,22 +159,17 @@
                         android:text="@string/prefDeviceSoundsBellVolumeSummary"
                          />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/dss_DeviceSoundsBellVolume"
-                        style="?attr/edit_label_style"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:layout_weight=".3"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:shadowColor="#FFFFFFFF"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="0.2"
-                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:text="100"
-                        android:textSize="18sp"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="RtlHardcoded" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -197,22 +187,16 @@
                         android:text="@string/prefDeviceSoundsHornVolumeSummary"
                          />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/dss_DeviceSoundsHornVolume"
-                        style="?attr/edit_label_style"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
                         android:layout_weight=".3"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        android:shadowColor="#FFFFFFFF"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="0.2"
-                        android:singleLine="true"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:text="100"
-                        android:textSize="18sp"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="RtlHardcoded" />
                 </LinearLayout>
 
             </LinearLayout>

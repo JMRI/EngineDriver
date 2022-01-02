@@ -55,15 +55,17 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private Menu DSSMenu;
     private GestureDetector myGesture;
 
+    String[] valuesList;
+
     private int dssThrottle0Index;
     private int dssThrottle1Index;
     private int result;
     String[] deviceSoundsEntryValuesArray;
     String[] deviceSoundsEntriesArray; // display version
     private EditText etDeviceSoundsMomentum;
-    private EditText etDeviceSoundsLocoVolume;
-    private EditText etDeviceSoundsBellVolume;
-    private EditText etDeviceSoundsHornVolume;
+    private int dssDeviceSoundsLocoVolumeIndex;
+    private int dssDeviceSoundsBellVolumeIndex;
+    private int dssDeviceSoundsHornVolumeIndex;
     String prefDeviceSoundsMomentum;
     String prefDeviceSoundsLocoVolume;
     String prefDeviceSoundsBellVolume;
@@ -113,14 +115,9 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner = findViewById(R.id.dss_throttle0);
             dssThrottle0Index = spinner.getSelectedItemPosition();
-
             prefs.edit().putString("prefDeviceSounds0", deviceSoundsEntryValuesArray[dssThrottle0Index]).commit();  //reset the preference
 
-            InputMethodManager imm =
-                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
-            }
+            hideKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -133,14 +130,57 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Spinner spinner = findViewById(R.id.dss_throttle1);
             dssThrottle1Index = spinner.getSelectedItemPosition();
-
             prefs.edit().putString("prefDeviceSounds1", deviceSoundsEntryValuesArray[dssThrottle1Index]).commit();  //reset the preference
 
-            InputMethodManager imm =
-                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
-            }
+            hideKeyboard(view);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class spinner_listener_loco_volume implements AdapterView.OnItemSelectedListener {
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsLocoVolume);
+            dssDeviceSoundsLocoVolumeIndex = spinner.getSelectedItemPosition();
+            prefDeviceSoundsLocoVolume = valuesList[dssDeviceSoundsLocoVolumeIndex];
+            prefs.edit().putString("prefDeviceSoundsLocoVolume", prefDeviceSoundsLocoVolume).commit();  //reset the preference
+
+            hideKeyboard(view);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class spinner_listener_bell_volume implements AdapterView.OnItemSelectedListener {
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsBellVolume);
+            dssDeviceSoundsBellVolumeIndex = spinner.getSelectedItemPosition();
+            prefDeviceSoundsBellVolume = valuesList[dssDeviceSoundsBellVolumeIndex];
+            prefs.edit().putString("prefDeviceSoundsBellVolume", prefDeviceSoundsBellVolume).commit();  //reset the preference
+
+            hideKeyboard(view);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class spinner_listener_horn_volume implements AdapterView.OnItemSelectedListener {
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsHornVolume);
+            dssDeviceSoundsHornVolumeIndex = spinner.getSelectedItemPosition();
+            prefDeviceSoundsHornVolume = valuesList[dssDeviceSoundsHornVolumeIndex];
+            prefs.edit().putString("prefDeviceSoundsHornVolume", prefDeviceSoundsHornVolume).commit();  //reset the preference
+
+            hideKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -227,38 +267,38 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         });
         etDeviceSoundsMomentum.setText(prefDeviceSoundsMomentum);
 
-        etDeviceSoundsLocoVolume = findViewById(R.id.dss_DeviceSoundsLocoVolume);
-        etDeviceSoundsLocoVolume.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-        etDeviceSoundsLocoVolume.setText(prefDeviceSoundsLocoVolume);
+        valuesList = new String[100];
+        for(int i=1;i<=100;i++){
+            valuesList[i-1]=Integer.toString(i);
+        }
+        Spinner spinner = findViewById(R.id.dss_DeviceSoundsLocoVolume);
+        dssDeviceSoundsLocoVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsLocoVolume);
+        if (dssDeviceSoundsLocoVolumeIndex<1) dssDeviceSoundsLocoVolumeIndex=99;
+        ArrayAdapter<String> sa_deviceSoundsLocoVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        sa_deviceSoundsLocoVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sa_deviceSoundsLocoVolume);
+        spinner.setOnItemSelectedListener(new spinner_listener_loco_volume());
+        spinner.setSelection(dssDeviceSoundsLocoVolumeIndex);
 
-        etDeviceSoundsBellVolume = findViewById(R.id.dss_DeviceSoundsBellVolume);
-        etDeviceSoundsBellVolume.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-        etDeviceSoundsBellVolume.setText(prefDeviceSoundsBellVolume);
+        spinner = findViewById(R.id.dss_DeviceSoundsBellVolume);
+        dssDeviceSoundsBellVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsBellVolume);
+        if (dssDeviceSoundsBellVolumeIndex<1) dssDeviceSoundsBellVolumeIndex=99;
+        ArrayAdapter<String> sa_deviceSoundsBellVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        sa_deviceSoundsBellVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sa_deviceSoundsBellVolume);
+        spinner.setOnItemSelectedListener(new spinner_listener_bell_volume());
+        spinner.setSelection(dssDeviceSoundsBellVolumeIndex);
 
-        etDeviceSoundsHornVolume = findViewById(R.id.dss_DeviceSoundsHornVolume);
-        etDeviceSoundsHornVolume.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-        etDeviceSoundsHornVolume.setText(prefDeviceSoundsHornVolume);
+        spinner = findViewById(R.id.dss_DeviceSoundsHornVolume);
+        dssDeviceSoundsHornVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsHornVolume);
+        if (dssDeviceSoundsHornVolumeIndex<1) dssDeviceSoundsHornVolumeIndex=99;
+        ArrayAdapter<String> sa_deviceSoundsHornVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        sa_deviceSoundsHornVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(sa_deviceSoundsHornVolume);
+        spinner.setOnItemSelectedListener(new spinner_listener_horn_volume());
+        spinner.setSelection(dssDeviceSoundsHornVolumeIndex);
+
+
 
         if (mainapp.maxThrottlesCurrentScreen<2) {
             dss_throttle1.setEnabled(false);
@@ -297,18 +337,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "device_sounds_settings.onDestroy() called");
-
         super.onDestroy();
     }
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             saveNumberEntries();
-            InputMethodManager imm =
-                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+            hideKeyboard(v);
             finish();
         }
     }
@@ -380,13 +415,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @SuppressLint("ApplySharedPref")
     void saveNumberEntries() {
         prefDeviceSoundsMomentum = limitIntEditValue("prefDeviceSoundsMomentum", etDeviceSoundsMomentum, 0, 2000, getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
-        prefDeviceSoundsLocoVolume = limitIntEditValue("prefDeviceSoundsLocoVolume", etDeviceSoundsLocoVolume, 1, 100, "100");
-        prefDeviceSoundsBellVolume = limitIntEditValue("prefDeviceSoundsBellVolume", etDeviceSoundsBellVolume, 1, 100, "100");
-        prefDeviceSoundsHornVolume = limitIntEditValue("prefDeviceSoundsHornVolume", etDeviceSoundsHornVolume, 1, 100, "100");
         mainapp.prefDeviceSoundsMomentum = Integer.parseInt(prefDeviceSoundsMomentum);
-        mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(prefDeviceSoundsLocoVolume);
-        mainapp.prefDeviceSoundsBellVolume = Integer.parseInt(prefDeviceSoundsBellVolume);
-        mainapp.prefDeviceSoundsHornVolume = Integer.parseInt(prefDeviceSoundsHornVolume);
         prefs.edit().putString("prefDeviceSoundsMomentum", prefDeviceSoundsMomentum).commit();  //reset the preference
         prefs.edit().putString("prefDeviceSoundsLocoVolume", prefDeviceSoundsLocoVolume).commit();  //reset the preference
         prefs.edit().putString("prefDeviceSoundsBellVolume", prefDeviceSoundsBellVolume).commit();  //reset the preference
@@ -445,4 +474,12 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    void hideKeyboard(View view) {
+        InputMethodManager imm =
+                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if ((imm != null) && (view != null)) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+        }
+
+    }
 }
