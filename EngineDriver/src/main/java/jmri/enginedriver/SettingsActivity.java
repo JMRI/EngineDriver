@@ -1191,6 +1191,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.checkThrottleScreenType(sharedPreferences);
                         parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
                         showHideThrottleWebViewPreferences(sharedPreferences);
+                        if ( (parentActivity.prefThrottleScreenType.equals("Simple"))
+                           && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
+                           && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
+                              || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
+                            Toast.makeText(context, R.string.toastDeviceSoundsSimpleLayoutWarning, Toast.LENGTH_LONG).show();
+                        }
                     case "NumThrottle":
                         showHideThrottleNumberPreference(sharedPreferences);
                         if (!parentActivity.ignoreThisThrottleNumChange) {

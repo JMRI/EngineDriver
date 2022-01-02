@@ -924,5 +924,6 @@
     <string name="prefDeviceSoundsButtonTitle">Im Telefon Sounds-Taste</string>
     <string name="deviceSoundsMenu">Loco-Sounds</string>
     <string name="app_name_device_sounds_settings">In Telefon-Loco-Sounds</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Empfehlen Sie, dass Sie die Funktionsgröße der Funktionstasten erhöhen, oder Sie können nicht auf die Soundfunktionen von Bell / Horn / Mute-Sound-Funktionen zugreifen</string>
 
 </resources>

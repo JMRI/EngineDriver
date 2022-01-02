@@ -859,5 +859,6 @@
     <string name="prefDeviceSoundsButtonTitle">No botão de sons do telefone</string>
     <string name="deviceSoundsMenu">Loco sons</string>
     <string name="app_name_device_sounds_settings">Em sons de loco de telefone</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Recomende que você aumente o tamanho da área de botões de função, ou você não poderá acessar as funções de som Bell / Horn / Mudo</string>
 
 </resources>
