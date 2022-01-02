@@ -908,4 +908,5 @@
     <string name="prefDeviceSoundsButtonTitle">En el botón de sonidos telefónicos</string>
     <string name="deviceSoundsMenu">Suena loco</string>
     <string name="app_name_device_sounds_settings">En el teléfono LOCO sonidos</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Recomendamos que aumente el tamaño del área de los botones de la función, o no podrá acceder a las funciones de sonido de campana / cuerno / mute</string>
 </resources>

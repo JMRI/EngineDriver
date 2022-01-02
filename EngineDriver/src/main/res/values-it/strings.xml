@@ -856,5 +856,6 @@
     <string name="prefDeviceSoundsButtonTitle">Nel pulsante dei suoni del telefono</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">Nei suoni del telefono del telefono</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Consiglia di aumentare i pulsanti della funzione Dimensioni dell\'area o non sarà possibile accedere alle funzioni del suono Bell / Horn / Mute Sound</string>
 
 </resources>

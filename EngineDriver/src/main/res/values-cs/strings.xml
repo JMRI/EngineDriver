@@ -1115,5 +1115,6 @@
     <string name="prefDeviceSoundsButtonTitle">V telefonu zvuky</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
 
 </resources>

@@ -912,4 +912,5 @@
     <string name="prefDeviceSoundsButtonTitle">Al botó de sons del telèfon</string>
     <string name="deviceSoundsMenu">Loco sona</string>
     <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Recomanem que augmenteu la mida de la zona de botons de la funció, o no podreu accedir a les funcions de so de campana / banya / silenci</string>
 </resources>
