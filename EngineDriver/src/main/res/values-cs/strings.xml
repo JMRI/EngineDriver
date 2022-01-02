@@ -476,7 +476,7 @@
     <string name="prefThrottleImportExportSummary">Předvolby Importu/Exportu/Resetu</string>
 
     <string name="prefImportExportTitle">Import, Export nebo Reset</string>
-    <string name="prefImportExportSummary">Předvolby \'Import\' nebo \'Export\' do složky \'engine_driver/\' nebo \'Reset\'.\nObjeví se bezprostředně při výběru volby.\nVarování! S \'Reset\' a \'Import\' se bude Engine Driver restartovat!\n(Můžete přenést předvolby na jiný telefon kopírováním souboru.)</string>
+    <string name="prefImportExportSummary">Předvolby \'Import\' nebo \'Export\' do složky \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' nebo \'Reset\'.\nObjeví se bezprostředně při výběru volby.\nVarování! S \'Reset\' a \'Import\' se bude Engine Driver restartovat!\n(Můžete přenést předvolby na jiný telefon kopírováním souboru.)</string>
 
 
     <string name="prefImportExportLocoListTitle">Zahrnout seznam Nedávné lokomotivy</string>
@@ -487,20 +487,20 @@
 
 
     <string name="prefHostImportExportTitle">Ruční import/export na určitý host</string>
-    <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'engine_driver/\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
+    <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
 
 
     <string name="prefImportExportOverwite">Soubor \'%1$s\' již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
-    <string name="prefImportExportErrorReadingFrom">Import z \'engine_driver/%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
+    <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
     <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
 
     <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
-    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'/engine_driver/\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
+    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
 
     
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
-    <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/engine_driver/auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
+    <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
 
     <string name="importServerAutoDialog">Nový soubor předvoleb byl nalezen na tomto serveru (%1$s).\nChcete ho importovat?\n\nVarování!\n\'Úplný\' - Všechny předvolby budou přepsány.\n\n\'Částečný\' - Všechny předvolby s výjimkou Téma a některé předvolby Stránky typu ovladače budou přepsány.</string>
     <string name="importServerAutoDialogPositiveButton">Úplný</string>
@@ -736,11 +736,11 @@
     <string name="toastRoutesCommandSent">"Příkaz odeslaný k nastavení trasy "</string>
 
     <!--    Toast messages for the Import/Export -->
-    <string name="toastImportExportExportSucceeded">Export předvolby do \'engine_driver/%1$s\' byl úspěšný.</string>
-    <string name="toastImportExportImportSucceeded">Import předvolby z \'engine_driver/%1$s\' byl úspěšný.</string>
-    <string name="toastImportExportExportFailed">Export předvolby do \'engine_driver/%1$s\' selhal!</string>
-    <string name="toastImportExportImportFailed">Export předvolby z \'engine_driver/%1$s\' selhal!</string>
-    <string name="toastImportExportServerImportFailed">Nebyly importovány předvolby z \'engine_driver/%1$s\'. Možná jste dosud neuložili předvolby pro tohoto hostitele.</string>
+    <string name="toastImportExportExportSucceeded">Export předvolby do \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' byl úspěšný.</string>
+    <string name="toastImportExportImportSucceeded">Import předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' byl úspěšný.</string>
+    <string name="toastImportExportExportFailed">Export předvolby do \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal!</string>
+    <string name="toastImportExportImportFailed">Export předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal!</string>
+    <string name="toastImportExportServerImportFailed">Nebyly importovány předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'. Možná jste dosud neuložili předvolby pro tohoto hostitele.</string>
     <string name="toastImportExportCannotImport">Nemohu importovat předvolby. Není připojení na hostitele.</string>
     <string name="toastImportExportCannotExport">Nemohu exportovat předvolby pro určitého hosta. Host není připojen.</string>
 

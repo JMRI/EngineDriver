@@ -380,7 +380,7 @@
     <string name="prefThrottleImportExportTitle">Importar/Exportar/Reiniciar Preferências</string>
     <string name="prefThrottleImportExportSummary">Importar/Exportar/Reiniciar Preferências</string>
     <string name="prefImportExportTitle">Importar, Exportar ou Reiniciar</string>
-    <string name="prefImportExportSummary">\'Importar\' ou \'Exportar\' as preferências para a pasta \'engine_driver/\', ou \'Reiniciar\'.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Pode transferir as preferências para um outro telefone copiando o arquivo.)</string>
+    <string name="prefImportExportSummary">\'Importar\' ou \'Exportar\' as preferências para a pasta \'\\Android\\data\\jmri.enginedriver\\data\\files\\\', ou \'Reiniciar\'.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Pode transferir as preferências para um outro telefone copiando o arquivo.)</string>
 
     <string name="prefImportExportLocoListTitle">Incluir lista de locomotivas recentes</string>
     <string name="prefImportExportLocoListSummary">Inclui as locomotivas na lista locomotivas recentes em \'Importar\' e \'Exportar\'.</string>
@@ -388,21 +388,21 @@
     <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar.  (Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
 
     <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
-    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'/engine_driver/\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
 
     <string name="prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
-    <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'/engine_driver/auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
+    <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
 
     <string name="importServerAutoDialog">O arquivo New Preferences foi encontrado neste servidor (%1$s).\nVocê deseja importá-lo?\n\nAviso!\n\'Completo\' - Todas as suas preferências serão sobrescritas.\n\n\'Parcial\' - Todas as preferências, exceto as preferências Tema e Tipo de página do acelerador, serão sobrescritas.</string>
     <string name="importServerAutoDialogPositiveButton">Completo</string>
     <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
-    <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'engine_driver/\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
+    <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
     <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
-    <string name="prefImportExportErrorReadingFrom">Importação de \'engine_driver/%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="prefImportExportErrorReadingFrom">Importação de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
     <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
@@ -542,11 +542,11 @@
     <string name="toastConnectRemoved">Servidor removido da lista.</string>
 
     <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
-    <string name="toastImportExportExportSucceeded">Exportação preferências para \'engine_driver/%1$s\' realizada com sucesso.</string>
-    <string name="toastImportExportImportSucceeded">Importação preferências de \'engine_driver/%1$s\' realizada com sucesso.</string>
-    <string name="toastImportExportExportFailed">Exportação preferências para \'engine_driver/%1$s\' falhou!</string>
-    <string name="toastImportExportImportFailed">Importação preferências de \'engine_driver/%1$s\' falhou!</string>
-    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'engine_driver/%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="toastImportExportExportSucceeded">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportImportSucceeded">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportExportFailed">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou!</string>
+    <string name="toastImportExportImportFailed">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou!</string>
+    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
     <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
     <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>
