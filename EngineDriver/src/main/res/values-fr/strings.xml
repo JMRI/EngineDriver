@@ -934,6 +934,6 @@
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Délai (inertie) entre pas de vitesse en millisecondes (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">Delai (inertie) via telephone</string>
     <string name="app_name_device_sounds_settings">Sons locomotives via telephone</string>
-    <string name="toastDeviceSoundsSimpleLayoutWarning">Je vous recommande d\'augmenter la taille de la zone des boutons de fonction, ou vous ne pourrez pas accéder aux fonctions sonores Bell / Horn / Horn / Mute.</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Augmentez la zone affichant les touches de fonctions pour accéder aux touches de fonctions Sonores Cloche / Klaxon / Mute</string>
 
 </resources>
