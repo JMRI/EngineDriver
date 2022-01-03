@@ -97,6 +97,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -365,6 +366,17 @@ public class threaded_application extends Application {
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
     public int [] soundsLocoSteps = new int[2];
+
+    public ArrayList<String> iplsNames;
+    public ArrayList<String> iplsFileNames;
+
+    // this are used for temporary storage of the ipls details
+    public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16
+    public String[] iplsBellSoundsFileName = {"","",""};  // Start, Loop, End
+    public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
+    public int iplsLocoSoundsCount = -1;
+    public String iplsName = "";
+    public String iplsFileName = "";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3900,4 +3912,112 @@ public class threaded_application extends Application {
             if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
         }
     }
+
+    public void getIplsList() { // In Phone Loco Sounds
+        iplsFileNames = new ArrayList<>();
+        iplsNames = new ArrayList<>();
+        String errMsg;
+
+        File dir = new File(context.getExternalFilesDir(null).getPath());
+        File [] filesList = dir.listFiles();
+        for (File file : filesList) {
+            String fileName = file.getName();
+            String lowercaseFileName = file.getName().toLowerCase();
+            if (lowercaseFileName.endsWith(".ipls")) {
+                getIplsDetails(fileName);
+                if (!iplsName.equals("")) { // if we didn't fine a name, ignore it
+                    iplsFileNames.add(fileName);
+                    iplsNames.add("♫  " + iplsName);
+                }
+
+                Log.d("Engine_Driver", "getIplsList: Found: " + fileName);
+//                } else {
+//                    Log.d("Engine_Driver", "getIplsList: " + file.getName());
+            }
+        }
+        int x=1;
+    }
+
+    public void getIplsDetails(String fileName) {
+        String name = "";
+        String cmd;
+        int num;
+
+        File iplsFile = new File(context.getExternalFilesDir(null), fileName);
+        if (iplsFile.exists()) {
+            BufferedReader list_reader = null;
+            try {
+                list_reader = new BufferedReader(
+                        new FileReader(iplsFile));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    int splitPos = line.indexOf(':');
+                    if (splitPos > 0) {
+                        cmd = line.substring(0, 1).toLowerCase();
+                        num = -1;
+                        switch (cmd) {
+                            case "/": // comment line
+                                break;
+                            case "n":
+                                if (line.length() > splitPos + 1) { // has the name
+                                    name = line.substring(splitPos + 1, line.length() - splitPos + 1).trim();
+                                }
+                                break;
+                            case "l":
+                                if (splitPos>1) {
+                                    try {
+                                        num = Integer.decode(line.substring(1, splitPos));
+                                    } catch (NumberFormatException e) {
+                                        // ignore
+                                    }
+                                }
+                                if ( (num >= 0) && (num <= 16) ) {
+                                    iplsLocoSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                    if (num > iplsLocoSoundsCount) {
+                                        iplsLocoSoundsCount = num;
+                                    }
+                                }
+                                break;
+                            case "b":
+                                if (splitPos>1) {
+                                    try {
+                                        num = Integer.decode(line.substring(1, splitPos));
+                                    } catch (NumberFormatException e) {
+                                        // ignore
+                                    }
+                                }
+                                if ( (num >= 0) && (num <= 2) ) {
+                                    iplsBellSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                }
+                                break;
+                            case "h":
+                                if (splitPos>1) {
+                                    try {
+                                        num = Integer.decode(line.substring(1, splitPos));
+                                    } catch (NumberFormatException e) {
+                                        // ignore
+                                    }
+                                }
+                                if ( (num >= 0) && (num <= 2) ) {
+                                    iplsHornSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                }
+                                break;
+
+                        }
+                    }
+                }
+                list_reader.close();
+
+                iplsFileName = fileName;
+                iplsName = name;
+
+            } catch (IOException except) {
+                Log.e("Engine_Driver", "addToIplsList: Error reading .ipls file. "
+                        + except.getMessage());
+            }
+
+        }
+        Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
+    }
+
 }
