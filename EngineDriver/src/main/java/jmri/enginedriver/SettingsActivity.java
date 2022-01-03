@@ -139,6 +139,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
     private boolean ignoreThisThrottleNumChange = false;
+
+    private static String[] deviceSoundsEntryValuesArray;
+    private static String[] deviceSoundsEntriesArray; // display version
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @Override
@@ -182,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
 
-    }
+    } // end onCreate
 
     @Override
     public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
@@ -1274,6 +1278,29 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
                 }
 
+                mainapp.getIplsList();
+                int ipslCount = mainapp.iplsNames.size();
+                int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
+                deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
+                deviceSoundsEntryValuesArray = new String[deviceSoundsCount + ipslCount];
+                for (int i=0; i<deviceSoundsCount; i++) {
+                    deviceSoundsEntriesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntries)[i];
+                    deviceSoundsEntryValuesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntryValues)[i];
+                }
+                if (!mainapp.iplsNames.isEmpty()) {
+                    for (int i=0; i<ipslCount; i++) {
+                        deviceSoundsEntriesArray[deviceSoundsCount+i] = mainapp.iplsNames.get(i);
+                        deviceSoundsEntryValuesArray[deviceSoundsCount+i] = mainapp.iplsFileNames.get(i);
+                    }
+                }
+
+                ListPreference lp = (ListPreference) findPreference("prefDeviceSounds0");
+                lp.setEntries(deviceSoundsEntriesArray);
+                lp.setEntryValues(deviceSoundsEntryValuesArray);
+
+                lp = (ListPreference) findPreference("prefDeviceSounds1");
+                lp.setEntries(deviceSoundsEntriesArray);
+                lp.setEntryValues(deviceSoundsEntryValuesArray);
             }
 
 

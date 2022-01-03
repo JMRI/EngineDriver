@@ -211,6 +211,22 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
+        mainapp.getIplsList();        //see if there any custom ipls files
+        int ipslCount = mainapp.iplsNames.size();
+        int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
+        deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
+        deviceSoundsEntryValuesArray = new String[deviceSoundsCount + ipslCount];
+        for (int i=0; i<deviceSoundsCount; i++) {
+            deviceSoundsEntriesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntries)[i];
+            deviceSoundsEntryValuesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntryValues)[i];
+        }
+        if (!mainapp.iplsNames.isEmpty()) {
+            for (int i=0; i<ipslCount; i++) {
+                deviceSoundsEntriesArray[deviceSoundsCount+i] = mainapp.iplsNames.get(i);
+                deviceSoundsEntryValuesArray[deviceSoundsCount+i] = mainapp.iplsFileNames.get(i);
+            }
+        }
+
         //Set the buttons
         Button closeButton = findViewById(R.id.device_sounds_settings_button_close);
         close_button_listener close_click_listener = new close_button_listener();
@@ -218,14 +234,16 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
         // Set the options for the sounds
         Spinner dss_throttle0 = findViewById(R.id.dss_throttle0);
-        ArrayAdapter<?> spinner_adapter0 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
+//        ArrayAdapter<?> spinner_adapter0 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> spinner_adapter0 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
         spinner_adapter0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dss_throttle0.setAdapter(spinner_adapter0);
         dss_throttle0.setOnItemSelectedListener(new spinner_listener_0());
 
         // Set the options for the sounds
         Spinner dss_throttle1 = findViewById(R.id.dss_throttle1);
-        ArrayAdapter<?> spinner_adapter1 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
+//        ArrayAdapter<?> spinner_adapter1 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> spinner_adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
         spinner_adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dss_throttle1.setAdapter(spinner_adapter1);
         dss_throttle1.setOnItemSelectedListener(new spinner_listener_1());
@@ -233,10 +251,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         //put pointer to this activity's handler in main app's shared variable
         mainapp.device_sounds_settings_msg_handler = new device_sounds_settings_handler();
 
-        deviceSoundsEntryValuesArray = this.getResources().getStringArray(R.array.deviceSoundsEntryValues);
-//        final List<String> deviceSoundsList = new ArrayList<>(Arrays.asList(deviceSoundsEntryValuesArray));
-        deviceSoundsEntriesArray = this.getResources().getStringArray(R.array.deviceSoundsEntries);
-//        final List<String> deviceSoundsEntriesList = new ArrayList<>(Arrays.asList(deviceSoundsEntriesArray));
+//        deviceSoundsEntryValuesArray = this.getResources().getStringArray(R.array.deviceSoundsEntryValues);
+//        deviceSoundsEntriesArray = this.getResources().getStringArray(R.array.deviceSoundsEntries);
 
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
