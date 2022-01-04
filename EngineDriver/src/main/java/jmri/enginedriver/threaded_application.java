@@ -3942,6 +3942,7 @@ public class threaded_application extends Application {
         String name = "";
         String cmd;
         int num;
+        iplsLocoSoundsCount =-1;
 
         File iplsFile = new File(context.getExternalFilesDir(null), fileName);
         if (iplsFile.exists()) {
