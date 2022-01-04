@@ -3942,6 +3942,7 @@ public class threaded_application extends Application {
         String name = "";
         String cmd;
         int num;
+        iplsLocoSoundsCount =-1;
 
         File iplsFile = new File(context.getExternalFilesDir(null), fileName);
         if (iplsFile.exists()) {
@@ -3951,58 +3952,60 @@ public class threaded_application extends Application {
                         new FileReader(iplsFile));
                 while (list_reader.ready()) {
                     String line = list_reader.readLine();
-                    int splitPos = line.indexOf(':');
-                    if (splitPos > 0) {
-                        cmd = line.substring(0, 1).toLowerCase();
-                        num = -1;
-                        switch (cmd) {
-                            case "/": // comment line
-                                break;
-                            case "n":
-                                if (line.length() > splitPos + 1) { // has the name
-                                    name = line.substring(splitPos + 1, line.length() - splitPos + 1).trim();
-                                }
-                                break;
-                            case "l":
-                                if (splitPos>1) {
-                                    try {
-                                        num = Integer.decode(line.substring(1, splitPos));
-                                    } catch (NumberFormatException e) {
-                                        // ignore
+                    if (line!=null) {
+                        int splitPos = line.indexOf(':');
+                        if (splitPos > 0) {
+                            cmd = line.substring(0, 1).toLowerCase();
+                            num = -1;
+                            switch (cmd) {
+                                case "/": // comment line
+                                    break;
+                                case "n":
+                                    if (line.length() > splitPos + 1) { // has the name
+                                        name = line.substring(splitPos + 1, line.length() - splitPos + 1).trim();
                                     }
-                                }
-                                if ( (num >= 0) && (num <= 16) ) {
-                                    iplsLocoSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                    if (num > iplsLocoSoundsCount) {
-                                        iplsLocoSoundsCount = num;
+                                    break;
+                                case "l":
+                                    if (splitPos > 1) {
+                                        try {
+                                            num = Integer.decode(line.substring(1, splitPos));
+                                        } catch (NumberFormatException e) {
+                                            // ignore
+                                        }
                                     }
-                                }
-                                break;
-                            case "b":
-                                if (splitPos>1) {
-                                    try {
-                                        num = Integer.decode(line.substring(1, splitPos));
-                                    } catch (NumberFormatException e) {
-                                        // ignore
+                                    if ((num >= 0) && (num <= 16)) {
+                                        iplsLocoSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                        if (num > iplsLocoSoundsCount) {
+                                            iplsLocoSoundsCount = num;
+                                        }
                                     }
-                                }
-                                if ( (num >= 0) && (num <= 2) ) {
-                                    iplsBellSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                }
-                                break;
-                            case "h":
-                                if (splitPos>1) {
-                                    try {
-                                        num = Integer.decode(line.substring(1, splitPos));
-                                    } catch (NumberFormatException e) {
-                                        // ignore
+                                    break;
+                                case "b":
+                                    if (splitPos > 1) {
+                                        try {
+                                            num = Integer.decode(line.substring(1, splitPos));
+                                        } catch (NumberFormatException e) {
+                                            // ignore
+                                        }
                                     }
-                                }
-                                if ( (num >= 0) && (num <= 2) ) {
-                                    iplsHornSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                }
-                                break;
+                                    if ((num >= 0) && (num <= 2)) {
+                                        iplsBellSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                    }
+                                    break;
+                                case "h":
+                                    if (splitPos > 1) {
+                                        try {
+                                            num = Integer.decode(line.substring(1, splitPos));
+                                        } catch (NumberFormatException e) {
+                                            // ignore
+                                        }
+                                    }
+                                    if ((num >= 0) && (num <= 2)) {
+                                        iplsHornSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                    }
+                                    break;
 
+                            }
                         }
                     }
                 }
