@@ -4771,10 +4771,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             return;
         }
 
+        // put pointer to this activity's handler in main app's shared variable
+        mainapp.throttle_msg_handler = new throttle_handler();
 
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
-        setContentView(mainapp.throttleLayoutViewId);
+            setContentView(mainapp.throttleLayoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
 
@@ -5226,9 +5228,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         });
 
-        // put pointer to this activity's handler in main app's shared variable
-        mainapp.throttle_msg_handler = new throttle_handler();
-
         // tone generator for feedback sounds
         try {
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
@@ -5521,6 +5520,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if (mainapp.throttle_msg_handler != null) {
+            mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
             mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
             mainapp.throttle_msg_handler = null;
         } else {
@@ -5528,6 +5528,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if (volumeKeysRepeatUpdateHandler != null) {
+            volumeKeysRepeatUpdateHandler.removeCallbacks(gestureStopped);;
             volumeKeysRepeatUpdateHandler.removeCallbacksAndMessages(null);
             volumeKeysRepeatUpdateHandler = null;
         }
@@ -6257,7 +6258,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d("Engine_Driver", "gestureMove action " + event.getAction() + " eventTime: " + event.getEventTime() );
         if (gestureInProgress) {
             // stop the gesture timeout timer
-            mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
+            if (mainapp.throttle_msg_handler != null)
+                mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 
             mVelocityTracker.addMovement(event);
             if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
@@ -6279,15 +6281,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (gestureInProgress) {
                 // restart the gesture timeout timer
 //                Log.d("Engine_Driver","gestureSMove restart gesture timer");
-                mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+                if (mainapp.throttle_msg_handler != null)
+                    mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
 //        Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
-        mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
-        if (gestureInProgress) {
+        if ( (mainapp!=null) && (mainapp.throttle_msg_handler != null) && (gestureInProgress) ) {
+            mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
+
             float deltaX = (event.getX() - gestureStartX);
             float deltaY = (event.getY() - gestureStartY);
             float absDeltaX =  Math.abs(deltaX);
@@ -7033,6 +7037,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
+        Log.d("Engine_Driver", "loadSoundFromFile : file:" + fileName);
         int duration = 0;
 
         File file = new File(context.getExternalFilesDir(null), fileName);
@@ -7059,6 +7064,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
                 break;
         }
+        Log.d("Engine_Driver", "loadSoundFromFile : file loaded: " + fileName);
     }
 
         void soundsStopAllSoundsForLoco(int whichThrottle) {
