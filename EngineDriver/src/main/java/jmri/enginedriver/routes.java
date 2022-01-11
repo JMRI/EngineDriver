@@ -482,6 +482,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         super.onDestroy();
 
         if (mainapp.routes_msg_handler != null) {
+            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);;
             mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
             mainapp.routes_msg_handler = null;
         } else {
@@ -712,8 +713,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     private void gestureEnd(MotionEvent event) {
 //        Log.d("Engine_Driver", "routes: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
-        mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
-        if (gestureInProgress) {
+        if ( (mainapp!=null) && (mainapp.routes_msg_handler != null) && (gestureInProgress) ) {
+            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
+
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
             if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes

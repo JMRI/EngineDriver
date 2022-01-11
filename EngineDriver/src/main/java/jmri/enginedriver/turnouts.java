@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.text.TextUtils.substring;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -71,8 +73,6 @@ import java.util.List;
 import java.util.Map;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-
-import static android.text.TextUtils.substring;
 
 //public class turnouts extends AppCompatActivity implements OnGestureListener {
 public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -768,6 +768,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         super.onDestroy();
 
         if (mainapp.turnouts_msg_handler != null) {
+            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);;
             mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
             mainapp.turnouts_msg_handler = null;
         } else {
@@ -1414,8 +1415,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     private void gestureEnd(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
-        mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
-        if (gestureInProgress) {
+        if ( (mainapp!=null) && (mainapp.turnouts_msg_handler != null) && (gestureInProgress)) {
+            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
             if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes

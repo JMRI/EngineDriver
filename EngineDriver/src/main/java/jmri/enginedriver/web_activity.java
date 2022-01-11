@@ -123,7 +123,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     public void gestureMove(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
-        if (gestureInProgress) {
+        if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
             // stop the gesture timeout timer
             mainapp.web_msg_handler.removeCallbacks(gestureStopped);
 
@@ -149,8 +149,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     private void gestureEnd(MotionEvent event) {
         // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
-        mainapp.web_msg_handler.removeCallbacks(gestureStopped);
-        if (gestureInProgress) {
+        if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
+            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
             if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes

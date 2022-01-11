@@ -183,7 +183,7 @@
     <string name="prefThrottlePageTitle">Throttle Screen Appearance Preferences</string>
     <string name="prefThrottleAdditionalControlTitle">Additional Throttle Control Source Preferences</string>
     <string name="prefThrottleTitle">Throttle Control Preferences</string>
-    <string name="prefThrottleStatusTitle">Throttle Screen Status Row Preferences</string>
+    <string name="prefThrottleStatusTitle">Throttle Screen Action Bar Preferences</string>
 
     <string name="prefSliderTitle">Speed Slider and Buttons Preferences</string>
     <string name="prefSliderSummary">Options for Speed Slider and Speed buttons</string>
@@ -366,7 +366,7 @@
     <string name="deviceSoundsMuteButton">Mute</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
 
-    <string name="prefDeviceSoundsButtonSummary">Show a action bar button to change the in phone loco sounds options</string>
+    <string name="prefDeviceSoundsButtonSummary">Show an action bar button to change the in phone loco sounds options</string>
     <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>
 
     <string name="prefSelectiveLeadSoundTitle">Selective Lead Unit Sound?</string>
@@ -897,7 +897,7 @@
 
     <string name="flashlightAction">Flashlight</string>
     <string name="flashlightStateOn">Flashlight is ON</string>
-    <string name="flashlightStateOff">Flashlight is Off</string>
+    <string name="flashlightStateOff">Flashlight is OFF</string>
     <string name="prefFlashlightSummary">Show Flashlight button in action bar</string>
     <string name="prefFlashlightTitle">Flashlight button?</string>
     <string name="toastFlashlightOnFailed">Sorry! There was a problem switching on the flashlight&#8230;</string>
