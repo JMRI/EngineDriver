@@ -1,4 +1,8 @@
 **Version 2.31.136
+ * Avoid NPEs in gesture handlers
+ * support for user-defined loco sounds
+ * Additional French Translations by Alain Carasso
+ * hide web view button and prefs when not available
 **Version 2.30.134
  * Cleanup of the Power Screen
  * Dead Zone Preference Fix
