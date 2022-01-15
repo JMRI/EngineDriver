@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -57,7 +56,7 @@ public class throttle_simple extends throttle {
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -129,60 +128,6 @@ public class throttle_simple extends throttle {
 
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
-
-        // set listeners for the limit speed buttons for each throttle
-        //----------------------------------------
-
-        limit_speed_button_touch_listener lstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
-        pause_speed_button_vertical_touch_listener psvtl;
-        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    bLimitSpeed = findViewById(R.id.limit_speed_0);
-                    bPauseSpeed = findViewById(R.id.pause_speed_0);
-                    break;
-                case 1:
-                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-                    bPauseSpeed = findViewById(R.id.pause_speed_1);
-                    break;
-                case 2:
-                    bLimitSpeed = findViewById(R.id.limit_speed_2);
-                    bPauseSpeed = findViewById(R.id.pause_speed_2);
-                    break;
-                case 3:
-                    bLimitSpeed = findViewById(R.id.limit_speed_3);
-                    bPauseSpeed = findViewById(R.id.pause_speed_3);
-                    break;
-                case 4:
-                    bLimitSpeed = findViewById(R.id.limit_speed_4);
-                    bPauseSpeed = findViewById(R.id.pause_speed_4);
-                    break;
-                case 5:
-                    bLimitSpeed = findViewById(R.id.limit_speed_5);
-                    bPauseSpeed = findViewById(R.id.pause_speed_5);
-                    break;
-
-            }
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lstl = new limit_speed_button_touch_listener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
-
-            bPauseSpeeds[throttleIndex] = bPauseSpeed;
-            psvtl = new pause_speed_button_vertical_touch_listener(throttleIndex);
-            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
-            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
-            if (!prefPauseSpeedButton) {
-                bPauseSpeed.setVisibility(View.GONE);
-            }
-        }
 
         sliderType = SLIDER_TYPE_VERTICAL;
     } // end of onCreate()
@@ -405,23 +350,6 @@ public class throttle_simple extends throttle {
 
     }
 
-    //listeners for the Pause Speed Button
-    protected class pause_speed_button_vertical_touch_listener implements View.OnTouchListener {
-        int whichThrottle;
-
-        protected pause_speed_button_vertical_touch_listener(int new_whichThrottle) {
-            whichThrottle = new_whichThrottle;
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                pauseSpeed(whichThrottle);
-            }
-            return false;
-        }
-    }
-
     protected void pauseSpeed(int whichThrottle) {
         int speed = 0;
 
@@ -471,10 +399,6 @@ public class throttle_simple extends throttle {
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
-        }
-        if ((bLimitSpeeds!=null) && (bLimitSpeeds[whichThrottle]!=null)) {
-            bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
-            bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
         }
 
         super.enable_disable_buttons(whichThrottle, forceDisable);

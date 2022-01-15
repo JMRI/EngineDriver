@@ -80,7 +80,7 @@ public class throttle_switching_left_or_right extends throttle {
 
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -181,42 +181,6 @@ public class throttle_switching_left_or_right extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        limit_speed_button_switching_touch_listener lsstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
-        pause_speed_button_switching_touch_listener psstl;
-        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    bLimitSpeed = findViewById(R.id.limit_speed_0);
-                    bPauseSpeed = findViewById(R.id.pause_speed_0);
-                    break;
-                case 1:
-                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-                    bPauseSpeed = findViewById(R.id.pause_speed_1);
-                    break;
-
-            }
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lsstl = new limit_speed_button_switching_touch_listener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
-
-            bPauseSpeeds[throttleIndex] = bPauseSpeed;
-            psstl = new pause_speed_button_switching_touch_listener(throttleIndex);
-            bPauseSpeeds[throttleIndex].setOnTouchListener(psstl);
-            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
-            if (!prefPauseSpeedButton) {
-                bPauseSpeed.setVisibility(View.GONE);
-            }
-        }
-
-
         throttleSwitchingListener thsl;
 
         for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
@@ -241,23 +205,7 @@ public class throttle_switching_left_or_right extends throttle {
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
             }
-
-//             show or hide the limit speed buttons
-            if (!prefLimitSpeedButton) {
-                bLimitSpeeds[throttleIndex].setVisibility(View.GONE);
-            } else {
-                bLimitSpeeds[throttleIndex].setVisibility(View.VISIBLE);
-            }
-
-//             show or hide the pause speed buttons
-            if (!prefPauseSpeedButton) {
-//            if ((!prefPauseSpeedButton) || (prefHideSlider)) {
-                bPauseSpeeds[throttleIndex].setVisibility(View.GONE);
-            } else {
-                bPauseSpeeds[throttleIndex].setVisibility(View.VISIBLE);
-            }
         }
-
     } // end of onResume()
 
     @Override
@@ -522,8 +470,6 @@ public class throttle_switching_left_or_right extends throttle {
         if (!forceDisable) { // avoid index crash, but may simply push to next line
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
-        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
-        bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
@@ -627,17 +573,9 @@ public class throttle_switching_left_or_right extends throttle {
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (vsbSwitchingSpeeds[whichThrottle].touchFromUser) ) {
-//            if ((fromUser) || (vsbSwitchingSpeeds[whichThrottle].touchFromUser)
-//                || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_TO_ZERO)
-//                || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_RETURN) ) {
-
                 if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
 
                     if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
-//                    if ((Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) // if jump is too large then limit it
-//                    || (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE)){
-//                        Log.d("Engine_Driver", "onProgressChanged -- throttling change");
-
                         jumpSpeed = getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false);      // save ultimate target value
                         jumpDir = dir; // save ultimate target direction
                         limitedJump[whichThrottle] = true;
@@ -655,18 +593,8 @@ public class throttle_switching_left_or_right extends throttle {
                         } else if ((lastSliderPosition > throttleMidPointZero[whichThrottle]) && (newSliderPosition < throttleMidPointZero[whichThrottle])) { // passing from forward to reverse
                             mChangeDirectionAtZero= true;
                         }
+                        repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
 
-//                        if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
-//                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
-//                        } else {
-//                            if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
-//                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
-//                            } else {
-//                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
-//                                jumpSpeed = pauseSpeed[whichThrottle];  // the recorded thumb position may be slightly out
-//                            }
-                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
-//                        }
                         return;
                     }
 
@@ -1012,22 +940,6 @@ public class throttle_switching_left_or_right extends throttle {
         setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
     }
 
-    //listeners for the Pause Speed Button
-    protected class pause_speed_button_switching_touch_listener implements View.OnTouchListener {
-        int whichThrottle;
-
-        protected pause_speed_button_switching_touch_listener(int new_whichThrottle) {
-            whichThrottle = new_whichThrottle;
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                pauseSpeed(whichThrottle);
-            }
-            return false;
-        }
-    }
 
     protected void pauseSpeed(int whichThrottle) {
         int speed = 0;

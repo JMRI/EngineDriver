@@ -212,9 +212,7 @@ public class throttle_switching_horizontal extends throttle {
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
             }
-
         }
-
     } // end of onResume()
 
     @Override
@@ -1013,6 +1011,77 @@ public class throttle_switching_horizontal extends throttle {
     @Override
     protected void setDisplayedSpeed(int whichThrottle, int speed) {
         setDisplayedSpeedWithDirection(whichThrottle, speed);
+    }
+
+    protected void limitSpeed(int whichThrottle) {
+        int dir = getDirection(whichThrottle);
+        int speed = getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle, false);
+//                Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
+
+        isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
+        if (isLimitSpeeds[whichThrottle]) {
+            bLimitSpeeds[whichThrottle].setSelected(true);
+            limitSpeedSliderScalingFactors[whichThrottle] = 100/ ((float) prefLimitSpeedPercent);
+            sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
+
+            throttleMidPointZero[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
+            hsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
+
+        } else {
+            bLimitSpeeds[whichThrottle].setSelected(false);
+            sbs[whichThrottle].setMax(maxThrottle);
+
+            throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
+            hsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
+        }
+        throttleMidPointDeadZoneUpper[whichThrottle] = throttleMidPointZero[whichThrottle] + prefSwitchingThrottleSliderDeadZone;
+        throttleMidPointDeadZoneLower[whichThrottle] = throttleMidPointZero[whichThrottle] - prefSwitchingThrottleSliderDeadZone;
+
+        speedUpdate(whichThrottle,  speed);
+        setEngineDirection(whichThrottle, dir, false);
+
+        Log.d("Engine_Driver","limitSpeed -  speed: " + speed );
+        speedChangeAndNotify(whichThrottle,0);
+        setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+    }
+
+    protected void pauseSpeed(int whichThrottle) {
+        int speed = 0;
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                speed = getSpeed(whichThrottle);
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) != 0) {
+                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                    bPauseSpeeds[whichThrottle].setSelected(true);
+                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                    pauseDir[whichThrottle] = getDirection(whichThrottle);
+                    speed = 0;
+                } else {
+                    return;
+                }
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                limitedJump[whichThrottle] = false;
+                break;
+            }
+        }
+        if (isPauseSpeeds[whichThrottle] != PAUSE_SPEED_INACTIVE) {
+            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
+        }
     }
 
 }
