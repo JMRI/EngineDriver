@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -54,7 +53,7 @@ public class throttle_big_buttons extends throttle {
         set_function_labels_and_listeners_for_view(whichThrottle);
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -112,40 +111,6 @@ public class throttle_big_buttons extends throttle {
 
         setAllFunctionLabelsAndListeners();
 
-        limit_speed_button_touch_listener lstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
-        pause_speed_button_vertical_touch_listener psvtl;
-        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    bLimitSpeed = findViewById(R.id.limit_speed_0);
-                    bPauseSpeed = findViewById(R.id.pause_speed_0);
-                    break;
-//                case 1:
-//                    bLimitSpeed = findViewById(R.id.limit_speed_1);
-//                    break;
-
-            }
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lstl = new limit_speed_button_touch_listener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
-
-            bPauseSpeeds[throttleIndex] = bPauseSpeed;
-            psvtl = new pause_speed_button_vertical_touch_listener(throttleIndex);
-            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
-            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
-            if (!prefPauseSpeedButton) {
-                bPauseSpeed.setVisibility(View.GONE);
-            }
-
-        }
         sliderType = SLIDER_TYPE_VERTICAL;   // they are not visible
     } // end of onCreate()
 
@@ -338,7 +303,6 @@ public class throttle_big_buttons extends throttle {
         if (!forceDisable) { // avoid index crash, but may simply push to next line
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
-        bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
@@ -400,23 +364,6 @@ public class throttle_big_buttons extends throttle {
             }
         }
 
-    }
-
-    //listeners for the Pause Speed Button
-    protected class pause_speed_button_vertical_touch_listener implements View.OnTouchListener {
-        int whichThrottle;
-
-        protected pause_speed_button_vertical_touch_listener(int new_whichThrottle) {
-            whichThrottle = new_whichThrottle;
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                pauseSpeed(whichThrottle);
-            }
-            return false;
-        }
     }
 
     protected void pauseSpeed(int whichThrottle) {

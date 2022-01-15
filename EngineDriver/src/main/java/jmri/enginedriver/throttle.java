@@ -929,6 +929,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     set_function_labels_and_listeners_for_view(whichThrottle);
                                     enable_disable_buttons_for_view(fbs[whichThrottle], true);
                                     soundsShowHideMuteButton(whichThrottle);
+                                    showHideSpeedLimitAndPauseButtons(whichThrottle);
                                     set_labels();
                                 } else if (com2 == '-') { // if loco removed
                                     removeLoco(whichThrottle);
@@ -2380,11 +2381,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         bRSpds[whichThrottle].setEnabled(newEnabledState);
         enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
         soundsShowHideMuteButton(whichThrottle);
+        showHideSpeedLimitAndPauseButtons(whichThrottle);
         if (!newEnabledState) {
             sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
             doLocoSound(whichThrottle);
         }
         sbs[whichThrottle].setEnabled(newEnabledState);
+
+        if ((bLimitSpeeds!=null) && (bLimitSpeeds[whichThrottle]!=null)) {
+            bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+            bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
+        }
 
         soundsEnableDisableMuteButton(whichThrottle,newEnabledState);
 
@@ -5099,6 +5106,57 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
+        // set listeners for the limit speed buttons for each throttle
+        limit_speed_button_touch_listener lstl;
+        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+        pause_speed_button_touch_listener psvtl;
+        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    bPauseSpeed = findViewById(R.id.pause_speed_0);
+                    break;
+                case 1:
+                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+                    bPauseSpeed = findViewById(R.id.pause_speed_1);
+                    break;
+                case 2:
+                    bLimitSpeed = findViewById(R.id.limit_speed_2);
+                    bPauseSpeed = findViewById(R.id.pause_speed_2);
+                    break;
+                case 3:
+                    bLimitSpeed = findViewById(R.id.limit_speed_3);
+                    bPauseSpeed = findViewById(R.id.pause_speed_3);
+                    break;
+                case 4:
+                    bLimitSpeed = findViewById(R.id.limit_speed_4);
+                    bPauseSpeed = findViewById(R.id.pause_speed_4);
+                    break;
+                case 5:
+                    bLimitSpeed = findViewById(R.id.limit_speed_5);
+                    bPauseSpeed = findViewById(R.id.pause_speed_5);
+                    break;
+
+            }
+            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+            lstl = new limit_speed_button_touch_listener(throttleIndex);
+            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+            isLimitSpeeds[throttleIndex] = false;
+            if (!prefLimitSpeedButton) {
+                bLimitSpeed.setVisibility(View.GONE);
+            }
+
+            bPauseSpeeds[throttleIndex] = bPauseSpeed;
+            psvtl = new pause_speed_button_touch_listener(throttleIndex);
+            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
+            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
+            if (!prefPauseSpeedButton) {
+                bPauseSpeed.setVisibility(View.GONE);
+            }
+        }
 
         //mute button
         sound_device_mute_button_touch_listener muteTl;
@@ -5306,6 +5364,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             enable_disable_buttons(throttleIndex);
             soundsShowHideMuteButton(throttleIndex);
+            showHideSpeedLimitAndPauseButtons(throttleIndex);
         }
 
         gestureFailed = false;
@@ -6140,6 +6199,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // loop through all function buttons and
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
+
         set_labels();
         soundsShowHideAllMuteButtons();
     }
@@ -6788,6 +6848,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);
     }
 
+    //listeners for the Pause Speed Button
+    protected class pause_speed_button_touch_listener implements View.OnTouchListener {
+        int whichThrottle;
+
+        protected pause_speed_button_touch_listener(int new_whichThrottle) {
+            whichThrottle = new_whichThrottle;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                pauseSpeed(whichThrottle);
+            }
+            return false;
+        }
+    }
+
     protected void pauseSpeed(int whichThrottle) {
     }
 
@@ -7172,6 +7249,22 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 // don't worry about the horn as it is not latching
             }
+        }
+    }
+
+    void showHideSpeedLimitAndPauseButtons(int whichThrottle) {
+        // show or hide the limit speed buttons
+        if (!prefLimitSpeedButton) {
+            bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
+        } else {
+            bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        }
+
+        // show or hide the pause speed buttons
+        if (!prefPauseSpeedButton) {
+            bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
+        } else {
+            bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
         }
     }
 }
