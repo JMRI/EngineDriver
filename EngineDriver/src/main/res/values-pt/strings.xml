@@ -380,7 +380,7 @@
     <string name="prefThrottleImportExportTitle">Importar/Exportar/Reiniciar Preferências</string>
     <string name="prefThrottleImportExportSummary">Importar/Exportar/Reiniciar Preferências</string>
     <string name="prefImportExportTitle">Importar, Exportar ou Reiniciar</string>
-    <string name="prefImportExportSummary">\'Importar\' ou \'Exportar\' as preferências para a pasta \'\\Android\\data\\jmri.enginedriver\\data\\files\\\', ou \'Reiniciar\'.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Pode transferir as preferências para um outro telefone copiando o arquivo.)</string>
+    <string name="prefImportExportSummary">\'Importar\' ou \'Exportar\' as preferências para a pasta \'\\Android\\data\\Hornjmri.enginedriver\\files\\\', ou \'Reiniciar\'.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Pode transferir as preferências para um outro telefone copiando o arquivo.)</string>
 
     <string name="prefImportExportLocoListTitle">Incluir lista de locomotivas recentes</string>
     <string name="prefImportExportLocoListSummary">Inclui as locomotivas na lista locomotivas recentes em \'Importar\' e \'Exportar\'.</string>
@@ -388,21 +388,21 @@
     <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar.  (Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
 
     <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
-    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'\\Android\\data\\Hornjmri.enginedriver\\files\\\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
 
     <string name="prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
-    <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
+    <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
 
     <string name="importServerAutoDialog">O arquivo New Preferences foi encontrado neste servidor (%1$s).\nVocê deseja importá-lo?\n\nAviso!\n\'Completo\' - Todas as suas preferências serão sobrescritas.\n\n\'Parcial\' - Todas as preferências, exceto as preferências Tema e Tipo de página do acelerador, serão sobrescritas.</string>
     <string name="importServerAutoDialogPositiveButton">Completo</string>
     <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
-    <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
+    <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'\\Android\\data\\Hornjmri.enginedriver\\files\\\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
     <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
-    <string name="prefImportExportErrorReadingFrom">Importação de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="prefImportExportErrorReadingFrom">Importação de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
     <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
@@ -542,11 +542,11 @@
     <string name="toastConnectRemoved">Servidor removido da lista.</string>
 
     <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
-    <string name="toastImportExportExportSucceeded">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' realizada com sucesso.</string>
-    <string name="toastImportExportImportSucceeded">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' realizada com sucesso.</string>
-    <string name="toastImportExportExportFailed">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou!</string>
-    <string name="toastImportExportImportFailed">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' falhou!</string>
-    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
+    <string name="toastImportExportExportSucceeded">Exportação preferências para \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportImportSucceeded">Importação preferências de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' realizada com sucesso.</string>
+    <string name="toastImportExportExportFailed">Exportação preferências para \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' falhou!</string>
+    <string name="toastImportExportImportFailed">Importação preferências de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' falhou!</string>
+    <string name="toastImportExportServerImportFailed">Preferências não importadas de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
     <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
     <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>
@@ -637,15 +637,15 @@
     <string name="app_name_throttle_kids_enabled">Temporizador Pronto</string>
     <string name="app_name_throttle_kids_ended">Temporizador terminado</string>
 
-    <string name="permissionsReadRecentConnections">Engine Driver precisa de permissões STORAGE para ler conexões recentes.</string>
-    <string name="permissionsStoreRecentConnections">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes.</string>
-    <string name="permissionsClearRecentConnections">Engine Driver precisa de permissões STORAGE para limpar conexões recentes.</string>
-    <string name="permissionsReadPreferences">Engine Driver precisa de permissões STORAGE para ler preferências.</string>
-    <string name="permissionsStorePreferences">Engine Driver precisa de permissões STORAGE para armazenar preferências.</string>
-    <string name="permissionsClearPreferences">Engine Driver precisa de permissões STORAGE para limpar preferências.</string>
-    <string name="permissionsReadPhoneState">Engine Driver precisa de permissões PHONE para pausar as operações quando estiver em uma chamada.</string>
-    <string name="permissionsReadFunctionSettings">Engine Driver precisa de permissões STORAGE para ler as configurações das funções.</string>
-    <string name="permissionsStoreFunctionSettings">Engine Driver precisa de permissões STORAGE para armazenar configurações de função.</string>
+<!--    <string name="permissionsReadRecentConnections">Engine Driver precisa de permissões STORAGE para ler conexões recentes.</string>-->
+<!--    <string name="permissionsStoreRecentConnections">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes.</string>-->
+<!--    <string name="permissionsClearRecentConnections">Engine Driver precisa de permissões STORAGE para limpar conexões recentes.</string>-->
+<!--    <string name="permissionsReadPreferences">Engine Driver precisa de permissões STORAGE para ler preferências.</string>-->
+<!--    <string name="permissionsStorePreferences">Engine Driver precisa de permissões STORAGE para armazenar preferências.</string>-->
+<!--    <string name="permissionsClearPreferences">Engine Driver precisa de permissões STORAGE para limpar preferências.</string>-->
+<!--    <string name="permissionsReadPhoneState">Engine Driver precisa de permissões PHONE para pausar as operações quando estiver em uma chamada.</string>-->
+<!--    <string name="permissionsReadFunctionSettings">Engine Driver precisa de permissões STORAGE para ler as configurações das funções.</string>-->
+<!--    <string name="permissionsStoreFunctionSettings">Engine Driver precisa de permissões STORAGE para armazenar configurações de função.</string>-->
     <string name="permissionsVIBRATE">Engine Driver precisa de permissões vibrar para fornecer feedback adicional.</string>
     <string name="permissionsConnectToServer">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes e permissões PHONE para pausar operações quando em uma chamada.</string>
     <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>
@@ -803,7 +803,7 @@
     <string name="prefWebViewButtonTitle">Show / Hide botão Web View?</string>
     <string name="logViewerTitle">LogViewerActivity | %1$s</string>
     <string name="prefWebViewButtonSummary">Mostrar Mostrar Esconder botão / Web Ver na barra de ação? \\ n(requer \'acelerador Web View\' preferência a ser ativado)</string>
-    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
     <string name="permissionsWriteSettings">Engine Driver precisa de definições de permissões WRITE para mudar o brilho da tela.</string>
     <string name="permissionsSystemSettingsButton">Configurações do sistema</string>
@@ -845,14 +845,14 @@
     <string name="prefDeviceSounds1Title">Throttle 2 sons loco</string>
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume para o motor de loco sons no telefone (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">No telefone loco sons de volume</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volume para sino/chifre/apito sons no telefone (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle">No telefone outro volume de sons</string>
+    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="ExtraTranslation,TypographyDashes">Volume para sino/chifre/apito sons no telefone (1-100)</string>
+    <string name="prefDeviceSoundsBellHornVolumeTitle" tools:ignore="ExtraTranslation">No telefone outro volume de sons</string>
     <string name="prefThrottleAdditionalControlTitle">Preferências adicionais de fonte de controle do acelerador</string>
-    <string name="prefDeviceSoundsBellVolumeSummary">Volume para sino soa no telefone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Volume para sino soa no telefone (1-100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">No sino do telefone soa o volume</string>
-    <string name="prefDeviceSoundsHornVolumeSummary">Volume para o chifre / apito sons no telefone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Volume para o chifre / apito sons no telefone (1-100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">No Telefone Horn / Whistle Sounds Volume</string>
-    <string name="prefDeviceSoundsMomentumSummary">Atraso (Momentum) por mudança de passo em milissegundos (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Atraso (Momentum) por mudança de passo em milissegundos (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">No momento do telefone</string>
     <string name="deviceSoundsMuteButton">Mudo</string>
     <string name="prefDeviceSoundsButtonSummary">Mostrar um botão de barra de ação para alterar as opções de sons de loco no telefone</string>

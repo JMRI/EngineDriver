@@ -476,7 +476,7 @@
     <string name="prefThrottleImportExportSummary">Předvolby Importu/Exportu/Resetu</string>
 
     <string name="prefImportExportTitle">Import, Export nebo Reset</string>
-    <string name="prefImportExportSummary">Předvolby \'Import\' nebo \'Export\' do složky \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' nebo \'Reset\'.\nObjeví se bezprostředně při výběru volby.\nVarování! S \'Reset\' a \'Import\' se bude Engine Driver restartovat!\n(Můžete přenést předvolby na jiný telefon kopírováním souboru.)</string>
+    <string name="prefImportExportSummary">Předvolby \'Import\' nebo \'Export\' do složky \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' nebo \'Reset\'.\nObjeví se bezprostředně při výběru volby.\nVarování! S \'Reset\' a \'Import\' se bude Engine Driver restartovat!\n(Můžete přenést předvolby na jiný telefon kopírováním souboru.)</string>
 
 
     <string name="prefImportExportLocoListTitle">Zahrnout seznam Nedávné lokomotivy</string>
@@ -487,20 +487,20 @@
 
 
     <string name="prefHostImportExportTitle">Ruční import/export na určitý host</string>
-    <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
+    <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
 
 
     <string name="prefImportExportOverwite">Soubor \'%1$s\' již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
-    <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
+    <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
     <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
 
     <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
-    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
+    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
 
     
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
-    <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
+    <string name="prefImportServerAutoSummary">Automaticky importuje předvolby ze všech připojených serverů.\nPokud je soubor \'/\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preferences.ed\' na serveru a pokud je novější než poslední kontrola.)</string>
 
     <string name="importServerAutoDialog">Nový soubor předvoleb byl nalezen na tomto serveru (%1$s).\nChcete ho importovat?\n\nVarování!\n\'Úplný\' - Všechny předvolby budou přepsány.\n\n\'Částečný\' - Všechny předvolby s výjimkou Téma a některé předvolby Stránky typu ovladače budou přepsány.</string>
     <string name="importServerAutoDialogPositiveButton">Úplný</string>
@@ -736,11 +736,11 @@
     <string name="toastRoutesCommandSent">"Příkaz odeslaný k nastavení trasy "</string>
 
     <!--    Toast messages for the Import/Export -->
-    <string name="toastImportExportExportSucceeded">Export předvolby do \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' byl úspěšný.</string>
-    <string name="toastImportExportImportSucceeded">Import předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' byl úspěšný.</string>
-    <string name="toastImportExportExportFailed">Export předvolby do \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal!</string>
-    <string name="toastImportExportImportFailed">Export předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' selhal!</string>
-    <string name="toastImportExportServerImportFailed">Nebyly importovány předvolby z \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'. Možná jste dosud neuložili předvolby pro tohoto hostitele.</string>
+    <string name="toastImportExportExportSucceeded">Export předvolby do \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' byl úspěšný.</string>
+    <string name="toastImportExportImportSucceeded">Import předvolby z \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' byl úspěšný.</string>
+    <string name="toastImportExportExportFailed">Export předvolby do \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' selhal!</string>
+    <string name="toastImportExportImportFailed">Export předvolby z \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' selhal!</string>
+    <string name="toastImportExportServerImportFailed">Nebyly importovány předvolby z \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'. Možná jste dosud neuložili předvolby pro tohoto hostitele.</string>
     <string name="toastImportExportCannotImport">Nemohu importovat předvolby. Není připojení na hostitele.</string>
     <string name="toastImportExportCannotExport">Nemohu exportovat předvolby pro určitého hosta. Host není připojen.</string>
 
@@ -912,16 +912,16 @@
     <string name="timerDialogMessage">Heslo:</string>
     <string name="timerDialogHint">Znovunastavení nebo obnovení hesla</string>
 
-    <string name="permissionsReadRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro čtení nedávných připojení.</string>
-    <string name="permissionsStoreRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení.</string>
-    <string name="permissionsClearRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro vymazání nedávných připojení.</string>
-    <string name="permissionsReadPreferences">Engine Driver potřebuje oprávnění STORAGE pro čtení předvoleb.</string>
-    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění STORAGE pro načtení obrázků pozadí.</string>
-    <string name="permissionsStorePreferences">Engine Driver potřebuje oprávnění STORAGE pro uložení předvoleb.</string>
-    <string name="permissionsClearPreferences">Engine Driver potřebuje oprávnění STORAGE pro vymazání předvoleb.</string>
-    <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>
-    <string name="permissionsReadFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro čtení nastavení funkcí.</string>
-    <string name="permissionsStoreFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro uložení nastavení funkcí.</string>
+<!--    <string name="permissionsReadRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro čtení nedávných připojení.</string>-->
+<!--    <string name="permissionsStoreRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení.</string>-->
+<!--    <string name="permissionsClearRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro vymazání nedávných připojení.</string>-->
+<!--    <string name="permissionsReadPreferences">Engine Driver potřebuje oprávnění STORAGE pro čtení předvoleb.</string>-->
+<!--    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění STORAGE pro načtení obrázků pozadí.</string>-->
+<!--    <string name="permissionsStorePreferences">Engine Driver potřebuje oprávnění STORAGE pro uložení předvoleb.</string>-->
+<!--    <string name="permissionsClearPreferences">Engine Driver potřebuje oprávnění STORAGE pro vymazání předvoleb.</string>-->
+<!--    <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>-->
+<!--    <string name="permissionsReadFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro čtení nastavení funkcí.</string>-->
+<!--    <string name="permissionsStoreFunctionSettings">Engine Driver potřebuje oprávnění STORAGE pro uložení nastavení funkcí.</string>-->
     <string name="permissionsWriteSettings">Engine Driver potřebuje oprávnění ALLOW MODIFYING SYSTEM SETTINGS pro změnu jasu obrazovky.</string>
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
@@ -1065,7 +1065,7 @@
     <string name="toastPreferencesSwipeThroughWebDisabled">Přejeďte přes web zakázán.</string>
     <string name="prefTurnMobileDataOnOffTitle">Dades mòbils</string>
     <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>
-    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
     <string name="prefFeedbackOnDisconnectTitle">Zpětná vazba na Odpojit</string>
     <string name="prefFeedbackOnDisconnectSummary">Přehrát zvuk a vibrovat na nečekaném odpojení.</string>
@@ -1091,7 +1091,7 @@
     <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Potvrďte, že chcete odstranit všechna nedávná připojení</string>
     <string name="introAndroid11Title">Android 11 změn</string>
-    <string name="introAndroid11Summary">Kvůli změnám vynuceným společností Google pro Android 11, umístění, kde jsou uloženy soubory ovladače motoru, musí být přesunuty ze složky \'\\engine_driver\' na \'\\Android\\data\\jmri.enginedriver\\data\\files\' složku. \nVaše data budou automaticky zkopírována do této nové složky.</string>
+    <string name="introAndroid11Summary">Kvůli změnám vynuceným společností Google pro Android 11, umístění, kde jsou uloženy soubory ovladače motoru, musí být přesunuty ze složky \'\\engine_driver\' na \'\\Android\\data\\Hornjmri.enginedriver\\files\' složku. \nVaše data budou automaticky zkopírována do této nové složky.</string>
     <string name="introAndroid11Summary1">Ovladač motoru není schopen odstranit původní soubory v \'\\engine_driver\', ale již nejsou potřebné nebo používány. Takže je můžete odstranit ručně, pokud si přejete.</string>
     <string name="introAndroid11Summary2">Poznámka: Pokud aplikaci odinstalujete, budou automaticky vymazány všechny soubory v této nové složce (včetně exportovaných předvoleb). Takže je důležité zkopírovat soubory jinde před vymazáním aplikace.</string>
     <string name="prefDeviceSoundsCategoryTitle">V telefonu lokomoti zvuku hlasitosti</string>
@@ -1101,14 +1101,12 @@
     <string name="prefDeviceSounds1Title">Triptle 2 loko zvuky</string>
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Hlasitost pro lokální motor zvuku v telefonu (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">V telefonu lokomoti zvuku hlasitosti</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Hlasitost zvuku/houkaček/píšťalky v telefonu (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle">V telefonu Jiné zvuky hlasitosti</string>
     <string name="prefThrottleAdditionalControlTitle">Další preference zdroje řízení škrticí klapky</string>
-    <string name="prefDeviceSoundsBellVolumeSummary">Hlasitost zvonek zvuku v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Hlasitost zvonek zvuku v telefonu (1-100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">V telefonním zvonku zvuku</string>
-    <string name="prefDeviceSoundsHornVolumeSummary">Hlasitost pro zvuky Horn / Whistle v telefonu (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Hlasitost pro zvuky Horn / Whistle v telefonu (1-100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">V telefonu Horn / Whistle Zvuky hlasitosti</string>
-    <string name="prefDeviceSoundsMomentumSummary">Zpoždění (hybnost) za krok Změna milisekund (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Zpoždění (hybnost) za krok Změna milisekund (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">V telefonu hybnosti</string>
     <string name="deviceSoundsMuteButton">Ztlumit</string>
     <string name="prefDeviceSoundsButtonSummary">Zobrazte tlačítko ACCE BUNKU pro změnu možností v telefonu Loco Sounds</string>

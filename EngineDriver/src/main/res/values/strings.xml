@@ -526,7 +526,7 @@
     <string name="prefThrottleImportExportSummary">Import/Export/Reset and Log Preferences</string>
 
     <string name="prefImportExportTitle">Import, Export or Reset</string>
-    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' folder, or \'Reset\' them.\nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
+    <string name="prefImportExportSummary">\'Import\' or \'Export\' preferences to the \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' folder, or \'Reset\' them.\nWill occur IMMEDIATELY on selecting the option.\nWARNING! With \'Reset\' and \'Import\', Engine Driver will restart!\n(You can transfer the preferences to a different phone by copying the file.)</string>
     <string name="prefImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportExportLocoListTitle">Include recent loco list?</string>
@@ -537,20 +537,20 @@
     <string name="prefAutoImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefHostImportExportTitle">Manual host specific import/export</string>
-    <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
+    <string name="prefHostImportExportSummary">\'Import\' or \'Export\' your preferences for a specific host to the \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' folder. The host must be in your recent connection list.\nWill occur IMMEDIATELY on selecting the option.\n(Only available when not currently connected.)</string>
     <string name="prefHostImportExportDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
-    <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' failed! You may not have saved the preferences for this host yet.</string>
+    <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
     <string name="prefImportServerManualTitle">Import from current Server (manually)</string>
-    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'\\Android\\data\\jmri.enginedriver\\data\\files\\\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
+    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
     <string name="prefImportServerManualDefaultValue" translatable="false">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportServerAutoTitle">Auto import from all Servers?</string>
-    <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
+    <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
 
     <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
     <string name="importServerAutoDialogPositiveButton">Full</string>
@@ -803,11 +803,11 @@
     <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
 
     <!--    Toast messages for the Import/Export -->
-    <string name="toastImportExportExportSucceeded">Preferences export to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' succeeded.</string>
-    <string name="toastImportExportImportSucceeded">Preferences import from \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' succeeded.</string>
-    <string name="toastImportExportExportFailed">Preferences export to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' failed!</string>
-    <string name="toastImportExportImportFailed">Preferences import from \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' failed!</string>
-    <string name="toastImportExportServerImportFailed">Preferences not imported from \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'. You may not have saved the preferences for this host yet.</string>
+    <string name="toastImportExportExportSucceeded">Preferences export to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' succeeded.</string>
+    <string name="toastImportExportImportSucceeded">Preferences import from \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' succeeded.</string>
+    <string name="toastImportExportExportFailed">Preferences export to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' failed!</string>
+    <string name="toastImportExportImportFailed">Preferences import from \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' failed!</string>
+    <string name="toastImportExportServerImportFailed">Preferences not imported from \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
     <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>
 
@@ -1030,7 +1030,7 @@
 
     <string name="introAndroid11Title">Android 11 Changes</string>
     <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the
-        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder.
+        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' folder.
         \nYour data will be automatically copied to this new folder.</string>
     <string name="introAndroid11Summary1">Engine Driver is unable to delete the original files in \'\\engine_driver\' but they are no longer needed or used. So you can delete them manually if you wish.</string>
     <string name="introAndroid11Summary2">Note: if you uninstall the app, ALL the files in this new folder (including any exported preferences) will be automatically deleted. So it is important to copy the files elsewhere BEFORE deleting the app.</string>

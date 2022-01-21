@@ -107,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
 
     private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
-    private static final String ENGINE_DRIVER_DIR = "engine_driver";
+    private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
     private ProgressDialog pDialog;

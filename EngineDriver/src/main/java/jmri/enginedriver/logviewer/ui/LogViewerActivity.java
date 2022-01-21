@@ -49,7 +49,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
-    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\data\\files";
+    private static final String ENGINE_DRIVER_DIR = "Android\\data\\Hornjmri.enginedriver\\files";
 
     private Menu AMenu;
     private Toolbar toolbar;

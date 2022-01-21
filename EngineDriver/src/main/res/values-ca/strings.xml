@@ -352,7 +352,7 @@
     <string name="prefThrottleImportExportTitle">Importa/Exporta/Reinicia Preferències</string>
     <string name="prefThrottleImportExportSummary">Importa/Exporta/Reinicia Preferències</string>
     <string name="prefImportExportTitle">Importa, Exporta o Reinicia</string>
-    <string name="prefImportExportSummary">\'Importa\' o \'Exporta\' les preferències del directori \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\', o \'Reinicia\' per a reiniciar.\nAixò succeirà IMMEDIATAMENT en realitzar la selecció.\n(Pots transferir les preferències a un altre telèfon copiant l\'arxiu.)</string>
+    <string name="prefImportExportSummary">\'Importa\' o \'Exporta\' les preferències del directori \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\', o \'Reinicia\' per a reiniciar.\nAixò succeirà IMMEDIATAMENT en realitzar la selecció.\n(Pots transferir les preferències a un altre telèfon copiant l\'arxiu.)</string>
 
     <string name="prefImportExportLocoListTitle">Inclou la llista de Locomotores recents</string>
     <string name="prefImportExportLocoListSummary">Inclou la llista de Locomotores recents en \'Importar\' i \'Exportar\'</string>
@@ -360,17 +360,17 @@
     <string name="prefAutoImportExportSummary">En cada connexió amb un host, AUTOMÀTICAMENT \'Importa\' les preferències per aquest host, i opcionalment \'Exporta\' quan desconecti. \n(Per a restablir constantment a un estat conegut, estableix en \'Importació automàtica tan sols al connectar\' després de la primera vegada, o després de desar-ho manualment (a continuació).)</string>
 
     <string name="prefImportServerManualTitle">Importa des del servidor actual (manualment)</string>
-    <string name="prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència</string>
+    <string name="prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència</string>
 
     <string name="prefImportServerAutoTitle">Importació automàtica de tots els servidors</string>
-    <string name="prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'/\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
+    <string name="prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'/\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
 
     <string name="importServerAutoDialog">S\'ha trobat un nou fitxer de preferències en aquest servidor (%1$s).\nVols importar-lo?\n\nAdvertència!\n\'Complet\' - Totes les vostres preferències seran sobreescriure.\n\n\'Parcial\' - totes les preferències, excepte el tema i algunes preferències de tipus de pàgina, seran sobreescriuen</string>
     <string name="importServerAutoDialogPositiveButton">Complet</string>
     <string name="importServerAutoDialogNeutralButton">Parcial</string>
 
     <string name="prefHostImportExportTitle">Importació/exportació específica de host manual</string>
-    <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' les teves preferències per a un host específic al directori \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\'. El host ha d\'estar en la llista de connexions recents.\nSucceirà IMMEDIATAMENT després de seleccionar l\'opció.\n(Tan sols disponible quan s\'està connectat.)</string>
+    <string name="prefHostImportExportSummary">\'Importa\' o \'Exporta\' les teves preferències per a un host específic al directori \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\'. El host ha d\'estar en la llista de connexions recents.\nSucceirà IMMEDIATAMENT després de seleccionar l\'opció.\n(Tan sols disponible quan s\'està connectat.)</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Canviar les tecles de direcció</string>
     <string name="prefSwapForwardReverseButtonsSummary">Intecanvi permanent dels dos tecles de direcció en tots els Controladors</string>
@@ -505,11 +505,11 @@
     <string name="toastConnectRemoved">Servidor esborrat de la llista</string>
 
     <string name="toastRoutesCommandSent">"Comanda enviada per establir la ruta"</string>
-    <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' ha tingut èxit</string>
-    <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' ha tingut èxit</string>
-    <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' ha fallat!</string>
-    <string name="toastImportExportImportFailed">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\' ha fallat!</string>
-    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\data\\files%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host</string>
+    <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ha tingut èxit</string>
+    <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ha tingut èxit</string>
+    <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ha fallat!</string>
+    <string name="toastImportExportImportFailed">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ha fallat!</string>
+    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'\\engine_driver\' folder to \'\\Android\\data\\Hornjmri.enginedriver\\files%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host</string>
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host</string>
     <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host</string>
     <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores recents prement la tecla \'Netejar llista\' DE NOU</string>
@@ -629,7 +629,7 @@
     <string name="functionButtonLookForRear">DARRERA</string>
     <string name="prefImportExportOverwite">L\'arxiu \'%1$s\' ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
-    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\jmri.enginedriver\\data\\files\\%1$s\'! No has desat les preferències per aquest host</string>
+    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'! No has desat les preferències per aquest host</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host</string>
     <string name="logViewerTitle">Activitat en visualitzador de Logs | Nom del Controlador: %1$s</string>
 
@@ -702,15 +702,15 @@
     <string name="timerDialogMessage">Contrasenya :</string>
     <string name="timerDialogHint">Reinicia la contrasenya</string>
 
-    <string name="permissionsReadRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir connexions recents</string>
-    <string name="permissionsStoreRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar connexions recents</string>
-    <string name="permissionsClearRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per esborrar connexions recents</string>
-    <string name="permissionsReadPreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir preferències</string>
-    <string name="permissionsStorePreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar preferències</string>
-    <string name="permissionsClearPreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per netejar les preferències</string>
-    <string name="permissionsReadPhoneState">Engine Driver necessita els permisos del TELÈFON per aturar les operacions en una trucada</string>
-    <string name="permissionsReadFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir la configuració de la funció</string>
-    <string name="permissionsStoreFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar la configuració de la funció</string>
+<!--    <string name="permissionsReadRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir connexions recents</string>-->
+<!--    <string name="permissionsStoreRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar connexions recents</string>-->
+<!--    <string name="permissionsClearRecentConnections">Engine Driver necessita permisos D\'EMMAGATZEMATGE per esborrar connexions recents</string>-->
+<!--    <string name="permissionsReadPreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir preferències</string>-->
+<!--    <string name="permissionsStorePreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar preferències</string>-->
+<!--    <string name="permissionsClearPreferences">Engine Driver necessita permisos D\'EMMAGATZEMATGE per netejar les preferències</string>-->
+<!--    <string name="permissionsReadPhoneState">Engine Driver necessita els permisos del TELÈFON per aturar les operacions en una trucada</string>-->
+<!--    <string name="permissionsReadFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per llegir la configuració de la funció</string>-->
+<!--    <string name="permissionsStoreFunctionSettings">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar la configuració de la funció</string>-->
     <string name="permissionsWriteSettings">Engine Driver necessita permisos D\'ESRIPTURA per canviar la brillantor de la pantalla</string>
     <string name="permissionsWriteSettingsAdditional">- Fes clic en la tecla per concedir els permisos.\n- Fes clic \'Enrera\' per torna aquí</string>
     <string name="permissionsWriteSettingsAdditional2">Ignora-ho si no necessites que el Engine Driver modifiqui la brillantor de la pantalla del teu dispositiu</string>
@@ -860,7 +860,7 @@
     <string name="prefSwipeThroughWebTitle">Lliscar a través del web?</string>
     <string name="prefSwipeThroughWebSummary">Incloure pantalla Web quan lliscar entre les pantalles</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Lliscar a través del web deshabilitat</string>
-    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per carregar i llegfir les preferències.</string>
+<!--    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per carregar i llegfir les preferències.</string>-->
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver Engine necesita permisos per activar o desactivar les dades mòbils.</string>
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
     <string name="prefFeedbackOnDisconnectTitle">Retroalimentació sobre la Desconnexió</string>
@@ -888,7 +888,7 @@
     <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmeu que voleu eliminar totes les connexions recents</string>
     <string name="introAndroid11Title">Canvis Android 11</string>
-    <string name="introAndroid11Summary">A causa dels canvis aplicats per Google per a Android 11, la ubicació on s\'emmagatzemen els fitxers del controlador del motor han de ser traslladats de la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\jmri.enginedriver\\data\\files\'. Les vostres dades es copiaran automàticament a aquesta nova carpeta.</string>
+    <string name="introAndroid11Summary">A causa dels canvis aplicats per Google per a Android 11, la ubicació on s\'emmagatzemen els fitxers del controlador del motor han de ser traslladats de la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\Hornjmri.enginedriver\\files\'. Les vostres dades es copiaran automàticament a aquesta nova carpeta.</string>
     <string name="introAndroid11Summary1">El controlador del motor no pot eliminar els fitxers originals a \'\\engine_driver\', però ja no es necessiten ni s\'utilitzaran. Per tant, podeu eliminar-los manualment si ho desitgeu.</string>
     <string name="introAndroid11Summary2">Nota: Si desinstal·leu l\'aplicació, tots els fitxers d\'aquesta nova carpeta (incloses les preferències exportades) s\'eliminaran automàticament. Per tant, és important copiar els fitxers en altres llocs abans de suprimir l\'aplicació.</string>
     <string name="prefDeviceSoundsCategoryTitle">Al telèfon de telèfon sona el volum</string>
@@ -898,14 +898,12 @@
     <string name="prefDeviceSounds1Title">Accés 2 Loco Sounds</string>
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volum per a sons del motor Loco al telèfon (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">Al telèfon de telèfon sona el volum</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="TypographyDashes">Volum de Bell/Horn/Whistle Sounds al telèfon (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle">Al telèfon Altres sons Volum</string>
     <string name="prefThrottleAdditionalControlTitle">Preferències addicionals de control de control de l\'accelerador</string>
-    <string name="prefDeviceSoundsBellVolumeSummary">Volum de sons de campana al telèfon (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Volum de sons de campana al telèfon (1-100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">A la campana del telèfon sona el volum</string>
-    <string name="prefDeviceSoundsHornVolumeSummary">Volum per a sons de trompa / xiulet al telèfon (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Volum per a sons de trompa / xiulet al telèfon (1-100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">A la trompa telefònica / xiulet sona el volum</string>
-    <string name="prefDeviceSoundsMomentumSummary">Retard (impuls) per canvi de pas en mil·lisegons (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Retard (impuls) per canvi de pas en mil·lisegons (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">En el moment del telèfon</string>
     <string name="deviceSoundsMuteButton">Muda</string>
     <string name="prefDeviceSoundsButtonSummary">Mostra un botó d\'acció de barra per canviar les opcions del telèfon de Loco sona</string>
