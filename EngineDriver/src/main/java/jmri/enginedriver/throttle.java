@@ -33,6 +33,8 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -581,7 +583,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
     private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
-    private static final String ENGINE_DRIVER_DIR = "engine_driver";
+    private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
+    private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
@@ -6639,7 +6642,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             if ( (mainapp.connectedHostip != null) ) {
                 n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port
-                        + "/prefs/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_PREFERENCES_IMPORT_FILENAME;
+                        + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + EXTERNAL_PREFERENCES_IMPORT_FILENAME;
             } else {
                 // not currently connected
                 return null;
@@ -6652,9 +6655,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             try {
                 urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                urlPreferencesFilePath = Environment
-                        .getExternalStorageDirectory().toString()
-                        + "/" + ENGINE_DRIVER_DIR + "/" + urlPreferencesFileName;
+//                urlPreferencesFilePath = Environment
+//                        .getExternalStorageDirectory().toString()
+//                        + "/" + ENGINE_DRIVER_DIR + "/" + urlPreferencesFileName;
+                urlPreferencesFilePath = context.getExternalFilesDir(null) + "/" + urlPreferencesFileName;
 
                 url = new URL(n_url);
 
