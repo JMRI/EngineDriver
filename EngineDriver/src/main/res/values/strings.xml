@@ -542,7 +542,7 @@
 
     <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
-    <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' failed! You may not have saved the preferences for this host yet.</string>
+    <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
     <string name="prefImportServerManualTitle">Import from current Server (manually)</string>
@@ -764,6 +764,7 @@
     <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
+    <string name="toastInitialisingSounds">Initialising sounds. They will restart automatically in a few seconds.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>

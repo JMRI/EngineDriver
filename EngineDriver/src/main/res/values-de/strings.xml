@@ -636,7 +636,7 @@
     <string name="functionButtonLookForRear">HINTEN</string>
     <string name="prefImportExportOverwite">Datei \'%1$s\' existiert schon. Überschreiben?</string>
     <string name="prefImportExportErrorReadingList">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
-    <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
+    <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
 
     <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>

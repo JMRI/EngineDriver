@@ -492,7 +492,7 @@
 
     <string name="prefImportExportOverwite">Soubor \'%1$s\' již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
-    <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
+    <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
     <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
 
     <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>

@@ -282,6 +282,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int SOUNDS_TYPE_LOCO = 0;
     private static final int SOUNDS_TYPE_BELL = 1;
     private static final int SOUNDS_TYPE_HORN = 2;
+    private static final int SOUNDS_TYPE_LOCO_START_UP = 3;
+    private static final int SOUNDS_TYPE_LOCO_SHUTDOWN = 4;
 
     private static final int SOUNDS_BELL_HORN_START = 0;
     private static final int SOUNDS_BELL_HORN_LOOP = 1;
@@ -291,6 +293,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int SOUNDS_REPEAT_NONE = 0;
 
     private static final int SOUNDS_NOTHING_CURRENTLY_PLAYING = -1;
+    private static final int SOUNDS_STARTUP_INDEX = 20;
+    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
 
     // function number-to-button maps
     protected LinkedHashMap<Integer, Button>[] functionMaps;
@@ -4114,28 +4118,51 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return result;
     }
 
-    void doLocoSound(int whichThrottle) {
-        if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
-            if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-                int mSound = -1;
-                if (mainapp.consists[whichThrottle].isActive()) {
-                    mSound = getLocoSoundStep(whichThrottle);
-//                Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + stepForThisThrottle);
-                    if ((mSound >= 0)) {
-                        if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == SOUNDS_NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
-                            soundStart(SOUNDS_TYPE_LOCO, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
-                            mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
-                        } else {
-                            soundQueueNextLocoSound(whichThrottle, mSound);
-                        }
-                    }
-                } else {
-                    soundsStopAllSoundsForLoco(whichThrottle);
-                }
-            }
-            mainapp.soundsLocoLastDirection[whichThrottle] = dirs[whichThrottle];
+
+    public class DoLocoSoundDelayed implements Runnable {
+        int whichThrottle;
+
+        public DoLocoSoundDelayed(int WhichThrottle) {
+            whichThrottle = WhichThrottle;
         }
-    }
+        @Override
+        public void run() {
+            Log.d("Engine_Driver", "doLocoSoundDelayed.run: (locoSound) wt" + whichThrottle);
+            doLocoSound(whichThrottle);
+        }
+    } // end DoLocoSoundDelayed
+
+    void doLocoSound(int whichThrottle) {
+        if (!mainapp.soundsSoundsAreBeingReloaded) {
+            if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
+                if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
+                    int mSound = -1;
+                    if (mainapp.consists[whichThrottle].isActive()) {
+                        mSound = getLocoSoundStep(whichThrottle);
+                        Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+                        if ((mSound >= 0)) {
+                            if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == SOUNDS_NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
+                                //see if there is a startup sound for this profile
+                                if (mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX] > 0) {
+                                    soundStart(SOUNDS_TYPE_LOCO, whichThrottle, SOUNDS_STARTUP_INDEX, SOUNDS_REPEAT_NONE);
+                                    soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX]);
+                                    soundQueueNextLocoSound(whichThrottle, mSound);
+                                } else {
+                                    soundStart(SOUNDS_TYPE_LOCO, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
+                                    mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
+                                }
+                            } else {
+                                soundQueueNextLocoSound(whichThrottle, mSound);
+                            }
+                        }
+                    } else {
+                        soundsStopAllSoundsForLoco(whichThrottle);
+                    }
+                }
+                mainapp.soundsLocoLastDirection[whichThrottle] = dirs[whichThrottle];
+            }
+        }
+    } // end doLocoSound()
 
     void soundQueueNextLocoSound(int whichThrottle, int mSound) {
         boolean wasDirectionChange = false;
@@ -4146,7 +4173,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == mSound) && (mainapp.soundsLocoQueue[whichThrottle].queueCount() == 0) && (!wasDirectionChange)) {
             return; // sound is already playing and nothing is queued
         }
-//        Log.d("Engine_Driver", "soundQueueNextLocoSound  : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
+        Log.d("Engine_Driver", "soundQueueNextLocoSound  : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int queueCount = mainapp.soundsLocoQueue[whichThrottle].queueCount();
 
@@ -4155,10 +4182,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 soundScheduleNextLocoSound(whichThrottle,mSound, -1);
             }
         }
-    }
+    } // end soundQueueNextLocoSound()
 
     void soundScheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime ) {
-//        Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
+        Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int expectedEndTime;
         if (forcedExpectedEndTime>0) {
@@ -4169,12 +4196,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int nextSound = mainapp.soundsLocoQueue[whichThrottle].frontOfQueue();
 
         if (nextSound >= 0) {
-            mainapp.comm_msg_handler.postDelayed(
+            mainapp.throttle_msg_handler.postDelayed(
                     new SoundScheduleNextSoundToPlay(SOUNDS_TYPE_LOCO, whichThrottle, nextSound),
                     expectedEndTime-100);
-//            Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
+            Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
         }
-    }
+    } //end soundScheduleNextLocoSound()
 
     int getLocoSoundStep(int whichThrottle) {
         int rslt;
@@ -4186,7 +4213,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
 //        Log.d("Engine_Driver", "getLocoSoundStep         : (locoSound) wt: " + whichThrottle + " step:" + rslt);
         return rslt;
-    }
+    } // end getLocoSoundStep()
 
     void doFunctionSound(int whichThrottle, int function) {
 //        Log.d("Engine_Driver", "doFunctionSound          : wt: " + whichThrottle + " function: " + function);
@@ -4205,17 +4232,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
         }
-    }
+    } // end doFunctionSound()
 
+    // this is not used for Loco sounds
     int soundIsPlaying(int soundType, int whichThrottle) {
         int isPlaying;
         switch (soundType) {
             default:
                 isPlaying = -1;
                 break;
-//            case SOUNDS_TYPE_LOCO: // loco
-//                isPlaying = mainapp.soundsLocoPlaying[whichThrottle][mSound];
-//                break;
             case SOUNDS_TYPE_BELL: // bell
                 isPlaying = mainapp.soundsBellCurrentlyPlaying[whichThrottle];
                 break;
@@ -4223,49 +4248,57 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 isPlaying = mainapp.soundsHornCurrentlyPlaying[whichThrottle];
         }
         return isPlaying;
-    }
+    } // end soundIsPlaying()
 
     void startBellHornSound(int soundType, int whichThrottle) {
 //        Log.d("Engine_Driver", "startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
         if (soundIsPlaying(soundType,whichThrottle) < 0) { // check if the loop sound is not currently playing
             soundStart(soundType,whichThrottle,SOUNDS_BELL_HORN_START, 0);
             // queue up the loop sound to be played when the start sound is finished
-            mainapp.comm_msg_handler.postDelayed(
+            mainapp.throttle_msg_handler.postDelayed(
                     new SoundScheduleNextSoundToPlay(soundType, whichThrottle, SOUNDS_BELL_HORN_START),
                         mainapp.soundsBellDuration[whichThrottle][SOUNDS_BELL_HORN_START]);
         }
-    }
+    } // end startBellHornSound()
 
     void stopBellHornSound(int soundType, int whichThrottle) {
 //        Log.d("Engine_Driver", "stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
         if (soundIsPlaying(soundType,whichThrottle) == 0) {
             // if the start sound is currently playing need to do something special
             // as the loop is probably scheduled to run but has not started yet
-            mainapp.comm_msg_handler.postDelayed(
+            mainapp.throttle_msg_handler.postDelayed(
                     new SoundScheduleSoundToStop(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP),
                     mainapp.soundsBellDuration[whichThrottle][SOUNDS_BELL_HORN_START]+100);
 
         } else if (soundIsPlaying(soundType,whichThrottle) == 1) { // check if the loop sound is currently playing
             int expectedEndTime = soundStop(soundType,whichThrottle,SOUNDS_BELL_HORN_LOOP, false);
             // queue up the end sound
-            mainapp.comm_msg_handler.postDelayed(
+            mainapp.throttle_msg_handler.postDelayed(
                     new SoundScheduleNextSoundToPlay(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP),
                     expectedEndTime);
         }
-    }
+    } // end stopBellHornSound(
 
     void soundStart(int soundType, int whichThrottle, int mSound, int loop) {
-//        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
         switch (soundType) {
             default:
             case SOUNDS_TYPE_LOCO: // loco
-//                Log.d("Engine_Driver", "soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+                Log.d("Engine_Driver", "soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
                 if (mSound>=0) {
                     if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] != mSound) {
-                         mainapp.soundsLocoStreamId[whichThrottle][mSound]
-                                = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle),
-                                0, SOUNDS_REPEAT_INFINITE, 1);
+                        if (mSound < SOUNDS_STARTUP_INDEX) {
+                            mainapp.soundsLocoStreamId[whichThrottle][mSound]
+                                    = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
+                                    soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle),
+                                    0, SOUNDS_REPEAT_INFINITE, 1);
+                        } else if (mSound == SOUNDS_STARTUP_INDEX) {
+                            mainapp.soundsLocoStreamId[whichThrottle][mSound]
+                            = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
+                            soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle),
+                            0, SOUNDS_REPEAT_NONE, 1);
+//                        } else if (mSound == SOUNDS_SHUTDOWN_INDEX) {
+                        }
                         mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = mSound;
                         mainapp.soundsLocoStartTime[whichThrottle][mSound] = System.currentTimeMillis();
                     }
@@ -4294,7 +4327,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 break;
         }
-    }
+    }  // end startSound()
 
     int soundStop(int soundType, int whichThrottle, int mSound, boolean forceStop) {
 //        Log.d("Engine_Driver", "soundStop: soundType" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
@@ -4306,36 +4339,48 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case SOUNDS_TYPE_LOCO: // loco
 //                Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " mSound: " + snd + " forceStop:" + forceStop);
                 if (mSound>=0) {
-                    if (!forceStop) {
-                        double duration =  mainapp.soundsLocoDuration[whichThrottle][mSound];
+                    if (mSound < SOUNDS_STARTUP_INDEX) {
+                        if (!forceStop) {
+                            double duration = mainapp.soundsLocoDuration[whichThrottle][mSound];
 
-                        // number of complete completed loops
-                        timesPlayed = (int) ((System.currentTimeMillis() - mainapp.soundsLocoStartTime[whichThrottle][mSound])
-                                / mainapp.soundsLocoDuration[whichThrottle][mSound]);
-                        expectedEndTime = (timesPlayed + 1) * mainapp.soundsLocoDuration[whichThrottle][mSound];
+                            // number of complete completed loops
+                            timesPlayed = (int) ((System.currentTimeMillis() - mainapp.soundsLocoStartTime[whichThrottle][mSound])
+                                    / mainapp.soundsLocoDuration[whichThrottle][mSound]);
+                            expectedEndTime = (timesPlayed + 1) * mainapp.soundsLocoDuration[whichThrottle][mSound];
 
-                        int repeats = 1;
-                        if (expectedEndTime < mainapp.prefDeviceSoundsMomentum) {// if the sound has less that 1 second to play
-                            repeats = 2;
-                        }
-                        if ( (duration * (repeats+1) ) < mainapp.prefDeviceSoundsMomentum) {// if the sound is less that 1 second will need to repeat it
-                            repeats = (int) (mainapp.prefDeviceSoundsMomentum / duration) + 1;
-                        }
-                        double x = expectedEndTime + repeats * duration;
+                            int repeats = 1;
+                            if (expectedEndTime < mainapp.prefDeviceSoundsMomentum) {// if the sound has less that 1 second to play
+                                repeats = 2;
+                            }
+                            if ((duration * (repeats + 1)) < mainapp.prefDeviceSoundsMomentum) {// if the sound is less that 1 second will need to repeat it
+                                repeats = (int) (mainapp.prefDeviceSoundsMomentum / duration) + 1;
+                            }
+                            double x = expectedEndTime + repeats * duration;
 //                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " expected to end in: " +(x/1000)+"sec" );
 
-                        mainapp.soundPool.pause(mainapp.soundsLocoStreamId[whichThrottle][mSound]); // unfortunately you seem to have to pause it to change the number of repeats
-                        mainapp.soundPool.setLoop(mainapp.soundsLocoStreamId[whichThrottle][mSound], repeats);  // don't really stop it, just let it finish
-                        mainapp.soundPool.resume(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
+                            mainapp.soundPool.pause(mainapp.soundsLocoStreamId[whichThrottle][mSound]); // unfortunately you seem to have to pause it to change the number of repeats
+                            mainapp.soundPool.setLoop(mainapp.soundsLocoStreamId[whichThrottle][mSound], repeats);  // don't really stop it, just let it finish
+                            mainapp.soundPool.resume(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 
 //                        expectedEndTime = (timesPlayed + 1 + repeats) * mainapp.soundsLocoDuration[whichThrottle][mSound];
 //                        expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + expectedEndTime - System.currentTimeMillis();
-                        expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for 1 second regardless
+                            expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for 1 second regardless
 
 //                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
-                    } else {
-                        mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-//                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
+                        } else {
+                            mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
+                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
+                        }
+                    } else if (mSound == SOUNDS_STARTUP_INDEX) {
+                        // this will only ever play once
+                        if (!forceStop) {
+                            expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + mainapp.soundsLocoDuration[whichThrottle][mSound] - System.currentTimeMillis();
+                            Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
+                        } else {
+                            mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
+                            Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
+                        }
+
                     }
                 }
                 break;
@@ -4377,7 +4422,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
         }
         return (int) expectedEndTime;
-    }
+    } // end stopSound()
 
     public class SoundScheduleNextSoundToPlay implements Runnable {
         int whichThrottle;
@@ -4413,7 +4458,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
             }
         }
-    }
+    } // end class SoundScheduleNextSoundToPlay
 
     public class SoundScheduleSoundToStop implements Runnable {
         int whichThrottle;
@@ -4438,7 +4483,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
             }
         }
-    }
+    } // end class SoundScheduleSoundToStop
 
     protected class function_button_touch_listener implements View.OnTouchListener {
     int function;
@@ -4522,7 +4567,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
 
                         default: { // handle the function buttons
-//                            doSound(whichThrottle, function, lab, action);
                             isLatching = setFunctionButtonState(whichThrottle, function, true);  //special handling for when using the default function labels, and one of 'Special' function following options
                             sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly,followLeadFunction, isLatching);
                             break;
@@ -4539,7 +4583,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     // only process UP event if this is a "function" button
                     else if (function < direction_button.LEFT) {
-//                        doSound(whichThrottle, function, lab, action);
                         isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handling for when using the default function labels, and one of 'Special' function following options
                         sendFunctionToConsistLocos( whichThrottle, function,  lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly,followLeadFunction, isLatching);
                     }
@@ -6765,7 +6808,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!res) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),
+                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
+                    Toast.LENGTH_LONG).show();
         }
         forceRestartApp(forceRestartReason);
     }
@@ -6905,10 +6950,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speed = getScaleSpeed(whichThrottle);
         }
         return speed;
-    }
+    } // end getSpeedFromCurrentSliderPosition()
 
 
-    public void loadSounds() {
+    public class LoadSoundCompleteDelayed implements Runnable {
+
+        public LoadSoundCompleteDelayed() {
+        }
+        @Override
+        public void run() {
+            Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run: (locoSound)");
+            mainapp.soundsSoundsAreBeingReloaded = false;
+        }
+    } // end DoLocoSoundDelayed
+
+
+
+    public boolean loadSounds() {
+        Log.d("Engine_Driver", "loadSounds: (locoSound)");
         boolean soundAlreadyLoaded = true;
         for (int i = 0; i <= 1; i++) {
             if (!mainapp.prefDeviceSoundsCurrentlyLoaded[i].equals(mainapp.prefDeviceSounds[i])) {
@@ -6916,7 +6975,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             }
         }
-        if (soundAlreadyLoaded) return;
+        if (soundAlreadyLoaded) {
+            mainapp.soundsReloadSounds = false;
+            return false;
+        }
+
+        mainapp.soundsSoundsAreBeingReloaded = true;
+        Log.d("Engine_Driver", "loadSounds: (locoSound): sounds really do need to be reloaded");
 
         if (mainapp.soundPool!=null) {
             mainapp.stopAllSounds();
@@ -6957,9 +7022,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     for (int j = 0; j <= mainapp.iplsLocoSoundsCount; j++) {
                         loadSoundFromFile(SOUNDS_TYPE_LOCO, i, j, this, mainapp.iplsLocoSoundsFileName[j]);
                     }
+                    mainapp.prefDeviceSoundsCurrentlyLoaded[i] = mainapp.iplsFileName;
                 } else { // can't find the file name or some other issue
                     mainapp.prefDeviceSounds[i] = "none";
                     prefs.edit().putString("prefDeviceSoundsBellVolume", "none").commit();
+                    mainapp.prefDeviceSoundsCurrentlyLoaded[i] = "none";
                 }
                 mainapp.soundsLocoSteps[i] = mainapp.iplsLocoSoundsCount;
 
@@ -7090,10 +7157,34 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         mainapp.soundsLocoSteps[i] = 5;
                         break;
                 }
+
+                switch (mainapp.prefDeviceSounds[i]) {
+                    default:
+                        mainapp.soundsLoco[i][SOUNDS_STARTUP_INDEX] = 0;
+                        mainapp.soundsLocoDuration[i][SOUNDS_STARTUP_INDEX] = 0;
+                        mainapp.soundsLoco[i][SOUNDS_SHUTDOWN_INDEX] = 0;
+                        mainapp.soundsLocoDuration[i][SOUNDS_SHUTDOWN_INDEX] = 0;
+                        break;
+                    case "diesel645turbo":
+                        loadSound(SOUNDS_TYPE_LOCO, i, SOUNDS_STARTUP_INDEX, this, R.raw.diesel_645turbo_start);
+                        loadSound(SOUNDS_TYPE_LOCO, i, SOUNDS_SHUTDOWN_INDEX, this, R.raw.diesel_645turbo_shutdown);
+                        break;
+
+                    case "dieselNW2":
+                        loadSound(SOUNDS_TYPE_LOCO, i, SOUNDS_STARTUP_INDEX, this, R.raw.diesel_nw7_start_22050);
+                        loadSound(SOUNDS_TYPE_LOCO, i, SOUNDS_SHUTDOWN_INDEX, this, R.raw.diesel_nw7_stop_22050);
+                        break;
+
+                }
+
             }
         }
         mainapp.soundsReloadSounds = false;
-    }
+        mainapp.throttle_msg_handler.postDelayed(
+                new LoadSoundCompleteDelayed(), 2000);
+        Toast.makeText(getApplicationContext(), R.string.toastInitialisingSounds, Toast.LENGTH_LONG).show();
+        return true;   // true = sounds were reloaded
+    } // end loadSounds()
 
     void loadSound(int soundType, int whichThrottle, int soundNo, Context context, int resId) {
         int duration = 0;
@@ -7115,40 +7206,58 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
                 break;
         }
-    }
+    } // end loadSound()
 
     void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
-        Log.d("Engine_Driver", "loadSoundFromFile : file:" + fileName);
+        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:" + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
         int duration = 0;
 
-        File file = new File(context.getExternalFilesDir(null), fileName);
+        if (fileName.length() > 0) {
+            File file = new File(context.getExternalFilesDir(null), fileName);
 
-        MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
-        if (player!=null)
-            duration = player.getDuration();
+            MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
+            if (player != null)
+                duration = player.getDuration();
 
-        switch (soundType) {
-            default:
-            case SOUNDS_TYPE_LOCO: // loco
-                mainapp.soundsLoco[whichThrottle][soundNo]
-                        = mainapp.soundPool.load(context.getExternalFilesDir(null)+"/"+fileName, 1);
-                mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-                break;
-            case SOUNDS_TYPE_BELL: // bell
-                mainapp.soundsBell[whichThrottle][soundNo]
-                        = mainapp.soundPool.load(context.getExternalFilesDir(null)+"/"+fileName, 1);
-                mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
-                break;
-            case SOUNDS_TYPE_HORN: // horn
-                mainapp.soundsHorn[whichThrottle][soundNo]
-                        = mainapp.soundPool.load(context.getExternalFilesDir(null)+"/"+fileName, 1);
-                mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
-                break;
+            switch (soundType) {
+                default:
+                case SOUNDS_TYPE_LOCO: // loco
+                    mainapp.soundsLoco[whichThrottle][soundNo]
+                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                    mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
+                    break;
+                case SOUNDS_TYPE_BELL: // bell
+                    mainapp.soundsBell[whichThrottle][soundNo]
+                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                    mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
+                    break;
+                case SOUNDS_TYPE_HORN: // horn
+                    mainapp.soundsHorn[whichThrottle][soundNo]
+                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                    mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
+                    break;
+            }
+            Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: " + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
+        } else {
+            switch (soundType) {
+                default:
+                case SOUNDS_TYPE_LOCO: // loco
+                    mainapp.soundsLoco[whichThrottle][soundNo] = 0;
+                    mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
+                    break;
+                case SOUNDS_TYPE_BELL: // bell
+                    mainapp.soundsBell[whichThrottle][soundNo] = 0;
+                    mainapp.soundsBellDuration[whichThrottle][soundNo] = 0;
+                    break;
+                case SOUNDS_TYPE_HORN: // horn
+                    mainapp.soundsHorn[whichThrottle][soundNo] = 0;
+                    mainapp.soundsHornDuration[whichThrottle][soundNo] = 0;
+                    break;
+            }
         }
-        Log.d("Engine_Driver", "loadSoundFromFile : file loaded: " + fileName);
-    }
+    } // end loadSoundsFromFile()
 
-        void soundsStopAllSoundsForLoco(int whichThrottle) {
+    void soundsStopAllSoundsForLoco(int whichThrottle) {
 //        Log.d("Engine_Driver", "soundsStopAllSoundsForLoco : (locoSound) wt: " + whichThrottle);
         if (mainapp.soundPool != null) {
             for (int i = 0; i < 17; i++) {
@@ -7161,7 +7270,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = -1;
         }
-    }
+    } // end soundsStopAllSoundsForLoco
 
     //listeners for the Pause Speed Button
     protected class sound_device_mute_button_touch_listener implements View.OnTouchListener {

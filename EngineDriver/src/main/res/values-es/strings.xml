@@ -623,7 +623,7 @@
     <string name="functionButtonLookForRear">ATRÁS</string>
     <string name="prefImportExportOverwite">El archivo \'%1$s\' ya existe. ¿Sobreescribir?</string>
     <string name="prefImportExportErrorReadingList">Error leyendo la lista de conexiones recientes:</string>
-    <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'! No has guardado las preferencias para este host</string>
+    <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\'! No has guardado las preferencias para este host</string>
     <string name="prefImportExportErrorNotConnected">No cenectado a un host</string>
     <string name="logViewerTitle">Actividad en visualizador de Logs | Nombre del Controlador: %1$s</string>
 

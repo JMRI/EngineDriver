@@ -629,7 +629,7 @@
     <string name="functionButtonLookForRear">DARRERA</string>
     <string name="prefImportExportOverwite">L\'arxiu \'%1$s\' ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
-    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'! No has desat les preferències per aquest host</string>
+    <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\'! No has desat les preferències per aquest host</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host</string>
     <string name="logViewerTitle">Activitat en visualitzador de Logs | Nom del Controlador: %1$s</string>
 

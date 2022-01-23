@@ -116,7 +116,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             Spinner spinner = findViewById(R.id.dss_throttle0);
             dssThrottle0Index = spinner.getSelectedItemPosition();
             prefs.edit().putString("prefDeviceSounds0", deviceSoundsEntryValuesArray[dssThrottle0Index]).commit();  //reset the preference
-
+            mainapp.soundsReloadSounds = true;
             hideKeyboard(view);
         }
         @Override
@@ -131,7 +131,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             Spinner spinner = findViewById(R.id.dss_throttle1);
             dssThrottle1Index = spinner.getSelectedItemPosition();
             prefs.edit().putString("prefDeviceSounds1", deviceSoundsEntryValuesArray[dssThrottle1Index]).commit();  //reset the preference
-
+            mainapp.soundsReloadSounds = true;
             hideKeyboard(view);
         }
         @Override
