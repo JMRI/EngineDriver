@@ -699,7 +699,7 @@
     <string name="functionButtonLookForRear">ARRIÈRE</string>
     <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur sur lecture de la liste de connexions récentes:</string>
-    <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
+    <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte.</string>
 
     <string name="ConsistEditLabelLead">TETE</string>

@@ -335,6 +335,7 @@ public class threaded_application extends Application {
     public float prefDeviceSoundsBellVolume = 1;
     public float prefDeviceSoundsHornVolume = 1;
     public boolean soundsReloadSounds = true;
+    public boolean soundsSoundsAreBeingReloaded = false;
 
     public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
@@ -3993,7 +3994,11 @@ public class threaded_application extends Application {
                                         try {
                                             num = Integer.decode(line.substring(1, splitPos));
                                         } catch (NumberFormatException e) {
-                                            // ignore
+                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
+                                                num = SOUNDS_STARTUP_INDEX;
+                                            } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
+                                                num = SOUNDS_SHUTDOWN_INDEX;
+                                            }
                                         }
                                     }
                                     if ((num >= 0) && (num <= 2)) {

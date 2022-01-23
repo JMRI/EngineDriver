@@ -403,7 +403,7 @@
 
     <string name="prefImportExportOverwite">File \'%1$s\' giá presente. Sovrascrivere?</string>
     <string name="prefImportExportErrorReadingList">Errore lettura lista connessioni recenti:</string>
-    <string name="prefImportExportErrorReadingFrom">Importazione da \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' fallita! Puoi non aver ancora salvato le preferenze per questo host.</string>
+    <string name="prefImportExportErrorReadingFrom">Importazione da \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' fallita! Puoi non aver ancora salvato le preferenze per questo host.</string>
     <string name="prefImportExportErrorNotConnected">Host non connesso.</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Cambia Direzione Pulsanti</string>

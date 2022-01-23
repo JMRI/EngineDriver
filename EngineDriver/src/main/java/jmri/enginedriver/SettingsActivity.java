@@ -418,7 +418,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!res) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),
+                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
+                    Toast.LENGTH_LONG).show();
         }
         forceRestartApp(forceRestartReason);
         return res;
