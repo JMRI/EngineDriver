@@ -622,6 +622,7 @@
  *   TODO: support negative responses to permissions prompts, limiting functionality
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
+ *   TODO: allow zoom out more than the page width
  *   TODO: set "Web" menu to "DCC EXP" if HTDCCESP
  * routes
  *   TODO: shrink button text if longer than x
