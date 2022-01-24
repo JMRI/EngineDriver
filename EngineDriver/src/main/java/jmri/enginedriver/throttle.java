@@ -6152,6 +6152,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!mainapp.consists[i].isActive()) {
                         soundsStopAllSoundsForLoco(i);
                     }
+                    showHideMuteButton(i);
                 }
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist
@@ -6238,6 +6239,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
 //                    doLocoSound(i);
 //                }
+                for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
+                    showHideMuteButton(i);
+                }
                 break;
             }
         }
@@ -6968,6 +6972,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     public boolean loadSounds() {
         Log.d("Engine_Driver", "loadSounds: (locoSound)");
+        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+
         boolean soundAlreadyLoaded = true;
         for (int i = 0; i <= 1; i++) {
             if (!mainapp.prefDeviceSoundsCurrentlyLoaded[i].equals(mainapp.prefDeviceSounds[i])) {
@@ -7378,6 +7385,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
         } else {
             bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        }
+    }
+
+    void showHideMuteButton(int whichThrottle) {
+        if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
+            bMutes[whichThrottle].setVisibility(View.GONE);
+        } else {
+            bMutes[whichThrottle].setVisibility(View.VISIBLE);
         }
     }
 }
