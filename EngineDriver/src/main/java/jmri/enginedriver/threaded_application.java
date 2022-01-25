@@ -3644,7 +3644,7 @@ public class threaded_application extends Application {
         return serverType.equals("DCC-EX");
     }
 
-    /* only JMRI and MRC support Rosters at this time */
+    /* only JMRI, MRC and DCC-EX support Rosters at this time */
     public boolean supportsRoster() {
         return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
