@@ -7389,10 +7389,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void showHideMuteButton(int whichThrottle) {
-        if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-            bMutes[whichThrottle].setVisibility(View.GONE);
-        } else {
-            bMutes[whichThrottle].setVisibility(View.VISIBLE);
+        if (whichThrottle < bMutes.length) {
+            if (bMutes[whichThrottle] != null) {
+                if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
+                    bMutes[whichThrottle].setVisibility(View.GONE);
+                } else {
+                    bMutes[whichThrottle].setVisibility(View.VISIBLE);
+                }
+            }
         }
     }
 }
