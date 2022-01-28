@@ -329,10 +329,35 @@
 
                                         <Button
                                             android:id="@+id/device_sounds_mute_0"
-                                            style="?attr/ed_normal_button_style"
+                                            style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/deviceSoundsMuteButton" />
+
+                                        <Button
+                                            android:id="@+id/device_sounds_bell_0"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton01DefaultValue" />
+
+                                        <Button
+                                            android:id="@+id/device_sounds_horn_0"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton02DefaultValue" />
+
+                                        <Button
+                                            android:id="@+id/device_sounds_horn_short_0"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton02DefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_0"
@@ -774,12 +799,36 @@
 
                                         <Button
                                             android:id="@+id/device_sounds_mute_1"
-                                            style="?attr/ed_normal_button_style"
+                                            style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_marginLeft="1dp"
                                             android:layout_marginRight="4dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/deviceSoundsMuteButton" />
 
+                                        <Button
+                                            android:id="@+id/device_sounds_bell_1"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton01DefaultValue" />
+
+                                        <Button
+                                            android:id="@+id/device_sounds_horn_1"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton02DefaultValue" />
+
+                                        <Button
+                                            android:id="@+id/device_sounds_horn_short_1"
+                                            style="?attr/ed_fn_button_style"
+                                            android:layout_width="fill_parent"
+                                            android:layout_marginLeft="5dp"
+                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                            android:text="@string/functionButton02DefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_1"

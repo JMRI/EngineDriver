@@ -197,6 +197,7 @@
                         android:paddingRight="20dp"
                         android:text="100"
                         tools:ignore="RtlHardcoded" />
+
                 </LinearLayout>
 
             </LinearLayout>

@@ -1155,7 +1155,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
                         break;
                     case "prefDeviceSounds0":
+                        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0",
+                                parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                     case "prefDeviceSounds1":
+                        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1",
+                                parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                         mainapp.soundsReloadSounds = true;
                         break;
                     case "prefDeviceSoundsLocoVolume":

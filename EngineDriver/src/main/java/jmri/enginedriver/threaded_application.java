@@ -337,6 +337,8 @@ public class threaded_application extends Application {
     public boolean soundsReloadSounds = true;
     public boolean soundsSoundsAreBeingReloaded = false;
 
+    public boolean[][] soundsDeviceButtonStates = { {false,false,false},{false,false,false} };
+
     public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
     public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
@@ -348,6 +350,12 @@ public class threaded_application extends Application {
     public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
     public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
     public int [] soundsHornCurrentlyPlaying = {-1,-1};
+
+    public int[] soundsHornShort = {0,0};
+    public int[] soundsHornShortStreamId = {0,0};
+    public int[] soundsHornShortDuration = {0,0};
+    public double[] soundsHornShortStartTime = {0,0};
+    public int [] soundsHornShortCurrentlyPlaying = {-1,-1};
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
@@ -378,6 +386,7 @@ public class threaded_application extends Application {
     public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16   20 ans 21 are startup and shut down
     public String[] iplsBellSoundsFileName = {"","",""};  // Start, Loop, End
     public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
+    public String iplsHornShortSoundsFileName = "";
     public int iplsLocoSoundsCount = -1;
     public String iplsName = "";
     public String iplsFileName = "";
@@ -3979,6 +3988,8 @@ public class threaded_application extends Application {
                                                 num = SOUNDS_STARTUP_INDEX;
                                             } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
                                                 num = SOUNDS_SHUTDOWN_INDEX;
+                                            } else {
+                                                break;
                                             }
                                         }
                                     }
@@ -3998,6 +4009,8 @@ public class threaded_application extends Application {
                                                 num = SOUNDS_STARTUP_INDEX;
                                             } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
                                                 num = SOUNDS_SHUTDOWN_INDEX;
+                                            } else {
+                                                break;
                                             }
                                         }
                                     }
@@ -4010,7 +4023,10 @@ public class threaded_application extends Application {
                                         try {
                                             num = Integer.decode(line.substring(1, splitPos));
                                         } catch (NumberFormatException e) {
-                                            // ignore
+                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
+                                                iplsHornShortSoundsFileName = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                            }
+                                            break;
                                         }
                                     }
                                     if ((num >= 0) && (num <= 2)) {

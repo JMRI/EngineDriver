@@ -232,7 +232,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         close_button_listener close_click_listener = new close_button_listener();
         closeButton.setOnClickListener(close_click_listener);
 
-        // Set the options for the sounds
+        // Set the options for the sounds  - throttle 0
         Spinner dss_throttle0 = findViewById(R.id.dss_throttle0);
 //        ArrayAdapter<?> spinner_adapter0 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<String> spinner_adapter0 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
@@ -240,7 +240,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         dss_throttle0.setAdapter(spinner_adapter0);
         dss_throttle0.setOnItemSelectedListener(new spinner_listener_0());
 
-        // Set the options for the sounds
+        // Set the options for the sounds - throttle 1
         Spinner dss_throttle1 = findViewById(R.id.dss_throttle1);
 //        ArrayAdapter<?> spinner_adapter1 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<String> spinner_adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);

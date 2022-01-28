@@ -328,13 +328,59 @@
                                         android:layout_marginRight="7dp"
                                         android:text="@string/pauseSpeedButtonLabel" />
 
-                                    <Button
-                                        android:id="@+id/device_sounds_mute_0"
-                                        style="?attr/ed_normal_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_marginLeft="11dp"
-                                        android:layout_marginRight="7dp"
-                                        android:text="@string/deviceSoundsMuteButton" />
+                                    <TableLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:paddingLeft="3dp"
+                                        android:paddingRight="0dp"
+                                        android:shrinkColumns="*"
+                                        android:stretchColumns="*">
+
+                                        <TableRow
+                                            android:layout_width="match_parent"
+                                            android:baselineAligned="false"
+                                            android:weightSum="10">
+
+                                            <Button
+                                                android:id="@+id/device_sounds_mute_0"
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_width="0dp"
+                                                android:layout_weight="5"
+                                                android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                                android:text="@string/deviceSoundsMuteButton" />
+
+                                            <Button
+                                                android:id="@+id/device_sounds_bell_0"
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_width="0dp"
+                                                android:layout_weight="5"
+                                                android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                                android:text="@string/functionButton01DefaultValue" />
+
+                                    </TableRow>
+
+                                        <TableRow
+                                            android:layout_width="match_parent"
+                                            android:baselineAligned="false"
+                                            android:weightSum="10">
+
+                                            <Button
+                                                android:id="@+id/device_sounds_horn_0"
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_width="0dp"
+                                                android:layout_weight="5"
+                                                android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                                android:text="@string/functionButton02DefaultValue" />
+
+                                            <Button
+                                                android:id="@+id/device_sounds_horn_short_0"
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_width="0dp"
+                                                android:layout_weight="5"
+                                                android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                                android:text="@string/functionButton02DefaultValue" />
+                                        </TableRow>
+                                    </TableLayout>
 
                                     <TableLayout
                                     android:id="@+id/function_buttons_table_0"
