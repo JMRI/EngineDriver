@@ -764,7 +764,7 @@
     <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
-    <string name="toastInitialisingSounds">Initialising sounds. They will restart automatically in a few seconds.</string>
+    <string name="toastInitialisingSounds">Initialising sounds. They will be ready/start automatically in a few seconds.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>

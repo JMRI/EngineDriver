@@ -337,6 +337,8 @@ public class threaded_application extends Application {
     public boolean soundsReloadSounds = true;
     public boolean soundsSoundsAreBeingReloaded = false;
 
+    public boolean[][] soundsDeviceButtonStates = { {false,false,false},{false,false,false} };
+
     public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
     public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
     public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
@@ -348,6 +350,12 @@ public class threaded_application extends Application {
     public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
     public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
     public int [] soundsHornCurrentlyPlaying = {-1,-1};
+
+    public int[] soundsHornShort = {0,0};
+    public int[] soundsHornShortStreamId = {0,0};
+    public int[] soundsHornShortDuration = {0,0};
+    public double[] soundsHornShortStartTime = {0,0};
+    public int [] soundsHornShortCurrentlyPlaying = {-1,-1};
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
