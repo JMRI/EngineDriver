@@ -386,6 +386,7 @@ public class threaded_application extends Application {
     public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16   20 ans 21 are startup and shut down
     public String[] iplsBellSoundsFileName = {"","",""};  // Start, Loop, End
     public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
+    public String iplsHornShortSoundsFileName = "";
     public int iplsLocoSoundsCount = -1;
     public String iplsName = "";
     public String iplsFileName = "";
@@ -3987,6 +3988,8 @@ public class threaded_application extends Application {
                                                 num = SOUNDS_STARTUP_INDEX;
                                             } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
                                                 num = SOUNDS_SHUTDOWN_INDEX;
+                                            } else {
+                                                break;
                                             }
                                         }
                                     }
@@ -4006,6 +4009,8 @@ public class threaded_application extends Application {
                                                 num = SOUNDS_STARTUP_INDEX;
                                             } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
                                                 num = SOUNDS_SHUTDOWN_INDEX;
+                                            } else {
+                                                break;
                                             }
                                         }
                                     }
@@ -4018,7 +4023,10 @@ public class threaded_application extends Application {
                                         try {
                                             num = Integer.decode(line.substring(1, splitPos));
                                         } catch (NumberFormatException e) {
-                                            // ignore
+                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
+                                                iplsHornShortSoundsFileName = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                            }
+                                            break;
                                         }
                                     }
                                     if ((num >= 0) && (num <= 2)) {
