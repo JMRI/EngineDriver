@@ -71,4 +71,5 @@ public interface message_type {
     int HTTP_SERVER_NAME_RECEIVED = 49;   //
     int CONNECTION_COMPLETED_CHECK = 50;   //
     int RELAUNCH_APP = 51;   //
+    int SOUNDS_FORCE_LOCO_SOUNDS_TO_START = 52;   //
 }

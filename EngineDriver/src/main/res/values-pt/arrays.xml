@@ -122,6 +122,10 @@
         <item>Função 26</item>
         <item>Função 27</item>
         <item>Função 28</item>
+        <item >Mute (IPLS)</item>
+        <item >Bell (IPLS)</item>
+        <item >Horn (IPLS)</item>
+        <item >Horn Short (IPLS)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>

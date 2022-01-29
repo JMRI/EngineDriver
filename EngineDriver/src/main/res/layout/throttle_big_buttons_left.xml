@@ -316,7 +316,7 @@
                                         android:layout_marginLeft="11dp"
                                         android:layout_marginRight="7dp"
                                         android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                        android:text="@string/functionButton02DefaultValue" />
+                                        android:text="@string/soundsButtonHornShortDefaultValue" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_0"

@@ -221,6 +221,10 @@
         <item >Funkce 26</item>
         <item >Funkce 27</item>
         <item >Funkce 28</item>
+        <item >Mute (IPLS)</item>
+        <item >Bell (IPLS)</item>
+        <item >Horn (IPLS)</item>
+        <item >Horn Short (IPLS)</item>
     </string-array>
 
    
