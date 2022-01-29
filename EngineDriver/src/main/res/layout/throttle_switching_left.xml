@@ -425,7 +425,7 @@
                                                     android:layout_width="0dp"
                                                     android:layout_weight="5"
                                                     android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                                    android:text="@string/functionButton02DefaultValue" />
+                                                    android:text="@string/soundsButtonHornShortDefaultValue" />
                                             </TableRow>
                                         </TableLayout>
 

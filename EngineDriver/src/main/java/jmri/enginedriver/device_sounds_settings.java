@@ -353,6 +353,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "device_sounds_settings.onDestroy() called");
+        mainapp.loadSounds();
         super.onDestroy();
     }
 

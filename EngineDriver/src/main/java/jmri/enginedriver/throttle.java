@@ -32,7 +32,6 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
-
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -49,12 +48,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.media.ToneGenerator;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -117,7 +113,6 @@ import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
-import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
@@ -435,6 +430,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static String PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED = "Decrease Speed";
     private static String PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED = "Limit Speed";
     private static String PREF_GAMEPAD_BUTTON_OPTION_PAUSE = "Pause";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE = "Mute (IPLS)";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL = "Bell (IPLS)";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN = "Horn (IPLS)";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
 
     protected MediaPlayer _mediaPlayer;
 
@@ -1094,6 +1093,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
                     autoImportUrlAskToImport();
                     break;
+                case message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START:
+                    for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
+                        doLocoSound(throttleIndex);
+                    }
+                    break;
 
             }
         }
@@ -1499,7 +1503,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSoundsHornVolume = mainapp.prefDeviceSoundsHornVolume / 100;
 
         if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
-            loadSounds();
+            mainapp.loadSounds();
         } else {
             mainapp.stopAllSounds();
         }
@@ -2968,6 +2972,58 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
                 }
             }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE)) {  // IPLS Sounds - Mute
+            if (isActive && (action == ACTION_UP)) {
+                soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
+                if (soundsIsMuted[whichThrottle]) {
+                    bMutes[whichThrottle].setSelected(true);
+                    bMutes[whichThrottle].setPressed(true);
+                } else {
+                    bMutes[whichThrottle].setSelected(false);
+                    bMutes[whichThrottle].setPressed(false);
+                }
+                soundsMuteUnmuteCurrentSounds(whichThrottle);
+            }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL)) {  // IPLS Sounds - Bell
+            if (isActive && (action == ACTION_UP)) {
+                boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL - 1];
+                doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_BELL);
+                bBells[whichThrottle].setSelected(rslt);
+                bBells[whichThrottle].setPressed(rslt);
+                mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL -1] = rslt;
+            }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN)) {  // IPLS Sounds - Horn
+            if (isActive) {
+                if (action == ACTION_UP) {
+                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
+                    bHorns[whichThrottle].setSelected(false);
+                    bHorns[whichThrottle].setPressed(false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = false;
+                } else {
+                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1]) {
+                        doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
+                        bHorns[whichThrottle].setSelected(true);
+                        bHorns[whichThrottle].setPressed(true);
+                        mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = true;
+                    }
+                }
+            }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT)) {  // IPLS Sounds - Horn Short
+            if (isActive) {
+                if (action == ACTION_UP) {
+                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
+                    bHornShorts[whichThrottle].setSelected(false);
+                    bHornShorts[whichThrottle].setPressed(false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = false;
+                } else {
+                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1]) {
+                        doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
+                        bHornShorts[whichThrottle].setSelected(true);
+                        bHornShorts[whichThrottle].setPressed(true);
+                        mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = true;
+                    }
+                }
+            }
         } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             if (isActive && (repeatCnt == 0)) {
@@ -4142,15 +4198,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     int mSound = -1;
                     if (mainapp.consists[whichThrottle].isActive()) {
                         mSound = getLocoSoundStep(whichThrottle);
+
                         Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                         if ((mSound >= 0)) {
                             if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == SOUNDS_NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
+//                                Log.d("Engine_Driver", "doLocoSound 2              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                 //see if there is a startup sound for this profile
                                 if (mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX] > 0) {
+//                                    Log.d("Engine_Driver", "doLocoSound 3              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                     soundStart(SOUNDS_TYPE_LOCO, whichThrottle, SOUNDS_STARTUP_INDEX, SOUNDS_REPEAT_NONE);
                                     soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX]);
                                     soundQueueNextLocoSound(whichThrottle, mSound);
                                 } else {
+//                                    Log.d("Engine_Driver", "doLocoSound 4              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                     soundStart(SOUNDS_TYPE_LOCO, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
                                     mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
                                 }
@@ -4321,7 +4381,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end stopBellHornSound(
 
     void soundStart(int soundType, int whichThrottle, int mSound, int loop) {
-        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+//        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
         switch (soundType) {
             default:
             case SOUNDS_TYPE_LOCO: // loco
@@ -4338,6 +4398,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
                             soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle),
                             0, SOUNDS_REPEAT_NONE, 1);
+//                            Log.d("Engine_Driver", "soundStart SU            : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
+
 //                        } else if (mSound == SOUNDS_SHUTDOWN_INDEX) {
                         }
                         mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = mSound;
@@ -6326,7 +6388,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             case ACTIVITY_DEVICE_SOUNDS_SETTINGS: {
                 mainapp.soundsReloadSounds = true;
-                loadSounds();
+                mainapp.loadSounds();
                 soundsShowHideAllMuteButtons();
                 break;
             }
@@ -7041,359 +7103,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         return speed;
     } // end getSpeedFromCurrentSliderPosition()
-
-
-    public class LoadSoundCompleteDelayed implements Runnable {
-
-        public LoadSoundCompleteDelayed() {
-        }
-        @Override
-        public void run() {
-            Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run: (locoSound)");
-            mainapp.soundsSoundsAreBeingReloaded = false;
-        }
-    } // end DoLocoSoundDelayed
-
-
-
-    public boolean loadSounds() {
-        Log.d("Engine_Driver", "loadSounds: (locoSound)");
-        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
-        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
-
-        boolean soundAlreadyLoaded = true;
-        for (int i = 0; i <= 1; i++) {
-            if (!mainapp.prefDeviceSoundsCurrentlyLoaded[i].equals(mainapp.prefDeviceSounds[i])) {
-                soundAlreadyLoaded = false;
-                break;
-            }
-        }
-        if (soundAlreadyLoaded) {
-            mainapp.soundsReloadSounds = false;
-            return false;
-        }
-
-        mainapp.soundsSoundsAreBeingReloaded = true;
-//        Log.d("Engine_Driver", "loadSounds: (locoSound): sounds really do need to be reloaded");
-
-        if (mainapp.soundPool!=null) {
-            mainapp.stopAllSounds();
-        }
-        for (int i = 0; i <= 1; i++) {
-            mainapp.soundsLocoQueue[i] = new ArrayQueue(30);
-            mainapp.soundsLocoQueue[i].emptyQueue();
-            mainapp.soundsLocoCurrentlyPlaying[i] = -1;
-        }
-
-        // setup the soundPool for the in device loco sounds
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            AudioAttributes audioAttributes = new AudioAttributes
-                    .Builder()
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-            mainapp.soundPool = new SoundPool
-                    .Builder()
-                    .setMaxStreams(8)
-                    .setAudioAttributes(audioAttributes)
-                    .build();
-
-        } else {
-            mainapp.soundPool = new SoundPool(8,
-                    AudioManager.STREAM_MUSIC,0);
-        }
-
-        for (int throttleIndex = 0; throttleIndex <= 1; throttleIndex++) {
-            if (mainapp.prefDeviceSounds[throttleIndex].toLowerCase(Locale.ROOT).contains(".ipls")) {
-                // load the custom sounds
-                mainapp.getIplsDetails(mainapp.prefDeviceSounds[throttleIndex]);
-                if (!mainapp.iplsFileName.equals("")) {
-                    for (int j = 0; j <= 2; j++) {
-                        loadSoundFromFile(SOUNDS_TYPE_BELL, throttleIndex, j, this, mainapp.iplsBellSoundsFileName[j]);
-                        loadSoundFromFile(SOUNDS_TYPE_HORN, throttleIndex, j, this, mainapp.iplsHornSoundsFileName[j]);
-                    }
-                    loadSoundFromFile(SOUNDS_TYPE_HORN_SHORT, throttleIndex, 0, this, mainapp.iplsHornShortSoundsFileName);
-                    for (int j = 0; j <= mainapp.iplsLocoSoundsCount; j++) {
-                        loadSoundFromFile(SOUNDS_TYPE_LOCO, throttleIndex, j, this, mainapp.iplsLocoSoundsFileName[j]);
-                    }
-                    loadSoundFromFile(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_STARTUP_INDEX, this, mainapp.iplsLocoSoundsFileName[SOUNDS_STARTUP_INDEX]);
-                    loadSoundFromFile(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_SHUTDOWN_INDEX, this, mainapp.iplsLocoSoundsFileName[SOUNDS_SHUTDOWN_INDEX]);
-                    mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = mainapp.iplsFileName;
-
-                } else { // can't find the file name or some other issue
-                    mainapp.prefDeviceSounds[throttleIndex] = "none";
-                    prefs.edit().putString("prefDeviceSoundsBellVolume", "none").commit();
-                    mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = "none";
-                }
-                mainapp.soundsLocoSteps[throttleIndex] = mainapp.iplsLocoSoundsCount;
-
-            } else {
-                switch (mainapp.prefDeviceSounds[throttleIndex]) {
-                    default:
-                    case "steam":
-                    case "steamSlow":
-                    case "steamClass64":
-                    case "diesel645turbo":
-                    case "diesel7FDL":
-                    case "dieselNW2":
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.bell_start);
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.bell_loop);
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.bell_end);
-                        break;
-                    case "steamClass94":
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.bell_br_64_glocke_22_start);
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.bell_br_64_glocke_22_loop);
-                        loadSound(SOUNDS_TYPE_BELL, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.bell_br_64_glocke_22_end);
-                        break;
-                }
-
-                switch (mainapp.prefDeviceSounds[throttleIndex]) {
-                    default:
-                    case "steam":
-                    case "steamSlow":
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.whistle_start);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_loop);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.whistle_end);
-                        break;
-
-                    case "diesel645turbo":
-                    case "diesel7FDL":
-                    case "dieselNW2":
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.horn_start);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.horn_loop);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.horn_end);
-                        break;
-
-                    case "steamClass64":
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.whistle_class64_long_start);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_class64_long_mid);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.whistle_class64_long_end);
-                        break;
-
-                    case "steamClass94":
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_start);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_loop);
-                        loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, this, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_end);
-                        break;
-                }
-
-                switch (mainapp.prefDeviceSounds[throttleIndex]) {
-                    default:
-                    case "steam":
-                    case "steamSlow":
-                        loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_short);
-                        break;
-
-                    case "diesel645turbo":
-                    case "diesel7FDL":
-                    case "dieselNW2":
-                        loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.horn_short);
-                        break;
-
-                    case "steamClass64":
-                        loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_class64_short);
-                        break;
-
-                    case "steamClass94":
-                        loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, this, R.raw.whistle_class94_pfiff_2_2);
-                        break;
-                }
-
-                mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = mainapp.prefDeviceSounds[throttleIndex];
-                switch (mainapp.prefDeviceSounds[throttleIndex]) {
-                    default:
-                    case "steam":
-                    case "steamSlow":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.steam_loco_stationary_med);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.steam_piston_stroke3);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.steam_loop_30rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, this, R.raw.steam_loop_35rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, this, R.raw.steam_loop_40rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 5, this, R.raw.steam_loop_50rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 6, this, R.raw.steam_loop_60rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 7, this, R.raw.steam_loop_75rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 8, this, R.raw.steam_loop_90rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 9, this, R.raw.steam_loop_100rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 10, this, R.raw.steam_loop_125rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 11, this, R.raw.steam_loop_150rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 12, this, R.raw.steam_loop_175rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 13, this, R.raw.steam_loop_200rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 14, this, R.raw.steam_loop_250rpm);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 15, this, R.raw.steam_loop_300rpm);
-                        if (mainapp.prefDeviceSounds[throttleIndex].equals("steam")) {
-                            mainapp.soundsLocoSteps[throttleIndex] = 15;
-                        } else {
-                            mainapp.soundsLocoSteps[throttleIndex] = 7;
-                        }
-                        break;
-
-                    case "diesel645turbo":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.diesel_645turbo_idle);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.diesel_645turbo_d1_d2);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.diesel_645turbo_d2_d3);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, this, R.raw.diesel_645turbo_d3_d4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, this, R.raw.diesel_645turbo_d4);
-                        mainapp.soundsLocoSteps[throttleIndex] = 4;
-                        break;
-
-                    case "diesel7FDL":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.diesel_7fdl_idle_1a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.diesel_7fdl_idle_2a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.diesel_7fdl_idle_3a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, this, R.raw.diesel_7fdl_idle_4a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, this, R.raw.diesel_7fdl_idle_5a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 5, this, R.raw.diesel_7fdl_idle_6a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 6, this, R.raw.diesel_7fdl_idle_7a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 7, this, R.raw.diesel_7fdl_idle_8a);
-                        mainapp.soundsLocoSteps[throttleIndex] = 7; // fast steam
-                        break;
-
-                    case "dieselNW2":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.diesel_nw7_motor);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.diesel_nw7_motor_2);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.diesel_nw7_motor_1);
-                        mainapp.soundsLocoSteps[throttleIndex] = 2;
-                        break;
-
-                    case "steamClass64":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.steam_class64_idle_sound);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.steam_class64_chuff1_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.steam_class64_chuff2_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, this, R.raw.steam_class64_chuff3_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, this, R.raw.steam_class64_chuff4_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 5, this, R.raw.steam_class64_chuff5_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 6, this, R.raw.steam_class64_chuff6_1_4);
-                        mainapp.soundsLocoSteps[throttleIndex] = 6;
-                        break;
-
-                    case "steamClass94":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, this, R.raw.steam_class94_idle2a);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, this, R.raw.steam_class94_speed0a_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, this, R.raw.steam_class94_speed2g_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, this, R.raw.steam_class94_speed3g_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, this, R.raw.steam_class94_speed4g_1_4);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 5, this, R.raw.steam_class94_speed5g_1_4);
-                        mainapp.soundsLocoSteps[throttleIndex] = 5;
-                        break;
-                }
-
-                switch (mainapp.prefDeviceSounds[throttleIndex]) {
-                    default:
-                        mainapp.soundsLoco[throttleIndex][SOUNDS_STARTUP_INDEX] = 0;
-                        mainapp.soundsLocoDuration[throttleIndex][SOUNDS_STARTUP_INDEX] = 0;
-                        mainapp.soundsLoco[throttleIndex][SOUNDS_SHUTDOWN_INDEX] = 0;
-                        mainapp.soundsLocoDuration[throttleIndex][SOUNDS_SHUTDOWN_INDEX] = 0;
-                        break;
-                    case "diesel645turbo":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_STARTUP_INDEX, this, R.raw.diesel_645turbo_start);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_SHUTDOWN_INDEX, this, R.raw.diesel_645turbo_shutdown);
-                        break;
-
-                    case "dieselNW2":
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_STARTUP_INDEX, this, R.raw.diesel_nw7_start_22050);
-                        loadSound(SOUNDS_TYPE_LOCO, throttleIndex, SOUNDS_SHUTDOWN_INDEX, this, R.raw.diesel_nw7_stop_22050);
-                        break;
-
-                }
-
-            }
-        }
-        mainapp.soundsReloadSounds = false;
-        mainapp.throttle_msg_handler.postDelayed(
-                new LoadSoundCompleteDelayed(), 2000);
-
-        boolean soundsLoading = false;
-        for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
-            if (!mainapp.prefDeviceSounds[i].equals("none")) {
-                soundsLoading = true;
-                break;
-            }
-        }
-        if (soundsLoading) {
-            Toast.makeText(getApplicationContext(), R.string.toastInitialisingSounds, Toast.LENGTH_LONG).show();
-        }
-        return true;   // true = sounds were reloaded
-    } // end loadSounds()
-
-    void loadSound(int soundType, int whichThrottle, int soundNo, Context context, int resId) {
-        int duration = 0;
-        MediaPlayer player = MediaPlayer.create(context, resId);
-        if (player!=null)
-            duration = player.getDuration();
-        switch (soundType) {
-            default:
-            case SOUNDS_TYPE_LOCO: // loco
-                mainapp.soundsLoco[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-                mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-                break;
-            case SOUNDS_TYPE_BELL: // bell
-                mainapp.soundsBell[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-                mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
-                break;
-            case SOUNDS_TYPE_HORN: // horn
-                mainapp.soundsHorn[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-                mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
-                break;
-            case SOUNDS_TYPE_HORN_SHORT: // horn short
-                mainapp.soundsHornShort[whichThrottle] = mainapp.soundPool.load(context, resId, 1);
-                mainapp.soundsHornShortDuration[whichThrottle] = duration;
-                break;
-        }
-    } // end loadSound()
-
-    void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
-//        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:" + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
-        int duration = 0;
-
-        if (fileName.length() > 0) {
-            File file = new File(context.getExternalFilesDir(null), fileName);
-
-            MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
-            if (player != null)
-                duration = player.getDuration();
-
-            switch (soundType) {
-                default:
-                case SOUNDS_TYPE_LOCO: // loco
-                    mainapp.soundsLoco[whichThrottle][soundNo]
-                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-                    mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-                    break;
-                case SOUNDS_TYPE_BELL: // bell
-                    mainapp.soundsBell[whichThrottle][soundNo]
-                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-                    mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
-                    break;
-                case SOUNDS_TYPE_HORN: // horn
-                    mainapp.soundsHorn[whichThrottle][soundNo]
-                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-                    mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
-                    break;
-                case SOUNDS_TYPE_HORN_SHORT: // horn short
-                    mainapp.soundsHornShort[whichThrottle]
-                            = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-                    mainapp.soundsHornShortDuration[whichThrottle] = duration;
-                    break;
-            }
-            Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: " + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
-        } else {
-            switch (soundType) {
-                default:
-                case SOUNDS_TYPE_LOCO: // loco
-                    mainapp.soundsLoco[whichThrottle][soundNo] = 0;
-                    mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
-                    break;
-                case SOUNDS_TYPE_BELL: // bell
-                    mainapp.soundsBell[whichThrottle][soundNo] = 0;
-                    mainapp.soundsBellDuration[whichThrottle][soundNo] = 0;
-                    break;
-                case SOUNDS_TYPE_HORN: // horn
-                    mainapp.soundsHorn[whichThrottle][soundNo] = 0;
-                    mainapp.soundsHornDuration[whichThrottle][soundNo] = 0;
-                    break;
-            }
-        }
-    } // end loadSoundsFromFile()
 
     void soundsStopAllSoundsForLoco(int whichThrottle) {
 //        Log.d("Engine_Driver", "soundsStopAllSoundsForLoco : (locoSound) wt: " + whichThrottle);
