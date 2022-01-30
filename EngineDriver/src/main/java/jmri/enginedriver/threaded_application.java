@@ -4075,7 +4075,7 @@ public class threaded_application extends Application {
             Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run: (locoSound)");
             soundsSoundsAreBeingReloaded = false;
             sendMsg(throttle_msg_handler, message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START, "", 0);
-            Toast.makeText(getApplicationContext(), "Sounds loaded. Delay: " + loadDelay, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Sounds loaded. Delay: " + loadDelay, Toast.LENGTH_SHORT).show();
             Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run. Delay: " + loadDelay);
 
         }
