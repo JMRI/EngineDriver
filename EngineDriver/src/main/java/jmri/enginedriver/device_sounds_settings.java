@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +51,8 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
+
 public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -72,6 +76,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     String prefDeviceSoundsHornVolume;
     private SharedPreferences prefs;
     private Toolbar toolbar;
+
+    protected InPhoneLocoSoundsLoader iplsLoader;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -211,7 +217,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        mainapp.getIplsList();        //see if there any custom ipls files
+        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        iplsLoader.getIplsList();        //see if there any custom ipls files
         int ipslCount = mainapp.iplsNames.size();
         int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
         deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
@@ -353,7 +360,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "device_sounds_settings.onDestroy() called");
-        mainapp.loadSounds();
+        iplsLoader.loadSounds();
         super.onDestroy();
     }
 
