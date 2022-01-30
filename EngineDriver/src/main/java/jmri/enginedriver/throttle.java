@@ -113,6 +113,7 @@ import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
@@ -290,6 +291,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int SOUNDS_NOTHING_CURRENTLY_PLAYING = -1;
     private static final int SOUNDS_STARTUP_INDEX = 20;
     private static final int SOUNDS_SHUTDOWN_INDEX = 21;
+
+    protected InPhoneLocoSoundsLoader iplsLoader;
 
     // function number-to-button maps
     protected LinkedHashMap<Integer, Button>[] functionMaps;
@@ -1503,7 +1506,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSoundsHornVolume = mainapp.prefDeviceSoundsHornVolume / 100;
 
         if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
-            mainapp.loadSounds();
+            loadSounds();
         } else {
             mainapp.stopAllSounds();
         }
@@ -4953,7 +4956,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
-            setContentView(mainapp.throttleLayoutViewId);
+        setContentView(mainapp.throttleLayoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
 
@@ -6387,8 +6390,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             }
             case ACTIVITY_DEVICE_SOUNDS_SETTINGS: {
-                mainapp.soundsReloadSounds = true;
-                mainapp.loadSounds();
+                loadSounds();
                 soundsShowHideAllMuteButtons();
                 break;
             }
@@ -7401,5 +7403,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
         }
+    }
+
+    protected void loadSounds() {
+        if (iplsLoader == null) iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        mainapp.soundsReloadSounds = true;
+        iplsLoader.loadSounds();
+        iplsLoader = null;
     }
 }
