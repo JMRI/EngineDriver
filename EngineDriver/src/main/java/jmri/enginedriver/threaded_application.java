@@ -336,6 +336,7 @@ public class threaded_application extends Application {
     private static final int SOUNDS_BELL_HORN_END = 2;
 
     public boolean prefDeviceSoundsButton = false;
+    public boolean prefDeviceSoundsBellIsMomentary = false;
     public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
     public String[] prefDeviceSoundsCurrentlyLoaded = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;

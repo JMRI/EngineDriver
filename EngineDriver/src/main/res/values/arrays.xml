@@ -1124,9 +1124,9 @@
         <!-- In Phone Sound Preferences -->
         <item>prefDeviceSoundsMomentum</item>
         <item>prefDeviceSoundsLocoVolume</item>
-        <item>prefDeviceSoundsLocoVolume</item>
         <item>prefDeviceSoundsBellVolume</item>
         <item>prefDeviceSoundsHornVolume</item>
+        <item>prefDeviceSoundsBellIsMomentary</item>
 
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>
