@@ -1563,6 +1563,13 @@
             android:title="@string/prefDeviceSoundsHornVolumeTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDeviceSoundsBellIsMomentaryDefaultValue"
+            android:key="prefDeviceSoundsBellIsMomentary"
+            android:summary="@string/prefDeviceSoundsBellIsMomentarySummary"
+            android:title="@string/prefDeviceSoundsBellIsMomentaryTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

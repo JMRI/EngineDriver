@@ -364,6 +364,8 @@
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
     <string name="prefDeviceSoundsMomentumDefaultValue">750</string>
     <string name="deviceSoundsMuteButton">Mute</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is Momentary. (Latching if unchecked.)</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show an action bar button to change the in phone loco sounds options</string>
@@ -765,7 +767,7 @@
     <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
-    <string name="toastInitialisingSounds">Initialising sounds. They will be ready/start automatically shortly.</string>
+    <string name="toastInitialisingSounds">Initialising In Phone Loco Sounds.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
