@@ -362,7 +362,7 @@
     <string name="prefDeviceSoundsHornVolumeTitle">In Phone Horn/Whistle Sounds Volume</string>
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Delay (momentum) per step change in milliseconds (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
-    <string name="prefDeviceSoundsMomentumDefaultValue">750</string>
+    <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
     <string name="deviceSoundsMuteButton">Mute</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is Momentary. (Latching if unchecked.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>
@@ -475,10 +475,10 @@
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
     <string name="prefDisplayClockSummary">Set format for Fast Clock display in action bar</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
-    <string name="LeftButton">&lt;&lt;</string>
-    <string name="RightButton">&gt;&gt;</string>
-    <string name="DownButton">--</string>
-    <string name="UpButton">++</string>
+    <string name="LeftButton" translatable="false">&lt;&lt;</string>
+    <string name="RightButton" translatable="false">&gt;&gt;</string>
+    <string name="DownButton" translatable="false">--</string>
+    <string name="UpButton" translatable="false">++</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to Speed Sliders to change loco speed</string>
 
@@ -1129,7 +1129,7 @@
 
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Function Buttons Area size</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue" translatable="false">0</string>
 
     <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log?</string>
     <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>

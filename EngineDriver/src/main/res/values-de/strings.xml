@@ -923,5 +923,14 @@
     <string name="deviceSoundsMenu">Loco-Sounds</string>
     <string name="app_name_device_sounds_settings">In Telefon-Loco-Sounds</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Empfehlen Sie, dass Sie die Funktionsgröße der Funktionstasten erhöhen, oder Sie können nicht auf die Soundfunktionen von Bell / Horn / Mute-Sound-Funktionen zugreifen</string>
+    <string name="pauseSpeedButtonLabel">Pause</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Zwingen Sie den zu verwendenden Geschwindigkeitsschritt, wenn lange eine niedrigere Drehzahl auf dem Schieberegler gedrückt wird. \\ n Wenn nicht geprüft, springt die Geschwindigkeit sofort zur berührten Geschwindigkeit.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Geschwindigkeitsschritt auf das Dekrement?</string>
+    <string name="soundsButtonHornShortDefaultValue">Horn kurz</string>
+    <string name="toastInitialisingSounds">Initialisieren in Telefon-Loco-Sounds.</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Die Bell-Taste ist momentan. (Verriegelung, wenn nicht markiert.)</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Glockenknopfverriegelung / momentan</string>
+    <string name="permissionsReadLegacyFiles">Der Engine-Treiber benötigt Speicherberechtigungen, um die Einstellungen der Alt- (alten Standort-) zu laden.</string>
+    <string name="permissionsReadPhoneState">Engine-Treiber benötigt Telefonberechtigungen, um den Betrieb bei einem Anruf anzuhalten.</string>
 
 </resources>

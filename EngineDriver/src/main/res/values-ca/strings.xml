@@ -911,4 +911,13 @@
     <string name="deviceSoundsMenu">Loco sona</string>
     <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomanem que augmenteu la mida de la zona de botons de la funció, o no podreu accedir a les funcions de so de campana / banya / silenci</string>
+    <string name="pauseSpeedButtonLabel">Pausa</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Força el pas de velocitat que s\'utilitzarà quan fa temps que pressioni una velocitat inferior al control lliscant. \\nSi no es comprova, la velocitat saltarà immediatament a la velocitat tocada.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed ​​Pas de disminució?</string>
+    <string name="soundsButtonHornShortDefaultValue">Banya curta</string>
+    <string name="toastInitialisingSounds">Inicialització al telèfon de telèfon sona.</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Botó de campana és momentània. (Bloqueig si no està marcat.)</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Bouth Button Botó / momentània</string>
+    <string name="permissionsReadLegacyFiles">El controlador de motor necessita permisos d\'emmagatzematge per carregar la configuració del llegat (ubicació antiga).</string>
+    <string name="permissionsReadPhoneState">El controlador del motor necessita permisos de telèfon per aturar les operacions en una trucada.</string>
 </resources>

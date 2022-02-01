@@ -855,5 +855,14 @@
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">Nei suoni del telefono del telefono</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Consiglia di aumentare i pulsanti della funzione Dimensioni dell\'area o non sarà possibile accedere alle funzioni del suono Bell / Horn / Mute Sound</string>
+    <string name="pauseSpeedButtonLabel">Pausa</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forza il passaggio della velocità da utilizzare quando si preme a lungo una velocità inferiore sul cursore. \\nSe non viene controllato, la velocità salterà immediatamente alla velocità toccata.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Velocità passo dopo il decremento?</string>
+    <string name="soundsButtonHornShortDefaultValue">Corta corta</string>
+    <string name="toastInitialisingSounds">Inizializzando nei suoni del telefono del telefono.</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell pulsante chiaggiatore / momentatore</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Il pulsante Bell è momentaneo. (Chiusura se non controllata.)</string>
+    <string name="permissionsReadLegacyFiles">Il driver del motore ha bisogno di autorizzazioni di archiviazione per caricare le impostazioni legacy (Posizione vecchia).</string>
+    <string name="permissionsReadPhoneState">Il driver del motore ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.</string>
 
 </resources>
