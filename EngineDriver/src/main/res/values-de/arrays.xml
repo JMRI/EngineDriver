@@ -120,10 +120,10 @@
         <item>Funktion 26</item>
         <item>Funktion 27</item>
         <item>Funktion 28</item>
-        <item >Mute (IPLS)</item>
-        <item >Bell (IPLS)</item>
-        <item >Horn (IPLS)</item>
-        <item >Horn Short (IPLS)</item>
+        <item>Stumm (IPLS)</item>
+        <item>Glocke (IPLS)</item>
+        <item>Horn (IPLS)</item>
+        <item>Horn Kurz (IPLS)</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Keine</item>

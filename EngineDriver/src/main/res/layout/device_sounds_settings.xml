@@ -200,6 +200,33 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/dss_DeviceSoundsBellIsMomentary_label"
+                        style="?attr/floating_text_style"
+                        android:layout_width="0dp"
+                        android:layout_weight=".7"
+                        android:layout_height="wrap_content"
+                        android:padding="8sp"
+                        android:text="@string/prefDeviceSoundsBellIsMomentarySummary" />
+
+                    <Spinner
+                        android:id="@+id/dss_DeviceSoundsBellIsMomentary"
+                        android:layout_width="0dp"
+                        android:layout_weight=".3"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:entries="@array/prefYesNoEntryValues"
+                        android:entryValues="@array/prefYesNoEntryValues"
+                        android:padding="0dp"/>
+                </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>
