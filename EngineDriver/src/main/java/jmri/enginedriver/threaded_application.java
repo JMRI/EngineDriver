@@ -349,23 +349,12 @@ public class threaded_application extends Application {
 
     public boolean[][] soundsDeviceButtonStates = { {false,false,false},{false,false,false} };
 
-    public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
-    public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
-    public double[][] soundsBellStartTime = {{0,0,0},{0,0,0}};
-    public int [] soundsBellCurrentlyPlaying = {-1,-1};
-
-    public int[][] soundsHorn = {{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0}};
-    public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
-    public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
-    public int [] soundsHornCurrentlyPlaying = {-1,-1};
-
-    public int[] soundsHornShort = {0,0};
-    public int[] soundsHornShortStreamId = {0,0};
-    public int[] soundsHornShortDuration = {0,0};
-    public double[] soundsHornShortStartTime = {0,0};
-    public int [] soundsHornShortCurrentlyPlaying = {-1,-1};
+    // [Type = Bell, Horn, HornShort] [whichThrottle] [Start, Loop, End]
+    public int[][][] soundsExtras = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};  // Start, Loop, End
+    public int[][][] soundsExtrasStreamId = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public int[][][] soundsExtrasDuration = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public double[][][] soundsExtrasStartTime = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public int [][] soundsExtrasCurrentlyPlaying = {{-1,-1},{-1,-1},{-1,-1}};
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
@@ -3829,30 +3818,25 @@ public class threaded_application extends Application {
     public void stopAllSounds() {
         Log.d("Engine_Driver", "ta - stopAllSounds (locoSounds)");
         if (soundPool!=null) {
-            for (int type = 0; type < soundsBellStreamId.length; type++) {
-                for (int mSound = 0; mSound < soundsBellStreamId.length; mSound++) {
-                    soundPool.stop(soundsBellStreamId[type][mSound]);
-//                    soundsBellPlaying[type][mSound] = false;
-                }
-            }
-            for (int type = 0; type < soundsHornStreamId.length; type++) {
-                for (int mSound = 0; mSound < soundsHornStreamId.length; mSound++) {
-                    soundPool.stop(soundsHornStreamId[type][mSound]);
-//                    soundsHornPlaying[type][mSound] = false;
+            for (int soundType = 0; soundType < 3; soundType++) {
+                for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {
+                    for (int mSound = 0; mSound < 3; mSound++) {
+                        soundPool.stop(soundsExtrasStreamId[soundType][throttleIndex][mSound]);
+                    }
                 }
             }
 
             for (int type = 0; type < soundsLocoStreamId.length; type++) {
                 for (int mSound = 0; mSound < soundsLocoStreamId.length; mSound++) {
                     soundPool.stop(soundsLocoStreamId[type][mSound]);
-//                    soundsLocoPlaying[type][mSound] = false;
                 }
             }
 
             for (int j = 0; j<2; j++) {
                 soundsLocoCurrentlyPlaying[j] = -1;
-                soundsBellCurrentlyPlaying[j] = -1;
-                soundsHornCurrentlyPlaying[j] = -1;
+                for (int soundType = 0; soundType < 3; soundType++) {
+                    soundsExtrasCurrentlyPlaying[soundType][j] = -1;
+                }
             }
             soundPool.release();
         }

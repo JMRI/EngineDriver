@@ -70,6 +70,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private int dssDeviceSoundsLocoVolumeIndex;
     private int dssDeviceSoundsBellVolumeIndex;
     private int dssDeviceSoundsHornVolumeIndex;
+    private int dss_DeviceSoundsBellIsMomentary;
     String prefDeviceSoundsMomentum;
     String prefDeviceSoundsLocoVolume;
     String prefDeviceSoundsBellVolume;
@@ -188,6 +189,25 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
             hideKeyboard(view);
         }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class bell_momentary_spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsBellIsMomentary);
+            dss_DeviceSoundsBellIsMomentary = spinner.getSelectedItemPosition();
+            mainapp.prefDeviceSoundsBellIsMomentary = dss_DeviceSoundsBellIsMomentary == 0;
+            prefs.edit().putBoolean("prefDeviceSoundsBellIsMomentary", mainapp.prefDeviceSoundsBellIsMomentary).commit();  //reset the preference
+
+            hideKeyboard(view);
+        }
+
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
         }
@@ -321,7 +341,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         spinner.setOnItemSelectedListener(new spinner_listener_horn_volume());
         spinner.setSelection(dssDeviceSoundsHornVolumeIndex);
 
-
+        spinner = findViewById(R.id.dss_DeviceSoundsBellIsMomentary);
+        spinner.setOnItemSelectedListener(new bell_momentary_spinner_listener());
+        if (mainapp.prefDeviceSoundsBellIsMomentary) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(1);
+        }
 
         if (mainapp.maxThrottlesCurrentScreen<2) {
             dss_throttle1.setEnabled(false);

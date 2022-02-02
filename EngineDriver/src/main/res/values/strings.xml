@@ -364,7 +364,7 @@
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
     <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
     <string name="deviceSoundsMuteButton">Mute</string>
-    <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is Momentary. (Latching if unchecked.)</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is momentary (not latching)?</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
 

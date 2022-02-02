@@ -185,9 +185,12 @@ public class InPhoneLocoSoundsLoader {
                default:
                case "steam":
                case "steamSlow":
-                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.whistle_start);
-                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.whistle_loop);
-                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, context, R.raw.whistle_end);
+//                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.whistle_start);
+//                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.whistle_loop);
+//                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, context, R.raw.whistle_end);
+                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.steam_horn_start3);
+                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.steam_horn_loop3);
+                  loadSound(SOUNDS_TYPE_HORN, throttleIndex, SOUNDS_BELL_HORN_END, context, R.raw.steam_horn_end3);
                   break;
 
                case "diesel645turbo":
@@ -215,21 +218,21 @@ public class InPhoneLocoSoundsLoader {
                default:
                case "steam":
                case "steamSlow":
-                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.whistle_short);
+                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.whistle_short);
                   break;
 
                case "diesel645turbo":
                case "diesel7FDL":
                case "dieselNW2":
-                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.horn_short);
+                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.horn_short);
                   break;
 
                case "steamClass64":
-                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.whistle_class64_short);
+                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.whistle_class64_short);
                   break;
 
                case "steamClass94":
-                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_LOOP, context, R.raw.whistle_class94_pfiff_2_2);
+                  loadSound(SOUNDS_TYPE_HORN_SHORT, throttleIndex, SOUNDS_BELL_HORN_START, context, R.raw.whistle_class94_pfiff_2_2);
                   break;
             }
 
@@ -362,16 +365,10 @@ public class InPhoneLocoSoundsLoader {
             mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
             break;
          case SOUNDS_TYPE_BELL: // bell
-            mainapp.soundsBell[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-            mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
-            break;
          case SOUNDS_TYPE_HORN: // horn
-            mainapp.soundsHorn[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-            mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
-            break;
          case SOUNDS_TYPE_HORN_SHORT: // horn short
-            mainapp.soundsHornShort[whichThrottle] = mainapp.soundPool.load(context, resId, 1);
-            mainapp.soundsHornShortDuration[whichThrottle] = duration;
+            mainapp.soundsExtras[soundType-1][whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
+            mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = duration;
             break;
       }
    } // end loadSound()
@@ -396,19 +393,11 @@ public class InPhoneLocoSoundsLoader {
                mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
                break;
             case SOUNDS_TYPE_BELL: // bell
-               mainapp.soundsBell[whichThrottle][soundNo]
-                       = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-               mainapp.soundsBellDuration[whichThrottle][soundNo] = duration;
-               break;
             case SOUNDS_TYPE_HORN: // horn
-               mainapp.soundsHorn[whichThrottle][soundNo]
-                       = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-               mainapp.soundsHornDuration[whichThrottle][soundNo] = duration;
-               break;
             case SOUNDS_TYPE_HORN_SHORT: // horn short
-               mainapp.soundsHornShort[whichThrottle]
+               mainapp.soundsExtras[soundType-1][whichThrottle][soundNo]
                        = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-               mainapp.soundsHornShortDuration[whichThrottle] = duration;
+               mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = duration;
                break;
          }
 //         Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: " + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
@@ -420,16 +409,10 @@ public class InPhoneLocoSoundsLoader {
                mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
                break;
             case SOUNDS_TYPE_BELL: // bell
-               mainapp.soundsBell[whichThrottle][soundNo] = 0;
-               mainapp.soundsBellDuration[whichThrottle][soundNo] = 0;
-               break;
             case SOUNDS_TYPE_HORN: // horn
-               mainapp.soundsHorn[whichThrottle][soundNo] = 0;
-               mainapp.soundsHornDuration[whichThrottle][soundNo] = 0;
-               break;
             case SOUNDS_TYPE_HORN_SHORT: // horn
-               mainapp.soundsHornShort[whichThrottle] = 0;
-               mainapp.soundsHornShortDuration[whichThrottle] = 0;
+               mainapp.soundsExtras[soundType-1][whichThrottle][soundNo] = 0;
+               mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = 0;
                break;
          }
       }
@@ -438,7 +421,6 @@ public class InPhoneLocoSoundsLoader {
        public void getIplsList() { // In Phone Loco Sounds
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
-        String errMsg;
 
         File dir = new File(context.getExternalFilesDir(null).getPath());
         File [] filesList = dir.listFiles();
@@ -560,22 +542,14 @@ public class InPhoneLocoSoundsLoader {
 
    public void clearAllSounds() {
       Log.d("Engine_Driver", "iplsLoader - clearAllSounds (locoSounds)");
-      for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
-         for (int mSound = 0; mSound < mainapp.soundsBellStreamId[throttleIndex].length; mSound++) {
-            mainapp.soundsBell[throttleIndex][mSound] = 0;
-            mainapp.soundsBellStreamId[throttleIndex][mSound] = 0;
-            mainapp.soundsBellDuration[throttleIndex][mSound] = 0;
+      for (int soundType = 0; soundType < 3; soundType++) {
+         for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
+            for (int mSound = 0; mSound < mainapp.soundsExtrasStreamId[soundType][throttleIndex].length; mSound++) {
+               mainapp.soundsExtras[soundType][throttleIndex][mSound] = 0;
+               mainapp.soundsExtrasStreamId[soundType][throttleIndex][mSound] = 0;
+               mainapp.soundsExtrasDuration[soundType][throttleIndex][mSound] = 0;
+            }
          }
-      }
-      for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
-         for (int mSound = 0; mSound < mainapp.soundsHornStreamId[throttleIndex].length; mSound++) {
-            mainapp.soundsHorn[throttleIndex][mSound] =0;
-            mainapp.soundsHornStreamId[throttleIndex][mSound] =0;
-            mainapp.soundsHornDuration[throttleIndex][mSound] =0;
-         }
-         mainapp.soundsHornShort[throttleIndex] = 0;
-         mainapp.soundsHornShortStreamId[throttleIndex] = 0;
-         mainapp.soundsHornShortDuration[throttleIndex] = 0;
       }
       for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
          mainapp.soundsLocoSteps[throttleIndex] = 0;
