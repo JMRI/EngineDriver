@@ -3643,9 +3643,11 @@ public class threaded_application extends Application {
         return serverType.equals("DCC-EX");
     }
 
-    /* only JMRI, MRC and DCC-EX support Rosters at this time */
     public boolean supportsRoster() {
-        return (serverType.equals("JMRI") || serverType.equals("") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
+        //true if roster entries exist
+        if (roster_entries.size() > 0) return true;
+        //always show roster panel for these entries
+        return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
 
     /* add passed-in loco to Recent Locos list and store it */
