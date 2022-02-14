@@ -96,5 +96,6 @@
 
     <bool name="prefDeviceSoundsButtonDefaultValue">false</bool>
     <bool name="prefDeviceSoundsBellIsMomentaryDefaultValue">false</bool>
+    <bool name="prefDeviceSoundsMomentumOverrideDefaultValue">false</bool>
 
 </resources>

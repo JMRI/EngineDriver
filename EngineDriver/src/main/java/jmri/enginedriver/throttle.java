@@ -1499,6 +1499,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSoundsMomentum = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsMomentum", getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue))));
+        mainapp.prefDeviceSoundsMomentumOverride = prefs.getBoolean("prefDeviceSoundsMomentumOverride",
+                getResources().getBoolean(R.bool.prefDeviceSoundsMomentumOverrideDefaultValue));
         mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsLocoVolume", "100")));
         mainapp.prefDeviceSoundsBellVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsBellVolume", "100")));
         mainapp.prefDeviceSoundsHornVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsHornVolume", "100")));
@@ -4428,10 +4430,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             expectedEndTime = (timesPlayed + 1) * mainapp.soundsLocoDuration[whichThrottle][mSound];
 
                             int repeats = 1;
-                            if (expectedEndTime < mainapp.prefDeviceSoundsMomentum) {// if the sound has less that 1 second to play
+                            if (expectedEndTime < mainapp.prefDeviceSoundsMomentum) {
                                 repeats = 2;
                             }
-                            if ((duration * (repeats + 1)) < mainapp.prefDeviceSoundsMomentum) {// if the sound is less that 1 second will need to repeat it
+                            if ((duration * (repeats + 1)) < mainapp.prefDeviceSoundsMomentum) { // if the sound is less than the preference period 1 second will need to repeat it
                                 repeats = (int) (mainapp.prefDeviceSoundsMomentum / duration) + 1;
                             }
                             double x = expectedEndTime + repeats * duration;
@@ -4441,9 +4443,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mainapp.soundPool.setLoop(mainapp.soundsLocoStreamId[whichThrottle][mSound], repeats);  // don't really stop it, just let it finish
                             mainapp.soundPool.resume(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 
-//                        expectedEndTime = (timesPlayed + 1 + repeats) * mainapp.soundsLocoDuration[whichThrottle][mSound];
-//                        expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + expectedEndTime - System.currentTimeMillis();
-                            expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for 1 second regardless
+                            if (mainapp.prefDeviceSoundsMomentumOverride) {
+                                expectedEndTime = (timesPlayed + repeats) * mainapp.soundsLocoDuration[whichThrottle][mSound];
+                                expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + expectedEndTime - System.currentTimeMillis();
+                            } else {
+                                expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for the preference amount regardless
+                            }
 
 //                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
                         } else {
