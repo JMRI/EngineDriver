@@ -75,6 +75,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
@@ -142,6 +143,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private static String[] deviceSoundsEntryValuesArray;
     private static String[] deviceSoundsEntriesArray; // display version
+    public static InPhoneLocoSoundsLoader iplsLoader;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -173,6 +175,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
         mainapp.preferences_msg_handler = new SettingsActivity.settings_handler();
+
+        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -1155,12 +1159,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
                         break;
                     case "prefDeviceSounds0":
-                        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0",
-                                parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+                        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                     case "prefDeviceSounds1":
-                        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1",
-                                parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+                        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                         mainapp.soundsReloadSounds = true;
+                        iplsLoader.loadSounds();
                         break;
                     case "prefDeviceSoundsLocoVolume":
                     case "prefDeviceSoundsBellVolume":
@@ -1284,7 +1287,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
                 }
 
-                mainapp.getIplsList();
+                iplsLoader.getIplsList();
                 int ipslCount = mainapp.iplsNames.size();
                 int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
                 deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];

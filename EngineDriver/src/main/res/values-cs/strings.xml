@@ -427,10 +427,6 @@
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
     <string name="prefDisplayClockSummary">Nastavit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
 
-    <string name="LeftButton">&lt;&lt;</string>
-    <string name="RightButton">&gt;&gt;</string>
-    <string name="DownButton">--</string>
-    <string name="UpButton">++</string>
     <string name="prefDisplaySpeedArrowsTitle">Zobrazit tlačítka rychlosti?</string>
     <string name="prefDisplaySpeedArrowsSummary">Zobrazit tlačítka rychlosti vedle posuvníků rychlosti lokomotivy?</string>
 
@@ -1114,5 +1110,15 @@
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
+    <string name="pauseSpeedButtonLabel">Pauza</string>
+    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Vynutit krok rychlosti, který má být použit, když dlouho stiskněte nižší rychlost na jezdci. n Pokud není zaškrtnuto, rychlost okamžitě přeskočí na dotykovou rychlost.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Krok rychlosti na snižování?</string>
+    <string name="soundsButtonHornShortDefaultValue">Roh krátký</string>
+    <string name="toastInitialisingSounds">Inicializace v telefonu Loco zvuky.</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Tlačítko Bell je momentální. (Zabezpečení, pokud není zaškrtnuto.)</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell Tlačítko Latching / Momentary</string>
+    <string name="permissionsReadLegacyFiles">Ovladač motoru potřebuje oprávnění pro ukládání dat pro nastavení starší (staré umístění).</string>
+    <string name="permissionsReadPhoneState">Ovladač motoru potřebuje telefonní oprávnění k pozastavení operací při volání.</string>
 
 </resources>

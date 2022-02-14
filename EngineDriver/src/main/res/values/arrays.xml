@@ -306,6 +306,10 @@
         <item >Function 26</item>
         <item >Function 27</item>
         <item >Function 28</item>
+        <item >Mute (IPLS)</item>
+        <item >Bell (IPLS)</item>
+        <item >Horn (IPLS)</item>
+        <item >Horn Short (IPLS)</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntryValues" translatable="false">
@@ -348,6 +352,10 @@
         <item >Function 26</item>
         <item >Function 27</item>
         <item >Function 28</item>
+        <item >Mute (IPLS)</item>
+        <item >Bell (IPLS)</item>
+        <item >Horn (IPLS)</item>
+        <item >Horn Short (IPLS)</item>
     </string-array>
     <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
 
@@ -1116,9 +1124,9 @@
         <!-- In Phone Sound Preferences -->
         <item>prefDeviceSoundsMomentum</item>
         <item>prefDeviceSoundsLocoVolume</item>
-        <item>prefDeviceSoundsLocoVolume</item>
         <item>prefDeviceSoundsBellVolume</item>
         <item>prefDeviceSoundsHornVolume</item>
+        <item>prefDeviceSoundsBellIsMomentary</item>
 
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>

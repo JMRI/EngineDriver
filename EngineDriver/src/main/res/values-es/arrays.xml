@@ -120,6 +120,10 @@
         <item>Función 26</item>
         <item>Función 27</item>
         <item>Función 28</item>
+        <item>Silencio (IPLS)</item>
+        <item>Campana (IPLS)</item>
+        <item>Bocina (IPLS)</item>
+        <item>Cuerno Corto (IPLS)</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Ninguno</item>

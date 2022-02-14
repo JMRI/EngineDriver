@@ -399,7 +399,7 @@
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_0"
@@ -1038,7 +1038,7 @@
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_1"

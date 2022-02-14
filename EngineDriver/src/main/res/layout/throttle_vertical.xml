@@ -357,7 +357,7 @@
                                             android:layout_width="fill_parent"
                                             android:layout_marginLeft="5dp"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_0"
@@ -828,7 +828,7 @@
                                             android:layout_width="fill_parent"
                                             android:layout_marginLeft="5dp"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue" />
 
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_1"

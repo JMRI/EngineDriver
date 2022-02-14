@@ -326,7 +326,17 @@ public class threaded_application extends Application {
 
     public SoundPool soundPool;
 
+    private static final int SOUNDS_TYPE_LOCO = 0;
+    private static final int SOUNDS_TYPE_BELL = 1;
+    private static final int SOUNDS_TYPE_HORN = 2;
+    private static final int SOUNDS_TYPE_HORN_SHORT = 3;
+
+    private static final int SOUNDS_BELL_HORN_START = 0;
+    private static final int SOUNDS_BELL_HORN_LOOP = 1;
+    private static final int SOUNDS_BELL_HORN_END = 2;
+
     public boolean prefDeviceSoundsButton = false;
+    public boolean prefDeviceSoundsBellIsMomentary = false;
     public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
     public String[] prefDeviceSoundsCurrentlyLoaded = {"none","none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
@@ -339,23 +349,12 @@ public class threaded_application extends Application {
 
     public boolean[][] soundsDeviceButtonStates = { {false,false,false},{false,false,false} };
 
-    public int[][] soundsBell = {{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsBellStreamId = {{0,0,0},{0,0,0}};
-    public int[][] soundsBellDuration = {{0,0,0},{0,0,0}};
-    public double[][] soundsBellStartTime = {{0,0,0},{0,0,0}};
-    public int [] soundsBellCurrentlyPlaying = {-1,-1};
-
-    public int[][] soundsHorn = {{0,0,0},{0,0,0}};  // Start, Loop, End
-    public int[][] soundsHornStreamId = {{0,0,0},{0,0,0}};
-    public int[][] soundsHornDuration = {{0,0,0},{0,0,0}};
-    public double[][] soundsHornStartTime = {{0,0,0},{0,0,0}};
-    public int [] soundsHornCurrentlyPlaying = {-1,-1};
-
-    public int[] soundsHornShort = {0,0};
-    public int[] soundsHornShortStreamId = {0,0};
-    public int[] soundsHornShortDuration = {0,0};
-    public double[] soundsHornShortStartTime = {0,0};
-    public int [] soundsHornShortCurrentlyPlaying = {-1,-1};
+    // [Type = Bell, Horn, HornShort] [whichThrottle] [Start, Loop, End]
+    public int[][][] soundsExtras = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};  // Start, Loop, End
+    public int[][][] soundsExtrasStreamId = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public int[][][] soundsExtrasDuration = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public double[][][] soundsExtrasStartTime = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
+    public int [][] soundsExtrasCurrentlyPlaying = {{-1,-1},{-1,-1},{-1,-1}};
 
     public int [][] soundsLoco = { // need one for each type of sound set available to select
             {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
@@ -381,15 +380,6 @@ public class threaded_application extends Application {
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
-
-    // this are used for temporary storage of the ipls details
-    public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16   20 ans 21 are startup and shut down
-    public String[] iplsBellSoundsFileName = {"","",""};  // Start, Loop, End
-    public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
-    public String iplsHornShortSoundsFileName = "";
-    public int iplsLocoSoundsCount = -1;
-    public String iplsName = "";
-    public String iplsFileName = "";
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -3827,231 +3817,45 @@ public class threaded_application extends Application {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-
-//    public void adjustToolbarButtonSpacing(Toolbar toolbar){
-//        Log.d("Engine_Driver", "ta: adjustToolbarButtonSpacing");
-//
-//        // Get the ChildCount of your Toolbar
-//        int childCount = toolbar.getChildCount();
-//
-//        // Loop through the child Items
-//        for(int i = 0; i < childCount; i++){
-//            // Get the item at the current index
-//            View childView = toolbar.getChildAt(i);
-//            // If its a ViewGroup
-//            if(childView instanceof ViewGroup){
-//                // Get the child count of this view group
-//                int innerChildCount = ((ViewGroup) childView).getChildCount();
-//                // Create layout params for the ActionMenuView
-////                ActionMenuView.LayoutParams params = new ActionMenuView.LayoutParams(80, ActionMenuView.LayoutParams.WRAP_CONTENT);
-//                ActionMenuView.LayoutParams params;
-//                // Loop through the children
-//                for(int j = 0; j < innerChildCount; j++){
-//                    View grandChild = ((ViewGroup) childView).getChildAt(j);
-//                    if(grandChild instanceof ActionMenuItemView){
-//                        setToolbarItemSize(grandChild);
-//                    } else {
-//                        if(grandChild instanceof ViewGroup) {
-//                            innerChildCount = ((ViewGroup) grandChild).getChildCount();
-//                            // Loop through the children
-//                            for (int k = 0; k < innerChildCount; k++) {
-//                                View greatGrandChild = ((ViewGroup) grandChild).getChildAt(k);
-//                                if (greatGrandChild instanceof ActionMenuItemView) {
-//                                    setToolbarItemSize(greatGrandChild);
-//                                }
-//                            }
-//                        }
-//                    }
-//                    grandChild.invalidate();
-//                }
-//                childView.invalidate();
-//            }
-//        }
-//    }
-//
-//    private void setToolbarItemSize(View actionMenuItemView) {
-//        ActionMenuView.LayoutParams params;
-//
-//        if(actionMenuItemView instanceof ActionMenuItemView) {
-//            // set the layout parameters on each View
-//            params = (ActionMenuView.LayoutParams) actionMenuItemView.getLayoutParams();
-//            params.width = actionMenuItemView.getWidth() + 100;
-////                              params.rightMargin = params.rightMargin + 180;
-//            actionMenuItemView.setLayoutParams(params);
-//            actionMenuItemView.invalidate();
-//        }
-//    }
-
-    void stopAllSounds() {
+    public void stopAllSounds() {
         Log.d("Engine_Driver", "ta - stopAllSounds (locoSounds)");
         if (soundPool!=null) {
-            for (int type = 0; type < soundsBellStreamId.length; type++) {
-                for (int mSound = 0; mSound < soundsBellStreamId.length; mSound++) {
-                    soundPool.stop(soundsBellStreamId[type][mSound]);
-//                    soundsBellPlaying[type][mSound] = false;
-                }
-            }
-            for (int type = 0; type < soundsHornStreamId.length; type++) {
-                for (int mSound = 0; mSound < soundsHornStreamId.length; mSound++) {
-                    soundPool.stop(soundsHornStreamId[type][mSound]);
-//                    soundsHornPlaying[type][mSound] = false;
+            for (int soundType = 0; soundType < 3; soundType++) {
+                for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {
+                    for (int mSound = 0; mSound < 3; mSound++) {
+                        soundPool.stop(soundsExtrasStreamId[soundType][throttleIndex][mSound]);
+                    }
                 }
             }
 
             for (int type = 0; type < soundsLocoStreamId.length; type++) {
                 for (int mSound = 0; mSound < soundsLocoStreamId.length; mSound++) {
                     soundPool.stop(soundsLocoStreamId[type][mSound]);
-//                    soundsLocoPlaying[type][mSound] = false;
                 }
             }
 
             for (int j = 0; j<2; j++) {
                 soundsLocoCurrentlyPlaying[j] = -1;
-                soundsBellCurrentlyPlaying[j] = -1;
-                soundsHornCurrentlyPlaying[j] = -1;
+                for (int soundType = 0; soundType < 3; soundType++) {
+                    soundsExtrasCurrentlyPlaying[soundType][j] = -1;
+                }
             }
             soundPool.release();
         }
     } // end stopAllSounds
 
-    public static void log_dTrace(String label, StackTraceElement[] e) {
-        String method = "";
-        int doNext = 0;
-        for (StackTraceElement s : e) {
-            if (doNext == 1) {
-                method = s.getMethodName();
-            }
-            if (doNext == 2) {
-                Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
-                return;
-            }
-            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
-        }
-    }
-
-    public void getIplsList() { // In Phone Loco Sounds
-        iplsFileNames = new ArrayList<>();
-        iplsNames = new ArrayList<>();
-        String errMsg;
-
-        File dir = new File(context.getExternalFilesDir(null).getPath());
-        File [] filesList = dir.listFiles();
-        for (File file : filesList) {
-            String fileName = file.getName();
-            String lowercaseFileName = file.getName().toLowerCase();
-            if (lowercaseFileName.endsWith(".ipls")) {
-                getIplsDetails(fileName);
-                if (!iplsName.equals("")) { // if we didn't fine a name, ignore it
-                    iplsFileNames.add(fileName);
-                    iplsNames.add("♫  " + iplsName);
-                }
-
-                Log.d("Engine_Driver", "getIplsList: Found: " + fileName);
-//                } else {
-//                    Log.d("Engine_Driver", "getIplsList: " + file.getName());
-            }
-        }
-        int x=1;
-    }
-
-    public void getIplsDetails(String fileName) {
-        String name = "";
-        String cmd;
-        int num;
-        iplsLocoSoundsCount =-1;
-
-        File iplsFile = new File(context.getExternalFilesDir(null), fileName);
-        if (iplsFile.exists()) {
-            BufferedReader list_reader = null;
-            try {
-                list_reader = new BufferedReader(
-                        new FileReader(iplsFile));
-                while (list_reader.ready()) {
-                    String line = list_reader.readLine();
-                    if (line!=null) {
-                        int splitPos = line.indexOf(':');
-                        if (splitPos > 0) {
-                            cmd = line.substring(0, 1).toLowerCase();
-                            num = -1;
-                            switch (cmd) {
-                                case "/": // comment line
-                                    break;
-                                case "n":
-                                    if (line.length() > splitPos + 1) { // has the name
-                                        name = line.substring(splitPos + 1, line.length() - splitPos + 1).trim();
-                                    }
-                                    break;
-                                case "l":
-                                    if (splitPos > 1) {
-                                        try {
-                                            num = Integer.decode(line.substring(1, splitPos));
-                                        } catch (NumberFormatException e) {
-                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
-                                                num = SOUNDS_STARTUP_INDEX;
-                                            } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
-                                                num = SOUNDS_SHUTDOWN_INDEX;
-                                            } else {
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if ((num >= 0) && (num <= SOUNDS_SHUTDOWN_INDEX)) {
-                                        iplsLocoSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                        if ( (num > iplsLocoSoundsCount) && (num < SOUNDS_STARTUP_INDEX) ) {  // don't count the Startup and shutdown sounds
-                                            iplsLocoSoundsCount = num;
-                                        }
-                                    }
-                                    break;
-                                case "b":
-                                    if (splitPos > 1) {
-                                        try {
-                                            num = Integer.decode(line.substring(1, splitPos));
-                                        } catch (NumberFormatException e) {
-                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
-                                                num = SOUNDS_STARTUP_INDEX;
-                                            } else if (line.substring(1, splitPos).equals("-")) { // shutdown sound
-                                                num = SOUNDS_SHUTDOWN_INDEX;
-                                            } else {
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if ((num >= 0) && (num <= 2)) {
-                                        iplsBellSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                    }
-                                    break;
-                                case "h":
-                                    if (splitPos > 1) {
-                                        try {
-                                            num = Integer.decode(line.substring(1, splitPos));
-                                        } catch (NumberFormatException e) {
-                                            if (line.substring(1, splitPos).equals("+")) {  // startup sound
-                                                iplsHornShortSoundsFileName = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    if ((num >= 0) && (num <= 2)) {
-                                        iplsHornSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
-                                    }
-                                    break;
-
-                            }
-                        }
-                    }
-                }
-                list_reader.close();
-
-                iplsFileName = fileName;
-                iplsName = name;
-
-            } catch (IOException except) {
-                Log.e("Engine_Driver", "addToIplsList: Error reading .ipls file. "
-                        + except.getMessage());
-            }
-
-        }
-        Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
-    }
-
+//    public static void log_dTrace(String label, StackTraceElement[] e) {
+//        String method = "";
+//        int doNext = 0;
+//        for (StackTraceElement s : e) {
+//            if (doNext == 1) {
+//                method = s.getMethodName();
+//            }
+//            if (doNext == 2) {
+//                Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
+//                return;
+//            }
+//            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
+//        }
+//    }
 }

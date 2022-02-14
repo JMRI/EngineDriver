@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +51,8 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
+
 public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -66,12 +70,15 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private int dssDeviceSoundsLocoVolumeIndex;
     private int dssDeviceSoundsBellVolumeIndex;
     private int dssDeviceSoundsHornVolumeIndex;
+    private int dss_DeviceSoundsBellIsMomentary;
     String prefDeviceSoundsMomentum;
     String prefDeviceSoundsLocoVolume;
     String prefDeviceSoundsBellVolume;
     String prefDeviceSoundsHornVolume;
     private SharedPreferences prefs;
     private Toolbar toolbar;
+
+    protected InPhoneLocoSoundsLoader iplsLoader;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -187,6 +194,25 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         }
     }
 
+    public class bell_momentary_spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsBellIsMomentary);
+            dss_DeviceSoundsBellIsMomentary = spinner.getSelectedItemPosition();
+            mainapp.prefDeviceSoundsBellIsMomentary = dss_DeviceSoundsBellIsMomentary == 0;
+            prefs.edit().putBoolean("prefDeviceSoundsBellIsMomentary", mainapp.prefDeviceSoundsBellIsMomentary).commit();  //reset the preference
+
+            hideKeyboard(view);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
     /**
      * Called when the activity is first created.
      */
@@ -211,7 +237,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        mainapp.getIplsList();        //see if there any custom ipls files
+        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        iplsLoader.getIplsList();        //see if there any custom ipls files
         int ipslCount = mainapp.iplsNames.size();
         int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
         deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
@@ -314,7 +341,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         spinner.setOnItemSelectedListener(new spinner_listener_horn_volume());
         spinner.setSelection(dssDeviceSoundsHornVolumeIndex);
 
-
+        spinner = findViewById(R.id.dss_DeviceSoundsBellIsMomentary);
+        spinner.setOnItemSelectedListener(new bell_momentary_spinner_listener());
+        if (mainapp.prefDeviceSoundsBellIsMomentary) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(1);
+        }
 
         if (mainapp.maxThrottlesCurrentScreen<2) {
             dss_throttle1.setEnabled(false);
@@ -353,6 +386,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public void onDestroy() {
         Log.d("Engine_Driver", "device_sounds_settings.onDestroy() called");
+        iplsLoader.loadSounds();
         super.onDestroy();
     }
 

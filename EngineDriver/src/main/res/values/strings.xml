@@ -362,8 +362,10 @@
     <string name="prefDeviceSoundsHornVolumeTitle">In Phone Horn/Whistle Sounds Volume</string>
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Delay (momentum) per step change in milliseconds (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
-    <string name="prefDeviceSoundsMomentumDefaultValue">750</string>
+    <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
     <string name="deviceSoundsMuteButton">Mute</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is momentary (not latching)?</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show an action bar button to change the in phone loco sounds options</string>
@@ -473,10 +475,10 @@
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
     <string name="prefDisplayClockSummary">Set format for Fast Clock display in action bar</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
-    <string name="LeftButton">&lt;&lt;</string>
-    <string name="RightButton">&gt;&gt;</string>
-    <string name="DownButton">--</string>
-    <string name="UpButton">++</string>
+    <string name="LeftButton" translatable="false">&lt;&lt;</string>
+    <string name="RightButton" translatable="false">&gt;&gt;</string>
+    <string name="DownButton" translatable="false">--</string>
+    <string name="UpButton" translatable="false">++</string>
     <string name="prefDisplaySpeedArrowsTitle">Display Speed buttons?</string>
     <string name="prefDisplaySpeedArrowsSummary">Display buttons next to Speed Sliders to change loco speed</string>
 
@@ -651,6 +653,7 @@
     <string name="functionButton00DefaultValue">Light</string>
     <string name="functionButton01DefaultValue">Bell</string>
     <string name="functionButton02DefaultValue">Horn</string>
+    <string name="soundsButtonHornShortDefaultValue">Horn Short</string>
     <string name="functionButton03DefaultValue" translatable="false">3</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton04DefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton05DefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
@@ -764,7 +767,7 @@
     <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
     <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
-    <string name="toastInitialisingSounds">Initialising sounds. They will be ready/start automatically in a few seconds.</string>
+    <string name="toastInitialisingSounds">Initialising In Phone Loco Sounds.</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
@@ -1126,7 +1129,7 @@
 
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">Function Buttons Area size</string>
     <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">Number of Function Buttons (0-4) to show on the Simple Throttle layout</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue">0</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue" translatable="false">0</string>
 
     <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log?</string>
     <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>

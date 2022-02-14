@@ -633,7 +633,6 @@
 
     <string name="prefConsistFollowRuleStyleTitle">Funciones de Tracción Múltiple: sigue el estilo de la regla</string>
     <string name="prefConsistFollowRuleStyleSummary" tools:ignore="Typos">Qué estilo de reglas de Tracción Múltiple se seguirá cuando se presionan las teclas de funcion</string>
-    <string name="prefConsistFollowRuleStyleDefaultValue">original</string>
 
     <string name="prefConsistFollowTitle">Preferencias de funciones en Tracción Múltiple</string>
     <string name="prefConsistFollowSummary">Opciones de como se comportaran las funciones en una Tracción Múltiple</string>
@@ -907,4 +906,13 @@
     <string name="deviceSoundsMenu">Suena loco</string>
     <string name="app_name_device_sounds_settings">En el teléfono LOCO sonidos</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomendamos que aumente el tamaño del área de los botones de la función, o no podrá acceder a las funciones de sonido de campana / cuerno / mute</string>
+    <string name="pauseSpeedButtonLabel">Pausa</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forzar el paso de velocidad que se utilizará cuando presiona mucho tiempo una velocidad más baja en el control deslizante. \\nSi no está marcado, la velocidad saltará inmediatamente a la velocidad conmovedora.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Paso de velocidad en la disminución?</string>
+    <string name="soundsButtonHornShortDefaultValue">Cuerno corto</string>
+    <string name="toastInitialisingSounds">Inicialización en el teléfono Loco sonidos.</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Botón de campana Latching / Momenty</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Botón de campana es momentáneo. (Enganchando si no se controla).</string>
+    <string name="permissionsReadLegacyFiles">El controlador del motor necesita permisos de almacenamiento para cargar la configuración de Legacy (antigua ubicación).</string>
+    <string name="permissionsReadPhoneState">El controlador del motor necesita permisos telefónicos para pausar las operaciones cuando se llame.</string>
 </resources>

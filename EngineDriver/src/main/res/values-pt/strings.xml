@@ -845,8 +845,6 @@
     <string name="prefDeviceSounds1Title">Throttle 2 sons loco</string>
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume para o motor de loco sons no telefone (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">No telefone loco sons de volume</string>
-    <string name="prefDeviceSoundsBellHornVolumeSummary" tools:ignore="ExtraTranslation,TypographyDashes">Volume para sino/chifre/apito sons no telefone (1-100)</string>
-    <string name="prefDeviceSoundsBellHornVolumeTitle" tools:ignore="ExtraTranslation">No telefone outro volume de sons</string>
     <string name="prefThrottleAdditionalControlTitle">Preferências adicionais de fonte de controle do acelerador</string>
     <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Volume para sino soa no telefone (1-100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">No sino do telefone soa o volume</string>
@@ -860,5 +858,14 @@
     <string name="deviceSoundsMenu">Loco sons</string>
     <string name="app_name_device_sounds_settings">Em sons de loco de telefone</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomende que você aumente o tamanho da área de botões de função, ou você não poderá acessar as funções de som Bell / Horn / Mudo</string>
+    <string name="pauseSpeedButtonLabel">Pausa</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forçar a etapa de velocidade a ser usada quando longa pressionando uma velocidade mais baixa no controle deslizante. \\nSe não for verificado, a velocidade saltará imediatamente para a velocidade tocada.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">Velocidade passo no decremento?</string>
+    <string name="soundsButtonHornShortDefaultValue">Chifre curta</string>
+    <string name="toastInitialisingSounds">Inicializando em sons de loco telefônicos.</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Botão de sino travamento / momentâneo</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">Botão Bell é momentâneo. (Travamento se desmarcado.)</string>
+    <string name="permissionsReadLegacyFiles">O driver do motor precisa de permissões de armazenamento para carregar as configurações legadas (local de localização).</string>
+    <string name="permissionsReadPhoneState">O driver do motor precisa de permissões de telefone para pausar as operações quando estiver em uma chamada.</string>
 
 </resources>

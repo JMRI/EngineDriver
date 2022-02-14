@@ -122,6 +122,10 @@
         <item>Função 26</item>
         <item>Função 27</item>
         <item>Função 28</item>
+        <item>Mudo (IPLS)</item>
+        <item>Sino (IPLS)</item>
+        <item>Buzina (IPLS)</item>
+        <item>Chifre Curta (IPLS)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>

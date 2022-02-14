@@ -120,6 +120,10 @@
         <item>Funció 26</item>
         <item>Funció 27</item>
         <item>Funció 28</item>
+        <item>Muda (IPLS)</item>
+        <item>Timbre (IPLS)</item>
+        <item>Banya (IPLS)</item>
+        <item>Banya Curta (IPLS)</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>

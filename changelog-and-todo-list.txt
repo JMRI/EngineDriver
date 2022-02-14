@@ -664,6 +664,12 @@
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
  *   TODO: User request to have re-arrangeable function buttons
+ *   TODO: add preference to set throttles to zero when track power is turned off
+ * In Phone Loco Sounds (throttle):
+ *   TODO: custom sound profiles to be able to specify/override the momentum delay
+ *   TODO: work out when to play the engine shut down sounds
+ *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
+ *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
