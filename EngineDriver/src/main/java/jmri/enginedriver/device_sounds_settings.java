@@ -71,6 +71,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private int dssDeviceSoundsBellVolumeIndex;
     private int dssDeviceSoundsHornVolumeIndex;
     private int dss_DeviceSoundsBellIsMomentary;
+    private int dss_DeviceSoundsMomentumOverride;
     String prefDeviceSoundsMomentum;
     String prefDeviceSoundsLocoVolume;
     String prefDeviceSoundsBellVolume;
@@ -213,6 +214,25 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         }
     }
 
+    public class momentum_override_spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.dss_DeviceSoundsMomentumOverride);
+            dss_DeviceSoundsMomentumOverride = spinner.getSelectedItemPosition();
+            mainapp.prefDeviceSoundsMomentumOverride = dss_DeviceSoundsMomentumOverride == 0;
+            prefs.edit().putBoolean("prefDeviceSoundsMomentumOverride", mainapp.prefDeviceSoundsMomentumOverride).commit();  //reset the preference
+
+            hideKeyboard(view);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
     /**
      * Called when the activity is first created.
      */
@@ -262,7 +282,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         // Set the options for the sounds  - throttle 0
         Spinner dss_throttle0 = findViewById(R.id.dss_throttle0);
 //        ArrayAdapter<?> spinner_adapter0 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> spinner_adapter0 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
+        ArrayAdapter<String> spinner_adapter0 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
         spinner_adapter0.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dss_throttle0.setAdapter(spinner_adapter0);
         dss_throttle0.setOnItemSelectedListener(new spinner_listener_0());
@@ -270,7 +290,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         // Set the options for the sounds - throttle 1
         Spinner dss_throttle1 = findViewById(R.id.dss_throttle1);
 //        ArrayAdapter<?> spinner_adapter1 = ArrayAdapter.createFromResource(this, R.array.deviceSoundsEntries, android.R.layout.simple_spinner_item);
-        ArrayAdapter<String> spinner_adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
+        ArrayAdapter<String> spinner_adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deviceSoundsEntriesArray);
         spinner_adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dss_throttle1.setAdapter(spinner_adapter1);
         dss_throttle1.setOnItemSelectedListener(new spinner_listener_1());
@@ -317,7 +337,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         Spinner spinner = findViewById(R.id.dss_DeviceSoundsLocoVolume);
         dssDeviceSoundsLocoVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsLocoVolume);
         if (dssDeviceSoundsLocoVolumeIndex<1) dssDeviceSoundsLocoVolumeIndex=99;
-        ArrayAdapter<String> sa_deviceSoundsLocoVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        ArrayAdapter<String> sa_deviceSoundsLocoVolume = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, valuesList);
         sa_deviceSoundsLocoVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(sa_deviceSoundsLocoVolume);
         spinner.setOnItemSelectedListener(new spinner_listener_loco_volume());
@@ -326,7 +346,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         spinner = findViewById(R.id.dss_DeviceSoundsBellVolume);
         dssDeviceSoundsBellVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsBellVolume);
         if (dssDeviceSoundsBellVolumeIndex<1) dssDeviceSoundsBellVolumeIndex=99;
-        ArrayAdapter<String> sa_deviceSoundsBellVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        ArrayAdapter<String> sa_deviceSoundsBellVolume = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, valuesList);
         sa_deviceSoundsBellVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(sa_deviceSoundsBellVolume);
         spinner.setOnItemSelectedListener(new spinner_listener_bell_volume());
@@ -335,7 +355,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         spinner = findViewById(R.id.dss_DeviceSoundsHornVolume);
         dssDeviceSoundsHornVolumeIndex = Arrays.asList(valuesList).indexOf(prefDeviceSoundsHornVolume);
         if (dssDeviceSoundsHornVolumeIndex<1) dssDeviceSoundsHornVolumeIndex=99;
-        ArrayAdapter<String> sa_deviceSoundsHornVolume = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, valuesList);
+        ArrayAdapter<String> sa_deviceSoundsHornVolume = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, valuesList);
         sa_deviceSoundsHornVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(sa_deviceSoundsHornVolume);
         spinner.setOnItemSelectedListener(new spinner_listener_horn_volume());
@@ -344,6 +364,14 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         spinner = findViewById(R.id.dss_DeviceSoundsBellIsMomentary);
         spinner.setOnItemSelectedListener(new bell_momentary_spinner_listener());
         if (mainapp.prefDeviceSoundsBellIsMomentary) {
+            spinner.setSelection(0);
+        } else {
+            spinner.setSelection(1);
+        }
+
+        spinner = findViewById(R.id.dss_DeviceSoundsMomentumOverride);
+        spinner.setOnItemSelectedListener(new momentum_override_spinner_listener());
+        if (mainapp.prefDeviceSoundsMomentumOverride) {
             spinner.setSelection(0);
         } else {
             spinner.setSelection(1);

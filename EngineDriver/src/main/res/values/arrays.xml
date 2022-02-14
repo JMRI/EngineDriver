@@ -1123,6 +1123,7 @@
 
         <!-- In Phone Sound Preferences -->
         <item>prefDeviceSoundsMomentum</item>
+        <item>prefDeviceSoundsMomentumOverride</item>
         <item>prefDeviceSoundsLocoVolume</item>
         <item>prefDeviceSoundsBellVolume</item>
         <item>prefDeviceSoundsHornVolume</item>

@@ -363,6 +363,8 @@
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Delay (momentum) per step change in milliseconds (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">In Phone Momentum</string>
     <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Loco step sounds will play till their end when changing step.  Momentum amount (above) becomes a minimum time only.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">Don\'t clip loco step sounds</string>
     <string name="deviceSoundsMuteButton">Mute</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is momentary (not latching)?</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>

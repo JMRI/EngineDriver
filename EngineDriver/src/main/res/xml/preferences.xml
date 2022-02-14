@@ -1530,6 +1530,13 @@
             android:title="@string/prefDeviceSoundsMomentumTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDeviceSoundsMomentumOverrideDefaultValue"
+            android:key="prefDeviceSoundsMomentumOverride"
+            android:summary="@string/prefDeviceSoundsMomentumOverrideSummary"
+            android:title="@string/prefDeviceSoundsMomentumOverrideTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <EditTextPreference
             android:defaultValue="100"
             android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
