@@ -173,6 +173,7 @@
     <color name="buttonActivatedHoveredInsideStroke_colorful">#8c00ff</color>
     <color name="buttonActivatedHoveredInside2Stroke_colorful">#f200ff</color>
 
+    <color name="buttonFnFillGradiantExtraLight_colorful">#E2EFEB</color>
     <color name="buttonFnFillGradiantLight_colorful">#c3d9d3</color>
     <color name="buttonFnFillGradiantCenter_colorful">#8edac6</color>
     <color name="buttonFnFillGradiantDark_colorful">#3ad7ac</color>

@@ -17,9 +17,9 @@
             <gradient
                 android:angle="135"
                 android:centerX="5%"
-                android:startColor="@color/buttonFnFillGradiantLight_colorful"
-                android:centerColor="@color/buttonFnFillGradiantCenter_colorful"
-                android:endColor="@color/buttonFnFillGradiantDark_colorful"
+                android:startColor="@color/buttonFnFillGradiantExtraLight_colorful"
+                android:centerColor="@color/buttonFnFillGradiantLight_colorful"
+                android:endColor="@color/buttonFnFillGradiantCenter_colorful"
                 android:type="linear"
                 />
         </shape>
