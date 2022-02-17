@@ -2984,35 +2984,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE)) {  // IPLS Sounds - Mute
             if (isActive && (action == ACTION_UP)) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
-                if (soundsIsMuted[whichThrottle]) {
-                    bMutes[whichThrottle].setSelected(true);
-                    bMutes[whichThrottle].setPressed(true);
-                } else {
-                    bMutes[whichThrottle].setSelected(false);
-                    bMutes[whichThrottle].setPressed(false);
-                }
+                setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
                 soundsMuteUnmuteCurrentSounds(whichThrottle);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL)) {  // IPLS Sounds - Bell
             if (isActive && (action == ACTION_UP)) {
                 boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL - 1];
                 doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_BELL);
-                bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setSelected(rslt);
-                bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setPressed(rslt);
+                setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], rslt);
                 mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL -1] = rslt;
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN)) {  // IPLS Sounds - Horn
             if (isActive) {
                 if (action == ACTION_UP) {
                     doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setSelected(false);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setPressed(false);
+                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], false);
                     mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = false;
                 } else {
                     if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1]) {
                         doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                        bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setSelected(true);
-                        bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setPressed(true);
+                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], true);
                         mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = true;
                     }
                 }
@@ -3021,14 +3012,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive) {
                 if (action == ACTION_UP) {
                     doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setSelected(false);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setPressed(false);
+                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], false);
                     mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = false;
                 } else {
                     if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1]) {
                         doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                        bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setSelected(true);
-                        bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setPressed(true);
+                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], true);
                         mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = true;
                     }
                 }
@@ -7078,6 +7067,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     } // end soundsStopAllSoundsForLoco
 
+    protected void setSoundButtonState(Button btn, boolean state) {
+        if (state) {
+            btn.setSelected(true);
+            btn.setPressed(true);
+            btn.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+        } else {
+            btn.setSelected(false);
+            btn.setPressed(false);
+            btn.setTypeface(null, Typeface.NORMAL);
+        }
+
+    }
+
     //listeners for the Mute Button
     protected class sound_device_mute_button_touch_listener implements View.OnTouchListener {
         int whichThrottle;
@@ -7093,13 +7095,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
-                if (soundsIsMuted[whichThrottle]) {
-                    bMutes[whichThrottle].setSelected(true);
-                    bMutes[whichThrottle].setPressed(true);
-                } else {
-                    bMutes[whichThrottle].setSelected(false);
-                    bMutes[whichThrottle].setPressed(false);
-                }
+                setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
             }
             soundsMuteUnmuteCurrentSounds(whichThrottle);
             return true;
@@ -7153,8 +7149,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     rslt = true;
                 }
                 doDeviceButtonSound(whichThrottle, soundType);
-                bSoundsExtras[buttonType][whichThrottle].setSelected(rslt);
-                bSoundsExtras[buttonType][whichThrottle].setPressed(rslt);
+                setSoundButtonState(bSoundsExtras[buttonType][whichThrottle], rslt);
                 mainapp.soundsDeviceButtonStates[whichThrottle][buttonType] = rslt;
             } else {
                 switch (action) {
@@ -7173,8 +7168,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         void doAction(boolean state) {
             doDeviceButtonSound(whichThrottle, soundType);
-            bSoundsExtras[buttonType][whichThrottle].setSelected(state);
-            bSoundsExtras[buttonType][whichThrottle].setPressed(state);
+            setSoundButtonState(bSoundsExtras[buttonType][whichThrottle], state);
             mainapp.soundsDeviceButtonStates[whichThrottle][buttonType] = state;
         }
     }
@@ -7197,6 +7191,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setVisibility(rslt);
+                    if (rslt == View.VISIBLE) {
+                        setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
+                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_BELL]);
+                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_HORN]);
+                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_HORN_SHORT]);
+                    }
                 }
             }
         }
@@ -7210,6 +7210,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setEnabled(newEnabledState);
                     bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setEnabled(newEnabledState);
                     bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setEnabled(newEnabledState);
+                    if (newEnabledState) {
+                        setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
+                    }
                 }
             }
         }
