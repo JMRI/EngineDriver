@@ -180,7 +180,7 @@
     <color name="buttonFnSelectedStroke_colorful">#404040</color>
     <color name="buttonFnDisabledFill_colorful">#faefe7</color>
     <color name="buttonFnDisabledStroke_colorful">#b79d88</color>
-    <color name="buttonFnSelectedText_colorful">#45564c</color>
+    <color name="buttonFnSelectedText_colorful">#000000</color>
     <color name="buttonFnSelectedFill_colorful">#FF262626</color>
     <color name="buttonFnSelectedInsideStroke_colorful">#00ac7d</color>
 
