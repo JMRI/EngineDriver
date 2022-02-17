@@ -182,7 +182,7 @@
     <color name="buttonFnDisabledStroke_colorful">#b79d88</color>
     <color name="buttonFnSelectedText_colorful">#000000</color>
     <color name="buttonFnSelectedFill_colorful">#FF262626</color>
-    <color name="buttonFnSelectedInsideStroke_colorful">#00ac7d</color>
+    <color name="buttonFnSelectedInsideStroke_colorful">#FF3D00</color>
 
 
 
