@@ -1,3 +1,4 @@
+**Version 2.31.140
 **Version 2.31.138
  * Fix: Auto Server preference load
  * 'Limit Speed' and 'Pause' added to the Horizontal Layouts
