@@ -201,6 +201,16 @@
 
             </PreferenceCategory>
 
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefCategoryHapticFeedbackScreen"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefHapticFeedbackSummary"
+            android:title="@string/prefHapticFeedbackTitle" >
+
             <PreferenceCategory
                 android:key="prefCategoryHapticFeedback"
                 android:title="@string/prefHapticFeedbackTitle"
@@ -216,17 +226,17 @@
                     android:title="@string/prefHapticFeedbackTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-    <!--
-                <EditTextPreference
-                    android:defaultValue="@string/prefHapticFeedbackStepsDefaultValue"
-                    android:dialogTitle="@string/prefHapticFeedbackStepsTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
-                    android:key="prefHapticFeedbackSteps"
-                    android:maxLength="3"
-                    android:summary="@string/prefHapticFeedbackStepsSummary"
-                    android:title="@string/prefHapticFeedbackStepsTitle" />
-    -->
+                <!--
+                            <EditTextPreference
+                                android:defaultValue="@string/prefHapticFeedbackStepsDefaultValue"
+                                android:dialogTitle="@string/prefHapticFeedbackStepsTitle"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:key="prefHapticFeedbackSteps"
+                                android:maxLength="3"
+                                android:summary="@string/prefHapticFeedbackStepsSummary"
+                                android:title="@string/prefHapticFeedbackStepsTitle" />
+                -->
 
                 <EditTextPreference
                     android:defaultValue="@string/prefHapticFeedbackDurationDefaultValue"
@@ -1391,6 +1401,15 @@
                     android:title="@string/prefTtsThrottleResponseTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <ListPreference
+                    android:defaultValue="@string/prefTtsThrottleSpeedDefaultValue"
+                    android:entries="@array/prefTtsThrottleSpeedEntries"
+                    android:entryValues="@array/prefTtsThrottleSpeedEntryValues"
+                    android:key="prefTtsThrottleSpeed"
+                    android:summary="@string/prefTtsThrottleSpeedSummary"
+                    android:title="@string/prefTtsThrottleSpeedTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <CheckBoxPreference
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -1519,64 +1538,80 @@
             android:title="@string/prefDeviceSounds1Title"
             android:layout="@layout/checkbox_no_icon" />
 
-        <EditTextPreference
-            android:defaultValue="@string/prefDeviceSoundsMomentumDefaultValue"
-            android:dialogTitle="@string/prefDeviceSoundsMomentumTitle"
-            android:key="prefDeviceSoundsMomentum"
-            android:maxLength="4"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsMomentumSummary"
-            android:title="@string/prefDeviceSoundsMomentumTitle"
-            android:layout="@layout/checkbox_no_icon" />
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefDeviceSoundsAdditionalPreferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefDeviceSoundsAdditionalPreferencesSummary"
+            android:title="@string/prefDeviceSoundsAdditionalPreferencesTitle">
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDeviceSoundsMomentumOverrideDefaultValue"
-            android:key="prefDeviceSoundsMomentumOverride"
-            android:summary="@string/prefDeviceSoundsMomentumOverrideSummary"
-            android:title="@string/prefDeviceSoundsMomentumOverrideTitle"
-            android:layout="@layout/checkbox_no_icon" />
+            <PreferenceCategory
+                android:key="prefCategoryDeviceSoundsSub"
+                android:title="@string/prefDeviceSoundsCategoryTitle"
+                android:layout="@layout/category_icon_left"
+                android:icon="@drawable/category_loco_sounds_black" >
 
-        <EditTextPreference
-            android:defaultValue="100"
-            android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
-            android:key="prefDeviceSoundsLocoVolume"
-            android:maxLength="3"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsLocoVolumeSummary"
-            android:title="@string/prefDeviceSoundsLocoVolumeTitle"
-            android:layout="@layout/checkbox_no_icon" />
+                <EditTextPreference
+                    android:defaultValue="@string/prefDeviceSoundsMomentumDefaultValue"
+                    android:dialogTitle="@string/prefDeviceSoundsMomentumTitle"
+                    android:key="prefDeviceSoundsMomentum"
+                    android:maxLength="4"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefDeviceSoundsMomentumSummary"
+                    android:title="@string/prefDeviceSoundsMomentumTitle"
+                    android:layout="@layout/checkbox_no_icon" />
 
-        <EditTextPreference
-            android:defaultValue="100"
-            android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
-            android:key="prefDeviceSoundsBellVolume"
-            android:maxLength="3"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsBellVolumeSummary"
-            android:title="@string/prefDeviceSoundsBellVolumeTitle"
-            android:layout="@layout/checkbox_no_icon" />
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDeviceSoundsMomentumOverrideDefaultValue"
+                    android:key="prefDeviceSoundsMomentumOverride"
+                    android:summary="@string/prefDeviceSoundsMomentumOverrideSummary"
+                    android:title="@string/prefDeviceSoundsMomentumOverrideTitle"
+                    android:layout="@layout/checkbox_no_icon" />
 
-        <EditTextPreference
-            android:defaultValue="100"
-            android:dialogTitle="@string/prefDeviceSoundsHornVolumeTitle"
-            android:key="prefDeviceSoundsHornVolume"
-            android:maxLength="3"
-            android:inputType="number"
-            android:digits="0123456789"
-            android:summary="@string/prefDeviceSoundsHornVolumeSummary"
-            android:title="@string/prefDeviceSoundsHornVolumeTitle"
-            android:layout="@layout/checkbox_no_icon" />
+                <EditTextPreference
+                    android:defaultValue="100"
+                    android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
+                    android:key="prefDeviceSoundsLocoVolume"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefDeviceSoundsLocoVolumeSummary"
+                    android:title="@string/prefDeviceSoundsLocoVolumeTitle"
+                    android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDeviceSoundsBellIsMomentaryDefaultValue"
-            android:key="prefDeviceSoundsBellIsMomentary"
-            android:summary="@string/prefDeviceSoundsBellIsMomentarySummary"
-            android:title="@string/prefDeviceSoundsBellIsMomentaryTitle"
-            android:layout="@layout/checkbox_no_icon" />
+                <EditTextPreference
+                    android:defaultValue="100"
+                    android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
+                    android:key="prefDeviceSoundsBellVolume"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefDeviceSoundsBellVolumeSummary"
+                    android:title="@string/prefDeviceSoundsBellVolumeTitle"
+                    android:layout="@layout/checkbox_no_icon" />
 
+                <EditTextPreference
+                    android:defaultValue="100"
+                    android:dialogTitle="@string/prefDeviceSoundsHornVolumeTitle"
+                    android:key="prefDeviceSoundsHornVolume"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefDeviceSoundsHornVolumeSummary"
+                    android:title="@string/prefDeviceSoundsHornVolumeTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDeviceSoundsBellIsMomentaryDefaultValue"
+                    android:key="prefDeviceSoundsBellIsMomentary"
+                    android:summary="@string/prefDeviceSoundsBellIsMomentarySummary"
+                    android:title="@string/prefDeviceSoundsBellIsMomentaryTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory

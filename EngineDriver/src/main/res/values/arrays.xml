@@ -896,6 +896,16 @@
         <item>Throttle + Loco + Speed</item>
     </string-array>
 
+    <string-array name="prefTtsThrottleSpeedEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>None</item>
+        <item>Zero + Max</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Zero and Max</item>
+    </string-array>
+
     <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Yes</item>
         <item>No</item>
@@ -1083,6 +1093,7 @@
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
         <item>prefBackgroundImageGroup</item> <!-- PreferenceScreen -->
+        <item>prefCategoryHapticFeedbackScreen</item> <!-- PreferenceScreen -->
 
         <!-- Status Row Preferences -->
         <!-- <item>prefCategoryThrottleStatusRow</item> -->
@@ -1122,12 +1133,14 @@
         <item>prefCategorySelectLoco</item> <!-- Category -->
 
         <!-- In Phone Sound Preferences -->
-        <item>prefDeviceSoundsMomentum</item>
-        <item>prefDeviceSoundsMomentumOverride</item>
-        <item>prefDeviceSoundsLocoVolume</item>
-        <item>prefDeviceSoundsBellVolume</item>
-        <item>prefDeviceSoundsHornVolume</item>
-        <item>prefDeviceSoundsBellIsMomentary</item>
+<!--        <item>prefDeviceSoundsMomentum</item>-->
+<!--        <item>prefDeviceSoundsMomentumOverride</item>-->
+<!--        <item>prefDeviceSoundsLocoVolume</item>-->
+<!--        <item>prefDeviceSoundsBellVolume</item>-->
+<!--        <item>prefDeviceSoundsHornVolume</item>-->
+<!--        <item>prefDeviceSoundsBellIsMomentary</item>-->
+        <item>prefDeviceSoundsButton</item>
+        <item>prefDeviceSoundsAdditionalPreferences</item>
 
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>
@@ -1181,6 +1194,7 @@
         <item>prefAutoImportExport</item>
         <item>prefHostImportExport</item>
         <item>prefShowTimeOnLogEntry</item>
+
 
     </string-array>
 

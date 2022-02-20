@@ -462,6 +462,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private String lastTts = "none";
     private String prefTtsWhen = "None";
     private String prefTtsThrottleResponse = "Throttle";
+    private String prefTtsThrottleSpeed = "Zero + Max";
     private boolean prefTtsGamepadTest = true;
     private boolean prefTtsGamepadTestComplete = true;
     private Time lastTtsTime;
@@ -474,6 +475,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET = 6;
     private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL = 7;
+    private static final int TTS_MSG_GAMEPAD_THROTTLE_SPEED = 8;
 
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
@@ -1449,6 +1451,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
         prefTtsThrottleResponse = prefs.getString("prefTtsThrottleResponse", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
+        prefTtsThrottleSpeed = prefs.getString("prefTtsThrottleSpeed", getResources().getString(R.string.prefTtsThrottleSpeedDefaultValue));
         prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
 
@@ -1848,6 +1851,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep);
+                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
         doLocoSound(whichThrottle);
@@ -1899,6 +1903,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep);
+                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
 
@@ -2574,13 +2579,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestReset);
                         }
                         break;
+                    case TTS_MSG_GAMEPAD_THROTTLE_SPEED:
+                        if ((prefTtsGamepadTestComplete)) {
+                            int spd = getSpeedFromCurrentSliderPosition(whichThrottle,false);
+                            int maxSpd = getMaxSpeed(whichThrottle);
+                            if (spd == 0) {
+                                result = true;
+                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedZero);
+                            } else if (spd == maxSpd) {
+                                result = true;
+                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedMax);
+                            }
+                        }
+                        break;
                 }
 
                 if (result) {
                     Time currentTime = new Time();
                     currentTime.setToNow();
-                    // //don't repeat what was last spoken withing 6 seconds
-                    if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true) + 6000)) || (!speech.equals(lastTts)))) {
+                    // //don't repeat what was last spoken withing 1.5 seconds
+                    if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true) + 1500)) || (!speech.equals(lastTts)))) {
                         //myTts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
                         myTts.speak(speech, TextToSpeech.QUEUE_ADD, null);
                         lastTtsTime = currentTime;
@@ -2595,7 +2613,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void setupTts() {
         if (!prefTtsWhen.equals(getApplicationContext().getResources().getString(R.string.prefTtsWhenDefaultValue))) {
             if (myTts == null) {
-                Intent checkTTSIntent = new Intent();
                 lastTtsTime = new Time();
                 lastTtsTime.setToNow();
 
@@ -2928,6 +2945,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 speedUpdateAndNotify(whichThrottle, 0);
+                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
@@ -3326,11 +3344,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void GamepadIncrementSpeed(int whichThrottle) {
         incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
+        speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
     }
 
     void GamepadDecrementSpeed(int whichThrottle) {
         decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
+        speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
     }
 
     void GamepadFeedbackSound(boolean invalidAction) {
