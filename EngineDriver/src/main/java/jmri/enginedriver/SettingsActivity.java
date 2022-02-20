@@ -993,6 +993,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         enableDisablePreference(prefScreen, "prefTtsThrottleResponse", !enable);
+        enableDisablePreference(prefScreen, "prefTtsThrottleSpeed", !enable);
         enableDisablePreference(prefScreen, "prefTtsGamepadTest", !enable);
         enableDisablePreference(prefScreen, "prefTtsGamepadTestComplete", !enable);
 

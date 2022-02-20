@@ -349,6 +349,8 @@
     <string name="prefWebViewLocationSummary">Include web view on Throttle screen</string>
     <string name="prefSelectLocoTitle">Select Loco Preferences</string>
     <string name="prefDeviceSoundsCategoryTitle">In Phone Loco Sounds</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Additional Preferences</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Additional In Phone Loco Sounds preferences</string>
     <string name="prefDeviceSounds0Summary">Play basic loco sounds in the phone for Throttle 1</string>
     <string name="prefDeviceSounds0Title">Throttle 1 Loco Sounds</string>
     <string name="prefDeviceSounds1Summary">Play basic loco sounds in the phone for Throttle 2</string>
@@ -858,6 +860,10 @@
     <string name="prefTtsThrottleResponseSummary">When you select a different throttle on the gamepad</string>
     <string name="prefTtsThrottleResponseDefaultValue" translatable="false">Throttle</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefTtsThrottleSpeedTitle">On Gamepad Speeds</string>
+    <string name="prefTtsThrottleSpeedSummary">When the speed hits certain speeds when using a gamepad</string>
+    <string name="prefTtsThrottleSpeedDefaultValue" translatable="false">Zero + Max</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="prefTtsGamepadTestTitle">On Gamepad Test start</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test screen is launched </string>
 
@@ -876,6 +882,8 @@
     <string name="TtsGamepadTestSkipped">Test skipped</string>
     <string name="TtsGamepadTestFail">Test cancelled</string>
     <string name="TtsGamepadTestReset">Gamepad reset</string>
+    <string name="TtsGamepadTestSpeedZero">Zero</string>
+    <string name="TtsGamepadTestSpeedMax">Max</string>
 <!--
     <string name="TTS_Screen_Dimmed">Dimmed, swipe up to restore</string>
     <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>
