@@ -266,9 +266,9 @@ public class InPhoneLocoSoundsLoader {
 
                case "diesel645turbo":
                   loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 0, context, R.raw.diesel_645turbo_idle);
-                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, context, R.raw.diesel_645turbo_d1_d2);
-                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, context, R.raw.diesel_645turbo_d2_d3);
-                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, context, R.raw.diesel_645turbo_d3_d4);
+                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 1, context, R.raw.diesel_645turbo_d1k);
+                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 2, context, R.raw.diesel_645turbo_d2);
+                  loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 3, context, R.raw.diesel_645turbo_d3);
                   loadSound(SOUNDS_TYPE_LOCO, throttleIndex, 4, context, R.raw.diesel_645turbo_d4);
                   mainapp.soundsLocoSteps[throttleIndex] = 4;
                   break;
