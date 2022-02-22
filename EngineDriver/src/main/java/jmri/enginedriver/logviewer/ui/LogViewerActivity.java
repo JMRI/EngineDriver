@@ -81,6 +81,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 String text = ((TextView) view).getText().toString();
                 builder.setMessage(text);
                 builder.show();
+                mainapp.buttonVibration();
             }
         } );
 
@@ -160,9 +161,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, AMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -170,6 +173,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -189,6 +193,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.buttonVibration();
             finish();
         }
     }
@@ -222,6 +227,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     public class save_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.buttonVibration();
             saveLogFile();
         }
     }

@@ -280,8 +280,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             String entrytext = entryv.getText().toString().trim();
             if (entrytext.length() > 0) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
-
             }
+            mainapp.buttonVibration();
         }
     }
 
@@ -294,6 +294,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
             String systemname = snv.getText().toString();
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2' + systemname);  // 2=toggle
+            mainapp.buttonVibration();
         }
     }
 
@@ -356,6 +357,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mainapp.buttonVibration();
+                }
                 return myGesture != null && myGesture.onTouchEvent(event);
             }
         };
@@ -596,6 +600,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -603,9 +608,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, RMenu);
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

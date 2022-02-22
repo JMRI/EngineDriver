@@ -920,4 +920,8 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bouth Button Botó / momentània</string>
     <string name="permissionsReadLegacyFiles">El controlador de motor necessita permisos d\'emmagatzematge per carregar la configuració del llegat (ubicació antiga).</string>
     <string name="permissionsReadPhoneState">El controlador del motor necessita permisos de telèfon per aturar les operacions en una trucada.</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferències addicionals</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Addicionals al telèfon Loco sona les preferències</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Els sons de pas de loco jugaran fins al final en canviar de pas. La quantitat d\'impuls (a dalt) només es converteix en un temps mínim.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">No feu clic a Loco Step Sounds</string>
 </resources>

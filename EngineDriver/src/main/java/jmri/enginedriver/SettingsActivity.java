@@ -374,6 +374,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                 }
                 fixAndReloadImportExportPreference(sharedPreferences);
+                mainapp.buttonVibration();
             }
         };
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
@@ -405,6 +406,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         reload();
                         break;
                 }
+                mainapp.buttonVibration();
             }
         };
 
@@ -714,9 +716,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, SAMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -724,6 +728,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1245,7 +1250,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         mainapp.prefThrottleViewImmersiveModeHideToolbar = sharedPreferences.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
                         parentActivity.forceReLaunchAppOnPreferencesClose =true;
-                        parentActivity.forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_IMMERSIVE_MODE;                        break;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_IMMERSIVE_MODE;
+                        break;
+
+                    case "prefHapticFeedbackButtons":
+                        mainapp.prefHapticFeedbackButtons = prefs.getBoolean("prefHapticFeedbackButtons", getResources().getBoolean(R.bool.prefHapticFeedbackButtonsDefaultValue));
+                        break;
+
                 }
             }
         }

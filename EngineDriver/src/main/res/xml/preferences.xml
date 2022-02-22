@@ -248,6 +248,14 @@
                     android:summary="@string/prefHapticFeedbackDurationSummary"
                     android:title="@string/prefHapticFeedbackDurationTitle"
                     android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefHapticFeedbackButtonsDefaultValue"
+                    android:key="prefHapticFeedbackButtons"
+                    android:summary="@string/prefHapticFeedbackButtonsSummary"
+                    android:title="@string/prefHapticFeedbackButtonsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
         </PreferenceScreen>
 

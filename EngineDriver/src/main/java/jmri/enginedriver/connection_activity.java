@@ -218,6 +218,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         break;
                 }
                 connect();
+                mainapp.buttonVibration();
             }
         }
     }
@@ -230,6 +231,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             entry.requestFocus();
             host_numeric.setVisibility(View.GONE);
             host_text.setVisibility(View.VISIBLE);
+            mainapp.buttonVibration();
         }
     }
 
@@ -240,6 +242,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             entry.requestFocus();
             host_numeric.setVisibility(View.VISIBLE);
             host_text.setVisibility(View.GONE);
+            mainapp.buttonVibration();
         }
     }
 
@@ -270,6 +273,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
             }
+            mainapp.buttonVibration();
         }
     }
 
@@ -873,6 +877,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
                     }
+                    mainapp.buttonVibration();
                 }
             };
 

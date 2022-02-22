@@ -810,7 +810,8 @@
                                             android:id="@+id/device_sounds_bell_1"
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
-                                            android:layout_marginLeft="5dp"
+                                            android:layout_marginLeft="1dp"
+                                            android:layout_marginRight="4dp"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/functionButton01DefaultValue" />
 
@@ -818,7 +819,8 @@
                                             android:id="@+id/device_sounds_horn_1"
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
-                                            android:layout_marginLeft="5dp"
+                                            android:layout_marginLeft="1dp"
+                                            android:layout_marginRight="4dp"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/functionButton02DefaultValue" />
 
@@ -826,7 +828,8 @@
                                             android:id="@+id/device_sounds_horn_short_1"
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="fill_parent"
-                                            android:layout_marginLeft="5dp"
+                                            android:layout_marginLeft="1dp"
+                                            android:layout_marginRight="4dp"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/soundsButtonHornShortDefaultValue" />
 

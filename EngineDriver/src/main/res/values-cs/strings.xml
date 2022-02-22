@@ -1120,5 +1120,9 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell Tlačítko Latching / Momentary</string>
     <string name="permissionsReadLegacyFiles">Ovladač motoru potřebuje oprávnění pro ukládání dat pro nastavení starší (staré umístění).</string>
     <string name="permissionsReadPhoneState">Ovladač motoru potřebuje telefonní oprávnění k pozastavení operací při volání.</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Další preference</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Další v telefonu Loco Sounds Preferences</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Zuny Loco Step bude hrát až do jejich konce při změně kroku. Částka hybnosti (výše) se stává minimálním časem.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">Nefulip Clip Locko Step Zvuky</string>
 
 </resources>

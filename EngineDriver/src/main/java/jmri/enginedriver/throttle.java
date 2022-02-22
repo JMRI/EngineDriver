@@ -1482,6 +1482,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefHapticFeedback = prefs.getString("prefHapticFeedback", getResources().getString(R.string.prefHapticFeedbackDefaultValue));
 //        mainapp.prefHapticFeedbackSteps = Integer.parseInt(prefs.getString("prefHapticFeedbackSteps", getResources().getString(R.string.prefHapticFeedbackStepsDefaultValue)));
         mainapp.prefHapticFeedbackDuration = Integer.parseInt(prefs.getString("prefHapticFeedbackDuration", getResources().getString(R.string.prefHapticFeedbackDurationDefaultValue)));
+        mainapp.prefHapticFeedbackButtons = prefs.getBoolean("prefHapticFeedbackButtons", getResources().getBoolean(R.bool.prefHapticFeedbackButtonsDefaultValue));
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
 
@@ -3868,13 +3869,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT).show();
             }
+            mainapp.buttonVibration();
         }
 
         @Override
         public boolean onLongClick(View v) {
             start_consist_lights_edit(whichThrottle);
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-
+            mainapp.buttonVibration();
             return true;
         }
 
@@ -3908,8 +3910,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 limitSpeed(whichThrottle);
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mainapp.buttonVibration();
             }
-            return false;
+                return false;
         }
     }
 
@@ -3951,6 +3955,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
 
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            mainapp.buttonVibration();
             return false;
         }
 
@@ -3964,6 +3969,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
             }
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            mainapp.buttonVibration();
         }
 
         @Override
@@ -4012,6 +4018,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            mainapp.buttonVibration();
         }
 
         Runnable run = new Runnable() {
@@ -4049,7 +4056,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                 doButtonPress();
                 setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-
+                mainapp.buttonVibration();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 isDirectionButtonLongPress = false;
                 directionButtonLongPressHandler.removeCallbacks(run);
@@ -4608,6 +4615,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             // make the click sound once
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
+                mainapp.buttonVibration();
             }
 
             // if gesture in progress, skip button processing
@@ -4661,7 +4669,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
                         }
                     }
-                    break;
+                     break;
                 }
 
                 // handle stopping of function on key-up
@@ -4967,9 +4975,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         bMutes = new Button[mainapp.maxThrottlesCurrentScreen];
         soundsIsMuted = new boolean[mainapp.maxThrottlesCurrentScreen];
         bSoundsExtras = new Button[3][mainapp.maxThrottlesCurrentScreen];
-//        bBells = new Button[mainapp.maxThrottlesCurrentScreen];
-//        bHorns = new Button[mainapp.maxThrottlesCurrentScreen];
-//        bHornShorts = new Button[mainapp.maxThrottlesCurrentScreen];
 
         tvGamePads = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
@@ -6143,12 +6148,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
-                speedUpdate(0);  // update all three throttles
+                speedUpdate(0);  // update all throttles
                 applySpeedRelatedOptions();  // update all three throttles
                 if (IS_ESU_MCII) {
                     Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
                     setEsuThrottleKnobPosition(whichVolume, 0);
                 }
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -6156,6 +6162,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             case R.id.EditConsist0_menu:
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
@@ -6223,9 +6230,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.throttle_switch_button:
                 switchThrottleScreenType();
+                mainapp.buttonVibration();
                 return true;
             case R.id.web_view_button:
                 showHideWebView("");
@@ -6235,6 +6244,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
 
             case R.id.device_sounds_button:
+                mainapp.buttonVibration();
             case R.id.device_sounds_menu:
                 in = new Intent().setClass(this, device_sounds_settings.class);
                 startActivityForResult(in, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
@@ -6682,11 +6692,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             public void onClick(DialogInterface dialog, int id) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
                 stealPromptActive = false;
+                mainapp.buttonVibration();
             }
         });
         b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() { //if no pressed do nothing
             public void onClick(DialogInterface dialog, int id) {
                 stealPromptActive = false;
+                mainapp.buttonVibration();
             }
         });
         AlertDialog alert = b.create();
@@ -6735,6 +6747,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
 
                 mainapp.hideSoftKeyboardAfterDialog();
+                mainapp.buttonVibration();
             }
         });
 
@@ -6742,6 +6755,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         mainapp.hideSoftKeyboardAfterDialog();
+                        mainapp.buttonVibration();
 //                        return;
                     }
                 });
@@ -6909,6 +6923,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
                         break;
                 }
+                mainapp.buttonVibration();
             }
         };
 
@@ -7028,6 +7043,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 pauseSpeed(whichThrottle);
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mainapp.buttonVibration();
             }
             return false;
         }
@@ -7116,6 +7133,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
                 setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mainapp.buttonVibration();
             }
             soundsMuteUnmuteCurrentSounds(whichThrottle);
             return true;
@@ -7137,6 +7156,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 v.playSoundEffect(SoundEffectConstants.CLICK);
+                mainapp.buttonVibration();
             }
 
             // if gesture in progress, skip button processing
@@ -7155,7 +7175,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
             handleAction(event.getAction());
-
             return true;
         }
 
@@ -7163,7 +7182,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d("Engine_Driver", "sound_device_bell_button_touch_listener: handleAction - action: " + action);
 
             if ( (buttonType==SOUNDS_BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary) ) {
-//            if (!mainapp.prefDeviceSoundsBellIsMomentary) {
                 boolean rslt = false;
                 if (!mainapp.soundsDeviceButtonStates[whichThrottle][buttonType]) {
                     rslt = true;

@@ -915,4 +915,8 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botón de campana es momentáneo. (Enganchando si no se controla).</string>
     <string name="permissionsReadLegacyFiles">El controlador del motor necesita permisos de almacenamiento para cargar la configuración de Legacy (antigua ubicación).</string>
     <string name="permissionsReadPhoneState">El controlador del motor necesita permisos telefónicos para pausar las operaciones cuando se llame.</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferencias adicionales</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Adicional en teléfono loco sonidas preferencias</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Los sonidos del paso de Loco jugarán hasta su final al cambiar el paso. La cantidad de impulso (arriba) se convierte en un tiempo mínimo solamente.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">No clips Loco Paso sonidos</string>
 </resources>

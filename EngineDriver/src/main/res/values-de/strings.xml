@@ -932,5 +932,9 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Glockenknopfverriegelung / momentan</string>
     <string name="permissionsReadLegacyFiles">Der Engine-Treiber benötigt Speicherberechtigungen, um die Einstellungen der Alt- (alten Standort-) zu laden.</string>
     <string name="permissionsReadPhoneState">Engine-Treiber benötigt Telefonberechtigungen, um den Betrieb bei einem Anruf anzuhalten.</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Zusätzliche Präferenzen</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Zusätzlich in Telefon Loco Sounds-Vorlieben</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Loco-Step-Sounds spielen bis zum Ende, wenn Sie den Schritt ändern. Der Momentummenge (oben) wird nur zu einer Mindestzeit.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">Clip Loco-Step-Sounds nicht</string>
 
 </resources>
