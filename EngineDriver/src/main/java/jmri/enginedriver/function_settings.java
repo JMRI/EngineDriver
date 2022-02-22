@@ -236,9 +236,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, FMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -246,6 +248,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -399,6 +402,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         public void onClick(View v) {
             move_roster_to_settings();
             move_settings_to_view();
+            mainapp.buttonVibration();
         }
     }
 
@@ -431,6 +435,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             prefNumberOfDefaultFunctionLabels = "29";
             prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
+            mainapp.buttonVibration();
         }
     }
 

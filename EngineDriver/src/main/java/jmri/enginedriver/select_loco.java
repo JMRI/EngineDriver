@@ -781,7 +781,7 @@ public class select_loco extends AppCompatActivity {
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
-
+            mainapp.buttonVibration();
         }
     }
 
@@ -793,6 +793,7 @@ public class select_loco extends AppCompatActivity {
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, "*", whichThrottle);
             result = RESULT_OK;
             end_this_activity();
+            mainapp.buttonVibration();
         }
     }
 
@@ -807,6 +808,7 @@ public class select_loco extends AppCompatActivity {
             release_loco(_throttle);
             overrideThrottleName = "";
             end_this_activity();
+            mainapp.buttonVibration();
         }
     }
 
@@ -826,7 +828,7 @@ public class select_loco extends AppCompatActivity {
 
             startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
-
+            mainapp.buttonVibration();
         }
     }
 
@@ -845,7 +847,7 @@ public class select_loco extends AppCompatActivity {
 
             startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
-
+            mainapp.buttonVibration();
         }
     }
 
@@ -863,6 +865,7 @@ public class select_loco extends AppCompatActivity {
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;
             end_this_activity();
+            mainapp.buttonVibration();
         }
     }
 
@@ -885,6 +888,7 @@ public class select_loco extends AppCompatActivity {
 
                 sWhichThrottle += locoName;
                 acquire_engine(true, -1);
+                mainapp.buttonVibration();
             }
         }
     }
@@ -938,8 +942,8 @@ public class select_loco extends AppCompatActivity {
                 updateRecentConsists(saveUpdateList);
 
                 result = RESULT_LOCO_EDIT;
+                mainapp.buttonVibration();
                 end_this_activity();
-
             }
         }
     }
@@ -959,6 +963,7 @@ public class select_loco extends AppCompatActivity {
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
                     }
+                    mainapp.buttonVibration();
                 }
             };
 
@@ -988,6 +993,7 @@ public class select_loco extends AppCompatActivity {
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
                     }
+                    mainapp.buttonVibration();
                 }
             };
 
@@ -1036,6 +1042,7 @@ public class select_loco extends AppCompatActivity {
 
                 overrideThrottleName = rosterNameString;
                 acquire_engine(bRosterRecent, -1);
+                mainapp.buttonVibration();
             }
         }
     }
@@ -1535,9 +1542,11 @@ public class select_loco extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, SMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -1545,6 +1554,7 @@ public class select_loco extends AppCompatActivity {
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1640,6 +1650,7 @@ public class select_loco extends AppCompatActivity {
         buttonClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
+                mainapp.buttonVibration();
             }
         });
 
@@ -1902,11 +1913,13 @@ public class select_loco extends AppCompatActivity {
                     loadRecentConsistsList(true);
                     consists_list_view.invalidateViews();
                 }
+                mainapp.buttonVibration();
             }
         });
         dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
+                mainapp.buttonVibration();
             }
         });
         AlertDialog b = dialogBuilder.create();
@@ -1933,12 +1946,14 @@ public class select_loco extends AppCompatActivity {
                     saveRecentLocosList(true);
                     loadRecentLocosList(true);
                     engine_list_view.invalidateViews();
+                    mainapp.buttonVibration();
                 }
             }
         });
         dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //pass
+                mainapp.buttonVibration();
             }
         });
         AlertDialog b = dialogBuilder.create();

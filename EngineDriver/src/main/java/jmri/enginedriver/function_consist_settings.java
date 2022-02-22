@@ -188,9 +188,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, FMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -198,6 +200,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -365,6 +368,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 }
             }
             move_settings_to_view();
+            mainapp.buttonVibration();
         }
     }
 

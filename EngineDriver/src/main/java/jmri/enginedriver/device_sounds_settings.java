@@ -422,6 +422,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         public void onClick(View v) {
             saveNumberEntries();
             hideKeyboard(v);
+            mainapp.buttonVibration();
             finish();
         }
     }
@@ -454,9 +455,11 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, DSSMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -464,6 +467,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

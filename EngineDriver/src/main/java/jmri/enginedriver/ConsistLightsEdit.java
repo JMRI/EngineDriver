@@ -238,7 +238,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
                     Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
                 }
-
+                mainapp.buttonVibration();
                 refreshConsistLists();
             }
         });
@@ -269,6 +269,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
         OnTouchListener gestureListener = new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
+                mainapp.buttonVibration();
                 return myGesture.onTouchEvent(event);
             }
         };
@@ -358,9 +359,11 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CLEMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -368,6 +371,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

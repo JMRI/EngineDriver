@@ -1,4 +1,5 @@
 **Version 2.31.140
+ * Option for Haptic feedback on button presses
 **Version 2.31.138
  * Fix: Auto Server preference load
  * 'Limit Speed' and 'Pause' added to the Horizontal Layouts

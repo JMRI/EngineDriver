@@ -254,6 +254,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     consist.setLeadAddr(lAddr);
                     refreshConsistLists();
                 }
+                mainapp.buttonVibration();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -270,6 +271,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     consist.setTrailAddr(lAddr);
                     refreshConsistLists();
                 }
+                mainapp.buttonVibration();
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -360,9 +362,11 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, CEMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -370,6 +374,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -456,6 +461,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 }
             }
 
+            mainapp.buttonVibration();
             refreshConsistLists();
         }
     }

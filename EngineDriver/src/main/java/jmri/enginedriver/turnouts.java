@@ -415,6 +415,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     loadRecentTurnoutsList();
                     showHideRecentsList();
                 }
+                mainapp.buttonVibration();
             }
         }
     }
@@ -439,6 +440,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
             saveRecentTurnoutsList(true);
             showHideRecentsList();
+            mainapp.buttonVibration();
         }
     }
 
@@ -464,6 +466,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             removingTurnoutOrForceReload = true;
             saveRecentTurnoutsList(true);
             showHideRecentsList();
+            mainapp.buttonVibration();
         }
     }
 
@@ -924,6 +927,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -931,9 +935,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TuMenu);
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -1201,6 +1207,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
                     }
+                    mainapp.buttonVibration();
                 }
             };
 

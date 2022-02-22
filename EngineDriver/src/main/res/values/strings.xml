@@ -1173,6 +1173,8 @@
     <string name="prefHapticFeedbackDurationTitle">Haptic Feedback Duration</string>
     <string name="prefHapticFeedbackDurationSummary">Duration of each vibration (in milliseconds).</string>
     <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>
+    <string name="prefHapticFeedbackButtonsTitle">Haptic Feedback on Button Presses</string>
+    <string name="prefHapticFeedbackButtonsSummary">Haptic feedback (vibrate) on button presses.</string>
     <string name="LocoSelectMethodIDNGo">Request Loco ID</string>
     <string name="idngo_label">Request Loco ID</string>
     <string name="idngo_button">Request Loco ID</string>

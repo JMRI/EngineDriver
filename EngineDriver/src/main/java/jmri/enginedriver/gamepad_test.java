@@ -17,6 +17,19 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.InputDevice.getDevice;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
+import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_D;
+import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_R;
+import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_V;
+import static android.view.KeyEvent.KEYCODE_W;
+import static android.view.KeyEvent.KEYCODE_X;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -51,19 +64,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static android.view.InputDevice.getDevice;
-import static android.view.KeyEvent.ACTION_DOWN;
-import static android.view.KeyEvent.ACTION_UP;
-import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_D;
-import static android.view.KeyEvent.KEYCODE_F;
-import static android.view.KeyEvent.KEYCODE_N;
-import static android.view.KeyEvent.KEYCODE_R;
-import static android.view.KeyEvent.KEYCODE_T;
-import static android.view.KeyEvent.KEYCODE_V;
-import static android.view.KeyEvent.KEYCODE_W;
-import static android.view.KeyEvent.KEYCODE_X;
 
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
@@ -644,17 +644,20 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private class cancel_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             end_this_activity(GAMEPAD_TEST_FAIL);
+            mainapp.buttonVibration();
         }
     }
 
     private class reset_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             end_this_activity(GAMEPAD_TEST_RESET);
+            mainapp.buttonVibration();
         }
     }
     private class skip_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             end_this_activity(GAMEPAD_TEST_SKIPPED);
+            mainapp.buttonVibration();
         }
     }
 
@@ -850,9 +853,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, GPTMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -860,6 +865,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

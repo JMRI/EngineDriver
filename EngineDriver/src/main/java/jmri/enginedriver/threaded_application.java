@@ -310,6 +310,7 @@ public class threaded_application extends Application {
     public String prefHapticFeedback = "None";
     //    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
+    public boolean prefHapticFeedbackButtons = false;
 
     public boolean prefFullScreenSwipeArea = false;
     public boolean prefThrottleViewImmersiveModeHideToolbar = true;
@@ -3192,6 +3193,7 @@ public class threaded_application extends Application {
             public void onClick(DialogInterface dialog, int id) {
                 exitConfirmed = true;
                 sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
+                buttonVibration();
             }
         });
         b.setNegativeButton(R.string.no, null);
@@ -3759,6 +3761,12 @@ public class threaded_application extends Application {
                 }
             }
         }
+
+    public void buttonVibration() {
+        if (prefHapticFeedbackButtons) {
+            vibrate(prefHapticFeedbackDuration*2);
+        }
+    }
 
     public String getHostIp() {
         return host_ip;

@@ -944,5 +944,9 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bouton bouton Locking / Momentaire</string>
     <string name="permissionsReadLegacyFiles">Le pilote de moteur a besoin d\'autorisations de stockage pour charger les paramètres hérités (anciens emplacement).</string>
     <string name="permissionsReadPhoneState">Le pilote de moteur a besoin d\'autorisations téléphoniques pour mettre en pause des opérations lors d\'un appel.</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">Préférences supplémentaires</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Supplémentaire dans le téléphone Loco Sounds Préférences</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Les sons de l\'étape loco joueront jusqu\'à leur fin lors du changement d\'étape. Le montant de l\'élan (ci-dessus) devient un temps minimum seulement.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">Ne clipez pas de sons sur la loco</string>
 
 </resources>

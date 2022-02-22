@@ -511,6 +511,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             navigateAway();
+            mainapp.buttonVibration();
         }
     }
 
@@ -605,6 +606,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return true;
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.logviewer_menu:
                 navigateAway(false, LogViewerActivity.class);
@@ -614,6 +616,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, WMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -621,6 +624,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

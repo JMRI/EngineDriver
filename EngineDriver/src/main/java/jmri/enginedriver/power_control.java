@@ -88,6 +88,7 @@ public class power_control extends AppCompatActivity {
                 newState = 0;
             }
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.POWER_CONTROL, "", newState);
+            mainapp.buttonVibration();
         }
     }
 
@@ -218,9 +219,11 @@ public class power_control extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
+                mainapp.buttonVibration();
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, PMenu);
+                mainapp.buttonVibration();
                 return true;
             case R.id.power_layout_button:
                 if (!mainapp.isPowerControlAllowed()) {
@@ -228,6 +231,7 @@ public class power_control extends AppCompatActivity {
                 } else {
                     mainapp.powerStateMenuButton();
                 }
+                mainapp.buttonVibration();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -257,6 +261,7 @@ public class power_control extends AppCompatActivity {
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.buttonVibration();
             finish();
         }
     }

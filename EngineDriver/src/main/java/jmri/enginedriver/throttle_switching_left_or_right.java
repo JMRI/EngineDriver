@@ -899,6 +899,8 @@ public class throttle_switching_left_or_right extends throttle {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 vsbSwitchingSpeeds[whichThrottle].touchFromUser = false;
                 limitSpeed(whichThrottle);
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                mainapp.buttonVibration();
             }
             return false;
         }
