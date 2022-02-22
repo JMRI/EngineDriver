@@ -6278,7 +6278,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     setActiveThrottle(whichVolume);
                 }
                 for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
-                    if (!mainapp.consists[i].isActive()) {
+                    if (mainapp.consists!=null && mainapp.consists[i]!=null && !mainapp.consists[i].isActive()) {
                         soundsStopAllSoundsForLoco(i);
                     }
 //                    showHideMuteButton(i);
