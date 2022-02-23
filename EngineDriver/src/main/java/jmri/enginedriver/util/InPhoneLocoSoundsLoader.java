@@ -374,51 +374,65 @@ public class InPhoneLocoSoundsLoader {
    } // end loadSound()
 
    void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
-        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:" + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
+//        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file: '" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo);
       int duration = 0;
 
       if (fileName.length() > 0) {
          File file = new File(context.getExternalFilesDir(null), fileName);
 
-         MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
-         if (player != null)
-            duration = player.getDuration();
-         soundsCountOfSoundBeingLoaded ++;
+         if(!file.exists()) {
+            Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - File can't be found");
+            loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
+         } else {
 
-         switch (soundType) {
-            default:
-            case SOUNDS_TYPE_LOCO: // loco
-               mainapp.soundsLoco[whichThrottle][soundNo]
-                       = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-               mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-               break;
-            case SOUNDS_TYPE_BELL: // bell
-            case SOUNDS_TYPE_HORN: // horn
-            case SOUNDS_TYPE_HORN_SHORT: // horn short
-               mainapp.soundsExtras[soundType-1][whichThrottle][soundNo]
-                       = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-               mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = duration;
-               break;
+            MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
+            if (player == null) {
+               Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - Can't determine duration");
+               loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
+            } else {
+               duration = player.getDuration();
+               soundsCountOfSoundBeingLoaded++;
+
+               switch (soundType) {
+                  default:
+                  case SOUNDS_TYPE_LOCO: // loco
+                     mainapp.soundsLoco[whichThrottle][soundNo]
+                             = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                     mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
+                     break;
+                  case SOUNDS_TYPE_BELL: // bell
+                  case SOUNDS_TYPE_HORN: // horn
+                  case SOUNDS_TYPE_HORN_SHORT: // horn short
+                     mainapp.soundsExtras[soundType - 1][whichThrottle][soundNo]
+                             = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                     mainapp.soundsExtrasDuration[soundType - 1][whichThrottle][soundNo] = duration;
+                     break;
+               }
+               Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: '" + file.getPath() + "/" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo + " Duration: " + duration);
+            }
          }
-//         Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: " + fileName + " wt: " + whichThrottle + " sNo: " + soundNo);
       } else {
-         switch (soundType) {
-            default:
-            case SOUNDS_TYPE_LOCO: // loco
-               mainapp.soundsLoco[whichThrottle][soundNo] = 0;
-               mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
-               break;
-            case SOUNDS_TYPE_BELL: // bell
-            case SOUNDS_TYPE_HORN: // horn
-            case SOUNDS_TYPE_HORN_SHORT: // horn
-               mainapp.soundsExtras[soundType-1][whichThrottle][soundNo] = 0;
-               mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = 0;
-               break;
-         }
+         loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
       }
    } // end loadSoundsFromFile()
 
-       public void getIplsList() { // In Phone Loco Sounds
+   void loadSoundFromFileFailed(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
+      switch (soundType) {
+         default:
+         case SOUNDS_TYPE_LOCO: // loco
+            mainapp.soundsLoco[whichThrottle][soundNo] = 0;
+            mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
+            break;
+         case SOUNDS_TYPE_BELL: // bell
+         case SOUNDS_TYPE_HORN: // horn
+         case SOUNDS_TYPE_HORN_SHORT: // horn
+            mainapp.soundsExtras[soundType-1][whichThrottle][soundNo] = 0;
+            mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = 0;
+            break;
+      }
+   }
+
+   public void getIplsList() { // In Phone Loco Sounds
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
 
