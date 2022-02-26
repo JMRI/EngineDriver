@@ -371,6 +371,16 @@
                         android:text="@string/gamepadTestHelp"
                         android:textSize="15sp" />
 
+                    <TextView
+                        android:id="@+id/gamepad_test_keyboard_help"
+                        style="?attr/floating_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="@string/gamepadTestKeyboardHelp"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
             </ScrollView>

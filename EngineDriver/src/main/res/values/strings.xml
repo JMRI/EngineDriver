@@ -716,6 +716,36 @@
     <string name="gamepadTestCompleteLabel">Test status:</string>
     <string name="gamepadTestDeviceName">BT:</string>
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
+    <string name="gamepadTestKeyboardHelp">Keyboard Commands
+\n-----------------
+\nUp = Increase Speed
+\nDown = Decrease Speed
+\n\'X\' = Stop
+\nLeft = Reverse (Forward if changed in preferences)
+\nRight = Forward (Reverse if changed in preferences)
+\n\'D\' = Direction - Toggle Forward/Reverse
+\n\'N\' = Next Throttle
+\n\'Z\' = All stop
+\n
+\nF00 - F28 = Function
+\nMust be \'F\' followed by two digits
+\n
+\nS000 - S100 = Speed
+\nMust be \'S\' followed by three digits
+\n
+\nIn Phone Loco Sounds (IPLS)
+\n\'B\' = Bell
+\n\'H\' = Horn / Whistle
+\n\'J\' = Short Horn
+\n\'M\' or Volume Mute = Mute IPLS
+\n
+\nT0 - T5 = Specify a throttle for next command
+\nMust be \'T\' followed by one digit
+\nThe following command will sent to the specified throttle regardless of the currently selected gamepad throttle.
+\n
+\nAll other keyCodes are ignored
+\n
+\nFailure to follow the \'F\', \'S\' or \'L\' with the correct number of digits will ignore the command</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">"Test Incomplete"</string>
     <string name="gamepadTestComplete">"Test Complete"</string>
