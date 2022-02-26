@@ -57,7 +57,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -231,6 +234,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "Keyboard":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
@@ -253,6 +260,28 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             gamePadKeys_Up[3] = bGamePadKeysUp[5];
             gamePadKeys_Up[4] = bGamePadKeysUp[3];
             gamePadKeys_Up[5] = bGamePadKeysUp[2];
+        }
+
+        LinearLayout dpad = findViewById(R.id.gamepad_dpad);
+        TableLayout btns = findViewById(R.id.gamepad_buttons);
+        RelativeLayout optn = findViewById(R.id.gamepad_test_optional_group);
+        TableLayout extra = findViewById(R.id.gamepad_buttons_extra);
+        View helpText = findViewById(R.id.gamepad_test_help);
+        View helpTextKeyboard = findViewById(R.id.gamepad_test_keyboard_help);
+        if (!whichGamePadMode.equals("Keyboard")) {
+            dpad.setVisibility(LinearLayout.VISIBLE);
+            btns.setVisibility(TableLayout.VISIBLE);
+            optn.setVisibility(RelativeLayout.VISIBLE);
+            extra.setVisibility(TableLayout.VISIBLE);
+            helpText.setVisibility(View.VISIBLE);
+            helpTextKeyboard.setVisibility(View.GONE);
+        } else {
+            dpad.setVisibility(LinearLayout.GONE);
+            btns.setVisibility(TableLayout.GONE);
+            optn.setVisibility(RelativeLayout.GONE);
+            extra.setVisibility(TableLayout.GONE);
+            helpText.setVisibility(View.GONE);
+            helpTextKeyboard.setVisibility(View.VISIBLE);
         }
     }
 

@@ -223,6 +223,7 @@
         <item tools:ignore="Typos">MagicseeR1B</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
+        <item >Keyboard</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
@@ -246,6 +247,7 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item >Keyboard</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
