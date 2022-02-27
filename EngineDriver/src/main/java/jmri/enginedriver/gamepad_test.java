@@ -266,6 +266,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         TableLayout btns = findViewById(R.id.gamepad_buttons);
         RelativeLayout optn = findViewById(R.id.gamepad_test_optional_group);
         TableLayout extra = findViewById(R.id.gamepad_buttons_extra);
+        RelativeLayout status = findViewById(R.id.gamepad_test_complete_group);
         View helpText = findViewById(R.id.gamepad_test_help);
         View helpTextKeyboard = findViewById(R.id.gamepad_test_keyboard_help);
         if (!whichGamePadMode.equals("Keyboard")) {
@@ -273,6 +274,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             btns.setVisibility(TableLayout.VISIBLE);
             optn.setVisibility(RelativeLayout.VISIBLE);
             extra.setVisibility(TableLayout.VISIBLE);
+            status.setVisibility(View.VISIBLE);
             helpText.setVisibility(View.VISIBLE);
             helpTextKeyboard.setVisibility(View.GONE);
         } else {
@@ -280,6 +282,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             btns.setVisibility(TableLayout.GONE);
             optn.setVisibility(RelativeLayout.GONE);
             extra.setVisibility(TableLayout.GONE);
+            status.setVisibility(TableLayout.GONE);
             helpText.setVisibility(View.GONE);
             helpTextKeyboard.setVisibility(View.VISIBLE);
         }
