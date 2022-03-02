@@ -101,7 +101,16 @@
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
                     android:imeOptions="actionDone"
                     android:maxLength="8"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    tools:ignore="Autofill" />
+                <TextView
+                    android:id="@+id/turnout_entry_static"
+                    style="?attr/floating_text_style"
+                    android:layout_weight="0.25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/turnouts_turnout"
+                    android:visibility="gone"/>
                 <Button
                     android:id="@+id/turnout_throw"
                     style="?attr/ed_normal_button_style"

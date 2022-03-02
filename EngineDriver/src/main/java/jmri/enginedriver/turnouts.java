@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.TextUtils.substring;
+import static android.view.InputDevice.getDevice;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -32,11 +33,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.Html;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,7 +48,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -62,7 +61,6 @@ import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -143,6 +141,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
     private VelocityTracker mVelocityTracker;
 
+    private EditText trn;
+    private TextView trnStatic;
 
     public void refresh_turnout_view() {
         //specify logic for sort comparison (by username)
@@ -268,7 +268,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         Button butTog = findViewById(R.id.turnout_toggle);
         Button butClose = findViewById(R.id.turnout_close);
         Button butThrow = findViewById(R.id.turnout_throw);
-        EditText trn = findViewById(R.id.turnout_entry);
+//        EditText trn = findViewById(R.id.turnout_entry);
         TextView trnPrefix = findViewById(R.id.turnout_prefix);
         String turnout = trn.getText().toString().trim();
         int txtLen = turnout.length();
@@ -381,8 +381,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
 
         public void onClick(View v) {
-            EditText entryv = findViewById(R.id.turnout_entry);
-            String entrytext = entryv.getText().toString().trim();
+//            EditText entryv = findViewById(R.id.turnout_entry);
+            String entrytext = trn.getText().toString().trim();
             if (entrytext.length() > 0) {
                 //if text starts with a digit, check number and prefix with hardware_system and "T"
                 //otherwise send the text as is
@@ -550,32 +550,32 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         // -------------------------------------------------------------------
 
-        EditText trn = findViewById(R.id.turnout_entry);
-        trn.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                updateTurnoutEntry();
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-        });
-        trn.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    InputMethodManager imm =
-                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    }
-                    return true;
-                } else
-                    return false;
-            }
-        });
+        trn = findViewById(R.id.turnout_entry);
+//        trn.addTextChangedListener(new TextWatcher() {
+//            public void afterTextChanged(Editable s) {
+//                updateTurnoutEntry();
+//            }
+//
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            }
+//        });
+//        trn.setOnEditorActionListener(new OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+//                    InputMethodManager imm =
+//                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    if (imm != null) {
+//                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//                    }
+//                    return true;
+//                } else
+//                    return false;
+//            }
+//        });
 
         //Set the button callbacks, storing the command to pass for each
         Button b = findViewById(R.id.turnout_toggle);
@@ -723,7 +723,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.turnouts_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-        EditText trn = findViewById(R.id.turnout_entry);
+//        EditText trn = findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
             imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
@@ -783,6 +783,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     //Always go to throttle activity if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+
+        InputDevice idev = getDevice(event.getDeviceId());
+        boolean rslt = mainapp.implDispatchKeyEvent(event);
+
         if (key == KeyEvent.KEYCODE_BACK) {
             this.finish();
             connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
@@ -1494,5 +1498,30 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
         }
     };
+
+
+    // listener for the joystick events
+    @Override
+    public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
+        boolean rslt = mainapp.implDispatchGenericMotionEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchGenericMotionEvent(event);
+        }
+    }
+
+    // listener for physical keyboard events
+    // used to support the gamepad only   DPAD and key events
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        InputDevice idev = getDevice(event.getDeviceId());
+        boolean rslt = mainapp.implDispatchKeyEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
 
 }

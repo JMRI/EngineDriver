@@ -445,11 +445,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     boolean locoSelectWhileMoving;
 
     // used for the GamePad Support
-    private static final String WHICH_GAMEPAD_MODE_NONE = "None";
+//    private static final String WHICH_GAMEPAD_MODE_NONE = "None";
     protected static final int DIRECTION_FORWARD = 1;
     protected static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
-    private String whichGamePadMode = WHICH_GAMEPAD_MODE_NONE;
+//    private String whichGamePadMode = WHICH_GAMEPAD_MODE_NONE;
     private static String PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP = "All Stop";
     private static String PREF_GAMEPAD_BUTTON_OPTION_STOP = "Stop";
     private static String PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE = "Next Throttle";
@@ -464,6 +464,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL = "Bell (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN = "Horn (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
+
+    private int externalGamepadAction;
+//    private int externalGamepadWhichThrottle;
+    private int externalGamepadKeyCode;
+    private boolean externalGamepadIsShiftPressed;
+    private int externalGamepadRepeatCnt;
+    private int externalGamepadWhichGamePadIsEventFrom;
+
+    private float externalGamepadxAxis;
+    private float externalGamepadyAxis;
+    private float externalGamepadxAxis2;
+    private float externalGamepadyAxis2;
 
     protected MediaPlayer _mediaPlayer;
 
@@ -526,13 +538,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected String prefBackgroundImageFileName = "";
     protected String prefBackgroundImagePosition = "FIT_CENTER";
 
-    private int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
-    private int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
-    private boolean usingMultiplePads = false;
-    private int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
-    private int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
-    private int gamepadCount = 0;
-    // preference to chnage the consist's on long clicks
+//    private int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
+//    private int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
+//    private boolean usingMultiplePads = false;
+//    private int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
+//    private int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
+//    private int gamepadCount = 0;
+
+    // preference to change the consist's on long clicks
     boolean prefConsistLightsLongClick;
     public static final int LIGHT_FOLLOW = 1;
 
@@ -975,8 +988,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 } else if (com2 == '-') { // if loco removed
                                     removeLoco(whichThrottle);
                                     swapToNextAvilableThrottleForGamePad(whichThrottle, true); // see if we can/need to move the gamepad to another throttle
-                                    gamePadIds[whichThrottle] = 0;
-                                    gamePadThrottleAssignment[whichThrottle] = -1;
+                                    mainapp.gamePadIds[whichThrottle] = 0;
+                                    mainapp.gamePadThrottleAssignment[whichThrottle] = -1;
 
                                 } else if (com2 == 'A') { // Action e.g. MTAL2608<;>R1
                                     char com3 = ' ';
@@ -1130,7 +1143,35 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         doLocoSound(throttleIndex);
                     }
                     break;
+                case message_type.GAMEPAD_ACTION:
+                    Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_ACTION " + response_str );
+                    if (response_str.length()>0) {
+                        String[] splitString = response_str.split(":");
+                        externalGamepadAction = Integer.parseInt(splitString[0]);
+//                        externalGamepadWhichThrottle = Integer.parseInt(splitString[1]);
+                        externalGamepadKeyCode = Integer.parseInt(splitString[1]);
+                        externalGamepadIsShiftPressed = (Integer.parseInt(splitString[2]) == 1);
+                        externalGamepadRepeatCnt = Integer.parseInt(splitString[3]);
+                        externalGamepadWhichGamePadIsEventFrom = Integer.parseInt(splitString[4]);
 
+                        dispatchKeyEvent(null);
+                    }
+                    break;
+
+                case message_type.GAMEPAD_JOYSTICK_ACTION:
+                    Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_JOYSTICK_ACTION " + response_str );
+                    if (response_str.length()>0) {
+                        String[] splitString = response_str.split(":");
+                        externalGamepadAction = Integer.parseInt(splitString[0]);
+                        externalGamepadWhichGamePadIsEventFrom = Integer.parseInt(splitString[1]);
+                        externalGamepadxAxis = Float.parseFloat(splitString[2]);
+                        externalGamepadyAxis = Float.parseFloat(splitString[3]);
+                        externalGamepadxAxis2 = Float.parseFloat(splitString[4]);
+                        externalGamepadyAxis2 = Float.parseFloat(splitString[5]);
+
+                        dispatchGenericMotionEvent(null);
+                    }
+                    break;
             }
         }
     }
@@ -2315,7 +2356,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void start_gamepad_test_activity(int gamepadNo) {
 
         if (prefGamepadTestEnforceTesting) {
-            gamePadDeviceIdsTested[gamepadNo] = 0;
+            mainapp.gamePadDeviceIdsTested[gamepadNo] = 0;
             try {
                 Intent in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
@@ -2326,7 +2367,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 Log.d("Engine_Driver", ex.getMessage());
             }
         } else { // don't bother doing the test if the preference is set not to
-            gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
+            mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
         }
     }
 
@@ -2686,13 +2727,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // hide or display gamepad number indicator based on variable
         boolean isSet = false;
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-            if (gamePadThrottleAssignment[throttleIndex]!=-1) {
-                tvGamePads[throttleIndex].setText(String.valueOf(gamePadThrottleAssignment[throttleIndex]));
+            if (mainapp.gamePadThrottleAssignment[throttleIndex]!=-1) {
+                tvGamePads[throttleIndex].setText(String.valueOf(mainapp.gamePadThrottleAssignment[throttleIndex]));
             } else {
                 tvGamePads[throttleIndex].setText("");
             }
 
-            if (gamePadThrottleAssignment[throttleIndex] == 1) {
+            if (mainapp.gamePadThrottleAssignment[throttleIndex] == 1) {
                 setSelectedLocoAdditionalIndicator(throttleIndex, false);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE, throttleIndex);
                 isSet = true;
@@ -2755,7 +2796,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
-        whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        mainapp.prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -2776,7 +2817,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefGamePadButtons[12] = prefs.getString("prefGamePadButtonLeftTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
         prefGamePadButtons[13] = prefs.getString("prefGamePadButtonRightTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightTriggerDefaultValue));
 
-        if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) {
+        if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) {
             // make sure the Softkeyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
@@ -2785,7 +2826,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
-        switch (whichGamePadMode) {
+        switch (mainapp.prefGamePadType) {
             case "iCade+DPAD":
             case "iCade+DPAD-rotate":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
@@ -2830,7 +2871,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         // if the preference name has "-rotate" at the end of it swap the dpad buttons around
-        if (whichGamePadMode.contains("-rotate")) {
+        if (mainapp.prefGamePadType.contains("-rotate")) {
             gamePadKeys[2] = bGamePadKeys[4];
             gamePadKeys[3] = bGamePadKeys[5];
             gamePadKeys[4] = bGamePadKeys[3];
@@ -2855,9 +2896,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (index >= mainapp.numThrottles) {
                 index = 0;
             }
-            if (gamePadIds[index] == 0) {  // unassigned
+            if (mainapp.gamePadIds[index] == 0) {  // unassigned
                 if (getConsist(index).isActive()) { // found next active throttle
-                    if (gamePadIds[index] <= 0) { //not currently assigned
+                    if (mainapp.gamePadIds[index] <= 0) { //not currently assigned
                         whichThrottle = index;
                         break;  // done
                     }
@@ -2866,10 +2907,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if (whichThrottle>=0) {
-            gamePadIds[whichThrottle] = gamePadIds[fromThrottle];
-            gamePadThrottleAssignment[whichThrottle] = gamePadThrottleAssignment[fromThrottle];
-            gamePadIds[fromThrottle] = 0;
-            gamePadThrottleAssignment[fromThrottle] = -1;
+            mainapp.gamePadIds[whichThrottle] = mainapp.gamePadIds[fromThrottle];
+            mainapp.gamePadThrottleAssignment[whichThrottle] = mainapp.gamePadThrottleAssignment[fromThrottle];
+            mainapp.gamePadIds[fromThrottle] = 0;
+            mainapp.gamePadThrottleAssignment[fromThrottle] = -1;
             setGamepadIndicator();
         }
 
@@ -2899,14 +2940,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             int i;
             // find out if this gamepad is already assigned
             for (i = 0; i < mainapp.numThrottles; i++) {
-                if (gamePadIds[i] == eventDeviceId) {
+                if (mainapp.gamePadIds[i] == eventDeviceId) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
                         whichGamePad = i;
                     } else { // currently assigned to this throttle, but the throttle is not active
                         whichGamePad = i;
-                        gamePadIds[i] = 0;
-                        reassigningGamepad = gamePadThrottleAssignment[i];
-                        gamePadThrottleAssignment[i] = -1;
+                        mainapp.gamePadIds[i] = 0;
+                        reassigningGamepad = mainapp.gamePadThrottleAssignment[i];
+                        mainapp.gamePadThrottleAssignment[i] = -1;
                         setGamepadIndicator(); // need to clear the indicator
                     }
                     break;
@@ -2915,31 +2956,31 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             if (whichGamePad == -1) { //didn't find it OR is known, but unassigned
 
-                for (j = 0; j < gamepadCount; j++) {
-                    if (gamePadDeviceIds[j] == eventDeviceId) { // known, but unassigned
+                for (j = 0; j < mainapp.gamepadCount; j++) {
+                    if (mainapp.gamePadDeviceIds[j] == eventDeviceId) { // known, but unassigned
                         whichGamePadDeviceId = j;
                         break;
                     }
                 }
                 if (whichGamePadDeviceId == -1) { // previously unseen gamepad
-                    gamepadCount++;
-                    gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
-                    whichGamePadDeviceId = gamepadCount - 1;
+                    mainapp.gamepadCount++;
+                    mainapp.gamePadDeviceIds[mainapp.gamepadCount - 1] = eventDeviceId;
+                    whichGamePadDeviceId = mainapp.gamepadCount - 1;
 
-                    mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+                    mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
 
-                    start_gamepad_test_activity(gamepadCount - 1);
+                    start_gamepad_test_activity(mainapp.gamepadCount - 1);
 
                 }
 
                 for (i = 0; i < mainapp.numThrottles; i++) {
-                    if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
+                    if (mainapp.gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
-                            gamePadIds[i] = eventDeviceId;
+                            mainapp.gamePadIds[i] = eventDeviceId;
                             if (reassigningGamepad==-1) { // not a reassignment
-                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
+                                mainapp.gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
                             } else { // reasigning
-                                gamePadThrottleAssignment[i] = reassigningGamepad;
+                                mainapp.gamePadThrottleAssignment[i] = reassigningGamepad;
                             }
                             whichGamePad = i;
                             setGamepadIndicator();
@@ -2948,13 +2989,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             } else {
-                if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+                if (mainapp.gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
                     start_gamepad_test_activity(i);
                 }
             }
         }
-        if (gamepadCount > 0) {
-            usingMultiplePads = true;
+        if (mainapp.gamepadCount > 0) {
+            mainapp.usingMultiplePads = true;
         }
 
         return whichGamePad;
@@ -2979,7 +3020,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                if ( usingMultiplePads && whichGamePadIsEventFrom >= 0) {
+                if ( mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
                     swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
@@ -3073,30 +3114,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-//            if (isActive && (repeatCnt == 0)) {
-//                String lab = mainapp.function_labels[whichThrottle].get(fKey);
-//                if (lab != null) {
-//                    lab = lab.toUpperCase().trim();
-//                } else {
-//                    lab = mainapp.function_labels_default.get(fKey).toUpperCase().trim();
-//                }
-//
-//                boolean leadOnly = false;
-//                boolean trailOnly = false;
-//                boolean followLeadFunction = false;
-//
-//                int result = isFunctionLeadTrailFollow(whichThrottle, fKey, lab);
-//                if ((result == FUNCTION_IS_LEAD_ONLY) || (result==FUNCTION_IS_LEAD_AND_FOLLOW) || (result==FUNCTION_IS_LEAD_AND_TRAIL)) {leadOnly = true;}
-//                if ((result == FUNCTION_IS_TRAIL_ONLY) || (result==FUNCTION_IS_LEAD_AND_TRAIL)) {trailOnly = true;}
-//                if ((result == FUNCTION_IS_FOLLOW) || (result==FUNCTION_IS_LEAD_AND_FOLLOW)) {followLeadFunction = true;}
-//
-//                if (action==ACTION_DOWN) {
-//                    GamepadFeedbackSound(false);
-//                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
-//                } else {
-//                    sendFunctionToConsistLocos(whichThrottle,fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
-//                }
-//            }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED)) {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isLimitSpeeds[whichThrottle]) {
@@ -3119,12 +3136,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    // map the button pressed to the user selected action for that button on the gamepad
-    private void performKeyboardKeyAction(int keyCode, KeyEvent event, int action, boolean originalIsActive, int originalWhichThrottle, int whichGamePadIsEventFrom) {
-        boolean isShiftPressed = event.isShiftPressed();
-        int repeatCnt = event.getRepeatCount();
+    // map the button pressed to the user selected action for that button on a keyboard
+    private void performKeyboardKeyAction(int keyCode, int action, boolean isShiftPressed, int repeatCnt, int originalWhichThrottle, int whichGamePadIsEventFrom) {
         int whichThrottle = originalWhichThrottle;
-        boolean isActive = originalIsActive;
+        boolean isActive = getConsist(originalWhichThrottle).isActive();
         if ( (keyboardThrottle >=0) && (keyboardThrottle!=originalWhichThrottle) ) {
             whichThrottle = keyboardThrottle;
             isActive = getConsist(whichThrottle).isActive();
@@ -3145,7 +3160,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (keyCode==KEYCODE_N) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
-                if ( usingMultiplePads && whichGamePadIsEventFrom >= 0) {
+                if ( mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
                     swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
@@ -3377,52 +3392,71 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     }
 
-    private int getGamePadIndexFromThrottleNo (int whichThrottle) {
-        int whichGamepad = -1;
-        for (int i = 0; i < mainapp.numThrottles; i++) {
-            if (gamePadIds[whichThrottle] == gamePadDeviceIds[i]) {
-                whichGamepad = i;
-                break;
-            }
-        }
-        return whichGamepad;
-    }
+//    private int getGamePadIndexFromThrottleNo (int whichThrottle) {
+//        int whichGamepad = -1;
+//        for (int i = 0; i < mainapp.numThrottles; i++) {
+//            if (mainapp.gamePadIds[whichThrottle] == mainapp.gamePadDeviceIds[i]) {
+//                whichGamepad = i;
+//                break;
+//            }
+//        }
+//        return whichGamepad;
+//    }
 
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
-            if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
                 int action;
                 int whichThrottle;
                 int repeatCnt = 0;
-                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
+                int whichGamePadIsEventFrom;
 
-                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)
-                        && getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom) < gamePadDeviceIdsTested.length ) { // the event came from a valid gamepad
-                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                if (event != null) {
+                    action = event.getAction();
+                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
+                    if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length)
+                            && mainapp.getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom) < mainapp.gamePadDeviceIdsTested.length) { // the event came from a valid gamepad
+                        if (mainapp.gamePadDeviceIdsTested[mainapp.getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)] != GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                            acceptEvent = false;
+                        }
+                    } else {
                         acceptEvent = false;
                     }
                 } else {
-                    acceptEvent = false;
+                    action = externalGamepadAction;
+                    whichGamePadIsEventFrom = externalGamepadWhichGamePadIsEventFrom;
                 }
 
                 if (acceptEvent) {
                     float xAxis;
-                    xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-                    float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-                    float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-                    float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+                    float yAxis;
+                    float xAxis2;
+                    float yAxis2;
 
-                    if ((xAxis != 0) || (yAxis != 0)) {
-                        action = ACTION_DOWN;
+                    if (event != null) {
+                        xAxis = event.getAxisValue(MotionEvent.AXIS_X);
+                        yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
+                        xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
+                        yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+
+                        if ((xAxis != 0) || (yAxis != 0)) {
+                            action = ACTION_DOWN;
+                        } else {
+                            action = ACTION_UP;
+                        }
                     } else {
-                        action = ACTION_UP;
+                        xAxis = externalGamepadxAxis;
+                        yAxis = externalGamepadyAxis;
+                        xAxis2 = externalGamepadxAxis2;
+                        yAxis2 = externalGamepadyAxis2;
                     }
-                    if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
+
+                    if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                         if (whichGamePadIsEventFrom >= 0) {
                             whichThrottle = whichGamePadIsEventFrom;
                         } else {
@@ -3435,7 +3469,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                     boolean isActive = getConsist(whichThrottle).isActive();
 
-                    if (action == ACTION_UP) {
+                    if (action == ACTION_UP) {// event received by this activity
                         mGamepadAutoIncrement = false;
                         mGamepadAutoDecrement = false;
                         GamepadFeedbackSoundStop();
@@ -3478,33 +3512,57 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     return (true); // stop processing this key
                 }
         }
-        return super.dispatchGenericMotionEvent(event);
+            if (event!=null) {
+                return super.dispatchGenericMotionEvent(event);
+            } else {
+                return true;
+            }
     }
 
     // listener for physical keyboard events
-    // used to support the gamepad only   DPAD and key events
+    // used to support the gamepad and physical keyboard events   DPAD and keystroke events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
 
         boolean isExternal = false;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            InputDevice idev = getDevice(event.getDeviceId());
-            if( idev != null && idev.toString().contains("Location: external")) isExternal = true;
+        if (event!=null) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+                InputDevice idev = getDevice(event.getDeviceId());
+                if (idev != null && idev.toString().contains("Location: external"))
+                    isExternal = true;
+            }
+        } else { // received from another activity (Turnouts or Routes)
+            isExternal = true;
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
-            if (!whichGamePadMode.equals(WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
-                int action = event.getAction();
-                int keyCode = event.getKeyCode();
-                int repeatCnt = event.getRepeatCount();
+                int action;
+                int keyCode;
+                boolean isShiftPressed;
+                int repeatCnt;
                 int whichThrottle;
-                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+                int whichGamePadIsEventFrom;
 
-                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
-                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                if (event!=null) {
+                    action = event.getAction();
+                    keyCode = event.getKeyCode();
+                    isShiftPressed = event.isShiftPressed();
+                    repeatCnt = event.getRepeatCount();
+                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+                } else {
+                    action = externalGamepadAction;
+                    keyCode = externalGamepadKeyCode;
+                    isShiftPressed = externalGamepadIsShiftPressed;
+                    repeatCnt = externalGamepadRepeatCnt;
+                    whichGamePadIsEventFrom = externalGamepadWhichGamePadIsEventFrom;
+                }
+
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length)) { // the event came from a gamepad
+                    if (mainapp.gamePadDeviceIdsTested[mainapp.getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -3512,7 +3570,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
 
                 if (acceptEvent) {
-                    if ((usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
+                    if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                         if (whichGamePadIsEventFrom >= 0) {
                             whichThrottle = whichGamePadIsEventFrom;
                         } else {
@@ -3529,7 +3587,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                     }
 
-                    if (!whichGamePadMode.equals("Keyboard")) {
+                    if (!mainapp.prefGamePadType.equals("Keyboard")) {
                         if (action == ACTION_UP) {
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
@@ -3593,7 +3651,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                             return (true); // stop processing this key
                         }
-                        if (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length) {// checked all the code and didn't find it
+                        if (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length) {// checked all the code and didn't find it
                             return (true); // ignore it
                         }
                     } else {
@@ -3602,7 +3660,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
                         }
-                        performKeyboardKeyAction(keyCode, event, action, isActive, whichThrottle, whichGamePadIsEventFrom);
+                        performKeyboardKeyAction(keyCode, action, isShiftPressed, repeatCnt, whichThrottle, whichGamePadIsEventFrom);
                         return (true); // stop processing this key
                     }
                 } else { // event is from a gamepad that has not finished testing. Ignore it
@@ -3637,7 +3695,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
         }
-        return super.dispatchKeyEvent(event);
+        if (event!=null) {
+            return super.dispatchKeyEvent(event);
+        } else {
+            return true;
+        }
     }
 
     void GamepadIncrementSpeed(int whichThrottle) {
@@ -6258,8 +6320,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu, gamepadCount);
-            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), gamepadCount);
+            mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
+            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), mainapp.gamepadCount);
             mainapp.setFlashlightButton(TMenu);
             mainapp.displayFlashlightMenuButton(TMenu);
             mainapp.displayTimerMenuButton(TMenu, kidsTimerRunning);
@@ -6628,28 +6690,28 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         int gamepadNo = Integer.valueOf(whichGamepadNo.substring(0, 1));
                         switch (result) {
                             case GAMEPAD_TEST_PASS:
-                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
+                                mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
                                 speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE,' ');
                                 break;
                             case GAMEPAD_TEST_SKIPPED:
-                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
+                                mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
                                 speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED, ' ');
                                 break;
                             case GAMEPAD_TEST_FAIL:
-                                gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_BAD;
+                                mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_BAD;
                                 speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL, ' ');
                                 break;
                             case GAMEPAD_TEST_RESET:
-                                gamepadCount = 0;
-                                for (int i=0;i<gamePadDeviceIds.length;i++) {
-                                    gamePadDeviceIds[i]=0;
-                                    gamePadDeviceIdsTested[i]=0;
+                                mainapp.gamepadCount = 0;
+                                for (int i=0;i<mainapp.gamePadDeviceIds.length;i++) {
+                                    mainapp.gamePadDeviceIds[i]=0;
+                                    mainapp.gamePadDeviceIdsTested[i]=0;
                                 }
                                 for (int i = 0; i < 3; i++) {
-                                    gamePadIds[i] = 0;
-                                    gamePadThrottleAssignment[0] = -1;
+                                    mainapp.gamePadIds[i] = 0;
+                                    mainapp.gamePadThrottleAssignment[0] = -1;
                                 }
-                                mainapp.setGamepadTestMenuOption(TMenu,gamepadCount);
+                                mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
                                 setGamepadIndicator();
                                 speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
                                 break;

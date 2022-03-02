@@ -22,6 +22,9 @@ package jmri.enginedriver;
 /* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static android.view.InputDevice.getDevice;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -63,8 +66,11 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -382,6 +388,20 @@ public class threaded_application extends Application {
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
+
+    // moved from throttle to ta to allow for gamepads to function in other activities
+    public static final String WHICH_GAMEPAD_MODE_NONE = "None";
+    public String prefGamePadType = WHICH_GAMEPAD_MODE_NONE;
+    public int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
+    public int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
+    public boolean usingMultiplePads = false;
+    public int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
+    public int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
+    public int gamepadCount = 0;
+
+    public static final int GAMEPAD_GOOD = 1;
+    public static final int GAMEPAD_BAD = 2;
+
 
     class comm_thread extends Thread {
         JmDNS jmdns = null;
@@ -900,6 +920,13 @@ public class threaded_application extends Application {
                                 !connectedHostName.equals(demo_host)) {
                             updateConnectionList(retrievedServerName);
                         }
+                        break;
+
+                    case message_type.GAMEPAD_ACTION:
+                        sendMsg(throttle_msg_handler, message_type.GAMEPAD_ACTION, msg.obj.toString());
+                        break;
+                    case message_type.GAMEPAD_JOYSTICK_ACTION:
+                        sendMsg(throttle_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION, msg.obj.toString());
                         break;
                 }
             }
@@ -2685,7 +2712,7 @@ public class threaded_application extends Application {
      * @param menu - menu object that will be adjusted
      */
     public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
-        String whichGamePadMode = prefs.getString("prefGamePadType", threaded_application.context.getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        String prefGamePadType = prefs.getString("prefGamePadType", threaded_application.context.getResources().getString(R.string.prefGamePadTypeDefaultValue));
         boolean result;
 
         if (menu != null) {
@@ -2703,7 +2730,7 @@ public class threaded_application extends Application {
                 result = i <= gamepadCount;
 
                 if (item != null) {
-                    if ((!whichGamePadMode.equals("None")) && (result)) {
+                    if ((!prefGamePadType.equals("None")) && (result)) {
                         any = true;
                         item.setVisible(true);
                     } else {
@@ -3867,4 +3894,176 @@ public class threaded_application extends Application {
 //            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
 //        }
 //    }
+
+    public int getGamePadIndexFromThrottleNo (int whichThrottle) {
+        int whichGamepad = -1;
+        for (int i = 0; i < numThrottles; i++) {
+            if (gamePadIds[whichThrottle] == gamePadDeviceIds[i]) {
+                whichGamepad = i;
+                break;
+            }
+        }
+        return whichGamepad;
+    }
+
+    // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
+    public int findWhichGamePadEventIsFrom(int eventDeviceId, int eventKeyCode) {
+        int whichGamePad = -2;  // default to the event not from a gamepad
+        int whichGamePadDeviceId = -1;
+        int j;
+
+        if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
+            whichGamePad = -1;  // gamepad
+
+            int reassigningGamepad = -1;
+            int i;
+            // find out if this gamepad is already assigned
+            for (i = 0; i < numThrottles; i++) {
+                if (gamePadIds[i] == eventDeviceId) {
+                    if (getConsist(i).isActive()) { //found the throttle and it is active
+                        whichGamePad = i;
+                    } else { // currently assigned to this throttle, but the throttle is not active
+                        whichGamePad = i;
+                        gamePadIds[i] = 0;
+                        reassigningGamepad = gamePadThrottleAssignment[i];
+                        gamePadThrottleAssignment[i] = -1;
+//                        setGamepadIndicator(); // need to clear the indicator
+                    }
+                    break;
+                }
+            }
+
+            if (whichGamePad == -1) { //didn't find it OR is known, but unassigned
+
+                for (j = 0; j < gamepadCount; j++) {
+                    if (gamePadDeviceIds[j] == eventDeviceId) { // known, but unassigned
+                        whichGamePadDeviceId = j;
+                        break;
+                    }
+                }
+                if (whichGamePadDeviceId == -1) { // previously unseen gamepad
+                    gamepadCount++;
+                    gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
+                    whichGamePadDeviceId = gamepadCount - 1;
+
+//                    setGamepadTestMenuOption(TMenu,gamepadCount);
+//
+//                    start_gamepad_test_activity(gamepadCount - 1);
+
+                }
+
+                for (i = 0; i < numThrottles; i++) {
+                    if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
+                        if (getConsist(i).isActive()) { // found next active throttle
+                            gamePadIds[i] = eventDeviceId;
+                            if (reassigningGamepad==-1) { // not a reassignment
+//                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
+                            } else { // reasigning
+                                gamePadThrottleAssignment[i] = reassigningGamepad;
+                            }
+                            whichGamePad = i;
+//                            setGamepadIndicator();
+                            break;  // done
+                        }
+                    }
+                }
+//            } else {
+//                if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+//                    start_gamepad_test_activity(i);
+//                }
+            }
+        }
+        if (gamepadCount > 0) {
+            usingMultiplePads = true;
+        }
+
+        return whichGamePad;
+    }
+
+    // get the consist for the specified throttle
+    private static final Consist emptyConsist = new Consist();
+    public Consist getConsist(int whichThrottle) {
+        if (consists == null || whichThrottle >= consists.length || consists[whichThrottle] == null)
+            return emptyConsist;
+        return consists[whichThrottle];
+    }
+
+    // listener for the joystick events
+    public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
+        //Log.d("Engine_Driver", "dgme " + event.getAction());
+        if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+
+            int action;
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
+
+            float xAxis;
+            xAxis = event.getAxisValue(MotionEvent.AXIS_X);
+            float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
+            float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
+            float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+
+            if ((xAxis != 0) || (yAxis != 0)) {
+                action = ACTION_DOWN;
+            } else {
+                action = ACTION_UP;
+            }
+
+            sendMsg(comm_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION,
+                    Integer.toString(action) + ":"
+                            + Integer.toString(whichGamePadIsEventFrom) + ":"
+                            + Float.toString(xAxis) + ":"
+                            + Float.toString(yAxis) + ":"
+                            + Float.toString(xAxis2) + ":"
+                            + Float.toString(yAxis2) );
+
+            return (true); // stop processing this key
+        }
+        return (false);
+    }
+
+
+    // listener for physical keyboard events - called from the
+    // used to support the gamepad only   DPAD and key events
+    public boolean implDispatchKeyEvent(KeyEvent event) {
+        boolean isExternal = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            InputDevice idev = getDevice(event.getDeviceId());
+            if( idev != null && idev.toString().contains("Location: external")) {
+                isExternal = true;
+            }
+        }
+
+        if (isExternal) { // if it has come from the phone itself, don't try to process it here
+            if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+                boolean acceptEvent = true; // default to assuming that we will respond to the event
+
+                int action = event.getAction();
+                boolean isShiftPressed = event.isShiftPressed();
+                int keyCode = event.getKeyCode();
+                int repeatCnt = event.getRepeatCount();
+//                int whichThrottle;
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+                if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
+                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=threaded_application.GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                        acceptEvent = false;
+                    }
+                } else {
+                    acceptEvent = false;
+                }
+
+                if (acceptEvent) {
+                    sendMsg(comm_msg_handler, message_type.GAMEPAD_ACTION,
+                            Integer.toString(action) + ":"
+                                    + Integer.toString(keyCode) + ":"
+                                    + ((isShiftPressed) ? "1" : "0") + ":"
+                                    + Integer.toString(repeatCnt) + ":"
+                                    + Integer.toString(whichGamePadIsEventFrom));
+
+                    return (true); // stop processing this key
+                }
+            }
+        }
+        return (false);
+    }
+
 }

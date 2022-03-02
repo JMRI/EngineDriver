@@ -81,9 +81,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private String whichGamepadNo = " "; //text version of the arr index of the gamepad we are testing.  Sent in and out
 
-    private String whichGamePadMode = "None";
-    private int whichGamePadModeIndex = 0;
-    private int oldWhichGamePadModeIndex = 0;
+    private String prefGamePadType = "None";
+    private int prefGamePadTypeIndex = 0;
+    private int oldPrefGamePadTypeIndex = 0;
     String[] gamePadModesArray;
     String[] gamePadModeEntriesArray;
 
@@ -151,7 +151,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
-        whichGamePadMode = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
         gamePadModesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
         final List<String> gamePadModesList = new ArrayList<>(Arrays.asList(gamePadModesArray));
@@ -159,11 +159,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntries);
         final List<String> gamePadModeEntriesList = new ArrayList<>(Arrays.asList(gamePadModeEntriesArray));
 
-        whichGamePadModeIndex = Arrays.asList(gamePadModesArray).indexOf(whichGamePadMode);
-        if (whichGamePadModeIndex<0) whichGamePadModeIndex=0;
+        prefGamePadTypeIndex = Arrays.asList(gamePadModesArray).indexOf(prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
 
         Spinner spinner = findViewById(R.id.gamepad_test_mode);
-        spinner.setSelection(whichGamePadModeIndex);
+        spinner.setSelection(prefGamePadTypeIndex);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -206,7 +206,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
-        switch (whichGamePadMode) {
+        switch (prefGamePadType) {
             case "iCade+DPAD":
             case "iCade+DPAD-rotate":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
@@ -250,7 +250,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
 
         // if the preference name has "-rotate" at the end of it swap the dpad buttons around
-        if (whichGamePadMode.contains("-rotate")) {
+        if (prefGamePadType.contains("-rotate")) {
             gamePadKeys[2] = bGamePadKeys[4];
             gamePadKeys[3] = bGamePadKeys[5];
             gamePadKeys[4] = bGamePadKeys[3];
@@ -269,7 +269,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         RelativeLayout status = findViewById(R.id.gamepad_test_complete_group);
         View helpText = findViewById(R.id.gamepad_test_help);
         View helpTextKeyboard = findViewById(R.id.gamepad_test_keyboard_help);
-        if (!whichGamePadMode.equals("Keyboard")) {
+        if (!prefGamePadType.equals("Keyboard")) {
             dpad.setVisibility(LinearLayout.VISIBLE);
             btns.setVisibility(TableLayout.VISIBLE);
             optn.setVisibility(RelativeLayout.VISIBLE);
@@ -442,7 +442,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
-            if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
                 int action;
 
                 float xAxis;
@@ -536,7 +536,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
-            if (!whichGamePadMode.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 int action = event.getAction();
                 int keyCode = event.getKeyCode();
@@ -652,13 +652,13 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             Spinner spinner = findViewById(R.id.gamepad_test_mode);
-            whichGamePadModeIndex = spinner.getSelectedItemPosition();
+            prefGamePadTypeIndex = spinner.getSelectedItemPosition();
 
-            prefs.edit().putString("prefGamePadType", gamePadModesArray[whichGamePadModeIndex]).commit();  //reset the preference
+            prefs.edit().putString("prefGamePadType", gamePadModesArray[prefGamePadTypeIndex]).commit();  //reset the preference
 
-            if (oldWhichGamePadModeIndex != whichGamePadModeIndex) {
+            if (oldPrefGamePadTypeIndex != prefGamePadTypeIndex) {
                 setGamepadKeys();
-                oldWhichGamePadModeIndex = whichGamePadModeIndex;
+                oldPrefGamePadTypeIndex = prefGamePadTypeIndex;
             }
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

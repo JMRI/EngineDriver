@@ -902,11 +902,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void setGamePadPrefLabels(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
-        String whichGamePadMode = sharedPreferences.getString("prefGamePadType", "None").trim();
+        String prefGamePadType = sharedPreferences.getString("prefGamePadType", "None").trim();
         String[] gamePadPrefLabels;
         String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
 
-        switch (whichGamePadMode) {
+        switch (prefGamePadType) {
             case "iCade+DPAD":
             case "iCade+DPAD-rotate":
             case "MTK":
@@ -955,7 +955,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         boolean thisEnabled = true;
-        if (whichGamePadMode.equals("None")) {
+        if (prefGamePadType.equals("None")) {
             thisEnabled = false;
         }
         Preference thisPref;
