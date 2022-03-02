@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.InputDevice.getDevice;
 import static android.view.View.GONE;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -39,6 +40,7 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -1960,4 +1962,27 @@ public class select_loco extends AppCompatActivity {
         b.show();
     }
 
+    // listener for the joystick events
+    @Override
+    public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
+        boolean rslt = mainapp.implDispatchGenericMotionEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchGenericMotionEvent(event);
+        }
+    }
+
+    // listener for physical keyboard events
+    // used to support the gamepad only   DPAD and key events
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        InputDevice idev = getDevice(event.getDeviceId());
+        boolean rslt = mainapp.implDispatchKeyEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
 }

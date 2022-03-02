@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.InputDevice.getDevice;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -266,4 +269,27 @@ public class power_control extends AppCompatActivity {
         }
     }
 
+    // listener for the joystick events
+    @Override
+    public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
+        boolean rslt = mainapp.implDispatchGenericMotionEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchGenericMotionEvent(event);
+        }
+    }
+
+    // listener for physical keyboard events
+    // used to support the gamepad only   DPAD and key events
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        InputDevice idev = getDevice(event.getDeviceId());
+        boolean rslt = mainapp.implDispatchKeyEvent(event);
+        if (rslt) {
+            return (true);
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
 }
