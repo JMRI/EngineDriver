@@ -84,8 +84,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private String prefGamePadType = "None";
     private int prefGamePadTypeIndex = 0;
     private int oldPrefGamePadTypeIndex = 0;
-    String[] gamePadModesArray;
-    String[] gamePadModeEntriesArray;
+    String[] gamePadModeEntryValuesArray;
+    String[] gamePadModeEntriesArray; // display version
 
     private boolean prefGamepadTestEnforceTestingSimple = true;
 
@@ -93,11 +93,13 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
-            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger"};
+            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger","Left Thumb","Right Thumb","","","","","",""};
 
-    //                              none     NextThr  Speed+    Speed-      Fwd         Rev       All Stop    F2         F1          F0        Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
+    //                               0         1    2           3          4          5          6          7          8          9          10        11 12 13 14 15 16 17 18 19 20
+    //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
+    private int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static int GAMEPAD_KEYS_LENGTH = 21;
 
     private ToneGenerator tg;
 
@@ -115,6 +117,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private Button bButtonRightShoulder;
     private Button bButtonLeftTrigger;
     private Button bButtonRightTrigger;
+    private Button bButtonLeftThumb;
+    private Button bButtonRightThumb;
     private TextView tvGamepadMode;
     private TextView tvGamepadKeyCode;
     private TextView tvGamepadKeyFunction;
@@ -153,13 +157,14 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private void setGamepadKeys() {
         prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
-        gamePadModesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
-        final List<String> gamePadModesList = new ArrayList<>(Arrays.asList(gamePadModesArray));
+        gamePadModeEntryValuesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        final List<String> gamePadEntryValuesList = new ArrayList<>(Arrays.asList(gamePadModeEntryValuesArray));
 
+        // display version
         gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntries);
         final List<String> gamePadModeEntriesList = new ArrayList<>(Arrays.asList(gamePadModeEntriesArray));
 
-        prefGamePadTypeIndex = Arrays.asList(gamePadModesArray).indexOf(prefGamePadType);
+        prefGamePadTypeIndex = Arrays.asList(gamePadModeEntryValuesArray).indexOf(prefGamePadType);
         if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
 
         Spinner spinner = findViewById(R.id.gamepad_test_mode);
@@ -183,6 +188,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         prefGamePadButtons[11] = prefs.getString("prefGamePadButtonRightShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightShoulderDefaultValue));
         prefGamePadButtons[12] = prefs.getString("prefGamePadButtonLeftTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
         prefGamePadButtons[13] = prefs.getString("prefGamePadButtonRightTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightTriggerDefaultValue));
+        prefGamePadButtons[14] = prefs.getString("prefGamePadButtonLeftThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftThumbDefaultValue));
+        prefGamePadButtons[15] = prefs.getString("prefGamePadButtonRightThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightThumbDefaultValue));
 
         bDpadUp.setSelected(false);
         bDpadDown.setSelected(false);
@@ -198,6 +205,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         bButtonRightShoulder.setSelected(false);
         bButtonLeftTrigger.setSelected(false);
         bButtonRightTrigger.setSelected(false);
+        bButtonLeftThumb.setSelected(false);
+        bButtonRightThumb.setSelected(false);
 
         // make sure the Softkeyboard is hidden
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -234,6 +243,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "Generic":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             case "Keyboard":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
                 bGamePadKeysUp = bGamePadKeys;
@@ -244,7 +257,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 break;
         }
         // now grab the keycodes and put them into the arrays that will actually be used.
-        for (int i = 0; i<=14; i++ ) {
+        for (int i = 0; i<GAMEPAD_KEYS_LENGTH; i++ ) {
             gamePadKeys[i] = bGamePadKeys[i];
             gamePadKeys_Up[i] = bGamePadKeysUp[i];
         }
@@ -332,6 +345,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         setButtonOff(bButtonRightShoulder);
         setButtonOff(bButtonLeftTrigger);
         setButtonOff(bButtonRightTrigger);
+        setButtonOff(bButtonLeftThumb);
+        setButtonOff(bButtonRightThumb);
 
     }
 
@@ -629,6 +644,18 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                         isTestComplete(0);
                         return (true); // stop processing this key
 
+                   } else if (keyCode == gamePadKeys[15]) { // Left Thumb button
+                        setButtonOn(bButtonLeftThumb, prefGamePadButtons[14], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
+                    } else if (keyCode == gamePadKeys[16]) { // Right Thumb button
+                        setButtonOn(bButtonRightThumb, prefGamePadButtons[15], String.valueOf(keyCode));
+                        GamepadFeedbackSound(false);
+                        isTestComplete(0);
+                        return (true); // stop processing this key
+
                     } else if (keyCode == gamePadKeys[1]) { // Return button
                         setButtonOn(bButtonEnter, prefGamePadButtons[9], String.valueOf(keyCode));
                         GamepadFeedbackSound(false);
@@ -654,7 +681,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             Spinner spinner = findViewById(R.id.gamepad_test_mode);
             prefGamePadTypeIndex = spinner.getSelectedItemPosition();
 
-            prefs.edit().putString("prefGamePadType", gamePadModesArray[prefGamePadTypeIndex]).commit();  //reset the preference
+            prefs.edit().putString("prefGamePadType", gamePadModeEntryValuesArray[prefGamePadTypeIndex]).commit();  //reset the preference
 
             if (oldPrefGamePadTypeIndex != prefGamePadTypeIndex) {
                 setGamepadKeys();
@@ -769,6 +796,12 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         bButtonRightTrigger = findViewById(R.id.gamepad_test_button_right_trigger);
         bButtonRightTrigger.setClickable(false);
 
+        bButtonLeftThumb = findViewById(R.id.gamepad_test_button_left_thumb);
+        bButtonLeftThumb.setClickable(false);
+
+        bButtonRightThumb = findViewById(R.id.gamepad_test_button_right_thumb);
+        bButtonRightThumb.setClickable(false);
+
 
         //tvGamepadMode =(TextView) findViewById(R.id.gamepad_test_mode);
 
@@ -785,7 +818,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         // Set the options for the mode.
         Spinner mode_spinner = findViewById(R.id.gamepad_test_mode);
         //ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeOptions, android.R.layout.simple_spinner_item);
-        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeEntryValues, android.R.layout.simple_spinner_item);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefGamePadTypeEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mode_spinner.setAdapter(spinner_adapter);
         mode_spinner.setOnItemSelectedListener(new spinner_listener());

@@ -259,6 +259,24 @@
                                     android:text="@string/gamepadTestButtonLabelButtonRightTrigger"
                                     android:textSize="12sp" />
                             </TableRow>
+                            <TableRow android:gravity="center_horizontal">
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_left_thumb"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonLeftThumb"
+                                    android:textSize="12sp" />
+
+                                <Button
+                                    android:id="@+id/gamepad_test_button_right_thumb"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="100dip"
+                                    android:layout_height="25dip"
+                                    android:text="@string/gamepadTestButtonLabelButtonRightThumb"
+                                    android:textSize="12sp" />
+                            </TableRow>
                         </TableLayout>
 
                         <LinearLayout

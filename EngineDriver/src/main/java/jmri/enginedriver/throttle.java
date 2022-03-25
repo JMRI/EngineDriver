@@ -32,11 +32,17 @@ import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
 import static android.view.KeyEvent.KEYCODE_DPAD_UP;
 import static android.view.KeyEvent.KEYCODE_EQUALS;
 import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_F1;
+import static android.view.KeyEvent.KEYCODE_F10;
 import static android.view.KeyEvent.KEYCODE_H;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_M;
+import static android.view.KeyEvent.KEYCODE_MEDIA_NEXT;
+import static android.view.KeyEvent.KEYCODE_MEDIA_PREVIOUS;
 import static android.view.KeyEvent.KEYCODE_MINUS;
+import static android.view.KeyEvent.KEYCODE_MOVE_END;
+import static android.view.KeyEvent.KEYCODE_MOVE_HOME;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_ADD;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_SUBTRACT;
@@ -481,11 +487,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
-                                            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger"};
+                                            "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger","Left Thumb","Right Thumb","","","","","",""};
 
-    //                              none     NextThr  Speed+    Speed-      Fwd         Rev       All Stop    F2         F1          F0        Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W, KEYCODE_X,   KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0,0,0,0};
+    //                               0         1    2           3          4          5          6          7          8          9          10        11 12 13 14 15 16 17 18 19 20
+    //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
+    private int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static int GAMEPAD_KEYS_LENGTH = 21;
+    private static int[] BUTTON_ACTION_NUMBERS ={
+                                     -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
     // For TTS
     private int MY_TTS_DATA_CHECK_CODE = 1234;
@@ -1861,8 +1871,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         doLocoSound(whichThrottle);
     }
 
-
     public void decrementSpeed(int whichThrottle, int from) {
+        decrementSpeed(whichThrottle, from, 1);
+    }
+
+    public void decrementSpeed(int whichThrottle, int from, int stepMultiplier) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
                 if ( (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE)
@@ -1917,7 +1930,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speedChangeAndNotify(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
-                speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep);
+                speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
@@ -1925,6 +1938,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     public void incrementSpeed(int whichThrottle, int from) {
+        incrementSpeed(whichThrottle, from, 1);
+    }
+
+    public void incrementSpeed(int whichThrottle, int from, int stepMultiplier) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
                 if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE)
@@ -1969,7 +1986,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speedChangeAndNotify(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
-                speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep);
+                speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
@@ -2816,6 +2833,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefGamePadButtons[11] = prefs.getString("prefGamePadButtonRightShoulder", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightShoulderDefaultValue));
         prefGamePadButtons[12] = prefs.getString("prefGamePadButtonLeftTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftTriggerDefaultValue));
         prefGamePadButtons[13] = prefs.getString("prefGamePadButtonRightTrigger", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightTriggerDefaultValue));
+        prefGamePadButtons[14] = prefs.getString("prefGamePadButtonLeftThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftThumbDefaultValue));
+        prefGamePadButtons[15] = prefs.getString("prefGamePadButtonRightThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightThumbDefaultValue));
 
         if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) {
             // make sure the Softkeyboard is hidden
@@ -2854,6 +2873,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "Generic":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             case "Keyboard":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
                 bGamePadKeysUp = bGamePadKeys;
@@ -2865,7 +2888,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
         }
         // now grab the keycodes and put them into the arrays that will actually be used.
-        for (int i = 0; i<=14; i++ ) {
+        for (int i = 0; i<GAMEPAD_KEYS_LENGTH; i++ ) {
             gamePadKeys[i] = bGamePadKeys[i];
             gamePadKeys_Up[i] = bGamePadKeysUp[i];
         }
@@ -2928,7 +2951,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
-    private int findWhichGamePadEventIsFrom(int eventDeviceId, int eventKeyCode) {
+    private int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
         int whichGamePadDeviceId = -1;
         int j;
@@ -2965,6 +2988,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (whichGamePadDeviceId == -1) { // previously unseen gamepad
                     mainapp.gamepadCount++;
                     mainapp.gamePadDeviceIds[mainapp.gamepadCount - 1] = eventDeviceId;
+                    mainapp.gamePadDeviceNames[mainapp.gamepadCount - 1] = eventDeviceName;
                     whichGamePadDeviceId = mainapp.gamepadCount - 1;
 
                     mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
@@ -3001,10 +3025,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return whichGamePad;
     }
 
-    // map the button pressed to the user selected action for that button on the gamepad
+    // map the button pressed to the user selected action for that button on the gamepad or ESP32 DIY Gamepad (which thinks it is a Keyboard)
     private void performButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int whichGamePadIsEventFrom, int repeatCnt) {
-
-
         String x =prefGamePadButtons[buttonNo];
 
         if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {  // All Stop
@@ -3060,14 +3082,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
                     mGamepadAutoIncrement = true;
-                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED)) {  // Decrease Speed
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
                     mGamepadAutoDecrement = true;
-                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE)) {  // IPLS Sounds - Mute
@@ -3145,13 +3167,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             isActive = getConsist(whichThrottle).isActive();
         }
 
-        if (keyCode==KEYCODE_Z) {  // All Stop
+        if ( (keyCode==KEYCODE_Z) || (keyCode==KEYCODE_MOVE_END)) {  // All Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 speedUpdateAndNotify(0);         // update all three throttles
                 resetKeyboardString();
             }
-        } else if (keyCode==KEYCODE_X) {  // Stop
+        } else if ( (keyCode==KEYCODE_X) || (keyCode==KEYCODE_MOVE_HOME) ) {  // Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 speedUpdateAndNotify(whichThrottle, 0);
@@ -3200,19 +3222,39 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
-        } else if ( (keyCode==KEYCODE_DPAD_UP) || (keyCode==KEYCODE_PLUS) || (keyCode==KEYCODE_EQUALS) || (keyCode==KEYCODE_NUMPAD_ADD) ) {  // Increase Speed
+        } else if ( (keyCode==KEYCODE_DPAD_UP) || (keyCode==KEYCODE_PLUS)
+                || (keyCode==KEYCODE_EQUALS) || (keyCode==KEYCODE_NUMPAD_ADD)
+                || (keyCode==KEYCODE_VOLUME_UP) ) {  // Increase Speed
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0) ) {
                 if (repeatCnt == 0) {
                     mGamepadAutoIncrement = true;
-                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 }
                 resetKeyboardString();
             }
-        } else if ( (keyCode==KEYCODE_DPAD_DOWN) || (keyCode==KEYCODE_MINUS) || (keyCode==KEYCODE_NUMPAD_SUBTRACT) ) {  // Decrease Speed
+        } else if ( (keyCode==KEYCODE_DPAD_DOWN) || (keyCode==KEYCODE_MINUS)
+                || (keyCode==KEYCODE_NUMPAD_SUBTRACT)
+                || (keyCode==KEYCODE_VOLUME_DOWN) ) {  // Decrease Speed
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (repeatCnt == 0) {
                     mGamepadAutoDecrement = true;
-                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle));
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
+                }
+                resetKeyboardString();
+            }
+        } else if ( (keyCode==KEYCODE_MEDIA_NEXT) ) {  // Increase Speed * 2
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0) ) {
+                if (repeatCnt == 0) {
+                    mGamepadAutoIncrement = true;
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 2));
+                }
+                resetKeyboardString();
+            }
+        } else if ( (keyCode==KEYCODE_MEDIA_PREVIOUS) ) {  // Decrease Speed * 2
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                if (repeatCnt == 0) {
+                    mGamepadAutoDecrement = true;
+                    gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 2));
                 }
                 resetKeyboardString();
             }
@@ -3299,11 +3341,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 keyboardString = "T";
                 keyboardThrottle = -1;  //reset it
             }
-        } else if ( (keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {  // Start of a Function, Speed, or Throttle command
+        } else if ( ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9))
+                    || ( (keyCode>=KEYCODE_F1) && (keyCode<=KEYCODE_F10)) )
+        {  // Start of a Function, Speed, or Throttle command
+           String num;
+           if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
+               num = Integer.toString(keyCode - KEYCODE_0);
+           } else {
+               if (keyCode!=KEYCODE_F10) {
+                   num = Integer.toString(keyCode - KEYCODE_F1 + 1);
+               } else {
+                    num = "0";
+               }
+           }
 
            if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'F')) {  // Function
                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+//                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+                   keyboardString = keyboardString + num;
                }
                 if (keyboardString.length() == 3) {  // have a two digit function number now
                     int fKey = Integer.parseInt(keyboardString.substring(1, 3));
@@ -3316,7 +3371,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'S')) {  // speed
                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+//                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+                   keyboardString = keyboardString + num;
                }
                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
                    if (keyboardString.length() == 4) {  // have a three digit speed amount now
@@ -3329,7 +3385,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'T')) {    // specify Throttle number
                 if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-                    keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+//                    keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
+                    keyboardString = keyboardString + num;
                 }
                if (action == ACTION_DOWN) {
                    if (keyboardString.length() == 2) {  // have a complete Throttle number
@@ -3342,7 +3399,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     keyboardString = "";
                 }
             }  else if (keyboardString.length() == 0) {  // direct function 0-9
-                int fKey = keyCode - KEYCODE_0;
+//                int fKey = keyCode - KEYCODE_0;
+                int fKey;
+               if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
+                   fKey = keyCode - KEYCODE_0;
+               } else {
+                   if (keyCode!=KEYCODE_F10) {
+                       fKey = keyCode - KEYCODE_F1 + 1;
+                   } else {
+                       fKey = 0;
+                   }
+               }
                 if (action == ACTION_DOWN) {
                         doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
                 } else {
@@ -3418,7 +3485,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                 if (event != null) {
                     action = event.getAction();
-                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
+                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), 0); // dummy eventKeyCode
                     if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length)
                             && mainapp.getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom) < mainapp.gamePadDeviceIdsTested.length) { // the event came from a valid gamepad
                         if (mainapp.gamePadDeviceIdsTested[mainapp.getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)] != GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
@@ -3552,7 +3619,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     keyCode = event.getKeyCode();
                     isShiftPressed = event.isShiftPressed();
                     repeatCnt = event.getRepeatCount();
-                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+                    whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), event.getKeyCode());
                 } else {
                     action = externalGamepadAction;
                     keyCode = externalGamepadKeyCode;
@@ -3593,64 +3660,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
                         }
-
-                        if (keyCode == gamePadKeys[2]) { // DPAD Up Button
-                            performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        int rslt = -1;
+                        int actionNo = -1;
+                        for (int i=0; i<=20; i++){
+                            if (keyCode == gamePadKeys[i]) {
+                                rslt = i;
+                                actionNo = BUTTON_ACTION_NUMBERS[i];
+                                break;
+                            }
+                        }
+                        if ( (rslt>=1) && (rslt <=16) ) {
+                            performButtonAction(actionNo, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
                             return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[3]) { // DPAD Down Button
-                            performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[4]) { // DPAD Left Button
-                            performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[5]) { // DPAD Right Button
-                            performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[7]) { // ios button
-                            performButtonAction(1, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys_Up[8]) { // X button
-                            performButtonAction(3, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys_Up[9]) { // Triangle button
-                            performButtonAction(2, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys_Up[10]) { // @ button
-                            performButtonAction(4, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[6]) { // start button
-                            performButtonAction(0, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[11]) { // Left Shoulder button
-                            performButtonAction(10, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[12]) { // Left Shoulder button
-                            performButtonAction(11, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[13]) { // Left Shoulder button
-                            performButtonAction(12, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[14]) { // Left Shoulder button
-                            performButtonAction(13, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                            return (true); // stop processing this key
-
-                        } else if (keyCode == gamePadKeys[1]) { // Return button
-                            // NextThrottle
-                            performButtonAction(9, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        } else if ( (rslt>=17) && (rslt <=21)) {
+                            performKeyboardKeyAction(keyCode, action, false, repeatCnt, whichThrottle, whichGamePadIsEventFrom);
                             return (true); // stop processing this key
                         }
+
                         if (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length) {// checked all the code and didn't find it
                             return (true); // ignore it
                         }
@@ -3702,14 +3728,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    void GamepadIncrementSpeed(int whichThrottle) {
-        incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
+    void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
+        incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
         speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
     }
 
-    void GamepadDecrementSpeed(int whichThrottle) {
-        decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD);
+    void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
+        decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
         speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
     }
@@ -3759,9 +3785,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // For gamepad speed buttons.
     private class GamepadRptUpdater implements Runnable {
         int whichThrottle;
+        int stepMultiplier = 1;
 
-        private GamepadRptUpdater(int WhichThrottle) {
+        private GamepadRptUpdater(int WhichThrottle, int StepMultiplier) {
             whichThrottle = WhichThrottle;
+            stepMultiplier = StepMultiplier;
 
             try {
                 REP_DELAY = Integer.parseInt(prefs.getString("prefGamePadSpeedArrowsThrottleRepeatDelay",  getApplicationContext().getResources().getString(R.string.prefGamePadSpeedButtonsRepeatDefaultValue)));
@@ -3775,11 +3803,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (mainapp.appIsFinishing) { return;}
 
             if (mGamepadAutoIncrement) {
-                GamepadIncrementSpeed(whichThrottle);
-                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle), REP_DELAY);
+                GamepadIncrementSpeed(whichThrottle, stepMultiplier);
+                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle, stepMultiplier), REP_DELAY);
             } else if (mGamepadAutoDecrement) {
-                GamepadDecrementSpeed(whichThrottle);
-                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle), REP_DELAY);
+                GamepadDecrementSpeed(whichThrottle, stepMultiplier);
+                gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle, stepMultiplier), REP_DELAY);
             }
         }
     }

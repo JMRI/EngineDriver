@@ -181,6 +181,13 @@
         <item>Pravé rameno</item>
         <item>Levý spouštěč</item>
         <item>Pravý spouštěč</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadMocuteLabels">
@@ -195,10 +202,17 @@
         <item>Tlačítko Y [Triangle] akce</item>
         <item>Tlačítko A [Cross] akce</item>
         <item>Tlačítko B [@] akce</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
 <!--
@@ -233,10 +247,17 @@
         <item>Tlačítko D akce</item>
         <item>Tlačítko A akce</item>
         <item>Tlačítko B akce</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
@@ -251,10 +272,17 @@
         <item>Tlačítko není k dispozici</item>
         <item>Tlačítko není k dispozici</item>
         <item>Tlačítko není k dispozici</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->
