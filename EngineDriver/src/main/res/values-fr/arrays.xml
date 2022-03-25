@@ -231,6 +231,7 @@
         <item >MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item >Generic (Btn 0-9 + Hat)</item>
         <item >Keyboard</item>
     </string-array>
 
@@ -250,6 +251,13 @@
         <item>Epaulement Droit</item>
         <item>Gachette Gauche</item>
         <item>Gachette Droite</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadMocuteLabels">
@@ -268,6 +276,13 @@
         <item>Epaulement Droit</item>
         <item>Gachette Gauche</item>
         <item>Gachette Droite</item>
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadMagicseeR1Labels">
@@ -282,10 +297,17 @@
         <item>Touche DPAD Action D</item>
         <item>Touche DPAD Action A</item>
         <item>Touche DPAD Action B</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
@@ -300,10 +322,17 @@
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
-        <item> </item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefGamePadPrefButtonReferences">
@@ -322,6 +351,13 @@
         <item>prefGamePadButtonRightShoulder</item> //not used
         <item>prefGamePadButtonLeftTrigger</item> //not used
         <item>prefGamePadButtonRightTrigger</item> //not used
+        <item>prefGamePadButtonLeftThumb</item> //not used
+        <item>prefGamePadButtonRightThumb</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->

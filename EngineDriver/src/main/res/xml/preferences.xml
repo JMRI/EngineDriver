@@ -1227,6 +1227,24 @@
                     android:title="@string/prefGamePadButtonLeftTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <ListPreference
+                    android:defaultValue="@string/prefGamePadButtonLeftThumbDefaultValue"
+                    android:entries="@array/prefGamePadKeyEntries"
+                    android:entryValues="@array/prefGamePadKeyEntryValues"
+                    android:key="prefGamePadButtonLeftThumb"
+                    android:summary="@string/prefGamePadButtonSummary"
+                    android:title="@string/prefGamePadButtonLeftTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <ListPreference
+                    android:defaultValue="@string/prefGamePadButtonRightThumbDefaultValue"
+                    android:entries="@array/prefGamePadKeyEntries"
+                    android:entryValues="@array/prefGamePadKeyEntryValues"
+                    android:key="prefGamePadButtonRightThumb"
+                    android:summary="@string/prefGamePadButtonSummary"
+                    android:title="@string/prefGamePadButtonLeftTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <!--    Gamepad button preferences   -->
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"

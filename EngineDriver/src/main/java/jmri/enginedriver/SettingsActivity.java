@@ -934,6 +934,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             case "UtopiaC":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadUtopiaCLabels);
                 break;
+            case "Generic":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGenericLabels);
+                break;
             case "None":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
                 break;

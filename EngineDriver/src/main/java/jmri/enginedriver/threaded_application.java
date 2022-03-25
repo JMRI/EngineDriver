@@ -396,6 +396,7 @@ public class threaded_application extends Application {
     public int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
     public boolean usingMultiplePads = false;
     public int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
+    public String[] gamePadDeviceNames = {"","","","","","",""}; // which device have we seen - Names
     public int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
     public int gamepadCount = 0;
 
@@ -3907,7 +3908,7 @@ public class threaded_application extends Application {
     }
 
     // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
-    public int findWhichGamePadEventIsFrom(int eventDeviceId, int eventKeyCode) {
+    public int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
         int whichGamePadDeviceId = -1;
         int j;
@@ -3944,6 +3945,7 @@ public class threaded_application extends Application {
                 if (whichGamePadDeviceId == -1) { // previously unseen gamepad
                     gamepadCount++;
                     gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
+                    gamePadDeviceNames[gamepadCount - 1] = eventDeviceName;
                     whichGamePadDeviceId = gamepadCount - 1;
 
 //                    setGamepadTestMenuOption(TMenu,gamepadCount);
@@ -3994,7 +3996,7 @@ public class threaded_application extends Application {
         if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
-            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), 0); // dummy eventKeyCode
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), 0); // dummy eventKeyCode
 
             float xAxis;
             xAxis = event.getAxisValue(MotionEvent.AXIS_X);
@@ -4025,11 +4027,19 @@ public class threaded_application extends Application {
     // listener for physical keyboard events - called from the
     // used to support the gamepad only   DPAD and key events
     public boolean implDispatchKeyEvent(KeyEvent event) {
+        String eventDeviceName = event.getDevice().getName();
         boolean isExternal = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             InputDevice idev = getDevice(event.getDeviceId());
             if( idev != null && idev.toString().contains("Location: external")) {
                 isExternal = true;
+            }
+            if (!isExternal) {
+                for (int i=0; i<gamePadDeviceNames.length; i++) {
+                    if (eventDeviceName == gamePadDeviceNames[i]) {
+                        isExternal = true;
+                    }
+                }
             }
         }
 
@@ -4042,7 +4052,7 @@ public class threaded_application extends Application {
                 int keyCode = event.getKeyCode();
                 int repeatCnt = event.getRepeatCount();
 //                int whichThrottle;
-                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getKeyCode());
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), event.getKeyCode());
                 if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
                     if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=threaded_application.GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;

@@ -273,6 +273,8 @@
     <string name="prefGamePadButtonRightShoulderDefaultValue" translatable="false">Function 04</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButtonLeftTriggerDefaultValue" translatable="false">Function 05</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButtonRightTriggerDefaultValue" translatable="false">Function 06</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonLeftThumbDefaultValue" translatable="false">Function 07</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefGamePadButtonRightThumbDefaultValue" translatable="false">Function 08</string>  <!-- DO NOT TRANSLATE -->
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
@@ -707,6 +709,8 @@
     <string name="gamepadTestButtonLabelButtonRightShoulder">Right Shoulder</string>
     <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
     <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Left Thumb</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Right Thumb</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
     <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
