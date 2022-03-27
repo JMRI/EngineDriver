@@ -82,7 +82,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -7374,7 +7373,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void loadBackgroundImageImpl() {
         ImageView myImage = findViewById(R.id.backgroundImgView);
         try {
-            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File sdcard_path = Environment.getExternalStorageDirectory();
             File image_file = new File(prefBackgroundImageFileName);
 //            File image_file = new File(getApplicationContext().getExternalFilesDir(null), prefBackgroundImageFileName);
             myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));

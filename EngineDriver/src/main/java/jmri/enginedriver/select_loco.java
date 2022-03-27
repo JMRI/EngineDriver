@@ -29,6 +29,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +73,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -91,6 +95,8 @@ public class select_loco extends AppCompatActivity {
     private static final String WHICH_METHOD_RECENT = "3";
     private static final String WHICH_METHOD_CONSIST = "4";
     private static final String WHICH_METHOD_IDNGO = "5";
+
+    private static final String RECENT_LOCO_DIR = "recent_engine_list";
 
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
@@ -1014,12 +1020,40 @@ public class select_loco extends AppCompatActivity {
             AdapterView.OnItemClickListener {
         // When a roster item is clicked, send request to acquire that engine.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
             //use clicked position in list to retrieve roster item object from roster_list
             HashMap<String, String> hm = roster_list.get(position);
             String rosterNameString = hm.get("roster_name");
             String rosterAddressString = hm.get("roster_address");
             String rosterEntryType = hm.get("roster_entry_type");
+
+            String rosterEntryIcon = hm.get("roster_icon");
+            if (rosterEntryIcon != null) {
+                String imgFileName = "";
+                ViewGroup vg = (ViewGroup) v;
+                if (vg!=null) {
+                    ImageView iv = (ImageView) vg.getChildAt(0);
+                    if (iv != null) {
+                        int x = 1;
+                        try {
+                            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
+                            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+                            imgFileName = rosterNameString.replaceAll("[^A-Za-z0-9_]", "_") + ".jpg";
+                            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+                            if (dir.exists()) imageFile.delete(); // delete the old version if it exists
+                            FileOutputStream fileOutputStream =
+                                new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+                            Bitmap bitmap = viewToBitmap(iv, iv.getWidth(), iv.getHeight());
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                            Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+                            fileOutputStream.flush();
+                            fileOutputStream.close();
+                        } catch (Exception e)  {
+                            Log.d("Engine_Driver", "select_loco.roster_item_ClickListener() Unable to save roster loco image");
+                        }
+                    }
+                }
+            }
+
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
             if (ras[0].length() > 0) {  //only process if address found
@@ -1779,26 +1813,21 @@ public class select_loco extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
 
-            String str = hm.get("roster_name");
-            if (str != null) {
+            String engineName = hm.get("roster_name");
+            if (engineName != null) {
                 TextView name = view.findViewById(R.id.roster_name_label);
-                name.setText(str);
+                name.setText(engineName);
             }
 
-            str = hm.get("roster_address");
-            if (str != null) {
+            String engineNo = hm.get("roster_address");
+            if (engineNo != null) {
                 TextView secondLine = view.findViewById(R.id.roster_address_label);
-                secondLine.setText(hm.get("roster_address"));
+                secondLine.setText(engineNo);
             }
 
+            ImageView imageView = view.findViewById(R.id.roster_icon_image);
             String iconURL = hm.get("roster_icon");
-            if ((iconURL != null) && (iconURL.length() > 0)) {
-                ImageView imageView = view.findViewById(R.id.roster_icon_image);
-                mainapp.imageDownloader.download(iconURL, imageView);
-            } else {
-                View v = view.findViewById(R.id.roster_icon_image);
-                v.setVisibility(GONE);
-            }
+            loadRosterOrRecentImage(engineName, imageView, hm, iconURL);
 
             return view;
         }
@@ -1831,22 +1860,40 @@ public class select_loco extends AppCompatActivity {
                 name.setText(Html.fromHtml(str));
             }
 
-            str = hm.get("engine");
-            if (str != null) {
+            String engineName = hm.get("engine");
+            if (engineName != null) {
                 TextView secondLine = view.findViewById(R.id.engine_item_label);
-                secondLine.setText(str);
+                secondLine.setText(engineName);
             }
 
+            ImageView imageView = view.findViewById(R.id.engine_icon_image);
             String iconURL = hm.get("engine_icon");
-            if ((iconURL != null) && (iconURL.length() > 0)) {
-                ImageView imageView = view.findViewById(R.id.engine_icon_image);
-                mainapp.imageDownloader.download(iconURL, imageView);
-            } else {
-                View v = view.findViewById(R.id.engine_icon_image);
-                v.setVisibility(GONE);
-            }
+            loadRosterOrRecentImage(engineName, imageView, hm, iconURL);
 
             return view;
+        }
+    }
+
+    private void loadRosterOrRecentImage(String engineName, ImageView imageView, HashMap<String, String> hm, String iconURL) {
+        //see if there is a saved file and preload it, even if it gets written over later
+        boolean foundSavedImage = false;
+        String imgFileName = engineName.replaceAll("[^A-Za-z0-9_]", "_") + ".jpg";
+        File image_file = new File(getApplicationContext().getExternalFilesDir(null), "/"+RECENT_LOCO_DIR+"/"+imgFileName);
+        if (image_file.exists()) {
+            try {
+                imageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
+                foundSavedImage = true;
+            } catch (Exception e) {
+                Log.d("Engine_Driver", "select_loco - recent consists - image file found but could not loaded");
+            }
+        }
+
+        if ((iconURL != null) && (iconURL.length() > 0)) {
+            mainapp.imageDownloader.download(iconURL, imageView);
+        } else {
+            if (!foundSavedImage) {
+                imageView.setVisibility(GONE);
+            }
         }
 
     }
@@ -1984,5 +2031,12 @@ public class select_loco extends AppCompatActivity {
         } else {
             return super.dispatchKeyEvent(event);
         }
+    }
+
+    private static Bitmap viewToBitmap(View view, int widh, int hight)
+    {
+        Bitmap bitmap=Bitmap.createBitmap(widh,hight, Bitmap.Config.ARGB_8888);
+        Canvas canvas=new Canvas(bitmap); view.draw(canvas);
+        return bitmap;
     }
 }
