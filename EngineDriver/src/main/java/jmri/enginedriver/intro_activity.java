@@ -27,7 +27,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -140,7 +139,7 @@ public class intro_activity extends AppIntro2 {
 
         // only show this slide if there is no connections_list in the Scoped Storage area
         try {
-            File sdcard_path = Environment.getExternalStorageDirectory();
+//            File sdcard_path = Environment.getExternalStorageDirectory();
             File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
             if (!connection_file.exists()) {
                 Fragment fragment98 = new intro_alert();

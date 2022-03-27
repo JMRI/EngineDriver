@@ -20,15 +20,15 @@
         android:layout_height="wrap_content"
         android:paddingLeft="2dp"
         android:text="TestAddress"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <TextView
         android:id="@+id/roster_name_label"
         style="?attr/list_item_style"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="0dp"
         android:paddingTop="12dp"
+        android:paddingBottom="0dp"
         android:text="Test Roster Name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         tools:ignore="HardcodedText" />
