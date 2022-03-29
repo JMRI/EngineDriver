@@ -248,7 +248,7 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
-        <item >ESP32 DIY (Btn 1-10 + Hat + Encoder)</item>
+        <item tools:ignore="TypographyDashes">ESP32 DIY (Btn 1-10 +4x4 Hat +Encoder)</item>
         <item >Keyboard</item>
     </string-array>
 
@@ -790,21 +790,21 @@
         <item>Button not available</item> //not used
         <item>Button not available</item> //not used
         <item>Button not available</item> //not used
-        <item>0</item> //not used - alternate Stop
+        <item>Button not available</item> //not used
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>0</item> //not used - alternate Fast Increase Speed
+        <item>0</item> //not used - alternate Fast Decrease Speed
     </string-array>
 
     <integer-array name="prefGamePadGeneric" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
-        <item>@integer/KeyCode_F6</item> //Select
+        <item>@integer/KeyCode_F5</item> //Select
         <item>@integer/KeyCode_Dpad_Up</item> //
         <item>@integer/KeyCode_Dpad_Down</item> //
         <item>@integer/KeyCode_Dpad_Left</item> //
         <item>@integer/KeyCode_Dpad_Right</item> //
-        <item>@integer/KeyCode_F5</item> //Start
+        <item>@integer/KeyCode_F6</item> //Start
         <item>@integer/KeyCode_F3</item> //gamepadX
         <item>@integer/KeyCode_F4</item> //gamepadY
         <item>@integer/KeyCode_F1</item> //gamepadA
@@ -815,30 +815,31 @@
         <item>@integer/KeyCode_F10</item> //Right Trigger
         <item>@integer/KeyCode_F11</item> //Left Thumb
         <item>@integer/KeyCode_F12</item> //Right Thumb
+        <item>@integer/KeyCode_Move_Home</item> //alternate Stop
         <item>@integer/KeyCode_Volume_Up</item> //alternate Increase Speed
         <item>@integer/KeyCode_Volume_Down</item> //alternate Decrease Speed
-        <item>@integer/KeyCode_Media_Next</item> //alternate Increase Speed by specified Amount
-        <item>@integer/KeyCode_Media_Previous</item> //alternate Decrease Speed by specified Amount
+        <item>@integer/KeyCode_Media_Next</item> //alternate Fast Increase
+        <item>@integer/KeyCode_Media_Previous</item> //alternate Fast Decrease Speed
     </integer-array>
 
     <string-array name="prefGamePadGenericLabels">
         <item> </item> //not used
-        <item>Button F10 action</item>
-        <item>Button DPAD Up action</item>
-        <item>Button DPAD Down action</item>
-        <item>Button DPAD Left action</item>
-        <item>Button DPAD Right action</item>
-        <item>Button F1 action</item>
-        <item>Button F2 action</item>
-        <item>Button F3 action</item>
-        <item>Button F4 action</item>
-        <item>Button F5 action</item>
-        <item>Button F6 action</item>
-        <item>Button F7 action</item>
-        <item>Button F8 action</item>
-        <item>Button F9 action</item>
-        <item>Button F11 action</item>
-        <item>Button F12 action</item> //not used
+        <item>Button 5 action</item>
+        <item>Button A action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
+        <item>Button D action</item>
+        <item>Button 6  action</item>
+        <item>Button 3 action</item>
+        <item>Button 4 action</item>
+        <item>Button 1 action</item>
+        <item>Button 2 action</item>
+        <item>Button 7 action</item>
+        <item>Button 8 action</item>
+        <item>Button 9 action</item>
+        <item>Button 10 action</item>
+        <item>Button 11 action</item>
+        <item>Button 12 action</item>
         <item>0</item> //alternate Stop
         <item>0</item> //alternate Increase Speed
         <item>0</item> //alternate Decrease Speed
