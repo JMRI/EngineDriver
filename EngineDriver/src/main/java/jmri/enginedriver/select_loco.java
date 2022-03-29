@@ -1037,7 +1037,6 @@ public class select_loco extends AppCompatActivity {
                         try {
                             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
                             if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
-//                            imgFileName = rosterNameString.replaceAll("[^A-Za-z0-9_]", "_") + ".jpg";
                             imgFileName = mainapp.fixFilename(rosterNameString) + ".jpg";
                             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
                             if (dir.exists()) imageFile.delete(); // delete the old version if it exists
@@ -1878,7 +1877,6 @@ public class select_loco extends AppCompatActivity {
     private void loadRosterOrRecentImage(String engineName, ImageView imageView, HashMap<String, String> hm, String iconURL) {
         //see if there is a saved file and preload it, even if it gets written over later
         boolean foundSavedImage = false;
-//        String imgFileName = engineName.replaceAll("[^A-Za-z0-9_]", "_") + ".jpg";
         String imgFileName = mainapp.fixFilename(engineName) + ".jpg";
         File image_file = new File(getApplicationContext().getExternalFilesDir(null), "/"+RECENT_LOCO_DIR+"/"+imgFileName);
         if (image_file.exists()) {
