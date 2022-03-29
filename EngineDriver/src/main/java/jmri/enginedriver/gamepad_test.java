@@ -282,8 +282,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         boolean testComplete = true;
         for (int i = 1; i<=8; i++ ) {
-            if (!gamepadButtonsChecked[i])
+            if (!gamepadButtonsChecked[i]) {
                 testComplete = false;
+                break;
+            }
         }
 
         if (testComplete) {
@@ -380,7 +382,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 }
 
                 if (yAxis == -1) { // DPAD Up Button
-//                    setButtonOn(bDpadUp, prefGamePadButtons[5],"DPad Up");
                     setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad Up");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
                     GamepadFeedbackSound(false);
@@ -388,7 +389,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (yAxis == 1) { // DPAD Down Button
-//                    setButtonOn(bDpadDown, prefGamePadButtons[7],"DPad Down");
                     setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad Down");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
                     GamepadFeedbackSound(false);
@@ -396,7 +396,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (xAxis == -1) { // DPAD Left Button
-//                    setButtonOn(bDpadLeft, prefGamePadButtons[8],"DPad Left");
                     setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad Left");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
                     GamepadFeedbackSound(false);
@@ -404,7 +403,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (xAxis == 1) { // DPAD Right Button
-//                    setButtonOn(bDpadRight, prefGamePadButtons[6],"DPad Right");
                     setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad Right");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     GamepadFeedbackSound(false);
@@ -413,7 +411,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 }
 
                 if (yAxis2 == -1) { // DPAD2 Up Button
-//                    setButtonOn(bDpadUp, prefGamePadButtons[5],"DPad2 Up");
                     setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad2 Up");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
                     GamepadFeedbackSound(false);
@@ -421,7 +418,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (yAxis2 == 1) { // DPAD2 Down Button
-//                    setButtonOn(bDpadDown, prefGamePadButtons[7],"DPad2 Down");
                     setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad2 Down");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
                     GamepadFeedbackSound(false);
@@ -429,7 +425,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (xAxis2 == -1) { // DPAD2 Left Button
-//                    setButtonOn(bDpadLeft, prefGamePadButtons[8],"DPad2 Left");
                     setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad2 Left");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
                     GamepadFeedbackSound(false);
@@ -437,7 +432,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     return (true); // stop processing this key
 
                 } else if (xAxis2 == 1) { // DPAD2 Right Button
-//                    setButtonOn(bDpadRight, prefGamePadButtons[6],"DPad2 Right");
                     setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad2 Right");
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     GamepadFeedbackSound(false);
@@ -579,7 +573,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         // tone generator for feedback sounds
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                mainapp.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                threaded_application.getIntPrefValue(prefs,"prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
 
         bButtons = new Button[17];
         bButtons[1] = findViewById(R.id.gamepad_test_button_start);
@@ -713,7 +707,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
@@ -740,6 +733,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     class gamepad_test_handler extends Handler {
 
         public void handleMessage(Message msg) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
