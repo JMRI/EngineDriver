@@ -1,4 +1,5 @@
-**Version 2.31.140
+**Version 2.32.142
+**Version 2.32.140
  * Option for Haptic feedback on button presses
  * Option to use a normal keyboard (bluetooth or USB) as a gamepad type
  * Gamepads continue to function in most activities (excludes keyboards)
