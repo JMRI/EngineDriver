@@ -248,7 +248,7 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
-        <item tools:ignore="TypographyDashes">ESP32 DIY (Btn 1-10 +4x4 Hat +Encoder)</item>
+        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
         <item >Keyboard</item>
     </string-array>
 
@@ -829,7 +829,7 @@
         <item>Button B action</item>
         <item>Button C action</item>
         <item>Button D action</item>
-        <item>Button 6  action</item>
+        <item>Button 6 action</item>
         <item>Button 3 action</item>
         <item>Button 4 action</item>
         <item>Button 1 action</item>
@@ -870,6 +870,86 @@
         <item>0</item> //not used - alternate Decrease Speed
         <item>0</item> //not used - alternate Increase Speed by specified Amount
         <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsDefault">
+        <item> </item>
+        <item>Select | Enter</item>
+        <item>Up</item>
+        <item>Down</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Start | Enter</item>
+        <item>C | X [iOS]</item>
+        <item>D | Y [Triangle]</item>
+        <item>A [Cross]</item>
+        <item>B [@]</item>
+        <item>Left Shoulder</item>
+        <item>Right Shoulder</item>
+        <item>Left Trigger</item>
+        <item>Right Trigger</item>
+        <item>Left Thumb</item>
+        <item>Right Thumb</item>
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsMTK">
+        <item> </item>
+        <item>- Not available</item>
+        <item>▲ Up</item>
+        <item>▼ Down</item>
+        <item>◄ Left</item>
+        <item>Right ►</item>
+        <item>Start</item>
+        <item>[iOS]</item>
+        <item>∆ Triangle</item>
+        <item>X Cross</item>
+        <item>\@</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsMagicR1">
+        <item> </item>
+        <item>← Upper Front</item>
+        <item>▲ Up</item>
+        <item>▼ Down</item>
+        <item>◄ Left</item>
+        <item>Right ►</item>
+        <item>Ο Lower Front</item>
+        <item>C</item>
+        <item>D</item>
+        <item>A</item>
+        <item>B</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsGeneric">
+        <item> </item>
+        <item>5</item>
+        <item>A</item>
+        <item>B</item>
+        <item>B</item>
+        <item>C</item>
+        <item>6</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>0</item>
+        <item>*</item>
+        <item>#</item>
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->

@@ -86,6 +86,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private int oldPrefGamePadTypeIndex = 0;
     String[] gamePadModeEntryValuesArray;
     String[] gamePadModeEntriesArray; // display version
+    String[] gamePadButtonLabelsArray;
 
     private boolean prefGamepadTestEnforceTestingSimple = true;
 
@@ -179,10 +180,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         prefGamePadButtons[14] = prefs.getString("prefGamePadButtonLeftThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftThumbDefaultValue));
         prefGamePadButtons[15] = prefs.getString("prefGamePadButtonRightThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightThumbDefaultValue));
 
-        for (int i=1;i<=16;i++) {
-            bButtons[i].setSelected(false);
-            setButtonOff(bButtons[i]);
-        }
 
         // make sure the Softkeyboard is hidden
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -191,6 +188,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
+        gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsDefault);
         switch (prefGamePadType) {
             case "iCade+DPAD":
             case "iCade+DPAD-rotate":
@@ -201,6 +199,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             case "MTK-rotate":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMTK);
                 bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMTK);
                 break;
             case "Game":
             case "Game-rotate":
@@ -210,6 +209,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             case "MagicseeR1B":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
                 bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
                 break;
             case "FlydigiWee2":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
@@ -222,6 +222,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             case "Generic":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
                 bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsGeneric);
                 break;
             case "Keyboard":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
@@ -232,6 +233,14 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
                 break;
         }
+
+        for (int i=1;i<=16;i++) {
+            bButtons[i].setText(gamePadButtonLabelsArray[i]);  // set the button labels
+            bButtons[i].setSelected(false);
+            setButtonOff(bButtons[i]);
+        }
+
+
         // now grab the keycodes and put them into the arrays that will actually be used.
         for (int i = 0; i<GAMEPAD_KEYS_LENGTH; i++ ) {
             gamePadKeys[i] = bGamePadKeys[i];
