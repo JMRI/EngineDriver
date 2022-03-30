@@ -8,8 +8,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -147,12 +149,6 @@ class ImportExportConnectionList {
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
                 return errMsg;
             try {
-//                File path = Environment.getExternalStorageDirectory();
-//                File engine_driver_dir = new File(path, "engine_driver");
-//                //noinspection ResultOfMethodCallIgnored
-//                engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//
-//                File connections_list_file = new File(path, "engine_driver/connections_list.txt");
                 File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
@@ -207,27 +203,24 @@ class ImportExportConnectionList {
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
                     String currentDateAndTime = sdf.format(new Date());
-
-//                    File path = Environment.getExternalStorageDirectory();
-//                    File engine_driver_dir = new File(path, "engine_driver");
-//                    //noinspection ResultOfMethodCallIgnored
-//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//
-//                    String connection_log_file_name = "engine_driver/connections_log.txt";
                     String connection_log_file_name = "connections_log.txt";
-//
-//                    PrintWriter log_output = new PrintWriter(new FileWriter(path + "/" + connection_log_file_name, true));
+
                     File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);
-                    PrintWriter log_output = new PrintWriter(connections_log_file);
+                    FileWriter fileWriter = new FileWriter(connections_log_file , true);
+                    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter, 1024);
+                    PrintWriter log_output = new PrintWriter(bufferedWriter);
 
                     if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                             || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {
-                        log_output.printf("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, currentDateAndTime);
                     } else {
-                        log_output.printf("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, currentDateAndTime);
                     }
 
+                    log_output.flush();
                     log_output.close();
+                    bufferedWriter.close();
+                    fileWriter.close();
                 } catch (IOException except) {
                     errMsg = except.getMessage();
                 }

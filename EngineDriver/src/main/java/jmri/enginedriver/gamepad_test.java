@@ -89,7 +89,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private boolean prefGamepadTestEnforceTestingSimple = true;
 
-    private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+    private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
     // Gamepad Button preferences
     private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
