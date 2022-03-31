@@ -224,6 +224,7 @@
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
         <item>Generic</item>
+        <item>Generic3x4</item>
         <item >Keyboard</item>
     </string-array>
 
@@ -249,6 +250,7 @@
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
+        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +3x4 Hat +Encoder)</item>
         <item >Keyboard</item>
     </string-array>
 
@@ -847,6 +849,56 @@
         <item>0</item> //alternate Decrease Speed by specified Amount
     </string-array>
 
+    <integer-array name="prefGamePadGeneric3x4" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item> //not used
+        <item>@integer/KeyCode_F5</item> //Select
+        <item>@integer/KeyCode_F7</item> //
+        <item>@integer/KeyCode_F11</item> //
+        <item>@integer/KeyCode_F9</item> //
+        <item>@integer/KeyCode_F12</item> //
+        <item>@integer/KeyCode_F6</item> //Start
+        <item>@integer/KeyCode_F3</item> //gamepadX
+        <item>@integer/KeyCode_F4</item> //gamepadY
+        <item>@integer/KeyCode_F1</item> //gamepadA
+        <item>@integer/KeyCode_F2</item> //gamepadB
+        <item>0</item> //Left Shoulder
+        <item>@integer/KeyCode_F8</item> //Left Trigger
+        <item>0</item> //Right Shoulder
+        <item>@integer/KeyCode_F10</item> //Right Trigger
+        <item>0</item> //Left Thumb
+        <item>0</item> //Right Thumb
+        <item>@integer/KeyCode_Move_Home</item> //alternate Stop
+        <item>@integer/KeyCode_Volume_Up</item> //alternate Increase Speed
+        <item>@integer/KeyCode_Volume_Down</item> //alternate Decrease Speed
+        <item>@integer/KeyCode_Media_Next</item> //alternate Fast Increase
+        <item>@integer/KeyCode_Media_Previous</item> //alternate Fast Decrease Speed
+    </integer-array>
+
+    <string-array name="prefGamePadGeneric3x4Labels">
+        <item> </item> //not used
+        <item>Button 5 action</item>
+        <item>Button 7 action</item>
+        <item>Button * action</item>
+        <item>Button 9 action</item>
+        <item>Button # action</item>
+        <item>Button 6 action</item>
+        <item>Button 3 action</item>
+        <item>Button 4 action</item>
+        <item>Button 1 action</item>
+        <item>Button 2 action</item>
+        <item>0</item>
+        <item>Button 8 action</item>
+        <item>0</item>
+        <item>Button 0 action</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item> //alternate Stop
+        <item>0</item> //alternate Increase Speed
+        <item>0</item> //alternate Decrease Speed
+        <item>0</item> //alternate Increase Speed by specified Amount
+        <item>0</item> //alternate Decrease Speed by specified Amount
+    </string-array>
+
     <string-array name="prefGamePadPrefButtonReferences" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item> </item> //not used
         <item>prefGamePadButtonReturn</item>
@@ -950,6 +1002,26 @@
         <item>0</item>
         <item>*</item>
         <item>#</item>
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsGeneric3x4">
+        <item> </item>
+        <item>5</item>
+        <item>7</item>
+        <item>*</item>
+        <item>9</item>
+        <item>#</item>
+        <item>6</item>
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>2</item>
+        <item>- Not available</item>
+        <item>8</item>
+        <item>- Not available</item>
+        <item>0</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->

@@ -17,7 +17,7 @@
       original translation by Alain Carasso
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="address_size_defaultsEntries">
         <item>Court</item>
         <item>Long</item>
@@ -61,8 +61,8 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item>Original - Téléphone ou Tablette (1-3 régulateurs)</item>
-        <item>Vertical - Téléphone ou Tablette (1-2 régulateurs)</item>
+        <item tools:ignore="TypographyDashes">Original - Téléphone ou Tablette (1-3 régulateurs)</item>
+        <item tools:ignore="TypographyDashes">Vertical - Téléphone ou Tablette (1-2 régulateurs)</item>
         <item>Big Buttons - Gauche (1 régulateur)</item>
         <item>Big Buttons - Droite (1 régulateur)</item>
         <item>Vertical - Gauche (1 régulateur)</item>
@@ -231,7 +231,8 @@
         <item >MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
-        <item >Generic (Btn 0-9 + Hat)</item>
+        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
+        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +3x4 Hat +Encoder)</item>
         <item >Keyboard</item>
     </string-array>
 

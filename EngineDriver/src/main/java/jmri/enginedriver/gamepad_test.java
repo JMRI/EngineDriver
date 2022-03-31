@@ -224,6 +224,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeysUp = bGamePadKeys;
                 gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsGeneric);
                 break;
+            case "Generic3x4":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric3x4);
+                bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsGeneric3x4);
+                break;
             case "Keyboard":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
                 bGamePadKeysUp = bGamePadKeys;
@@ -651,7 +656,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         //put pointer to this activity's handler in main app's shared variable
         mainapp.gamepad_test_msg_handler = new gamepad_test_handler();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
