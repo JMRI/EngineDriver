@@ -111,6 +111,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
+    private static final String DEMO_HOST = "jmri.mstevetodd.com";
+    private String[] prefHostImportExportEntriesFound = {"None"};
+    private String[] prefHostImportExportEntryValuesFound = {"None"};
+
     private ProgressDialog pDialog;
     public static final int PROGRESS_BAR_TYPE = 0;
 
@@ -154,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = null;
+        Fragment fragment;
         if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragment = new SettingsFragment().newInstance("Advanced Setting");
@@ -178,7 +182,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -238,7 +242,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 //        mainapp.applyTheme(this,true);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -606,13 +610,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 InputStream input = new BufferedInputStream(url.openStream(),
                         8192);
 
-                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
-
+//                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
 
                 // Output stream
-                FileOutputStream output = new FileOutputStream(Environment
-                        .getExternalStorageDirectory().toString()
-                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+//                FileOutputStream output = new FileOutputStream(Environment
+//                        .getExternalStorageDirectory().toString()
+//                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+                FileOutputStream output = new FileOutputStream(context.getExternalFilesDir(null)
+                        + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
 
                 byte data[] = new byte[1024];
 
@@ -937,6 +942,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             case "Generic":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGenericLabels);
                 break;
+            case "Generic3x4":
+                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGeneric3x4Labels);
+                break;
             case "None":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
                 break;
@@ -1049,6 +1057,71 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     }
 
+    private void getConnectionsList() {
+        boolean foundDemoHost = false;
+        String host_name;
+        String host_name_filename;
+        String errMsg;
+
+        try {
+//                File sdcard_path = Environment.getExternalStorageDirectory();
+//                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+            File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+
+            if (connections_list_file.exists()) {
+                BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                    if (parts.size() > 1) {  //skip if not split
+                        host_name = parts.get(0);
+                        host_name_filename = host_name.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                        if (host_name.equals(DEMO_HOST)) {
+                            foundDemoHost = true;
+                        }
+                        if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + host_name_filename);
+                        }
+                    }
+                }
+                list_reader.close();
+            } else {
+                Log.d("settingActivity", "getConnectionsList: Recent connections not found");
+            }
+        } catch (IOException except) {
+            errMsg = except.getMessage();
+            Log.e("Engine_Driver", "Settings: Error reading recent connections list: " + errMsg);
+            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
+        }
+
+        if (!foundDemoHost) {
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+        }
+
+    }
+
+    private static String[] add(String[] stringArray, String newValue) {
+        String[] tempArray = new String[stringArray.length + 1];
+        System.arraycopy(stringArray, 0, tempArray, 0, stringArray.length);
+        tempArray[stringArray.length] = newValue;
+        return tempArray;
+    }
+
+    public static boolean isAlreadyInArray(String[] arr, String targetValue) {
+        for (String s : arr) {
+            if (s.equals(targetValue))
+                return true;
+        }
+        return false;
+    }
+
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1064,9 +1137,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 //        private int result;                     // set to RESULT_FIRST_USER when something is edited
 
-        private static final String DEMO_HOST = "jmri.mstevetodd.com";
-        private String[] prefHostImportExportEntriesFound = {"None"};
-        private String[] prefHostImportExportEntryValuesFound = {"None"};
+//        private static final String DEMO_HOST = "jmri.mstevetodd.com";
+//        private String[] prefHostImportExportEntriesFound = {"None"};
+//        private String[] prefHostImportExportEntryValuesFound = {"None"};
 
         private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
         private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
@@ -1282,11 +1355,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
 
                 if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
-                    getConnectionsList();
+                    parentActivity.getConnectionsList();
                     ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
                     if (preference!=null) {
-                        preference.setEntries(prefHostImportExportEntriesFound);
-                        preference.setEntryValues(prefHostImportExportEntryValuesFound);
+                        preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
+                        preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
                     }
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", true);
                 } else {
@@ -1532,70 +1605,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             return null;
         }
 
-        private void getConnectionsList() {
-            boolean foundDemoHost = false;
-            String host_name;
-            String host_name_filename;
-            String errMsg;
-
-            try {
-//                File sdcard_path = Environment.getExternalStorageDirectory();
-//                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
-                File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
-
-                if (connections_list_file.exists()) {
-                    BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
-                    while (list_reader.ready()) {
-                        String line = list_reader.readLine();
-                        List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
-                        if (parts.size() > 1) {  //skip if not split
-                            host_name = parts.get(0);
-                            host_name_filename = host_name.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                            if (host_name.equals(DEMO_HOST)) {
-                                foundDemoHost = true;
-                            }
-                            if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
-                                prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename);
-                                prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
-                                prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
-                                prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + host_name_filename);
-                            }
-                        }
-                    }
-                    list_reader.close();
-                } else {
-                    Log.d("settingActivity", "getConnectionsList: Recent connections not found");
-                }
-            } catch (IOException except) {
-                errMsg = except.getMessage();
-                Log.e("Engine_Driver", "Settings: Error reading recent connections list: " + errMsg);
-                Toast.makeText(parentActivity.getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
-            }
-
-            if (!foundDemoHost) {
-                prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-                prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-                prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-                prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
-            }
-
-        }
-
-        private static String[] add(String[] stringArray, String newValue) {
-            String[] tempArray = new String[stringArray.length + 1];
-            System.arraycopy(stringArray, 0, tempArray, 0, stringArray.length);
-            tempArray[stringArray.length] = newValue;
-            return tempArray;
-        }
-
-        public static boolean isAlreadyInArray(String[] arr, String targetValue) {
-            for (String s : arr) {
-                if (s.equals(targetValue))
-                    return true;
-            }
-            return false;
-        }
-
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1644,6 +1653,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
 
             parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+
+            if (parentActivity.mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
+                parentActivity.getConnectionsList();
+                ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                if (preference!=null) {
+                    preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
+                    preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
+                }
+            } else {
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
+            }
+
 
             advancedSubPreferences = getResources().getStringArray(R.array.advancedSubPreferences);
             hideAdvancedSubPreferences();
