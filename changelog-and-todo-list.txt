@@ -26,6 +26,8 @@
  * avoid crashes reported to Play Store
  * FIX - Switching layouts sometimes not updating correctly for direction changes
  * bump minSdkVersion from 15 to 16
+ * Cache roster images for selected locos
+ * Option to load local images for roster locos (primarily intended for DCC++EX)
 **Version 2.30.128
  * Add confirmation dialog to Clear Consists
  * FIX - Locos selected from roster written to Recents without name

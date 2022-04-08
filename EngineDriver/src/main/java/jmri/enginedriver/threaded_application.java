@@ -4027,7 +4027,11 @@ public class threaded_application extends Application {
     // listener for physical keyboard events - called from the
     // used to support the gamepad only   DPAD and key events
     public boolean implDispatchKeyEvent(KeyEvent event) {
-        String eventDeviceName = event.getDevice().getName();
+        InputDevice dev = event.getDevice();
+        if (dev==null) { // unclear why, but some phones/tables don't seem to return a device for the internal keyboard
+            return false;
+        }
+        String eventDeviceName = dev.getName();
         boolean isExternal = false;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
             InputDevice idev = getDevice(event.getDeviceId());
@@ -4036,14 +4040,14 @@ public class threaded_application extends Application {
             }
             if (!isExternal) {
                 for (int i=0; i<gamePadDeviceNames.length; i++) {
-                    if (eventDeviceName == gamePadDeviceNames[i]) {
+                    if (eventDeviceName.equals(gamePadDeviceNames[i])) {
                         isExternal = true;
                     }
                 }
             }
         }
 
-        if (isExternal) { // if it has come from the phone itself, don't try to process it here
+        if (isExternal) { // is from a external device (otherwise if it has come from the phone itself, don't try to process it here)
             if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 

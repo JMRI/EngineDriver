@@ -33,7 +33,6 @@
         android:paddingRight="6dp">
 
         <TableRow android:gravity="center_horizontal">
-
             <ImageView
                 android:id="@+id/rosterEntryImage"
                 android:layout_width="300dp"
@@ -41,11 +40,47 @@
         </TableRow>
 
         <TableRow android:gravity="center_horizontal">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <Button
+                    android:id="@+id/selectRosterEntryImage"
+                    style="?attr/ed_normal_button_style"
+                    android:text="@string/selectRosterEntryImage"
+                    android:textSize="16sp"
+                    android:layout_weight="5" />
+
+                <Button
+                    android:id="@+id/removeRosterEntryImage"
+                    style="?attr/ed_normal_button_style"
+                    android:text="@string/removeRosterEntryImage"
+                    android:textSize="16sp"
+                    android:layout_weight="5" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_horizontal"
+            android:paddingTop="5dp">
+            <TextView
+                android:id="@+id/rosterEntryImageHelpText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/rosterEntryImageHelpText"  />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_horizontal"
+            android:paddingTop="25dp">
 
             <Button
                 android:id="@+id/rosterEntryButtonClose"
                 style="?attr/ed_normal_button_style"
                 android:layout_marginTop="5dp"
+                android:layout_width="300dp"
                 android:text="@string/logviewerClose" />
         </TableRow>
 

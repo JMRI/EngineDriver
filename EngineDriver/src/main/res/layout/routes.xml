@@ -49,7 +49,6 @@
                         android:layout_weight="0.75"
                         android:hint="@string/routes_route"
                         android:imeOptions="actionDone"
-                        android:inputType="textCapCharacters"
                         android:maxLength="80"
                         android:singleLine="true" />
 
