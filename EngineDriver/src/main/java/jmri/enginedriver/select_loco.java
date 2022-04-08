@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import static android.view.InputDevice.getDevice;
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -29,12 +30,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -115,6 +119,7 @@ public class select_loco extends AppCompatActivity {
     private static final int LIGHT_UNKNOWN = 2;
 
     public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
+    public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;
 
     // recent consists
     ArrayList<HashMap<String, String>> recent_consists_list;
@@ -130,6 +135,12 @@ public class select_loco extends AppCompatActivity {
     private int address_size;
     private String locoName = "";
     private int locoSource = 0;
+    private ImageView detailsRosterImageView;
+    String detailsRosterNameString = "";
+    boolean newRosterImageSelected = false;
+    boolean hasLocalRosterImage = false;
+    boolean LocalRosterImageRemoved = false;
+    Button buttonRemoveRosterImage;
 
     private String sWhichThrottle = "0";  // "0" or "1" or "2" + roster name
     int whichThrottle = 0;
@@ -168,6 +179,7 @@ public class select_loco extends AppCompatActivity {
     boolean removingLocoOrForceReload = false; //flag used to indicate that the selected loco is being removed and not to save it.
     boolean removingConsistOrForceRewite = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
+    ListView roster_list_view;
 
     String overrideThrottleName;
 
@@ -533,15 +545,49 @@ public class select_loco extends AppCompatActivity {
 
     //handle return from ConsistEdit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == throttle.ACTIVITY_CONSIST) {                          // edit consist
-            if (newEngine) {
-                saveRecentLocosList(saveUpdateList);
-                updateRecentConsists(saveUpdateList);
-            }
-            result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
+        switch (requestCode) {
+            case throttle.ACTIVITY_CONSIST: // edit consist
+                if (newEngine) {
+                    saveRecentLocosList(saveUpdateList);
+                    updateRecentConsists(saveUpdateList);
+                }
+                result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
+
+                overrideThrottleName = "";
+                end_this_activity();
+                break;
+
+            case ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE: // edit consist
+                if (resultCode == RESULT_OK && data != null) {
+                    // Get the Image from data
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+
+                    // Get the cursor
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imgpath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    File image_file = new File(imgpath);
+                    if (image_file.exists()) {
+                        try {
+                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
+                            detailsRosterImageView.setVisibility(View.VISIBLE);
+                            detailsRosterImageView.invalidate();
+                            newRosterImageSelected = true;
+                            hasLocalRosterImage = true;
+                            LocalRosterImageRemoved = false;
+                            buttonRemoveRosterImage.setVisibility(VISIBLE);
+                        } catch (Exception e) {
+                            Log.d("Engine_Driver", "select_loco - load image - image file found but could not loaded");
+                        }
+                    }
+                }
+                break;
         }
-        overrideThrottleName = "";
-        end_this_activity();
     }
 
     //write the recent locos to a file
@@ -1034,22 +1080,7 @@ public class select_loco extends AppCompatActivity {
                     ImageView iv = (ImageView) vg.getChildAt(0);
                     if (iv != null) {
                         int x = 1;
-                        try {
-                            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
-                            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
-                            imgFileName = mainapp.fixFilename(rosterNameString) + ".jpg";
-                            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-                            if (dir.exists()) imageFile.delete(); // delete the old version if it exists
-                            FileOutputStream fileOutputStream =
-                                new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-                            Bitmap bitmap = viewToBitmap(iv, iv.getWidth(), iv.getHeight());
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-                            Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
-                            fileOutputStream.flush();
-                            fileOutputStream.close();
-                        } catch (Exception e)  {
-                            Log.d("Engine_Driver", "select_loco.roster_item_ClickListener() Unable to save roster loco image");
-                        }
+                        writeLocoImageToFile(rosterNameString, iv);
                     }
                 }
             }
@@ -1143,7 +1174,7 @@ public class select_loco extends AppCompatActivity {
                 "roster_address", "roster_icon"}, new int[]{R.id.roster_name_label,
                 R.id.roster_address_label, R.id.roster_icon_image});
 
-        ListView roster_list_view = findViewById(R.id.roster_list);
+        roster_list_view = findViewById(R.id.roster_list);
         roster_list_view.setAdapter(roster_list_adapter);
         roster_list_view.setOnItemClickListener(new roster_item_ClickListener());
         roster_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -1675,20 +1706,54 @@ public class select_loco extends AppCompatActivity {
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
 
-        ImageView imageView = dialog.findViewById(R.id.rosterEntryImage);
-        if ((iconURL != null) && (iconURL.length() > 0)) {
-            mainapp.imageDownloader.download(iconURL, imageView);
-        } else {
-            imageView.setVisibility(GONE);
-        }
+        detailsRosterImageView = dialog.findViewById(R.id.rosterEntryImage);
+        loadRosterOrRecentImage(rosterNameString, detailsRosterImageView, iconURL);
 
         Button buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (newRosterImageSelected) {
+                    writeLocoImageToFile(detailsRosterNameString, detailsRosterImageView);
+                }
+                if (newRosterImageSelected || LocalRosterImageRemoved ) {
+                    roster_list_view.invalidateViews();
+                }
                 dialog.dismiss();
                 mainapp.buttonVibration();
             }
         });
+
+        Button buttonSelectRosterImage = dialog.findViewById(R.id.selectRosterEntryImage);
+        buttonSelectRosterImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                detailsRosterNameString = rosterNameString; // store the name for the return result
+                // Create intent to Open Image applications like Gallery, Google Photos
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Start the Intent
+                startActivityForResult(galleryIntent, ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE);
+
+                mainapp.buttonVibration();
+            }
+        });
+
+        buttonRemoveRosterImage = dialog.findViewById(R.id.removeRosterEntryImage);
+        buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (deleteLocoImageFile(rosterNameString, detailsRosterImageView)) {
+                    detailsRosterImageView.setVisibility(GONE);
+                    buttonRemoveRosterImage.setVisibility(GONE);
+                    LocalRosterImageRemoved = true;
+                    hasLocalRosterImage = false;
+                    newRosterImageSelected = false;
+                }
+                mainapp.buttonVibration();
+            }
+        });
+
+        if (!hasLocalRosterImage) {
+            buttonRemoveRosterImage.setVisibility(GONE);
+        }
 
         dialog.setCancelable(true);
         dialog.show();
@@ -1827,7 +1892,7 @@ public class select_loco extends AppCompatActivity {
 
             ImageView imageView = view.findViewById(R.id.roster_icon_image);
             String iconURL = hm.get("roster_icon");
-            loadRosterOrRecentImage(engineName, imageView, hm, iconURL);
+            loadRosterOrRecentImage(engineName, imageView, iconURL);
 
             return view;
         }
@@ -1868,13 +1933,13 @@ public class select_loco extends AppCompatActivity {
 
             ImageView imageView = view.findViewById(R.id.engine_icon_image);
             String iconURL = hm.get("engine_icon");
-            loadRosterOrRecentImage(engineName, imageView, hm, iconURL);
+            loadRosterOrRecentImage(engineName, imageView, iconURL);
 
             return view;
         }
     }
 
-    private void loadRosterOrRecentImage(String engineName, ImageView imageView, HashMap<String, String> hm, String iconURL) {
+    private void loadRosterOrRecentImage(String engineName, ImageView imageView, String iconURL) {
         //see if there is a saved file and preload it, even if it gets written over later
         boolean foundSavedImage = false;
         String imgFileName = mainapp.fixFilename(engineName) + ".jpg";
@@ -1887,6 +1952,7 @@ public class select_loco extends AppCompatActivity {
                 Log.d("Engine_Driver", "select_loco - recent consists - image file found but could not loaded");
             }
         }
+        hasLocalRosterImage = foundSavedImage;
 
         if ((iconURL != null) && (iconURL.length() > 0)) {
             mainapp.imageDownloader.download(iconURL, imageView);
@@ -2038,5 +2104,39 @@ public class select_loco extends AppCompatActivity {
         Bitmap bitmap=Bitmap.createBitmap(widh,hight, Bitmap.Config.ARGB_8888);
         Canvas canvas=new Canvas(bitmap); view.draw(canvas);
         return bitmap;
+    }
+
+    private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
+        try {
+            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
+            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            String imgFileName = mainapp.fixFilename(rosterNameString + ".jpg");
+            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            if (dir.exists()) imageFile.delete(); // delete the old version if it exists
+            FileOutputStream fileOutputStream =
+                    new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            Bitmap bitmap = viewToBitmap(detailsRosterImageView, detailsRosterImageView.getWidth(), detailsRosterImageView.getHeight());
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return true;
+        } catch (Exception e)  {
+            Log.d("Engine_Driver", "writeLocoImageToFile: Unable to save roster loco image");
+            return false;
+        }
+    }
+
+    private boolean deleteLocoImageFile(String rosterNameString, ImageView imageView) {
+        try {
+            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
+            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            String imgFileName = mainapp.fixFilename(rosterNameString + ".jpg");
+            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            if (dir.exists()) imageFile.delete();
+            return true;
+        } catch (Exception e)  {
+            Log.d("Engine_Driver", "removeLocoImageToFile: Unable to delete roster loco image");
+            return false;
+        }
     }
 }
