@@ -34,6 +34,9 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.RectF;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,7 +80,10 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -141,6 +147,7 @@ public class select_loco extends AppCompatActivity {
     boolean hasLocalRosterImage = false;
     boolean LocalRosterImageRemoved = false;
     Button buttonRemoveRosterImage;
+    Button buttonClose;
 
     private String sWhichThrottle = "0";  // "0" or "1" or "2" + roster name
     int whichThrottle = 0;
@@ -571,16 +578,67 @@ public class select_loco extends AppCompatActivity {
                     String imgpath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    File image_file = new File(imgpath);
-                    if (image_file.exists()) {
+                    File image_file = null;
+                    try {
+                        image_file = new File(imgpath);
+                    } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
+                        Log.d("Engine_Driver", "Load image failed : " + imgpath);
+                    }
+                    if ( (image_file != null) && (image_file.exists()) ) {
                         try {
-                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
+                            int inWidth = 0;
+                            int inHeight = 0;
+
+                            InputStream in = new FileInputStream(image_file.getPath());
+
+                            // decode image size (decode metadata only, not the whole image)
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inJustDecodeBounds = true;
+                            BitmapFactory.decodeStream(in, null, options);
+                            in.close();
+
+                            // save width and height
+                            inWidth = options.outWidth;
+                            inHeight = options.outHeight;
+
+                            // decode full image pre-resized
+                            in = new FileInputStream(image_file.getPath());
+                            options = new BitmapFactory.Options();
+                            // calc rough re-size (this is no exact resize)
+                            options.inSampleSize = Math.max(inWidth/150, inHeight/150);
+                            // decode full image
+                            Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
+
+                            // calc exact destination size
+                            Matrix m = new Matrix();
+                            RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
+                            RectF outRect = new RectF(0, 0, 150, 150);
+                            m.setRectToRect(inRect, outRect, Matrix.ScaleToFit.CENTER);
+                            float[] values = new float[9];
+                            m.getValues(values);
+
+                            // resize bitmap
+                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]), (int) (roughBitmap.getHeight() * values[4]), true);
+
+                            int degree = getRotateDegreeFromExif(image_file.getPath());
+                            Matrix matrix = new Matrix();
+                            matrix.postRotate(degree);/*from   w  w w.  j  a v  a2 s  .co  m*/
+                            if (degree!=0) {
+                                Bitmap rotatedImage = Bitmap.createBitmap(resizedBitmap, 0, 0,
+                                        resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
+                                detailsRosterImageView.setImageBitmap(rotatedImage);
+                            } else {
+                                detailsRosterImageView.setImageBitmap(resizedBitmap);
+                            }
+
+//                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
                             detailsRosterImageView.setVisibility(View.VISIBLE);
                             detailsRosterImageView.invalidate();
                             newRosterImageSelected = true;
                             hasLocalRosterImage = true;
                             LocalRosterImageRemoved = false;
                             buttonRemoveRosterImage.setVisibility(VISIBLE);
+                            buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
                         } catch (Exception e) {
                             Log.d("Engine_Driver", "select_loco - load image - image file found but could not loaded");
                         }
@@ -600,7 +658,7 @@ public class select_loco extends AppCompatActivity {
 
         if (!removingLocoOrForceReload) {
 
-            // check if it already in the list and remove it
+            // check if it is already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
                 Log.d("Engine_Driver", "vLocoName='"+locoName+"', address="+engine_address+", size="+address_size);
                 Log.d("Engine_Driver", "sLocoName='"+importExportPreferences.recent_loco_name_list.get(i)+
@@ -1158,7 +1216,6 @@ public class select_loco extends AppCompatActivity {
         prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
 
-
         // Set the options for the address length.
         Spinner address_spinner = findViewById(R.id.address_length);
         ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this,
@@ -1180,7 +1237,7 @@ public class select_loco extends AppCompatActivity {
         roster_list_view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongListItemClick(pos);
+                return onLongRosterListItemClick(pos);
             }
         });
 
@@ -1674,42 +1731,43 @@ public class select_loco extends AppCompatActivity {
     }
 
     // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
-    protected boolean onLongListItemClick(int position) {
-        if (mainapp.roster == null) {
-            Log.w("Engine_Driver", "No roster details found.");
-            return true;
-        }
+    protected boolean onLongRosterListItemClick(int position) {
+        String iconURL = "";
+        RosterEntry re = null;
         HashMap<String, String> hm = roster_list.get(position);
         String rosterNameString = hm.get("roster_name");
-        if (mainapp.roster == null) {
-            Log.w("Engine_Driver", "select_loco: Roster is null.");
-            return true;
+        String rosterAddressString = hm.get("roster_address");
+        if (mainapp.roster != null) {
+            re = mainapp.roster.get(rosterNameString);
+            if (re == null) {
+                Log.w("Engine_Driver", "select_loco: Roster entry " + rosterNameString + " not available.");
+                return true;
+            }
         }
-        RosterEntry re = mainapp.roster.get(rosterNameString);
-        if (re == null) {
-            Log.w("Engine_Driver", "select_loco: Roster entry " + rosterNameString + " not available.");
-            return true;
-        }
-        String iconURL = hm.get("roster_icon");
-
-        showRosterDetailsDialog(re, rosterNameString, iconURL);
-
+        iconURL = hm.get("roster_icon");
+        showRosterDetailsDialog(re, rosterNameString, rosterAddressString, iconURL);
         return true;
     }
 
-    protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String iconURL) {
+    protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
+        String res = "";
         Log.d("Engine_Driver", "select_loco: Showing details for roster entry " + rosterNameString);
         final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
         dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
         dialog.setContentView(R.layout.roster_entry);
-        String res = re.toString();
+        if (re != null) {
+            res = re.toString();
+        } else {
+            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
+        }
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
 
         detailsRosterImageView = dialog.findViewById(R.id.rosterEntryImage);
+        detailsRosterImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         loadRosterOrRecentImage(rosterNameString, detailsRosterImageView, iconURL);
 
-        Button buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
+        buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (newRosterImageSelected) {
@@ -1751,6 +1809,13 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
+        if ((iconURL != null) && (!iconURL.equals(""))) {
+            buttonSelectRosterImage.setVisibility(GONE);
+            TextView rosterEntryImageHelpText = dialog.findViewById(R.id.rosterEntryImageHelpText);
+            rosterEntryImageHelpText.setText(getString(R.string.rosterEntryImageServerImageHelpText));
+            buttonRemoveRosterImage.setVisibility(GONE);
+        }
+
         if (!hasLocalRosterImage) {
             buttonRemoveRosterImage.setVisibility(GONE);
         }
@@ -1764,6 +1829,7 @@ public class select_loco extends AppCompatActivity {
     protected boolean onLongRecentListItemClick(int position) {
         if (importExportPreferences.recent_loco_source_list.get(position) == WHICH_SOURCE_ROSTER) {
             String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
+            Integer rosterEntryAddress = importExportPreferences.recent_loco_address_list.get(position);
             RosterEntry re = null;
             if (mainapp.roster != null) {
                 re = mainapp.roster.get(rosterEntryName);
@@ -1772,7 +1838,7 @@ public class select_loco extends AppCompatActivity {
                 Log.w("Engine_Driver", "Roster entry " + rosterEntryName + " not available.");
                 return true;
             }
-            showRosterDetailsDialog(re, rosterEntryName, "");
+            showRosterDetailsDialog(re, rosterEntryName, Integer.toString(rosterEntryAddress),"");
         } else {
             showEditRecentsNameDialog(position);
         }
@@ -1942,7 +2008,7 @@ public class select_loco extends AppCompatActivity {
     private void loadRosterOrRecentImage(String engineName, ImageView imageView, String iconURL) {
         //see if there is a saved file and preload it, even if it gets written over later
         boolean foundSavedImage = false;
-        String imgFileName = mainapp.fixFilename(engineName) + ".jpg";
+        String imgFileName = mainapp.fixFilename(engineName) + ".png";
         File image_file = new File(getApplicationContext().getExternalFilesDir(null), "/"+RECENT_LOCO_DIR+"/"+imgFileName);
         if (image_file.exists()) {
             try {
@@ -2099,24 +2165,39 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
-    private static Bitmap viewToBitmap(View view, int widh, int hight)
+    private static Bitmap viewToBitmap(View view, int maxHeight)
     {
-        Bitmap bitmap=Bitmap.createBitmap(widh,hight, Bitmap.Config.ARGB_8888);
-        Canvas canvas=new Canvas(bitmap); view.draw(canvas);
-        return bitmap;
+        int originalWidth = view.getWidth();
+        int originalHeight = view.getHeight();
+
+        Bitmap bitmap = Bitmap.createBitmap(originalWidth, originalHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+
+        if (maxHeight>0) {
+            //scale the image based on th max allowed height
+            int scaledHeight = (int) (((double) maxHeight) * context.getResources().getDisplayMetrics().density);  //52dp
+            double ratio = ((float) scaledHeight) / originalHeight;
+            int scaledWidth = (int) (((double) originalWidth) * ratio);
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true);
+            return resizedBitmap;
+        } else {
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, originalWidth, originalHeight, true);
+            return resizedBitmap;
+        }
     }
 
     private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
-            String imgFileName = mainapp.fixFilename(rosterNameString + ".jpg");
+            String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             if (dir.exists()) imageFile.delete(); // delete the old version if it exists
             FileOutputStream fileOutputStream =
                     new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            Bitmap bitmap = viewToBitmap(detailsRosterImageView, detailsRosterImageView.getWidth(), detailsRosterImageView.getHeight());
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            Bitmap bitmap = viewToBitmap(imageView, 52);   //52dp
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
             return true;
@@ -2130,7 +2211,7 @@ public class select_loco extends AppCompatActivity {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
-            String imgFileName = mainapp.fixFilename(rosterNameString + ".jpg");
+            String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             if (dir.exists()) imageFile.delete();
             return true;
@@ -2139,4 +2220,42 @@ public class select_loco extends AppCompatActivity {
             return false;
         }
     }
+
+//    private void cropLocoImage() {
+//        int crop = detailsRosterImageView.getHeight() / 10;
+//        Bitmap bitmap = viewToBitmap(detailsRosterImageView, 0);
+//        Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, 0, crop, detailsRosterImageView.getWidth(), detailsRosterImageView.getHeight()-(crop*2) );
+//        detailsRosterImageView.setScaleY((float) 10/8);
+//
+//        detailsRosterImageView.setImageBitmap(croppedBitmap);
+//        detailsRosterImageView.invalidate();
+//        detailsRosterImageView.setVisibility(VISIBLE);
+//        newRosterImageSelected = true;
+//        hasLocalRosterImage = true;
+//        LocalRosterImageRemoved = false;
+//    }
+
+    // from http://www.java2s.com/example/android/android.graphics/read-bitmap-from-file-and-rotate.html
+    static private int getRotateDegreeFromExif(String filePath) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(filePath);
+            int orientation = exifInterface.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_UNDEFINED);
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                degree = 90;
+            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                degree = 180;
+            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                degree = 270;
+            }
+        } catch (IOException e) {
+            degree = -1;
+            e.printStackTrace();
+        }
+
+        return degree;
+    }
+
 }

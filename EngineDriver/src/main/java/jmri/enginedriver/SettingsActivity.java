@@ -674,11 +674,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     protected void loadImagefromGallery() {
 //        if (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_PREFERENCES)) {
-            loadImagefromGalleryImpl();
+//            loadImagefromGalleryImpl();
 //        }
-    }
-
-    public void loadImagefromGalleryImpl() {
+//    }
+//
+//    public void loadImagefromGalleryImpl() {
         // Create intent to Open Image applications like Gallery, Google Photos
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);

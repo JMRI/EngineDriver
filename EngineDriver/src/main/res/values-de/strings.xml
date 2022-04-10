@@ -936,5 +936,10 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Zusätzlich in Telefon Loco Sounds-Vorlieben</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Loco-Step-Sounds spielen bis zum Ende, wenn Sie den Schritt ändern. Der Momentummenge (oben) wird nur zu einer Mindestzeit.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">Clip Loco-Step-Sounds nicht</string>
+    <string name="rosterEntryImageHelpText">Nur lokal gespeicherte Bilder. Wenn Ihr Server ein Bild für den LOCO hat, wird diese Auswahl überschrieben.</string>
+    <string name="rosterEntryImageRemoveButtonText">Entfernen</string>
+    <string name="rosterEntryImageSaveButtonText">Speichern</string>
+    <string name="rosterEntryImageSelectButtonText">Neues Bild</string>
+    <string name="rosterEntryImageServerImageHelpText">Ihr Server verfügt über ein Bild für den Lok. Sie können das lokale Bild ändern, da er von der einem auf dem Server automatisch überwunden wird.</string>
 
 </resources>

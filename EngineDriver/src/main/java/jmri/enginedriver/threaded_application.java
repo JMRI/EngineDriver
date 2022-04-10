@@ -3635,11 +3635,11 @@ public class threaded_application extends Application {
     // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
     private void saveSharedPreferencesToFileIfAllowed() {
 //        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
-            saveSharedPreferencesToFileImpl();
-//        }
-    }
-
-    private void saveSharedPreferencesToFileImpl() {
+//            saveSharedPreferencesToFileImpl();
+////        }
+//    }
+//
+//    private void saveSharedPreferencesToFileImpl() {
         Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));

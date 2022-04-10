@@ -4612,7 +4612,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
                 if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
                     int mSound = -1;
-                    if (mainapp.consists[whichThrottle].isActive()) {
+                    if ( (mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive()) ) {
                         mSound = getLocoSoundStep(whichThrottle);
 
                         Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
@@ -7190,10 +7190,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private void autoImportFromURL() {
 //        navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
-        autoImportFromURLImpl();
-    }
-
-    public void autoImportFromURLImpl() {
+//        autoImportFromURLImpl();
+//    }
+//
+//    public void autoImportFromURLImpl() {
         new autoImportFromURL().execute();
     }
 
@@ -7288,10 +7288,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private void autoImportUrlAskToImport() {
 //        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
-        autoImportUrlAskToImportImpl();
-    }
-
-    private void autoImportUrlAskToImportImpl() {
+//        autoImportUrlAskToImportImpl();
+//    }
+//
+//    private void autoImportUrlAskToImportImpl() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
             @SuppressLint("ApplySharedPref")

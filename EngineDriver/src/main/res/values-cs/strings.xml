@@ -1124,5 +1124,10 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Další v telefonu Loco Sounds Preferences</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Zuny Loco Step bude hrát až do jejich konce při změně kroku. Částka hybnosti (výše) se stává minimálním časem.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">Nefulip Clip Locko Step Zvuky</string>
+    <string name="rosterEntryImageHelpText">Lokálně uložené obrázky. Pokud má váš server obraz pro LOCO, přepíše tento výběr.</string>
+    <string name="rosterEntryImageRemoveButtonText">Odstranit</string>
+    <string name="rosterEntryImageSaveButtonText">Uložit</string>
+    <string name="rosterEntryImageSelectButtonText">Nový vzhled</string>
+    <string name="rosterEntryImageServerImageHelpText">Váš server má obraz pro LOCO. Můžete změnit místní snímek, protože bude automaticky převaženo jedním na serveru.</string>
 
 </resources>

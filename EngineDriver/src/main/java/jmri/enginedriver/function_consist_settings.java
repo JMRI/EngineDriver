@@ -233,10 +233,10 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     //(and updated by saveSettings() when required) so just copy it
     void initSettings() {
 //        navigateToHandler(PermissionsHelper.READ_FUNCTION_SETTINGS);
-        initSettingsImpl();
-    }
-
-    private void initSettingsImpl() {
+//        initSettingsImpl();
+//    }
+//
+//    private void initSettingsImpl() {
         mainapp.set_default_function_labels(true);
 
         aLbl.clear();
@@ -389,11 +389,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     void saveSettings() {
 //        navigateToHandler(PermissionsHelper.STORE_FUNCTION_SETTINGS);
-        saveSettingsImpl();
-    }
-
-    //save function and labels to file
-    void saveSettingsImpl() {
+//        saveSettingsImpl();
+//    }
+//
+//    //save function and labels to file
+//    void saveSettingsImpl() {
         //SD Card required to save settings
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
             return;

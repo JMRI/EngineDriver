@@ -871,5 +871,10 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Preferências adicionais em Telefone Loco Sounds</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Os sons de passo de loco jogarão até o fim ao mudar de passo. A quantidade de momentum (acima) se torna apenas um tempo mínimo.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">Não clique sons de passo de loco</string>
+    <string name="rosterEntryImageHelpText">Apenas imagens armazenadas localmente. Se o seu servidor tiver uma imagem para o loco, ele substituirá essa seleção.</string>
+    <string name="rosterEntryImageServerImageHelpText">Seu servidor tem uma imagem para o loco. Você não pode alterar a imagem local, pois será automaticamente superajectiva pelo servidor.</string>
+    <string name="rosterEntryImageSelectButtonText">Nova imagem</string>
+    <string name="rosterEntryImageRemoveButtonText">Remover</string>
+    <string name="rosterEntryImageSaveButtonText">Salve </string>
 
 </resources>

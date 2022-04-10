@@ -234,10 +234,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     private void saveLogFile() {
 //        navigateToHandler(PermissionsHelper.STORE_LOG_FILES);
-        saveLogFileImpl();
-    }
-
-    private void saveLogFileImpl() {
+//        saveLogFileImpl();
+//    }
+//
+//    private void saveLogFileImpl() {
 //        File path = Environment.getExternalStorageDirectory();
 //        File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
 //        engine_driver_dir.mkdir();            // create directory if it doesn't exist
