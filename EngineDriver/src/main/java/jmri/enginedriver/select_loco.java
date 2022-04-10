@@ -578,8 +578,13 @@ public class select_loco extends AppCompatActivity {
                     String imgpath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    File image_file = new File(imgpath);
-                    if (image_file.exists()) {
+                    File image_file = null;
+                    try {
+                        image_file = new File(imgpath);
+                    } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
+                        Log.d("Engine_Driver", "Load image failed : " + imgpath);
+                    }
+                    if ( (image_file != null) && (image_file.exists()) ) {
                         try {
                             int inWidth = 0;
                             int inHeight = 0;
