@@ -154,11 +154,11 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     private void connect() {
-        navigateToHandler(PermissionsHelper.CONNECT_TO_SERVER);
-    }
-
-    //Request connection to the WiThrottle server.
-    private void connectImpl() {
+//        navigateToHandler(PermissionsHelper.CONNECT_TO_SERVER);
+//    }
+//
+//    //Request connection to the WiThrottle server.
+//    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
         Log.d("Engine_Driver", "in connection_activity.connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
@@ -435,6 +435,10 @@ public class connection_activity extends AppCompatActivity implements Permission
         mainapp.connectedHostip = "";
         mainapp.connectedPort = 0;
         mainapp.logged_host_ip = null;
+
+        mainapp.roster_entries = null;
+        mainapp.consist_entries = null;
+        mainapp.roster = null;
 
         connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
@@ -846,13 +850,12 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void clearConnectionsList() {
 //            navigateToHandler(PermissionsHelper.CLEAR_CONNECTION_LIST);
-        clearConnectionsListImpl();
-        ;
-    }
-
-    //Jeffrey M added 7/3/2013
-    //Clears recent connection list.
-    private void clearConnectionsListImpl() {
+//        clearConnectionsListImpl();
+//        ;
+//    }
+//
+//    //Clears recent connection list.
+//    private void clearConnectionsListImpl() {
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
@@ -948,10 +951,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void saveSharedPreferencesToFile() {
 //            navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
-        saveSharedPreferencesToFileImpl();
-    }
-
-    private void saveSharedPreferencesToFileImpl() {
+//        saveSharedPreferencesToFileImpl();
+//    }
+//
+//    private void saveSharedPreferencesToFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -972,13 +975,14 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     private void loadSharedPreferencesFromFile() {
 //            navigateToHandler(PermissionsHelper.READ_PREFERENCES);
-        loadSharedPreferencesFromFileImpl();
-    }
-
-    @SuppressLint("ApplySharedPref")
-    private void loadSharedPreferencesFromFileImpl() {
+//        loadSharedPreferencesFromFileImpl();
+//    }
+//
+//    @SuppressLint("ApplySharedPref")
+//    private void loadSharedPreferencesFromFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
@@ -1031,7 +1035,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                        break;
                 case PermissionsHelper.CONNECT_TO_SERVER:
                     Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
-                    connectImpl();
+//                    connectImpl();
+                    connect();
                     break;
                 default:
                     // do nothing

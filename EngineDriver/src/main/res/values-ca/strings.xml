@@ -924,4 +924,9 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Addicionals al telèfon Loco sona les preferències</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Els sons de pas de loco jugaran fins al final en canviar de pas. La quantitat d\'impuls (a dalt) només es converteix en un temps mínim.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">No feu clic a Loco Step Sounds</string>
+    <string name="rosterEntryImageHelpText">Imatges emmagatzemades localment. Si el vostre servidor té una imatge per al Loco, sobreescriu aquesta selecció.</string>
+    <string name="rosterEntryImageRemoveButtonText">Treure</string>
+    <string name="rosterEntryImageSaveButtonText">Estalviar</string>
+    <string name="rosterEntryImageSelectButtonText">Nova imatge</string>
+    <string name="rosterEntryImageServerImageHelpText">El vostre servidor té una imatge per al loco. Podeu canviar la imatge local, ja que s\'acabarà automàticament per la que hi ha al servidor.</string>
 </resources>

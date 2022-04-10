@@ -868,5 +868,10 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Ulteriori preferenze del telefono dei suoni del telefono</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Loco Step Sounds giocherà fino alla fine quando cambiano il passaggio. L\'importo dello slancio (sopra) diventa solo un tempo minimo.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">Non clitare i suoni Step Loco</string>
+    <string name="rosterEntryImageHelpText">Solo immagini memorizzate localmente. Se il tuo server ha un\'immagine per la loco, sovrascriverà questa selezione.</string>
+    <string name="rosterEntryImageServerImageHelpText">Il tuo server ha un\'immagine per la loco. Puoi cambiare l\'immagine locale in quanto verrà automaticamente sovrascritta da quella sul server.</string>
+    <string name="rosterEntryImageSelectButtonText">Nuova immagine</string>
+    <string name="rosterEntryImageRemoveButtonText">Rimuovere</string>
+    <string name="rosterEntryImageSaveButtonText">Salva</string>
 
 </resources>

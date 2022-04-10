@@ -948,5 +948,10 @@
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Supplémentaire dans le téléphone Loco Sounds Préférences</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Les sons de l\'étape loco joueront jusqu\'à leur fin lors du changement d\'étape. Le montant de l\'élan (ci-dessus) devient un temps minimum seulement.</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">Ne clipez pas de sons sur la loco</string>
+    <string name="rosterEntryImageHelpText">Images stockées localement uniquement. Si votre serveur a une image pour le loco, il écrasera cette sélection.</string>
+    <string name="rosterEntryImageRemoveButtonText">Éliminer</string>
+    <string name="rosterEntryImageSaveButtonText">Sauver</string>
+    <string name="rosterEntryImageSelectButtonText">Nouvelle image</string>
+    <string name="rosterEntryImageServerImageHelpText">Votre serveur a une image pour la loco. Vous ne pouvez pas changer l\'image locale car elle sera automatiquement ouverte par celle sur le serveur.</string>
 
 </resources>

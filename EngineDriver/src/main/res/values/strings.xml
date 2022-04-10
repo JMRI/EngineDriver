@@ -169,9 +169,12 @@
     <string name="logviewerClose">Close</string>
     <string name="logviewerSave">Start recording to file</string>
 
-    <string name="selectRosterEntryImage">Select new image</string>
-    <string name="removeRosterEntryImage">Remove image</string>
+    <string name="rosterEntryImageSelectButtonText">New image</string>
+    <string name="rosterEntryImageRemoveButtonText">Remove</string>
     <string name="rosterEntryImageHelpText">Locally stored images only.  If your server has an image for the loco, it will overwrite this selection.</string>
+    <string name="rosterEntryImageServerImageHelpText">Your server has an image for the loco. You can\'t change the local image as it will be automatically overwitten by the one on the server.</string>
+    <string name="rosterEntryImageSaveButtonText">Save</string>
+
 
     <string name="prefTitle">Preferences</string>
     <string name="prefSummary">Preferences for Engine Driver</string>
