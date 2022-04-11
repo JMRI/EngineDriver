@@ -3696,7 +3696,7 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
-        if (conLoco.getIsFromRoster()) {
+        if ( (conLoco.getIsFromRoster()) && (!conLoco.getRosterName().equals("")) ) {
             loco_name = conLoco.getRosterName();
         }
         Integer locoSource = conLoco.getWhichSource();
