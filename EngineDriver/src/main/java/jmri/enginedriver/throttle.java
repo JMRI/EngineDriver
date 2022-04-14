@@ -1572,6 +1572,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
+        mainapp.prefActionBarShowServerDescription = prefs.getBoolean("prefActionBarShowServerDescription",
+                getResources().getBoolean(R.bool.prefActionBarShowServerDescriptionDefaultValue));
+
         mainapp.prefDeviceSoundsButton = prefs.getBoolean("prefDeviceSoundsButton",
                 getResources().getBoolean(R.bool.prefDeviceSoundsButtonDefaultValue));
 

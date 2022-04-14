@@ -320,6 +320,7 @@ public class threaded_application extends Application {
 
     public boolean prefFullScreenSwipeArea = false;
     public boolean prefThrottleViewImmersiveModeHideToolbar = true;
+    public boolean prefActionBarShowServerDescription = false;
 
     public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
@@ -3832,6 +3833,21 @@ public class threaded_application extends Application {
                 tvIconHelp.setText("");
             } else {
                 tvIconHelp.setText("  ◄ ►");
+            }
+
+            TextView tvToolbarServerDesc;
+            int screenLayout = context.getResources().getConfiguration().screenLayout;
+            screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
+            if (screenLayout >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+                tvToolbarServerDesc = (TextView) toolbar.findViewById(R.id.toolbar_server_desc_x_large);
+            } else {
+                tvToolbarServerDesc = (TextView) toolbar.findViewById(R.id.toolbar_server_desc);
+            }
+            if (prefActionBarShowServerDescription) {
+                tvToolbarServerDesc.setText(getServerDescription());
+                tvToolbarServerDesc.setVisibility(View.VISIBLE);
+            } else {
+                tvToolbarServerDesc.setVisibility(View.GONE);
             }
 
             TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);

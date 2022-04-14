@@ -1414,6 +1414,9 @@
         <item>prefWebViewButton</item>
         <item>prefThrottleSwitchButton</item>  <!-- PreferenceScreen -->
 
+        <!-- Action Bar Preferences -->
+        <item>prefActionBarShowServerDescription</item>
+
         <!-- Throttle Control Preferences -->
         <item>maximum_throttle_preference</item>
         <item>maximum_throttle_change_preference</item>

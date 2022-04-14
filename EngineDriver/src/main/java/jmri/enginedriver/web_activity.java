@@ -513,7 +513,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            navigateAway(false);
+            navigateAway();
             mainapp.buttonVibration();
         }
     }
@@ -550,7 +550,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 webView.goBack();
                 return true;
             }
-            navigateAway(false, mainapp.getThrottleIntent(), false);
+            navigateAway();
             return true;
         }
         return (super.onKeyDown(key, event));
@@ -585,20 +585,19 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                navigateAway(false, mainapp.getThrottleIntent(), false);
+                navigateAway();
                 return true;
             case R.id.turnouts_mnu:
-                navigateAway(false, turnouts.class, true);
+                navigateAway(false, turnouts.class);
                 return true;
             case R.id.routes_mnu:
-                navigateAway(false, routes.class, true);
+                navigateAway(false, routes.class);
                 return true;
             case R.id.exit_mnu:
-                navigateAway(true);
                 mainapp.checkExit(this);
                 return true;
             case R.id.power_control_mnu:
-                navigateAway(false, power_control.class, true);
+                navigateAway(false, power_control.class);
                 return true;
 /*            case R.id.preferences_mnu:
                 navigateAway(false, SettingsActivity.class);
@@ -613,10 +612,10 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 mainapp.buttonVibration();
                 return true;
             case R.id.logviewer_menu:
-                navigateAway(false, LogViewerActivity.class, true);
+                navigateAway(false, LogViewerActivity.class);
                 return true;
             case R.id.about_mnu:
-                navigateAway(false, about_page.class, true);
+                navigateAway(false, about_page.class);
                 return true;
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, WMenu);
@@ -641,33 +640,23 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     // helper methods to handle navigating away from this activity
-    private void navigateAway(boolean doFinish, Class activityClass, boolean forResult) {
-        Intent in = new Intent().setClass(this, activityClass);
-        navigateAway(doFinish, in, forResult);
+    private void navigateAway() {
+        mainapp.webMenuSelected = false;    // not returning so clear flag
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
-    private void navigateAway(boolean doFinish, Intent in, boolean forResult) {
+
+    private void navigateAway(boolean doFinish, Class activityClass) {
+        Intent in = new Intent().setClass(this, activityClass);
         if (doFinish) {                 // if not returning
             startActivity(in);
-            navigateAway(true);
+            navigateAway();
         } else {
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
-            if (forResult) {
-                startActivityForResult(in, 0);
-            } else {
-                startActivity(in);
-            }
+            startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
-    }
-    private void navigateAway(boolean doFinish) {
-        if (doFinish) {
-            mainapp.webMenuSelected = false;    // not returning so clear flag
-            this.finish();
-        } else {
-            savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
-        }
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     // attempt to reload url first from local store, then try from prefs, and if that fails then use noUrl
