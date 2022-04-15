@@ -3218,6 +3218,8 @@ public class threaded_application extends Application {
         } catch (Exception e) {
             Log.e("Engine_Driver", "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
         }
+
+        webMenuSelected = false;  // reset after each check
         return true;
     }
 
@@ -3760,7 +3762,7 @@ public class threaded_application extends Application {
 
     public boolean supportsRoster() {
         //true if roster entries exist
-        if (roster_entries.size() > 0) return true;
+        if ( (roster_entries!=null) && (roster_entries.size() > 0)) return true;
         //always show roster panel for these entries
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
