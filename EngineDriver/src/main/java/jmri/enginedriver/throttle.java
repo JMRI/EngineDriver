@@ -5316,7 +5316,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         // put pointer to this activity's handler in main app's shared variable
-        mainapp.throttle_msg_handler = new throttle_handler();
+//        mainapp.throttle_msg_handler = new throttle_handler();
 
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
@@ -5918,7 +5918,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!mainapp.setActivityOrientation(this)) // set screen orientation based on prefs
         {
             Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+//            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;
@@ -6116,6 +6116,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Engine_Driver", "throttle.onStart() called");
+        // put pointer to this activity's handler in main app's shared variable
+        if (mainapp.throttle_msg_handler == null)
+            mainapp.throttle_msg_handler = new throttle_handler();
     }
 
     @Override
@@ -6502,7 +6511,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

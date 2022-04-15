@@ -557,21 +557,18 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-//                this.finish();
-//                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                 startActivity(mainapp.getThrottleIntent());
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
                 startActivity(in);
-                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
-                this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
@@ -582,11 +579,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-/*            case R.id.preferences_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);   // refresh view on return
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;*/
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);

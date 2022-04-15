@@ -402,7 +402,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 //        closeButton.setOnClickListener(close_click_listener);
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.web_msg_handler = new web_handler();
+//        mainapp.web_msg_handler = new web_handler();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -478,6 +478,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Engine_Driver", "throttle.onStart() called");
+        // put pointer to this activity's handler in main app's shared variable
+        if (mainapp.web_msg_handler == null)
+            mainapp.web_msg_handler = new web_handler();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         Log.d("Engine_Driver", "web_activity.onDestroy() called");
@@ -535,7 +544,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 webView.goBack();
                 return true;
             }
-            navigateAway(false, null); // don't really finish the activity here
+            navigateAway(true, null); // don't really finish the activity here
             return true;
         }
         return (super.onKeyDown(key, event));
@@ -570,13 +579,13 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                navigateAway(false, null);
+                navigateAway(true, null);
                 return true;
             case R.id.turnouts_mnu:
-                navigateAway(false, turnouts.class);
+                navigateAway(true, turnouts.class);
                 return true;
             case R.id.routes_mnu:
-                navigateAway(false, routes.class);
+                navigateAway(true, routes.class);
                 return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
@@ -631,16 +640,16 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
-    private void navigateAway(boolean doFinish, Class activityClass) {
+    private void navigateAway(boolean returningToOtherActivity, Class activityClass) {
         Intent in;
         if (activityClass != null ) {
             in = new Intent().setClass(this, activityClass);
         } else {  // if null assume we want the throttle activity
             in = mainapp.getThrottleIntent();
         }
-        if (doFinish) {                 // if not returning
+        if (returningToOtherActivity) {                 // if not returning
             startActivity(in);
-            navigateAway();
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } else {
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
