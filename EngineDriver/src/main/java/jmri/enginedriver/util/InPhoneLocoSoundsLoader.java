@@ -127,7 +127,7 @@ public class InPhoneLocoSoundsLoader {
          @Override
          public void onLoadComplete(SoundPool soundPool, int i, int i2) {
             if (i==soundsCountOfSoundBeingLoaded) {
-               Log.d("Engine_Driver", "loadSounds: Sounds confimed loaded.");
+               Log.d("Engine_Driver", "loadSounds: Sounds confirmed loaded.");
                mainapp.throttle_msg_handler.postDelayed(
                        new LoadSoundCompleteDelayed(1000), 1000);
 

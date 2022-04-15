@@ -1435,24 +1435,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
-                if (deltaX > 0.0) { // left to right swipe goes to throttle
-
-                    boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-//                    swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-                    if (swipeWeb) {
-                        Intent in = new Intent().setClass(this, web_activity.class);
-                        startActivity(in);
-                    }
-
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-
-                } else { // right to left swipe
-
-                    // else falls back  to throttle
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_TURNOUTS, deltaX);
+                if (nextScreenIntent != null) {
+                    startActivity(nextScreenIntent);
+                    mainapp.setSwipeAnimationTransition(this, deltaX);
                 }
             } else {
                 // gesture was not long enough

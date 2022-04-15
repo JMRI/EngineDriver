@@ -6940,43 +6940,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                         // swipe left/right
                         if (!isScreenLocked) {
-                            boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                            swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                            boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                            swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                            boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-                            swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-
-                            // if any swiping is enabled, process the swipe
-                            if (swipeTurnouts || swipeRoutes || swipeWeb) {
-                                if (deltaX > 0.0) {
-                                    // left to right swipe goes to turnouts, then web if enabled in prefs
-                                    Intent in;
-                                    if (swipeTurnouts) {
-                                        in = new Intent().setClass(this, turnouts.class);
-                                    } else if (swipeWeb) {
-                                        in = new Intent().setClass(this, web_activity.class);
-                                    } else {
-                                        in = new Intent().setClass(this, routes.class);
-                                    }
-                                    startActivity(in);
-                                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                                } else {
-                                    // right to left swipe goes to routes, then web if enabled in prefs
-                                    Intent in;
-                                    if (swipeRoutes) {
-                                        in = new Intent().setClass(this, routes.class);
-                                    } else if (swipeWeb) {
-                                        in = new Intent().setClass(this, web_activity.class);
-                                    } else {
-                                        in = new Intent().setClass(this, turnouts.class);
-                                    }
-                                    startActivity(in);
-                                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-                                }
+                            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
+                            if (nextScreenIntent != null) {
+                                startActivity(nextScreenIntent);
+                                mainapp.setSwipeAnimationTransition(this, deltaX);
                             }
                         }
                     }

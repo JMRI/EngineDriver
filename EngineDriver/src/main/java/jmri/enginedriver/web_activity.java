@@ -161,27 +161,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
-                if (deltaX > 0.0) { // left to right swipe goes to routes if enabled in prefs
-                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                    if (swipeRoutes) {
-                        Intent in = new Intent().setClass(this, routes.class);
-                        startActivity(in);
-                    } // else falls back  to throttle
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                } else { // right to left swipe goes to turnouts if enabled
-                    boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                    swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                    if (swipeTurnouts) {
-                        Intent in = new Intent().setClass(this, turnouts.class);
-                        startActivity(in);
-                    } // else falls back  to throttle
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_WEB, deltaX);
+                if (nextScreenIntent != null) {
+                    startActivity(nextScreenIntent);
+                    mainapp.setSwipeAnimationTransition(this, deltaX);
                 }
+
             } else {
                 // gesture was not long enough
                 gestureFailed(event);
@@ -318,7 +303,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         setContentView(R.layout.web_activity);
 
-        webView = findViewById(R.id.webview);
+        webView = findViewById(R.id.webActivityWebView);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -550,7 +535,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 webView.goBack();
                 return true;
             }
-            navigateAway();
+            navigateAway(false, null); // don't really finish the activity here
             return true;
         }
         return (super.onKeyDown(key, event));
@@ -585,7 +570,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                navigateAway();
+                navigateAway(false, null);
                 return true;
             case R.id.turnouts_mnu:
                 navigateAway(false, turnouts.class);
@@ -647,7 +632,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     private void navigateAway(boolean doFinish, Class activityClass) {
-        Intent in = new Intent().setClass(this, activityClass);
+        Intent in;
+        if (activityClass != null ) {
+            in = new Intent().setClass(this, activityClass);
+        } else {  // if null assume we want the throttle activity
+            in = mainapp.getThrottleIntent();
+        }
         if (doFinish) {                 // if not returning
             startActivity(in);
             navigateAway();

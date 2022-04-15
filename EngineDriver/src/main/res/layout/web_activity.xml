@@ -32,7 +32,7 @@
                 android:minHeight="1000dp">
 
                 <WebView
-                    android:id="@+id/webview"
+                    android:id="@+id/webActivityWebView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"/>
 

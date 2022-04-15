@@ -318,6 +318,17 @@ public class threaded_application extends Application {
     public int prefHapticFeedbackDuration = 250;
     public boolean prefHapticFeedbackButtons = false;
 
+    /// swipe right sequence
+    public static final int SCREEN_SWIPE_INDEX_THROTTLE = 0;
+    public static final int SCREEN_SWIPE_INDEX_ROUTES = 1;
+    public static final int SCREEN_SWIPE_INDEX_WEB = 2;
+    public static final int SCREEN_SWIPE_INDEX_TURNOUTS = 3;
+
+
+    public boolean prefSwipeThoughTurnouts = true;
+    public boolean prefSwipeThoughRoutes = true;
+    public boolean prefSwipeThoughWeb = true;
+
     public boolean prefFullScreenSwipeArea = false;
     public boolean prefThrottleViewImmersiveModeHideToolbar = true;
     public boolean prefActionBarShowServerDescription = false;
@@ -3569,6 +3580,78 @@ public class threaded_application extends Application {
         return throttle;
     }
 
+    public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX ) {
+        prefSwipeThoughTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+        prefSwipeThoughRoutes = prefs.getBoolean("swipe_through_routes_preference",
+                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
+        prefSwipeThoughWeb = prefs.getBoolean("swipe_through_web_preference",
+                getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+
+        boolean swipeRoutes = isRouteControlAllowed();  //also check the allowed flag
+        boolean swipeTurnouts = isTurnoutControlAllowed();  //also check the allowed flag
+        boolean swipeWeb = isWebAllowed();  //also check the allowed flag
+
+        if ((!swipeRoutes) && (!swipeTurnouts) && (!swipeWeb)) {
+            return null;
+        }
+
+        int nextScreen;
+        if (deltaX <= 0.0) {
+            nextScreen = currentScreen + 1;
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes)) ) {
+                nextScreen++;
+            }
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_WEB)
+                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb)) ) {
+                nextScreen++;
+            }
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts)) ) {
+                nextScreen++;
+            }
+            if (nextScreen > SCREEN_SWIPE_INDEX_TURNOUTS) {
+                nextScreen = SCREEN_SWIPE_INDEX_THROTTLE;
+            }
+        } else {
+            nextScreen = currentScreen - 1;
+            if (nextScreen < SCREEN_SWIPE_INDEX_THROTTLE) {
+                nextScreen = SCREEN_SWIPE_INDEX_TURNOUTS;
+            }
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts)) ) {
+                nextScreen--;
+            }
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_WEB)
+                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb)) ) {
+                nextScreen--;
+            }
+            if ( (nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes)) ) {
+                nextScreen--;
+            }
+        }
+
+        Intent nextIntent;
+        switch (nextScreen) {
+            case SCREEN_SWIPE_INDEX_ROUTES:
+                nextIntent = new Intent().setClass(this, routes.class);
+                break;
+            case SCREEN_SWIPE_INDEX_TURNOUTS:
+                nextIntent = new Intent().setClass(this, turnouts.class);
+                break;
+            case SCREEN_SWIPE_INDEX_WEB:
+                nextIntent = new Intent().setClass(this, web_activity.class);
+                break;
+            case SCREEN_SWIPE_INDEX_THROTTLE:
+            default:
+                nextIntent = getThrottleIntent();
+                break;
+        }
+        return nextIntent;
+    }
+
     /***
      * show appropriate messages on a restart that was forced by prefs
      *
@@ -4102,5 +4185,14 @@ public class threaded_application extends Application {
             rslt = fName.replaceAll("[\\\\/:\"*?<>|]", "_");
         }
         return rslt;
+    }
+
+    public void setSwipeAnimationTransition(Activity activity, float deltaX) {
+        if (deltaX > 0.0 ) {
+            connection_activity.overridePendingTransition(activity, R.anim.push_right_in, R.anim.push_right_out);
+        } else {
+            connection_activity.overridePendingTransition(activity, R.anim.push_left_in, R.anim.push_left_out);
+        }
+
     }
 }
