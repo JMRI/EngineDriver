@@ -68,7 +68,7 @@
         <activity
             android:name=".ConsistEdit"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTop" 
+            android:launchMode="singleTop"
             android:label="@string/app_name_ConsistEdit"
             android:theme="@style/app_theme_black" >
         </activity>
@@ -82,7 +82,7 @@
         <activity
             android:name=".throttle_full"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -90,7 +90,7 @@
         <activity
             android:name=".throttle_switching_horizontal"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -98,7 +98,7 @@
         <activity
             android:name=".throttle_simple"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -106,7 +106,7 @@
         <activity
             android:name=".throttle_vertical_left_or_right"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -114,7 +114,7 @@
         <activity
             android:name=".throttle_switching_left_or_right"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -122,7 +122,7 @@
         <activity
             android:name=".throttle_big_buttons"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -130,14 +130,14 @@
         <activity
             android:name=".function_settings"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop"
             android:label="@string/app_name_functions"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".function_consist_settings"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:label="@string/app_name_consist_functions"
             android:theme="@style/app_theme_black" >
         </activity>
@@ -145,14 +145,14 @@
             android:name=".turnouts"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".routes"
             android:label="@string/app_name_routes"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
@@ -165,35 +165,35 @@
         <activity
             android:name=".about_page"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:label="@string/app_name_about"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".web_activity"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:label="@string/app_name_web"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".power_control"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop"
             android:label="@string/app_name_power_control"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".reconnect_status"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop"
             android:label="@string/app_name_reconnect_status"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
             android:name=".logviewer.ui.LogViewerActivity"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask" 
+            android:launchMode="singleTop"
             android:label="LogViewerActivity"
             android:theme="@style/app_theme_black" >
         </activity>
@@ -202,6 +202,7 @@
             android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_gamepad_test"
+            android:launchMode="singleTop"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
@@ -209,6 +210,7 @@
             android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_device_sounds_settings"
+            android:launchMode="singleTop"
             android:theme="@style/app_theme_black" >
         </activity>
     </application>

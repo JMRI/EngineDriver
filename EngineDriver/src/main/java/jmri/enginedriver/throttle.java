@@ -1572,6 +1572,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
+        mainapp.prefActionBarShowServerDescription = prefs.getBoolean("prefActionBarShowServerDescription",
+                getResources().getBoolean(R.bool.prefActionBarShowServerDescriptionDefaultValue));
+
         mainapp.prefDeviceSoundsButton = prefs.getBoolean("prefDeviceSoundsButton",
                 getResources().getBoolean(R.bool.prefDeviceSoundsButtonDefaultValue));
 
@@ -5313,7 +5316,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         // put pointer to this activity's handler in main app's shared variable
-        mainapp.throttle_msg_handler = new throttle_handler();
+//        mainapp.throttle_msg_handler = new throttle_handler();
 
         sliderType = SLIDER_TYPE_HORIZONTAL;
 
@@ -5641,49 +5644,69 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        // set listeners for the limit speed buttons for each throttle
-        limit_speed_button_touch_listener lstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        if ( (!prefThrottleScreenType.contains("Switch")) || (prefThrottleScreenType.equals("Switching Horizontal")) ) {
+            // set listeners for the limit speed buttons for each throttle
+            limit_speed_button_touch_listener lstl;
+            Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                switch (throttleIndex) {
+                    case 0:
+                        bLimitSpeed = findViewById(R.id.limit_speed_0);
+                        break;
+                    case 1:
+                        bLimitSpeed = findViewById(R.id.limit_speed_1);
+                        break;
+                    case 2:
+                        bLimitSpeed = findViewById(R.id.limit_speed_2);
+                        break;
+                    case 3:
+                        bLimitSpeed = findViewById(R.id.limit_speed_3);
+                        break;
+                    case 4:
+                        bLimitSpeed = findViewById(R.id.limit_speed_4);
+                        break;
+                    case 5:
+                        bLimitSpeed = findViewById(R.id.limit_speed_5);
+                        break;
+                }
+                bLimitSpeeds[throttleIndex] = bLimitSpeed;
+                limitSpeedSliderScalingFactors[throttleIndex] = 1;
+                lstl = new limit_speed_button_touch_listener(throttleIndex);
+                bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+                isLimitSpeeds[throttleIndex] = false;
+                if (!prefLimitSpeedButton) {
+                    bLimitSpeed.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        // set listeners for the pause buttons for each throttle
         pause_speed_button_touch_listener psvtl;
         Button bPauseSpeed = findViewById(R.id.pause_speed_0);
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    bLimitSpeed = findViewById(R.id.limit_speed_0);
                     bPauseSpeed = findViewById(R.id.pause_speed_0);
                     break;
                 case 1:
-                    bLimitSpeed = findViewById(R.id.limit_speed_1);
                     bPauseSpeed = findViewById(R.id.pause_speed_1);
                     break;
                 case 2:
-                    bLimitSpeed = findViewById(R.id.limit_speed_2);
                     bPauseSpeed = findViewById(R.id.pause_speed_2);
                     break;
                 case 3:
-                    bLimitSpeed = findViewById(R.id.limit_speed_3);
                     bPauseSpeed = findViewById(R.id.pause_speed_3);
                     break;
                 case 4:
-                    bLimitSpeed = findViewById(R.id.limit_speed_4);
                     bPauseSpeed = findViewById(R.id.pause_speed_4);
                     break;
                 case 5:
-                    bLimitSpeed = findViewById(R.id.limit_speed_5);
                     bPauseSpeed = findViewById(R.id.pause_speed_5);
                     break;
-
             }
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lstl = new limit_speed_button_touch_listener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
-
             bPauseSpeeds[throttleIndex] = bPauseSpeed;
             psvtl = new pause_speed_button_touch_listener(throttleIndex);
             bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
@@ -6116,6 +6139,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Engine_Driver", "throttle.onStart() called");
+        // put pointer to this activity's handler in main app's shared variable
+        if (mainapp.throttle_msg_handler == null)
+            mainapp.throttle_msg_handler = new throttle_handler();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         Log.d("Engine_Driver", "throttle.onDestroy() called");
@@ -6499,7 +6531,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -6937,43 +6969,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                         // swipe left/right
                         if (!isScreenLocked) {
-                            boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                            swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                            boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-                            swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-                            boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                                    getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-                            swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-
-                            // if any swiping is enabled, process the swipe
-                            if (swipeTurnouts || swipeRoutes || swipeWeb) {
-                                if (deltaX > 0.0) {
-                                    // left to right swipe goes to turnouts, then web if enabled in prefs
-                                    Intent in;
-                                    if (swipeTurnouts) {
-                                        in = new Intent().setClass(this, turnouts.class);
-                                    } else if (swipeWeb) {
-                                        in = new Intent().setClass(this, web_activity.class);
-                                    } else {
-                                        in = new Intent().setClass(this, routes.class);
-                                    }
-                                    startActivity(in);
-                                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-                                } else {
-                                    // right to left swipe goes to routes, then web if enabled in prefs
-                                    Intent in;
-                                    if (swipeRoutes) {
-                                        in = new Intent().setClass(this, routes.class);
-                                    } else if (swipeWeb) {
-                                        in = new Intent().setClass(this, web_activity.class);
-                                    } else {
-                                        in = new Intent().setClass(this, turnouts.class);
-                                    }
-                                    startActivity(in);
-                                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-                                }
+                            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
+                            if (nextScreenIntent != null) {
+                                nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                startActivity(nextScreenIntent);
+                                mainapp.setSwipeAnimationTransition(this, deltaX);
                             }
                         }
                     }

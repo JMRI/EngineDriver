@@ -1001,6 +1001,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefBackgroundImagePosition", !enable);
     }
 
+    private void showHideWebSwipePreferences(PreferenceScreen prefScreen) {
+        boolean enable = true;
+        String currentValue = prefs.getString("ThrottleOrientation", "");
+        if (!currentValue.equals("Auto-Web")) {
+            enable = false;
+        }
+        enableDisablePreference(prefScreen, "swipe_through_web_preference", !enable);
+    }
+
     private void showHideTTSPreferences(PreferenceScreen prefScreen) {
         boolean enable = true;
         String currentValue = prefs.getString("prefTtsWhen", "");
@@ -1647,6 +1656,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
             parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
+
+            parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
 
             parentActivity.showHideTTSPreferences(getPreferenceScreen());
 

@@ -43,16 +43,36 @@
                 android:layout_gravity="left"
                 android:src="?attr/ed_icon" />
 
-            <TextView
-                android:id="@+id/toolbar_icon_help"
+            <LinearLayout
+                android:id="@+id/toolbar_icon_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:text=""
-                android:textColor="#fff"
-                android:textSize="8dp" />
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/toolbar_icon_help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text=""
+                    android:textColor="#fff"
+                    android:textSize="8dp" />
+
+                <TextView
+                    android:id="@+id/toolbar_server_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text=""
+                    android:textColor="@color/secondary_text"
+                    android:textSize="8dp"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -90,5 +110,16 @@
                 android:textSize="12dp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbar_server_desc_x_large"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/secondary_text"
+            android:textSize="14dp"
+            android:textStyle="italic" />
+
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

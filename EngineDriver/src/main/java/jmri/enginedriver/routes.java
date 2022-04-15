@@ -557,20 +557,22 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                in = mainapp.getThrottleIntent();
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(in);
-                this.finish();
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
-                this.finish();
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
@@ -581,11 +583,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
-/*            case R.id.preferences_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);   // refresh view on return
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;*/
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
@@ -732,31 +729,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
-                if (deltaX > 0.0) { // left to right swipe goes to throttle
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-
-                } else { // right to left swipe goes to web and turnouts if enabled
-
-                    boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-                            getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-//                    swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-                    if (swipeWeb) {
-                        Intent in = new Intent().setClass(this, web_activity.class);
-                        startActivity(in);
-                    } else {
-                        boolean swipeTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
-                                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-                        swipeTurnouts = swipeTurnouts && mainapp.isTurnoutControlAllowed();  //also check the allowed flag
-                        if (swipeTurnouts) {
-                            Intent in = new Intent().setClass(this, turnouts.class);
-                            startActivity(in);
-                        }
-                    }
-
-                    // else falls back  to throttle
-                    this.finish();  //don't keep on return stack
-                    connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_ROUTES, deltaX);
+                if (nextScreenIntent != null) {
+                    nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(nextScreenIntent);
+                    mainapp.setSwipeAnimationTransition(this, deltaX);
                 }
             } else {
                 // gesture was not long enough

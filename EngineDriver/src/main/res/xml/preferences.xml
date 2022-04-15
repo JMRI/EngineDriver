@@ -690,6 +690,13 @@
             android:summary="@string/prefDeviceSoundsButtonSummary"
             android:title="@string/prefDeviceSoundsButtonTitle" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefActionBarShowServerDescriptionDefaultValue"
+            android:key="prefActionBarShowServerDescription"
+            android:summary="@string/prefActionBarShowServerDescriptionSummary"
+            android:title="@string/prefActionBarShowServerDescriptionTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
