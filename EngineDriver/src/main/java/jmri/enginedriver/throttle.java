@@ -5918,7 +5918,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!mainapp.setActivityOrientation(this)) // set screen orientation based on prefs
         {
             Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
-//            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return;

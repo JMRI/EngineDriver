@@ -438,7 +438,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
 
         if (!mainapp.setActivityOrientation(this)) {   //set screen orientation based on prefs
-            this.finish();
+            Intent in = mainapp.getThrottleIntent();
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
         else {
