@@ -507,6 +507,20 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
     }
 
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle bundle = new Bundle();
+        webView.saveState(bundle);
+        outState.putBundle("webViewState", bundle);
+    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle state) {
+//        super.onRestoreInstanceState(state);
+//        Bundle bundle = new Bundle();
+//        webView.saveState(bundle);
+//        state.putBundle("webViewState", bundle);
+//    }
+
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             navigateAway();
