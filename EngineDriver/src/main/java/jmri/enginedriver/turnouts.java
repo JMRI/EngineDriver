@@ -887,15 +887,18 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             case R.id.throttle_mnu:
                 in = mainapp.getThrottleIntent();
                 startActivity(in);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
                 return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
                 startActivity(in);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1431,6 +1434,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 // process swipe in the direction with the largest change
                 Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_TURNOUTS, deltaX);
                 if (nextScreenIntent != null) {
+                    nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(nextScreenIntent);
                     mainapp.setSwipeAnimationTransition(this, deltaX);
                 }

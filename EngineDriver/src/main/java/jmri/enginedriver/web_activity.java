@@ -513,13 +513,13 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         webView.saveState(bundle);
         outState.putBundle("webViewState", bundle);
     }
-//    @Override
-//    protected void onRestoreInstanceState(Bundle state) {
-//        super.onRestoreInstanceState(state);
-//        Bundle bundle = new Bundle();
-//        webView.saveState(bundle);
-//        state.putBundle("webViewState", bundle);
-//    }
+
+    protected void onRestoreInstanceState(Bundle state) {
+        super.onRestoreInstanceState(state);
+        Bundle bundle = new Bundle();
+        webView.saveState(bundle);
+        state.putBundle("webViewState", bundle);
+    }
 
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
@@ -664,6 +664,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             in = mainapp.getThrottleIntent();
         }
         if (returningToOtherActivity) {                 // if not returning
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } else {

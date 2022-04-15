@@ -6971,6 +6971,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (!isScreenLocked) {
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
                             if (nextScreenIntent != null) {
+                                nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                 startActivity(nextScreenIntent);
                                 mainapp.setSwipeAnimationTransition(this, deltaX);
                             }

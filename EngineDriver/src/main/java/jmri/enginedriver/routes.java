@@ -557,16 +557,20 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                startActivity(mainapp.getThrottleIntent());
+                in = mainapp.getThrottleIntent();
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -727,6 +731,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 // process swipe in the direction with the largest change
                 Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_ROUTES, deltaX);
                 if (nextScreenIntent != null) {
+                    nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(nextScreenIntent);
                     mainapp.setSwipeAnimationTransition(this, deltaX);
                 }
