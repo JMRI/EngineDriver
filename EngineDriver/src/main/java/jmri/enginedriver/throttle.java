@@ -5644,49 +5644,69 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        // set listeners for the limit speed buttons for each throttle
-        limit_speed_button_touch_listener lstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        if ( (!prefThrottleScreenType.contains("Switch")) || (prefThrottleScreenType.equals("Switching Horizontal")) ) {
+            // set listeners for the limit speed buttons for each throttle
+            limit_speed_button_touch_listener lstl;
+            Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                switch (throttleIndex) {
+                    case 0:
+                        bLimitSpeed = findViewById(R.id.limit_speed_0);
+                        break;
+                    case 1:
+                        bLimitSpeed = findViewById(R.id.limit_speed_1);
+                        break;
+                    case 2:
+                        bLimitSpeed = findViewById(R.id.limit_speed_2);
+                        break;
+                    case 3:
+                        bLimitSpeed = findViewById(R.id.limit_speed_3);
+                        break;
+                    case 4:
+                        bLimitSpeed = findViewById(R.id.limit_speed_4);
+                        break;
+                    case 5:
+                        bLimitSpeed = findViewById(R.id.limit_speed_5);
+                        break;
+                }
+                bLimitSpeeds[throttleIndex] = bLimitSpeed;
+                limitSpeedSliderScalingFactors[throttleIndex] = 1;
+                lstl = new limit_speed_button_touch_listener(throttleIndex);
+                bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+                isLimitSpeeds[throttleIndex] = false;
+                if (!prefLimitSpeedButton) {
+                    bLimitSpeed.setVisibility(View.GONE);
+                }
+            }
+        }
+
+        // set listeners for the pause buttons for each throttle
         pause_speed_button_touch_listener psvtl;
         Button bPauseSpeed = findViewById(R.id.pause_speed_0);
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    bLimitSpeed = findViewById(R.id.limit_speed_0);
                     bPauseSpeed = findViewById(R.id.pause_speed_0);
                     break;
                 case 1:
-                    bLimitSpeed = findViewById(R.id.limit_speed_1);
                     bPauseSpeed = findViewById(R.id.pause_speed_1);
                     break;
                 case 2:
-                    bLimitSpeed = findViewById(R.id.limit_speed_2);
                     bPauseSpeed = findViewById(R.id.pause_speed_2);
                     break;
                 case 3:
-                    bLimitSpeed = findViewById(R.id.limit_speed_3);
                     bPauseSpeed = findViewById(R.id.pause_speed_3);
                     break;
                 case 4:
-                    bLimitSpeed = findViewById(R.id.limit_speed_4);
                     bPauseSpeed = findViewById(R.id.pause_speed_4);
                     break;
                 case 5:
-                    bLimitSpeed = findViewById(R.id.limit_speed_5);
                     bPauseSpeed = findViewById(R.id.pause_speed_5);
                     break;
-
             }
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lstl = new limit_speed_button_touch_listener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
-
             bPauseSpeeds[throttleIndex] = bPauseSpeed;
             psvtl = new pause_speed_button_touch_listener(throttleIndex);
             bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);

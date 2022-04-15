@@ -190,6 +190,30 @@ public class throttle_switching_left_or_right extends throttle {
             vsbSwitchingSpeeds[i].setOnTouchListener(thsl);
 
         }
+
+        // set listeners for the limit speed buttons for each throttle
+        limit_speed_button_switching_touch_listener lsstl;
+        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            switch (throttleIndex) {
+                case 0:
+                    bLimitSpeed = findViewById(R.id.limit_speed_0);
+                    break;
+                case 1:
+                    bLimitSpeed = findViewById(R.id.limit_speed_1);
+                    break;
+            }
+            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+            lsstl = new limit_speed_button_switching_touch_listener(throttleIndex);
+            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
+            isLimitSpeeds[throttleIndex] = false;
+            if (!prefLimitSpeedButton) {
+                bLimitSpeed.setVisibility(View.GONE);
+            }
+        }
+
         sliderType = SLIDER_TYPE_SWITCHING;
     } // end of onCreate()
 
