@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
 import android.os.Build;
 import android.os.Bundle;
@@ -437,20 +438,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return;
         }
 
-        if (!mainapp.setActivityOrientation(this)) {   //set screen orientation based on prefs
-            Intent in = mainapp.getThrottleIntent();
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
+        if (WMenu != null) {
+            mainapp.displayEStop(WMenu);
         }
-        else {
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
-            if (WMenu != null) {
-                mainapp.displayEStop(WMenu);
-            }
-            resumeWebView();
-            CookieSyncManager.getInstance().startSync();
-        }
+        resumeWebView();
+        CookieSyncManager.getInstance().startSync();
 
         // enable swipe/fling detection if enabled in Prefs
         ov = findViewById(R.id.web_overlay);
@@ -486,6 +479,18 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.web_msg_handler == null)
             mainapp.web_msg_handler = new web_handler();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (!mainapp.setActivityOrientation(this)) {   //set screen orientation based on prefs
+            Intent in = mainapp.getThrottleIntent();
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        }
     }
 
     @Override
