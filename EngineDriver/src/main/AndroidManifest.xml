@@ -83,6 +83,7 @@
             android:name=".throttle_full"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -91,6 +92,7 @@
             android:name=".throttle_switching_horizontal"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -99,6 +101,7 @@
             android:name=".throttle_simple"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -107,6 +110,7 @@
             android:name=".throttle_vertical_left_or_right"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -115,6 +119,7 @@
             android:name=".throttle_switching_left_or_right"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -123,6 +128,7 @@
             android:name=".throttle_big_buttons"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle"
             android:theme="@style/app_theme_black" >
@@ -146,6 +152,7 @@
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
@@ -153,6 +160,7 @@
             android:label="@string/app_name_routes"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
@@ -173,6 +181,7 @@
             android:name=".web_activity"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name_web"
             android:theme="@style/app_theme_black" >
         </activity>

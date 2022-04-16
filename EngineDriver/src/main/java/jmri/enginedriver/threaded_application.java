@@ -1640,17 +1640,20 @@ public class threaded_application extends Application {
                 if (socketOk) {
                     try {
                         //look for someone to answer on specified socket, and set timeout
-                        Log.d("Engine_Driver", "t_a: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                         clientSocket = new Socket();
                         InetSocketAddress sa = new InetSocketAddress(host_ip, port);
                         clientSocket.connect(sa, connectTimeoutMs);
+                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: Connect successful.");
                         clientSocket.setSoTimeout(socketTimeoutMs);
+                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: set timeout successful.");
                     } catch (Exception except) {
                         if (!firstConnect) {
                             safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
                                     host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
                         }
                         if ((!client_type.equals("WIFI")) && (prefAllowMobileData)) { //show additional message if using mobile data
+                            Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
                             safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
                         }
                         socketOk = false;

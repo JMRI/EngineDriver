@@ -70,6 +70,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -5935,14 +5936,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             overridePendingTransition(0, 0);
             return;
         }
-        if (!mainapp.setActivityOrientation(this)) // set screen orientation based on prefs
-        {
-            Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            return;
-        }
 
         // format the screen area
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -6145,6 +6138,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.throttle_msg_handler == null)
             mainapp.throttle_msg_handler = new throttle_handler();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (!mainapp.setActivityOrientation(this)) { // set screen orientation based on prefs
+            Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        }
     }
 
     @Override
@@ -6531,7 +6536,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-//                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mainapp.webMenuSelected = true;
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

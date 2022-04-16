@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
@@ -740,15 +741,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             this.finish();
             return;
         }
-        if (!mainapp.setActivityOrientation(this))  //set screen orientation based on prefs
-        {
-            Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(in);
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            return;
-        }
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.turnouts_list);
@@ -760,6 +752,19 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         setActivityTitle();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
+            Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return;
+        }
     }
 
     /**
