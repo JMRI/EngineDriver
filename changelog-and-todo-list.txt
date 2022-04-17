@@ -4,6 +4,8 @@
  * Option to use a normal keyboard (bluetooth or USB) as a gamepad type
  * Gamepads continue to function in most activities (excludes keyboards)
  * Images for any selected loco is cached locally
+ * Option to select a local image for roster locos (For wiThrottle servers that don't support images)
+ * Web Screen maintains state when swiping, using the menus or auto-web
 **Version 2.31.138
  * Fix: Auto Server preference load
  * 'Limit Speed' and 'Pause' added to the Horizontal Layouts
