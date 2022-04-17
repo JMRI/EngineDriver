@@ -25,6 +25,8 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
+import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -357,8 +359,8 @@ public class threaded_application extends Application {
     public boolean prefDeviceSoundsButton = false;
     public boolean prefDeviceSoundsBellIsMomentary = false;
     public boolean prefDeviceSoundsMomentumOverride = false;
-    public String[] prefDeviceSounds = {"none","none"};  //currently only supporting two throttles
-    public String[] prefDeviceSoundsCurrentlyLoaded = {"none","none"};  //currently only supporting two throttles
+    public String[] prefDeviceSounds = {"none", "none"};  //currently only supporting two throttles
+    public String[] prefDeviceSoundsCurrentlyLoaded = {"none", "none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
     public float prefDeviceSoundsMomentum = 1000;
     public float prefDeviceSoundsLocoVolume = 1;
@@ -367,33 +369,33 @@ public class threaded_application extends Application {
     public boolean soundsReloadSounds = true;
     public boolean soundsSoundsAreBeingReloaded = false;
 
-    public boolean[][] soundsDeviceButtonStates = { {false,false,false},{false,false,false} };
+    public boolean[][] soundsDeviceButtonStates = {{false, false, false}, {false, false, false}};
 
     // [Type = Bell, Horn, HornShort] [whichThrottle] [Start, Loop, End]
-    public int[][][] soundsExtras = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};  // Start, Loop, End
-    public int[][][] soundsExtrasStreamId = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
-    public int[][][] soundsExtrasDuration = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
-    public double[][][] soundsExtrasStartTime = {{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}},{{0,0,0},{0,0,0}}};
-    public int [][] soundsExtrasCurrentlyPlaying = {{-1,-1},{-1,-1},{-1,-1}};
+    public int[][][] soundsExtras = {{{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}};  // Start, Loop, End
+    public int[][][] soundsExtrasStreamId = {{{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}};
+    public int[][][] soundsExtrasDuration = {{{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}};
+    public double[][][] soundsExtrasStartTime = {{{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}}};
+    public int[][] soundsExtrasCurrentlyPlaying = {{-1, -1}, {-1, -1}, {-1, -1}};
 
-    public int [][] soundsLoco = { // need one for each type of sound set available to select
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0}};
-    public int [][] soundsLocoStreamId = {
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0}};
-    public int [][] soundsLocoDuration = {
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0}};
-    public double [][] soundsLocoStartTime = {  //  extra entries for the Startup and Shut down sounds  20 and 21
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0},
-            {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0}};
-    public int [] soundsLocoCurrentlyPlaying = {-1,-1};
-    public int [] soundsLocoLastDirection = {1,1};
+    public int[][] soundsLoco = { // need one for each type of sound set available to select
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    public int[][] soundsLocoStreamId = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    public int[][] soundsLocoDuration = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    public double[][] soundsLocoStartTime = {  //  extra entries for the Startup and Shut down sounds  20 and 21
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    public int[] soundsLocoCurrentlyPlaying = {-1, -1};
+    public int[] soundsLocoLastDirection = {1, 1};
 
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
-    public int [] soundsLocoSteps = new int[2];
+    public int[] soundsLocoSteps = new int[2];
 
     private static final int SOUNDS_STARTUP_INDEX = 20;
     private static final int SOUNDS_SHUTDOWN_INDEX = 21;
@@ -404,12 +406,12 @@ public class threaded_application extends Application {
     // moved from throttle to ta to allow for gamepads to function in other activities
     public static final String WHICH_GAMEPAD_MODE_NONE = "None";
     public String prefGamePadType = WHICH_GAMEPAD_MODE_NONE;
-    public int[] gamePadIds = {0,0,0,0,0,0}; // which device id if assigned to each of the three throttles
-    public int[] gamePadThrottleAssignment = {-1,-1,-1,-1,-1,-1};
+    public int[] gamePadIds = {0, 0, 0, 0, 0, 0}; // which device id if assigned to each of the three throttles
+    public int[] gamePadThrottleAssignment = {-1, -1, -1, -1, -1, -1};
     public boolean usingMultiplePads = false;
-    public int[] gamePadDeviceIds = {0,0,0,0,0,0,0}; // which device ids have we seen
-    public String[] gamePadDeviceNames = {"","","","","","",""}; // which device have we seen - Names
-    public int[] gamePadDeviceIdsTested = {-1,-1,-1,-1,-1,-1,-1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
+    public int[] gamePadDeviceIds = {0, 0, 0, 0, 0, 0, 0}; // which device ids have we seen
+    public String[] gamePadDeviceNames = {"", "", "", "", "", "", ""}; // which device have we seen - Names
+    public int[] gamePadDeviceIdsTested = {-1, -1, -1, -1, -1, -1, -1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
     public int gamepadCount = 0;
 
     public static final int GAMEPAD_GOOD = 1;
@@ -749,7 +751,9 @@ public class threaded_application extends Application {
                             }
                         }
 
-                        if (soundPool!=null) {soundPool.autoPause();}
+                        if (soundPool != null) {
+                            soundPool.autoPause();
+                        }
                         break;
                     }
 
@@ -940,6 +944,10 @@ public class threaded_application extends Application {
                         break;
                     case message_type.GAMEPAD_JOYSTICK_ACTION:
                         sendMsg(throttle_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION, msg.obj.toString());
+                        break;
+
+                    case message_type.VOLUME_BUTTON_ACTION:
+                        sendMsg(throttle_msg_handler, message_type.VOLUME_BUTTON_ACTION, msg.obj.toString());
                         break;
                 }
             }
@@ -3097,6 +3105,7 @@ public class threaded_application extends Application {
     public int getSelectedTheme() {
         return getSelectedTheme(false);
     }
+
     public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
         if (!isPreferences) {  // not a preferences activity
@@ -3134,6 +3143,7 @@ public class threaded_application extends Application {
     public void applyTheme(Activity activity) {
         applyTheme(activity, false);
     }
+
     public void applyTheme(Activity activity, boolean isPreferences) {
         int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
@@ -3299,7 +3309,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if ((prefs.getBoolean("prefKidsTimerButton", false))
-            && !((kidsTimerRunning == KIDS_TIMER_RUNNNING) || (kidsTimerRunning == KIDS_TIMER_ENABLED)) ) {
+                && !((kidsTimerRunning == KIDS_TIMER_RUNNNING) || (kidsTimerRunning == KIDS_TIMER_ENABLED))) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3314,9 +3324,9 @@ public class threaded_application extends Application {
         String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
         String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
 
-        if ( (prefs.getBoolean("prefWebViewButton", false))
+        if ((prefs.getBoolean("prefWebViewButton", false))
                 && (!webViewLocation.equals(defaultWebViewLocation))
-                && (currentScreenSupportsWebView)){
+                && (currentScreenSupportsWebView)) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3566,7 +3576,7 @@ public class threaded_application extends Application {
         return throttle;
     }
 
-    public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX ) {
+    public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX) {
         prefSwipeThoughTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
                 getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
         prefSwipeThoughRoutes = prefs.getBoolean("swipe_through_routes_preference",
@@ -3585,16 +3595,16 @@ public class threaded_application extends Application {
         int nextScreen;
         if (deltaX <= 0.0) {
             nextScreen = currentScreen + 1;
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
-                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes))) {
                 nextScreen++;
             }
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_WEB)
-                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_WEB)
+                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb))) {
                 nextScreen++;
             }
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
-                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts))) {
                 nextScreen++;
             }
             if (nextScreen > SCREEN_SWIPE_INDEX_TURNOUTS) {
@@ -3605,16 +3615,16 @@ public class threaded_application extends Application {
             if (nextScreen < SCREEN_SWIPE_INDEX_THROTTLE) {
                 nextScreen = SCREEN_SWIPE_INDEX_TURNOUTS;
             }
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
-                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+                    && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts))) {
                 nextScreen--;
             }
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_WEB)
-                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_WEB)
+                    && ((!isWebAllowed()) || (!prefSwipeThoughWeb))) {
                 nextScreen--;
             }
-            if ( (nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
-                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes)) ) {
+            if ((nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+                    && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes))) {
                 nextScreen--;
             }
         }
@@ -3746,7 +3756,7 @@ public class threaded_application extends Application {
 
     public boolean supportsRoster() {
         //true if roster entries exist
-        if ( (roster_entries!=null) && (roster_entries.size() > 0)) return true;
+        if ((roster_entries != null) && (roster_entries.size() > 0)) return true;
         //always show roster panel for these entries
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
@@ -3766,7 +3776,7 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
-        if ( (conLoco.getIsFromRoster()) && (!conLoco.getRosterName().equals("")) ) {
+        if ((conLoco.getIsFromRoster()) && (!conLoco.getRosterName().equals(""))) {
             loco_name = conLoco.getRosterName();
         }
         Integer locoSource = conLoco.getWhichSource();
@@ -3778,7 +3788,7 @@ public class threaded_application extends Application {
                 importExportPreferences.recent_loco_address_size_list.remove(i);
                 importExportPreferences.recent_loco_name_list.remove(i);
                 importExportPreferences.recent_loco_source_list.remove(i);
-                Log.d("Engine_Driver", "Loco '"+ loco_name + "' removed from Recents");
+                Log.d("Engine_Driver", "Loco '" + loco_name + "' removed from Recents");
                 break;
             }
         }
@@ -3790,7 +3800,7 @@ public class threaded_application extends Application {
         importExportPreferences.recent_loco_source_list.add(0, locoSource);
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
-        Log.d("Engine_Driver", "Loco '"+ loco_name + "' added to Recents");
+        Log.d("Engine_Driver", "Loco '" + loco_name + "' added to Recents");
 
     }
 
@@ -3800,79 +3810,79 @@ public class threaded_application extends Application {
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
-            ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
-            importExportConnectionList.connections_list.clear();
-            importExportConnectionList.getConnectionsList("", "");
-            importExportConnectionList.saveConnectionsListExecute(
-                    this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
-            connectedHostName = retrievedServerName;
+        ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
+        importExportConnectionList.connections_list.clear();
+        importExportConnectionList.getConnectionsList("", "");
+        importExportConnectionList.saveConnectionsListExecute(
+                this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
+        connectedHostName = retrievedServerName;
 
-            String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
+        String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-            prefs.edit().putString("prefAndroidId", deviceId).commit();
-            prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        prefs.edit().putString("prefAndroidId", deviceId).commit();
+        prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
-            if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
-                    || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
-                if (connectedHostName != null) {
-                    String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                    ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                    importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
+        if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
+                || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+            if (connectedHostName != null) {
+                String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+                importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
 
-                    Message msg = Message.obtain();
-                    msg.what = message_type.RESTART_APP;
-                    msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
-                    Log.d("Engine_Driver", "updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
-                    comm_msg_handler.sendMessage(msg);
-                } else {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
-                }
+                Message msg = Message.obtain();
+                msg.what = message_type.RESTART_APP;
+                msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
+                Log.d("Engine_Driver", "updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                comm_msg_handler.sendMessage(msg);
+            } else {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
             }
+        }
 //        }
     }
 
-        public void throttleVibration(int speed, int lastSpeed) {
-        if ( (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
-            || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) ) {
-                int speedStepPref = getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-                int xSpeed = speed;
-                int xLastSpeed = lastSpeed;
-                if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
-                    if (speedStepPref == 28) {
-                        xSpeed = speed / 2;
-                        xLastSpeed = lastSpeed / 2;
-                    } else if (speedStepPref == 100) {
-                        xSpeed = speed / 10;
-                        xLastSpeed = lastSpeed / 10;
-                    } else if (speedStepPref == 128) {
-                        xSpeed = speed / 6;
-                        xLastSpeed = lastSpeed / 6;
-                    }
-                }
-
-                if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
-                        || ((xSpeed == 0) && (xLastSpeed != 0))
-                        || ((xSpeed == 126) && (xLastSpeed != 126))) {
-//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
-                    vibrate(prefHapticFeedbackDuration);
+    public void throttleVibration(int speed, int lastSpeed) {
+        if ((prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
+                || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED))) {
+            int speedStepPref = getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            int xSpeed = speed;
+            int xLastSpeed = lastSpeed;
+            if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
+                if (speedStepPref == 28) {
+                    xSpeed = speed / 2;
+                    xLastSpeed = lastSpeed / 2;
+                } else if (speedStepPref == 100) {
+                    xSpeed = speed / 10;
+                    xLastSpeed = lastSpeed / 10;
+                } else if (speedStepPref == 128) {
+                    xSpeed = speed / 6;
+                    xLastSpeed = lastSpeed / 6;
                 }
             }
+
+            if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
+                    || ((xSpeed == 0) && (xLastSpeed != 0))
+                    || ((xSpeed == 126) && (xLastSpeed != 126))) {
+//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
+                vibrate(prefHapticFeedbackDuration);
+            }
         }
+    }
 
     public void buttonVibration() {
         if (prefHapticFeedbackButtons) {
-            vibrate(prefHapticFeedbackDuration*2);
+            vibrate(prefHapticFeedbackDuration * 2);
         }
     }
 
     public String getHostIp() {
         return host_ip;
-        }
+    }
 
     public Double getWithrottleVersion() {
         return withrottle_version;
-        }
+    }
 
     static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
         int newVal;
@@ -3888,7 +3898,7 @@ public class threaded_application extends Application {
         return newVal;
     }
 
-    public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle,  String clockText) {
+    public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
             TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -3929,7 +3939,7 @@ public class threaded_application extends Application {
     public void hideSoftKeyboard(View view) {
         // Check if no view has focus:
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -3941,7 +3951,7 @@ public class threaded_application extends Application {
 
     public void stopAllSounds() {
         Log.d("Engine_Driver", "ta - stopAllSounds (locoSounds)");
-        if (soundPool!=null) {
+        if (soundPool != null) {
             for (int soundType = 0; soundType < 3; soundType++) {
                 for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {
                     for (int mSound = 0; mSound < 3; mSound++) {
@@ -3956,7 +3966,7 @@ public class threaded_application extends Application {
                 }
             }
 
-            for (int j = 0; j<2; j++) {
+            for (int j = 0; j < 2; j++) {
                 soundsLocoCurrentlyPlaying[j] = -1;
                 for (int soundType = 0; soundType < 3; soundType++) {
                     soundsExtrasCurrentlyPlaying[soundType][j] = -1;
@@ -3981,7 +3991,7 @@ public class threaded_application extends Application {
 //        }
 //    }
 
-    public int getGamePadIndexFromThrottleNo (int whichThrottle) {
+    public int getGamePadIndexFromThrottleNo(int whichThrottle) {
         int whichGamepad = -1;
         for (int i = 0; i < numThrottles; i++) {
             if (gamePadIds[whichThrottle] == gamePadDeviceIds[i]) {
@@ -4043,7 +4053,7 @@ public class threaded_application extends Application {
                     if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
                             gamePadIds[i] = eventDeviceId;
-                            if (reassigningGamepad==-1) { // not a reassignment
+                            if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
                             } else { // reasigning
                                 gamePadThrottleAssignment[i] = reassigningGamepad;
@@ -4069,6 +4079,7 @@ public class threaded_application extends Application {
 
     // get the consist for the specified throttle
     private static final Consist emptyConsist = new Consist();
+
     public Consist getConsist(int whichThrottle) {
         if (consists == null || whichThrottle >= consists.length || consists[whichThrottle] == null)
             return emptyConsist;
@@ -4101,7 +4112,7 @@ public class threaded_application extends Application {
                             + Float.toString(xAxis) + ":"
                             + Float.toString(yAxis) + ":"
                             + Float.toString(xAxis2) + ":"
-                            + Float.toString(yAxis2) );
+                            + Float.toString(yAxis2));
 
             return (true); // stop processing this key
         }
@@ -4113,26 +4124,26 @@ public class threaded_application extends Application {
     // used to support the gamepad only   DPAD and key events
     public boolean implDispatchKeyEvent(KeyEvent event) {
         InputDevice dev = event.getDevice();
-        if (dev==null) { // unclear why, but some phones/tables don't seem to return a device for the internal keyboard
+        if (dev == null) { // unclear why, but some phones/tables don't seem to return a device for the internal keyboard
             return false;
         }
         String eventDeviceName = dev.getName();
         boolean isExternal = false;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            InputDevice idev = getDevice(event.getDeviceId());
-            if( idev != null && idev.toString().contains("Location: external")) {
-                isExternal = true;
-            }
-            if (!isExternal) {
-                for (int i=0; i<gamePadDeviceNames.length; i++) {
-                    if (eventDeviceName.equals(gamePadDeviceNames[i])) {
-                        isExternal = true;
-                    }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        InputDevice idev = getDevice(event.getDeviceId());
+        if (idev != null && idev.toString().contains("Location: external")) {
+            isExternal = true;
+        }
+        if (!isExternal) {
+            for (int i = 0; i < gamePadDeviceNames.length; i++) {
+                if (eventDeviceName.equals(gamePadDeviceNames[i])) {
+                    isExternal = true;
                 }
             }
         }
+//        }
 
-        if (isExternal) { // is from a external device (otherwise if it has come from the phone itself, don't try to process it here)
+        if (isExternal) { // is from a external device (otherwise if it has come from the phone itself, generally don't try to process it here)
             if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
@@ -4143,7 +4154,7 @@ public class threaded_application extends Application {
 //                int whichThrottle;
                 int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), event.getKeyCode());
                 if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
-                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)]!=threaded_application.GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)] != threaded_application.GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -4160,6 +4171,16 @@ public class threaded_application extends Application {
 
                     return (true); // stop processing this key
                 }
+            }
+        } else { // only process the volume keys
+            int action = event.getAction();
+            int keyCode = event.getKeyCode();
+            int repeatCnt = event.getRepeatCount();
+            if ((keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_VOLUME_DOWN)) {
+                sendMsg(comm_msg_handler, message_type.VOLUME_BUTTON_ACTION,
+                        action + ":" + keyCode + ":" + repeatCnt);
+
+                return (true); // stop processing this key
             }
         }
         return (false);

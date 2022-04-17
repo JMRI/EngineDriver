@@ -1167,6 +1167,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         dispatchKeyEvent(null);
                     }
                     break;
+                case message_type.VOLUME_BUTTON_ACTION: // volumem button n another activity
+                    Log.d("Engine_Driver", "throttle handleMessage VOLUMN_BUTTON_ACTION " + response_str );
+                    if (response_str.length()>0) {
+                        String[] splitString = response_str.split(":");
+                        doVolumeButtonAction(Integer.parseInt(splitString[0]), Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
+                    }
+                    break;
 
                 case message_type.GAMEPAD_JOYSTICK_ACTION:
                     Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_JOYSTICK_ACTION " + response_str );
@@ -6413,9 +6420,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
-            mVolumeKeysAutoIncrement = false;
-            mVolumeKeysAutoDecrement = false;
-
+//            mVolumeKeysAutoIncrement = false;
+//            mVolumeKeysAutoDecrement = false;
+            doVolumeButtonAction(event.getAction(), key, 0);
             return (true); // stop processing this key
         }
         return (super.onKeyUp(key, event)); // continue with normal key
@@ -6442,10 +6449,40 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return (true); // stop processing this key
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+//            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
+//                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+//                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
+//                          && (mainapp.consists[throttleIndex].isActive()) ) {
+//                        if (key == KEYCODE_VOLUME_UP) {
+//                            if (repeatCnt == 0) {
+//                                mVolumeKeysAutoIncrement = true;
+//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                            }
+//                        } else {
+//                            if (repeatCnt == 0) {
+//                                mVolumeKeysAutoDecrement = true;
+//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            doVolumeButtonAction(event.getAction(), key, repeatCnt);
+            return (true); // stop processing this key
+        }
+        return (super.onKeyDown(key, event)); // continue with normal key
+        // processing
+    }
+
+    void doVolumeButtonAction(int action, int key, int repeatCnt) {
+        if (action==ACTION_UP) {
+            mVolumeKeysAutoIncrement = false;
+            mVolumeKeysAutoDecrement = false;
+        } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
                 for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
-                          && (mainapp.consists[throttleIndex].isActive()) ) {
+                    if (throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
+                            && (mainapp.consists[throttleIndex].isActive())) {
                         if (key == KEYCODE_VOLUME_UP) {
                             if (repeatCnt == 0) {
                                 mVolumeKeysAutoIncrement = true;
@@ -6460,10 +6497,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             }
-            return (true); // stop processing this key
         }
-        return (super.onKeyDown(key, event)); // continue with normal key
-        // processing
     }
 
     private void releaseThrottles() {
