@@ -6514,6 +6514,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -6526,20 +6527,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         switch (item.getItemId()) {
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startACoreActivity(this, in, false, 0);
                 mainapp.webMenuSelected = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
@@ -6975,11 +6972,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         // swipe left/right
                         if (!isScreenLocked) {
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
-                            if (nextScreenIntent != null) {
-                                nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                startActivity(nextScreenIntent);
-                                mainapp.setSwipeAnimationTransition(this, deltaX);
-                            }
+                            startACoreActivity(this, nextScreenIntent, true, deltaX);
                         }
                     }
                 }
@@ -7696,17 +7689,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     void showHideSpeedLimitAndPauseButtons(int whichThrottle) {
         // show or hide the limit speed buttons
-        if (!prefLimitSpeedButton) {
-            bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
-        } else {
-            bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        if ((bLimitSpeeds != null) && (bLimitSpeeds[whichThrottle] != null)) {
+            if (!prefLimitSpeedButton) {
+                bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
+            } else{
+                bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+            }
         }
 
         // show or hide the pause speed buttons
-        if (!prefPauseSpeedButton) {
-            bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
-        } else {
-            bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        if ((bPauseSpeeds != null) && (bPauseSpeeds[whichThrottle] != null)) {
+            if (!prefPauseSpeedButton) {
+                bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
+            } else {
+                bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -7715,5 +7712,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.soundsReloadSounds = true;
         iplsLoader.loadSounds();
         iplsLoader = null;
+    }
+
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
     }
 }

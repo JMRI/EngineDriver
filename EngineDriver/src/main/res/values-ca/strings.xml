@@ -26,12 +26,15 @@
     <string name="app_name_intro">Introducció</string>
     <string name="app_name_connect">Connectar al servidor</string>
     <string name="app_name_throttle">Controlador</string>
+    <string name="app_name_throttle_long">Engine Driver - Controlador</string>
     <string name="app_name_throttle_short">Controlador</string>
     <string name="app_name_power_control">Control de corrent</string>
     <string name="app_name_reconnect_status">Estat de reconnexió</string>
     <string name="app_name_routes">Rutes</string>
+    <string name="app_name_routes_long">Engine Driver - Rutes</string>
     <string name="app_name_routes_short">Rutes</string>
     <string name="app_name_turnouts">Agulles</string>
+    <string name="app_name_turnouts_long">Engine Driver - Agulles</string>
     <string name="app_name_turnouts_short">Agulles</string>
     <string name="app_name_about">Quant a</string>
     <string name="app_name_functions">Paràmetres de funcions per defecte</string>

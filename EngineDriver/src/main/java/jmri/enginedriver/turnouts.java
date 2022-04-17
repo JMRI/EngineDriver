@@ -21,6 +21,7 @@ import static android.text.TextUtils.substring;
 import static android.view.InputDevice.getDevice;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -800,69 +801,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         return (super.onKeyDown(key, event));
     }
 
-//    @Override
-//    public boolean onDown(MotionEvent e) {
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//        if (e1 == null || e2 == null)
-//            return false;
-//        float deltaX = e2.getX() - e1.getX();
-//        float absDeltaX = Math.abs(deltaX);
-//        if ((absDeltaX > threaded_application.min_fling_distance) &&
-//                (Math.abs(velocityX) > threaded_application.min_fling_velocity) &&
-//                (absDeltaX > Math.abs(e2.getY() - e1.getY()))) {
-//            // left to right swipe goes to web, then routes if enabled in prefs
-//            if (deltaX > 0.0) {
-//                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
-//                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
-//                swipeWeb = swipeWeb && mainapp.isWebAllowed();  //also check the allowed flag
-//                if (swipeWeb) {
-//                    Intent in = new Intent().setClass(this, web_activity.class);
-//                    startActivity(in);
-//                } else {
-//                    boolean swipeRoutes = prefs.getBoolean("swipe_through_routes_preference",
-//                            getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
-//                    swipeRoutes = swipeRoutes && mainapp.isRouteControlAllowed();  //also check the allowed flag
-//                    if (swipeRoutes) {
-//                        Intent in = new Intent().setClass(this, routes.class);
-//                        startActivity(in);
-//                    }
-//                }
-//                this.finish();  //don't keep on return stack
-//                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
-//            }
-//            // right to left swipe goes to throttle
-//            else {
-//                this.finish();  //don't keep on return stack
-//                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
-//            }
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public void onLongPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-//                            float distanceY) {
-//        return false;
-//    }
-//
-//    @Override
-//    public void onShowPress(MotionEvent e) {
-//    }
-//
-//    @Override
-//    public boolean onSingleTapUp(MotionEvent e) {
-//        return false;
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -883,6 +821,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         return  super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
@@ -891,22 +830,16 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
                 in = mainapp.getThrottleIntent();
-                startActivity(in);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
-                startActivity(in);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startACoreActivity(this, in, false, 0);
                 mainapp.webMenuSelected = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
@@ -1438,11 +1371,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
                 Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_TURNOUTS, deltaX);
-                if (nextScreenIntent != null) {
-                    nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(nextScreenIntent);
-                    mainapp.setSwipeAnimationTransition(this, deltaX);
-                }
+                startACoreActivity(this, nextScreenIntent, true, deltaX);
             } else {
                 // gesture was not long enough
                 gestureFailed(event);
@@ -1513,4 +1442,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }
 }

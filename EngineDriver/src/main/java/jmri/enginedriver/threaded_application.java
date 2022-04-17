@@ -2211,15 +2211,15 @@ public class threaded_application extends Application {
         private Activity runningActivity = null;
 
         @Override
-        public void onActivityCreated(Activity activity, Bundle bundle) {
+        public void onActivityCreated(@NonNull Activity activity, Bundle bundle) {
         }
 
         @Override
-        public void onActivityStarted(Activity activity) {
+        public void onActivityStarted(@NonNull Activity activity) {
         }
 
         @Override
-        public void onActivityResumed(Activity activity) {
+        public void onActivityResumed(@NonNull Activity activity) {
             if (isInBackground) {                           // if coming out of background
                 isInBackground = false;
                 exitConfirmed = false;
@@ -2229,26 +2229,26 @@ public class threaded_application extends Application {
         }
 
         @Override
-        public void onActivityPaused(Activity activity) {
+        public void onActivityPaused(@NonNull Activity activity) {
         }
 
         @Override
-        public void onActivityStopped(Activity activity) {
+        public void onActivityStopped(@NonNull Activity activity) {
         }
 
         @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+        public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
         }
 
         @Override
-        public void onActivityDestroyed(Activity activity) {
+        public void onActivityDestroyed(@NonNull Activity activity) {
             if (isInBackground && activity == runningActivity) {
                 removeNotification();           // destroyed in background so remove notification
             }
         }
 
         @Override
-        public void onConfigurationChanged(Configuration configuration) {
+        public void onConfigurationChanged(@NonNull Configuration configuration) {
         }
 
         @Override
@@ -2262,7 +2262,7 @@ public class threaded_application extends Application {
                     isInBackground = true;
                     if (!exitConfirmed) {                       // if user did not just confirm exit
                         addNotification(runningActivity.getIntent());
-                    } else {                                    // user confirmed exit
+//                    } else {                                    // user confirmed exit
                     }
                 }
                 if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) { // time to kill app
@@ -2316,7 +2316,7 @@ public class threaded_application extends Application {
                 int i = 0;
                 while (settings_reader.ready()) {
                     String line = settings_reader.readLine();
-                    String temp[] = line.split(":");
+                    String[] temp = line.split(":");
                     if (temp.length >= 2) {
                         if (i <= numberOfDefaultFunctionLabels) {
                             function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
@@ -2693,11 +2693,7 @@ public class threaded_application extends Application {
     }
 
     public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
-        if (prefs.getBoolean(swipePreferenceToCheck, false)) {
-            menu.findItem(R.id.throttle_button_mnu).setVisible(false);
-        } else {
-            menu.findItem(R.id.throttle_button_mnu).setVisible(true);
-        }
+        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
     }
 
     /**
@@ -2770,11 +2766,7 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.routes_mnu);
             if (item != null) {
-                if (isRouteControlAllowed()) {
-                    item.setVisible(true);
-                } else {
-                    item.setVisible(false);
-                }
+                item.setVisible(isRouteControlAllowed());
             }
         }
     }
@@ -2788,11 +2780,7 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.power_control_mnu);
             if (item != null) {
-                if (isPowerControlAllowed()) {
-                    item.setVisible(true);
-                } else {
-                    item.setVisible(false);
-                }
+                item.setVisible(isPowerControlAllowed());
             }
         }
     }
@@ -2806,11 +2794,7 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.turnouts_mnu);
             if (item != null) {
-                if (isTurnoutControlAllowed()) {
-                    item.setVisible(true);
-                } else {
-                    item.setVisible(false);
-                }
+                item.setVisible(isTurnoutControlAllowed());
             }
         }
     }
@@ -3344,10 +3328,7 @@ public class threaded_application extends Application {
         MenuItem mi;
         mi = menu.findItem(R.id.device_sounds_button);
         if (mi != null) {
-            boolean rslt = false;
-            if (prefDeviceSoundsButton) {
-                rslt = true;
-            }
+            boolean rslt = prefDeviceSoundsButton;
             if (rslt) {
                 actionBarIconCountThrottle++;
                 mi.setVisible(true);
@@ -4192,12 +4173,27 @@ public class threaded_application extends Application {
         return rslt;
     }
 
-    public void setSwipeAnimationTransition(Activity activity, float deltaX) {
-        if (deltaX > 0.0 ) {
-            connection_activity.overridePendingTransition(activity, R.anim.push_right_in, R.anim.push_right_out);
-        } else {
-            connection_activity.overridePendingTransition(activity, R.anim.push_left_in, R.anim.push_left_out);
+    public int getFadeIn(boolean swipe, float deltaX) {
+        int fadeIn = R.anim.fade_in;
+        if (swipe) {
+            if (deltaX > 0.0) {
+                    fadeIn = R.anim.push_right_in;
+            } else {
+                    fadeIn = R.anim.push_left_in;
+            }
         }
+        return fadeIn;
+    }
 
+    public int getFadeOut(boolean swipe, float deltaX) {
+        int fadeOut = R.anim.fade_out;
+        if (swipe) {
+            if (deltaX > 0.0) {
+                    fadeOut = R.anim.push_right_out;
+            } else {
+                    fadeOut = R.anim.push_left_out;
+            }
+        }
+        return fadeOut;
     }
 }
