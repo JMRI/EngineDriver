@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import static android.view.InputDevice.getDevice;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -480,7 +481,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            return;
         }
     }
 
@@ -494,7 +494,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         super.onDestroy();
 
         if (mainapp.routes_msg_handler != null) {
-            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);;
+            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
             mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
             mainapp.routes_msg_handler = null;
         } else {
@@ -553,6 +553,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 //        Log.d("Engine_Driver", "routes: onOptionsItemSelected");
@@ -563,22 +564,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
                 in = mainapp.getThrottleIntent();
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startACoreActivity(this, in, false, 0);
                 mainapp.webMenuSelected = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
@@ -735,11 +730,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
                 Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_ROUTES, deltaX);
-                if (nextScreenIntent != null) {
-                    nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(nextScreenIntent);
-                    mainapp.setSwipeAnimationTransition(this, deltaX);
-                }
+                startACoreActivity(this, nextScreenIntent, true, deltaX);
             } else {
                 // gesture was not long enough
                 gestureFailed(event);
@@ -810,4 +801,13 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
     }
 
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }
 }

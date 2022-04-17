@@ -1167,6 +1167,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         dispatchKeyEvent(null);
                     }
                     break;
+                case message_type.VOLUME_BUTTON_ACTION: // volumem button n another activity
+                    Log.d("Engine_Driver", "throttle handleMessage VOLUMN_BUTTON_ACTION " + response_str );
+                    if (response_str.length()>0) {
+                        String[] splitString = response_str.split(":");
+                        doVolumeButtonAction(Integer.parseInt(splitString[0]), Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
+                    }
+                    break;
 
                 case message_type.GAMEPAD_JOYSTICK_ACTION:
                     Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_JOYSTICK_ACTION " + response_str );
@@ -6413,9 +6420,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
-            mVolumeKeysAutoIncrement = false;
-            mVolumeKeysAutoDecrement = false;
-
+//            mVolumeKeysAutoIncrement = false;
+//            mVolumeKeysAutoDecrement = false;
+            doVolumeButtonAction(event.getAction(), key, 0);
             return (true); // stop processing this key
         }
         return (super.onKeyUp(key, event)); // continue with normal key
@@ -6442,10 +6449,40 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return (true); // stop processing this key
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+//            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
+//                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+//                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
+//                          && (mainapp.consists[throttleIndex].isActive()) ) {
+//                        if (key == KEYCODE_VOLUME_UP) {
+//                            if (repeatCnt == 0) {
+//                                mVolumeKeysAutoIncrement = true;
+//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                            }
+//                        } else {
+//                            if (repeatCnt == 0) {
+//                                mVolumeKeysAutoDecrement = true;
+//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            doVolumeButtonAction(event.getAction(), key, repeatCnt);
+            return (true); // stop processing this key
+        }
+        return (super.onKeyDown(key, event)); // continue with normal key
+        // processing
+    }
+
+    void doVolumeButtonAction(int action, int key, int repeatCnt) {
+        if (action==ACTION_UP) {
+            mVolumeKeysAutoIncrement = false;
+            mVolumeKeysAutoDecrement = false;
+        } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
                 for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
-                          && (mainapp.consists[throttleIndex].isActive()) ) {
+                    if (throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
+                            && (mainapp.consists[throttleIndex].isActive())) {
                         if (key == KEYCODE_VOLUME_UP) {
                             if (repeatCnt == 0) {
                                 mVolumeKeysAutoIncrement = true;
@@ -6460,10 +6497,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             }
-            return (true); // stop processing this key
         }
-        return (super.onKeyDown(key, event)); // continue with normal key
-        // processing
     }
 
     private void releaseThrottles() {
@@ -6514,6 +6548,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -6526,20 +6561,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         switch (item.getItemId()) {
             case R.id.turnouts_mnu:
                 in = new Intent().setClass(this, turnouts.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.routes_mnu:
                 in = new Intent().setClass(this, routes.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+                startACoreActivity(this, in, false, 0);
                 return true;
             case R.id.web_mnu:
                 in = new Intent().setClass(this, web_activity.class);
-                in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startACoreActivity(this, in, false, 0);
                 mainapp.webMenuSelected = true;
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
             case R.id.exit_mnu:
                 mainapp.checkExit(this);
@@ -6975,11 +7006,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         // swipe left/right
                         if (!isScreenLocked) {
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
-                            if (nextScreenIntent != null) {
-                                nextScreenIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                startActivity(nextScreenIntent);
-                                mainapp.setSwipeAnimationTransition(this, deltaX);
-                            }
+                            startACoreActivity(this, nextScreenIntent, true, deltaX);
                         }
                     }
                 }
@@ -7696,17 +7723,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     void showHideSpeedLimitAndPauseButtons(int whichThrottle) {
         // show or hide the limit speed buttons
-        if (!prefLimitSpeedButton) {
-            bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
-        } else {
-            bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        if ((bLimitSpeeds != null) && (bLimitSpeeds[whichThrottle] != null)) {
+            if (!prefLimitSpeedButton) {
+                bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
+            } else{
+                bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+            }
         }
 
         // show or hide the pause speed buttons
-        if (!prefPauseSpeedButton) {
-            bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
-        } else {
-            bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+        if ((bPauseSpeeds != null) && (bPauseSpeeds[whichThrottle] != null)) {
+            if (!prefPauseSpeedButton) {
+                bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
+            } else {
+                bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -7715,5 +7746,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.soundsReloadSounds = true;
         iplsLoader.loadSounds();
         iplsLoader = null;
+    }
+
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
     }
 }
