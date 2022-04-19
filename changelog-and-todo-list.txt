@@ -1,3 +1,4 @@
+**Version 2.32.144
 **Version 2.32.142
  * Fix: avoid web page reload on navigate
  * Option to show the Server Description on the Action bar
