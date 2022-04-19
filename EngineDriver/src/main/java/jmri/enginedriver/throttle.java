@@ -5028,7 +5028,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         private void handleAction(int action) {
-            Log.d("Engine_Driver", "handleAction - action: " + action );
+//            Log.d("Engine_Driver", "handleAction - action: " + action );
             int isLatching = FUNCTION_CONSIST_LATCHING_NA;  // only used for the special consist function matching
 
             switch (action) {
