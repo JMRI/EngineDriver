@@ -21,6 +21,7 @@ import static android.view.InputDevice.getDevice;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +33,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -163,11 +165,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
                 Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_WEB, deltaX);
-                if (nextScreenIntent != null) {
-                    startActivity(nextScreenIntent);
-                    mainapp.setSwipeAnimationTransition(this, deltaX);
-                }
-
+                startACoreActivity(this, nextScreenIntent, true, deltaX);
             } else {
                 // gesture was not long enough
                 gestureFailed(event);
@@ -519,7 +517,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         outState.putBundle("webViewState", bundle);
     }
 
-    protected void onRestoreInstanceState(Bundle state) {
+    protected void onRestoreInstanceState(@NonNull Bundle state) {
         super.onRestoreInstanceState(state);
         Bundle bundle = new Bundle();
         webView.saveState(bundle);
@@ -593,6 +591,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         return  super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
@@ -669,9 +668,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             in = mainapp.getThrottleIntent();
         }
         if (returningToOtherActivity) {                 // if not returning
-            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            startACoreActivity(this, in, false, 0);
         } else {
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
@@ -749,4 +746,13 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return super.dispatchKeyEvent(event);
         }
     }
-}
+
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }}

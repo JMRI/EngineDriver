@@ -74,4 +74,5 @@ public interface message_type {
     int SOUNDS_FORCE_LOCO_SOUNDS_TO_START = 52;   //
     int GAMEPAD_ACTION = 53;   //
     int GAMEPAD_JOYSTICK_ACTION = 54;   //
+    int VOLUME_BUTTON_ACTION = 55;   //
 }

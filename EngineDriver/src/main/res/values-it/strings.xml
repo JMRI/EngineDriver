@@ -27,12 +27,15 @@
     <string name="app_name_intro">Introduzione</string>
     <string name="app_name_connect">Connessione al Server</string>
     <string name="app_name_throttle">Controllo</string>
+    <string name="app_name_throttle_long">Engine Driver - Controllo</string>
     <string name="app_name_throttle_short">Controllo </string>
     <string name="app_name_power_control">Controllo di Energia</string>
     <string name="app_name_reconnect_status">Status Ri-connessione</string>
     <string name="app_name_routes">Rotte</string>
+    <string name="app_name_routes_long">Engine Driver - Rotte</string>
     <string name="app_name_routes_short">Rotte</string>
     <string name="app_name_turnouts">Scambi</string>
+    <string name="app_name_turnouts_long">Engine Driver - Scambi</string>
     <string name="app_name_turnouts_short">Scambi</string>
     <string name="app_name_about">Circa</string>
     <string name="app_name_functions">Configurazione Funzioni Default</string>
@@ -843,7 +846,7 @@
     <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">Volume per il motore Loco Sounds nel telefono (1-100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">Nel telefono Loco suona il volume</string>
     <string name="prefThrottleAdditionalControlTitle">Altre preferenze di sorgente di controllo dell\'acceleratore</string>
-    <string name="prefDeviceSoundsBellVolumeSummary">Volume per suoni di campana nel telefono (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">Volume per suoni di campana nel telefono (1-100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">Nel volume della campana del telefono</string>
     <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">Volume per suoni di corno / fischietto nel telefono (1-100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">Nel telefono Horn / Whistle Sounds Volume</string>

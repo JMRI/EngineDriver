@@ -26,12 +26,15 @@
     <string name="app_name_intro">Introdução</string>
     <string name="app_name_connect">Conexão ao Servidor</string>
     <string name="app_name_throttle">Controlador</string>
+    <string name="app_name_throttle_long">Engine Driver - Controlador</string>
     <string name="app_name_throttle_short">Controlador  </string>
     <string name="app_name_power_control">Controle de Energia</string>
     <string name="app_name_reconnect_status">Status Re-conexão</string>
     <string name="app_name_routes">Rotas</string>
+    <string name="app_name_routes_long">Engine Driver - Rotas</string>
     <string name="app_name_routes_short">Rotas</string>
     <string name="app_name_turnouts">Desvios</string>
+    <string name="app_name_turnouts_long">Engine Driver - Desvios</string>
     <string name="app_name_turnouts_short">Desvios</string>
     <string name="app_name_about">Sobre</string>
     <string name="app_name_functions">Configuração Funções Padrão</string>
