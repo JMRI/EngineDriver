@@ -1573,7 +1573,7 @@ public class threaded_application extends Application {
             if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
                 ret = true;
             } //any function key message
-            if (ret) Log.d("Engine_Driver", "timeSensitive message, not requeued: '{}'" + msg);
+            if (ret) Log.d("Engine_Driver", "timeSensitive msg, not requeuing:");
             return ret;
         }
 
