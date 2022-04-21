@@ -18,7 +18,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -101,8 +103,9 @@ public class reconnect_status extends AppCompatActivity {
     };
 
     private void closeScreen() {
-        this.finish();                  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+//        this.finish();                  //end this activity
+//        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        startACoreActivity(this, mainapp.getThrottleIntent(), false, 0);
     }
 
     /**
@@ -201,4 +204,13 @@ public class reconnect_status extends AppCompatActivity {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    // common startActivity()
+    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+        if (activity != null) {
+            in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(in);
+            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }
 }

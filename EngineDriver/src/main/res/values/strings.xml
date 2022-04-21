@@ -41,6 +41,7 @@
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
     <string name="app_name_routes_long">Engine Driver - Routes</string>
     <string name="app_name_routes_short">Routes</string>
