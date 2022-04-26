@@ -104,7 +104,7 @@ public class reconnect_status extends AppCompatActivity {
 
     private void closeScreen() {
 //        this.finish();                  //end this activity
-//        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+//        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);utes
         startACoreActivity(this, mainapp.getThrottleIntent(), false, 0);
     }
 

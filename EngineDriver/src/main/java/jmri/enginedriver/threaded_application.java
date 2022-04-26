@@ -4189,7 +4189,7 @@ public class threaded_application extends Application {
     public String fixFilename(String fName) {
         String rslt = "";
         if (fName!=null) {
-            rslt = fName.replaceAll("[\\\\/:\"*?<>|]", "_");
+            rslt = fName.replaceAll("[\\\\/:\"*?<>|]", "_").trim();
         }
         return rslt;
     }
