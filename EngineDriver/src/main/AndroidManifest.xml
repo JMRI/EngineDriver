@@ -82,8 +82,7 @@
         <activity
             android:name=".throttle_full"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -92,8 +91,7 @@
         <activity
             android:name=".throttle_switching_horizontal"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -102,8 +100,7 @@
         <activity
             android:name=".throttle_simple"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -112,8 +109,7 @@
         <activity
             android:name=".throttle_vertical_left_or_right"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -122,8 +118,7 @@
         <activity
             android:name=".throttle_switching_left_or_right"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -132,8 +127,7 @@
         <activity
             android:name=".throttle_big_buttons"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_throttle_long"
@@ -157,8 +151,7 @@
             android:name=".turnouts"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts_long"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:theme="@style/app_theme_black" >
         </activity>
@@ -166,8 +159,7 @@
             android:name=".routes"
             android:label="@string/app_name_routes_long"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:theme="@style/app_theme_black" >
         </activity>
@@ -188,8 +180,7 @@
         <activity
             android:name=".web_activity"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name_web_long"
             android:theme="@style/app_theme_black" >

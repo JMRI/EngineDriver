@@ -2191,7 +2191,7 @@ public class select_loco extends AppCompatActivity {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
-            String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
+            String imgFileName = mainapp.fixFilename(rosterNameString) + ".png";
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             if (dir.exists()) imageFile.delete(); // delete the old version if it exists
             FileOutputStream fileOutputStream =
