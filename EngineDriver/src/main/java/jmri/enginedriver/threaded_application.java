@@ -413,6 +413,10 @@ public class threaded_application extends Application {
     public String[] gamePadDeviceNames = {"", "", "", "", "", "", ""}; // which device have we seen - Names
     public int[] gamePadDeviceIdsTested = {-1, -1, -1, -1, -1, -1, -1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
     public int gamepadCount = 0;
+    public float[] gamePadLastxAxis = {0, 0, 0, 0, 0, 0, 0};
+    public float[] gamePadLastyAxis = {0, 0, 0, 0, 0, 0, 0};
+    public float[] gamePadLastxAxis2 = {0, 0, 0, 0, 0, 0, 0};
+    public float[] gamePadLastyAxis2 = {0, 0, 0, 0, 0, 0, 0};
 
     public static final int GAMEPAD_GOOD = 1;
     public static final int GAMEPAD_BAD = 2;

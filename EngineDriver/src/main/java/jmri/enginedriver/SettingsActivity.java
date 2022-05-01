@@ -1665,17 +1665,20 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
 
-            if (parentActivity.mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
-                parentActivity.getConnectionsList();
-                ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
-                if (preference!=null) {
-                    preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
-                    preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
-                }
-            } else {
-                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
-            }
+            // option is only available when there is no current connection
 
+            if (parentActivity.mainapp != null) {
+                if (parentActivity.mainapp.connectedHostName.equals("")) {
+                    parentActivity.getConnectionsList();
+                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    if (preference != null) {
+                        preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
+                        preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
+                    }
+                } else {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
+                }
+            }
 
             advancedSubPreferences = getResources().getStringArray(R.array.advancedSubPreferences);
             hideAdvancedSubPreferences();

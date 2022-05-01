@@ -3487,7 +3487,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d("Engine_Driver", "dgme " + event.getAction());
+        //Log.d("Engine_Driver", "game " + event.getAction());
             if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
@@ -3529,6 +3529,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             action = ACTION_DOWN;
                         } else {
                             action = ACTION_UP;
+
+                            // retrieve the previous DPAD direction press
+                            xAxis = mainapp.gamePadLastxAxis[whichGamePadIsEventFrom];
+                            yAxis = mainapp.gamePadLastyAxis[whichGamePadIsEventFrom];
+                            xAxis2 = mainapp.gamePadLastxAxis2[whichGamePadIsEventFrom];
+                            yAxis2 = mainapp.gamePadLastyAxis2[whichGamePadIsEventFrom];
                         }
                     } else {
                         xAxis = externalGamepadxAxis;
@@ -3545,7 +3551,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             return (true);
                         }
                     } else {
-                        whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                        whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to control... and use that one
                     }
 
                     boolean isActive = getConsist(whichThrottle).isActive();
@@ -3556,39 +3562,50 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         GamepadFeedbackSoundStop();
                     }
 
+                    boolean rslt = false;
                     if (yAxis == -1) { // DPAD Up Button
                         performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (yAxis == 1) { // DPAD Down Button
                         performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (xAxis == -1) { // DPAD Left Button
                         performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (xAxis == 1) { // DPAD Right Button
                         performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
                     }
 
                     if (yAxis2 == -1) { // DPAD2 Up Button
                         performButtonAction(5, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (yAxis2 == 1) { // DPAD2 Down Button
                         performButtonAction(7, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (xAxis2 == -1) { // DPAD2 Left Button
                         performButtonAction(8, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
-                        return (true); // stop processing this key
+                        rslt = true;
 
                     } else if (xAxis2 == 1) { // DPAD2 Right Button
                         performButtonAction(6, action, isActive, whichThrottle, whichGamePadIsEventFrom, repeatCnt);
+                        rslt = true;
+                    }
+
+                    mainapp.gamePadLastxAxis[whichGamePadIsEventFrom] = xAxis;
+                    mainapp.gamePadLastyAxis[whichGamePadIsEventFrom] = yAxis;
+                    mainapp.gamePadLastxAxis2[whichGamePadIsEventFrom] = xAxis2;
+                    mainapp.gamePadLastyAxis2[whichGamePadIsEventFrom] = yAxis2;
+
+                    if (rslt) {
                         return (true); // stop processing this key
                     }
+
                 } else { // event is from a gamepad that has not finished testing. Ignore it
                     return (true); // stop processing this key
                 }
