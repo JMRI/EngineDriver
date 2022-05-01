@@ -767,7 +767,7 @@
         <item>Button not available</item> //not used
         <item>Button not available</item> //not used
         <item>Button not available</item> //not used
-        <item>0</item> //not used - alternate Stop
+        <item>Button not available</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
         <item>0</item> //not used - alternate Increase Speed by specified Amount
@@ -915,8 +915,8 @@
         <item>prefGamePadButtonRightShoulder</item> //not used
         <item>prefGamePadButtonLeftTrigger</item> //not used
         <item>prefGamePadButtonRightTrigger</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>prefGamePadButtonLeftThumb</item> //not used
+        <item>prefGamePadButtonRightThumb</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
