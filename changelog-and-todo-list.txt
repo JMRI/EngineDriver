@@ -1,4 +1,8 @@
 **Version 2.32.144
+ * Fix: Show proper function keys for "Request LocoID" feature
+ * Fix: Several gamepad issues
+ * Fix: Engine Driver not appearing in recent apps list
+ * Fix: Reconnect screen created extra entry in the recents list on Samsung S5
 **Version 2.32.142
  * Fix: avoid web page reload on navigate
  * Option to show the Server Description on the Action bar

@@ -1115,6 +1115,7 @@ public class threaded_application extends Application {
                         } else if (con.isWaitingOnID()) { //we were waiting for this response to get address
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
+                            conLoco.setIsFromRoster(true); //not really true, but it might be and we really don't know for these.
                             con.add(conLoco);
                             con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
@@ -3780,7 +3781,7 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
-        if ((conLoco.getIsFromRoster()) && (!conLoco.getRosterName().equals(""))) {
+        if ((conLoco.getIsFromRoster()) && (conLoco.getRosterName() != null) && (!conLoco.getRosterName().equals(""))) {
             loco_name = conLoco.getRosterName();
         }
         Integer locoSource = conLoco.getWhichSource();
