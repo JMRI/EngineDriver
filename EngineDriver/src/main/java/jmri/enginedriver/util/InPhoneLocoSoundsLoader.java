@@ -1,5 +1,6 @@
 package jmri.enginedriver.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
@@ -77,6 +78,7 @@ public class InPhoneLocoSoundsLoader {
    } // end DoLocoSoundDelayed
 
 
+   @SuppressLint("ApplySharedPref")
    public boolean loadSounds() {
       Log.d("Engine_Driver", "loadSounds: (locoSound)");
       mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", context.getResources().getString(R.string.prefDeviceSoundsDefaultValue));
@@ -128,9 +130,10 @@ public class InPhoneLocoSoundsLoader {
          public void onLoadComplete(SoundPool soundPool, int i, int i2) {
             if (i==soundsCountOfSoundBeingLoaded) {
                Log.d("Engine_Driver", "loadSounds: Sounds confirmed loaded.");
-               mainapp.throttle_msg_handler.postDelayed(
-                       new LoadSoundCompleteDelayed(1000), 1000);
-
+               if (mainapp.throttle_msg_handler!=null) {
+                  mainapp.throttle_msg_handler.postDelayed(
+                          new LoadSoundCompleteDelayed(1000), 1000);
+               }
             }
          }
       });
