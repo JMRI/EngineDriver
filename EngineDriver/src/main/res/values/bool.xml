@@ -98,6 +98,7 @@
     <bool name="prefDeviceSoundsButtonDefaultValue">false</bool>
     <bool name="prefDeviceSoundsBellIsMomentaryDefaultValue">false</bool>
     <bool name="prefDeviceSoundsMomentumOverrideDefaultValue">false</bool>
+    <bool name="prefDeviceSoundsF1F2ActivateBellHornDefaultValue">false</bool>
 
     <bool name="prefActionBarShowServerDescriptionDefaultValue">false</bool>
 

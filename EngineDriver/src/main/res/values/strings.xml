@@ -385,6 +385,8 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Bell button is momentary (not latching)?</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell button Latching/Momentary</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1 and F2 also activate IPLS Bell and Horn</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1 and F2 activate Bell and Horn?</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show an action bar button to change the in phone loco sounds options</string>
     <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>

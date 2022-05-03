@@ -1643,6 +1643,13 @@
                     android:title="@string/prefDeviceSoundsBellIsMomentaryTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDeviceSoundsF1F2ActivateBellHornDefaultValue"
+                    android:key="prefDeviceSoundsF1F2ActivateBellHorn"
+                    android:summary="@string/prefDeviceSoundsF1F2ActivateBellHornSummary"
+                    android:title="@string/prefDeviceSoundsF1F2ActivateBellHornTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
