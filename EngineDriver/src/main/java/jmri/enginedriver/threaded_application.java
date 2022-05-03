@@ -1115,11 +1115,17 @@ public class threaded_application extends Application {
                         } else if (con.isWaitingOnID()) { //we were waiting for this response to get address
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
-                            conLoco.setIsFromRoster(true); //not really true, but it might be and we really don't know for these.
+                            //look for RosterEntry which matches address returned
+                            String rn = getRosterNameFromAddress(conLoco.getFormatAddress(),true);
+                            if ( !rn.equals("")) {
+                                conLoco.setIsFromRoster(true);
+                                conLoco.setRosterName(rn);
+                            }
                             con.add(conLoco);
                             con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
-                            addLocoToRecents(con.getLoco(addr));
+//                            addLocoToRecents(con.getLoco(addr));
+                            addLocoToRecents(conLoco);
                             Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
                         } else {
                             Log.d("Engine_Driver", "loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
@@ -1395,9 +1401,8 @@ public class threaded_application extends Application {
 
         //clear out any stored consists
         private void clear_consist_list() {
-            consist_entries.clear();
+            if (consist_entries != null) consist_entries.clear();
         }
-
 
         //parse turnout change to update mainapp array entry
         //  PTA<NewState><SystemName>
@@ -2495,7 +2500,7 @@ public class threaded_application extends Application {
         }
     }
 
-    // get the roster name from address string 123(L).  Return input if not found in roster or in consist
+    // get the roster name from address string 123(L).  Return input string if not found in roster or in consist
     public String getRosterNameFromAddress(String addr_str, boolean returnBlankIfNotFound) {
         boolean prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
