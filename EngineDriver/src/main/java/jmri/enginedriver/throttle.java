@@ -874,7 +874,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         switch (action) {
             case threaded_application.KIDS_TIMER_DISABLED:
                 if (arg == 0) { // not onResume
-                    speedUpdateAndNotify(0);
+//                    speedUpdateAndNotify(0);
                     if (kidsTimer!=null) kidsTimer.cancel();
                     kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -6808,7 +6808,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         tg.release();
                         try {
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                                    mainapp.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                                    threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
                             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
