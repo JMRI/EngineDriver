@@ -2647,7 +2647,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
+                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -2663,7 +2663,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
+                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -2698,7 +2698,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE_SPEED:
-                        if ((prefTtsGamepadTestComplete)) {
+                        if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
                             int spd = getSpeedFromCurrentSliderPosition(whichThrottle,false);
                             int maxSpd = getMaxSpeed(whichThrottle);
                             if (spd == 0) {
@@ -2707,6 +2707,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             } else if (spd == maxSpd) {
                                 result = true;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedMax);
+                                if ((prefTtsThrottleSpeed.equals("Zero + Max + speed"))) {
+                                    speech = speech + " " + getDisplaySpeedFromCurrentSliderPosition(whichThrottle, true);
+                                }
                             }
                         }
                         break;
@@ -7546,6 +7549,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             prefs.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_LONG).show();
         }
+    }
+
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale) + 1;
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {

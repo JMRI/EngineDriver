@@ -1209,11 +1209,13 @@
     <string-array name="prefTtsThrottleSpeedEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Zero + Max</item>
+        <item>Zero + Max + speed</item>
     </string-array>
 
     <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
         <item>None</item>
         <item>Zero and Max</item>
+        <item>Zero and (Max + speed)</item>
     </string-array>
 
     <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

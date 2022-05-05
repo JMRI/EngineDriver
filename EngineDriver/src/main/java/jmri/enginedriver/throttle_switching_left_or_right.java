@@ -837,6 +837,10 @@ public class throttle_switching_left_or_right extends throttle {
         return (getDirection(whichThrottle) == direction);
     }
 
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale);
+    }
+
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
         int speed = 0;
         if (vsbSwitchingSpeeds[whichThrottle].isEnabled()) {

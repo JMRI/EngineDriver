@@ -940,6 +940,10 @@ public class throttle_switching_horizontal extends throttle {
         return (getDirection(whichThrottle) == direction);
     }
 
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale);
+    }
+
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
         int speed = 0;
         if (hsbSwitchingSpeeds[whichThrottle].isEnabled()) {
