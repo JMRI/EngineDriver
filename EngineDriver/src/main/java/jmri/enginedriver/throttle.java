@@ -176,7 +176,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static double[] displayUnitScales;            // display units per slider count
 
     private static String VOLUME_INDICATOR = "v";
-    private static int[] GAMEPAD_INDICATOR = {1, 2, 3};
+    private static int[] GAMEPAD_INDICATOR = {1, 2, 3, 4, 5, 6};
 
     private static final String SELECTED_LOCO_INDICATOR_NONE = "None";
     private static final String SELECTED_LOCO_INDICATOR_GAMEPAD = "Gamepad";
@@ -874,7 +874,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         switch (action) {
             case threaded_application.KIDS_TIMER_DISABLED:
                 if (arg == 0) { // not onResume
-                    speedUpdateAndNotify(0);
+//                    speedUpdateAndNotify(0);
                     if (kidsTimer!=null) kidsTimer.cancel();
                     kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -2646,7 +2646,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
+                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -2661,7 +2662,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
+                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -6616,11 +6618,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.settings_mnu:
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.function_defaults_mnu:
                 in = new Intent().setClass(this, function_settings.class);
                 startActivity(in);
@@ -6631,6 +6635,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
                 startActivity(in);
@@ -6641,6 +6646,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(logviewer);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
                 speedUpdate(0);  // update all throttles
@@ -6659,9 +6665,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 mainapp.buttonVibration();
                 return true;
+
             case R.id.EditConsist0_menu:
                 Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-
                 consistEdit.putExtra("whichThrottle", '0');
                 startActivityForResult(consistEdit, ACTIVITY_CONSIST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -6696,6 +6702,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
+            case R.id.gamepad_test_reset:
+                mainapp.gamepadFullReset();
+                mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
+                setGamepadIndicator();
+                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+                return true;
             case R.id.gamepad_test_mnu1:
                 in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", "0");
@@ -6714,6 +6727,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.timer_mnu:
                 showTimerPasswordDialog();
                 return true;
@@ -6723,6 +6737,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
                 kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED, 0);
                 return true;
+
             case R.id.flashlight_button:
                 mainapp.toggleFlashlight(this, TMenu);
                 mainapp.buttonVibration();
@@ -6793,7 +6808,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         tg.release();
                         try {
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
-                                    mainapp.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
+                                    threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
                             Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
@@ -6842,10 +6857,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     mainapp.gamePadDeviceIds[i]=0;
                                     mainapp.gamePadDeviceIdsTested[i]=0;
                                 }
-                                for (int i = 0; i < 3; i++) {
-                                    mainapp.gamePadIds[i] = 0;
-                                    mainapp.gamePadThrottleAssignment[0] = -1;
-                                }
+                                mainapp.gamepadFullReset();
                                 mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
                                 setGamepadIndicator();
                                 speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');

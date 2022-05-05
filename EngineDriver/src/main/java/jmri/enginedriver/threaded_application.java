@@ -292,6 +292,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
     public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
     public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 14;
+    public static final int FORCED_RESTART_REASON_GAMEPAD_RESET = 15;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -1396,7 +1397,7 @@ public class threaded_application extends Application {
 
         //clear out any stored consists
         private void clear_consist_list() {
-            consist_entries.clear();
+            if (consist_entries!=null) consist_entries.clear();
         }
 
 
@@ -2767,6 +2768,7 @@ public class threaded_application extends Application {
             }
             if (any) {
                 menu.findItem(R.id.gamepad_test_menu).setVisible(any);
+                menu.findItem(R.id.gamepad_test_reset).setVisible(any);
             }
 
         }
@@ -4228,7 +4230,7 @@ public class threaded_application extends Application {
     public void gamepadFullReset() {
         usingMultiplePads = false;
         gamepadCount = 0;
-        for (int i =0;i< MAX_GAMEPADS;i++) {
+        for (int i=0; i<MAX_GAMEPADS; i++) {
             gamePadIds[i] = 0;
             gamePadThrottleAssignment[i] = -1;
             gamePadDeviceIds[i] = 0;

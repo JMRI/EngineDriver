@@ -109,6 +109,10 @@
         android:visible="false">
         <menu>
             <item
+                android:id="@+id/gamepad_test_reset"
+                android:title="@string/gamepad_test_reset"
+                android:visible="false" />
+            <item
                 android:id="@+id/gamepad_test_mnu1"
                 android:title="@string/gamepad1_test"
                 android:visible="false" />
