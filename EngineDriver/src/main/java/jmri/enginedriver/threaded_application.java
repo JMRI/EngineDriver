@@ -405,6 +405,7 @@ public class threaded_application extends Application {
     public ArrayList<String> iplsFileNames;
 
     // moved from throttle to ta to allow for gamepads to function in other activities
+    public static final int MAX_GAMEPADS = 6;
     public static final String WHICH_GAMEPAD_MODE_NONE = "None";
     public String prefGamePadType = WHICH_GAMEPAD_MODE_NONE;
     public int[] gamePadIds = {0, 0, 0, 0, 0, 0}; // which device id if assigned to each of the three throttles
@@ -2215,6 +2216,7 @@ public class threaded_application extends Application {
                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
         prefFeedbackOnDisconnect = prefs.getBoolean("prefFeedbackOnDisconnect",
                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
+
 
     } // end onCreate
 
@@ -4221,5 +4223,21 @@ public class threaded_application extends Application {
             }
         }
         return fadeOut;
+    }
+
+    public void gamepadFullReset() {
+        usingMultiplePads = false;
+        gamepadCount = 0;
+        for (int i =0;i< MAX_GAMEPADS;i++) {
+            gamePadIds[i] = 0;
+            gamePadThrottleAssignment[i] = -1;
+            gamePadDeviceIds[i] = 0;
+            gamePadDeviceNames[i] = "";
+            gamePadDeviceIdsTested[i] = -1;
+            gamePadLastxAxis[i] = 0;
+            gamePadLastyAxis[i] = 0;
+            gamePadLastxAxis2[i] = 0;
+            gamePadLastyAxis2[i] = 0;
+        }
     }
 }
