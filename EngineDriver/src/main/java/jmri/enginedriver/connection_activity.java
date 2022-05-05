@@ -577,6 +577,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                     "");
         }
 
+        mainapp. gamepadFullReset();
+
     } //end onCreate
 
     @Override
