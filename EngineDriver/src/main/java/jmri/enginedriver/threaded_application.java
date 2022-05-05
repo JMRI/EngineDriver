@@ -1396,7 +1396,7 @@ public class threaded_application extends Application {
 
         //clear out any stored consists
         private void clear_consist_list() {
-            consist_entries.clear();
+            if (consist_entries!=null) consist_entries.clear();
         }
 
 
@@ -4228,7 +4228,7 @@ public class threaded_application extends Application {
     public void gamepadFullReset() {
         usingMultiplePads = false;
         gamepadCount = 0;
-        for (int i =0;i< MAX_GAMEPADS;i++) {
+        for (int i=0; i<MAX_GAMEPADS; i++) {
             gamePadIds[i] = 0;
             gamePadThrottleAssignment[i] = -1;
             gamePadDeviceIds[i] = 0;

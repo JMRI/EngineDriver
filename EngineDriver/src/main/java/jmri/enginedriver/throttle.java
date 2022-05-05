@@ -176,7 +176,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static double[] displayUnitScales;            // display units per slider count
 
     private static String VOLUME_INDICATOR = "v";
-    private static int[] GAMEPAD_INDICATOR = {1, 2, 3};
+    private static int[] GAMEPAD_INDICATOR = {1, 2, 3, 4, 5, 6};
 
     private static final String SELECTED_LOCO_INDICATOR_NONE = "None";
     private static final String SELECTED_LOCO_INDICATOR_GAMEPAD = "Gamepad";
@@ -2646,7 +2646,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
+                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -2661,7 +2662,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " " + (getScaleSpeed(whichThrottle) + 1);
+                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
+                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
