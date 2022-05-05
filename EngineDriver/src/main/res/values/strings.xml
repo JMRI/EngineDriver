@@ -61,7 +61,8 @@
     <string name="app_name_gamepad_test">Gamepad Test</string>
     <string name="app_name_log_viewer">Log Viewer</string>
     <string name="app_name_device_sounds_settings">In Phone Loco Sounds</string>
-    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="gamepad_test_menu">\≡ Gamepads</string>
+    <string name="gamepad_test_reset">Gamepads Full Reset</string>
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
