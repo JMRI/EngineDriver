@@ -1,5 +1,10 @@
 **Version 2.32.144
+ * TTS speed bug fixes
+ * additional TTS options
+ * Option to link F1&F2 to the IPLS Bell and Horn
+ * Reset gamepads on start
 **Version 2.32.142
+ * preserve the Web Activity status when switching screens
  * Fix: avoid web page reload on navigate
  * Option to show the Server Description on the Action bar
 **Version 2.32.140
