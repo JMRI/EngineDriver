@@ -339,7 +339,7 @@ public class throttle_switching_horizontal extends throttle {
         }
 
         if (webView!=null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area

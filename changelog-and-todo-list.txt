@@ -3,6 +3,7 @@
  * additional TTS options
  * Option to link F1&F2 to the IPLS Bell and Horn
  * Reset gamepads on start
+ * Hide the status and navigation bars on Lock&Dim screen.
 **Version 2.32.142
  * preserve the Web Activity status when switching screens
  * Fix: avoid web page reload on navigate

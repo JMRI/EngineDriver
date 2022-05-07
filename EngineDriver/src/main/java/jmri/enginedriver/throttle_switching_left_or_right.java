@@ -314,7 +314,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         if (webView != null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -375,7 +375,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         if (webView!=null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         // save part the screen for webview

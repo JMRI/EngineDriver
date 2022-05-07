@@ -276,7 +276,7 @@ public class throttle_full extends throttle {
         }
 
         if (webView!=null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area

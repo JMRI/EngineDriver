@@ -1303,10 +1303,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return BrightnessModeValue;
     }
 
-    protected void setImmersiveModeOn(View webView) {
+    protected void setImmersiveModeOn(View webView, boolean forceOn) {
         immersiveModeIsOn = false;
 
-        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
+        if ( (prefThrottleViewImmersiveMode) || (forceOn) ) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 immersiveModeIsOn = true;
                 webView.setSystemUiVisibility(
@@ -1325,10 +1325,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    protected void setImmersiveModeOff(View webView) {
+    protected void setImmersiveModeOff(View webView, boolean forceOff) {
          immersiveModeIsOn = false;
 
-        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
+        if ( (prefThrottleViewImmersiveMode) || (forceOff) ) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
@@ -1379,11 +1379,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
+            if (!prefThrottleViewImmersiveMode)
+                setImmersiveModeOff(webView, true);
         } else {
             isScreenLocked = true;
             Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
+            if (!prefThrottleViewImmersiveMode)
+                setImmersiveModeOn(webView, true);
         }
 
     }
@@ -6159,7 +6163,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
             set_labels();       // need to redraw button Press states since ActionBar and Notification access clears them
         }
     }
@@ -6484,7 +6488,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             else {
                 if (webView != null) {
-                    setImmersiveModeOn(webView);
+                    setImmersiveModeOn(webView, false);
                 }
                 mainapp.checkExit(this);
                 return (true); // stop processing this key
@@ -6594,7 +6598,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (webView != null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         // Handle all of the possible menu actions.
@@ -7081,10 +7085,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
                         case SWIPE_UP_OPTION_IMMERSIVE:
                             if (immersiveModeIsOn) {
-                                setImmersiveModeOff(webView);
+                                setImmersiveModeOff(webView, false);
                                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                             } else {
-                                setImmersiveModeOn(webView);
+                                setImmersiveModeOn(webView, false);
                             }
                             break;
                         case SWIPE_UP_OPTION_SWITCH_LAYOUTS:

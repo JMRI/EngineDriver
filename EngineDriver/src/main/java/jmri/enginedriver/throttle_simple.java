@@ -216,7 +216,7 @@ public class throttle_simple extends throttle {
         }
 
         if (webView != null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
