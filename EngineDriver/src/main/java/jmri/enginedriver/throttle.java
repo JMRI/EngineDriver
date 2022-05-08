@@ -2026,6 +2026,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
+        if ((vsbSwitchingSpeeds!=null) || (hsbSwitchingSpeeds!=null)) { // get around a problem with reporting for the switching layouts
+            sbs[whichThrottle].setProgress(getSpeedFromCurrentSliderPosition(whichThrottle,false));
+        }
 
         kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
         doLocoSound(whichThrottle);
