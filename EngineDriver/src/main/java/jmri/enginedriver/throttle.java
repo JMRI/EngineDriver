@@ -6481,17 +6481,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
-            if (webViewIsOn && webView.canGoBack() && !clearHistory) {
-                webView.goBack();
-                webView.setInitialScale((int) (100 * scale)); // restore scale
-                return (true);
-            }
-            else {
-                if (webView != null) {
-                    setImmersiveModeOn(webView, false);
+            if (!isScreenLocked) {
+                if (webViewIsOn && webView.canGoBack() && !clearHistory) {
+                    webView.goBack();
+                    webView.setInitialScale((int) (100 * scale)); // restore scale
+                    return (true);
+                } else {
+                    if (webView != null) {
+                        setImmersiveModeOn(webView, false);
+                    }
+                    mainapp.checkExit(this);
+                    return (true); // stop processing this key
                 }
-                mainapp.checkExit(this);
-                return (true); // stop processing this key
+            } else {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT).show();
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
 //            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set

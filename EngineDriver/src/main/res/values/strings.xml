@@ -818,6 +818,7 @@
     <string name="toastShakeWebViewHidden">Throttle Web View temporarily hidden. Shake again to show. To hide permanently change in preferences</string>
     <string name="toastShakeWebViewUnavailable">Throttle Web View must be enabled in the preferences first</string>
     <string name="toastShakeScreenLocked">Throttle Screen Locked - Shake again to unlock</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Action not allow while Throttle Screen is Locked</string>
     <string name="toastShakeScreenDimmed">Throttle Screen Dimmed - Shake again to restore</string>
     <string name="toastSwipeUpDownScreenLocked">Throttle Screen Locked - Swipe again to unlock</string>
     <string name="toastSwipeUpDownScreenDimmed">Throttle Screen Dimmed - Swipe again to restore</string>
