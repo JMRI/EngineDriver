@@ -127,6 +127,7 @@
         <item>Campana (IPLS)</item>
         <item>Corno (IPLS)</item>
         <item>Corta Corta (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

@@ -470,6 +470,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL = "Bell (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN = "Horn (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED = "Speak Current Speed";
 
     private int externalGamepadAction;
 //    private int externalGamepadWhichThrottle;
@@ -2637,6 +2638,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // For TTS
     private void speakWords(int msgNo, int whichThrottle) {
+        speakWords(msgNo, whichThrottle, false);
+    }
+
+    private void speakWords(int msgNo, int whichThrottle, boolean force) {
         boolean result = false;
         String speech = "";
         if (!prefTtsWhen.equals(PREF_TT_WHEN_NONE)) {
@@ -2660,7 +2665,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
-                            if (whichLastGamepad1 != whichThrottle) {
+                            if ((whichLastGamepad1 != whichThrottle) || (force)) {
                                 result = true;
                                 whichLastGamepad1 = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (whichThrottle + 1);
@@ -3203,6 +3208,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 pauseSpeed(whichThrottle);
             }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED)) {
+            speakWords(TTS_MSG_GAMEPAD_THROTTLE,whichThrottle, true);
         }
     }
 

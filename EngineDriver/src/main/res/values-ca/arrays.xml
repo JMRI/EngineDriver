@@ -124,6 +124,7 @@
         <item>Timbre (IPLS)</item>
         <item>Banya (IPLS)</item>
         <item>Banya Curta (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>

@@ -124,6 +124,7 @@
         <item>Glocke (IPLS)</item>
         <item>Horn (IPLS)</item>
         <item>Horn Kurz (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Keine</item>

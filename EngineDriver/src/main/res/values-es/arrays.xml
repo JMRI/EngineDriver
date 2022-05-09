@@ -124,6 +124,7 @@
         <item>Campana (IPLS)</item>
         <item>Bocina (IPLS)</item>
         <item>Cuerno Corto (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Ninguno</item>
