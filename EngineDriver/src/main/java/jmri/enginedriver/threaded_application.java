@@ -1401,7 +1401,7 @@ public class threaded_application extends Application {
 
         //clear out any stored consists
         private void clear_consist_list() {
-            if (consist_entries != null) consist_entries.clear();
+            if (consist_entries!=null) consist_entries.clear();
         }
 
         //parse turnout change to update mainapp array entry
