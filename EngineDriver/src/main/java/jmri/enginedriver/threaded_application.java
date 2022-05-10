@@ -1118,10 +1118,17 @@ public class threaded_application extends Application {
                         } else if (con.isWaitingOnID()) { //we were waiting for this response to get address
                             ConLoco conLoco = new ConLoco(addr);
                             conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
+                            //look for RosterEntry which matches address returned
+                            String rn = getRosterNameFromAddress(conLoco.getFormatAddress(),true);
+                            if ( !rn.equals("")) {
+                                conLoco.setIsFromRoster(true);
+                                conLoco.setRosterName(rn);
+                            }
                             con.add(conLoco);
                             con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
-                            addLocoToRecents(con.getLoco(addr));
+//                            addLocoToRecents(con.getLoco(addr));
+                            addLocoToRecents(conLoco);
                             Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
                         } else {
                             Log.d("Engine_Driver", "loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
@@ -1399,7 +1406,6 @@ public class threaded_application extends Application {
         private void clear_consist_list() {
             if (consist_entries!=null) consist_entries.clear();
         }
-
 
         //parse turnout change to update mainapp array entry
         //  PTA<NewState><SystemName>
@@ -2498,7 +2504,7 @@ public class threaded_application extends Application {
         }
     }
 
-    // get the roster name from address string 123(L).  Return input if not found in roster or in consist
+    // get the roster name from address string 123(L).  Return input string if not found in roster or in consist
     public String getRosterNameFromAddress(String addr_str, boolean returnBlankIfNotFound) {
         boolean prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
@@ -3785,7 +3791,7 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
-        if ((conLoco.getIsFromRoster()) && (!conLoco.getRosterName().equals(""))) {
+        if ((conLoco.getIsFromRoster()) && (conLoco.getRosterName() != null) && (!conLoco.getRosterName().equals(""))) {
             loco_name = conLoco.getRosterName();
         }
         Integer locoSource = conLoco.getWhichSource();
