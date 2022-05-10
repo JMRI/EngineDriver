@@ -470,6 +470,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL = "Bell (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN = "Horn (IPLS)";
     private static String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
+    private static String PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED = "Speak Current Speed";
 
     private int externalGamepadAction;
 //    private int externalGamepadWhichThrottle;
@@ -1303,10 +1304,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return BrightnessModeValue;
     }
 
-    protected void setImmersiveModeOn(View webView) {
+    protected void setImmersiveModeOn(View webView, boolean forceOn) {
         immersiveModeIsOn = false;
 
-        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
+        if ( (prefThrottleViewImmersiveMode) || (forceOn) ) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 immersiveModeIsOn = true;
                 webView.setSystemUiVisibility(
@@ -1325,10 +1326,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    protected void setImmersiveModeOff(View webView) {
+    protected void setImmersiveModeOff(View webView, boolean forceOff) {
          immersiveModeIsOn = false;
 
-        if (prefThrottleViewImmersiveMode) {   // if the preference is set use Immersive mode
+        if ( (prefThrottleViewImmersiveMode) || (forceOff) ) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
@@ -1379,11 +1380,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
+            if (!prefThrottleViewImmersiveMode)
+                setImmersiveModeOff(webView, true);
         } else {
             isScreenLocked = true;
             Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
+            if (!prefThrottleViewImmersiveMode)
+                setImmersiveModeOn(webView, true);
         }
 
     }
@@ -2022,6 +2027,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
+        if ((vsbSwitchingSpeeds!=null) || (hsbSwitchingSpeeds!=null)) { // get around a problem with reporting for the switching layouts
+            sbs[whichThrottle].setProgress(getSpeedFromCurrentSliderPosition(whichThrottle,false));
+        }
 
         kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
         doLocoSound(whichThrottle);
@@ -2630,6 +2638,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // For TTS
     private void speakWords(int msgNo, int whichThrottle) {
+        speakWords(msgNo, whichThrottle, false);
+    }
+
+    private void speakWords(int msgNo, int whichThrottle, boolean force) {
         boolean result = false;
         String speech = "";
         if (!prefTtsWhen.equals(PREF_TT_WHEN_NONE)) {
@@ -2647,13 +2659,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
+                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
-                            if (whichLastGamepad1 != whichThrottle) {
+                            if ((whichLastGamepad1 != whichThrottle) || (force)) {
                                 result = true;
                                 whichLastGamepad1 = whichThrottle;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (whichThrottle + 1);
@@ -2663,7 +2675,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             }
                             if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getSpeedFromCurrentSliderPosition(whichThrottle,true));
+                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
                             }
                         }
                         break;
@@ -2698,7 +2710,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                         break;
                     case TTS_MSG_GAMEPAD_THROTTLE_SPEED:
-                        if ((prefTtsGamepadTestComplete)) {
+                        if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
                             int spd = getSpeedFromCurrentSliderPosition(whichThrottle,false);
                             int maxSpd = getMaxSpeed(whichThrottle);
                             if (spd == 0) {
@@ -2707,6 +2719,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             } else if (spd == maxSpd) {
                                 result = true;
                                 speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedMax);
+                                if ((prefTtsThrottleSpeed.equals("Zero + Max + speed"))) {
+                                    speech = speech + " " + getDisplaySpeedFromCurrentSliderPosition(whichThrottle, true);
+                                }
                             }
                         }
                         break;
@@ -3193,6 +3208,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 pauseSpeed(whichThrottle);
             }
+        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED)) {
+            speakWords(TTS_MSG_GAMEPAD_THROTTLE,whichThrottle, true);
         }
     }
 
@@ -6156,7 +6173,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
             set_labels();       // need to redraw button Press states since ActionBar and Notification access clears them
         }
     }
@@ -6474,17 +6491,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // Handle pressing of the back button
         if (key == KEYCODE_BACK) {
-            if (webViewIsOn && webView.canGoBack() && !clearHistory) {
-                webView.goBack();
-                webView.setInitialScale((int) (100 * scale)); // restore scale
-                return (true);
-            }
-            else {
-                if (webView != null) {
-                    setImmersiveModeOn(webView);
+            if (!isScreenLocked) {
+                if (webViewIsOn && webView.canGoBack() && !clearHistory) {
+                    webView.goBack();
+                    webView.setInitialScale((int) (100 * scale)); // restore scale
+                    return (true);
+                } else {
+                    if (webView != null) {
+                        setImmersiveModeOn(webView, false);
+                    }
+                    mainapp.checkExit(this);
+                    return (true); // stop processing this key
                 }
-                mainapp.checkExit(this);
-                return (true); // stop processing this key
+            } else {
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT).show();
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
 //            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
@@ -6591,7 +6611,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (webView != null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         // Handle all of the possible menu actions.
@@ -7078,10 +7098,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
                         case SWIPE_UP_OPTION_IMMERSIVE:
                             if (immersiveModeIsOn) {
-                                setImmersiveModeOff(webView);
+                                setImmersiveModeOff(webView, false);
                                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                             } else {
-                                setImmersiveModeOn(webView);
+                                setImmersiveModeOn(webView, false);
                             }
                             break;
                         case SWIPE_UP_OPTION_SWITCH_LAYOUTS:
@@ -7546,6 +7566,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             prefs.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index]-1]), Toast.LENGTH_LONG).show();
         }
+    }
+
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale) + 1;
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {

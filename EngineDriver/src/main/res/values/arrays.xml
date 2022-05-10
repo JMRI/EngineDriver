@@ -316,6 +316,7 @@
         <item >Bell (IPLS)</item>
         <item >Horn (IPLS)</item>
         <item >Horn Short (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntryValues" translatable="false">
@@ -362,6 +363,7 @@
         <item >Bell (IPLS)</item>
         <item >Horn (IPLS)</item>
         <item >Horn Short (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
     <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
 
@@ -1209,11 +1211,13 @@
     <string-array name="prefTtsThrottleSpeedEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Zero + Max</item>
+        <item>Zero + Max + speed</item>
     </string-array>
 
     <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
         <item>None</item>
         <item>Zero and Max</item>
+        <item>Zero and (Max + speed)</item>
     </string-array>
 
     <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

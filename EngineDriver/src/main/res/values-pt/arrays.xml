@@ -126,6 +126,7 @@
         <item>Sino (IPLS)</item>
         <item>Buzina (IPLS)</item>
         <item>Chifre Curta (IPLS)</item>
+        <item >Speak Current Speed</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>

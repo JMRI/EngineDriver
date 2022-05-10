@@ -314,7 +314,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         if (webView != null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -375,7 +375,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         if (webView!=null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         // save part the screen for webview
@@ -835,6 +835,10 @@ public class throttle_switching_left_or_right extends throttle {
             speedUpdate(whichThrottle,lastScaleSpeed);
         }
         return (getDirection(whichThrottle) == direction);
+    }
+
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale);
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {

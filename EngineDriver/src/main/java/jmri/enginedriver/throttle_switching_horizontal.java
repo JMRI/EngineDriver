@@ -339,7 +339,7 @@ public class throttle_switching_horizontal extends throttle {
         }
 
         if (webView!=null) {
-            setImmersiveModeOn(webView);
+            setImmersiveModeOn(webView, false);
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
@@ -938,6 +938,10 @@ public class throttle_switching_horizontal extends throttle {
             speedUpdate(whichThrottle,lastScaleSpeed);
         }
         return (getDirection(whichThrottle) == direction);
+    }
+
+    int getDisplaySpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
+        return getSpeedFromCurrentSliderPosition(whichThrottle, useScale);
     }
 
     int getSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {

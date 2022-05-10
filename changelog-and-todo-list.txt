@@ -1,10 +1,16 @@
 **Version 2.32.146
+ * TTS speed bug fixes
+ * additional TTS options
+ * Option to link F1&F2 to the IPLS Bell and Horn
+ * Reset gamepads on start
+ * Hide the status and navigation bars on Lock&Dim screen.
 **Version 2.32.144
  * Fix: Show proper function keys for "Request LocoID" feature
  * Fix: Several gamepad issues
  * Fix: Engine Driver not appearing in recent apps list
  * Fix: Reconnect screen created extra entry in the recents list on Samsung S5
 **Version 2.32.142
+ * preserve the Web Activity status when switching screens
  * Fix: avoid web page reload on navigate
  * Option to show the Server Description on the Action bar
 **Version 2.32.140
