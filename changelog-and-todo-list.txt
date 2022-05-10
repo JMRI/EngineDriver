@@ -1,3 +1,4 @@
+**Version 2.32.146
 **Version 2.32.144
  * Fix: Show proper function keys for "Request LocoID" feature
  * Fix: Several gamepad issues
