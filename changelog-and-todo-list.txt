@@ -1,3 +1,4 @@
+**Version 2.32.148
 **Version 2.32.146
  * TTS speed bug fixes
  * additional TTS options
