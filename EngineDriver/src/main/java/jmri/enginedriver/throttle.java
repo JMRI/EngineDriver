@@ -3085,11 +3085,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {  // All Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
+                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                    if (isPauseSpeeds[throttleIndex]==PAUSE_SPEED_TO_RETURN) {
+                        disablePauseSpeed(throttleIndex);
+                    }
+                }
                 speedUpdateAndNotify(0);         // update all three throttles
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_STOP)) {  // Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
+                if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN) {
+                    disablePauseSpeed(whichThrottle);
+                }
                 speedUpdateAndNotify(whichThrottle, 0);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
             }
@@ -7542,6 +7550,42 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     protected void pauseSpeed(int whichThrottle) {
+        int speed = 0;
+
+        switch (isPauseSpeeds[whichThrottle]) {
+            case PAUSE_SPEED_ZERO: {
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
+                bPauseSpeeds[whichThrottle].setSelected(false);
+                speed = getSpeed(whichThrottle);
+                break;
+            }
+            case PAUSE_SPEED_INACTIVE: {
+                if (getSpeed(whichThrottle) == 0) return;
+
+                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
+                bPauseSpeeds[whichThrottle].setSelected(true);
+                pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
+                pauseDir[whichThrottle] = getDirection(whichThrottle);
+                break;
+            }
+            case PAUSE_SPEED_TO_RETURN:
+            case PAUSE_SPEED_TO_ZERO:
+            default: {
+                disablePauseSpeed(whichThrottle);
+                break;
+            }
+        }
+
+        if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
+            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
+        }
+    }
+
+    void disablePauseSpeed(int whichThrottle) {
+        setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+        bPauseSpeeds[whichThrottle].setSelected(false);
+        isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+        limitedJump[whichThrottle] = false;
     }
 
     @SuppressLint("ApplySharedPref")

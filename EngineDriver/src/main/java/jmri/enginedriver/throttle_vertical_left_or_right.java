@@ -448,46 +448,5 @@ public class throttle_vertical_left_or_right extends throttle {
                 b.setPressed(false);
             }
         }
-
     }
-
-    protected void pauseSpeed(int whichThrottle) {
-        int speed = 0;
-
-
-        switch (isPauseSpeeds[whichThrottle]) {
-            case PAUSE_SPEED_ZERO: {
-                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
-                bPauseSpeeds[whichThrottle].setSelected(false);
-                speed = getSpeed(whichThrottle);
-                break;
-            }
-            case PAUSE_SPEED_INACTIVE: {
-                if (getSpeed(whichThrottle) != 0) {
-                    isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
-                    bPauseSpeeds[whichThrottle].setSelected(true);
-                    pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
-                    pauseDir[whichThrottle] = getDirection(whichThrottle);
-                    speed = 0;
-                } else {
-                    return;
-                }
-                break;
-            }
-            case PAUSE_SPEED_TO_RETURN:
-            case PAUSE_SPEED_TO_ZERO:
-            default: {
-                setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
-                bPauseSpeeds[whichThrottle].setSelected(false);
-                isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
-                limitedJump[whichThrottle] = false;
-                break;
-            }
-        }
-
-        if (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE) {
-            setSpeed(whichThrottle, speed, SPEED_COMMAND_FROM_BUTTONS);
-        }
-    }
-
 }
