@@ -31,8 +31,6 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import java.util.HashMap;
-
 public class about_page extends AppCompatActivity {
 
     private threaded_application mainapp; // hold pointer to mainapp
@@ -74,15 +72,15 @@ public class about_page extends AppCompatActivity {
             }
             if (!sServer.isEmpty()) {
                 s += String.format(", Server:%s", sServer);
-            } else {
-                // otherwise show JMRI version info from web if populated
-                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
-                if (JmriMetadata != null && JmriMetadata.size() > 0) {
-                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
-                    if (JmriMetadata.get("activeProfile") != null) {
-                        s += ", ActiveProfile:" + JmriMetadata.get("activeProfile");
-                    }
-                }
+//            } else {
+//                // otherwise show JMRI version info from web if populated
+//                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
+//                if (JmriMetadata != null && JmriMetadata.size() > 0) {
+//                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
+//                    if (JmriMetadata.get("activeProfile") != null) {
+//                        s += ", ActiveProfile:" + JmriMetadata.get("activeProfile");
+//                    }
+//                }
             }
         }
         s += String.format(", SSID:%s, Net:%s", mainapp.client_ssid, mainapp.client_type);
