@@ -33,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import jmri.enginedriver.R;
@@ -465,15 +464,15 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             }
             if (!sServer.isEmpty()) {
                 s += ", Server:" + sServer;
-            } else {
-                // otherwise show JMRI version info from web if populated
-                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
-                if (JmriMetadata != null && JmriMetadata.size() > 0) {
-                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
-                    if (JmriMetadata.get("activeProfile") != null) {
-                        s += ", Active Profile:" + JmriMetadata.get("activeProfile");
-                    }
-                }
+//            } else {
+//                // otherwise show JMRI version info from web if populated
+//                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
+//                if (JmriMetadata != null && JmriMetadata.size() > 0) {
+//                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
+//                    if (JmriMetadata.get("activeProfile") != null) {
+//                        s += ", Active Profile:" + JmriMetadata.get("activeProfile");
+//                    }
+//                }
             }
         }
         Log.d("Engine_Driver", s);
