@@ -82,11 +82,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.ResponseHandler;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.impl.client.BasicResponseHandler;
+//import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,9 +167,9 @@ public class threaded_application extends Application {
     Map<String, String> roster_entries;  //roster sent by WiThrottle
     Map<String, String> consist_entries;
     private static DownloadRosterTask dlRosterTask = null;
-    private static DownloadMetaTask dlMetadataTask = null;
+//    private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
-    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
+//    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
@@ -967,7 +967,7 @@ public class threaded_application extends Application {
                 phone = null;
             }
             end_jmdns();
-            dlMetadataTask.stop();
+//            dlMetadataTask.stop();
             dlRosterTask.stop();
         }
 
@@ -984,7 +984,7 @@ public class threaded_application extends Application {
             doFinish = false;                   //ok for activities to run if restarted after this
 
             dlRosterTask.stop();
-            dlMetadataTask.stop();
+//            dlMetadataTask.stop();
 
             // make sure flashlight is switched off at shutdown
             if (flashlight != null) {
@@ -1309,7 +1309,7 @@ public class threaded_application extends Application {
                             if (oldPort == web_server_port) {
                                 skipAlert = true;
                             } else {
-                                dlMetadataTask.get();           // start background metadata update
+//                                dlMetadataTask.get();           // start background metadata update
                                 dlRosterTask.get();             // start background roster update
 
                             }
@@ -2208,7 +2208,7 @@ public class threaded_application extends Application {
             function_states[i] = new boolean[32];
         }
 
-        dlMetadataTask = new DownloadMetaTask();
+//        dlMetadataTask = new DownloadMetaTask();
         dlRosterTask = new DownloadRosterTask();
 
         //use worker thread to initialize default function labels from file so UI can continue
@@ -2416,44 +2416,44 @@ public class threaded_application extends Application {
         }
     }
 
-    public class DownloadMetaTask extends DownloadDataTask {
-        @SuppressWarnings("unchecked")
-        @Override
-        void runMethod(Download dl) throws IOException {
-            String metaUrl = createUrl("json/metadata");
-            if (metaUrl == null || metaUrl.equals("") || dl.cancel)
-                return;
-            Log.d("Engine_Driver", "t_a: Background loading metadata from " + metaUrl);
-
-            HttpClient Client = new DefaultHttpClient();
-            HttpGet httpget = new HttpGet(metaUrl);
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            String jsonResponse;
-            jsonResponse = Client.execute(httpget, responseHandler);
-            Log.d("Engine_Driver", "t_a: Raw metadata retrieved: " + jsonResponse);
-
-            HashMap<String, String> metadataTemp = new HashMap<>();
-            try {
-                JSONArray ja = new JSONArray(jsonResponse);
-                for (int i = 0; i < ja.length(); i++) {
-                    JSONObject j = ja.optJSONObject(i);
-                    String metadataName = j.getJSONObject("data").getString("name");
-                    String metadataValue = j.getJSONObject("data").getString("value");
-                    metadataTemp.put(metadataName, metadataValue);
-                }
-            } catch (JSONException e) {
-                Log.d("Engine_Driver", "t_a: exception trying to retrieve json metadata.");
-            } catch (Exception e) {
-                throw new IOException();
-            }
-            if (metadataTemp.size() == 0) {
-                Log.d("Engine_Driver", "t_a: did not retrieve any json metadata entries.");
-            } else {
-                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-                Log.d("Engine_Driver", "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
-            }
-        }
-    }
+//    public class DownloadMetaTask extends DownloadDataTask {
+//        @SuppressWarnings("unchecked")
+//        @Override
+//        void runMethod(Download dl) throws IOException {
+//            String metaUrl = createUrl("json/metadata");
+//            if (metaUrl == null || metaUrl.equals("") || dl.cancel)
+//                return;
+//            Log.d("Engine_Driver", "t_a: Background loading metadata from " + metaUrl);
+//
+//            HttpClient Client = new DefaultHttpClient();
+//            HttpGet httpget = new HttpGet(metaUrl);
+//            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+//            String jsonResponse;
+//            jsonResponse = Client.execute(httpget, responseHandler);
+//            Log.d("Engine_Driver", "t_a: Raw metadata retrieved: " + jsonResponse);
+//
+//            HashMap<String, String> metadataTemp = new HashMap<>();
+//            try {
+//                JSONArray ja = new JSONArray(jsonResponse);
+//                for (int i = 0; i < ja.length(); i++) {
+//                    JSONObject j = ja.optJSONObject(i);
+//                    String metadataName = j.getJSONObject("data").getString("name");
+//                    String metadataValue = j.getJSONObject("data").getString("value");
+//                    metadataTemp.put(metadataName, metadataValue);
+//                }
+//            } catch (JSONException e) {
+//                Log.d("Engine_Driver", "t_a: exception trying to retrieve json metadata.");
+//            } catch (Exception e) {
+//                throw new IOException();
+//            }
+//            if (metadataTemp.size() == 0) {
+//                Log.d("Engine_Driver", "t_a: did not retrieve any json metadata entries.");
+//            } else {
+//                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
+//                Log.d("Engine_Driver", "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
+//            }
+//        }
+//    }
 
     abstract class DownloadDataTask {
         private Download dl = null;
@@ -2600,7 +2600,7 @@ public class threaded_application extends Application {
         host_ip = null;
         setServerType("");
         setServerDescription("");
-        jmriMetadata = null;
+//        jmriMetadata = null;
         power_state = null;
         to_states = null;
         to_system_names = null;
