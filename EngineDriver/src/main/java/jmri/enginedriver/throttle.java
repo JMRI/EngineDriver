@@ -513,6 +513,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private String prefTtsThrottleSpeed = "Zero + Max";
     private boolean prefTtsGamepadTest = true;
     private boolean prefTtsGamepadTestComplete = true;
+    private boolean prefTtsGamepadTestKeys = false;
     private Time lastTtsTime;
     private static final String PREF_TT_WHEN_NONE = "None";
     private static final String PREF_TT_WHEN_KEY = "Key";
@@ -1562,6 +1563,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefTtsThrottleSpeed = prefs.getString("prefTtsThrottleSpeed", getResources().getString(R.string.prefTtsThrottleSpeedDefaultValue));
         prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
+        prefTtsGamepadTestKeys = prefs.getBoolean("prefTtsGamepadTestKeys", getResources().getBoolean(R.bool.prefTtsGamepadTestKeysDefaultValue));
 
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));

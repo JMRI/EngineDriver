@@ -921,6 +921,9 @@
     <string name="prefTtsGamepadTestTitle">On Gamepad Test start</string>
     <string name="prefTtsGamepadTestSummary">When the gamepad test screen is launched </string>
 
+    <string name="prefTtsGamepadTestKeysTitle">On Gamepad Test key press</string>
+    <string name="prefTtsGamepadTestKeysSummary">When each buttons is pressed in the gamepad test screen</string>
+
     <string name="prefTtsGamepadTestCompleteTitle">On Gamepad Test complete</string>
     <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test screen is finished </string>
 

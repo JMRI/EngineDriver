@@ -40,6 +40,7 @@ import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -67,6 +68,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
@@ -89,6 +91,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     String[] gamePadButtonLabelsArray;
 
     private boolean prefGamepadTestEnforceTestingSimple = true;
+    private boolean prefTtsGamepadTestKeys = false;
 
     private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
@@ -122,6 +125,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private static String GAMEPAD_TEST_RESET = "9";
 
     private int decreaseButtonCount = 0;
+
+    private TextToSpeech myTts;
 
     private Toolbar toolbar;
 
@@ -329,15 +334,24 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     }
 
 
-    private void setButtonOn(Button btn, String fn, String keyCodeString) {
+    private void setButtonOn(Button btn, String fn, String keyCodeString, int action) {
 
         if (whichGamepadNo.equals(" ")) {
             setAllButtonsOff();
         }
 
+        if ( (myTts != null) && (action==ACTION_DOWN) && (prefTtsGamepadTestKeys) ) {
+            String text = keyCodeString;
+            if ( (keyCodeString.length()<4) || (!keyCodeString.substring(0,4).equals("DPad")) ) {
+                text = "Button "+String.valueOf(btn.getText());
+            }
+            myTts.speak(text+","+fn, TextToSpeech.QUEUE_ADD, null);
+        }
+
         btn.setClickable(true);
         btn.setSelected(true);
         btn.setTypeface(null, Typeface.ITALIC);
+
 
         tvGamepadKeyCode.setText(String.valueOf(keyCodeString));
         tvGamepadKeyFunction.setText(fn);
@@ -396,28 +410,28 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 }
 
                 if (yAxis == -1) { // DPAD Up Button
-                    setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad Up");
+                    setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad Up", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(5);
                     return (true); // stop processing this key
 
                 } else if (yAxis == 1) { // DPAD Down Button
-                    setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad Down");
+                    setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad Down", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(7);
                     return (true); // stop processing this key
 
                 } else if (xAxis == -1) { // DPAD Left Button
-                    setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad Left");
+                    setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad Left", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(8);
                     return (true); // stop processing this key
 
                 } else if (xAxis == 1) { // DPAD Right Button
-                    setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad Right");
+                    setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad Right", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(6);
@@ -425,28 +439,28 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 }
 
                 if (yAxis2 == -1) { // DPAD2 Up Button
-                    setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad2 Up");
+                    setButtonOn(bButtons[2], prefGamePadButtons[5],"DPad2 Up", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesUpCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(5);
                     return (true); // stop processing this key
 
                 } else if (yAxis2 == 1) { // DPAD2 Down Button
-                    setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad2 Down");
+                    setButtonOn(bButtons[3], prefGamePadButtons[7],"DPad2 Down", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesDownCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(7);
                     return (true); // stop processing this key
 
                 } else if (xAxis2 == -1) { // DPAD2 Left Button
-                    setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad2 Left");
+                    setButtonOn(bButtons[4], prefGamePadButtons[8],"DPad2 Left", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesLeftCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(8);
                     return (true); // stop processing this key
 
                 } else if (xAxis2 == 1) { // DPAD2 Right Button
-                    setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad2 Right");
+                    setButtonOn(bButtons[5], prefGamePadButtons[6],"DPad2 Right", action);
                     setAllKeyCodes( this.getResources().getString(R.string.gamepadTestKeyCodesRightCode), action);
                     GamepadFeedbackSound(false);
                     isTestComplete(6);
@@ -492,7 +506,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     }
                 }
                 if (rslt>=1) {
-                    setButtonOn(bButtons[rslt], prefGamePadButtons[actionNo], String.valueOf(keyCode));
+                    setButtonOn(bButtons[rslt], prefGamePadButtons[actionNo], String.valueOf(keyCode), action);
                     if (action == ACTION_DOWN) {
                         GamepadFeedbackSound(false);
                     } else {
@@ -662,6 +676,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
+        setupTts();
+
     } // end onCreate
 
     @Override
@@ -818,5 +834,25 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
+
+    private void setupTts() {
+        prefTtsGamepadTestKeys = prefs.getBoolean("prefTtsGamepadTestKeys", getResources().getBoolean(R.bool.prefTtsGamepadTestKeysDefaultValue));
+
+        if (prefTtsGamepadTestKeys) {
+            if (myTts == null) {
+                myTts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                    @Override
+                    public void onInit(int status) {
+                        if (status != TextToSpeech.ERROR) {
+                            myTts.setLanguage(Locale.getDefault());
+                        } else {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
 
 }

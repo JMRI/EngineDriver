@@ -63,6 +63,7 @@
 
     <bool name="prefTtsGamepadTestDefaultValue">true</bool>
     <bool name="prefTtsGamepadTestCompleteDefaultValue">true</bool>
+    <bool name="prefTtsGamepadTestKeysDefaultValue">false</bool>
 
     <bool name="prefEsuMc2EndStopDirectionChangeDefaultValue">true</bool>
     <bool name="prefEsuMc2StopButtonShortPressDefaultValue">true</bool>
