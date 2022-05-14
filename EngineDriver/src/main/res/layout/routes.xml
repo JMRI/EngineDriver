@@ -82,11 +82,11 @@
                     android:id="@+id/routes_list_label"
                     style="?android:attr/listSeparatorTextViewStyle"
                     android:text="@string/routes_list_label" />
+
                 <ListView
                     android:id="@+id/routes_list"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" >
-                </ListView>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>

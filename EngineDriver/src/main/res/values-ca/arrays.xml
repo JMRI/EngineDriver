@@ -124,7 +124,7 @@
         <item>Timbre (IPLS)</item>
         <item>Banya (IPLS)</item>
         <item>Banya Curta (IPLS)</item>
-        <item >Speak Current Speed</item>
+        <item >Parla la velocitat actual</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>

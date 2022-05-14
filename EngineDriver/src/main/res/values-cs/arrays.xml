@@ -163,7 +163,7 @@
         <item >Zvonek (IPLS)</item>
         <item >Roh (IPLS)</item>
         <item >Roh krátký (IPLS)</item>
-        <item >Speak Current Speed</item>
+        <item >Mluvit aktuální rychlostí</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">

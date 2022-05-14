@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -86,6 +87,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private Toolbar toolbar;
     private int toolbarHeight;
 
+    ListView routes_lv;
     protected View routesView;
     protected GestureOverlayView routesOverlayView;
     // these are used for gesture tracking
@@ -357,11 +359,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             }
 
         };
-        ListView routes_lv = findViewById(R.id.routes_list);
+        routes_lv = findViewById(R.id.routes_list);
         routes_lv.setAdapter(routes_list_adapter);
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, @NonNull MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     mainapp.buttonVibration();
                 }
@@ -427,7 +429,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        routesView = findViewById(R.id.routes);
+        routesView = findViewById(R.id.routes_screen);
         // enable swipe/fling detection if enabled in Prefs
         routesOverlayView = findViewById(R.id.routes_overlay);
         routesOverlayView.addOnGestureListener(this);

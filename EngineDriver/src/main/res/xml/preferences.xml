@@ -1460,6 +1460,15 @@
                     android:summary="@string/prefTtsGamepadTestCompleteSummary"
                     android:title="@string/prefTtsGamepadTestCompleteTitle"
                     android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:defaultValue="@bool/prefTtsGamepadTestKeysDefaultValue"
+                    android:key="prefTtsGamepadTestKeys"
+                    android:summary="@string/prefTtsGamepadTestKeysSummary"
+                    android:title="@string/prefTtsGamepadTestKeysTitle"
+                    android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
         </PreferenceScreen>
 
