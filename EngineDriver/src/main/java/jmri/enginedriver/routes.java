@@ -364,9 +364,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, @NonNull MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mainapp.buttonVibration();
-                }
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    mainapp.buttonVibration();
+//                }
                 return myGesture != null && myGesture.onTouchEvent(event);
             }
         };
@@ -640,7 +640,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
-        if (mainapp.fastClockFormat > 0)
+        if (mainapp.getFastClockFormat() > 0)
             mainapp.setToolbarTitle(toolbar,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_routes_short),

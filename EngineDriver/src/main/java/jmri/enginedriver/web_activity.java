@@ -262,7 +262,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
-        if (mainapp.fastClockFormat > 0)
+        if (mainapp.getFastClockFormat() > 0)
             mainapp.setToolbarTitle(toolbar,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_web_short),
