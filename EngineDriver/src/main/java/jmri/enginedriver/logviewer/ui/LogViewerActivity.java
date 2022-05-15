@@ -454,7 +454,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 s +=  String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
             }
             s += String.format(", Host:%s", mainapp.getHostIp() );
-
+            s += String.format(", Port:%s", mainapp.connectedPort);
             //show server type and description if set
             String sServer;
             if (mainapp.getServerDescription().contains(mainapp.getServerType())) {

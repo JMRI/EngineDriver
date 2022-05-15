@@ -5350,7 +5350,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // set the title, optionally adding the current time.
     private void setActivityTitle() {
-        if (mainapp.fastClockFormat > 0)
+        if (mainapp.getFastClockFormat() > 0)
             mainapp.setToolbarTitle(toolbar,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_throttle_short),

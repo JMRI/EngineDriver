@@ -56,13 +56,14 @@ public class about_page extends AppCompatActivity {
         String s;
         // ED version info
         s = "EngineDriver:" + mainapp.appVersion;
-        if (mainapp.host_ip != null) {
+        if (mainapp.getHostIp() != null) {
             // WiT info
-            if (mainapp.withrottle_version != 0.0) {
-                s += ", WiThrottle:v" + mainapp.withrottle_version;
+            if (mainapp.getWithrottleVersion() != 0.0) {
+                s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
                 s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
             }
-            s += String.format(", Host:%s", mainapp.host_ip);
+            s += String.format(", Host:%s", mainapp.getHostIp());
+            s += String.format(", Port:%s", mainapp.getConnectedPort());
             //show server type and description if set
             String sServer;
             if (mainapp.getServerDescription().contains(mainapp.getServerType())) {

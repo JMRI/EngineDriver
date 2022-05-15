@@ -139,10 +139,10 @@ public class threaded_application extends Application {
     public static String INTRO_VERSION = "7";  // set this to a different string to force the intro to run on next startup.
 
     public comm_thread commThread;
-    volatile String host_ip = null; //The IP address of the WiThrottle server.
+    private volatile String host_ip = null; //The IP address of the WiThrottle server.
     volatile String logged_host_ip = null;
     private volatile int port = 0; //The TCP port that the WiThrottle server is running on
-    Double withrottle_version = 0.0; //version of withrottle server
+    private Double withrottle_version = 0.0; //version of withrottle server
     volatile int web_server_port = 0; //default port for jmri web server
     private String serverType = ""; //should be set by server in initial command strings
     private String serverDescription = ""; //may be set by server in initial command strings
@@ -172,7 +172,12 @@ public class threaded_application extends Application {
 //    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     String power_state;
-    public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
+
+    public int getFastClockFormat() {
+        return fastClockFormat;
+    }
+
+    private int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
     private Long fastClockSeconds = 0L;
     public int androidVersion = 0;
     public String appVersion = "";
@@ -257,6 +262,11 @@ public class threaded_application extends Application {
     public String connectedHostName = "";
     @NonNull
     public String connectedHostip = "";
+
+    public int getConnectedPort() {
+        return connectedPort;
+    }
+
     public int connectedPort = 0;
 
     public String languageCountry = "en";
@@ -1172,23 +1182,28 @@ public class threaded_application extends Application {
                     break;
                 }
                 case 'V':
-                    Double old_vn = withrottle_version;
-                    try {
-                        withrottle_version = Double.parseDouble(response_str.substring(2));
-                    } catch (Exception e) {
-                        Log.e("Engine_Driver", "process response: invalid WiT version string");
-                        withrottle_version = 0.0;
-                    }
-                    //only move on to Throttle screen if version received is 2.0+
-                    if (withrottle_version >= 2.0) {
-                        if (!withrottle_version.equals(old_vn)) { //only if changed
-                            sendMsg(connection_msg_handler, message_type.CONNECTED);
+                    if (response_str.startsWith("VN")) {
+                        Double old_vn = withrottle_version;
+                        try {
+                            withrottle_version = Double.parseDouble(response_str.substring(2));
+                        } catch (Exception e) {
+                            Log.e("Engine_Driver", "process response: invalid WiT version string");
+                            withrottle_version = 0.0;
+                            break;
+                        }
+                        //only move on to Throttle screen if version received is 2.0+
+                        if (withrottle_version >= 2.0) {
+                            if (!withrottle_version.equals(old_vn)) { //only if changed
+                                sendMsg(connection_msg_handler, message_type.CONNECTED);
+                            } else {
+                                Log.d("Engine_Driver", "version already set to " + withrottle_version + ", ignoring");
+                            }
                         } else {
-                            Log.d("Engine_Driver", "version already set to " + withrottle_version + ", ignoring");
+                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
+                            socketWiT.disconnect(false);
                         }
                     } else {
-                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
-                        socketWiT.disconnect(false);
+                        Log.e("Engine_Driver", "process response: invalid WiT version string");
                     }
                     break;
 
