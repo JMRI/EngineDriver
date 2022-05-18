@@ -1,3 +1,4 @@
+**Version 2.32.150
 **Version 2.32.148
  * TTS current speed option
  * Hide the status and navigation bars on Lock&Dim screen.
