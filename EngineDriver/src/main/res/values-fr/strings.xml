@@ -384,7 +384,7 @@
     <string name="prefThrottleImportExportTitle">Importer/exporter/Reset des préférences</string>
     <string name="prefThrottleImportExportSummary">Importer/exporter/Reset des préférences</string>
     <string name="prefImportExportTitle">Importe, Exporter ou Reset</string>
-    <string name="prefImportExportSummary">\'Import\' ou \'Export\' les préférences dans le répertoire \'\\Android\\data\\Hornjmri.enginedriver\\files\\\', ou \'Reset\' ceux-ci.
+    <string name="prefImportExportSummary">\'Import\' ou \'Export\' les préférences dans le répertoire \'\\Android\\data\\jmri.enginedriver\\files\\\', ou \'Reset\' ceux-ci.
 \nEffet immédiat si vous choisissez cette option.
 \n(Vous pourrez ainsi transférer vos préférences sur un autre téléphone en copiant le fichier).</string>
 
@@ -395,7 +395,7 @@
         \n(Pour revenir systématiquement dans un état connu, définir \'Auto import on connect only\' à la première connexion, ou après une sauvegarde (voir ci dessous)).</string>
 
     <string name="prefHostImportExportTitle">Import/export manuel spécifique au serveur </string>
-<string name="prefHostImportExportSummary">\'Import\' ou \'Export\' vos préférence d un serveur spécifique dans le répertoire \'\\Android\\data\\Hornjmri.enginedriver\\files\\\'. Le serveur doit faire partie de vos connexions récentes.
+<string name="prefHostImportExportSummary">\'Import\' ou \'Export\' vos préférence d un serveur spécifique dans le répertoire \'\\Android\\data\\jmri.enginedriver\\files\\\'. Le serveur doit faire partie de vos connexions récentes.
 \nAction immédiate si cette option est choisie.
 \n(Disponible seulement hors connexion).</string>
 
@@ -550,11 +550,11 @@
     <string name="toastConnectRemoveDemoHostError">La suppression du serveur de démo ne peut se faire qu\'en modifiant les préférences</string>
     <string name="toastConnectRemoved">Serveur supprimé de la liste.</string>
     <string name="toastRoutesCommandSent">"Commande envoyée pour définir itinéraire "</string>
-    <string name="toastImportExportExportSucceeded">Exportation des préférences d \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' avec succès.</string>
-    <string name="toastImportExportImportSucceeded">Importation des préférences d \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' avec succès.</string>
-    <string name="toastImportExportExportFailed">Exportation des préférences d \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' en ERREUR.</string>
-    <string name="toastImportExportImportFailed">Importation des préférences d \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' en ERREUR.</string>
-    <string name="toastImportExportServerImportFailed">Les préférences ne sont pas importées depuis \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'. Vous n\'avez pas encore sauvegardés les préférences de ce serveur.</string>
+    <string name="toastImportExportExportSucceeded">Exportation des préférences d \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' avec succès.</string>
+    <string name="toastImportExportImportSucceeded">Importation des préférences d \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' avec succès.</string>
+    <string name="toastImportExportExportFailed">Exportation des préférences d \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' en ERREUR.</string>
+    <string name="toastImportExportImportFailed">Importation des préférences d \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' en ERREUR.</string>
+    <string name="toastImportExportServerImportFailed">Les préférences ne sont pas importées depuis \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. Vous n\'avez pas encore sauvegardés les préférences de ce serveur.</string>
     <string name="toastImportExportCannotImport">Import des préférences impossible. Aucune connexion sur un serveur.</string>
     <string name="toastImportExportCannotExport">Export des préférences impossible. Aucune connexion sur un serveur.</string>
     <string name="toastSelectLocoConfirmClear">Confirmer la suppression de toutes les locos récentes en appuyant A NOUVEAU sur la touche \'Efface list\'</string>
@@ -702,7 +702,7 @@
     <string name="functionButtonLookForRear">ARRIÈRE</string>
     <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur sur lecture de la liste de connexions récentes:</string>
-    <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
+    <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte.</string>
 
     <string name="ConsistEditLabelLead">TETE</string>
@@ -754,10 +754,10 @@
     <string name="timerDialogHint">Redémarre ou Réinitialise le mot de passe</string>
 
     <string name="prefImportServerManualTitle">Import manuel du serveur courant</string>
-    <string name="prefImportServerManualSummary">Fichier des préférence du serveur à \'Importer\' depuis le serveur connecté.\nLe fichier doit se trouver dans le répertoire \'/\\Android\\data\\Hornjmri.enginedriver\\files\\\' du serveur et le Web serveur doit être en service.\nATTENTION: cette importation démarre immédiatement si vous sauvez cette préférence.</string>
+    <string name="prefImportServerManualSummary">Fichier des préférence du serveur à \'Importer\' depuis le serveur connecté.\nLe fichier doit se trouver dans le répertoire \'/\\Android\\data\\jmri.enginedriver\\files\\\' du serveur et le Web serveur doit être en service.\nATTENTION: cette importation démarre immédiatement si vous sauvez cette préférence.</string>
 
     <string name="prefImportServerAutoTitle">Import automatique depuis tous les serveurs.</string>
-    <string name="prefImportServerAutoSummary">Import automatique des préférences depuis tous les serveurs dès la connexion.\n(Si le fichier \'/\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preference.ed\' est sur le serveur et si il est plus récent que lors du dernier contrôle).</string>
+    <string name="prefImportServerAutoSummary">Import automatique des préférences depuis tous les serveurs dès la connexion.\n(Si le fichier \'/\\Android\\data\\jmri.enginedriver\\files\\auto_preference.ed\' est sur le serveur et si il est plus récent que lors du dernier contrôle).</string>
 
     <string name="importServerAutoDialog">Un fichier de préférence existe sur ce serveur: (%1$s)\nFaut il l importer?\n\nATTENTION!\n\'Complet\' - Efface toutes vos préférences.\n\n\'Partiel\' - Efface tout sauf les themes et quelques préférences liées au type de régulateur.</string>
     <string name="importServerAutoDialogPositiveButton">Complet</string>
@@ -915,7 +915,7 @@
     <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmer la suppression des dernières connexions</string>
     <string name="introAndroid11Title">Android 11 changements</string>
-    <string name="introAndroid11Summary">Suite aux modifications apportées à Android 11, l emplacement des fichiers Engine Driver est déplacé du repertoire  \'\\engine_driver\' vers \'\\Android\\data\\Hornjmri.enginedriver\\files\'. \nVos données seront automatiquement copiées dans ce nouveau repertoire.</string>
+    <string name="introAndroid11Summary">Suite aux modifications apportées à Android 11, l emplacement des fichiers Engine Driver est déplacé du repertoire  \'\\engine_driver\' vers \'\\Android\\data\\jmri.enginedriver\\files\'. \nVos données seront automatiquement copiées dans ce nouveau repertoire.</string>
     <string name="introAndroid11Summary1">Engine Driver ne peux pas supprimer les fichiers initiaux du repertoire \'\\engine_driver\', mais ils ne servent plus. Vous pouvez donc les supprimer si besoin.</string>
     <string name="introAndroid11Summary2">Note: si vous désinstallez cette appli, TOUS les fichiers de ce nouveau repertoire, y compris les preferences seront automatiquement detruits. Il est donc important de les copier autre part avant suppressions de l appli.</string>
     <string name="prefDeviceSoundsCategoryTitle">Sons des locomotives sur le téléphone</string>

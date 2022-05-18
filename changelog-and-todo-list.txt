@@ -8,6 +8,7 @@
  * fix issue with the gesture overlay on the routes screen
  * option to speak the buttons in the gamepad test
  * fix stop during pause on gamepad
+ * correct log file path shown, and include in log
 **Version 2.32.146
  * TTS speed bug fixes
  * additional TTS options
