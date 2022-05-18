@@ -374,7 +374,7 @@
     <string name="prefThrottleImportExportTitle">Voreinstellungen für Import/Export/Zurücksetzen</string>
     <string name="prefThrottleImportExportSummary">Voreinstellungen für Import/Export/Zurücksetzen</string>
     <string name="prefImportExportTitle">Import, Export, oder Zurücksetzen</string>
-    <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen im \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.\n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
+    <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen im \'\\Android\\data\\jmri.enginedriver\\files\\\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.\n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
 <!--    <string name="prefImportExportDefaultValue">Keine</string> -->
     <string name="prefImportExportLocoListTitle">Einbeziehen der Liste kürzlich verwendeter Loks</string>
     <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
@@ -382,17 +382,17 @@
     <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\' der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
 
     <string name="prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>
-    <string name="prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/\\Android\\data\\Hornjmri.enginedriver\\files\\\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
+    <string name="prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/\\Android\\data\\jmri.enginedriver\\files\\\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
 
     <string name="prefImportServerAutoTitle">Automatischer Import von allen Servern</string>
-    <string name="prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind.\n(Wenn sich die Datei \'/\\Android\\data\\Hornjmri.enginedriver\\files\\auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
+    <string name="prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind.\n(Wenn sich die Datei \'/\\Android\\data\\jmri.enginedriver\\files\\auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
 
     <string name="importServerAutoDialog">Auf diesem Server wurde eine neue Voreinstellungsdatei gefunden (%1$s).\nMöchten Sie sie importieren?\n\nWarnung!\n\'Vollständig\' - Alle Ihre Voreinstellungen werden übersteuert.\n\n\'Teilweise\' - Alle Voreinstellungen außer "Theme" und einige "Throttle Page Type" -Einstellungen werden überschrieben.</string>
     <string name="importServerAutoDialogPositiveButton">Vollständig</string>
     <string name="importServerAutoDialogNeutralButton">Teilweise</string>
 
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
-    <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'\\Android\\data\\Hornjmri.enginedriver\\files\\\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
+    <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'\\Android\\data\\jmri.enginedriver\\files\\\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
 <!--    <string name="prefHostImportExportDefaultValue">Keine</string> -->
     <string name="prefSwapForwardReverseButtonsTitle">Vertausche Richtungsknöpfe</string>
     <string name="prefSwapForwardReverseButtonsSummary">Vertausche die beiden Richtungsknöpfe permanent für alle Fahrregler.</string>
@@ -533,11 +533,11 @@
     <string name="toastConnectRemoved">Server wurde aus der Liste entfernt.</string>
 
     <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>
-    <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
-    <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
-    <string name="toastImportExportExportFailed">Voreinstellungen exportieren zu \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
-    <string name="toastImportExportImportFailed">Voreinstellungen importieren von \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
-    <string name="toastImportExportServerImportFailed">Voreinstellungen nicht importiert von \'\\Android\\data\\Hornjmri.enginedriver\\files\\%1$s\'. Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
+    <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
+    <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
+    <string name="toastImportExportExportFailed">Voreinstellungen exportieren zu \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
+    <string name="toastImportExportImportFailed">Voreinstellungen importieren von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
+    <string name="toastImportExportServerImportFailed">Voreinstellungen nicht importiert von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="toastImportExportCannotImport">Kann Voreinstellungen nicht importieren. Mit keinem Host verbunden.</string>
     <string name="toastImportExportCannotExport">Kann Host spezifische Voreinstellungen nicht exportieren. Mit keinem Host verbunden.</string>
     <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in der Liste kürzlich verwendeter Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>
@@ -639,7 +639,7 @@
     <string name="functionButtonLookForRear">HINTEN</string>
     <string name="prefImportExportOverwite">Datei \'%1$s\' existiert schon. Überschreiben?</string>
     <string name="prefImportExportErrorReadingList">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
-    <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\Hornjmri.enginedriver\\files\\ %1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
+    <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
 
     <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>
@@ -903,7 +903,7 @@
     <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Bestätigen Sie, dass Sie alle jüngsten Verbindungen entfernen möchten</string>
     <string name="introAndroid11Title">Android 11 ändert sich</string>
-    <string name="introAndroid11Summary">Durch Änderungen, die von Google für Android 11 erzwungen werden, muss der Speicherort, an dem die Motortreiberdateien gespeichert sind, vom \'\\engine_driver\' Ordner in den \'\\Android\\data\\Hornjmri.enginedriver\\files\' Ordner verschoben werden. \nIhre Daten werden automatisch in diesen neuen Ordner kopiert.</string>
+    <string name="introAndroid11Summary">Durch Änderungen, die von Google für Android 11 erzwungen werden, muss der Speicherort, an dem die Motortreiberdateien gespeichert sind, vom \'\\engine_driver\' Ordner in den \'\\Android\\data\\jmri.enginedriver\\files\' Ordner verschoben werden. \nIhre Daten werden automatisch in diesen neuen Ordner kopiert.</string>
     <string name="introAndroid11Summary1">Der Engine-Treiber kann die Originaldateien in \'\\engine_driver\' nicht löschen, jedoch nicht mehr benötigt oder verwendet. So können Sie sie manuell löschen, wenn Sie möchten.</string>
     <string name="introAndroid11Summary2">Hinweis: Wenn Sie die App deinstallieren, werden alle Dateien in diesem neuen Ordner (einschließlich aller exportierten Voreinstellungen) automatisch gelöscht. Daher ist es wichtig, die Dateien an anderer Stelle zu kopieren, bevor Sie die App löschen.</string>
     <string name="prefDeviceSoundsCategoryTitle">Im Telefon Loco klingt das Volumen</string>
