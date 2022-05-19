@@ -48,7 +48,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
-    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
+//    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
     private Menu AMenu;
     private Toolbar toolbar;
@@ -247,7 +247,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, ENGINE_DRIVER_DIR+ "logcat" + System.currentTimeMillis() + ".txt"), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
+            Log.d("Engine_Driver", "Logging started to: " + logFile.toString());
             logAboutInfo();
         } catch ( IOException e ) {
             e.printStackTrace();
