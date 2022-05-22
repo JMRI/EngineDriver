@@ -890,9 +890,7 @@ public class select_loco extends AppCompatActivity {
             locoSource = WHICH_SOURCE_ADDRESS;
 
             acquire_engine(true, -1);
-            InputMethodManager imm =
-                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            hideSoftKeyboard(v);
             mainapp.buttonVibration();
         }
     }
@@ -904,6 +902,7 @@ public class select_loco extends AppCompatActivity {
             consist.setWaitingOnID(true);
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, "*", whichThrottle);
             result = RESULT_OK;
+            hideSoftKeyboard(v);
             end_this_activity();
             mainapp.buttonVibration();
         }
@@ -919,6 +918,7 @@ public class select_loco extends AppCompatActivity {
         public void onClick(View v) {
             release_loco(_throttle);
             overrideThrottleName = "";
+            hideSoftKeyboard(v);
             end_this_activity();
             mainapp.buttonVibration();
         }
@@ -938,6 +938,7 @@ public class select_loco extends AppCompatActivity {
             consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
             consistEdit.putExtra("saveConsistsFile", 'Y');
 
+            hideSoftKeyboard(v);
             startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
@@ -957,6 +958,7 @@ public class select_loco extends AppCompatActivity {
             Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEdit.class);
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
+            hideSoftKeyboard(v);
             startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
@@ -976,6 +978,7 @@ public class select_loco extends AppCompatActivity {
             startActivityForResult(deviceSounds, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;
+            hideSoftKeyboard(v);
             end_this_activity();
             mainapp.buttonVibration();
         }
@@ -1055,6 +1058,7 @@ public class select_loco extends AppCompatActivity {
 
                 result = RESULT_LOCO_EDIT;
                 mainapp.buttonVibration();
+                hideSoftKeyboard(v);
                 end_this_activity();
             }
         }
@@ -1167,6 +1171,7 @@ public class select_loco extends AppCompatActivity {
 
                 overrideThrottleName = rosterNameString;
                 acquire_engine(bRosterRecent, -1);
+                hideSoftKeyboard(v);
                 mainapp.buttonVibration();
             }
         }
@@ -2258,4 +2263,11 @@ public class select_loco extends AppCompatActivity {
         return degree;
     }
 
+    public void hideSoftKeyboard(View view) {
+        // Check if no view has focus:
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
 }
