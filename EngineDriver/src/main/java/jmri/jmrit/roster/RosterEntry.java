@@ -1,16 +1,13 @@
 package jmri.jmrit.roster;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-
-import jmri.enginedriver.threaded_application;
+import android.util.Log;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import android.util.Log;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @SuppressWarnings("UnnecessaryContinue")
 public class RosterEntry {
@@ -129,7 +126,8 @@ public class RosterEntry {
 //                if (metadata != null && metadata.size() > 0 && metadata.get("JMRIVERCANON") != null && metadata.get("JMRIVERCANON").compareTo("2.99.4") > 0) {
 //                    return rosterURL + URLEncoder.encode(_id, "UTF-8").replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
 //                }
-                return resourcesURL + URLEncoder.encode(_iconFilePath, "UTF-8");
+//                return resourcesURL + URLEncoder.encode(_iconFilePath, "UTF-8");
+                return rosterURL + URLEncoder.encode(_id, "UTF-8").replace("+", "%20") + "/icon";  //roster servlet doesn't like the + replacements
             } catch (UnsupportedEncodingException ignored) {
             }
         }
