@@ -3097,7 +3097,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_STOP)) {  // Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
-                if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN) {
+                if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN)
+                   || ( ( getSpeed(whichThrottle) == 0) && (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ) ) {
                     disablePauseSpeed(whichThrottle);
                 }
                 speedUpdateAndNotify(whichThrottle, 0);
@@ -5118,6 +5119,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 isPauseSpeeds[whichThrottle]=PAUSE_SPEED_ZERO;
                             } else if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN) {
                                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
+                            } else if ( ( getSpeed(whichThrottle) == 0)
+                                && (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ) {
+                                disablePauseSpeed(whichThrottle);
                             }
 
                             speedUpdateAndNotify(whichThrottle, 0);

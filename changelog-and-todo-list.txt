@@ -1,4 +1,5 @@
 **Version 2.32.152
+ * 'Stop' button cancels 'Pause' is stationary
 **Version 2.32.150
  * Fix: soft keyboard stayed up after exit from Loco Select in some conditions
  * Fix: roster icon url / location (broken in 148)
