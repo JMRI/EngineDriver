@@ -1049,10 +1049,10 @@
     <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button</string>
 
     <string name="prefKidsTimerButtonTitle">Show Timer button?</string>
-    <string name="prefKidsTimerButtonSummary">Display the Timer Button to activate the timer</string>
+    <string name="prefKidsTimerButtonSummary">Display the Timer Action Bar Button to activate the timer</string>
 
     <string name="prefKidsTimerButtonDefaultTitle">Default time for Button</string>
-    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the toollbar Button to activate the timer</string>
+    <string name="prefKidsTimerButtonDefaultSummary">Default time if using the Action Bar Button to activate the timer</string>
     <string name="prefKidsTimerButtonDefaultDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAllowMobileDataTitle">Mobile Data connection?</string>
