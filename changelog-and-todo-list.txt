@@ -1,6 +1,6 @@
 **Version 2.32.152
- * Volume 'Pause' and 'Mute' hardware buttons stop then toggle directions
- * 'Stop' button cancels 'Pause' is stationary
+ * 'Stop' button cancels 'Pause' if stationary
+ * Volume 'Pause' and 'Mute' hardware buttons stop then toggle direction
 **Version 2.32.150
  * Fix: soft keyboard stayed up after exit from Loco Select in some conditions
  * Fix: roster icon url / location (broken in 148)
