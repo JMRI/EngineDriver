@@ -55,6 +55,7 @@ import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_MUTE;
+import static android.view.KeyEvent.KEYCODE_HEADSETHOOK;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
@@ -6493,6 +6494,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //            mVolumeKeysAutoDecrement = false;
             doVolumeButtonAction(event.getAction(), key, 0);
             return (true); // stop processing this key
+        } else if ( (key == KEYCODE_VOLUME_MUTE) || (key == KEYCODE_HEADSETHOOK) ) {
+            doMuteButtonAction(event.getAction(), key, 0);
+            return (true); // stop processing this key
         }
         return (super.onKeyUp(key, event)); // continue with normal key
         // processing
@@ -6541,9 +6545,28 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //            }
             doVolumeButtonAction(event.getAction(), key, repeatCnt);
             return (true); // stop processing this key
+        } else if ( (key == KEYCODE_VOLUME_MUTE) || (key == KEYCODE_HEADSETHOOK) ) {
+            doMuteButtonAction(event.getAction(), key, 0);
+            return (true); // stop processing this key
         }
         return (super.onKeyDown(key, event)); // continue with normal key
         // processing
+    }
+
+    void doMuteButtonAction(int action, int key, int repeatCnt) {
+        if (action==ACTION_UP) {
+            mVolumeKeysAutoIncrement = false;
+            mVolumeKeysAutoDecrement = false;
+        } else {
+            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
+                if (getSpeed(whichVolume) > 0 ) {
+                    speedUpdateAndNotify(0);
+                } else {
+                    int dir = (getDirection(whichVolume) == DIRECTION_REVERSE) ? DIRECTION_FORWARD : DIRECTION_REVERSE;
+                    changeDirectionIfAllowed(whichVolume, dir);
+                }
+            }
+        }
     }
 
     void doVolumeButtonAction(int action, int key, int repeatCnt) {

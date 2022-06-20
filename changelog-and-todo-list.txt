@@ -1,4 +1,5 @@
 **Version 2.32.152
+ * Volume 'Pause' and 'Mute' hardware buttons stop then toggle directions
  * 'Stop' button cancels 'Pause' is stationary
 **Version 2.32.150
  * Fix: soft keyboard stayed up after exit from Loco Select in some conditions
