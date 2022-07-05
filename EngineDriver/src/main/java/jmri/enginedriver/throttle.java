@@ -3498,7 +3498,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (lab != null) {
                 lab = lab.toUpperCase().trim();
             } else {
-                if(fKey<prefNumberOfDefaultFunctionLabels) {
+                if ( (fKey<prefNumberOfDefaultFunctionLabels) && (mainapp.function_labels_default.get(fKey) != null) ) {
                     lab = mainapp.function_labels_default.get(fKey).toUpperCase().trim();
                 } else {
                     lab = "BLANK";
