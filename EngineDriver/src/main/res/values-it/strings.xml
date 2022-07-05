@@ -395,7 +395,7 @@
     <string name="prefImportServerManualSummary">File del server per \'Importare\' una serie di preferenze dal server attualmente collegato.\nIl file deve essere in \'/\\Android\\data\\jmri.enginedriver\\files\\\' del server e il server Web deve essere in esecuzione.\nAttenzione: l\'importazione inizierà immediatamente salvando questa preferenza.</string>
 
     <string name="prefImportServerAutoTitle">Importazione automatica da tutti i server</string>
-    <string name="prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'\\Android\\data\\jmri.enginedriver\\files\\auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
+    <string name="prefImportServerAutoSummary">Importa automaticamente le preferenze dai server alla connessione.\n(Se il file \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' è sul server e se è più recente che l\'ultima volta è stato controllato).</string>
 
     <string name="importServerAutoDialog">Il nuovo file delle preferenze è stato trovato su questo server (%1$s).\nVuoi importarlo?\n\nWarning!\n\'Pieno\' - Tutte le tue preferenze saranno sovrascritte.\n\n\'Parziale\' - Tutte le preferenze, eccetto Tema e alcune preferenze per Tipo di pagina Throttle, saranno sovrascritte.</string>
     <string name="importServerAutoDialogPositiveButton">Pieno</string>
