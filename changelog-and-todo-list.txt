@@ -1,4 +1,4 @@
-**Version 2.32.152
+**Version 2.33.152
  * 'Stop' button cancels 'Pause' if stationary
  * Volume 'Pause' and 'Mute' hardware buttons stop then toggle direction
  * Fix: gamepad buttons when some default function labels not set
