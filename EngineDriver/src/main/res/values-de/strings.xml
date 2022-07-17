@@ -944,5 +944,7 @@
     <string name="rosterEntryImageSaveButtonText">Speichern</string>
     <string name="rosterEntryImageSelectButtonText">Neues Bild</string>
     <string name="rosterEntryImageServerImageHelpText">Ihr Server verfügt über ein Bild für den Lok. Sie können das lokale Bild ändern, da er von der einem auf dem Server automatisch überwunden wird.</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">Wenn der aktivierte Motortreiber nicht nach mehreren Gamepads prüft.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Nur ein Gamepad?</string>
 
 </resources>

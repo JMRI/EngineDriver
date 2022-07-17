@@ -1070,6 +1070,13 @@
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
+                    android:defaultValue="@bool/prefGamepadOnlyOneGamepadDefaultValue"
+                    android:key="prefGamepadOnlyOneGamepad"
+                    android:summary="@string/prefGamepadOnlyOneGamepadSummary"
+                    android:title="@string/prefGamepadOnlyOneGamepadTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
                     android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                     android:key="prefGamepadTestNow"
                     android:summary="@string/prefGamepadTestNowSummary"

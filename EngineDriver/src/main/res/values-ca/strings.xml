@@ -932,4 +932,6 @@
     <string name="rosterEntryImageSaveButtonText">Estalviar</string>
     <string name="rosterEntryImageSelectButtonText">Nova imatge</string>
     <string name="rosterEntryImageServerImageHelpText">El vostre servidor té una imatge per al loco. Podeu canviar la imatge local, ja que s\'acabarà automàticament per la que hi ha al servidor.</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">Si el controlador del motor activat no comprovarà si hi ha diversos jocs.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Només un Gamepad?</string>
 </resources>

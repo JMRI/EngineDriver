@@ -1132,5 +1132,7 @@
     <string name="rosterEntryImageSaveButtonText">Uložit</string>
     <string name="rosterEntryImageSelectButtonText">Nový vzhled</string>
     <string name="rosterEntryImageServerImageHelpText">Váš server má obraz pro LOCO. Můžete změnit místní snímek, protože bude automaticky převaženo jedním na serveru.</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">Pokud ovladač motoru povolen, nebude kontrolovat více gamepadů.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Pouze jeden gamepad?</string>
 
 </resources>
