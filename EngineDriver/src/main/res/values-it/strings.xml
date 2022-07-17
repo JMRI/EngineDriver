@@ -876,5 +876,7 @@
     <string name="rosterEntryImageSelectButtonText">Nuova immagine</string>
     <string name="rosterEntryImageRemoveButtonText">Rimuovere</string>
     <string name="rosterEntryImageSaveButtonText">Salva</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">Se il driver del motore abilitato non verificherà più gamepad.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Solo un gamepad?</string>
 
 </resources>

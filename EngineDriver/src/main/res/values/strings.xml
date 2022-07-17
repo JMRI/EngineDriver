@@ -793,6 +793,9 @@
     <string name="prefGamepadTestNowTitle">Test Gamepad settings now!</string>
     <string name="prefGamepadTestNowSummary">Allows you to confirm that the chosen setting works correctly.\nTest screen will launch IMMEDIATELY on selection.</string>
 
+    <string name="prefGamepadOnlyOneGamepadTitle">Only one Gamepad?</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">If enabled Engine Driver will not check for multiple gamepads.</string>
+
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creating withrottle zeroconf listener: IOException:\n%1$s</string>

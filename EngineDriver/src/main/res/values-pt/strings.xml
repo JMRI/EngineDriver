@@ -879,5 +879,7 @@
     <string name="rosterEntryImageSelectButtonText">Nova imagem</string>
     <string name="rosterEntryImageRemoveButtonText">Remover</string>
     <string name="rosterEntryImageSaveButtonText">Salve </string>
+    <string name="prefGamepadOnlyOneGamepadSummary">Se o driver do motor ativado não verificará vários gamepads.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Apenas um gamepad?</string>
 
 </resources>

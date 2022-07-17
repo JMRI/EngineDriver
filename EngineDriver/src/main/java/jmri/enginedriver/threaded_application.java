@@ -82,15 +82,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import org.apache.http.client.HttpClient;
-//import org.apache.http.client.ResponseHandler;
-//import org.apache.http.client.methods.HttpGet;
-//import org.apache.http.impl.client.BasicResponseHandler;
-//import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -419,7 +410,8 @@ public class threaded_application extends Application {
     public static final int MAX_GAMEPADS = 6;
     public static final String WHICH_GAMEPAD_MODE_NONE = "None";
     public String prefGamePadType = WHICH_GAMEPAD_MODE_NONE;
-    public int[] gamePadIds = {0, 0, 0, 0, 0, 0}; // which device id if assigned to each of the three throttles
+    public boolean prefGamepadOnlyOneGamepad = true;
+    public int[] gamePadIdsAssignedToThrottles = {0, 0, 0, 0, 0, 0}; // which device id if assigned to each of the throttles
     public int[] gamePadThrottleAssignment = {-1, -1, -1, -1, -1, -1};
     public boolean usingMultiplePads = false;
     public int[] gamePadDeviceIds = {0, 0, 0, 0, 0, 0, 0}; // which device ids have we seen
@@ -497,7 +489,8 @@ public class threaded_application extends Application {
                 if (!sent)
                     service_message.recycle();
 
-                Log.d("Engine_Driver", String.format("threaded_application.serviceResolved - %s(%s):%d -- %s", host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
+                Log.d("Engine_Driver", String.format("threaded_application.serviceResolved - %s(%s):%d -- %s",
+                        host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
 
             }
         }
@@ -4024,7 +4017,7 @@ public class threaded_application extends Application {
     public int getGamePadIndexFromThrottleNo(int whichThrottle) {
         int whichGamepad = -1;
         for (int i = 0; i < numThrottles; i++) {
-            if (gamePadIds[whichThrottle] == gamePadDeviceIds[i]) {
+            if (gamePadIdsAssignedToThrottles[whichThrottle] == gamePadDeviceIds[i]) {
                 whichGamepad = i;
                 break;
             }
@@ -4043,14 +4036,28 @@ public class threaded_application extends Application {
 
             int reassigningGamepad = -1;
             int i;
+
+            // set for only one but the device id has changed - probably turned off then on
+            if ( (gamepadCount==1) && (prefGamepadOnlyOneGamepad) && (gamePadDeviceIds[0] != eventDeviceId) ) {
+                for (int k = 0; k < numThrottles; k++) {
+                    if (gamePadIdsAssignedToThrottles[k] == gamePadDeviceIds[0]) {
+                        gamePadIdsAssignedToThrottles[k] = eventDeviceId;
+                        break;
+                    }
+                }
+                gamePadDeviceIds[0] = eventDeviceId;
+                gamePadDeviceNames[0] = eventDeviceName;
+//                gamePadDeviceIdsTested[0]=GAMEPAD_BAD;
+            }
+
             // find out if this gamepad is already assigned
             for (i = 0; i < numThrottles; i++) {
-                if (gamePadIds[i] == eventDeviceId) {
+                if (gamePadIdsAssignedToThrottles[i] == eventDeviceId) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
                         whichGamePad = i;
                     } else { // currently assigned to this throttle, but the throttle is not active
                         whichGamePad = i;
-                        gamePadIds[i] = 0;
+                        gamePadIdsAssignedToThrottles[i] = 0;
                         reassigningGamepad = gamePadThrottleAssignment[i];
                         gamePadThrottleAssignment[i] = -1;
 //                        setGamepadIndicator(); // need to clear the indicator
@@ -4080,9 +4087,9 @@ public class threaded_application extends Application {
                 }
 
                 for (i = 0; i < numThrottles; i++) {
-                    if (gamePadIds[i] == 0) {  // throttle is not assigned a gamepad
+                    if (gamePadIdsAssignedToThrottles[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
-                            gamePadIds[i] = eventDeviceId;
+                            gamePadIdsAssignedToThrottles[i] = eventDeviceId;
                             if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
                             } else { // reasigning
@@ -4095,8 +4102,14 @@ public class threaded_application extends Application {
                     }
                 }
 //            } else {
-//                if (gamePadDeviceIdsTested[i]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
-//                    start_gamepad_test_activity(i);
+//                for (j = 0; j < gamepadCount; j++) {
+//                    if (gamePadDeviceIds[j] == eventDeviceId) { // known, but unassigned
+//                        whichGamePadDeviceId = j;
+//                        break;
+//                    }
+//                }
+//                if (gamePadDeviceIdsTested[whichGamePad]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+//                    start_gamepad_test_activity(whichGamePad);
 //                }
             }
         }
@@ -4106,6 +4119,7 @@ public class threaded_application extends Application {
 
         return whichGamePad;
     }
+
 
     // get the consist for the specified throttle
     private static final Consist emptyConsist = new Consist();
@@ -4252,7 +4266,7 @@ public class threaded_application extends Application {
         usingMultiplePads = false;
         gamepadCount = 0;
         for (int i=0; i<MAX_GAMEPADS; i++) {
-            gamePadIds[i] = 0;
+            gamePadIdsAssignedToThrottles[i] = 0;
             gamePadThrottleAssignment[i] = -1;
             gamePadDeviceIds[i] = 0;
             gamePadDeviceNames[i] = "";
