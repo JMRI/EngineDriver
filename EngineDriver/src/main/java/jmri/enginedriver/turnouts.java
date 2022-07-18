@@ -35,7 +35,9 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.InputDevice;
@@ -553,17 +555,18 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         // -------------------------------------------------------------------
 
         trn = findViewById(R.id.turnout_entry);
-//        trn.addTextChangedListener(new TextWatcher() {
-//            public void afterTextChanged(Editable s) {
-//                updateTurnoutEntry();
-//            }
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//        });
+        trn.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                updateTurnoutEntry();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
 //        trn.setOnEditorActionListener(new OnEditorActionListener() {
 //            @Override
 //            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
