@@ -530,6 +530,7 @@ public class threaded_application extends Application {
                     try {
                         Log.d("Engine_Driver", "threaded_application.end_jmdns: removing jmdns listener");
                         jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+
                         multicast_lock.release();
                     } catch (Exception e) {
                         Log.d("Engine_Driver", "threaded_application.end_jmdns: exception in jmdns.removeServiceListener()");

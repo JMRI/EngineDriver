@@ -6568,7 +6568,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
                 if (getSpeed(whichVolume) > 0 ) {
-                    speedUpdateAndNotify(0);
+                    speedUpdateAndNotify(whichVolume,0);
                 } else {
                     int dir = (getDirection(whichVolume) == DIRECTION_REVERSE) ? DIRECTION_FORWARD : DIRECTION_REVERSE;
                     changeDirectionIfAllowed(whichVolume, dir);
