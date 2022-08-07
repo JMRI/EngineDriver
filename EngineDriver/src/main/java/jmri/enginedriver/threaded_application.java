@@ -3244,9 +3244,13 @@ public class threaded_application extends Application {
         return true;
     }
 
-    // prompt for Exit
-    // must be called on the UI thread
     public void checkExit(final Activity activity) {
+        checkExit(activity, false);
+    }
+
+        // prompt for Exit
+    // must be called on the UI thread
+    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
         final AlertDialog.Builder b = new AlertDialog.Builder(activity);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(R.string.exit_title);
@@ -3255,7 +3259,11 @@ public class threaded_application extends Application {
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 exitConfirmed = true;
-                sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
+                if (!forceFastDisconnect) {
+                    sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
+                } else {
+                    sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);  //trigger fast disconnect / shutdown sequence
+                }
                 buttonVibration();
             }
         });
