@@ -30,7 +30,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
+
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
 public class reconnect_status extends AppCompatActivity {
 
@@ -38,6 +43,7 @@ public class reconnect_status extends AppCompatActivity {
     private String prog = "";
     private boolean backOk = true;
     private boolean retryFirst = false;
+    private Menu RCMenu;
 
     private Toolbar toolbar;
 
@@ -188,7 +194,7 @@ public class reconnect_status extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK && this.backOk) {
-            mainapp.checkExit(this);
+            mainapp.checkExit(this, true);
             return true;
         }
         return (super.onKeyDown(key, event));
@@ -213,4 +219,32 @@ public class reconnect_status extends AppCompatActivity {
             overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.reconnect_status_menu, menu);
+        RCMenu = menu;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle all of the possible menu actions.
+        //noinspection SwitchStatementWithTooFewBranches
+        switch (item.getItemId()) {
+            case R.id.exit_mnu:
+                mainapp.checkExit(this, true);
+                return true;
+            case R.id.logviewer_menu:
+                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+                startActivity(logviewer);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
