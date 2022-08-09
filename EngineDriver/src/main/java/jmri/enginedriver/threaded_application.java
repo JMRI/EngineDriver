@@ -2415,6 +2415,10 @@ public class threaded_application extends Application {
                 if (dl.cancel)
                     return;
                 rosterTemp = rl.parse();
+                if (rosterTemp == null) {
+                    Log.w("Engine_Driver", "t_a: Roster parse failed.");
+                    return;
+                }
                 rosterSize = rosterTemp.size();     //throws exception if still null
                 if (!dl.cancel)
                     roster = (HashMap<String, RosterEntry>) rosterTemp.clone();

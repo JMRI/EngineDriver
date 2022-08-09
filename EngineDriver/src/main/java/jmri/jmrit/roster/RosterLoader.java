@@ -51,6 +51,7 @@ public class RosterLoader {
             }
             rosterStream.close();
         } catch (Exception e) {
+            Log.e("Engine_Driver", "Error building hashmap of Roster Entries: " + e.getMessage());
             return null;
         }
         return roster;

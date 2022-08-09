@@ -153,7 +153,7 @@ public class RosterEntry {
         for (int k = 0; k < nm.getLength(); k++) {
             if ("id".compareTo(nm.item(k).getNodeName()) == 0) {
                 _id = nm.item(k).getNodeValue();
-                Log.d("Engine_Driver", "RosterEntry - adding id " + _id);
+                Log.d("Engine_Driver", "RosterEntry: adding id " + _id);
                 continue;
             }
             if ("fileName".compareTo(nm.item(k).getNodeName()) == 0) {
@@ -342,8 +342,12 @@ public class RosterEntry {
      * @param fn function number, starting with 0
      */
     public void setFunctionLabel(int fn, String label) {
-        if (functionLabels == null) functionLabels = new String[MAXFNNUM + 1]; // counts zero
-        functionLabels[fn] = label;
+        if (functionLabels == null) functionLabels = new String[getMAXFNNUM() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXFNNUM()) {
+            functionLabels[fn] = label;
+        } else {
+            Log.w("Engine_Driver", "RosterEntry: Fn " + fn + " out of range, not added for '" + getId() + "'");
+        }
     }
 
     /**
@@ -354,14 +358,18 @@ public class RosterEntry {
      */
     public String getFunctionLabel(int fn) {
         if (functionLabels == null) return null;
-        if (fn < 0 || fn > MAXFNNUM)
-            throw new IllegalArgumentException("number out of range: " + fn);
+        if (fn < 0 || fn > getMAXFNNUM()) {
+            return null;
+        }
+//            throw new IllegalArgumentException("number out of range: " + fn);
         return functionLabels[fn];
     }
 
     public void setFunctionImage(int fn, String s) {
-        if (functionImages == null) functionImages = new String[MAXFNNUM + 1]; // counts zero
-        functionImages[fn] = s;
+        if (functionImages == null) functionImages = new String[getMAXFNNUM() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXFNNUM()) {
+            functionImages[fn] = s;
+        }
     }
 
     public String getFunctionImage(int fn) {
@@ -372,8 +380,10 @@ public class RosterEntry {
 
     public void setFunctionSelectedImage(int fn, String s) {
         if (functionSelectedImages == null)
-            functionSelectedImages = new String[MAXFNNUM + 1]; // counts zero
-        functionSelectedImages[fn] = s;
+            functionSelectedImages = new String[getMAXFNNUM() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXFNNUM()) {
+            functionSelectedImages[fn] = s;
+        }
     }
 
     public String getFunctionSelectedImage(int fn) {
@@ -389,10 +399,12 @@ public class RosterEntry {
      */
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
-            functionLockables = new boolean[MAXFNNUM + 1]; // counts zero
+            functionLockables = new boolean[getMAXFNNUM() + 1]; // counts zero
             for (int i = 0; i < functionLockables.length; i++) functionLockables[i] = true;
         }
-        functionLockables[fn] = lockable;
+        if (fn >= 0 && fn <= getMAXFNNUM()) {
+            functionLockables[fn] = lockable;
+        }
     }
 
 
@@ -403,8 +415,8 @@ public class RosterEntry {
      */
     public boolean getFunctionLockable(int fn) {
         if (functionLockables == null) return true;
-        if (fn < 0 || fn > MAXFNNUM)
-            throw new IllegalArgumentException("number out of range: " + fn);
+        if (fn < 0 || fn > getMAXFNNUM())
+            return true;
         return functionLockables[fn];
     }
 

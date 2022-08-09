@@ -201,6 +201,11 @@ public class select_loco extends AppCompatActivity {
                 || ((mainapp.consist_entries != null)
                 && (mainapp.consist_entries.size() > 0))) {
 
+            //only show this warning once, it will be skipped for each entry below
+            if (mainapp.roster == null) {
+                Log.w("Engine_Driver", "select_loco: xml roster not available");
+            }
+
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
@@ -214,7 +219,7 @@ public class select_loco extends AppCompatActivity {
                         //add icon if url set
                         if (mainapp.roster != null) {
                             if (mainapp.roster.get(rostername) != null) {
-                                if ((mainapp.roster != null) && (mainapp.roster.get(rostername) != null) && (mainapp.roster.get(rostername).getIconPath() != null)) {
+                                if (mainapp.roster.get(rostername).getIconPath() != null) {
                                     hm.put("roster_icon", mainapp.roster.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
                                 } else {
                                     Log.d("Engine_Driver", "select_loco: xml roster entry " + rostername + " found, but no icon specified.");
@@ -222,8 +227,6 @@ public class select_loco extends AppCompatActivity {
                             } else {
                                 Log.w("Engine_Driver", "select_loco: WiThrottle roster entry " + rostername + " not found in xml roster.");
                             }
-                        } else {
-                            Log.w("Engine_Driver", "select_loco: xml roster not available");
                         }
                         // add temp hashmap to list which view is hooked to
                         roster_list.add(hm);
