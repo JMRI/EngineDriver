@@ -5,6 +5,8 @@
  * New: Option to specify only one gamepad, defaults to true
  * Fix: manual turnout buttons not enabling
  * add some padding to Port heading on Connect
+ * Show menu on Disconnect Screen
+ * Fix: tolerate FKeys > 28
 **Version 2.32.150
  * Fix: soft keyboard stayed up after exit from Loco Select in some conditions
  * Fix: roster icon url / location (broken in 148)
@@ -687,12 +689,13 @@
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add option to choose which server to automatically connect to
  * threaded_application
+ *   TODO: add support for FKeys > 28
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
- *   TODO: redo hard-coded 29 in function arrays (needs matching WiThrottle Server change)
  * throttle:
+ *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
  *   TODO: dynamically shrink the "other" throttle when not in use to maximize # of funcs shown
  *   TODO: respect "Max Throttle %" from roster entry
