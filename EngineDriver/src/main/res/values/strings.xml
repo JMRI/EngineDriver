@@ -458,6 +458,9 @@
     <string name="prefSocketTimeoutMsTitle">Socket Timeout</string>
     <string name="prefSocketTimeoutMsSummary">Set socket read timeout in milliseconds</string>
     <string name="prefSocketTimeoutMsDefaultValue" translatable="false">500</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefHeartbeatResponseFactorTitle">Heartbeat Response Factor</string>
+    <string name="prefHeartbeatResponseFactorSummary">Percentage of the heartbeat period for when to sent the heartbeat (50%-90%).\nWill take effect on next connection.</string>
+    <string name="prefHeartbeatResponseFactorDefaultValue" translatable="false">80</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
     <string name="prefHardwareSystemTitle">Turnout Hardware System</string>
