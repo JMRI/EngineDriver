@@ -510,6 +510,10 @@
     <string name="prefSelectedLocoIndicatorSummary">Additional highlight of the Loco Select button based on the selection method</string>
     <string name="prefSelectedLocoIndicatorDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefAppIconActionTitle">App Icon Action</string>
+    <string name="prefAppIconActionSummary">What happens when you click the App Icon aor App Name on the Action Bar.</string>
+    <string name="prefAppIconActionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys?</string>
     <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed</string>
 

@@ -678,9 +678,8 @@
                     android:title="@string/prefThrottleSwitchWebViewTitle" />
 -->
             </PreferenceCategory>
+
         </PreferenceScreen>
-
-
 
         <CheckBoxPreference
             android:icon="?attr/ed_in_device_sounds_button"
@@ -696,6 +695,16 @@
             android:summary="@string/prefActionBarShowServerDescriptionSummary"
             android:title="@string/prefActionBarShowServerDescriptionTitle"
             android:layout="@layout/checkbox_no_icon" />
+
+        <ListPreference
+            android:defaultValue="@string/prefAppIconActionDefaultValue"
+            android:entries="@array/prefAppIconActionEntries"
+            android:entryValues="@array/prefAppIconActionEntryValues"
+            android:key="prefAppIconAction"
+            android:layout="@layout/checkbox_no_icon"
+            android:summary="@string/prefAppIconActionSummary"
+            android:title="@string/prefAppIconActionTitle" />
+
 
     </PreferenceCategory>
 

@@ -1391,6 +1391,16 @@
         <item>Slider - Skip some at 28, 100, 128 Steps</item>
     </string-array>
 
+    <string-array name="prefAppIconActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>None</item>
+        <item>estop</item>
+    </string-array>
+
+    <string-array name="prefAppIconActionEntries">  <!-- display version -->
+        <item>None</item>
+        <item>Emergency Stop</item>
+    </string-array>
+
     <!-- always put any categories after the preferences in the category.  i.e. preferences and PreferenceScreens, then categories -->
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
     <string-array name="advancedPreferences" translatable="false">
