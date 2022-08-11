@@ -79,6 +79,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -3973,7 +3974,22 @@ public class threaded_application extends Application {
             TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
             mClock.setText(clockText);
 
+            String prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
+            if (!prefAppIconAction.equals("None")) {
+                LinearLayout llToolbarIconLayout = toolbar.findViewById(R.id.toolbar_icon_layout);
+                app_icon_button_listener AppIconButtonListener = new app_icon_button_listener();
+                llToolbarIconLayout.setOnClickListener(AppIconButtonListener);
+            }
+
 //            adjustToolbarButtonSpacing(toolbar);
+        }
+    }
+
+    public class app_icon_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            // at the moment there is only the e-stop option, otherwise check the preference to see what to do
+            sendEStopMsg();
+            buttonVibration();
         }
     }
 
