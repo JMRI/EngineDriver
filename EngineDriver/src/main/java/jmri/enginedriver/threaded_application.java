@@ -182,10 +182,11 @@ public class threaded_application extends Application {
     static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10000; //interval for outbound heartbeat when WiT heartbeat is disabled
     static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for outbound heartbeat generator
     static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30000;  //maximum allowed interval for outbound heartbeat generator
-    static final double HEARTBEAT_RESPONSE_FACTOR = 0.9;   //adjustment for inbound and outbound timers
+//    static final double HEARTBEAT_RESPONSE_FACTOR = 0.9;   //adjustment for inbound and outbound timers
     static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for (enabled) inbound heartbeat generator
     static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60000;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
+    public int prefHeartbeatResponseFactor = 90;   //adjustment for inbound and outbound timers as a percent
 
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
@@ -1971,6 +1972,8 @@ public class threaded_application extends Application {
              */
             void startHeartbeat(int timeoutInterval) {
                 //update interval timers only when the heartbeat timeout interval changed
+                prefHeartbeatResponseFactor = getIntPrefValue(prefs, "prefHeartbeatResponseFactor", getApplicationContext().getResources().getString(R.string.prefHeartbeatResponseFactorDefaultValue));
+
                 if (timeoutInterval != heartbeatIntervalSetpoint) {
                     heartbeatIntervalSetpoint = timeoutInterval;
 
@@ -1979,7 +1982,8 @@ public class threaded_application extends Application {
                     if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
                         outInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
                     } else {
-                        outInterval = (int) (heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
+//                        outInterval = (int) (heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
+                        outInterval = (int) (heartbeatIntervalSetpoint * ( (double) prefHeartbeatResponseFactor) / 100);
                         //keep values in a reasonable range
                         if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
                             outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
@@ -1996,7 +2000,8 @@ public class threaded_application extends Application {
                         if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
                         if (inInterval < outInterval)
-                            inInterval = (int) (outInterval / HEARTBEAT_RESPONSE_FACTOR);
+//                            inInterval = (int) (outInterval / HEARTBEAT_RESPONSE_FACTOR);
+                            inInterval = (int) (outInterval / ( ((double) prefHeartbeatResponseFactor) / 100) );
                         if (inInterval > MAX_INBOUND_HEARTBEAT_INTERVAL)
                             inInterval = MAX_INBOUND_HEARTBEAT_INTERVAL;
                     }

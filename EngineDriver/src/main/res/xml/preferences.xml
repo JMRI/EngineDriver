@@ -1720,6 +1720,16 @@
             android:title="@string/prefSocketTimeoutMsTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <EditTextPreference
+            android:defaultValue="@string/prefHeartbeatResponseFactorDefaultValue"
+            android:key="prefHeartbeatResponseFactor"
+            android:maxLength="2"
+            android:inputType="number"
+            android:digits="0123456789"
+            android:summary="@string/prefHeartbeatResponseFactorSummary"
+            android:title="@string/prefHeartbeatResponseFactorTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
