@@ -1,3 +1,4 @@
+**Version 2.33.154
 **Version 2.33.152
  * 'Stop' button cancels 'Pause' if stationary
  * Volume 'Pause' and 'Mute' hardware buttons stop then toggle direction
