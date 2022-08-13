@@ -1448,7 +1448,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
-        if (activity != null) {
+        if (activity != null && in != null) {
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));

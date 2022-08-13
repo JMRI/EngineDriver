@@ -7,6 +7,8 @@
  * add some padding to Port heading on Connect
  * Show menu on Disconnect Screen
  * Fix: tolerate FKeys > 28
+ * New: Preference to alter the Heartbeat Response Factor (percentage of the heartbeat period)
+ * New: Preference to have the App Icon and App Name act as an emergency stop
 **Version 2.32.150
  * Fix: soft keyboard stayed up after exit from Loco Select in some conditions
  * Fix: roster icon url / location (broken in 148)
