@@ -1406,7 +1406,7 @@ public class threaded_application extends Application {
             Log.d("Engine_Driver", "t_a: consist header, addr='" + consist_addr
                     + "', name='" + consist_name + "', desc='" + consist_desc + "'");
             //don't add empty consists to list
-            if (consist_desc.length() > 0) {
+            if (consist_entries != null && consist_desc.length() > 0) {
                 consist_entries.put(consist_addr, consist_desc.toString());
             } else {
                 Log.d("Engine_Driver", "skipping empty consist '" + consist_name + "'");

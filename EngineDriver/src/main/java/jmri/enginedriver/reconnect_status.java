@@ -213,7 +213,7 @@ public class reconnect_status extends AppCompatActivity {
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
-        if (activity != null) {
+        if (activity != null && in != null) {
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
