@@ -1,4 +1,6 @@
+**Version 2.33.156
 **Version 2.33.154
+ * Add link to Privacy Policy, per Google requirement
 **Version 2.33.152
  * 'Stop' button cancels 'Pause' if stationary
  * Volume 'Pause' and 'Mute' hardware buttons stop then toggle direction
