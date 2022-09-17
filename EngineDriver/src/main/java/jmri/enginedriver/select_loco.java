@@ -123,6 +123,7 @@ public class select_loco extends AppCompatActivity {
 //    private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
     private static final int LIGHT_UNKNOWN = 2;
+//    public static final int LIGHT_ON = 3;
 
     public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
     public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;

@@ -54,7 +54,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
+    public static final int LIGHT_ON = 3;
+
     public static String LIGHT_TEXT_OFF = "Off";
+    public static String LIGHT_TEXT_ON = "On";
     public static String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static String LIGHT_TEXT_UNKNOWN = "Unknown";
 
@@ -104,6 +107,9 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                     if (l.isLightOn() == LIGHT_OFF) {
                         hm.put("loco_light", LIGHT_TEXT_OFF);
                         mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, false);
+                    } else if (l.isLightOn() == LIGHT_ON) {
+                        hm.put("loco_light", LIGHT_TEXT_ON);
+                        mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, true);
                     } else if (l.isLightOn() == LIGHT_FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                     } else {
@@ -229,6 +235,8 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 } else {
                     if ((consist.isLight(address) == LIGHT_UNKNOWN) || (consist.isLight(address) == LIGHT_FOLLOW)) {
                         light = LIGHT_OFF;
+                    } else if (consist.isLight(address) == LIGHT_OFF) {
+                        light = LIGHT_ON;
                     } else {
                         light = LIGHT_FOLLOW;
                     }
@@ -254,6 +262,8 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 int light;
                 if ((consist.isLight(address) == LIGHT_UNKNOWN) | (consist.isLight(address) == LIGHT_FOLLOW)) {
                     light = LIGHT_OFF;
+                } else if (consist.isLight(address) == LIGHT_OFF) {
+                    light = LIGHT_ON;
                 } else {
                     light = LIGHT_FOLLOW;
                 }

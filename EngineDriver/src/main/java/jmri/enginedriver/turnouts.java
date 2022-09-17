@@ -153,7 +153,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         Comparator<HashMap<String, String>> turnout_comparator = new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-                return arg0.get("to_user_name").compareTo(arg1.get("to_user_name"));    //*** was compareToIgnoreCase()
+//                return arg0.get("to_user_name").compareTo(arg1.get("to_user_name"));    //*** was compareToIgnoreCase()
+                String a = formatNumberInName(arg0.get("to_user_name"));
+                String b = formatNumberInName(arg1.get("to_user_name"));
+                return a.compareTo(b);    //*** was compareToIgnoreCase()
             }
         };
 
@@ -212,6 +215,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         filterTurnoutView();
     }
 
+    String formatNumberInName (String name) {
+        String tempName = name;
+        boolean isNumber = tempName.matches("[-+]?[0-9]*\\.?[0-9]+");
+        if (isNumber) {
+            Double val = Double.parseDouble(tempName);
+            tempName = String.format("%11.5f",val);
+        }
+        return tempName;
+    }
 
     public void refreshTurnoutViewStates() {
         if (mainapp.isTurnoutControlAllowed()) {

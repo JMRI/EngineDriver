@@ -494,11 +494,11 @@
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
         <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
-        <item>@integer/KeyCode_Button_Y</item> //gamepadStart
-        <item>@integer/KeyCode_Button_B</item> //gamepadX
-        <item>@integer/KeyCode_Button_X</item> //gamepadY
-        <item>@integer/KeyCode_Volume_Up</item> //gamepadA
-        <item>@integer/KeyCode_Enter</item> //gamepadB
+        <item>@integer/KeyCode_Button_Start</item> //gamepadStart
+        <item>@integer/KeyCode_Button_X</item> //gamepadX
+        <item>@integer/KeyCode_Button_Y</item> //gamepadY
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
