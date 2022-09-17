@@ -550,7 +550,7 @@
 
     <string name="prefConsistLightsLongClickTitle">Control consist Lights on long click</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
-    <string name="consistLights_help">Click on a Loco to toggle the Lights for that Loco \'Off\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
+    <string name="consistLights_help">Click on a Loco to toggle the Lights for that Loco \'Off\', \'On\' or \'Follow Function Button\'. \n\nLong Click on a Loco to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused). \n\nPress Back Arrow when done.</string>
 
     <string name="prefThrottleImportExportTitle">Import/Export/Reset &amp; Log Preferences</string>
     <string name="prefThrottleImportExportSummary">Import/Export/Reset and Log Preferences</string>

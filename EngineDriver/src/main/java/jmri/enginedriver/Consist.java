@@ -36,6 +36,7 @@ public final class Consist {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
+    public static final int LIGHT_ON = 3;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;

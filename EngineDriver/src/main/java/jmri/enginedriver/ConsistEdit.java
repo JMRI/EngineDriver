@@ -56,9 +56,12 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
     public static final int LIGHT_UNKNOWN = 2;
+    public static final int LIGHT_ON = 3;
+
     public static final String LIGHT_TEXT_OFF = "Off";
     public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
+    public static final String LIGHT_TEXT_ON = "On";
 
     private String CONSIST_EDIT_LABEL_LEAD = "LEAD";
     private String CONSIST_EDIT_LABEL_TRAIL = "TRAIL";
@@ -125,6 +128,8 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 } else {
                     if (l.isLightOn() == LIGHT_OFF) {
                         hm.put("loco_light", LIGHT_TEXT_OFF);
+                    } else if (l.isLightOn() == LIGHT_ON) {
+                        hm.put("loco_light", LIGHT_TEXT_ON);
                     } else if (l.isLightOn() == LIGHT_FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                     } else {

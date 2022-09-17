@@ -84,6 +84,7 @@ public class ImportExportPreferences {
     private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
       private static final int LIGHT_UNKNOWN = 2;
+    public static final int LIGHT_ON = 3;
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
 
