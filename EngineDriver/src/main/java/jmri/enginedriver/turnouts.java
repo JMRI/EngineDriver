@@ -217,10 +217,40 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     String formatNumberInName (String name) {
         String tempName = name;
-        boolean isNumber = tempName.matches("[-+]?[0-9]*\\.?[0-9]+");
-        if (isNumber) {
-            Double val = Double.parseDouble(tempName);
-            tempName = String.format("%11.5f",val);
+        String tempNo = "";
+        int tempVal = 0;
+        char tempChar;
+        boolean haveNo = false;
+        boolean hasNumber = false;
+//        hasNumber= tempName.matches("[\\D]?[\\d]+[\\D]?");
+        for (int i=0; i<name.length();i++) {
+            tempChar = name.charAt(i);
+            if ((tempChar >= '0') && (tempChar <= '9')) {  // numeric
+                hasNumber = true;
+                break;
+            }
+        }
+        if (hasNumber) {
+            tempName = "";
+            for (int i=0; i<name.length();i++) {
+                tempChar = name.charAt(i);
+                if ((tempChar>='0') && (tempChar<='9')) {  // numeric
+                   haveNo = true;
+                   tempNo = tempNo + name.substring(i,i+1);
+                } else {
+                    if (haveNo) {
+                        tempVal = Integer.parseInt(tempNo);
+                        tempName = tempName + String.format("%6d",tempVal);
+                        haveNo = false;
+                        tempNo = "";
+                    }
+                    tempName = tempName + name.substring(i,i+1);
+                }
+            }
+            if (haveNo) {
+                tempVal = Integer.parseInt(tempNo);
+                tempName = tempName + String.format("%6d",tempVal);
+            }
         }
         return tempName;
     }
