@@ -36,7 +36,8 @@
         <item >Vertical Shunting -Left (1)</item>
         <item >Vertical Shunting -Right (1)</item>
         <item tools:ignore="TypographyDashes">Horizontal Shunting (1-3)</item>
-        <item tools:ignore="TypographyDashes">Simple &#8211; Tablet Recommended (1-6)</item>
+        <item tools:ignore="TypographyDashes">Simple - Tablet Recommended (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Shunting Left (1-6)</item>
     </string-array>
 
 </resources>

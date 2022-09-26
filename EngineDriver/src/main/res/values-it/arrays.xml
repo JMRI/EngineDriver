@@ -17,7 +17,7 @@
       translations provided by Roberto Falorni
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string-array name="address_size_defaultsEntries">
         <item>Breve</item>
@@ -68,7 +68,8 @@
         <item >Switching &#8211; Sinistra (1 acceleratore)</item>
         <item >Switching &#8211; Destra (1 acceleratore)</item>
         <item >Switching &#8211; Horizontal (3 acceleratore)</item>
-        <item >Semplice &#8211; Consigliato Tablet (1&#8211;6 controllori)</item>
+        <item >Semplice &#8211; Consigliato Tablet (1&#8211;6 acceleratore)</item>
+        <item tools:ignore="TypographyDashes">Tablet Shunting Sinistra (1-6 acceleratore)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
