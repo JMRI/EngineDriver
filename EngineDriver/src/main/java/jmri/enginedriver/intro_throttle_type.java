@@ -77,6 +77,8 @@ public class intro_throttle_type extends Fragment {
         v.setText(nameEntries[9]);
         v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_simple_name);
         v.setText(nameEntries[10]);
+        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_tablet_switching_left_name);
+        v.setText(nameEntries[11]);
 
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
@@ -93,6 +95,7 @@ public class intro_throttle_type extends Fragment {
         else if (nameEntryValues[8].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_right_name); }
         else if (nameEntryValues[9].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_switching_horizontal_name); }
         else if (nameEntryValues[10].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_simple_name); }
+        else if (nameEntryValues[11].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_tablet_switching_left_name); }
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -112,12 +115,11 @@ public class intro_throttle_type extends Fragment {
                 else if (checkedId == R.id.intro_throttle_type_switching_right_name) { Choice = 8; }
                 else if (checkedId == R.id.intro_throttle_type_switching_horizontal_name) { Choice = 9; }
                 else if (checkedId == R.id.intro_throttle_type_simple_name) { Choice = 10; }
+                else if (checkedId == R.id.intro_throttle_type_tablet_switching_left_name) { Choice = 11; }
                 prefs.edit().putString("prefThrottleScreenType", nameEntryValues[Choice]).commit();
          }
         });
-
     }
-
 
     @Nullable
     @Override

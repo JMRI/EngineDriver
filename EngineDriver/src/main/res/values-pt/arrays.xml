@@ -17,7 +17,7 @@
       translations provided by Roberto Falorni
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="address_size_defaultsEntries">
         <item>Curto</item>
         <item>Longo</item>
@@ -68,6 +68,7 @@
         <item >Switching &#8211; Direita (1 acelerador)</item>
         <item >Switching &#8211; Horizontal (3 acelerador)</item>
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6 controladores)</item>
+        <item tools:ignore="TypographyDashes">Tablet Switching Esquerda (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

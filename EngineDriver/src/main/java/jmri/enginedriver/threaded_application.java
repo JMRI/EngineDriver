@@ -3601,6 +3601,7 @@ public class threaded_application extends Application {
             case "Switching":
             case "Switching Left":
             case "Switching Right":
+            case "Tablet Switching Left":
                 throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
                 break;
             case "Switching Horizontal":

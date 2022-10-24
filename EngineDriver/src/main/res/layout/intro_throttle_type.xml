@@ -175,6 +175,17 @@
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_tablet_switching_left_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_tablet_left"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
             </RadioGroup>
 
         </LinearLayout>
