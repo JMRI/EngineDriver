@@ -946,5 +946,18 @@
     <string name="rosterEntryImageServerImageHelpText">Ihr Server verfügt über ein Bild für den Lok. Sie können das lokale Bild ändern, da er von der einem auf dem Server automatisch überwunden wird.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Wenn der aktivierte Motortreiber nicht nach mehreren Gamepads prüft.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Nur ein Gamepad?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Wiederverbindungsstatus</string>
+    <string name="clearConsistsList">Clear besteht aus der Liste</string>
+    <string name="gamepad_test_reset">Gamepads Voller Zurücksetzen</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Zeigen Sie die Beschreibung des aktuellen Servers in der Aktionsleiste an</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Serverbeschreibung anzeigen</string>
+    <string name="prefAppIconActionSummary">Was passiert, wenn Sie auf das App -Symbol oder den App -Namen in der Aktionsleiste klicken?</string>
+    <string name="prefAppIconActionTitle">App -Symbol Aktion</string>
+    <string name="prefTtsGamepadTestKeysSummary">Wenn jedes Tasten im Gamepad -Testbildschirm gedrückt wird</string>
+    <string name="prefTtsGamepadTestKeysTitle">Bei Gamepad -Testtaste Drücken Sie</string>
+    <string name="prefTtsThrottleSpeedSummary">Wenn die Geschwindigkeit bei Verwendung eines Gamepad bestimmte Geschwindigkeiten trifft</string>
+    <string name="prefTtsThrottleSpeedTitle">Auf Gamepad -Geschwindigkeiten</string>
+    <string name="TtsGamepadTestSpeedMax">Max</string>
+    <string name="TtsGamepadTestSpeedZero">Null</string>
 
 </resources>

@@ -831,8 +831,8 @@
     <string name="toastFlashlightOnFailed">Je mi líto! Při zapnutí svítilny došlo k problému&#8230;</string>
     <string name="toastFlashlightOffFailed">Je mi líto! Při vypnutí svítilny došlo k problému&#8230;</string>
 
-    <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
-    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
+    <string name="webViewButtonBar">Tlačítko webového zobrazení</string>
+    <string name="webViewAction">Zobrazit/skrýt webový pohled</string>
     <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí?\n(vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
 
@@ -1134,5 +1134,16 @@
     <string name="rosterEntryImageServerImageHelpText">Váš server má obraz pro LOCO. Můžete změnit místní snímek, protože bude automaticky převaženo jedním na serveru.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Pokud ovladač motoru povolen, nebude kontrolovat více gamepadů.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Pouze jeden gamepad?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Stav znovupřipojení</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Zobrazit popis aktuálního serveru na akčním panelu</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Zobrazit popis serveru</string>
+    <string name="prefAppIconActionSummary">Co se stane, když kliknete na ikonu aplikace nebo název aplikace na liště Action.</string>
+    <string name="prefAppIconActionTitle">Akce ikony aplikace</string>
+    <string name="prefTtsGamepadTestKeysSummary">Když jsou každá tlačítka stisknuta na testovací obrazovce GamePad</string>
+    <string name="prefTtsGamepadTestKeysTitle">Na testovací klíč GAMEPAD Stiskněte tlačítko</string>
+    <string name="prefTtsThrottleSpeedSummary">Když rychlost zasáhne určité rychlosti při používání gamepad</string>
+    <string name="prefTtsThrottleSpeedTitle">Při rychlostech gamepadu</string>
+    <string name="TtsGamepadTestSpeedMax">Max</string>
+    <string name="TtsGamepadTestSpeedZero">Nula</string>
 
 </resources>

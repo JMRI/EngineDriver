@@ -816,7 +816,7 @@
     <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings and Preferences.\n</string>
     <string name="statusThreadedAppNotConnected">Not connected to a network.  Check WiFi settings.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">No response from server %1$s:%2$s for %3$dms. Check that the WiThrottle Server is running.\n\nRetrying</string>
-    <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.\n\nRetrying</string>
+    <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.  Retrying</string>
 
     <!--    Toast messages for the Throttle page-->
     <string name="toastUnableToSetBrightness">Unable to set the Auto Brightness/ Adaptive Brightness.</string>

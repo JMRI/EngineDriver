@@ -881,5 +881,22 @@
     <string name="rosterEntryImageSaveButtonText">Salve </string>
     <string name="prefGamepadOnlyOneGamepadSummary">Se o driver do motor ativado não verificará vários gamepads.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Apenas um gamepad?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Status Re-conexão</string>
+    <string name="clearConsistsList">Clear Consiste List</string>
+    <string name="gamepad_test_reset">GamePads Reset completo</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Mostre a descrição do servidor atual na barra de ação</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Mostrar descrição do servidor</string>
+    <string name="prefAppIconActionSummary">O que acontece quando você clica no ícone do aplicativo ou nome do aplicativo na barra de ação.</string>
+    <string name="prefAppIconActionTitle">Ação do ícone do aplicativo</string>
+    <string name="prefTtsGamepadTestKeysSummary">Quando cada botão é pressionado na tela de teste gamepad</string>
+    <string name="prefTtsGamepadTestKeysTitle">Na tecla de teste gamepad, imprensa</string>
+    <string name="prefTtsThrottleSpeedSummary">Quando a velocidade atinge certas velocidades ao usar um gamepad</string>
+    <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
+    <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi. \\ n \\ n nova tentativa</string>
+    <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
+    <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$s segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
+    <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
+    <string name="TtsGamepadTestSpeedMax">Máx</string>
+    <string name="TtsGamepadTestSpeedZero">Zero</string>
 
 </resources>

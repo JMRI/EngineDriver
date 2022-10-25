@@ -67,7 +67,7 @@
         <item>Switching &#8211; dreta (1 controlador)</item>
         <item>Switching &#8211; Horizontal (3 controlador)</item>
         <item tools:ignore="TypographyDashes">Simple - tablet recomanat (1-6 controladors)</item>
-        <item tools:ignore="TypographyDashes">Tablet shunting esquerra (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Switching esquerra (1-6)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Cap</item>
