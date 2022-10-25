@@ -805,7 +805,7 @@
     <string name="webViewAction">Show / Hide Vista Web</string>
     <string name="prefWebViewButtonTitle">Show / Hide botão Web View?</string>
     <string name="logViewerTitle">LogViewerActivity | %1$s</string>
-    <string name="prefWebViewButtonSummary">Mostrar Mostrar Esconder botão / Web Ver na barra de ação? \\ n(requer \'acelerador Web View\' preferência a ser ativado)</string>
+    <string name="prefWebViewButtonSummary">Mostrar Mostrar Esconder botão / Web Ver na barra de ação?\n(requer \'acelerador Web View\' preferência a ser ativado)</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
     <string name="permissionsWriteSettings">Engine Driver precisa de definições de permissões WRITE para mudar o brilho da tela.</string>
@@ -878,7 +878,7 @@
     <string name="rosterEntryImageServerImageHelpText">Seu servidor tem uma imagem para o loco. Você não pode alterar a imagem local, pois será automaticamente superajectiva pelo servidor.</string>
     <string name="rosterEntryImageSelectButtonText">Nova imagem</string>
     <string name="rosterEntryImageRemoveButtonText">Remover</string>
-    <string name="rosterEntryImageSaveButtonText">Salve </string>
+    <string name="rosterEntryImageSaveButtonText">Salve</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Se o driver do motor ativado não verificará vários gamepads.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Apenas um gamepad?</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Status Re-conexão</string>
@@ -892,7 +892,7 @@
     <string name="prefTtsGamepadTestKeysTitle">Na tecla de teste gamepad, imprensa</string>
     <string name="prefTtsThrottleSpeedSummary">Quando a velocidade atinge certas velocidades ao usar um gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
-    <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi. \\ n \\ n nova tentativa</string>
+    <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi.\n\n nova tentativa</string>
     <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
     <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$s segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>

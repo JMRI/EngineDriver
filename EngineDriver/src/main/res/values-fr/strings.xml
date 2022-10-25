@@ -939,7 +939,7 @@
     <string name="app_name_device_sounds_settings">Sons locomotives via telephone</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Augmentez la zone affichant les touches de fonctions pour accéder aux touches de fonctions Sonores Cloche / Klaxon / Mute</string>
     <string name="pauseSpeedButtonLabel">Pause</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forcer l\'étape de vitesse à utiliser lorsque vous appuyez longuement sur une vitesse inférieure sur le curseur. \\ n Si non vérifié, la vitesse saute immédiatement à la vitesse touchée.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forcer l\'étape de vitesse à utiliser lorsque vous appuyez longuement sur une vitesse inférieure sur le curseur.\n Si non vérifié, la vitesse saute immédiatement à la vitesse touchée.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Étape de vitesse sur décrément?</string>
     <string name="soundsButtonHornShortDefaultValue">Corne court</string>
     <string name="toastInitialisingSounds">Initialisation dans les sons téléphoniques sur Loco.</string>

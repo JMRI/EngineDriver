@@ -941,7 +941,7 @@
     <string name="prefTtsThrottleSpeedSummary">Cuando la velocidad alcanza ciertas velocidades cuando se usa un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">En velocidades de gamepad</string>
     <string name="rosterEmpty">Incapaz de encontrar entidades en la lista de JMRI. Use la opción \'Dirección DCC\' o \'reciente\' en su lugar.</string>
-    <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi. \\ n \\ n volver a intentar</string>
+    <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máximo</string>
     <string name="TtsGamepadTestSpeedZero">Cero</string>

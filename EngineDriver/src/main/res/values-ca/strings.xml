@@ -938,7 +938,7 @@
     <string name="clearConsistsList">Clear consisteix a la llista</string>
     <string name="gamepad_test_reset">Restabliment complet dels jocs</string>
     <string name="limitSpeedButtonLabel">Velocitat límit</string>
-    <string name="prefActionBarShowServerDescriptionSummary">Mostra la descripció del servidor actual a la barra d’acció</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Mostra la descripció del servidor actual a la barra d\'acció</string>
     <string name="prefActionBarShowServerDescriptionTitle">Mostra la descripció del servidor</string>
     <string name="prefAppIconActionSummary">Què passa quan feu clic a la icona de l\'aplicació o el nom de l\'aplicació a la barra d\'acció.</string>
     <string name="prefAppIconActionTitle">Acció de la icona de l\'aplicació</string>
@@ -950,7 +950,7 @@
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
     <string name="rosterEmpty">No es pot trobar cap ingrés a la llista de JMRI. Utilitzeu l\'opció \'Adreça DCC\' o \'recent\'.</string>
     <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \\n\\nReintentant</string>
-    <string name="toastNumThrottles">El tipus de pantalla de l’acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
+    <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Màxim</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
     <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>

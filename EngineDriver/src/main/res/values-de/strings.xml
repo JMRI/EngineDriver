@@ -869,7 +869,7 @@
     <string name="webViewButtonBar">Web View-Taste</string>
     <string name="webViewAction">Show / Hide Webansicht</string>
     <string name="prefWebViewButtonTitle">Show / Hide Web View-Taste?</string>
-    <string name="prefWebViewButtonSummary">Anzeigen Show / Hide Webansicht Schaltfläche in der Aktionsleiste? \\ n(erfordert \'Drosselklappen Webansicht Präferenz aktiviert sein)</string>
+    <string name="prefWebViewButtonSummary">Anzeigen Show / Hide Webansicht Schaltfläche in der Aktionsleiste?\n(erfordert \'Drosselklappen Webansicht Präferenz aktiviert sein)</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
     <string name="permissionsWriteSettings">Engine Driver muss Berechtigungen WRITE EINStELLUNGEN Helligkeit ändern.</string>
@@ -927,7 +927,7 @@
     <string name="app_name_device_sounds_settings">In Telefon-Loco-Sounds</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Empfehlen Sie, dass Sie die Funktionsgröße der Funktionstasten erhöhen, oder Sie können nicht auf die Soundfunktionen von Bell / Horn / Mute-Sound-Funktionen zugreifen</string>
     <string name="pauseSpeedButtonLabel">Pause</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Zwingen Sie den zu verwendenden Geschwindigkeitsschritt, wenn lange eine niedrigere Drehzahl auf dem Schieberegler gedrückt wird. \\ n Wenn nicht geprüft, springt die Geschwindigkeit sofort zur berührten Geschwindigkeit.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Zwingen Sie den zu verwendenden Geschwindigkeitsschritt, wenn lange eine niedrigere Drehzahl auf dem Schieberegler gedrückt wird.\n Wenn nicht geprüft, springt die Geschwindigkeit sofort zur berührten Geschwindigkeit.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Geschwindigkeitsschritt auf das Dekrement?</string>
     <string name="soundsButtonHornShortDefaultValue">Horn kurz</string>
     <string name="toastInitialisingSounds">Initialisieren in Telefon-Loco-Sounds.</string>
