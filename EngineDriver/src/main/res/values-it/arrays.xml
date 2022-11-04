@@ -58,18 +58,18 @@
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
-        <item >Originale &#8211; Telefono o tablet (1&#8211;3 controllori)</item>
-        <item >Verticale &#8211; Telefono o tablet (2 controllori)</item>
-        <item >Grandi pulsanti &#8211; Sinistra (1 acceleratore)</item>
-        <item >Grandi pulsanti &#8211; Destra (1 acceleratore)</item>
-        <item >Verticale &#8211; Sinistra (1 acceleratore)</item>
-        <item >Verticale &#8211; Destra (1 acceleratore)</item>
-        <item >Switching &#8211; (2 controllori)</item>
-        <item >Switching &#8211; Sinistra (1 acceleratore)</item>
-        <item >Switching &#8211; Destra (1 acceleratore)</item>
-        <item >Switching &#8211; Horizontal (3 acceleratore)</item>
-        <item >Semplice &#8211; Consigliato Tablet (1&#8211;6 acceleratore)</item>
-        <item tools:ignore="TypographyDashes">Tablet Shunting Sinistra (1-6 acceleratore)</item>
+        <item >Originale &#8211; Telefono o tablet (1&#8211;3)</item>
+        <item >Verticale &#8211; Telefono o tablet (2)</item>
+        <item >Grandi pulsanti &#8211; Sinistra (1)</item>
+        <item >Grandi pulsanti &#8211; Destra (1)</item>
+        <item >Verticale &#8211; Sinistra (1)</item>
+        <item >Verticale &#8211; Destra (1)</item>
+        <item >Switching &#8211; (2)</item>
+        <item >Switching &#8211; Sinistra (1)</item>
+        <item >Switching &#8211; Destra (1)</item>
+        <item >Switching &#8211; Horizontal (3)</item>
+        <item >Semplice &#8211; Consigliato Tablet (1&#8211;6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Shunting Sinistra (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

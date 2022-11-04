@@ -939,7 +939,7 @@
     <string name="app_name_device_sounds_settings">Sons locomotives via telephone</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Augmentez la zone affichant les touches de fonctions pour accéder aux touches de fonctions Sonores Cloche / Klaxon / Mute</string>
     <string name="pauseSpeedButtonLabel">Pause</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forcer l\'étape de vitesse à utiliser lorsque vous appuyez longuement sur une vitesse inférieure sur le curseur. \\ n Si non vérifié, la vitesse saute immédiatement à la vitesse touchée.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forcer l\'étape de vitesse à utiliser lorsque vous appuyez longuement sur une vitesse inférieure sur le curseur.\n Si non vérifié, la vitesse saute immédiatement à la vitesse touchée.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Étape de vitesse sur décrément?</string>
     <string name="soundsButtonHornShortDefaultValue">Corne court</string>
     <string name="toastInitialisingSounds">Initialisation dans les sons téléphoniques sur Loco.</string>
@@ -958,5 +958,17 @@
     <string name="rosterEntryImageServerImageHelpText">Votre serveur a une image pour la loco. Vous ne pouvez pas changer l\'image locale car elle sera automatiquement ouverte par celle sur le serveur.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si le pilote du moteur activé ne vérifiera pas plusieurs cameaux de jeu.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Une seule manette de jeu?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - État Reconnexion</string>
+    <string name="clearConsistsList">Clear consiste à la liste</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Afficher la description du serveur actuel sur la barre d\'action</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Afficher la description du serveur</string>
+    <string name="prefAppIconActionSummary">Que se passe-t-il lorsque vous cliquez sur l\'icône de l\'application ou le nom de l\'application sur la barre d\'action.</string>
+    <string name="prefAppIconActionTitle">Action de l\'icône de l\'application</string>
+    <string name="prefTtsGamepadTestKeysSummary">Lorsque chaque boutons est enfoncé dans l\'écran de test de la manette de jeu</string>
+    <string name="prefTtsGamepadTestKeysTitle">Sur GamePad Test Key Press</string>
+    <string name="prefTtsThrottleSpeedSummary">Lorsque la vitesse atteint certaines vitesses lors de l\'utilisation d\'une manette de jeu</string>
+    <string name="prefTtsThrottleSpeedTitle">Sur les vitesses de jeu de game</string>
+    <string name="TtsGamepadTestSpeedMax">Max</string>
+    <string name="TtsGamepadTestSpeedZero">Zéro</string>
 
 </resources>

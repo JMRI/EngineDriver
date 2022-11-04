@@ -617,7 +617,7 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Error al crear el flujo de salida. Excepción IO: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error durmiendo el flujo de salida. Excepción interrumpida: %1$s</string>
     <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$dms. Verifica que el servidor WiThrottle se está ejecutando.\n\nReintenta</string>
-    <string name="statusThreadedAppUnableToConnect">No se ha podido conectar al servidor a %1$s:%2$s desde %3$s.\n\nReintentando</string>
+    <string name="statusThreadedAppUnableToConnect">No se puede conectar al servidor a %1$s:%2$s de %3$s. Volver a intentar</string>
     <string name="functionButtonLookForWhistle">SILBATO</string>
     <string name="functionButtonLookForHorn">BOZINA</string>
     <string name="functionButtonLookForBell">CAMPANA</string>
@@ -929,4 +929,20 @@
     <string name="rosterEntryImageSaveButtonText">Guardar</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si el controlador de motor habilitado no verificará múltiples gamepads.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">¿Solo un gamepad?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Estado de reconexión</string>
+    <string name="clearConsistsList">Lista de Clare Consists</string>
+    <string name="gamepad_test_reset">Restablecimiento completo de Gamepads</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Mostrar la descripción del servidor actual en la barra de acción</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Mostrar descripción del servidor</string>
+    <string name="prefAppIconActionSummary">¿Qué sucede cuando hace clic en el icono de la aplicación o el nombre de la aplicación en la barra de acción?</string>
+    <string name="prefAppIconActionTitle">Acción de icono de la aplicación</string>
+    <string name="prefTtsGamepadTestKeysSummary">Cuando cada botón se presiona en la pantalla de prueba de GamePad</string>
+    <string name="prefTtsGamepadTestKeysTitle">En la tecla de prueba de GamePad, presione</string>
+    <string name="prefTtsThrottleSpeedSummary">Cuando la velocidad alcanza ciertas velocidades cuando se usa un gamepad</string>
+    <string name="prefTtsThrottleSpeedTitle">En velocidades de gamepad</string>
+    <string name="rosterEmpty">Incapaz de encontrar entidades en la lista de JMRI. Use la opción \'Dirección DCC\' o \'reciente\' en su lugar.</string>
+    <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
+    <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
+    <string name="TtsGamepadTestSpeedMax">Máximo</string>
+    <string name="TtsGamepadTestSpeedZero">Cero</string>
 </resources>

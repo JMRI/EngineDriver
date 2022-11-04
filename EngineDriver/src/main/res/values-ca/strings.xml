@@ -934,4 +934,25 @@
     <string name="rosterEntryImageServerImageHelpText">El vostre servidor té una imatge per al loco. Podeu canviar la imatge local, ja que s\'acabarà automàticament per la que hi ha al servidor.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si el controlador del motor activat no comprovarà si hi ha diversos jocs.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Només un Gamepad?</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - Estat de reconnexió</string>
+    <string name="clearConsistsList">Clear consisteix a la llista</string>
+    <string name="gamepad_test_reset">Restabliment complet dels jocs</string>
+    <string name="limitSpeedButtonLabel">Velocitat límit</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Mostra la descripció del servidor actual a la barra d\'acció</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Mostra la descripció del servidor</string>
+    <string name="prefAppIconActionSummary">Què passa quan feu clic a la icona de l\'aplicació o el nom de l\'aplicació a la barra d\'acció.</string>
+    <string name="prefAppIconActionTitle">Acció de la icona de l\'aplicació</string>
+    <string name="prefTtsGamepadTestKeysSummary">Quan es pressiona cada botó a la pantalla de prova de GamePad</string>
+    <string name="prefTtsGamepadTestKeysTitle">A la tecla de prova de gamepad premeu</string>
+    <string name="prefTtsThrottleSpeedSummary">Quan la velocitat arriba a certes velocitats quan s\'utilitza un gamepad</string>
+    <string name="prefTtsThrottleSpeedTitle">A velocitats de gamepad</string>
+    <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí? (vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
+    <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
+    <string name="rosterEmpty">No es pot trobar cap ingrés a la llista de JMRI. Utilitzeu l\'opció \'Adreça DCC\' o \'recent\'.</string>
+    <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \\n\\nReintentant</string>
+    <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
+    <string name="TtsGamepadTestSpeedMax">Màxim</string>
+    <string name="TtsGamepadTestSpeedZero">Zero</string>
+    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
+    <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
 </resources>

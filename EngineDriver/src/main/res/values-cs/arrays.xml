@@ -92,17 +92,17 @@
     
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item tools:ignore="TypographyDashes">Původní &#8211; Telefon nebo Tablet (1-3 ovladače)</item>
-        <item >Svisle &#8211; Telefon nebo Tablet (2 ovladače)</item>
-        <item >Velká tlačítka &#8211; Vlevo (1 ovladač)</item>
-        <item >Velká tlačítka &#8211; Vpravo (1 ovladač)</item>
-        <item >Svisle &#8211; Vlevo (1 ovladač)</item>
-        <item >Svisle &#8211; Vpravo (1 ovladač)</item>
-        <item >Switching &#8211; (2 ovladače)</item>
-        <item >Switching &#8211; Vlevo (1 ovladač)</item>
-        <item >Switching &#8211; Vpravo (1 ovladač)</item>
-        <item >Switching &#8211; Horizontal (3 ovladač)</item>
-        <item tools:ignore="TypographyDashes">Jednoduchý - Tablet doporučeno (1-6 ovladače)</item>
-        <item tools:ignore="TypographyDashes">Tablet Switching Vlevo (1-6 ovladače)</item>
+        <item >Svisle &#8211; Telefon nebo Tablet (2)</item>
+        <item >Velká tlačítka &#8211; Vlevo (1)</item>
+        <item >Velká tlačítka &#8211; Vpravo (1)</item>
+        <item >Svisle &#8211; Vlevo (1)</item>
+        <item >Svisle &#8211; Vpravo (1)</item>
+        <item >Switching &#8211; (2)</item>
+        <item >Switching &#8211; Vlevo (1)</item>
+        <item >Switching &#8211; Vpravo (1)</item>
+        <item >Switching &#8211; Horizontal (3)</item>
+        <item tools:ignore="TypographyDashes">Jednoduchý - Tablet doporučeno (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Switching Vlevo (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">  <!-- display version -->
