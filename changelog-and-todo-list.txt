@@ -1,4 +1,6 @@
-**Version 2.33.156
+**Version 2.34.156
+ * Better sorting of Turnout/Points list where numbers are in the names
+ * Fix Android Game mode for gamepads
 **Version 2.33.154
  * Add link to Privacy Policy, per Google requirement
 **Version 2.33.152
@@ -704,7 +706,7 @@
  *   TODO: add voice control
  *   TODO: dynamically shrink the "other" throttle when not in use to maximize # of funcs shown
  *   TODO: respect "Max Throttle %" from roster entry
- *   TODO: option to show the turnout view instead of the webview, including Recents
+ *   TODO: option to show the turnout view instead of the webview, including option for Recents
  *   TODO: option to use 'f' function commands
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
@@ -723,6 +725,7 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
+ *   TODO: allow user to specify which loco to get labels from
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
