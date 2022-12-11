@@ -213,9 +213,9 @@
 
 
     <!--     Gamepad preferences  -->
-    <string name="prefGamePadTitle">Předvolby Gamepad</string>
-    <string name="prefGamePadSummary">Zvolte typ Gamepad a ostatní volby</string>
-    <string name="prefGamePadTypeTitle">Typ Gamepad</string>
+    <string name="prefGamePadTitle">Předvolby Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Zvolte typ Gamepad\/USB a ostatní volby</string>
+    <string name="prefGamePadTypeTitle">Typ Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Vyberte volbu které nejlépe podporuje váš Gamepad.</string>
     <string name="prefGamePadStartButtonTitle">Akce tlačítka Start na Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Vyberte akci pro stisk tlačítka Start.</string>

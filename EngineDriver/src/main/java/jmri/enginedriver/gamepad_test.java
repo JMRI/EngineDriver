@@ -238,6 +238,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "Volume":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVolume);
+                bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsVolume);
+                break;
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
                 bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);

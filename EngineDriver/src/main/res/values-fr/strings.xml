@@ -174,9 +174,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Nombre de crans par pression sur touches de vitesse</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Nombre de crans par pression sur touches de volume</string>
 
-    <string name="prefGamePadTitle">Préférences Gamepad</string>
-    <string name="prefGamePadSummary">Choix du type de Gamepad et autres options</string>
-    <string name="prefGamePadTypeTitle">Type de Gamepad</string>
+    <string name="prefGamePadTitle">Préférences Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Choix du type de Gamepad\/USB et autres options</string>
+    <string name="prefGamePadTypeTitle">Type de Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Choisir la meilleure option pour votre Gamepad</string>
     <string name="prefGamePadStartButtonTitle">Touche de démarrage Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Action réalisée par la touche de démarrage</string>

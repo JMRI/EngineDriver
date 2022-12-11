@@ -185,9 +185,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Incremento Pulsante Velocità</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quanto il pulsante volume aumenta la velocità.</string>
 
-    <string name="prefGamePadTitle">Preferenze Gamepad</string>
-    <string name="prefGamePadSummary">Scelta del tipo de Gamepad e altre opzioni</string>
-    <string name="prefGamePadTypeTitle">Tipo di Gamepad</string>
+    <string name="prefGamePadTitle">Preferenze Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Scelta del tipo de Gamepad\/USB e altre opzioni</string>
+    <string name="prefGamePadTypeTitle">Tipo di Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Scegli le opzioni che meglio supportano il tuo gamepad.</string>
     <string name="prefGamePadStartButtonTitle">Azione Pulsante Inizio del Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Scegli l\'azione quando premi il pulsante Inizio.</string>

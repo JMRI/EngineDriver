@@ -171,9 +171,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeit durch Lautstärkeknöpfe geändert wird.</string>
 
-    <string name="prefGamePadTitle">Voreinstellungen für Gamepad</string>
-    <string name="prefGamePadSummary">Wähle den Gamepad Typ und andere Optionen</string>
-    <string name="prefGamePadTypeTitle">Gamepad Typ</string>
+    <string name="prefGamePadTitle">Voreinstellungen für Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Wähle den Gamepad\/USB Typ und andere Optionen</string>
+    <string name="prefGamePadTypeTitle">Gamepad\/USB Typ</string>
     <string name="prefGamePadTypeSummary">Wähle die Option welche dein Gamepad am Besten unterstützt.</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Startknopf Aktion</string>
     <string name="prefGamePadStartButtonSummary">Wähle die Aktion für das Drücken des Startknopfes.</string>

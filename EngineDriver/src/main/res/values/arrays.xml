@@ -210,54 +210,32 @@
 
     <string-array name="prefGamePadTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
-        <!-- <item >iCade</item> -->
-            <item >iCade-rotate</item>
-        <!--     <item >iCade+DPAD</item> -->
-            <item >iCade+DPAD-rotate</item>
-        <!--    <item >MTK</item> -->
-           <item >MTK-rotate</item>
-        <!--   <item >Game</item> -->
-          <item >Game-rotate</item>
-      <!--
-              <item >VRBoxA</item>
-              <item >VRBoxA-rotate</item>
-              <item >VRBoxC</item>
-              <item >VRBoxC-rotate</item>
-              <item >VRBoxiC</item>
-              <item >VRBoxiC-rotate</item>
-      -->
+        <item >iCade-rotate</item>
+        <item >iCade+DPAD-rotate</item>
+        <item >MTK-rotate</item>
+        <item >Game-rotate</item>
         <item tools:ignore="Typos">MagicseeR1B</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
         <item>Generic</item>
         <item>Generic3x4</item>
-        <item >Keyboard</item>
+        <item>Keyboard</item>
+        <item>Volume</item>
     </string-array>
 
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
         <item >None</item>
         <item >Mocute iCade</item>
-        <!-- <item >Mocute/iOS- iCade Mode - DPAD rotated</item> -->
         <item >Mocute iCade+DPAD</item>
-        <!-- <item >Mocute/iOS- iCade+DPAD Mode - DPAD rotated</item> -->
         <item >Mocute MTK</item>
-        <!-- <item >Mocute/Android- MTK Mode - DPAD rotated</item> -->
         <item >Mocute Android-Game</item>
-        <!-- <item >Mocute/Android- Game Mode - DPAD rotated</item> -->
-<!--
-        <item >VRBOX/Android- A Mode</item>
-        <item >VRBOX/Android- A Mode - DPAD rotated</item>
-        <item >VRBOX/Android- C Mode</item>
-        <item >VRBOX/Android- C Mode - DPAD rotated</item>
-        <item >VRBOX/iOS- C Mode</item>
-        <item >VRBOX/iOS- C Mode - DPAD rotated</item>
--->
         <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (4x4 Keypad +Encoder)</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (3x4 Keypad +Encoder)</item>
         <item >Keyboard</item>
+        <item >USB Volume Dial</item>
     </string-array>
 
     <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1031,6 +1009,78 @@
         <item>- Not available</item>
         <item>- Not available</item>
     </string-array>
+
+    <string-array name="prefGamePadVolumeLabels">
+        <item> </item> //not used
+        <item>Mute Button action</item>
+        <item>▲ Volume Up action</item>
+        <item>▼ Volume Down action</item>
+        <item>◄ Previous action</item>
+        <item>Next ► action</item>
+        <item>►‖ Play/Pause</item>
+        <item>■ Stop</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
+    </string-array>
+
+
+    <string-array name="gamepadTestButtonLabelsVolume">
+        <item> </item>
+        <item>Mute</item>
+        <item>▲ Volume Up</item>
+        <item>▼ Volume Down</item>
+        <item>◄ Previous</item>
+        <item>Next ►</item>
+        <item>►‖ Play/Pause</item>
+        <item>■ Stop</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+    </string-array>
+
+    <integer-array name="prefGamePadVolume" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Media_Mute</item> //Select
+        <item>@integer/KeyCode_Media_Volume_Up</item> //
+        <item>@integer/KeyCode_Media_Volume_Down</item> //
+        <item>@integer/KeyCode_Media_Previous</item> //
+        <item>@integer/KeyCode_Media_Next</item> //
+        <item>@integer/KeyCode_Media_Play_Pause</item> //Start
+        <item>@integer/KeyCode_Media_Stop</item> //gamepadX
+        <item>0</item> //gamepadY
+        <item>0</item> //gamepadA
+        <item>0</item> //gamepadB
+        <item>0</item> //Left Shoulder
+        <item>0</item> //Left Trigger
+        <item>0</item> //Right Shoulder
+        <item>0</item> //Right Trigger
+        <item>0</item> //Left Thumb
+        <item>0</item> //Right Thumb
+        <item>0</item> //alternate Stop
+        <item>0</item> //alternate Increase Speed
+        <item>0</item> //alternate Decrease Speed
+        <item>0</item> //alternate Fast Increase
+        <item>0</item> //alternate Fast Decrease Speed
+    </integer-array>
+
 
     <string-array name="prefEsuMc2KeyEntries">  <!-- display version -->
         <item>(no function)</item>
