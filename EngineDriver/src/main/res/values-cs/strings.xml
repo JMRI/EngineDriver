@@ -1145,5 +1145,7 @@
     <string name="prefTtsThrottleSpeedTitle">Při rychlostech gamepadu</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
     <string name="TtsGamepadTestSpeedZero">Nula</string>
+    <string name="prefGamePadDoublePressStopSummary">Při stisknutí libovolného tlačítka vyberte akci, které je nakonfigurováno jako „Stop“</string>
+    <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
 
 </resources>

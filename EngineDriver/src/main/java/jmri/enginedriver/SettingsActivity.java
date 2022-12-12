@@ -976,6 +976,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         enableDisablePreference(prefScreen, "prefGamePadFeedbackVolume", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamePadSpeedArrowsThrottleRepeatDelay", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamepadprefGamePadDoublePressStop", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadSwapForwardReverseWithScreenButtons", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadTestEnforceTesting", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadTestNow", thisEnabled);

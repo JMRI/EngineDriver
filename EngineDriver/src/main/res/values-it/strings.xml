@@ -894,5 +894,7 @@
     <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$s secondi. Verificare che il server Withrottle sia in esecuzione. Riprovare</string>
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
+    <string name="prefGamePadDoublePressStopTitle">Azione di arresto a doppia stampa</string>
+    <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \\\'Stop\\\'</string>
 
 </resources>

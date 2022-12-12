@@ -945,4 +945,6 @@
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máximo</string>
     <string name="TtsGamepadTestSpeedZero">Cero</string>
+    <string name="prefGamePadDoublePressStopTitle">Acción de parada de doble prensa</string>
+    <string name="prefGamePadDoublePressStopSummary">Elija la acción cuando presione cualquier botón que esté configurado como \\\'Stop\\\'</string>
 </resources>

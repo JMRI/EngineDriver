@@ -1035,7 +1035,6 @@
         <item>Button not available</item>
     </string-array>
 
-
     <string-array name="gamepadTestButtonLabelsVolume">
         <item> </item>
         <item>Mute</item>
@@ -1162,6 +1161,18 @@
         <item>Function 26</item>
         <item>Function 27</item>
         <item>Function 28</item>
+    </string-array>
+
+    <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
+        <item>(no function)</item>
+        <item>All Stop</item>
+        <item>Forward/Reverse Toggle</item>
+    </string-array>
+
+    <string-array name="prefGamePadDoublePressStopEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>(no function)</item>
+        <item>All Stop</item>
+        <item>Forward/Reverse Toggle</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

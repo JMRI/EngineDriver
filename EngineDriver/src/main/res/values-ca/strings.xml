@@ -955,4 +955,6 @@
     <string name="TtsGamepadTestSpeedZero">Zero</string>
     <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
     <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
+    <string name="prefGamePadDoublePressStopSummary">Trieu l\'acció quan premeu qualsevol botó que es configuri com a \"parar\"</string>
+    <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
 </resources>

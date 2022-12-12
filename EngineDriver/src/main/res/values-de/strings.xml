@@ -959,5 +959,7 @@
     <string name="prefTtsThrottleSpeedTitle">Auf Gamepad -Geschwindigkeiten</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
     <string name="TtsGamepadTestSpeedZero">Null</string>
+    <string name="prefGamePadDoublePressStopTitle">Double Press Stop -Aktion</string>
+    <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
 
 </resources>
