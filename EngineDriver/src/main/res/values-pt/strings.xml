@@ -184,9 +184,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Incremento Botão velcoidade</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quanto o botão de volume aumenta a velocidade.</string>
 
-    <string name="prefGamePadTitle">Preferências Gamepad</string>
-    <string name="prefGamePadSummary">Escolha do tipo de Gamepad e outras opções</string>
-    <string name="prefGamePadTypeTitle">Tipo de Gamepad</string>
+    <string name="prefGamePadTitle">Preferências Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Escolha do tipo de Gamepad\/USB e outras opções</string>
+    <string name="prefGamePadTypeTitle">Tipo de Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Escolha as opções que melhor suportam seu gamepad.</string>
     <string name="prefGamePadStartButtonTitle">Ação Botão de Início do Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Escolha a ação quano aperta o botão Início.</string>
@@ -898,5 +898,7 @@
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máx</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
+    <string name="prefGamePadDoublePressStopTitle">Ação dupla de stop stop</string>
+    <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \\\'Stop\\\'</string>
 
 </resources>

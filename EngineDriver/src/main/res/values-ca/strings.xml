@@ -172,9 +172,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Quantitat a modificar la velocitat al prèmer la tecla</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quantitat a modificar la velocitat amb les tecles de volum</string>
 
-    <string name="prefGamePadTitle">Preferències de gamepad</string>
-    <string name="prefGamePadSummary">Escull tipus de gamepad i altres opcions</string>
-    <string name="prefGamePadTypeTitle">Tipus de gamepad</string>
+    <string name="prefGamePadTitle">Preferències de gamepad\/USB</string>
+    <string name="prefGamePadSummary">Escull tipus de gamepad\/USB i altres opcions</string>
+    <string name="prefGamePadTypeTitle">Tipus de gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Trieu l\'opció que millor admeti el vostre gamepad</string>
     <string name="prefGamePadStartButtonTitle">Acció de la tecla d\'inici de gamepad</string>
     <string name="prefGamePadStartButtonSummary">Trieu l\'acció quan premeu la tecla inici</string>
@@ -955,4 +955,6 @@
     <string name="TtsGamepadTestSpeedZero">Zero</string>
     <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
     <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
+    <string name="prefGamePadDoublePressStopSummary">Trieu l\'acció quan premeu qualsevol botó que es configuri com a \"parar\"</string>
+    <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
 </resources>

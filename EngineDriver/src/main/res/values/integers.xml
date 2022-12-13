@@ -101,7 +101,12 @@
 
     <integer name="KeyCode_Escape">111</integer>
 
+    <integer name="KeyCode_Media_Volume_Up">24</integer>
+    <integer name="KeyCode_Media_Volume_Down">25</integer>
+    <integer name="KeyCode_Media_Play_Pause">85</integer>
+    <integer name="KeyCode_Media_Stop">86</integer>
     <integer name="KeyCode_Media_Next">87</integer>
     <integer name="KeyCode_Media_Previous">88</integer>
+    <integer name="KeyCode_Media_Mute"> 164</integer>
 
 </resources>

@@ -238,6 +238,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private int whichVolume = 0;
     private int whichLastVolume = -1;
     private int whichLastGamepad1 = -1;
+    private int whichLastGamepadButtonPressed = -1;
+    private String prefGamePadDoublePressStop = "";
 
 
     // screen coordinates for throttle sliders, so we can ignore swipe on them
@@ -1559,6 +1561,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
         prefTtsGamepadTestKeys = prefs.getBoolean("prefTtsGamepadTestKeys", getResources().getBoolean(R.bool.prefTtsGamepadTestKeysDefaultValue));
         mainapp.prefGamepadOnlyOneGamepad = prefs.getBoolean("prefGamepadOnlyOneGamepad", getResources().getBoolean(R.bool.prefGamepadOnlyOneGamepadDefaultValue));
+
+        prefGamePadDoublePressStop = prefs.getString("prefGamePadDoublePressStop", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
 
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
@@ -2931,6 +2935,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "Volume":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVolume);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
 
             default: // "iCade" or iCade-rotate
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
@@ -3107,7 +3115,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         disablePauseSpeed(throttleIndex);
                     }
                 }
-                speedUpdateAndNotify(0);         // update all three throttles
+                speedUpdateAndNotify(0);         // update all throttles
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_STOP)) {  // Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
@@ -3118,6 +3126,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 speedUpdateAndNotify(whichThrottle, 0);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+                if (whichLastGamepadButtonPressed==buttonNo) {  // double press
+                    if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {
+                        speedUpdateAndNotify(0);         // update all throttles
+                    } else if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {
+                        boolean dirChangeFailed;
+                        if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+                            dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                        } else {
+                            dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                        }
+                        GamepadFeedbackSound(dirChangeFailed);
+                    } // else do nothing
+                    whichLastGamepadButtonPressed = -1;  // reset the count
+                }
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
@@ -3237,6 +3259,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED)) {
             speakWords(TTS_MSG_GAMEPAD_THROTTLE,whichThrottle, true);
         }
+
+        whichLastGamepadButtonPressed = buttonNo;
     }
 
     // map the button pressed to the user selected action for that button on a keyboard

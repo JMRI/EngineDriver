@@ -58,14 +58,14 @@
     <string name="app_name_select_loco">Select/Release Loco</string>
     <string name="app_name_ConsistEdit">Consist Edit</string>
     <string name="app_name_ConsistLightsEdit">Consist Lights</string>
-    <string name="app_name_gamepad_test">Gamepad Test</string>
+    <string name="app_name_gamepad_test">Gamepad\/USB Test</string>
     <string name="app_name_log_viewer">Log Viewer</string>
     <string name="app_name_device_sounds_settings">In Phone Loco Sounds</string>
-    <string name="gamepad_test_menu">\≡ Gamepads</string>
-    <string name="gamepad_test_reset">Gamepads Full Reset</string>
-    <string name="gamepad1_test">Gamepad 1 Test</string>
-    <string name="gamepad2_test">Gamepad 2 Test</string>
-    <string name="gamepad3_test">Gamepad 3 Test</string>
+    <string name="gamepad_test_menu">\≡ Gamepads\/USB</string>
+    <string name="gamepad_test_reset">Gamepads\/USB Full Reset</string>
+    <string name="gamepad1_test">Gamepad\/USB 1 Test</string>
+    <string name="gamepad2_test">Gamepad\/USB 2 Test</string>
+    <string name="gamepad3_test">Gamepad\/USB 3 Test</string>
     <string name="notification_title">Engine Driver is running</string>
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
@@ -241,9 +241,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <!--     Gamepad preferences  -->
-    <string name="prefGamePadTitle">Gamepad Preferences</string>
-    <string name="prefGamePadSummary">Choose the Gamepad type and related options</string>
-    <string name="prefGamePadTypeTitle">Gamepad type</string>
+    <string name="prefGamePadTitle">Gamepad\/USB Preferences</string>
+    <string name="prefGamePadSummary">Choose the Gamepad\/USB type and related options</string>
+    <string name="prefGamePadTypeTitle">Gamepad\/USB type</string>
     <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad</string>
     <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>
     <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button</string>
@@ -288,6 +288,10 @@
     <string name="prefGamePadButtonRightTriggerDefaultValue" translatable="false">Function 06</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButtonLeftThumbDefaultValue" translatable="false">Function 07</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefGamePadButtonRightThumbDefaultValue" translatable="false">Function 08</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefGamePadDoublePressStopTitle">Double press Stop action</string>
+    <string name="prefGamePadDoublePressStopSummary">Choose the action when you press any button that as configured as \\\'Stop\\\'</string>
+    <string name="prefGamePadDoublePressStopDefaultValue" translatable="false">Forward/Reverse Toggle</string>  <!-- DO NOT TRANSLATE -->
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->

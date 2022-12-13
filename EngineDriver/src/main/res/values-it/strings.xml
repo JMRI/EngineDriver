@@ -185,9 +185,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Incremento Pulsante Velocità</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quanto il pulsante volume aumenta la velocità.</string>
 
-    <string name="prefGamePadTitle">Preferenze Gamepad</string>
-    <string name="prefGamePadSummary">Scelta del tipo de Gamepad e altre opzioni</string>
-    <string name="prefGamePadTypeTitle">Tipo di Gamepad</string>
+    <string name="prefGamePadTitle">Preferenze Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Scelta del tipo de Gamepad\/USB e altre opzioni</string>
+    <string name="prefGamePadTypeTitle">Tipo di Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Scegli le opzioni che meglio supportano il tuo gamepad.</string>
     <string name="prefGamePadStartButtonTitle">Azione Pulsante Inizio del Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Scegli l\'azione quando premi il pulsante Inizio.</string>
@@ -894,5 +894,7 @@
     <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$s secondi. Verificare che il server Withrottle sia in esecuzione. Riprovare</string>
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
+    <string name="prefGamePadDoublePressStopTitle">Azione di arresto a doppia stampa</string>
+    <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \\\'Stop\\\'</string>
 
 </resources>

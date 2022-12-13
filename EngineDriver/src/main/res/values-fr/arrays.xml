@@ -236,6 +236,7 @@
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +3x4 Hat +Encoder)</item>
         <item >Keyboard</item>
+        <item >USB Volume Dial</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">

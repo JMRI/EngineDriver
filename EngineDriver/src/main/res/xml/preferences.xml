@@ -1268,6 +1268,15 @@
                     android:title="@string/prefGamePadButtonLeftTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <ListPreference
+                    android:defaultValue="@string/prefGamePadDoublePressStopDefaultValue"
+                    android:entries="@array/prefGamePadDoublePressStopEntries"
+                    android:entryValues="@array/prefGamePadDoublePressStopEntryValues"
+                    android:key="prefGamePadDoublePressStop"
+                    android:summary="@string/prefGamePadDoublePressStopSummary"
+                    android:title="@string/prefGamePadDoublePressStopTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <!--    Gamepad button preferences   -->
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"

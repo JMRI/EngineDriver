@@ -174,9 +174,9 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Nombre de crans par pression sur touches de vitesse</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Nombre de crans par pression sur touches de volume</string>
 
-    <string name="prefGamePadTitle">Préférences Gamepad</string>
-    <string name="prefGamePadSummary">Choix du type de Gamepad et autres options</string>
-    <string name="prefGamePadTypeTitle">Type de Gamepad</string>
+    <string name="prefGamePadTitle">Préférences Gamepad\/USB</string>
+    <string name="prefGamePadSummary">Choix du type de Gamepad\/USB et autres options</string>
+    <string name="prefGamePadTypeTitle">Type de Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Choisir la meilleure option pour votre Gamepad</string>
     <string name="prefGamePadStartButtonTitle">Touche de démarrage Gamepad</string>
     <string name="prefGamePadStartButtonSummary">Action réalisée par la touche de démarrage</string>
@@ -970,5 +970,7 @@
     <string name="prefTtsThrottleSpeedTitle">Sur les vitesses de jeu de game</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
     <string name="TtsGamepadTestSpeedZero">Zéro</string>
+    <string name="prefGamePadDoublePressStopTitle">Action d\'arrêt à double presse</string>
+    <string name="prefGamePadDoublePressStopSummary">Choisissez l\'action lorsque vous appuyez sur n\'importe quel bouton configuré comme «arrêt»</string>
 
 </resources>
