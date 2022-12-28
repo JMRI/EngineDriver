@@ -1,7 +1,10 @@
 **Version 2.34.156
  * Better sorting of Turnout/Points list where numbers are in the names
  * Fix Android Game mode for gamepads
-**Version 2.33.154
+ * Support for USB volume dials as a Gamepad type
+ * Preference for setting what a second press of the Stop button on a gamepad does
+ * Prevent some crashes reported to Play Store
+ **Version 2.33.154
  * Add link to Privacy Policy, per Google requirement
 **Version 2.33.152
  * 'Stop' button cancels 'Pause' if stationary
