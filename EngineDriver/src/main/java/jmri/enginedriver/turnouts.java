@@ -1081,7 +1081,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     if (mainapp.to_user_names != null) {
                         for (int pos = 0; pos < mainapp.to_user_names.length; pos++) {
                             String systemName = mainapp.to_system_names[pos];
-                            if (systemName.equals(toAddress)) {
+                            if (systemName != null && systemName.equals(toAddress)) {
                                 currentState = mainapp.to_states[pos];
                                 currentStateDesc = getCurrentStateDesc(currentState);
                             }
@@ -1302,7 +1302,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     private String getCurrentStateDesc(String currentState) {
         String currentStateDesc = mainapp.to_state_names.get(currentState);
-        if (currentState.equals(TURNOUT_STATE_UNKNOWN) || currentStateDesc == null) {
+        if (currentStateDesc == null || currentState.equals(TURNOUT_STATE_UNKNOWN)) {
             currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
         }
         return currentStateDesc;
