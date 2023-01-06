@@ -545,6 +545,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
         mainapp.setPowerMenuOption(menu);
+        mainapp.setDCCEXMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);

@@ -310,8 +310,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/idngo_help"
             android:layout_centerInParent="true"
-            android:state_enabled="true"
             android:padding="8sp"
+            android:state_enabled="true"
             android:text="@string/idngo_button"
             tools:ignore="RtlHardcoded" />
 

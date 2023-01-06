@@ -456,6 +456,7 @@ public class select_loco extends AppCompatActivity {
 
     // request release of specified throttle
     void release_loco(int whichThrottle) {
+        mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
     }

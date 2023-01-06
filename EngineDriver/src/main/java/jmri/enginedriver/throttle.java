@@ -240,6 +240,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private int whichLastGamepad1 = -1;
     private int whichLastGamepadButtonPressed = -1;
     private String prefGamePadDoublePressStop = "";
+    private long gamePadDoublePressStopTime;
 
 
     // screen coordinates for throttle sliders, so we can ignore swipe on them
@@ -1111,6 +1112,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         set_labels();
                 }
                 break;
+                case message_type.REFRESH_FUNCTIONS:
+                    setAllFunctionLabelsAndListeners();
+                    for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                        set_all_function_states(throttleIndex);
+                        enable_disable_buttons(throttleIndex); // direction and slider: pass whichthrottle
+                        showHideConsistMenus();
+                    }
+                    break;
                 case message_type.ROSTER_UPDATE:
                     set_labels();               // refresh function labels when any roster response is received
                     break;
@@ -1800,7 +1809,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (speed < 0)
             speed = 0;
         getThrottleSlider(whichThrottle).setProgress(speed);
-//        doLocoSound(whichThrottle);
+
+        mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
+        mainapp.lastKnownDirDCCEX[whichThrottle] = getDirection(whichThrottle);
     }
 
     // get the current speed of the throttle from the slider
@@ -2348,6 +2359,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // only used for the 'Special' function label matching  AND you have custom Function Labels
+    // also used for DCC-EX functions
     int setFunctionButtonState(int whichThrottle, int function, boolean downPress) {
         int isLatching = FUNCTION_CONSIST_LATCHING_NA;
         Consist con = mainapp.consists[whichThrottle];
@@ -2355,6 +2367,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
                 && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
                     || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) )
+                || (mainapp.isDCCEX)
         ) {
             int doPress = -1;
             boolean doRelease = false;
@@ -3126,7 +3139,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 speedUpdateAndNotify(whichThrottle, 0);
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
-                if (whichLastGamepadButtonPressed==buttonNo) {  // double press
+
+                if ((whichLastGamepadButtonPressed==buttonNo)
+                && (System.currentTimeMillis() <= (gamePadDoublePressStopTime+1000) ) ){  // double press - within 1 second
                     if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {
                         speedUpdateAndNotify(0);         // update all throttles
                     } else if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {
@@ -3139,6 +3154,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         GamepadFeedbackSound(dirChangeFailed);
                     } // else do nothing
                     whichLastGamepadButtonPressed = -1;  // reset the count
+                    gamePadDoublePressStopTime = 0; // reset the time
+                } else {
+                    gamePadDoublePressStopTime = System.currentTimeMillis();
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
@@ -6368,7 +6386,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // loop through all function buttons and
     // set label and dcc functions (based on settings) or hide if no label
     void set_function_labels_and_listeners_for_view(int whichThrottle) {
-        // Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view");
+        Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view (debugging comm_thread)");
 
 //        // implemented in derived class, but called from this class
 
@@ -6494,6 +6512,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.setPowerStateButton(TMenu);
             mainapp.displayPowerStateMenuButton(TMenu);
             mainapp.setPowerMenuOption(TMenu);
+            mainapp.setDCCEXMenuOption(TMenu);
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
@@ -6646,8 +6665,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // request release of specified throttle
     void release_loco(int whichThrottle) {
+        mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
-
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass T, S or G in message
     }
 
@@ -6660,6 +6679,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.displayTimerMenuButton(menu, kidsTimerRunning);
         mainapp.setPowerMenuOption(menu);
+        mainapp.setDCCEXMenuOption(menu);
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setFlashlightButton(menu);
@@ -6704,6 +6724,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+            case R.id.dcc_ex_mnu:
+                in = new Intent().setClass(this, dcc_ex.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;

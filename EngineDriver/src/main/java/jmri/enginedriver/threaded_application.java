@@ -46,26 +46,17 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.SoundPool;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.net.NetworkRequest;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
@@ -77,7 +68,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -87,15 +77,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,21 +88,15 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
-import jmri.enginedriver.threaded_application.comm_thread.comm_handler;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.comm_handler;
+import jmri.enginedriver.util.comm_thread;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -130,47 +106,48 @@ import jmri.jmrit.roster.RosterLoader;
 public class threaded_application extends Application {
     public static String INTRO_VERSION = "7";  // set this to a different string to force the intro to run on next startup.
 
+    private threaded_application mainapp = this;
     public comm_thread commThread;
-    private volatile String host_ip = null; //The IP address of the WiThrottle server.
+    public volatile String host_ip = null; //The IP address of the WiThrottle server.
     volatile String logged_host_ip = null;
-    private volatile int port = 0; //The TCP port that the WiThrottle server is running on
-    private Double withrottle_version = 0.0; //version of withrottle server
-    volatile int web_server_port = 0; //default port for jmri web server
+    public volatile int port = 0; //The TCP port that the WiThrottle server is running on
+    public Double withrottle_version = 0.0; //version of withrottle server
+    public volatile int web_server_port = 0; //default port for jmri web server
     private String serverType = ""; //should be set by server in initial command strings
     private String serverDescription = ""; //may be set by server in initial command strings
-    private volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
+    public volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
-    volatile Consist[] consists;
-    LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
+    public volatile Consist[] consists;
+    public LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
     LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
     LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with no function labels
     LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
-    LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
+    public LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
 
-    boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
-    String[] to_system_names;
-    String[] to_user_names;
-    String[] to_states;
-    HashMap<String, String> to_state_names;
-    String[] rt_system_names;
-    String[] rt_user_names;
-    String[] rt_states;
-    HashMap<String, String> rt_state_names; //if not set, routes are not allowed
-    Map<String, String> roster_entries;  //roster sent by WiThrottle
-    Map<String, String> consist_entries;
-    private static DownloadRosterTask dlRosterTask = null;
+    public boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
+    public String[] to_system_names;
+    public String[] to_user_names;
+    public String[] to_states;
+    public HashMap<String, String> to_state_names;
+    public String[] rt_system_names;
+    public String[] rt_user_names;
+    public String[] rt_states;
+    public HashMap<String, String> rt_state_names; //if not set, routes are not allowed
+    public Map<String, String> roster_entries;  //roster sent by WiThrottle
+    public Map<String, String> consist_entries;
+    public static DownloadRosterTask dlRosterTask = null;
 //    private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
 //    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
-    String power_state;
+    public String power_state;
 
     public int getFastClockFormat() {
         return fastClockFormat;
     }
 
-    private int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
-    private Long fastClockSeconds = 0L;
+    public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
+    public Long fastClockSeconds = 0L;
     public int androidVersion = 0;
     public String appVersion = "";
     //minimum Android version for some features
@@ -180,19 +157,19 @@ public class threaded_application extends Application {
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     //all heartbeat values are in milliseconds
-    static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10000; //interval for outbound heartbeat when WiT heartbeat is disabled
-    static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for outbound heartbeat generator
-    static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30000;  //maximum allowed interval for outbound heartbeat generator
+    public static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10000; //interval for outbound heartbeat when WiT heartbeat is disabled
+    public static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for outbound heartbeat generator
+    public static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30000;  //maximum allowed interval for outbound heartbeat generator
 //    static final double HEARTBEAT_RESPONSE_FACTOR = 0.9;   //adjustment for inbound and outbound timers
-    static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for (enabled) inbound heartbeat generator
-    static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60000;  //maximum allowed interval for inbound heartbeat generator
+    public static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for (enabled) inbound heartbeat generator
+    public static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60000;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
     public int prefHeartbeatResponseFactor = 90;   //adjustment for inbound and outbound timers as a percent
 
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
 
-    private static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
+    public static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
     //  WiThrottle server, can be chgd for specific servers
     //   do not exceed 200, unless slider delay is also changed
 
@@ -200,13 +177,44 @@ public class threaded_application extends Application {
 
     public String deviceId = "";
 
-    private static final String demo_host = "jmri.mstevetodd.com";
+    public static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
 
-    String client_address; //address string of the client address
+    public String client_address; //address string of the client address
     public Inet4Address client_address_inet4; //inet4 value of the client address
     public String client_ssid = "UNKNOWN";    //string of the connected SSID
     public String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
+
+    public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
+    public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
+    public boolean prefDCCEX = false;
+    public String DCCEXversion = "";
+    public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
+
+    public boolean DCCEXscreenIsOpen = false;
+
+    public String rosterStringDCCEX = ""; // used to process the roster list
+    public int [] rosterIDsDCCEX;  // used to process the roster list
+    public String [] rosterLocoNamesDCCEX;  // used to process the roster list
+    public String [] rosterLocoFunctionsDCCEX;  // used to process the roster list
+    public boolean [] rosterDetailsReceivedDCCEX;  // used to process the roster list
+
+    public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
+    public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
+
+
+    public String turnoutStringDCCEX = ""; // used to process the turnout list
+    public int [] turnoutIDsDCCEX;  // used to process the turnout list
+    public String [] turnoutNamesDCCEX;  // used to process the turnout list
+    public String [] turnoutStatesDCCEX;  // used to process the turnout list
+    public boolean [] turnoutDetailsReceivedDCCEX;  // used to process the turnout list
+
+    public String routeStringDCCEX = ""; // used to process the route list
+    public int [] routeIDsDCCEX;  // used to process the route list
+    public String [] routeNamesDCCEX;  // used to process the route list
+    public String [] routeStatesDCCEX;  // used to process the route list
+    public boolean [] routeDetailsReceivedDCCEX;  // used to process the route list
+
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -219,6 +227,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_edit_msg_handler;
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
+    public volatile Handler dcc_ex_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler preferences_msg_handler;
     public volatile Handler settings_msg_handler;
@@ -231,7 +240,7 @@ public class threaded_application extends Application {
 
     // for handling control of camera flash
     public static Flashlight flashlight;
-    private boolean flashState = false;
+    public boolean flashState = false;
 
     //these constants are used for onFling
     public static final int SWIPE_MIN_DISTANCE = 120;
@@ -306,15 +315,15 @@ public class threaded_application extends Application {
     protected int throttleLayoutViewId;
     public boolean webServerNameHasBeenChecked = false;
 
-    boolean haveForcedWiFiConnection = false;
-    boolean prefAllowMobileData = false;
+    public boolean haveForcedWiFiConnection = false;
+    public boolean prefAllowMobileData = false;
 
     public boolean prefAlwaysUseDefaultFunctionLabels = false;
     public String prefConsistFollowRuleStyle = "original";
     private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
     private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
 
     public boolean prefShowTimeOnLogEntry = false;
     public boolean prefFeedbackOnDisconnect = true;
@@ -428,1692 +437,8 @@ public class threaded_application extends Application {
     public static final int GAMEPAD_GOOD = 1;
     public static final int GAMEPAD_BAD = 2;
 
-
-    class comm_thread extends Thread {
-        JmDNS jmdns = null;
-        volatile boolean endingJmdns = false;
-        withrottle_listener listener;
-        android.net.wifi.WifiManager.MulticastLock multicast_lock;
-        socket_WiT socketWiT;
-        PhoneListener phone;
-        heartbeat heart = new heartbeat();
-        private long lastSentMs = System.currentTimeMillis();
-        private long lastQueuedMs = System.currentTimeMillis();
-
-        comm_thread() {
-            super("comm_thread");
-            this.start();
-        }
-
-        //Listen for a WiThrottle service advertisement on the LAN.
-        public class withrottle_listener implements ServiceListener {
-
-            public void serviceAdded(ServiceEvent event) {
-                //          Log.d("Engine_Driver", String.format("serviceAdded fired"));
-                //A service has been added. If no details, ask for them 
-                Log.d("Engine_Driver", String.format("threaded_application.serviceAdded for '%s', Type='%s'", event.getName(), event.getType()));
-                ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
-                if (si == null || si.getPort() == 0) {
-                    Log.d("Engine_Driver", String.format("threaded_application.serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
-                    jmdns.requestServiceInfo(event.getType(), event.getName(), true, 1000);
-                }
-            }
-
-            public void serviceRemoved(ServiceEvent event) {
-                //Tell the UI thread to remove from the list of services available.
-                sendMsg(connection_msg_handler, message_type.SERVICE_REMOVED, event.getName()); //send the service name to be removed
-                Log.d("Engine_Driver", String.format("threaded_application.serviceRemoved: '%s'", event.getName()));
-            }
-
-            public void serviceResolved(ServiceEvent event) {
-                //          Log.d("Engine_Driver", String.format("threaded_application.serviceResolved fired"));
-                //A service's information has been resolved. Send the port and service name to connect to that service.
-                int port = event.getInfo().getPort();
-                String host_name = event.getInfo().getName(); //
-                Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
-                String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
-
-                //Tell the UI thread to update the list of services available.
-                HashMap<String, String> hm = new HashMap<>();
-                hm.put("ip_address", ip_address);
-                hm.put("port", ((Integer) port).toString());
-                hm.put("host_name", host_name);
-
-                Message service_message = Message.obtain();
-                service_message.what = message_type.SERVICE_RESOLVED;
-                service_message.arg1 = port;
-                service_message.obj = hm;  //send the hashmap as the payload
-                boolean sent = false;
-                try {
-                    sent = connection_msg_handler.sendMessage(service_message);
-                } catch (Exception ignored) {
-                }
-                if (!sent)
-                    service_message.recycle();
-
-                Log.d("Engine_Driver", String.format("threaded_application.serviceResolved - %s(%s):%d -- %s",
-                        host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
-
-            }
-        }
-
-        void start_jmdns() {
-            //Set up to find a WiThrottle service via ZeroConf
-            try {
-                if (client_address != null) {
-                    WifiManager wifi = (WifiManager) threaded_application.this.getSystemService(Context.WIFI_SERVICE);
-
-                    if (multicast_lock == null) {  //do this only as needed
-                        multicast_lock = wifi.createMulticastLock("engine_driver");
-                        multicast_lock.setReferenceCounted(true);
-                    }
-
-                    Log.d("Engine_Driver", "threaded_application.start_jmdns: local IP addr " + client_address);
-
-                    jmdns = JmDNS.create(client_address_inet4, client_address);  //pass ip as name to avoid hostname lookup attempt
-
-                    listener = new withrottle_listener();
-                    Log.d("Engine_Driver", "threaded_application.start_jmdns: listener created");
-
-                } else {
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
-                }
-            } catch (Exception except) {
-                Log.e("Engine_Driver", "start_jmdns - Error creating withrottle listener: " + except.getMessage());
-                safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
-            }
-        }
-
-        //end_jmdns() takes a long time, so put it in its own thread
-        void end_jmdns() {
-            Thread jmdnsThread = new Thread("EndJmdns") {
-                @Override
-                public void run() {
-                    try {
-                        Log.d("Engine_Driver", "threaded_application.end_jmdns: removing jmdns listener");
-                        jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
-
-                        multicast_lock.release();
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application.end_jmdns: exception in jmdns.removeServiceListener()");
-                    }
-                    try {
-                        Log.d("Engine_Driver", "threaded_application.end_jmdns: calling jmdns.close()");
-                        jmdns.close();
-                        Log.d("Engine_Driver", "threaded_application.end_jmdns: after jmdns.close()");
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "threaded_application.end_jmdns: exception in jmdns.close()");
-                    }
-                    jmdns = null;
-                    endingJmdns = false;
-                    Log.d("Engine_Driver", "threaded_application.end_jmdns run exit");
-                }
-            };
-            if (jmdnsIsActive()) {      //only need to run one instance of this thread to terminate jmdns 
-                endingJmdns = true;
-                jmdnsThread.start();
-                Log.d("Engine_Driver", "threaded_application.end_jmdns active so ending it and starting thread to remove listener");
-            } else {
-                jmdnsThread = null;
-                Log.d("Engine_Driver", "threaded_application.end_jmdns not active");
-            }
-        }
-
-        boolean jmdnsIsActive() {
-            return jmdns != null && !endingJmdns;
-        }
-
-        /*
-          add configuration of digitrax LnWi or DCCEX to discovered list, since they do not provide mDNS
-         */
-        void addFakeDiscoveredServer(String entryName, String clientAddr, String entryPort) {
-
-            if (clientAddr == null || clientAddr.lastIndexOf(".") < 0)
-                return; //bail on unexpected value
-
-            //assume that the server is at x.y.z.1
-            String server_addr = clientAddr.substring(0, clientAddr.lastIndexOf("."));
-            server_addr += ".1";
-            HashMap<String, String> hm = new HashMap<>();
-            hm.put("ip_address", server_addr);
-            hm.put("port", entryPort);
-            hm.put("host_name", entryName);
-
-            Message service_message = Message.obtain();
-            service_message.what = message_type.SERVICE_RESOLVED;
-            service_message.arg1 = port;
-            service_message.obj = hm;  //send the hashmap as the payload
-            boolean sent = false;
-            try {
-                sent = connection_msg_handler.sendMessage(service_message);
-            } catch (Exception ignored) {
-            }
-            if (!sent)
-                service_message.recycle();
-
-            Log.d("Engine_Driver", String.format("t_a: added '%s' at %s to Discovered List", entryName, server_addr));
-
-        }
-
-        @SuppressLint("HandlerLeak")
-        class comm_handler extends Handler {
-            //All of the work of the communications thread is initiated from this function.
-
-            @SuppressLint({"DefaultLocale", "ApplySharedPref"})
-            public void handleMessage(Message msg) {
-//                Log.d("Engine_Driver", "threaded_application.comm_handler: message: " +msg.what);
-                switch (msg.what) {
-                    // note: if the Thottle is sent in arg1, it is always expected to be a int
-                    // if it is sent in arg0, it will be a string
-
-                    //Start or Stop jmdns stuff, or add "fake" discovered servers
-                    case message_type.SET_LISTENER:
-                        if (client_ssid != null &&
-                                client_ssid.matches("DCCEX_[0-9a-f]{6}$")) {
-                            //add "fake" discovered server entry for DCCEX: DCCEX_123abc
-                            addFakeDiscoveredServer(client_ssid, client_address, "2560");
-                        } else if (client_ssid != null &&
-                                client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
-                            //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
-                            addFakeDiscoveredServer(client_ssid, client_address, "12090");
-                        } else {
-                            //arg1= 1 to turn on, arg1=0 to turn off
-                            if (msg.arg1 == 0) {
-                                end_jmdns();
-                            } else {
-                                //show message if using mobile data
-                                if ((!client_type.equals("WIFI")) && (prefAllowMobileData)) {
-                                    safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
-                                }
-                                if (jmdns == null) {   //start jmdns if not started
-                                    start_jmdns();
-                                    if (jmdns != null) {  //don't bother if jmdns didn't start
-                                        try {
-                                            multicast_lock.acquire();
-                                        } catch (Exception e) {
-                                            //log message, but keep going if this fails
-                                            Log.d("Engine_Driver", "threaded_application.comm_handler: multicast_lock.acquire() failed");
-                                        }
-                                        jmdns.addServiceListener("_withrottle._tcp.local.", listener);
-                                        Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns listener added");
-                                    } else {
-                                        Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns not running, didn't start listener");
-                                    }
-                                } else {
-                                    Log.d("Engine_Driver", "threaded_application.comm_handler: jmdns already running");
-                                }
-                            }
-                        }
-                        break;
-
-                    //Connect to the WiThrottle server.
-                    case message_type.CONNECT:
-
-                        //The IP address is stored in the obj as a String, the port is stored in arg1.
-                        String new_host_ip = msg.obj.toString();
-                        new_host_ip = new_host_ip.trim();
-                        int new_port = msg.arg1;
-
-                        //avoid duplicate connects, seen when user clicks address multiple times quickly
-                        if (socketWiT != null && socketWiT.SocketGood()
-                                && new_host_ip.equals(host_ip) && new_port == port) {
-                            Log.d("Engine_Driver", "t_a: Duplicate CONNECT message received.");
-                            break;
-                        }
-
-                        //clear app.thread shared variables so they can be reinitialized
-                        initShared();
-                        fastClockSeconds = 0L;
-
-                        //store ip and port in global variables
-                        host_ip = new_host_ip;
-                        port = new_port;
-                        // skip url checking on Play Protect
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                            WebView.setSafeBrowsingWhitelist(Collections.singletonList(host_ip), null);
-                        }
-
-                        //attempt connection to WiThrottle server
-                        socketWiT = new socket_WiT();
-                        if (socketWiT.connect()) {
-                            sendThrottleName();
-                            sendMsgDelay(comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
-                            phone = new PhoneListener();
-                        } else {
-                            host_ip = null;  //clear vars if failed to connect
-                            port = 0;
-                        }
-                        soundsReloadSounds = true;
-                        break;
-
-                    //Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
-                    case message_type.RELEASE: {
-                        int delays = 0;
-                        String addr = msg.obj.toString();
-                        final int whichThrottle = msg.arg1;
-                        final boolean releaseAll = (addr.length() == 0);
-
-                        if (releaseAll || consists[whichThrottle].isEmpty()) {
-                            addr = "";
-                            function_labels[whichThrottle] = new LinkedHashMap<>();
-                            function_states[whichThrottle] = new boolean[32];
-                        }
-                        if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
-                                getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
-                            witSetSpeedZero(whichThrottle);
-                            delays++;
-                        }
-
-//                        releaseLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
-                        releaseLoco(addr, whichThrottle, 0);
-                        break;
-                    }
-
-                    //estop requested.   arg1 holds whichThrottle
-                    //  M0A*<;>X  was(0X)
-                    case message_type.ESTOP: {
-                        final int whichThrottle = msg.arg1;
-                        withrottle_send(String.format("M%sA*<;>X", throttleIntToString(whichThrottle)));  //send eStop request
-                        break;
-                    }
-
-                    case message_type.RESTART_APP: {
-                        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-                        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-                        sharedPreferences.edit().putInt("prefForcedRestartReason", msg.arg1).commit();
-                        alert_activities(message_type.RESTART_APP, "");
-                        break;
-                    }
-
-                    case message_type.RELAUNCH_APP: {
-                        SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-                        sharedPreferences.edit().putBoolean("prefForcedRestart", true).commit();
-                        sharedPreferences.edit().putInt("prefForcedRestartReason", msg.arg1).commit();
-                        alert_activities(message_type.RELAUNCH_APP, "");
-
-                        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        Runtime.getRuntime().exit(0); // really force the kill
-                        break;
-                    }
-
-                    //Disconnect from the WiThrottle server and Shutdown
-                    case message_type.DISCONNECT: {
-                        Log.d("Engine_Driver", "t_a: TA Disconnect");
-                        doFinish = true;
-                        Log.d("Engine_Driver", "t_a: TA alert all activities to shutdown");
-                        alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
-                        stoppingConnection();
-
-                        // arg1 = 1 means shutdown with no delays
-                        if (msg.arg1 == 1) {
-                            withrottle_send("Q");
-                            shutdown(true);
-                        } else {
-                            // At this point TA needs to send the quit message to WiT and then shutdown.
-                            // However the DISCONNECT message also tells the Throttle activity to release all throttles
-                            // and that process can take some time:
-                            //  release request messages and possibly zero speed messages need to be sent to WiT
-                            //  for each active throttle and WiT will respond with release messages.
-                            // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
-                            sendMsgDelay(comm_msg_handler, 1500L, message_type.WITHROTTLE_QUIT);
-                            if (!sendMsgDelay(comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
-                                shutdown(false);
-                            }
-                        }
-
-                        if (soundPool != null) {
-                            soundPool.autoPause();
-                        }
-                        break;
-                    }
-
-                    //Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
-                    //Optional rostername if present is separated from the address by the proper delimiter
-                    case message_type.REQ_LOCO_ADDR: {
-//                        int delays = 0;
-                        final String addr = msg.obj.toString();
-                        final int whichThrottle = msg.arg1;
-                        if (prefs.getBoolean("drop_on_acquire_preference",
-                                getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
-                            releaseLoco("*", whichThrottle, 0);
-//                            delays++;
-                        }
-//                        acquireLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
-                        acquireLoco(addr, whichThrottle, 0);
-                        break;
-                    }
-
-                    //send commands to steal the last requested address
-                    case message_type.STEAL: {
-                        String addr = msg.obj.toString();
-                        int whichThrottle = msg.arg1;
-                        stealLoco(addr, whichThrottle);
-                        break;
-                    }
-
-                    //Adjust the throttle's speed. whichThrottle is in arg 1 and arg2 holds the value of the speed to set.
-                    //  message sent is formatted M1A*<;>V13  was(1V13)
-                    case message_type.VELOCITY: {
-                        final int whichThrottle = msg.arg1;
-                        final int speed = msg.arg2;
-                        witSetSpeed(whichThrottle, speed);
-                        break;
-                    }
-                    //Change direction. address is in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
-                    //  message sent is formatted M1AS96<;>R0  was(1R0<;>S96)
-                    case message_type.DIRECTION: {
-                        final String addr = msg.obj.toString();
-                        final int whichThrottle = msg.arg1;
-                        withrottle_send(String.format("M%sA%s<;>R%d", throttleIntToString(whichThrottle), addr, msg.arg2));
-                        break;
-                    }
-                    //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
-                    //  M1AS96<;>F01  was(1F01<;>S96)
-                    case message_type.FUNCTION: {
-                        String addr = msg.obj.toString();
-                        final char cWhichThrottle = addr.charAt(0);
-                        addr = addr.substring(1);
-                        if (addr.length() == 0)
-                            addr = "*";
-                        withrottle_send(String.format("M%sA%s<;>F%d%d", cWhichThrottle, addr, msg.arg2, msg.arg1));
-                        break;
-                    }
-                    //Set or unset a function. whichThrottle+addr is in the msg, arg1 is the function number, arg2 is set or unset.
-                    case message_type.FORCE_FUNCTION: {
-                        String addr = msg.obj.toString();
-                        final char cWhichThrottle = addr.charAt(0);
-                        addr = addr.substring(1);
-                        if (addr.length() == 0)
-                            addr = "*";
-                        withrottle_send(String.format("M%sA%s<;>f%d%d", cWhichThrottle, addr, msg.arg2, msg.arg1));
-                        break;
-                    }
-                    //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName
-                    case message_type.TURNOUT: {
-                        final String cmd = msg.obj.toString();
-                        withrottle_send("PTA" + cmd);
-                        break;
-                    }
-                    //send command to route turnout.  msg = 2(toggle) + systemName
-                    case message_type.ROUTE: {
-                        final String cmd = msg.obj.toString();
-                        withrottle_send("PRA" + cmd);
-                        break;
-                    }
-                    //send command to change power setting, new state is passed in arg1
-                    case message_type.POWER_CONTROL:
-                        withrottle_send(String.format("PPA%d", msg.arg1));
-                        break;
-                    //send whatever command string comes in obj to Withrottle Server
-                    case message_type.WITHROTTLE_SEND:
-                        withrottle_send(msg.obj.toString());
-                        break;
-                    // Request the throttle's speed and direction. whichThrottle is in arg 1
-                    case message_type.WIT_QUERY_SPEED_AND_DIRECTION: {
-                        final int whichThrottle = msg.arg1;
-                        witRequestSpeedAndDir(whichThrottle);
-                        break;
-                    }
-                    //send Q to withrottle server
-                    case message_type.WITHROTTLE_QUIT:
-                        if (socketWiT != null && socketWiT.SocketGood())
-                            withrottle_send("Q");
-                        break;
-
-                    //send heartbeat start command to withrottle server
-                    case message_type.SEND_HEARTBEAT_START:
-                        heart.setHeartbeatSent(true);
-                        withrottle_send("*+");
-                        break;
-
-                    //Current Time clock display preference change, sets mainapp.fastClockFormat
-                    case message_type.CLOCK_DISPLAY_CHANGED:
-                        if (!doFinish) {
-                            try {
-                                fastClockFormat = Integer.parseInt(prefs.getString("ClockDisplayTypePreference", "0"));
-                            } catch (NumberFormatException e) {
-                                fastClockFormat = 0;
-                            }
-                            alert_activities(message_type.TIME_CHANGED, "");
-                        }
-                        break;
-
-                    // SHUTDOWN - terminate socketWiT and it's done
-                    case message_type.SHUTDOWN:
-                        shutdown(false);
-                        break;
-
-                    case message_type.CONNECTION_COMPLETED_CHECK:
-                        //if not successfully connected to a 2.0+ server by this time, kill connection
-                        if (withrottle_version < 2.0) {
-                            sendMsg(comm_msg_handler, message_type.TOAST_MESSAGE,
-                                    "timeout waiting for VN message for "
-                                            + host_ip + ":" + port + ", disconnecting");
-                            if (socketWiT != null) {
-                                socketWiT.disconnect(true, true);     //just close the socket
-                            }
-                        }
-                        break;
-
-                    // update of roster-related data completed in background
-                    case message_type.ROSTER_UPDATE:
-                        if (!doFinish) {
-                            alert_activities(message_type.ROSTER_UPDATE, "");
-                        }
-                        break;
-
-                    // WiT socket is down and reconnect attempt in prog
-                    case message_type.WIT_CON_RETRY:
-                        if (!doFinish) {
-                            alert_activities(message_type.WIT_CON_RETRY, msg.obj.toString());
-                        }
-                        break;
-
-                    // WiT socket is back up
-                    case message_type.WIT_CON_RECONNECT:
-                        if (!doFinish) {
-                            sendThrottleName();
-                            reacquireAllConsists();
-                            alert_activities(message_type.WIT_CON_RECONNECT, msg.obj.toString());
-                        }
-                        break;
-
-                    //send whatever message string comes in obj as a long toast message
-                    case message_type.TOAST_MESSAGE:
-                        safeToast(msg.obj.toString(), Toast.LENGTH_LONG);
-                        break;
-
-                    case message_type.KIDS_TIMER_ENABLE:
-                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0);
-                        break;
-                    case message_type.KIDS_TIMER_START:
-                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_START, "", 0);
-                        break;
-                    case message_type.KIDS_TIMER_END:
-                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_END, "", 0);
-                        break;
-                    case message_type.KIDS_TIMER_TICK:
-                        sendMsg(throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
-                        break;
-                    case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-                        Log.d("Engine_Driver", "threaded_application.comm_handler: message: AUTO_IMPORT_URL_AVAILABLE " + msg.what);
-                        sendMsg(throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
-                        break;
-
-                    case message_type.HTTP_SERVER_NAME_RECEIVED:
-                        String retrievedServerName = msg.obj.toString();
-                        if (connectedHostName != null &&
-                                !retrievedServerName.equals(connectedHostName) &&
-                                !connectedHostName.equals(demo_host)) {
-                            updateConnectionList(retrievedServerName);
-                        }
-                        break;
-
-                    case message_type.GAMEPAD_ACTION:
-                        sendMsg(throttle_msg_handler, message_type.GAMEPAD_ACTION, msg.obj.toString());
-                        break;
-                    case message_type.GAMEPAD_JOYSTICK_ACTION:
-                        sendMsg(throttle_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION, msg.obj.toString());
-                        break;
-
-                    case message_type.VOLUME_BUTTON_ACTION:
-                        sendMsg(throttle_msg_handler, message_type.VOLUME_BUTTON_ACTION, msg.obj.toString());
-                        break;
-                }
-            }
-        }
-
-        private void stoppingConnection() {
-            heart.stopHeartbeat();
-            if (phone != null) {
-                phone.disable();
-                phone = null;
-            }
-            end_jmdns();
-//            dlMetadataTask.stop();
-            dlRosterTask.stop();
-        }
-
-        private void shutdown(boolean fast) {
-            Log.d("Engine_Driver", "threaded_application.Shutdown");
-            if (socketWiT != null) {
-                socketWiT.disconnect(true, fast);     //stop reading from the socket
-            }
-            Log.d("Engine_Driver", "threaded_application.Shutdown: socketWit down");
-            saveSharedPreferencesToFileIfAllowed();
-            host_ip = null;
-            port = 0;
-            reinitStatics();                    // ensure activities are ready for relaunch
-            doFinish = false;                   //ok for activities to run if restarted after this
-
-            dlRosterTask.stop();
-//            dlMetadataTask.stop();
-
-            // make sure flashlight is switched off at shutdown
-            if (flashlight != null) {
-                flashlight.setFlashlightOff();
-                flashlight.teardown();
-            }
-            flashState = false;
-            Log.d("Engine_Driver", "threaded_application.Shutdown finished");
-        }
-
-        private void sendThrottleName() {
-            sendThrottleName(true);
-        }
-
-        private void sendThrottleName(Boolean sendHWID) {
-            String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
-            withrottle_send("N" + s);  //send throttle name
-            if (sendHWID) {
-                if (deviceId.equals("")) {
-                    deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
-                }
-                if (deviceId.equals("")) {
-                    withrottle_send("HU" + s);  //also send throttle name as the UDID
-                } else {
-                    withrottle_send("HU" + deviceId);
-                }
-            }
-        }
-
-
-        /* ask for specific loco to be added to a throttle
-             input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
-             msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
-        private void acquireLoco(String addr, int whichThrottle, int interval) {
-            String rosterName;
-            String address;
-            String[] as = splitByString(addr, "<;>");
-            if (as.length > 1) {
-                address = as[0];
-                rosterName = "E" + as[1];
-            } else { //if no rostername, just use address for both
-                address = addr;
-                rosterName = addr;
-            }
-
-            //format multithrottle request for loco M1+L37<;>ECSX37
-            String msgTxt;
-            msgTxt = String.format("M%s+%s<;>%s", throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-//            Log.d("Engine_Driver", "t_a: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
-//            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgTxt);
-            sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgTxt);
-
-            if (heart.getInboundInterval() > 0 && withrottle_version > 0.0 && !heart.isHeartbeatSent()) {
-//                sendMsgDelay(comm_msg_handler, interval + WITHROTTLE_SPACING_INTERVAL, message_type.SEND_HEARTBEAT_START);
-                sendMsg(comm_msg_handler, message_type.SEND_HEARTBEAT_START);
-            }
-        }
-
-        /* "steal" will send the MTS command */
-        private void stealLoco(String addr, int whichThrottle) {
-            if (addr != null) {
-                String msgtxt = String.format("M%sS%s<;>%s", throttleIntToString(whichThrottle), addr, addr);
-                sendMsg(comm_msg_handler, message_type.WITHROTTLE_SEND, msgtxt);
-            }
-        }
-
-        //release all locos for throttle using '*', or a single loco using address
-        private void releaseLoco(String addr, int whichThrottle, long interval) {
-            String msgtxt = String.format("M%s-%s<;>r", throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*"));
-            sendMsgDelay(comm_msg_handler, interval, message_type.WITHROTTLE_SEND, msgtxt);
-        }
-
-        private void reacquireAllConsists() {
-            for (int i = 0; i < maxThrottlesCurrentScreen; i++)
-                reacquireConsist(consists[i], i);
-        }
-
-        private void reacquireConsist(Consist c, int whichThrottle) {
-            int delays = 0;
-            for (ConLoco l : c.getLocos()) { // reacquire each confirmed loco in the consist
-                if (l.isConfirmed()) {
-                    String addr = l.getAddress();
-                    String roster_name = l.getRosterName();
-                    if (roster_name != null)  // add roster selection info if present
-                        addr += "<;>" + roster_name;
-//                    acquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
-                    acquireLoco(addr, whichThrottle, 0); //ask for next loco, with 0 or more delays
-                    delays++;
-                }
-            }
-        }
-
-        private void process_response(String response_str) {
-            /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
-          VN<Version#>
-          RL<RosterSize>]<RosterList>
-          RF<RosterFunctionList>
-          RS<2ndRosterFunctionList>
-          *<HeartbeatIntervalInSeconds>
-          PTL[<SystemTurnoutName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
-          PTA<NewTurnoutState><SystemName>
-          PPA<NewPowerState> where state 0=off, 1=on, 2=unknown
-          M<throttleid> multi-throttle command
-          TODO: add remaining items, or move examples into code below
-             */
-
-            //send response to debug log for review
-            Log.d("Engine_Driver", "<--:" + response_str);
-
-            boolean skipAlert = false;          //set to true if the Activities do not need to be Alerted
-
-            switch (response_str.charAt(0)) {
-
-                //handle responses from MultiThrottle function
-                case 'M': {
-                    if (response_str.length() < 5) { //must be at least Mtxs9
-                        Log.d("Engine_Driver", "t_a: invalid response string: '" + response_str + "'");
-                        break;
-                    }
-                    String sWhichThrottle = response_str.substring(1, 2);
-                    int whichThrottle = throttleCharToInt(sWhichThrottle.charAt(0));
-                    String[] ls = splitByString(response_str, "<;>");    //drop off separator
-                    String addr = ls[0].substring(3);
-                    char com2 = response_str.charAt(2);
-                    //loco was successfully added to a throttle
-                    if (com2 == '+') {  //"MT+L2591<;>"  loco was added
-                        Consist con = consists[whichThrottle];
-                        if (con.getLoco(addr) != null) { //loco was added to consist in select_loco
-                            con.setConfirmed(addr);
-                            addLocoToRecents(con.getLoco(addr));
-                        } else if (con.isWaitingOnID()) { //we were waiting for this response to get address
-                            ConLoco conLoco = new ConLoco(addr);
-                            conLoco.setFunctionLabelDefaults(threaded_application.this, whichThrottle);
-                            //look for RosterEntry which matches address returned
-                            String rn = getRosterNameFromAddress(conLoco.getFormatAddress(),true);
-                            if ( !rn.equals("")) {
-                                conLoco.setIsFromRoster(true);
-                                conLoco.setRosterName(rn);
-                            }
-                            con.add(conLoco);
-                            con.setWhichSource(addr, 1); //entered by address, not roster
-                            con.setConfirmed(addr);
-//                            addLocoToRecents(con.getLoco(addr));
-                            addLocoToRecents(conLoco);
-                            Log.d("Engine_Driver", "loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
-                        } else {
-                            Log.d("Engine_Driver", "loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
-                        }
-
-                        String consistname = getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
-                        if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
-                            String[] cna = splitByString(consistname, "+");
-                            String cmd = String.format("M%sA%s<;>C%s", throttleIntToString(whichThrottle), addr, cvtToLAddr(cna[0]));
-                            Log.d("Engine_Driver", "t_a: rqsting fkeys for lead loco " + cvtToLAddr(cna[0]));
-                            withrottle_send(cmd);
-                        }
-
-                    } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
-                        consists[whichThrottle].remove(addr);
-                        Log.d("Engine_Driver", "t_a: loco " + addr + " dropped from " + throttleIntToString(whichThrottle));
-
-                    } else if (com2 == 'L') { //list of function buttons
-                        if (consists[whichThrottle].isLeadFromRoster()) { // if not from the roster ignore the function labels that WiT has sent back
-                            String lead;
-                            lead = consists[whichThrottle].getLeadAddr();
-                            if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
-                                process_roster_function_string("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
-                            consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], threaded_application.this);
-                        }
-
-                    } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
-                        if (ls.length == 2 && "F".equals(ls[1].substring(0, 1))) {
-                            try {
-                                process_function_state(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
-                            } catch (NumberFormatException | StringIndexOutOfBoundsException ignore) {
-                                Log.d("Engine_Driver", "bad incoming message data, unable to parse '" + response_str + "'");
-                            }
-                        }
-
-                    } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                        Log.d("Engine_Driver", "t_a: rcvd MTS, request prompt for " + addr + " on " + throttleIntToString(whichThrottle));
-                        sendMsg(throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
-                    }
-
-                    break;
-                }
-                case 'V':
-                    if (response_str.startsWith("VN")) {
-                        Double old_vn = withrottle_version;
-                        try {
-                            withrottle_version = Double.parseDouble(response_str.substring(2));
-                        } catch (Exception e) {
-                            Log.e("Engine_Driver", "process response: invalid WiT version string");
-                            withrottle_version = 0.0;
-                            break;
-                        }
-                        //only move on to Throttle screen if version received is 2.0+
-                        if (withrottle_version >= 2.0) {
-                            if (!withrottle_version.equals(old_vn)) { //only if changed
-                                sendMsg(connection_msg_handler, message_type.CONNECTED);
-                            } else {
-                                Log.d("Engine_Driver", "version already set to " + withrottle_version + ", ignoring");
-                            }
-                        } else {
-                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, response_str.substring(2)), Toast.LENGTH_SHORT);
-                            socketWiT.disconnect(false);
-                        }
-                    } else {
-                        Log.e("Engine_Driver", "process response: invalid WiT version string");
-                    }
-                    break;
-
-                case 'H':
-                    if (response_str.charAt(1) == 'T') { //set hardware server type, HTMRC for example
-                        setServerType(response_str.substring(2)); //store the type
-                    } else if (response_str.charAt(1) == 't') { //server description string "HtMy Server Details go here"
-                        setServerDescription(response_str.substring(2)); //store the description
-                    } else if (response_str.charAt(1) == 'M') { //alert message sent from server to throttle
-                        safeToast(response_str.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
-                        //see if it is a turnout fail
-                        if ((response_str.contains("Turnout")) || (response_str.contains("create not allowed"))) {
-                            Pattern pattern = Pattern.compile(".*'(.*)'.*");
-                            Matcher matcher = pattern.matcher(response_str);
-                            if (matcher.find()) {
-                                sendMsg(turnouts_msg_handler, message_type.WIT_TURNOUT_NOT_DEFINED, matcher.group(1));
-                            }
-                        }
-
-                    } else if (response_str.charAt(1) == 'm') { //info message sent from server to throttle
-                        safeToast(response_str.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
-                    }
-                    break;
-
-                case '*':
-                    try {
-                        heartbeatInterval = Integer.parseInt(response_str.substring(1)) * 1000;  //convert to milliseconds
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "t_a: process response: invalid WiT hearbeat string");
-                        heartbeatInterval = 0;
-                    }
-                    heart.startHeartbeat(heartbeatInterval);
-                    break;
-
-                case 'R': //Roster
-                    switch (response_str.charAt(1)) {
-
-                        case 'C':
-                            if (response_str.charAt(2) == 'C' || response_str.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
-                                clear_consist_list();
-                            } else if (response_str.charAt(2) == 'D') {  //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
-                                process_consist_list(response_str);
-                            }
-                            break;
-
-                        case 'L':
-                            //                  roster_list_string = response_str.substring(2);  //set app variable
-                            process_roster_list(response_str);  //process roster list
-                            break;
-
-                        case 'F':   //RF29}|{2591(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-                            process_roster_function_string(response_str.substring(2), 0);
-                            break;
-
-                        case 'S': //RS29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-                            process_roster_function_string(response_str.substring(2), 1);
-                            break;
-
-                    }  //end switch inside R
-                    break;
-                case 'P': //Panel
-                    switch (response_str.charAt(1)) {
-                        case 'T': //turnouts
-                            if (response_str.charAt(2) == 'T') {  //turnout control allowed
-                                process_turnout_titles(response_str);
-                            }
-                            if (response_str.charAt(2) == 'L') {  //list of turnouts
-                                process_turnout_list(response_str);  //process turnout list
-                            }
-                            if (response_str.charAt(2) == 'A') {  //action?  changes to turnouts
-                                process_turnout_change(response_str);  //process turnout changes
-                            }
-                            break;
-
-                        case 'R':  //routes
-                            if (response_str.charAt(2) == 'T') {  //route  control allowed
-                                process_route_titles(response_str);
-                            }
-                            if (response_str.charAt(2) == 'L') {  //list of routes
-                                process_route_list(response_str);  //process route list
-                            }
-                            if (response_str.charAt(2) == 'A') {  //action?  changes to routes
-                                process_route_change(response_str);  //process route changes
-                            }
-                            break;
-
-                        case 'P':  //power
-                            if (response_str.charAt(2) == 'A') {  //change power state
-                                String oldState = power_state;
-                                power_state = response_str.substring(3);
-                                if (power_state.equals(oldState)) {
-                                    skipAlert = true;
-                                }
-                            }
-                            break;
-
-                        case 'F':  //FastClock message: PFT1581530521<;>2.0
-                            //extracts and sets shared fastClockSeconds
-                            if (response_str.startsWith("PFT")) {
-                                fastClockSeconds = 0L;
-                                String[] ta = splitByString(response_str.substring(3), "<;>"); //get the number between "PFT" and the "<;>"
-                                try {
-                                    fastClockSeconds = Long.parseLong(ta[0]);
-                                } catch (NumberFormatException e) {
-                                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + response_str + "'");
-                                }
-                                alert_activities(message_type.TIME_CHANGED, "");     //tell activities the time has changed
-                            }
-                            break;
-
-                        case 'W':  //Web Server port
-                            int oldPort = web_server_port;
-                            try {
-                                web_server_port = Integer.parseInt(response_str.substring(2));  //set app variable
-                            } catch (Exception e) {
-                                Log.d("Engine_Driver", "t_a: process response: invalid web server port string");
-                            }
-                            if (oldPort == web_server_port) {
-                                skipAlert = true;
-                            } else {
-//                                dlMetadataTask.get();           // start background metadata update
-                                dlRosterTask.get();             // start background roster update
-
-                            }
-                            webServerNameHasBeenChecked = false;
-                            break;
-                    }  //end switch inside P
-                    break;
-            }  //end switch
-
-            if (!skipAlert) {
-                alert_activities(message_type.RESPONSE, response_str);  //send response to running activities
-            }
-        }  //end of process_response
-
-        //parse roster functions list into appropriate app variable array
-        //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-        private void process_roster_function_string(String response_str, int whichThrottle) {
-
-            Log.d("Engine_Driver", "t_a: processing function labels for " + throttleIntToString(whichThrottle));
-            String[] ta = splitByString(response_str, "]\\[");  //split into list of labels
-
-            //populate a temp label array from RF command string
-            LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<>();
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
-                    function_labels_temp.put(i - 1, ts); //index is hashmap key, value is label string
-                }  //end if i>0
-                i++;
-            }  //end for
-
-            //set the appropriate global variable from the temp
-            function_labels[whichThrottle] = function_labels_temp;
-
-        }
-
-        //parse roster list into appropriate app variable array
-        //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
-        private void process_roster_list(String response_str) {
-            //clear the global variable
-            roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-            //todo   RDB why don't we just clear the existing map with roster_entries.clear() instead of disposing and creating a new instance?
-
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            //initialize app arrays (skipping first)
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 0) { //skip first chunk
-                    String[] tv = splitByString(ts, "}|{");  //split these into name, address and length
-                    try {
-                        roster_entries.put(tv[0], tv[1] + "(" + tv[2] + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "t_a: process_roster_list caught Exception");  //ignore any bad stuff in roster entries
-                    }
-                }  //end if i>0
-                i++;
-            }  //end for
-
-        }
-
-        //parse consist list into appropriate mainapp hashmap
-        //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
-        private void process_consist_list(String response_str) {
-            String consist_addr = null;
-            StringBuilder consist_desc = new StringBuilder();
-            String consist_name = "";
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            String plus = ""; //plus sign for a separator
-            //initialize app arrays (skipping first)
-            int i = 0;
-            for (String ts : ta) {
-                if (i == 0) { //first chunk is a "header"
-                    String[] tv = splitByString(ts, "}|{");  //split header chunk into header, address and name
-                    consist_addr = tv[1];
-                    consist_name = tv[2];
-                } else {  //list of locos in consist
-                    String[] tv = splitByString(ts, "}|{");  //split these into loco address and direction
-                    consist_desc.append(plus).append(tv[0]);
-                    plus = "+";
-                }  //end if i==0
-                i++;
-            }  //end for
-            Log.d("Engine_Driver", "t_a: consist header, addr='" + consist_addr
-                    + "', name='" + consist_name + "', desc='" + consist_desc + "'");
-            //don't add empty consists to list
-            if (consist_entries != null && consist_desc.length() > 0) {
-                consist_entries.put(consist_addr, consist_desc.toString());
-            } else {
-                Log.d("Engine_Driver", "skipping empty consist '" + consist_name + "'");
-            }
-        }
-
-        //clear out any stored consists
-        private void clear_consist_list() {
-            if (consist_entries!=null) consist_entries.clear();
-        }
-
-        //parse turnout change to update mainapp array entry
-        //  PTA<NewState><SystemName>
-        //  PTA2LT12
-        private void process_turnout_change(String response_str) {
-            if (to_system_names == null) return;  //ignore if turnouts not defined
-            String newState = response_str.substring(3, 4);
-            String systemName = response_str.substring(4);
-            int pos = -1;
-            for (String sn : to_system_names) { //TODO: rewrite for better lookup
-                pos++;
-                if (sn != null && sn.equals(systemName)) {
-                    break;
-                }
-            }
-            if (pos >= 0 && pos <= to_system_names.length) {  //if found, update to new value
-                to_states[pos] = newState;
-            }
-        }  //end of process_turnout_change
-
-        //parse turnout list into appropriate app variable array
-        //  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
-        //  PTL]\[LT12}|{my12}|{1
-        private void process_turnout_list(String response_str) {
-
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            //initialize app arrays (skipping first)
-            to_system_names = new String[ta.length - 1];
-            to_user_names = new String[ta.length - 1];
-            to_states = new String[ta.length - 1];
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 0) { //skip first chunk, just message id
-                    String[] tv = splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                    if (tv.length == 3) { //make sure split worked
-                        to_system_names[i - 1] = tv[0];
-                        to_user_names[i - 1] = tv[1];
-                        to_states[i - 1] = tv[2];
-                    }
-                }  //end if i>0
-                i++;
-            }  //end for
-
-        }
-
-        private void process_turnout_titles(String response_str) {
-            //PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
-
-            //clear the global variable
-            to_state_names = new HashMap<>();
-
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            //initialize app arrays (skipping first)
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 1) { //skip first 2 chunks
-                    String[] tv = splitByString(ts, "}|{");  //split these into value and key
-                    to_state_names.put(tv[1], tv[0]);
-                }  //end if i>0
-                i++;
-            }  //end for
-
-        }
-
-        //parse route list into appropriate app variable array
-        //  PRA<NewState><SystemName>
-        //  PRA2LT12
-        private void process_route_change(String response_str) {
-            String newState = response_str.substring(3, 4);
-            String systemName = response_str.substring(4);
-            int pos = -1;
-            for (String sn : rt_system_names) {
-                pos++;
-                if (sn != null && sn.equals(systemName)) {
-                    break;
-                }
-            }
-            if (pos >= 0 && pos <= rt_system_names.length) {  //if found, update to new value
-                rt_states[pos] = newState;
-            }
-        }  //end of process_route_change
-
-        //parse route list into appropriate app variable array
-        //  PRL[<SystemName><UserName><State>]repeat where state 1=Unknown,2=Active,4=Inactive,8=Inconsistent
-        //  PRL]\[LT12}|{my12}|{1
-        private void process_route_list(String response_str) {
-
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            //initialize app arrays (skipping first)
-            rt_system_names = new String[ta.length - 1];
-            rt_user_names = new String[ta.length - 1];
-            rt_states = new String[ta.length - 1];
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 0) { //skip first chunk, just message id
-                    String[] tv = splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                    rt_system_names[i - 1] = tv[0];
-                    rt_user_names[i - 1] = tv[1];
-                    rt_states[i - 1] = tv[2];
-                }  //end if i>0
-                i++;
-            }  //end for
-
-        }
-
-        private void process_route_titles(String response_str) {
-            //PRT
-
-            //clear the global variable
-            rt_state_names = new HashMap<>();
-
-            String[] ta = splitByString(response_str, "]\\[");  //initial separation
-            //initialize app arrays (skipping first)
-            int i = 0;
-            for (String ts : ta) {
-                if (i > 1) { //skip first 2 chunks
-                    String[] tv = splitByString(ts, "}|{");  //split these into value and key
-                    rt_state_names.put(tv[1], tv[0]);
-                }  //end if i>0
-                i++;
-            }  //end for
-        }
-
-        //parse function state string into appropriate app variable array
-        private void process_function_state(int whichThrottle, Integer fn, boolean fState) {
-
-            boolean skip = (fn > 2) && (prefAlwaysUseDefaultFunctionLabels)
-                    && ((prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)));
-
-            if (!skip) {
-                try {
-                    function_states[whichThrottle][fn] = fState;
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-            }
-        }
-
-        //
-        // withrottle_send(String msg)
-        //
-        //send formatted msg to the socket using multithrottle format
-        //  intermessage gap enforced by requeueing messages as needed
-        private void withrottle_send(String msg) {
-//            Log.d("Engine_Driver", "t_a: WiT send '" + msg + "'");
-            if (msg == null) { //exit if no message
-                Log.d("Engine_Driver", "--> null msg");
-                return;
-            } else if (socketWiT == null) {
-                Log.e("Engine_Driver", "socketWiT is null, message '" + msg + "' not sent!");
-                return;
-            }
-
-            long now = System.currentTimeMillis();
-            long lastGap = now - lastSentMs;
-
-            //send if sufficient gap between messages or msg is timingSensitive, requeue if not
-            if (lastGap >= WiThrottle_Msg_Interval || timingSensitive(msg)) {
-                //perform the send
-                Log.d("Engine_Driver", "-->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
-                lastSentMs = now;
-                socketWiT.Send(msg);
-            } else {
-                //requeue this message
-                int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (WiThrottle_Msg_Interval + 5); //extra 5 for processing
-                Log.d("Engine_Driver", "requeue:" + msg.replaceAll("\n", "\u21B5") +
-                        ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
-                sendMsgDelay(comm_msg_handler, nextGap, message_type.WITHROTTLE_SEND, msg);
-                lastQueuedMs = now + nextGap;
-            }
-        }  //end withrottle_send()
-
-        /* true indicates that message should NOT be requeued as the timing of this message
-             is critical.
-         */
-        private boolean timingSensitive(String msg) {
-            boolean ret = false;
-            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
-                ret = true;
-            } //any function key message
-            if (ret) Log.d("Engine_Driver", "timeSensitive msg, not requeuing:");
-            return ret;
-        }
-
-        private void witSetSpeedZero(int whichThrottle) {
-            witSetSpeed(whichThrottle, 0);
-        }
-
-        private void witSetSpeed(int whichThrottle, int speed) {
-            withrottle_send(String.format("M%sA*<;>V%d", throttleIntToString(whichThrottle), speed));
-        }
-
-        private void witRequestSpeed(int whichThrottle) {
-            withrottle_send(String.format("M%sA*<;>qV", throttleIntToString(whichThrottle)));
-        }
-
-        private void witRequestDir(int whichThrottle) {
-            withrottle_send(String.format("M%sA*<;>qR", throttleIntToString(whichThrottle)));
-        }
-
-        private void witRequestSpeedAndDir(int whichThrottle) {
-            withrottle_send(String.format("M%sA*<;>qV\nM%sA*<;>qR", throttleIntToString(whichThrottle), throttleIntToString(whichThrottle)));
-        }
-
-        public void run() {
-            Looper.prepare();
-            comm_msg_handler = new comm_handler();
-            Looper.loop();
-            Log.d("Engine_Driver", "comm_thread run() exit");
-        }
-
-        class socket_WiT extends Thread {
-            InetAddress host_address;
-            Socket clientSocket = null;
-            BufferedReader inputBR = null;
-            PrintWriter outputPW = null;
-            private volatile boolean endRead = false;           //signals rcvr to terminate
-            private volatile boolean socketGood = false;        //indicates socket condition
-            private volatile boolean inboundTimeout = false;    //indicates inbound messages are not arriving from WiT
-            private boolean firstConnect = false;               //indicates initial socket connection was achieved
-            private int connectTimeoutMs = 3000; //connection timeout in milliseconds
-            private int socketTimeoutMs = 500; //socket timeout in milliseconds
-
-            private final int MAX_INBOUND_TIMEOUT_RETRIES = 2;
-            private int inboundTimeoutRetryCount = 0;           // number of consecutive inbound timeouts
-            private boolean inboundTimeoutRecovery = false;     // attempting to force WiT to respond
-
-
-            socket_WiT() {
-                super("socket_WiT");
-            }
-
-            public boolean connect() {
-
-                //use local socketOk instead of setting socketGood so that the rcvr doesn't resume until connect() is done
-                boolean socketOk = HaveNetworkConnection();
-
-                connectTimeoutMs = Integer.parseInt(prefs.getString("prefConnectTimeoutMs", getResources().getString(R.string.prefConnectTimeoutMsDefaultValue)));
-                socketTimeoutMs = Integer.parseInt(prefs.getString("prefSocketTimeoutMs", getResources().getString(R.string.prefSocketTimeoutMsDefaultValue)));
-
-                //validate address
-                if (socketOk) {
-                    try {
-                        host_address = InetAddress.getByName(host_ip);
-                    } catch (UnknownHostException except) {
-//                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
-                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, host_ip), Toast.LENGTH_SHORT);
-                        socketOk = false;
-                    }
-                }
-
-                //socket
-                if (socketOk) {
-                    try {
-                        //look for someone to answer on specified socket, and set timeout
-                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
-                        clientSocket = new Socket();
-                        InetSocketAddress sa = new InetSocketAddress(host_ip, port);
-                        clientSocket.connect(sa, connectTimeoutMs);
-                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: Connect successful.");
-                        clientSocket.setSoTimeout(socketTimeoutMs);
-                        Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: set timeout successful.");
-                    } catch (Exception except) {
-                        if (!firstConnect) {
-                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
-                                    host_ip, Integer.toString(port), client_address, except.getMessage()), Toast.LENGTH_LONG);
-                        }
-                        if ((!client_type.equals("WIFI")) && (prefAllowMobileData)) { //show additional message if using mobile data
-                            Log.d("Engine_Driver", "t_a: socket_WiT: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
-                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, client_type), Toast.LENGTH_LONG);
-                        }
-                        socketOk = false;
-                    }
-                }
-
-                //rcvr
-                if (socketOk) {
-                    try {
-                        inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                    } catch (IOException except) {
-                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
-                        socketOk = false;
-                    }
-                }
-
-                //start the socket_WiT thread.
-                if (socketOk) {
-                    if (!this.isAlive()) {
-                        endRead = false;
-                        try {
-                            this.start();
-                        } catch (IllegalThreadStateException except) {
-                            //ignore "already started" errors
-                            safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
-                        }
-                    }
-                }
-
-                //xmtr
-                if (socketOk) {
-                    try {
-                        outputPW = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-                        if (outputPW.checkError()) {
-                            socketOk = false;
-                        }
-                    } catch (IOException e) {
-                        safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
-                        socketOk = false;
-                    }
-                }
-                socketGood = socketOk;
-                if (socketOk)
-                    firstConnect = true;
-                return socketOk;
-            }
-
-            public void disconnect(boolean shutdown) {
-                disconnect(shutdown, false);
-            }
-
-            public void disconnect(boolean shutdown, boolean fastShutdown) {
-                if (shutdown) {
-                    endRead = true;
-                    if (!fastShutdown) {
-                        for (int i = 0; i < 5 && this.isAlive(); i++) {
-                            try {
-                                Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
-                            } catch (InterruptedException e) {
-                                safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
-                            }
-                        }
-                    }
-                }
-
-                socketGood = false;
-
-                //close socket
-                if (clientSocket != null) {
-                    try {
-                        clientSocket.close();
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "t_a: Error closing the Socket: " + e.getMessage());
-                    }
-                }
-            }
-
-            //read the input buffer
-            public void run() {
-                String str;
-                //continue reading until signaled to exit by endRead
-                while (!endRead) {
-                    if (socketGood) {        //skip read when the socket is down
-                        try {
-                            if ((str = inputBR.readLine()) != null) {
-                                if (str.length() > 0) {
-                                    heart.restartInboundInterval();
-                                    clearInboundTimeout();
-                                    process_response(str);
-                                }
-                            }
-                        } catch (SocketTimeoutException e) {
-                            socketGood = this.SocketCheck();
-                        } catch (IOException e) {
-                            if (socketGood) {
-                                Log.d("Engine_Driver", "t_a: WiT rcvr error.");
-                                socketGood = false;     //input buffer error so force reconnection on next send
-                            }
-                        }
-                    }
-                    if (!socketGood) {
-                        SystemClock.sleep(500L);        //don't become compute bound here when the socket is down
-                    }
-                }
-                heart.stopHeartbeat();
-                Log.d("Engine_Driver", "t_a: socket_WiT exit.");
-            }
-
-            void Send(String msg) {
-                boolean reconInProg = false;
-                //reconnect socket if needed
-                if (!socketGood || inboundTimeout) {
-                    String status;
-                    if (client_address == null) {
-                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
-                        Log.d("Engine_Driver", "t_a: WiT send reconnection attempt.");
-                    } else if (inboundTimeout) {
-                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, host_ip, Integer.toString(port), heart.getInboundInterval());
-                        Log.d("Engine_Driver", "t_a: WiT receive reconnection attempt.");
-                    } else {
-                        status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, host_ip, Integer.toString(port), client_address);
-                        Log.d("Engine_Driver", "t_a: WiT send reconnection attempt.");
-                    }
-                    socketGood = false;
-
-                    sendMsg(comm_msg_handler, message_type.WIT_CON_RETRY, status);
-
-                    //perform the reconnection sequence
-                    this.disconnect(false);             //clean up socket but do not shut down the receiver
-                    this.connect();                     //attempt to reestablish connection
-                    reconInProg = true;
-                }
-
-                //try to send the message
-                if (socketGood) {
-                    try {
-                        outputPW.println(msg);
-                        outputPW.flush();
-                        heart.restartOutboundInterval();
-
-                        // if we get here without an exception then the socket is ok
-                        if (reconInProg) {
-                            String status = "Connected to WiThrottle Server at " + host_ip + ":" + port;
-                            sendMsg(comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
-                            Log.d("Engine_Driver", "t_a: WiT reconnection successful.");
-                            clearInboundTimeout();
-                            heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
-                        }
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "t_a: WiT xmtr error.");
-                        socketGood = false;             //output buffer error so force reconnection on next send
-                    }
-                }
-
-                if (!socketGood) {
-                    comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 500L);   //try connection again in 0.5 second
-                }
-            }
-
-            // Attempt to determine if the socket connection is still good.
-            // unfortunatley isConnected returns true if the Socket was disconnected other than by calling close() 
-            // so on signal loss it still returns true.  
-            // Eventually we just try to send and handle the IOException if the socket was disconnected.
-            boolean SocketCheck() {
-                boolean status = clientSocket.isConnected() && !clientSocket.isInputShutdown() && !clientSocket.isOutputShutdown();
-                if (status)
-                    status = HaveNetworkConnection();   // can't trust the socket flags so try something else...
-                return status;
-            }
-
-            // temporary - SocketCheck should determine whether socket connection is good however socket flags sometimes do not get updated
-            // so it doesn't work.  This is better than nothing though?
-            private boolean HaveNetworkConnection() {
-                boolean haveConnectedWifi = false;
-                boolean haveConnectedMobile = false;
-                prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
-
-                final ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-                for (NetworkInfo ni : netInfo) {
-                    if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
-
-                        if (!prefAllowMobileData) {
-                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                            if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                                    && (!haveForcedWiFiConnection)) {
-
-                                Log.d("Engine_Driver", "t_a: NetworkRequest.Builder");
-                                NetworkRequest.Builder request = new NetworkRequest.Builder();
-                                request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
-
-                                cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
-                                    @Override
-                                    public void onAvailable(Network network) {
-                                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                                            ConnectivityManager.setProcessDefaultNetwork(network);
-                                        } else {
-                                            cm.bindProcessToNetwork(network);  //API23+
-                                        }
-                                    }
-                                });
-                                haveForcedWiFiConnection = true;
-                            }
-                        }
-
-                    if (ni.isConnected()) {
-                        haveConnectedWifi = true;
-                    } else {
-                        // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                        if (prefAllowMobileData) {
-                            haveConnectedWifi = true;
-                        }
-                    }
-                    if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
-                        if ((ni.isConnected()) && (prefAllowMobileData)) {
-                            haveConnectedMobile = true;
-                        }
-                }
-                return haveConnectedWifi || haveConnectedMobile;
-            }
-
-            boolean SocketGood() {
-                return this.socketGood;
-            }
-
-            void InboundTimeout() {
-                if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
-                    Log.d("Engine_Driver", "t_a: WiT max inbound timeouts");
-                    inboundTimeout = true;
-                    inboundTimeoutRetryCount = 0;
-                    inboundTimeoutRecovery = false;
-                    // force a send to start the reconnection process
-                    comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
-                } else {
-                    Log.d("Engine_Driver", "t_a: WiT inbound timeout " +
-                            Integer.toString(inboundTimeoutRetryCount) + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
-                    // heartbeat should trigger a WiT reply so force that now
-                    inboundTimeoutRecovery = true;
-                    comm_msg_handler.post(heart.outboundHeartbeatTimer);
-                }
-            }
-
-            void clearInboundTimeout() {
-                inboundTimeout = false;
-                inboundTimeoutRecovery = false;
-                inboundTimeoutRetryCount = 0;
-            }
-        }
-
-        class heartbeat {
-            //  outboundHeartbeat - send a periodic heartbeat to WiT to show that ED is alive.
-            //  inboundHeartbeat - WiT doesn't send a heartbeat to ED, so send a periodic message to WiT that requires a response.
-            //
-            //  If the HeartbeatValueFromServer is 0 then set heartbeatOutboundInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL,
-            //    and set heartbeatInboundInterval = 0, to disable the inbound heartbeat checks
-            //
-            //  Otherwise, set heartbeatOutboundInterval to HeartbeatValueFromServer * HEARTBEAT_RESPONSE_ALLOWANCE,
-            //    and set heartbeatInboundInterval to HeartbeatValueFromServer / HEARTBEAT_RESPONSE_ALLOWANCE
-            //
-            //  Insure both values are between MIN_OUTBOUND_HEARTBEAT_INTERVAL and MAX_OUTBOUND_HEARTBEAT_INTERVAL
-
-            private int heartbeatIntervalSetpoint = 0;      //WiT heartbeat interval in msec
-            private int heartbeatOutboundInterval = 0;      //sends outbound heartbeat message at this rate (msec)
-            private int heartbeatInboundInterval = 0;       //alerts user if there was no inbound traffic for this long (msec)
-
-            public boolean isHeartbeatSent() {
-                return heartbeatSent;
-            }
-
-            public void setHeartbeatSent(boolean heartbeatSent) {
-                this.heartbeatSent = heartbeatSent;
-            }
-
-            private boolean heartbeatSent = false;
-
-            private int getInboundInterval() {
-                return heartbeatInboundInterval;
-            }
-
-            /***
-             * startHeartbeat(timeoutInterval in milliseconds)
-             * calcs the inbound and outbound intervals and starts the beating
-             *
-             * @param timeoutInterval the WiT timeoutInterval in milliseconds
-             */
-            void startHeartbeat(int timeoutInterval) {
-                //update interval timers only when the heartbeat timeout interval changed
-                prefHeartbeatResponseFactor = getIntPrefValue(prefs, "prefHeartbeatResponseFactor", getApplicationContext().getResources().getString(R.string.prefHeartbeatResponseFactorDefaultValue));
-
-                if (timeoutInterval != heartbeatIntervalSetpoint) {
-                    heartbeatIntervalSetpoint = timeoutInterval;
-
-                    // outbound interval (in ms)
-                    int outInterval;
-                    if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
-                        outInterval = DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
-                    } else {
-//                        outInterval = (int) (heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
-                        outInterval = (int) (heartbeatIntervalSetpoint * ( (double) prefHeartbeatResponseFactor) / 100);
-                        //keep values in a reasonable range
-                        if (outInterval < MIN_OUTBOUND_HEARTBEAT_INTERVAL)
-                            outInterval = MIN_OUTBOUND_HEARTBEAT_INTERVAL;
-                        if (outInterval > MAX_OUTBOUND_HEARTBEAT_INTERVAL)
-                            outInterval = MAX_OUTBOUND_HEARTBEAT_INTERVAL;
-                    }
-                    heartbeatOutboundInterval = outInterval;
-
-                    // inbound interval
-                    int inInterval = heartbeatInterval;
-                    if (heartbeatIntervalSetpoint == 0) {    // wit heartbeat is disabled so disable inbound heartbeat
-                        inInterval = 0;
-                    } else {
-                        if (inInterval < MIN_INBOUND_HEARTBEAT_INTERVAL)
-                            inInterval = MIN_INBOUND_HEARTBEAT_INTERVAL;
-                        if (inInterval < outInterval)
-//                            inInterval = (int) (outInterval / HEARTBEAT_RESPONSE_FACTOR);
-                            inInterval = (int) (outInterval / ( ((double) prefHeartbeatResponseFactor) / 100) );
-                        if (inInterval > MAX_INBOUND_HEARTBEAT_INTERVAL)
-                            inInterval = MAX_INBOUND_HEARTBEAT_INTERVAL;
-                    }
-                    heartbeatInboundInterval = inInterval;
-                    //sInboundInterval = Integer.toString(inInterval);    // seconds
-
-                    restartOutboundInterval();
-                    restartInboundInterval();
-                }
-            }
-
-            //restartOutboundInterval()
-            //restarts the outbound interval timing - call this after sending anything to WiT that requires a response
-            void restartOutboundInterval() {
-                comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);                   //remove any pending requests
-                if (heartbeatOutboundInterval > 0) {
-                    comm_msg_handler.postDelayed(outboundHeartbeatTimer, heartbeatOutboundInterval);    //restart interval
-                }
-            }
-
-            //restartInboundInterval()
-            //restarts the inbound interval timing - call this after receiving anything from WiT
-            void restartInboundInterval() {
-                comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
-                if (heartbeatInboundInterval > 0) {
-                    comm_msg_handler.postDelayed(inboundHeartbeatTimer, heartbeatInboundInterval);
-                }
-            }
-
-            void stopHeartbeat() {
-                comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
-                comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
-                heartbeatIntervalSetpoint = 0;
-                Log.d("Engine_Driver", "t_a: heartbeat stopped.");
-            }
-
-            //outboundHeartbeatTimer()
-            //sends a periodic message to WiT
-            private Runnable outboundHeartbeatTimer = new Runnable() {
-                @Override
-                public void run() {
-                    comm_msg_handler.removeCallbacks(this);             //remove pending requests
-                    if (heartbeatIntervalSetpoint != 0) {
-                        boolean anySent = false;
-                        for (int i = 0; i < numThrottles; i++) {
-                            if (consists[i].isActive()) {
-                                witRequestSpeedAndDir(i);
-                                anySent = true;
-                            }
-                        }
-                        // prior to JMRI 4.20 there were cases where WiT might not respond to
-                        // speed and direction request.  If inboundTimeout handling is in progress
-                        // then we always send the Throttle Name to ensure a response
-                        if (!anySent || (getServerType().equals("") && socketWiT.inboundTimeoutRecovery)) {
-                            sendThrottleName(false);    //send message that will get a response
-                        }
-                        comm_msg_handler.postDelayed(this, heartbeatOutboundInterval);   //set next beat
-                    }
-                }
-            };
-
-            //inboundHeartbeatTimer()
-            //display an alert message when there is no inbound traffic from WiT within required interval 
-            private Runnable inboundHeartbeatTimer = new Runnable() {
-                @Override
-                public void run() {
-                    comm_msg_handler.removeCallbacks(this); //remove pending requests
-                    if (heartbeatIntervalSetpoint != 0) {
-                        if (socketWiT != null && socketWiT.SocketGood()) {
-                            socketWiT.InboundTimeout();
-                        }
-                        comm_msg_handler.postDelayed(this, heartbeatInboundInterval);    //set next inbound timeout
-                    }
-                }
-            };
-        }
-
-        class PhoneListener extends PhoneStateListener {
-            private TelephonyManager telMgr;
-
-            PhoneListener() {
-                telMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                this.enable();
-            }
-
-            public void disable() {
-                telMgr.listen(this, PhoneStateListener.LISTEN_NONE);
-            }
-
-            public void enable() {
-                telMgr.listen(this, PhoneStateListener.LISTEN_CALL_STATE);
-            }
-
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-                if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-                    if (prefs.getBoolean("stop_on_phonecall_preference",
-                            getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-                        Log.d("Engine_Driver", "t_a: Phone is OffHook, Stopping Trains");
-                        for (int i = 0; i < numThrottles; i++) {
-                            if (consists[i].isActive()) {
-                                witSetSpeedZero(i);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    }
-
+    public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
+    public int[] lastKnownDirDCCEX = {0,0,0,0,0,0};
 
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
@@ -2138,7 +463,6 @@ public class threaded_application extends Application {
                 mChannel = new NotificationChannel(CHANNEL_ID_QUIET, name, NotificationManager.IMPORTANCE_DEFAULT);
                 mChannel.setSound(null, null);
             }
-
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT);
@@ -2185,7 +509,7 @@ public class threaded_application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Engine_Driver", "threaded_application.onCreate()");
+        Log.d("Engine_Driver", "t_a.onCreate()");
         try {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
@@ -2196,11 +520,11 @@ public class threaded_application extends Application {
 
         context = getApplicationContext();
 
-        commThread = new comm_thread();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        commThread = new comm_thread(mainapp, prefs);
 
         flashlight = Flashlight.newInstance(threaded_application.context);
-
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         lifecycleHandler = new ApplicationLifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycleHandler);
@@ -2508,7 +832,7 @@ public class threaded_application extends Application {
             }
         }
 
-        void get() {
+        public void get() {
             if (dl != null) {
                 dl.cancel = true;   // try to stop any update that is in progress on old download thread
             }
@@ -2516,7 +840,7 @@ public class threaded_application extends Application {
             dl.start();             // start an update
         }
 
-        void stop() {
+        public void stop() {
             if (dl != null) {
                 dl.cancel = true;
             }
@@ -2567,6 +891,31 @@ public class threaded_application extends Application {
         return null;
     }
 
+    public int getWhichThrottleFromAddress(String addr_str) {
+//        if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
+//            addr_str = cvtToAddrP(addr_str);
+//        }
+        // assumes "S123" "L333" type address, not "123(S)"
+        Consist con = null;
+        int whichThrottle = -1;
+        boolean found = false;
+        if (consists.length>0) {
+            for (int i=0; i<consists.length; i++) {
+                con = mainapp.consists[i];
+                for (Consist.ConLoco l : con.getLocos()) {
+                    if (l.getAddress().equals(addr_str)) {
+                        found = true;
+                        whichThrottle = i;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+        }
+        return whichThrottle;
+    }
+
+
     //convert a string of form L123 to 123(L)
     public String cvtToAddrP(String addr_str) {
         return addr_str.substring(1) + "(" + addr_str.substring(0, 1) + ")";
@@ -2605,7 +954,7 @@ public class threaded_application extends Application {
     }
 
     //reinitialize statics in activities as required to be ready for next launch
-    private static void reinitStatics() {
+    public static void reinitStatics() {
         throttle.initStatics();
         throttle_full.initStatics();
         throttle_simple.initStatics();
@@ -2613,7 +962,7 @@ public class threaded_application extends Application {
     }
 
     //initialize shared variables
-    private void initShared() {
+    public void initShared() {
         withrottle_version = 0.0;
         web_server_port = 0;
         host_ip = null;
@@ -2630,6 +979,18 @@ public class threaded_application extends Application {
         rt_user_names = null;
         rt_state_names = null;
 
+        prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
+         mainapp.isDCCEX = prefDCCEX;
+//        knownDCCEXserverIps = new HashMap<>();
+
+        DCCEXversion = "";
+        DCCEXlistsRequested = -1;
+        DCCEXscreenIsOpen = false;
+
+        rosterStringDCCEX = "";
+        turnoutStringDCCEX = "";
+        routeStringDCCEX = "";
+
         try {
             consists = new Consist[maxThrottles];
             function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
@@ -2639,6 +1000,9 @@ public class threaded_application extends Application {
                 consists[i] = new Consist();
                 function_labels[i] = new LinkedHashMap<Integer, String>();
                 function_states[i] = new boolean[32];        // also allocated in onCreate() ???
+
+                lastKnownSpeedDCCEX[i] = 0;
+                lastKnownDirDCCEX[i] = 0;
             }
 
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
@@ -2827,6 +1191,15 @@ public class threaded_application extends Application {
         }
     }
 
+    public void setDCCEXMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.dcc_ex_mnu);
+            if (item != null) {
+                item.setVisible(isDCCEX);
+            }
+        }
+    }
+
     /**
      * for menu passed in, hide or show the routes menu
      *
@@ -2864,6 +1237,7 @@ public class threaded_application extends Application {
         } else {
             menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
+            mainapp.setDCCEXMenuOption(menu);
             setWebMenuOption(menu);
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);
@@ -2978,7 +1352,7 @@ public class threaded_application extends Application {
     }
 
     // forward a message to all running activities 
-    void alert_activities(int msgType, String msgBody) {
+    public void alert_activities(int msgType, String msgBody) {
         try {
             sendMsg(connection_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
@@ -3009,6 +1383,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(power_control_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(dcc_ex_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {
@@ -3575,7 +1953,7 @@ public class threaded_application extends Application {
     }
 
     public static void safeToast(final String msg_txt, final int length) {
-        Log.d("Engine_Driver", "threaded_application.show_toast_message: " + msg_txt);
+        Log.d("Engine_Driver", "t_a.show_toast_message: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
@@ -3756,7 +2134,7 @@ public class threaded_application extends Application {
 
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
     // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
-    private void saveSharedPreferencesToFileIfAllowed() {
+    public void saveSharedPreferencesToFileIfAllowed() {
 //        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
 //            saveSharedPreferencesToFileImpl();
 ////        }
@@ -3805,7 +2183,7 @@ public class threaded_application extends Application {
     }
 
     /* add passed-in loco to Recent Locos list and store it */
-    private void addLocoToRecents(ConLoco conLoco) {
+    public void addLocoToRecents(ConLoco conLoco) {
         // if we don't have external storage mounted, or permission to write it, just ignore, no prompt
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
@@ -3848,7 +2226,7 @@ public class threaded_application extends Application {
     }
 
     @SuppressLint("ApplySharedPref")
-    private void updateConnectionList(String retrievedServerName) {
+    public void updateConnectionList(String retrievedServerName) {
         // if I don't have permissions, don't ask, just ignore
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
@@ -4310,6 +2688,26 @@ public class threaded_application extends Application {
             gamePadLastyAxis[i] = 0;
             gamePadLastxAxis2[i] = 0;
             gamePadLastyAxis2[i] = 0;
+        }
+    }
+
+    // Function to extract k bits from p position and returns the extracted value as integer
+    // from: https://www.geeksforgeeks.org/extract-k-bits-given-position-number/
+    public int bitExtracted(int number, int k, int p)
+    {
+        return (((1 << k) - 1) & (number >> (p - 1)));
+    }
+
+    // for DCC-EX we need to temp store the list of locos so we can remove them individually
+    public void storeThrottleLocosForReleaseDCCEX(int whichThrottle) {
+        if (isDCCEX) {
+            Consist con = mainapp.consists[whichThrottle];
+            throttleLocoReleaseListDCCEX[whichThrottle] = new String [con.size()];
+            int i=0;
+            for (Consist.ConLoco l : con.getLocos()) {
+                throttleLocoReleaseListDCCEX[whichThrottle][i] = l.getAddress();
+                i++;
+            }
         }
     }
 }

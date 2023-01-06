@@ -238,8 +238,8 @@
                         android:id="@+id/dss_DeviceSoundsBellIsMomentary_label"
                         style="?attr/floating_text_style"
                         android:layout_width="0dp"
-                        android:layout_weight=".7"
                         android:layout_height="wrap_content"
+                        android:layout_weight=".7"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsBellIsMomentarySummary" />
 

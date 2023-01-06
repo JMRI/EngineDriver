@@ -40,6 +40,7 @@
     <string name="app_name_throttle_long">Engine Driver - Throttle</string>
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
+    <string name="app_name_dcc_ex">DCC-EX</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
@@ -1230,6 +1231,14 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
+    <string name="prefDCCEXTitle">Use native DCC-EX commands</string>
+    <string name="prefDCCEXSummary">Use the native DCC-EX &lt;&gt; commands instead of wiThrottle for all connections</string>
+    <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the wiThrottle protocol.</string>
+
+    <string name="prefDCCEXconnectionOptionTitle">Show protocol option</string>
+    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen</string>
+    <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
+
     <string name="prefHapticFeedbackTitle">Haptic Feedback (Vibration)</string>
     <string name="prefHapticFeedbackSummary">Haptic feedback (vibrate) on speed changes</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
@@ -1256,5 +1265,17 @@
 
     <string name="directionIndicatorForward" translatable="false">"▲ "</string>  <!-- DO NOT TRANSLATE -->
     <string name="directionIndicatorReverse" translatable="false">"▼ "</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="DCCEXInstructions" >"This works on the programming track only!"</string>
+    <string name="DCCEXwriteAddressLabel" >"DCC Address"</string>
+    <string name="DCCEXwriteCvLabel" >"CV"</string>
+    <string name="DCCEXwriteCvValueLabel" >"Value"</string>
+    <string name="DCCEXwriteAddressButtonLabel" >"Write"</string>
+    <string name="DCCEXreadAddressButtonLabel" >"Read"</string>
+    <string name="DCCEXsendCommandButtonLabel" >"Send"</string>
+    <string name="DCCEXsendCommandLabel" >"DCC-EX Command\n(exclude \'&lt;\' &amp; \'&gt;\')"</string>
+
+    <string name="DCCEXSucceeded" >"Succeeded"</string>
+    <string name="DCCEXFailed" >"Failed"</string>
 
 </resources>

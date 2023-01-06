@@ -64,6 +64,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,6 +126,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     int rootViewHeight = 0;
 
     boolean prefAllowMobileData = false;
+    boolean prefDCCEXconnectionOption = false;
+    Spinner DCCEXconnectionOptionSpinner;
 
     private Toolbar toolbar;
 
@@ -563,6 +566,11 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
         });
 
+
+        DCCEXconnectionOptionSpinner = findViewById(R.id.cons_DCCEXconnectionOption);
+        DCCEXconnectionOptionSpinner.setOnItemSelectedListener(new DCCEXconnectionOption_listener());
+        setConnectionProtocolOption();
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -610,6 +618,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (prefs.getBoolean("connect_to_first_server_preference", false)) {
             connectA();
         }
+        setConnectionProtocolOption();
+
         if (CMenu != null) {
             mainapp.displayFlashlightMenuButton(CMenu);
             mainapp.setFlashlightButton(CMenu);
@@ -1117,6 +1127,43 @@ public class connection_activity extends AppCompatActivity implements Permission
         } finally {
             is.close();
             os.close();
+        }
+    }
+
+    public class DCCEXconnectionOption_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.cons_DCCEXconnectionOption);
+            int spinnerPosition = spinner.getSelectedItemPosition();
+            mainapp.prefDCCEX = spinnerPosition == 0;
+            prefs.edit().putBoolean("prefDCCEX", mainapp.prefDCCEX).commit();  //set the preference
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    private void setConnectionProtocolOption() {
+        prefDCCEXconnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDCCEXconnectionOptionDefaultValue));
+
+        if (mainapp.prefDCCEX) {
+            DCCEXconnectionOptionSpinner.setSelection(0);
+        } else {
+            DCCEXconnectionOptionSpinner.setSelection(1);
+        }
+
+        TextView DCCEXheading =  findViewById(R.id.cons_DCCEXconnectionOption_heading);
+        LinearLayout DCCEXlayout =  findViewById(R.id.cons_DCCEXconnectionOption_layout);
+        if (prefDCCEXconnectionOption) {
+            DCCEXheading.setVisibility(View.VISIBLE);
+            DCCEXlayout.setVisibility(View.VISIBLE);
+        } else {
+            DCCEXheading.setVisibility(View.GONE);
+            DCCEXlayout.setVisibility(View.GONE);
         }
     }
 }

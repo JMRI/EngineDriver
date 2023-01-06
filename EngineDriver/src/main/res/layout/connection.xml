@@ -109,6 +109,46 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/cons_DCCEXconnectionOption_heading"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/DCCEXconnectionOptionTitle"
+        android:visibility="gone"  />
+
+    <LinearLayout
+        android:id="@+id/cons_DCCEXconnectionOption_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:background="#00000000"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/cons_DCCEXconnectionOption_Label"
+            style="?attr/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:padding="8sp"
+            android:text="@string/prefDCCEXSummary" />
+
+        <Spinner
+            android:id="@+id/cons_DCCEXconnectionOption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:ellipsize="none"
+            android:entries="@array/prefYesNoEntryValues"
+            android:entryValues="@array/prefYesNoEntryValues"
+            android:padding="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/ca_footer"
         style="?attr/floating_text_style"
         android:layout_width="wrap_content"

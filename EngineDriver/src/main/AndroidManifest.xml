@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmri.enginedriver"
     android:versionCode="156"
-    android:versionName="2.34.156" android:installLocation="auto">
+    android:versionName="2.34.156i" android:installLocation="auto">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
@@ -223,5 +223,11 @@
             android:launchMode="singleTop"
             android:theme="@style/app_theme_black" >
         </activity>
-    </application>
+        <activity
+            android:name=".dcc_ex"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:label="@string/app_name_dcc_ex"
+            android:theme="@style/app_theme_black" >
+        </activity>    </application>
 </manifest>

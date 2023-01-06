@@ -51,10 +51,10 @@ public interface message_type {
     int TIME_CHANGED = 28;      // ta -> activities  updates current time
     int CLOCK_DISPLAY_CHANGED = 29;     // pref -> ta  clock display preference changed
     int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
-    int WITHROTTLE_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
+    int WIFI_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
     int REQ_STEAL = 32;         // ta(message_action) pass addr, throttle -> throttle
     int STEAL = 33;             // ta(checkSteal) pass addr, throttle -> ta send commands to steal
-    int WITHROTTLE_SEND = 34;    // ta, pass complete message, used for delayed sends
+    int WIFI_SEND = 34;         // ta, pass complete message, used for delayed sends
     int SEND_HEARTBEAT_START = 35;    // ta, pass complete message, used for delayed sends
     int FORCE_FUNCTION = 36;     // ed(buttons) -> ta function, on = 0 off =1(sends Tfxy to WiT)
     int TOAST_MESSAGE = 37;      //web_activity -> ta pass message text
@@ -67,12 +67,23 @@ public interface message_type {
     int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
     int WIT_TURNOUT_NOT_DEFINED = 45;    //
     int RESTART_APP = 46;   //
-    int WIT_QUERY_SPEED_AND_DIRECTION = 47;   //
-    int HTTP_SERVER_NAME_RECEIVED = 49;   //
-    int CONNECTION_COMPLETED_CHECK = 50;   //
-    int RELAUNCH_APP = 51;   //
-    int SOUNDS_FORCE_LOCO_SOUNDS_TO_START = 52;   //
-    int GAMEPAD_ACTION = 53;   //
-    int GAMEPAD_JOYSTICK_ACTION = 54;   //
-    int VOLUME_BUTTON_ACTION = 55;   //
+    int WIT_QUERY_SPEED_AND_DIRECTION = 47;
+    int HTTP_SERVER_NAME_RECEIVED = 49;
+    int CONNECTION_COMPLETED_CHECK = 50;
+    int RELAUNCH_APP = 51;
+    int SOUNDS_FORCE_LOCO_SOUNDS_TO_START = 52;
+    int GAMEPAD_ACTION = 53;
+    int GAMEPAD_JOYSTICK_ACTION = 54;
+    int VOLUME_BUTTON_ACTION = 55;
+    int REFRESH_FUNCTIONS = 56;
+    int REQUEST_DECODER_ADDRESS = 57;
+    int RECEIVED_DECODER_ADDRESS = 58;
+    int WRITE_DECODER_ADDRESS = 59;
+    int WRITE_DECODER_SUCCESS = 60;
+    int WRITE_DECODER_FAIL = 61;
+    int WRITE_CV = 62;
+    int REQUEST_CV = 63;
+    int RECEIVED_CV = 64;
+    int DCCEX_RESPONSE = 65;
+    int DCCEX_SEND_COMMAND = 66;
 }
