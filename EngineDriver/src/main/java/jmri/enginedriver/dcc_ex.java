@@ -97,7 +97,7 @@ public class dcc_ex extends AppCompatActivity {
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SS");
                     String currentTime = sdf.format(new Date());
                     DCCEXresponsesStr =  currentTime + " : " + msg.obj.toString() + "\n" + DCCEXresponsesStr;
-                    if (DCCEXresponsesStr.length()>2048) DCCEXresponsesStr.substring(0,2048);
+                    if (DCCEXresponsesStr.length()>2048) DCCEXresponsesStr = DCCEXresponsesStr.substring(0,4086);
                     DCCEXresponsesLabel.setText(DCCEXresponsesStr);
                     break;
                 case message_type.WRITE_DECODER_SUCCESS:
@@ -199,6 +199,7 @@ public class dcc_ex extends AppCompatActivity {
 
     public class send_command_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            DCCEXinfoStr = "";
             String cmdStr = etDCCEXsendCommandValue.getText().toString();
             if ((cmdStr.length()>0) && (cmdStr.charAt(0)!='<')) {
                 mainapp.buttonVibration();
@@ -308,7 +309,7 @@ public class dcc_ex extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             mainapp.setToolbarTitle(toolbar,
                     getApplicationContext().getResources().getString(R.string.app_name),
-                    getApplicationContext().getResources().getString(R.string.app_name_power_control),
+                    getApplicationContext().getResources().getString(R.string.app_name_dcc_ex),
                     "");
         }
 

@@ -1,3 +1,21 @@
+/*Copyright (C) 2018 M. Steve Todd
+  mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver.util;
 
 import android.annotation.SuppressLint;
@@ -219,12 +237,12 @@ public class comm_handler extends Handler {
 //                            delays++;
             }
 //                        sendAcquireLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
-            commThread.sendAcquireLoco(addr, whichThrottle, 0);
+            comm_thread.sendAcquireLoco(addr, whichThrottle, 0);
             break;
          }
 
          case message_type.REQUEST_DECODER_ADDRESS: { // DCC-EX only
-            commThread.sendAcquireLoco("*", -1, 0);
+            comm_thread.sendAcquireLoco("*", -1, 0);
             break;
          }
          case message_type.RECEIVED_DECODER_ADDRESS: {
@@ -235,18 +253,18 @@ public class comm_handler extends Handler {
          }
 
          case message_type.DCCEX_SEND_COMMAND: { // DCC-EX only
-            commThread.sendDCCEXcommand(msg.obj.toString());
+            comm_thread.sendDCCEXcommand(msg.obj.toString());
             break;
          }
 
          case message_type.REQUEST_CV: { // DCC-EX only
-            commThread.sendReadCv(msg.arg1);
+            comm_thread.sendReadCv(msg.arg1);
             break;
          }
 
          case message_type.WRITE_CV: { // DCC-EX only
             int cvValue = Integer.decode(msg.obj.toString());
-            commThread.sendWriteCv(cvValue, msg.arg1);
+            comm_thread.sendWriteCv(cvValue, msg.arg1);
             break;
          }
 
@@ -258,7 +276,7 @@ public class comm_handler extends Handler {
          }
 
          case message_type.WRITE_DECODER_ADDRESS: { // DCC-EX only
-            commThread.sendWriteDecoderAddress(msg.arg1);
+            comm_thread.sendWriteDecoderAddress(msg.arg1);
             break;
          }
 
@@ -287,6 +305,7 @@ public class comm_handler extends Handler {
             comm_thread.sendSpeed(whichThrottle, speed);
             break;
          }
+
          //Change direction. address is in msg, whichThrottle is in arg 1 and arg2 holds the direction to change to.
          //  message sent is formatted M1AS96<;>R0  was(1R0<;>S96)
          case message_type.DIRECTION: {

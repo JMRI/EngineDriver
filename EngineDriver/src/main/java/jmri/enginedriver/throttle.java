@@ -2230,19 +2230,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // if skipLead is true, the direction is not set for the lead engine
     void setEngineDirection(int whichThrottle, int direction, boolean skipLead) {
         Consist con;
-        con = mainapp.consists[whichThrottle];
-        dirs[whichThrottle] = direction;
+        if ( (mainapp.consists!=null) && (dirs!=null) ) {
+            con = mainapp.consists[whichThrottle];
+            dirs[whichThrottle] = direction;
 
-        String leadAddr = con.getLeadAddr();
-        for (String addr : con.getList()) { // loop through each engine in consist
-            if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
-                int locoDir = direction;
-                try {
-                    if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
-                        locoDir ^= 1; // then reverse the commanded direction
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
-                } catch (Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
-                    Log.d("Engine_Driver", "throttle " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
+            String leadAddr = con.getLeadAddr();
+            for (String addr : con.getList()) { // loop through each engine in consist
+                if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
+                    int locoDir = direction;
+                    try {
+                        if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
+                            locoDir ^= 1; // then reverse the commanded direction
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
+                    } catch (Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
+                        Log.d("Engine_Driver", "throttle " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
+                    }
                 }
             }
         }

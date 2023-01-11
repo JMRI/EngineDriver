@@ -1,3 +1,21 @@
+/*Copyright (C) 2018 M. Steve Todd
+  mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver.util;
 
 import android.annotation.SuppressLint;
@@ -763,7 +781,7 @@ public class comm_thread extends Thread {
     /* ******************************************************************************************** */
     /* ******************************************************************************************** */
 
-    private static void processWifiResponse(String responseStr) {
+    protected static void processWifiResponse(String responseStr) {
             /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
           VN<Version#>
           RL<RosterSize>]<RosterList>
@@ -1406,7 +1424,7 @@ public class comm_thread extends Thread {
 
     //parse roster functions list into appropriate app variable array
     //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
-    private static void processRosterFunctionString(String responseStr, int whichThrottle) {
+    static void processRosterFunctionString(String responseStr, int whichThrottle) {
 
         Log.d("Engine_Driver", "comm_thread.processRosterFunctionString: processing function labels for " + mainapp.throttleIntToString(whichThrottle));
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //split into list of labels
@@ -1428,7 +1446,7 @@ public class comm_thread extends Thread {
 
     //parse roster list into appropriate app variable array
     //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
-    private static void processRosterList(String responseStr) {
+    static void processRosterList(String responseStr) {
         //clear the global variable
         mainapp.roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         //todo   RDB why don't we just clear the existing map with roster_entries.clear() instead of disposing and creating a new instance?
@@ -1452,7 +1470,7 @@ public class comm_thread extends Thread {
 
     //parse consist list into appropriate mainapp hashmap
     //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
-    private static void processConsistList(String responseStr) {
+    static void processConsistList(String responseStr) {
         String consist_addr = null;
         StringBuilder consist_desc = new StringBuilder();
         String consist_name = "";
@@ -1483,11 +1501,11 @@ public class comm_thread extends Thread {
     }
 
     //clear out any stored consists
-    private static void clearConsistList() {
+    static void clearConsistList() {
         if (mainapp.consist_entries!=null) mainapp.consist_entries.clear();
     }
 
-    private static int findTurnoutPos(String systemName) {
+    static int findTurnoutPos(String systemName) {
         int pos = -1;
         for (String sn : mainapp.to_system_names) { //TODO: rewrite for better lookup
             pos++;
@@ -1501,7 +1519,7 @@ public class comm_thread extends Thread {
     //parse turnout change to update mainapp array entry
     //  PTA<NewState><SystemName>
     //  PTA2LT12
-    private static void processTurnoutChange(String responseStr) {
+    static void processTurnoutChange(String responseStr) {
         if (mainapp.to_system_names == null) return;  //ignore if turnouts not defined
         String newState = responseStr.substring(3, 4);
         String systemName = responseStr.substring(4);
@@ -1521,7 +1539,7 @@ public class comm_thread extends Thread {
     //parse turnout list into appropriate app variable array
     //  PTL[<SystemName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
     //  PTL]\[LT12}|{my12}|{1
-    private static void processTurnoutList(String responseStr) {
+    static void processTurnoutList(String responseStr) {
 
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //initial separation
         //initialize app arrays (skipping first)
@@ -1543,7 +1561,7 @@ public class comm_thread extends Thread {
 
     }
 
-    private static void processTurnoutTitles(String responseStr) {
+    static void processTurnoutTitles(String responseStr) {
         //PTT]\[Turnouts}|{Turnout]\[Closed}|{2]\[Thrown}|{4
 
         //clear the global variable
@@ -1565,7 +1583,7 @@ public class comm_thread extends Thread {
     //parse route list into appropriate app variable array
     //  PRA<NewState><SystemName>
     //  PRA2LT12
-    private static void processRouteChange(String responseStr) {
+    static void processRouteChange(String responseStr) {
         String newState = responseStr.substring(3, 4);
         String systemName = responseStr.substring(4);
         int pos = -1;
@@ -1583,7 +1601,7 @@ public class comm_thread extends Thread {
     //parse route list into appropriate app variable array
     //  PRL[<SystemName><UserName><State>]repeat where state 1=Unknown,2=Active,4=Inactive,8=Inconsistent
     //  PRL]\[LT12}|{my12}|{1
-    private static void processRouteList(String responseStr) {
+    static void processRouteList(String responseStr) {
 
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //initial separation
         //initialize app arrays (skipping first)
@@ -1603,7 +1621,7 @@ public class comm_thread extends Thread {
 
     }
 
-    private static void processRouteTitles(String responseStr) {
+    static void processRouteTitles(String responseStr) {
         //PRT
 
         //clear the global variable
@@ -1622,7 +1640,7 @@ public class comm_thread extends Thread {
     }
 
     //parse function state string into appropriate app variable array
-    private static void processFunctionState(int whichThrottle, Integer fn, boolean fState) {
+    static void processFunctionState(int whichThrottle, Integer fn, boolean fState) {
 
         boolean skip = (fn > 2) && (mainapp.prefAlwaysUseDefaultFunctionLabels)
                 && ((mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
@@ -2028,7 +2046,7 @@ public class comm_thread extends Thread {
 
         private boolean heartbeatSent = false;
 
-        private int getInboundInterval() {
+        int getInboundInterval() {
             return heartbeatInboundInterval;
         }
 

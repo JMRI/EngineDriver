@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -34,7 +35,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
-                android:layout_marginBottom="8sp"
                 android:background="#00000000"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -45,6 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:padding="4sp"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end"
                     android:text="@string/DCCEXwriteAddressLabel" />
 
                 <EditText
@@ -63,7 +65,8 @@
                     android:shadowDy="1"
                     android:shadowRadius="0.3"
                     android:singleLine="true"
-                    android:text="" />
+                    android:text=""
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXreadAddressButton"
@@ -97,8 +100,10 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".2"
+                    android:layout_weight=".15"
                     android:padding="4sp"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end"
                     android:text="@string/DCCEXwriteCvLabel" />
 
                 <EditText
@@ -108,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8sp"
                     android:layout_marginRight="8sp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".2"
                     android:inputType="number"
                     android:maxLength="4"
                     android:shadowColor="#FFFFFFFF"
@@ -122,8 +127,10 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".2"
+                    android:layout_weight=".15"
                     android:padding="4sp"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end"
                     android:text="@string/DCCEXwriteCvValueLabel" />
 
                 <EditText
@@ -133,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8sp"
                     android:layout_marginRight="8sp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".2"
                     android:inputType="number"
                     android:maxLength="4"
                     android:paddingRight="8sp"
@@ -142,7 +149,8 @@
                     android:shadowDy="1"
                     android:shadowRadius="0.3"
                     android:singleLine="true"
-                    android:text="" />
+                    android:text=""
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXreadCvButton"
@@ -194,7 +202,10 @@
                     android:shadowDy="1"
                     android:shadowRadius="0.3"
                     android:singleLine="true"
-                    android:text="" />
+                    android:text=""
+                    android:inputType="text"
+                    android:maxLength="30"
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXsendCommandButton"
@@ -214,8 +225,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4sp"
                 android:layout_marginBottom="4sp"
+                android:layout_gravity="end"
                 android:padding="4sp"
                 android:text="" />
+
+            <LinearLayout
+                android:id="@+id/separator"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#888888"
+                android:orientation="vertical" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -248,7 +267,8 @@
                 android:id="@+id/dcc_ex_button_close"
                 style="?attr/ed_normal_button_style"
                 android:layout_gravity="left"
-                android:text="@string/logviewerClose" />
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
 
         </TableLayout>
 
