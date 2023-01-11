@@ -1768,6 +1768,19 @@
             android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
             android:title="@string/prefFeedbackWhenGoingToBackgroundTitle"
             android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDCCEXDefaultValue"
+            android:key="prefDCCEX"
+            android:summary="@string/prefDCCEXSummary"
+            android:title="@string/prefDCCEXTitle"
+            android:layout="@layout/checkbox_no_icon" />
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDCCEXconnectionOptionDefaultValue"
+            android:key="prefDCCEXconnectionOption"
+            android:summary="@string/prefDCCEXconnectionOptionSummary"
+            android:title="@string/prefDCCEXconnectionOptionTitle"
+            android:layout="@layout/checkbox_no_icon" />
     </PreferenceCategory>
 
     <PreferenceCategory

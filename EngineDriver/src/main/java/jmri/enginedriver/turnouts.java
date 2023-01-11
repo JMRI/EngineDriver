@@ -856,6 +856,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
         mainapp.setPowerMenuOption(menu);
+        mainapp.setDCCEXMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
@@ -901,6 +902,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 return true;
             case R.id.about_mnu:
                 in = new Intent().setClass(this, about_page.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
+            case R.id.dcc_ex_mnu:
+                in = new Intent().setClass(this, dcc_ex.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
