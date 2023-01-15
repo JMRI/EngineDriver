@@ -771,6 +771,14 @@ public class comm_thread extends Thread {
     }
 
     @SuppressLint("DefaultLocale")
+    public static void sendWritePomCv(int cv, int cvValue, int addr) {
+        if (mainapp.isDCCEX) { // DCC-EX only
+            String msgTxt = String.format("<w %d %d %d>", addr, cv, cvValue);
+            wifiSend(msgTxt);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
     public static void sendDCCEXcommand(String cmdStr) {
         if (mainapp.isDCCEX) { // DCC-EX only
             wifiSend(cmdStr);

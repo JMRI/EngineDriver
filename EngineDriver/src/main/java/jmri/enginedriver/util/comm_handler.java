@@ -268,6 +268,13 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.WRITE_POM_CV: { // DCC-EX only
+            int addr = msg.arg1;
+            String [] args = msg.obj.toString().split(" ");  // [0]=cv [1]=cv value
+            comm_thread.sendWritePomCv(Integer.decode(args[0]), Integer.decode(args [1]), addr);
+            break;
+         }
+
          case message_type.RECEIVED_CV: {
             if (!mainapp.doFinish) {
                mainapp.alert_activities(message_type.RECEIVED_CV, msg.obj.toString());

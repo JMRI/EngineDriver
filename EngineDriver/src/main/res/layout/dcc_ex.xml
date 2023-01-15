@@ -23,13 +23,43 @@
             android:layout_weight=".9"
             android:orientation="vertical">
 
-            <TextView
-                style="?attr/floating_text_style"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="1sp"
-                android:text="@string/DCCEXInstructions"
-                android:textSize="12sp" />
+                android:layout_marginTop="0sp"
+                android:background="#00000000"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="1sp"
+                    android:layout_weight=".3"
+                    android:text="@string/DCCEXprogrammingTypeLabel"
+                    android:textSize="12sp" />
+
+                <Spinner
+                    android:id="@+id/dexc_programming_type_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:text=""
+                    android:layout_weight=".7"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8sp"
+                android:background="#888888"
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -44,10 +74,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
-                    android:padding="4sp"
-                    android:textAlignment="viewEnd"
                     android:gravity="end"
-                    android:text="@string/DCCEXwriteAddressLabel" />
+                    android:padding="4sp"
+                    android:text="@string/DCCEXwriteAddressLabel"
+                    android:textAlignment="viewEnd" />
 
                 <EditText
                     android:id="@+id/dexc_DCCEXwriteAddressValue"
@@ -101,10 +131,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".15"
-                    android:padding="4sp"
-                    android:textAlignment="viewEnd"
                     android:gravity="end"
-                    android:text="@string/DCCEXwriteCvLabel" />
+                    android:padding="4sp"
+                    android:text="@string/DCCEXwriteCvLabel"
+                    android:textAlignment="viewEnd" />
 
                 <EditText
                     android:id="@+id/dexc_DCCEXcv"
@@ -128,10 +158,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".15"
-                    android:padding="4sp"
-                    android:textAlignment="viewEnd"
                     android:gravity="end"
-                    android:text="@string/DCCEXwriteCvValueLabel" />
+                    android:padding="4sp"
+                    android:text="@string/DCCEXwriteCvValueLabel"
+                    android:textAlignment="viewEnd" />
 
                 <EditText
                     android:id="@+id/dexc_DCCEXcvValue"
@@ -196,6 +226,8 @@
                     android:layout_marginEnd="8sp"
                     android:layout_marginRight="8sp"
                     android:layout_weight=".45"
+                    android:inputType="text"
+                    android:maxLength="30"
                     android:paddingRight="8sp"
                     android:shadowColor="#FFFFFFFF"
                     android:shadowDx="1"
@@ -203,8 +235,6 @@
                     android:shadowRadius="0.3"
                     android:singleLine="true"
                     android:text=""
-                    android:inputType="text"
-                    android:maxLength="30"
                     tools:ignore="RtlHardcoded" />
 
                 <Button
@@ -218,19 +248,57 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/dexc_DCCEXwriteInfoLabel"
-                style="?attr/floating_text_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4sp"
-                android:layout_marginBottom="4sp"
-                android:layout_gravity="end"
-                android:padding="4sp"
-                android:text="" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8sp"
+                android:background="#888888"
+                android:orientation="vertical" />
 
             <LinearLayout
-                android:id="@+id/separator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:background="#00000000"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".7"
+                    android:padding="4sp"
+                    android:text="@string/DCCEXcommonCvsLabel"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/dexc_DCCEXwriteInfoLabel"
+                    style="?attr/floating_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="4sp"
+                    android:layout_marginBottom="4sp"
+                    android:layout_weight=".3"
+                    android:padding="4sp"
+                    android:text=""
+                    android:textColor="?android:attr/textColorSecondary" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/dexc_dcc_cv_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="none"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text=""
+                tools:ignore="RtlHardcoded" />
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:background="#888888"

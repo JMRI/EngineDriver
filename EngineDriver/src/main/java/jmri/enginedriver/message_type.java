@@ -86,4 +86,5 @@ public interface message_type {
     int RECEIVED_CV = 64;
     int DCCEX_RESPONSE = 65;
     int DCCEX_SEND_COMMAND = 66;
+    int WRITE_POM_CV = 67;
 }
