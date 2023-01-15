@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -67,6 +68,8 @@ public class dcc_ex extends AppCompatActivity {
 
     private TextView DCCEXresponsesLabel;
     private String DCCEXresponsesStr = "";
+
+    ArrayList<String> DCCEXresponsesListHtml = new ArrayList<>();
 
     private int dccCvsIndex = 0;
     String[] dccCvsEntryValuesArray;
@@ -118,9 +121,19 @@ public class dcc_ex extends AppCompatActivity {
                 case message_type.DCCEX_RESPONSE:  // informational response
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SS");
                     String currentTime = sdf.format(new Date());
-                    DCCEXresponsesStr =  currentTime + " : " + msg.obj.toString() + "\n" + DCCEXresponsesStr;
-                    if (DCCEXresponsesStr.length()>2048) DCCEXresponsesStr = DCCEXresponsesStr.substring(0,4086);
-                    DCCEXresponsesLabel.setText(DCCEXresponsesStr);
+
+                    DCCEXresponsesListHtml.add("<small><small>" + currentTime + " : </small></small>" + Html.escapeHtml(msg.obj.toString())  + "<br />");
+                    if (DCCEXresponsesListHtml.size()>20) {
+                        DCCEXresponsesListHtml.remove(0);
+                    }
+
+                    DCCEXresponsesStr ="<p>";
+                    for (int i=0; i<DCCEXresponsesListHtml.size(); i++) {
+                        DCCEXresponsesStr = DCCEXresponsesListHtml.get(i) + DCCEXresponsesStr;
+                    }
+                    DCCEXresponsesStr = DCCEXresponsesStr + "</p>";
+                    refresh_dcc_ex_view();
+
                     break;
                 case message_type.WRITE_DECODER_SUCCESS:
                     DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXSucceeded);
@@ -252,8 +265,6 @@ public class dcc_ex extends AppCompatActivity {
         }
     }
 
-
-
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
@@ -280,9 +291,7 @@ public class dcc_ex extends AppCompatActivity {
             readCvButton.setVisibility(View.GONE);
         }
 
-        DCCEXresponsesLabel.setText(DCCEXresponsesStr);
-
-
+        DCCEXresponsesLabel.setText(Html.fromHtml(DCCEXresponsesStr));
 
         mainapp.hideSoftKeyboard(this.getCurrentFocus());
 

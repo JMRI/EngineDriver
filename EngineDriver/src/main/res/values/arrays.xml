@@ -1176,8 +1176,8 @@
         <item>EMF Feedback Cutout</item>
         <item>Packet Time-Out Value</item>
         <item>Power Source Conversion</item>
-        <item>Alternate Mode Function Status F1F8</item>
-        <item>Alternate Mode Function. Status FL,F9-F12</item>
+        <item>Alt. Mode Funct. Status F1-F8</item>
+        <item>Alt. Mode Funct. Status FL,F9-F12</item>
         <item>Decoder Lock CV15</item>
         <item>Decoder Lock CV16</item>
 
