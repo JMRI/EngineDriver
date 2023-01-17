@@ -4,6 +4,11 @@
  * Support for USB volume dials as a Gamepad type
  * Preference for setting what a second press of the Stop button on a gamepad does
  * Prevent some crashes reported to Play Store
+ * Support for using the native DCC-EX commands instead of WiThrottle on an EX-Command Station
+ * Able to read and write CVs, on the programming track only, when using native DCC-EX commands
+ * Addition of Programming on the Main options for native DCC-EX
+ * Correct a misalignment of the touches on all the vertical throttles.
+ * Add IoTT Stick to server list on About page
  **Version 2.33.154
  * Add link to Privacy Policy, per Google requirement
 **Version 2.33.152
