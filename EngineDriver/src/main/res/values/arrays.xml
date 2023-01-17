@@ -1163,6 +1163,72 @@
         <item>Function 28</item>
     </string-array>
 
+    <string-array name="dccCvsEntries">  <!-- display version -->
+        <item>&lt;select&gt;</item>
+        <item>Vstart</item>
+        <item>Acceleration Rate</item>
+        <item>Deceleration Rate </item>
+        <item>Vhigh</item>
+        <item>Vmid</item>
+        <item>Manufacturer Version No.</item>
+        <item>Manufactured ID</item>
+        <item>Total PWM Period</item>
+        <item>EMF Feedback Cutout</item>
+        <item>Packet Time-Out Value</item>
+        <item>Power Source Conversion</item>
+        <item>Alt. Mode Funct. Status F1-F8</item>
+        <item>Alt. Mode Funct. Status FL,F9-F12</item>
+        <item>Decoder Lock CV15</item>
+        <item>Decoder Lock CV16</item>
+
+        <item>Consist Address</item>
+        <item>Consist Addr Active for F1-F8</item>
+        <item>Consist Addr Active for FL-F9-F12</item>
+        <item>Acceleration Adjustment</item>
+        <item>Deceleration Adjustment</item>
+
+        <item>Kick Start</item>
+        <item>Forward Trim</item>
+        <item>Reverse Trim</item>
+    </string-array>
+    <string-array name="dccCvsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item></item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>19</item>
+
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+
+        <item>65</item>
+        <item>66</item>
+        <item>95</item>
+    </string-array>
+
+    <string-array name="dccExProgrammingTypeEntries">  <!-- display version -->
+        <item>Programming track</item>
+        <item>Program on Main</item>
+    </string-array>
+    <string-array name="dccExProgramingTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>PROG</item>
+        <item>MAIN</item>
+    </string-array>
+
     <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
         <item>(no function)</item>
         <item>All Stop</item>

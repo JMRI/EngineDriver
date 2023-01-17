@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '31.0.0'
     useLibrary 'org.apache.http.legacy'
 
@@ -10,8 +10,8 @@ android {
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
         // also Steve's Kyocera Event requires 15
         minSdkVersion 16
-        compileSdkVersion 30
-        targetSdkVersion 30
+        compileSdkVersion 31
+        targetSdkVersion 31
     }
 
     buildTypes {
