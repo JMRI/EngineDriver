@@ -47,7 +47,7 @@
                     android:ellipsize="none"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="2dp"
                     android:text=""
                     android:layout_weight=".7"
                     tools:ignore="RtlHardcoded" />
@@ -96,7 +96,7 @@
                     android:shadowRadius="0.3"
                     android:singleLine="true"
                     android:text=""
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXreadAddressButton"
@@ -151,7 +151,8 @@
                     android:shadowDy="1"
                     android:shadowRadius="0.3"
                     android:singleLine="true"
-                    android:text="" />
+                    android:text=""
+                    tools:ignore="Autofill,LabelFor" />
 
                 <TextView
                     style="?attr/floating_text_style"
@@ -180,7 +181,7 @@
                     android:shadowRadius="0.3"
                     android:singleLine="true"
                     android:text=""
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXreadCvButton"
@@ -214,9 +215,11 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".4"
+                    android:layout_weight=".3"
                     android:padding="4sp"
-                    android:text="@string/DCCEXsendCommandLabel" />
+                    android:textAlignment="viewEnd"
+                    android:text="@string/DCCEXsendCommandLabel"
+                    android:gravity="end" />
 
                 <EditText
                     android:id="@+id/dexc_DCCEXsendCommandValue"
@@ -225,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8sp"
                     android:layout_marginRight="8sp"
-                    android:layout_weight=".45"
+                    android:layout_weight=".40"
                     android:inputType="text"
                     android:maxLength="30"
                     android:paddingRight="8sp"
@@ -235,7 +238,7 @@
                     android:shadowRadius="0.3"
                     android:singleLine="true"
                     android:text=""
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXsendCommandButton"
@@ -245,6 +248,15 @@
                     android:layout_weight=".15"
                     android:padding="4sp"
                     android:text="@string/DCCEXsendCommandButtonLabel" />
+
+                <Button
+                    android:id="@+id/dexc_DCCEXpreviousCommandButton"
+                    style="?attr/ed_small_button_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".15"
+                    android:padding="4sp"
+                    android:text="@string/DCCEXpreviousCommandButtonLabel" />
 
             </LinearLayout>
 
@@ -283,6 +295,7 @@
                     android:layout_weight=".3"
                     android:padding="4sp"
                     android:text=""
+                    android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
@@ -294,7 +307,7 @@
                 android:ellipsize="none"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="2dp"
                 android:text=""
                 tools:ignore="RtlHardcoded" />
 
@@ -306,7 +319,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight=".4">
 
                 <TextView

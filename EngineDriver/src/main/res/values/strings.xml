@@ -1273,7 +1273,8 @@
     <string name="DCCEXwriteAddressButtonLabel" >"Write"</string>
     <string name="DCCEXreadAddressButtonLabel" >"Read"</string>
     <string name="DCCEXsendCommandButtonLabel" >"Send"</string>
-    <string name="DCCEXsendCommandLabel" >"DCC-EX Command\n(exclude \'&lt;\' &amp; \'&gt;\')"</string>
+    <string name="DCCEXpreviousCommandButtonLabel" >"Prior"</string>
+    <string name="DCCEXsendCommandLabel" >"DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small>"</string>
 
     <string name="DCCEXcommonCvsLabel" >"Common CVs"</string>
 
