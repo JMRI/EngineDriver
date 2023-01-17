@@ -34,7 +34,9 @@ public class VerticalSeekBar extends SeekBar {
     protected int width;
     protected int paddingLeft;
     protected int paddingRight;
-    protected float gridLeft;
+    protected float realHeight;
+    protected float realTouchY;
+//    protected float gridLeft;
     protected float gridBottom;
 //            protected float gridTop;
 //            protected float gridRight;
@@ -45,6 +47,7 @@ public class VerticalSeekBar extends SeekBar {
     protected float l;
     protected float r;
     protected float j;
+
 
 
     // A change listener registrating start and stop of tracking. Need an own listener because the listener in SeekBar
@@ -120,11 +123,14 @@ public class VerticalSeekBar extends SeekBar {
                 }
             }
         }
+
+        paddingLeft = getPaddingLeft();
+        paddingRight = getPaddingRight();
+        realHeight = getHeight() - paddingLeft - paddingRight;
+
         if (prefTickMarksOnSliders) {
             height = getHeight();
             width = getWidth();
-            paddingLeft = getPaddingLeft();
-            paddingRight = getPaddingRight();
 
             int startSize = 10;
             float endSize = width/2 - 30;
@@ -198,7 +204,9 @@ public class VerticalSeekBar extends SeekBar {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                progress = getMax() - (int) (getMax() * event.getY() / getHeight());
+                float y = event.getY();
+                realTouchY = event.getY()-paddingLeft;
+                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);
@@ -206,14 +214,16 @@ public class VerticalSeekBar extends SeekBar {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                progress = getMax() - (int) (getMax() * event.getY() / getHeight());
+                realTouchY = event.getY()-paddingLeft;
+                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);
                 break;
 
             case MotionEvent.ACTION_UP:
-                progress = getMax() - (int) (getMax() * event.getY() / getHeight());
+                realTouchY = event.getY()-paddingLeft;
+                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);

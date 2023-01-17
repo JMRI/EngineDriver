@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/select_loco_screen"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -305,7 +304,7 @@
 
         <Button
             android:id="@+id/idngo_button"
-            style="@style/normal_button_style"
+            style="?attr/ed_normal_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/idngo_help"

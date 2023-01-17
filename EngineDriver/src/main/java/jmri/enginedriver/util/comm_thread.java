@@ -771,6 +771,14 @@ public class comm_thread extends Thread {
     }
 
     @SuppressLint("DefaultLocale")
+    public static void sendWritePomCv(int cv, int cvValue, int addr) {
+        if (mainapp.isDCCEX) { // DCC-EX only
+            String msgTxt = String.format("<w %d %d %d>", addr, cv, cvValue);
+            wifiSend(msgTxt);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
     public static void sendDCCEXcommand(String cmdStr) {
         if (mainapp.isDCCEX) { // DCC-EX only
             wifiSend(cmdStr);
@@ -1044,7 +1052,14 @@ public class comm_thread extends Thread {
                     switch (responseStr.charAt(1)) {
                         case 'i': // Command Station Information
                             String old_vn = mainapp.DCCEXversion;
-                            mainapp.DCCEXversion = responseStr;
+                            String [] vn1 = args[1].split("-");
+                            String [] vn2 = vn1[1].split("\\.");
+                            String vn = String.format("%02d.%03d",Integer.parseInt(vn2[0]),Integer.parseInt(vn2[1]));
+                            if (vn.length()>=3) {
+                                try { vn = vn +String.format("%03d",Integer.parseInt(vn2[2]));
+                                } catch (Exception ignored) { }
+                            }
+                            mainapp.DCCEXversion = vn;
                             if (!mainapp.DCCEXversion.equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
                             } else {
@@ -1053,7 +1068,7 @@ public class comm_thread extends Thread {
 
                             mainapp.withrottle_version = 4.0;  // fudge it
                             mainapp.setServerType("DCC-EX");
-                            mainapp.setServerDescription(responseStr.substring(3, responseStr.length() - 1)); //store the description
+                            mainapp.setServerDescription(responseStr.substring(2, responseStr.length() - 1)); //store the description
 
                             skipAlert = true;
                             mainapp.heartbeatInterval = 20000; // force a heartbeat period

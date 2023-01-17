@@ -25,18 +25,28 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class dcc_ex extends AppCompatActivity {
@@ -61,6 +71,35 @@ public class dcc_ex extends AppCompatActivity {
     private TextView DCCEXresponsesLabel;
     private String DCCEXresponsesStr = "";
 
+    ArrayList<String> DCCEXresponsesListHtml = new ArrayList<>();
+
+    private int dccCvsIndex = 0;
+    String[] dccCvsEntryValuesArray;
+    String[] dccCvsEntriesArray; // display version
+
+    private int dccExProgrammingTypeIndex = 0;
+    String[] dccExProgrammingTypeEntryValuesArray;
+    String[] dccExProgrammingTypeEntriesArray; // display version
+
+    private static final int PROGRAMMING_TRACK = 0;
+    private static final int PROGRAMMING_ON_MAIN = 1;
+
+    Button readAddressButton;
+    Button writeAddressButton;
+    Button readCvButton;
+    Button writeCvButton;
+    Button sendCommandButton;
+    Button previousCommandButton;
+
+    private int DCCEXpreviousCommandIndex = -1;
+    ArrayList<String> DCCEXpreviousCommandList = new ArrayList<>();
+
+
+    static final int WHICH_ADDRESS = 0;
+    static final int WHICH_CV = 1;
+    static final int WHICH_CV_VALUE = 2;
+    static final int WHICH_COMMAND = 3;
+
     private Toolbar toolbar;
 
     //Handle messages from the communication thread back to this thread (responses from withrottle)
@@ -77,7 +116,7 @@ public class dcc_ex extends AppCompatActivity {
                     } else {
                         DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXFailed);
                     }
-                    refresh_dcc_ex_view();
+                    refreshDCCEXview();
                     break;
                 case message_type.RECEIVED_CV:
                     String cvResponseStr = msg.obj.toString();
@@ -87,32 +126,42 @@ public class dcc_ex extends AppCompatActivity {
                             DCCEXcvValue = cvArgs[1];
                             DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXSucceeded);
                         } else {
-                            DCCEXcvValue = "";
+                            resetTextField(WHICH_CV_VALUE);
                             DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXFailed);
                         }
-                        refresh_dcc_ex_view();
+                        refreshDCCEXview();
                     }
                     break;
                 case message_type.DCCEX_RESPONSE:  // informational response
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SS");
                     String currentTime = sdf.format(new Date());
-                    DCCEXresponsesStr =  currentTime + " : " + msg.obj.toString() + "\n" + DCCEXresponsesStr;
-                    if (DCCEXresponsesStr.length()>2048) DCCEXresponsesStr = DCCEXresponsesStr.substring(0,4086);
-                    DCCEXresponsesLabel.setText(DCCEXresponsesStr);
+
+                    DCCEXresponsesListHtml.add("<small><small>" + currentTime + " : </small></small>" + Html.escapeHtml(msg.obj.toString())  + "<br />");
+                    if (DCCEXresponsesListHtml.size()>20) {
+                        DCCEXresponsesListHtml.remove(0);
+                    }
+
+                    DCCEXresponsesStr ="<p>";
+                    for (int i=0; i<DCCEXresponsesListHtml.size(); i++) {
+                        DCCEXresponsesStr = DCCEXresponsesListHtml.get(i) + DCCEXresponsesStr;
+                    }
+                    DCCEXresponsesStr = DCCEXresponsesStr + "</p>";
+                    refreshDCCEXview();
+
                     break;
                 case message_type.WRITE_DECODER_SUCCESS:
                     DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXSucceeded);
-                    refresh_dcc_ex_view();
+                    refreshDCCEXview();
                     break;
                 case message_type.WRITE_DECODER_FAIL:
                     DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXFailed);
-                    refresh_dcc_ex_view();
+                    refreshDCCEXview();
                     break;
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
                 case message_type.WIT_CON_RECONNECT:
-                    refresh_dcc_ex_view();
+                    refreshDCCEXview();
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
@@ -120,6 +169,17 @@ public class dcc_ex extends AppCompatActivity {
                 case message_type.SHUTDOWN:
                     disconnect();
                     break;
+                case message_type.RESPONSE: {    //handle messages from WiThrottle server
+                    String s = msg.obj.toString();
+                    if (s.length() >= 3) {
+                        String com1 = s.substring(0, 3);
+                        //update power icon
+                        if ("PPA".equals(com1)) {
+                            mainapp.setPowerStateButton(menu);
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
@@ -127,10 +187,10 @@ public class dcc_ex extends AppCompatActivity {
     public class read_address_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             DCCEXinfoStr = "";
-            DCCEXaddress = "";
+            resetTextField(WHICH_ADDRESS);
             mainapp.buttonVibration();
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_DECODER_ADDRESS, "*", -1);
-            refresh_dcc_ex_view();
+            refreshDCCEXview();
         }
     }
 
@@ -145,19 +205,19 @@ public class dcc_ex extends AppCompatActivity {
                     mainapp.buttonVibration();
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_DECODER_ADDRESS, "", addr);
                 } else {
-                    DCCEXaddress = "";
+                    resetTextField(WHICH_ADDRESS);
                 }
             } catch (Exception e) {
-                DCCEXaddress = "";
+                resetTextField(WHICH_ADDRESS);
             }
-            refresh_dcc_ex_view();
+            refreshDCCEXview();
         }
     }
 
     public class read_cv_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             DCCEXinfoStr = "";
-            DCCEXcvValue = "";
+            resetTextField(WHICH_CV_VALUE);
             String cvStr = etDCCEXcv.getText().toString();
             try {
                 int cv = Integer.decode(cvStr);
@@ -165,12 +225,12 @@ public class dcc_ex extends AppCompatActivity {
                     DCCEXcv = Integer.toString(cv);
                     mainapp.buttonVibration();
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_CV, "", cv);
-                    refresh_dcc_ex_view();
+                    refreshDCCEXview();
                 }
             } catch (Exception e) {
-                DCCEXcv = "";
+                resetTextField(WHICH_CV);
             }
-            refresh_dcc_ex_view();
+            refreshDCCEXview();
         }
     }
 
@@ -179,21 +239,41 @@ public class dcc_ex extends AppCompatActivity {
             DCCEXinfoStr = "";
             String cvStr = etDCCEXcv.getText().toString();
             String cvValueStr = etDCCEXcvValue.getText().toString();
-            try {
-                Integer cv = Integer.decode(cvStr);
-                int cvValue = Integer.decode(cvValueStr);
-                if ((cv>0) && (cvValue>0)) {
-                    DCCEXcv = cv.toString();
-                    DCCEXcvValue = Integer.toString(cvValue);
-                    mainapp.buttonVibration();
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_CV, cvValueStr, cv);
-                } else {
-                    DCCEXaddress = "";
+            String addrStr = etDCCEXwriteAddressValue.getText().toString();
+            if (dccExProgrammingTypeIndex == PROGRAMMING_TRACK) {
+                try {
+                    Integer cv = Integer.decode(cvStr);
+                    int cvValue = Integer.decode(cvValueStr);
+                    if ((cv > 0) && (cvValue > 0)) {
+                        DCCEXcv = cv.toString();
+                        DCCEXcvValue = Integer.toString(cvValue);
+                        mainapp.buttonVibration();
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_CV, cvValueStr, cv);
+                    } else {
+                        resetTextField(WHICH_ADDRESS);
+                    }
+                } catch (Exception e) {
+                    resetTextField(WHICH_ADDRESS);
                 }
-            } catch (Exception e) {
-                DCCEXaddress = "";
+            } else {
+                try {
+                    Integer cv = Integer.decode(cvStr);
+                    int cvValue = Integer.decode(cvValueStr);
+                    Integer addr = Integer.decode(addrStr);
+                    if ( (addr>2) && (addr<=9999) && (cv > 0) && (cvValue > 0) ) {
+                        DCCEXaddress = addr.toString();
+                        DCCEXcv = cv.toString();
+                        DCCEXcvValue = Integer.toString(cvValue);
+                        mainapp.buttonVibration();
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_POM_CV, DCCEXcv+" "+DCCEXcvValue, addr);
+                    } else {
+                        resetTextField(WHICH_ADDRESS);
+                    }
+                } catch (Exception e) {
+                    resetTextField(WHICH_ADDRESS);
+                }
             }
-            refresh_dcc_ex_view();
+            refreshDCCEXview();
         }
     }
 
@@ -204,13 +284,36 @@ public class dcc_ex extends AppCompatActivity {
             if ((cmdStr.length()>0) && (cmdStr.charAt(0)!='<')) {
                 mainapp.buttonVibration();
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_SEND_COMMAND, "<"+cmdStr+">");
-                DCCEXaddress = "";
+
+                if ( (DCCEXpreviousCommandList.size()<=0) || !(DCCEXpreviousCommandList.get(DCCEXpreviousCommandList.size()-1).equals(cmdStr)) ) {
+                    DCCEXpreviousCommandList.add(cmdStr);
+                    if (DCCEXpreviousCommandList.size() > 20) {
+                        DCCEXpreviousCommandList.remove(0);
+                    }
+                }
+                DCCEXpreviousCommandIndex = DCCEXpreviousCommandList.size();
             }
-            refresh_dcc_ex_view();
+            resetTextField(WHICH_COMMAND);
+            refreshDCCEXview();
         }
     }
 
+    public class previous_command_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            DCCEXinfoStr = "";
+            String cmdStr = etDCCEXsendCommandValue.getText().toString();
+            if (DCCEXpreviousCommandIndex>0) {
+                DCCEXsendCommandValue = DCCEXpreviousCommandList.get(DCCEXpreviousCommandIndex-1);
+                DCCEXpreviousCommandIndex--;
+            } else {
+                DCCEXsendCommandValue = DCCEXpreviousCommandList.get(DCCEXpreviousCommandList.size()-1);
+                DCCEXpreviousCommandIndex = DCCEXpreviousCommandList.size() -1;
+            }
+            etDCCEXsendCommandValue.setText(DCCEXsendCommandValue);
 
+            refreshDCCEXview();
+        }
+    }
 
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
@@ -219,19 +322,76 @@ public class dcc_ex extends AppCompatActivity {
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
-    public void refresh_dcc_ex_view() {
+    private void resetTextField(int which) {
+        switch (which) {
+            case WHICH_ADDRESS:
+                DCCEXaddress = "";
+                etDCCEXwriteAddressValue.setText("");
+                break;
+            case WHICH_CV:
+                DCCEXcv = "";
+                etDCCEXcv.setText("");
+                break;
+            case WHICH_CV_VALUE:
+                DCCEXcvValue = "";
+                etDCCEXcvValue.setText("");
+                break;
+            case WHICH_COMMAND:
+                DCCEXsendCommandValue = "";
+                etDCCEXsendCommandValue.setText("");
+        }
+    }
+
+    private void readTextField(int which) {
+        switch (which) {
+            case WHICH_ADDRESS:
+                DCCEXaddress = etDCCEXwriteAddressValue.getText().toString();
+                break;
+            case WHICH_CV:
+                DCCEXcv = etDCCEXcv.getText().toString();
+                break;
+            case WHICH_CV_VALUE:
+                DCCEXcvValue = etDCCEXcvValue.getText().toString();
+                break;
+            case WHICH_COMMAND:
+                DCCEXsendCommandValue = etDCCEXsendCommandValue.getText().toString();
+        }
+    }
+
+    private void showHideButtons() {
+        sendCommandButton.setEnabled(false);
+        writeAddressButton.setEnabled(DCCEXaddress.length() != 0);
+        readCvButton.setEnabled(DCCEXcv.length() != 0);
+        if (dccExProgrammingTypeIndex==PROGRAMMING_TRACK) {
+            writeCvButton.setEnabled( ((DCCEXcv.length() != 0) && (DCCEXcvValue.length() != 0)) );
+        } else {
+            writeCvButton.setEnabled(  ((DCCEXcv.length() != 0) && (DCCEXcvValue.length() != 0) && (DCCEXaddress.length() != 0)) );
+        }
+        sendCommandButton.setEnabled(DCCEXsendCommandValue.length() != 0);
+        previousCommandButton.setEnabled((DCCEXpreviousCommandIndex>=0));
+    }
+
+    public void refreshDCCEXview() {
 
         etDCCEXwriteAddressValue.setText(DCCEXaddress);
         DCCEXwriteInfoLabel.setText(DCCEXinfoStr);
-
         etDCCEXcv.setText(DCCEXcv);
         etDCCEXcvValue.setText(DCCEXcvValue);
-
-        etDCCEXcvValue.setText(DCCEXcvValue);
-
         etDCCEXsendCommandValue.setText(DCCEXsendCommandValue);
 
-        DCCEXresponsesLabel.setText(DCCEXresponsesStr);
+        if (dccExProgrammingTypeIndex==PROGRAMMING_TRACK) {
+            readAddressButton.setVisibility(View.VISIBLE);
+            writeAddressButton.setVisibility(View.VISIBLE);
+            readCvButton.setVisibility(View.VISIBLE);
+        } else {
+            readAddressButton.setVisibility(View.GONE);
+            writeAddressButton.setVisibility(View.GONE);
+            readCvButton.setVisibility(View.GONE);
+        }
+
+        DCCEXresponsesLabel.setText(Html.fromHtml(DCCEXresponsesStr));
+
+        showHideButtons();
 
         mainapp.hideSoftKeyboard(this.getCurrentFocus());
 
@@ -240,7 +400,7 @@ public class dcc_ex extends AppCompatActivity {
         }
     }
 
-    // *************************************************************************************** //
+    // ************************************************************************************************************* //
 
     /**
      * Called when the activity is first created.
@@ -260,40 +420,65 @@ public class dcc_ex extends AppCompatActivity {
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.dcc_ex_msg_handler = new dcc_ex_handler();
 
-        Button button = findViewById(R.id.dexc_DCCEXreadAddressButton);
-        read_address_button_listener read_address_click_listener = new read_address_button_listener();
-        button.setOnClickListener(read_address_click_listener);
+        Button button;
 
-        button = findViewById(R.id.dexc_DCCEXwriteAddressButton);
+        readAddressButton = findViewById(R.id.dexc_DCCEXreadAddressButton);
+        read_address_button_listener read_address_click_listener = new read_address_button_listener();
+        readAddressButton.setOnClickListener(read_address_click_listener);
+
+        writeAddressButton = findViewById(R.id.dexc_DCCEXwriteAddressButton);
         write_address_button_listener write_address_click_listener = new write_address_button_listener();
-        button.setOnClickListener(write_address_click_listener);
+        writeAddressButton.setOnClickListener(write_address_click_listener);
 
         etDCCEXwriteAddressValue = findViewById(R.id.dexc_DCCEXwriteAddressValue);
         etDCCEXwriteAddressValue.setText("");
+        etDCCEXwriteAddressValue.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { readTextField(WHICH_ADDRESS); showHideButtons(); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
 
-        button = findViewById(R.id.dexc_DCCEXreadCvButton);
+        readCvButton = findViewById(R.id.dexc_DCCEXreadCvButton);
         read_cv_button_listener readCvClickListener = new read_cv_button_listener();
-        button.setOnClickListener(readCvClickListener);
+        readCvButton.setOnClickListener(readCvClickListener);
 
-        button = findViewById(R.id.dexc_DCCEXwriteCvButton);
+        writeCvButton = findViewById(R.id.dexc_DCCEXwriteCvButton);
         write_cv_button_listener writeCvClickListener = new write_cv_button_listener();
-        button.setOnClickListener(writeCvClickListener);
+        writeCvButton.setOnClickListener(writeCvClickListener);
 
         etDCCEXcv = findViewById(R.id.dexc_DCCEXcv);
         etDCCEXcv.setText("");
+        etDCCEXcv.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV); showHideButtons(); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
 
         etDCCEXcvValue = findViewById(R.id.dexc_DCCEXcvValue);
         etDCCEXcvValue.setText("");
+        etDCCEXcvValue.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
 
-        button = findViewById(R.id.dexc_DCCEXsendCommandButton);
+        sendCommandButton = findViewById(R.id.dexc_DCCEXsendCommandButton);
         send_command_button_listener sendCommandClickListener = new send_command_button_listener();
-        button.setOnClickListener(sendCommandClickListener);
+        sendCommandButton.setOnClickListener(sendCommandClickListener);
 
         etDCCEXsendCommandValue = findViewById(R.id.dexc_DCCEXsendCommandValue);
         etDCCEXsendCommandValue.setText("");
-
+        etDCCEXsendCommandValue.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) { readTextField(WHICH_COMMAND); showHideButtons(); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
         DCCEXwriteInfoLabel = findViewById(R.id.dexc_DCCEXwriteInfoLabel);
         DCCEXwriteInfoLabel.setText("");
+
+        previousCommandButton = findViewById(R.id.dexc_DCCEXpreviousCommandButton);
+        previous_command_button_listener previousCommandClickListener = new previous_command_button_listener();
+        previousCommandButton.setOnClickListener(previousCommandClickListener);
 
         DCCEXresponsesLabel = findViewById(R.id.dexc_DCCEXresponsesLabel);
         DCCEXresponsesLabel.setText("");
@@ -302,8 +487,31 @@ public class dcc_ex extends AppCompatActivity {
         close_button_listener closeClickListener = new close_button_listener();
         closeButton.setOnClickListener(closeClickListener);
 
+        dccCvsEntryValuesArray = this.getResources().getStringArray(R.array.dccCvsEntryValues);
+        final List<String> dccCvsValuesList = new ArrayList<>(Arrays.asList(dccCvsEntryValuesArray));
+        dccCvsEntriesArray = this.getResources().getStringArray(R.array.dccCvsEntries); // display version
+        final List<String> dccCvsEntriesList = new ArrayList<>(Arrays.asList(dccCvsEntriesArray));
+        dccCvsIndex=0;
+        Spinner dcc_cvs_spinner = findViewById(R.id.dexc_dcc_cv_list);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccCvsEntries, android.R.layout.simple_spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dcc_cvs_spinner.setAdapter(spinner_adapter);
+        dcc_cvs_spinner.setOnItemSelectedListener(new spinner_listener());
+        dcc_cvs_spinner.setSelection(dccCvsIndex);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        dccExProgrammingTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExProgramingTypeEntryValues);
+        final List<String> dccProgrammingTypeValuesList = new ArrayList<>(Arrays.asList(dccExProgrammingTypeEntryValuesArray));
+        dccExProgrammingTypeEntriesArray = this.getResources().getStringArray(R.array.dccExProgrammingTypeEntries); // display version
+        final List<String> dccProgrammingTypeEntriesList = new ArrayList<>(Arrays.asList(dccExProgrammingTypeEntriesArray));
+        dccExProgrammingTypeIndex = PROGRAMMING_TRACK;
+        Spinner dcc_programming_type_spinner = findViewById(R.id.dexc_programming_type_list);
+        ArrayAdapter<?> programming_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExProgrammingTypeEntries, android.R.layout.simple_spinner_item);
+        programming_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dcc_programming_type_spinner.setAdapter(programming_type_spinner_adapter);
+        dcc_programming_type_spinner.setOnItemSelectedListener(new programming_type_spinner_listener());
+        dcc_programming_type_spinner.setSelection(dccExProgrammingTypeIndex);
+
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -314,6 +522,8 @@ public class dcc_ex extends AppCompatActivity {
         }
 
     } // end onCreate
+
+    // ************************************************************************************************************* //
 
     @Override
     public void onResume() {
@@ -328,11 +538,13 @@ public class dcc_ex extends AppCompatActivity {
             mainapp.displayEStop(menu);
             mainapp.displayFlashlightMenuButton(menu);
             mainapp.setFlashlightButton(menu);
+            mainapp.displayPowerStateMenuButton(menu);
+            mainapp.setPowerStateButton(menu);
         }
         //update power state
         mainapp.DCCEXscreenIsOpen = true;
 
-        refresh_dcc_ex_view();
+        refreshDCCEXview();
     }
 
     /**
@@ -355,11 +567,13 @@ public class dcc_ex extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu myMenu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.power_menu, myMenu);
+        inflater.inflate(R.menu.dcc_ex_menu, myMenu);
         menu = myMenu;
         mainapp.displayEStop(myMenu);
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightButton(menu);
+        mainapp.displayPowerStateMenuButton(menu);
+        mainapp.setPowerStateButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -439,6 +653,60 @@ public class dcc_ex extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public class spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.dexc_dcc_cv_list);
+            dccCvsIndex = spinner.getSelectedItemPosition();
+            DCCEXcv = dccCvsEntryValuesArray[dccCvsIndex];
+            resetTextField(WHICH_CV_VALUE);
+            DCCEXinfoStr = "";
+
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if ((imm != null) && (view != null)) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            }
+
+            refreshDCCEXview();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    public class programming_type_spinner_listener implements AdapterView.OnItemSelectedListener {
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            Spinner spinner = findViewById(R.id.dexc_programming_type_list);
+            dccExProgrammingTypeIndex = spinner.getSelectedItemPosition();
+            resetTextField(WHICH_CV);
+            resetTextField(WHICH_CV_VALUE);
+            DCCEXinfoStr = "";
+
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if ((imm != null) && (view != null)) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            }
+
+            refreshDCCEXview();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
         }
     }
 }
