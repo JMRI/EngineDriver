@@ -1220,13 +1220,30 @@
         <item>95</item>
     </string-array>
 
-    <string-array name="dccExProgrammingTypeEntries">  <!-- display version -->
-        <item>Programming track</item>
-        <item>Program on Main</item>
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Programming Track (Service mode)</item>
+        <item>Program on Main (Operation mode)</item>
+<!--        <item>Track/District Manager</item>-->
     </string-array>
-    <string-array name="dccExProgramingTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+    <string-array name="dccExActionTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>PROG</item>
         <item>MAIN</item>
+<!--        <item>TRACK</item>-->
+    </string-array>
+
+    <string-array name="dccExTrackTypeEntries">  <!-- display version -->
+        <item>OFF</item>
+        <item>DCC MAIN</item>
+        <item>DCC PROG</item>
+        <item>DC</item>
+        <item>DC reversed</item>
+    </string-array>
+    <string-array name="dccExTrackTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
