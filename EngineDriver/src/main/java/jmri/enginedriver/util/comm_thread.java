@@ -1373,7 +1373,11 @@ public class comm_thread extends Thread {
                                 + "}|{" + mainapp.turnoutNamesDCCEX[i]
                                 + "}|{" + (mainapp.turnoutStatesDCCEX[i].equals("T") ? 4 : 2);
                     }
-                    processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\[Closed}|{2]\\[Thrown}|{4]\\[Unknown}|{1]\\[Inconsistent}|{8");
+                    processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
                     processTurnoutList(mainapp.turnoutStringDCCEX);
                     mainapp.turnoutStringDCCEX = "";
                     mainapp.DCCEXlistsRequested++;
@@ -1392,6 +1396,7 @@ public class comm_thread extends Thread {
                     mainapp.routeStringDCCEX = "";
                     mainapp.routeIDsDCCEX = new int[args.length - 1];
                     mainapp.routeNamesDCCEX = new String[args.length - 1];
+                    mainapp.routeTypesDCCEX = new String[args.length - 1];
                     mainapp.routeStatesDCCEX = new String[args.length - 1];
                     mainapp.routeDetailsReceivedDCCEX = new boolean[args.length - 1];
                     for (int i = 0; i < args.length - 1; i++) { // first will be blank
@@ -1403,7 +1408,7 @@ public class comm_thread extends Thread {
             } else {  // individual route   <jA id type "[description]">
                 for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
                     if (mainapp.routeIDsDCCEX[i] == Integer.parseInt(args[1])) {
-//                    mainapp.routeStatesDCCEX[i] = args[2];
+                        mainapp.routeTypesDCCEX[i] = args[2];
                         mainapp.routeNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
                         mainapp.routeDetailsReceivedDCCEX[i] = true;
                         break;
@@ -1423,9 +1428,11 @@ public class comm_thread extends Thread {
                         mainapp.routeStringDCCEX = mainapp.routeStringDCCEX
                                 + "]\\[" + mainapp.routeIDsDCCEX[i]
                                 + "}|{" + mainapp.routeNamesDCCEX[i]
-                                + "}|{" + "1";  //unknown
+                                + "}|{" + (mainapp.routeTypesDCCEX[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
                     }
-                    processRouteTitles("PRT]\\[Routes}|{Route]\\[Active}|{2]\\[Inactive}|{4");
+                    processRouteTitles("PRT]\\[Routes}|{Route]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
                     processRouteList(mainapp.routeStringDCCEX);
                     mainapp.routeStringDCCEX = "";
                     mainapp.DCCEXlistsRequested++;

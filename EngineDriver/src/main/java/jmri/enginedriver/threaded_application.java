@@ -193,6 +193,9 @@ public class threaded_application extends Application {
 
     public boolean DCCEXscreenIsOpen = false;
 
+    public int [] DCCEXtrackType = {1, 2, 0, 0};
+    public String [] DCCEXtrackId = {"", "", "", ""};
+
     public String rosterStringDCCEX = ""; // used to process the roster list
     public int [] rosterIDsDCCEX;  // used to process the roster list
     public String [] rosterLocoNamesDCCEX;  // used to process the roster list
@@ -212,6 +215,7 @@ public class threaded_application extends Application {
     public String routeStringDCCEX = ""; // used to process the route list
     public int [] routeIDsDCCEX;  // used to process the route list
     public String [] routeNamesDCCEX;  // used to process the route list
+    public String [] routeTypesDCCEX;  // used to process the route list
     public String [] routeStatesDCCEX;  // used to process the route list
     public boolean [] routeDetailsReceivedDCCEX;  // used to process the route list
 

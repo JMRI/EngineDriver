@@ -1263,22 +1263,31 @@
     <string name="idngo_button">Request Loco ID</string>
     <string name="idngo_help_text">Press button to send a request to the server to identify and acquire the loco already on the programming track and return the value to this throttle.</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="directionIndicatorForward" translatable="false">"▲ "</string>  <!-- DO NOT TRANSLATE -->
-    <string name="directionIndicatorReverse" translatable="false">"▼ "</string>  <!-- DO NOT TRANSLATE -->
+    <string name="directionIndicatorForward" translatable="false">▲ </string>  <!-- DO NOT TRANSLATE -->
+    <string name="directionIndicatorReverse" translatable="false">▼ </string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="DCCEXprogrammingTypeLabel" >"Programming Type"</string>
-    <string name="DCCEXwriteAddressLabel" >"DCC Address"</string>
-    <string name="DCCEXwriteCvLabel" >"CV"</string>
-    <string name="DCCEXwriteCvValueLabel" >"Value"</string>
-    <string name="DCCEXwriteAddressButtonLabel" >"Write"</string>
-    <string name="DCCEXreadAddressButtonLabel" >"Read"</string>
-    <string name="DCCEXsendCommandButtonLabel" >"Send"</string>
-    <string name="DCCEXpreviousCommandButtonLabel" >"Prior"</string>
-    <string name="DCCEXsendCommandLabel" >"DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small>"</string>
+    <string name="DCCEXrouteSet" >Set</string>
+    <string name="DCCEXrouteHandoff" >HandOff</string>
 
-    <string name="DCCEXcommonCvsLabel" >"Common CVs"</string>
+    <string name="DCCEXturnoutClosed">Closed</string>
+    <string name="DCCEXturnoutThrown">Thrown</string>
+    <string name="DCCEXturnoutUnknown">Unknown</string>
+    <string name="DCCEXturnoutInconsistent">Inconsistent</string>
 
-    <string name="DCCEXSucceeded" >"Succeeded"</string>
-    <string name="DCCEXFailed" >"Failed"</string>
+    <string name="DCCEXactionTypeLabel">Action</string>
+    <string name="DCCEXwriteAddressLabel">DCC Address</string>
+    <string name="DCCEXwriteCvLabel">CV</string>
+    <string name="DCCEXwriteCvValueLabel">Value</string>
+    <string name="DCCEXwriteAddressButtonLabel">Write</string>
+    <string name="DCCEXreadAddressButtonLabel">Read</string>
+    <string name="DCCEXsendCommandButtonLabel">Send</string>
+    <string name="DCCEXpreviousCommandButtonLabel">Prior</string>
+    <string name="DCCEXnextCommandButtonLabel">Next</string>
+    <string name="DCCEXsendCommandLabel">"DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small>"</string>
+
+    <string name="DCCEXcommonCvsLabel" >Common CVs</string>
+
+    <string name="DCCEXSucceeded" >Succeeded</string>
+    <string name="DCCEXFailed" >Failed</string>
 
 </resources>
