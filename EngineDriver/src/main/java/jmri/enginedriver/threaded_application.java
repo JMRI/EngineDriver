@@ -193,8 +193,10 @@ public class threaded_application extends Application {
 
     public boolean DCCEXscreenIsOpen = false;
 
-    public int [] DCCEXtrackType = {1, 2, 0, 0};
-    public String [] DCCEXtrackId = {"", "", "", ""};
+    public int [] DCCEXtrackType = {1, 2, 0, 0, 0, 0, 0, 0};
+    public boolean [] DCCEXtrackAvailable = {false, false, false, false, false, false, false, false};
+    public String [] DCCEXtrackId = {"", "", "", "", "", "", "", ""};
+    public final static int DCCEX_MAX_TRACKS = 8;
 
     public String rosterStringDCCEX = ""; // used to process the roster list
     public int [] rosterIDsDCCEX;  // used to process the roster list
@@ -444,6 +446,8 @@ public class threaded_application extends Application {
     public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
     public int[] lastKnownDirDCCEX = {0,0,0,0,0,0};
 
+    public boolean prefActionBarShowDccExButton = false;
+
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
      * Should only be called when ED is going into the background.
@@ -469,7 +473,7 @@ public class threaded_application extends Application {
             }
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             Notification notification =
                     new Notification.Builder(this)
@@ -494,7 +498,7 @@ public class threaded_application extends Application {
                             .setOngoing(true);
 
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             builder.setContentIntent(contentIntent);
 
             // Add as notification
@@ -946,6 +950,8 @@ public class threaded_application extends Application {
             web_server_port = 80; //hardcode web port for MRC
         } else if (serverType.equals("Digitrax")) {
             WiThrottle_Msg_Interval = 200; //increase the interval for LnWi
+        } else if ( (serverType.equals("DCC-EX")) && (isDCCEX) ) {
+            WiThrottle_Msg_Interval = 200; //increase the interval for DCC-EX
         }
     }
 
@@ -1764,6 +1770,20 @@ public class threaded_application extends Application {
         if (mi != null) {
             boolean rslt = prefDeviceSoundsButton;
             if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayDccExButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.dcc_ex_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowDccExButton;
+            if ( (rslt) && (isDCCEX) ) {
                 actionBarIconCountThrottle++;
                 mi.setVisible(true);
             } else {

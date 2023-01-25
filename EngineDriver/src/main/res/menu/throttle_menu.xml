@@ -61,6 +61,12 @@
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+    <item android:id="@+id/dcc_ex_button"
+        android:icon="?attr/ed_dcc_ex_button"
+        android:title="@string/app_name_dcc_ex"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/turnouts_mnu"
         android:title="@string/turnouts" />

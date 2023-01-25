@@ -82,6 +82,15 @@ public class comm_thread extends Thread {
 
     private static int requestLocoIdForWhichThrottleDCCEX;
 
+    static final int TRACK_TYPE_OFF_INDEX = 0;
+    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
+    static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
+    static final int TRACK_TYPE_DC_INDEX = 3;
+    static final int TRACK_TYPE_DCX_INDEX = 4;
+
+    static final String [] TRACK_TYPES = { "OFF", "MAIN", "PROG", "DC", "DCX"};
+    static final boolean [] TRACK_TYPES_NEED_ID = { false, false, false, true, true };
+
     public comm_thread(threaded_application myApp, SharedPreferences myPrefs) {
         super("comm_thread");
 
@@ -326,9 +335,10 @@ public class comm_thread extends Thread {
                 sendRequestRoster();
                 sendRequestTurnouts();
                 sendRequestRoutes();
+                sendRequestTracks();
                 mainapp.DCCEXlistsRequested = 0;  // don't ask again
             } else {
-                wifiSend("<D CABS>");
+                wifiSend("<#>");
             }
 
         }
@@ -364,7 +374,7 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             if (!address.equals("*")) {
-                msgTxt = String.format("<t 0 %s 0 1>", address.substring(1, address.length()));  //add requested loco to this throttle
+                msgTxt = String.format("<t 0 %s 0 1>", address.substring(1));  //add requested loco to this throttle
 
                 Consist con = mainapp.consists[whichThrottle];
                 con.setConfirmed(address); // don't wait for confirmation
@@ -501,6 +511,10 @@ public class comm_thread extends Thread {
                 if (fn < mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle].length) {
                     isLatching = mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][fn] ? LATCHING_DEFAULT : "none";
                 }
+            } else {   // no roster entry
+                if (fn>2) { // assume it is latching
+                    isLatching = LATCHING_DEFAULT;
+                }
             }
 
             if ((isLatching != null) && (isLatching.equals(LATCHING_DEFAULT))) {
@@ -566,6 +580,42 @@ public class comm_thread extends Thread {
             String msgTxt = "<JA>";
             wifiSend(msgTxt);
 //            Log.d("Engine_Driver", "comm_thread.sendRequestRoutes DCC-EX: " + msgTxt);
+        }
+    }
+
+    protected static void sendRequestTracks() {
+        if (mainapp.isDCCEX) { // DCC-EX only
+            float vn = 4;
+            try {
+                vn = Float.valueOf(mainapp.DCCEXversion);
+            } catch (Exception e) { } // invalid version
+
+            if (vn >= 04.002007) {  /// need to remove the track manager option
+                String msgTxt = "<=>";
+                wifiSend(msgTxt);
+//            Log.d("Engine_Driver", "comm_thread.sendRequestTracks DCC-EX: " + msgTxt);
+            }
+        }
+    }
+
+    protected static void sendTrack(String track, String type, int id) {
+        if (mainapp.isDCCEX) { // DCC-EX only
+            String msgTxt = "";
+            boolean needsId = false;
+            for (int i=0; i<TRACK_TYPES.length; i++) {
+                if (type.equals(TRACK_TYPES[i])) {
+                    needsId = TRACK_TYPES_NEED_ID[i];
+                    break;
+                }
+            }
+            if (!needsId) {
+                msgTxt = msgTxt + "<= " + track + " "+ type + ">";
+                wifiSend(msgTxt);
+            } else {
+                msgTxt = msgTxt + "<= " + track + " "+ type + " " + id + ">";
+                wifiSend(msgTxt);
+            }
+//            Log.d("Engine_Driver", "comm_thread.sendTracks DCC-EX: " + msgTxt);
         }
     }
 
@@ -640,8 +690,8 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             heart.setHeartbeatSent(true);
-            wifiSend("<D CABS>"); // DCC-EX doesn't have heartbeat, so sending a command with a simple response
-//            Log.d("Engine_Driver", "comm_thread.sendHeartbeatStart DCC-EX: <D CABS>)");
+            wifiSend("<#>"); // DCC-EX doesn't have heartbeat, so sending a command with a simple response
+//            Log.d("Engine_Driver", "comm_thread.sendHeartbeatStart DCC-EX: <#>)");
         }
     }
 
@@ -658,13 +708,13 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1, l.getAddress().length()), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
+                    msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.lastKnownDirDCCEX[whichThrottle] = newDir;
 //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
                 }
             } else {
-                msgTxt = String.format("<t 0 %s %d %d>", addr.substring(1, addr.length()), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
+                msgTxt = String.format("<t 0 %s %d %d>", addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
                 wifiSend(msgTxt);
                 mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
 //                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
@@ -688,7 +738,7 @@ public class comm_thread extends Thread {
                 int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1, l.getAddress().length()), speed, newDir);
+                msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), speed, newDir);
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
             }
@@ -739,7 +789,7 @@ public class comm_thread extends Thread {
             Consist con = mainapp.consists[whichThrottle];
             String msgTxt = "";
             for (Consist.ConLoco l : con.getLocos()) {
-                msgTxt = String.format("<t %s>", l.getAddress().substring(1, l.getAddress().length()));
+                msgTxt = String.format("<t %s>", l.getAddress().substring(1));
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendRequestSpeedAndDir DCC-EX: " + msgTxt);
             }
@@ -779,9 +829,9 @@ public class comm_thread extends Thread {
     }
 
     @SuppressLint("DefaultLocale")
-    public static void sendDCCEXcommand(String cmdStr) {
+    public static void sendDCCEXcommand(String msgTxt) {
         if (mainapp.isDCCEX) { // DCC-EX only
-            wifiSend(cmdStr);
+            wifiSend(msgTxt);
         }
     }
 
@@ -1042,7 +1092,7 @@ public class comm_thread extends Thread {
         } else { // DCC-EX
             if (responseStr.length() >= 3) {
                 if (responseStr.charAt(0) == '<') {
-                    if (mainapp.DCCEXscreenIsOpen) {
+                    if ((mainapp.DCCEXscreenIsOpen) && (responseStr.charAt(1)!='#') ) {
                         mainapp.alert_activities(message_type.DCCEX_RESPONSE, responseStr);
                     }
 
@@ -1057,7 +1107,16 @@ public class comm_thread extends Thread {
                             String vn = String.format("%02d.%03d",Integer.parseInt(vn2[0]),Integer.parseInt(vn2[1]));
                             if (vn.length()>=3) {
                                 try { vn = vn +String.format("%03d",Integer.parseInt(vn2[2]));
-                                } catch (Exception ignored) { }
+                                } catch (Exception ignored) {
+                                    // try to pull a partial number
+                                    String pn = "0";
+                                    for (int j=0; j<vn2[2].length(); j++ ) {
+                                        if ( (vn2[2].charAt(j)>='0') && (vn2[2].charAt(j)<='9') ) {
+                                            pn = pn + vn2[2].charAt(j);
+                                        } else { break; }
+                                    }
+                                    vn = vn +String.format("%03d", Integer.parseInt(pn));
+                                }
                             }
                             mainapp.DCCEXversion = vn;
                             if (!mainapp.DCCEXversion.equals(old_vn)) { //only if changed
@@ -1127,6 +1186,12 @@ public class comm_thread extends Thread {
                             } else {
                                 mainapp.alert_activities(message_type.WRITE_DECODER_FAIL, responseStr);
                             }
+                            break;
+
+                        case '=': // Track Manager response
+                            processDCCEXtrackManagerResponse(args);
+                            skipAlert = true;
+                            break;
 
                     }
 
@@ -1144,7 +1209,7 @@ public class comm_thread extends Thread {
 
     /* ***********************************  *********************************** */
 
-    private static void processDCCEXRequestCvResponse(String [] args) {
+    private static void processDCCEXRequestCvResponse (String [] args) {
         String cv = "";
         String cvValue = "-1";
 
@@ -1154,6 +1219,38 @@ public class comm_thread extends Thread {
         }
 
         mainapp.alert_activities(message_type.RECEIVED_CV, cv + "|" + cvValue);  //send response to running activities
+    }
+
+    private static void processDCCEXtrackManagerResponse(String [] args) {
+        int trackNo = -1;
+        String type = args[2];
+        if (type.charAt(type.length() - 1) == '+')
+            type = type.substring(0, type.length() - 1);
+
+        if (args.length>=2) {
+            trackNo = args[1].charAt(0)-65;
+            if ( (trackNo>=0) && (trackNo<=mainapp.DCCEX_MAX_TRACKS) ) {
+                int trackTypeIndex = -1
+;               boolean needsId = false;
+                for (int i=0; i<TRACK_TYPES.length; i++) {
+                    if (type.equals(TRACK_TYPES[i])) {
+                        trackTypeIndex = i;
+                        needsId = TRACK_TYPES_NEED_ID[i];
+                        break;
+                    }
+                }
+
+                if (trackTypeIndex>=0) {
+                    mainapp.DCCEXtrackType[trackNo] = trackTypeIndex;
+                    mainapp.DCCEXtrackId[trackNo] = "";
+                }
+                if ( (needsId) && (args.length>=3) ) {
+                    mainapp.DCCEXtrackId[trackNo] = args[3];
+                }
+                mainapp.DCCEXtrackAvailable[trackNo] = true;
+            }
+            mainapp.alert_activities(message_type.RECEIVED_TRACKS, type);  //send response to running activities
+        }
     }
 
     private static void processDCCEXRequestLocoIdResponse(String [] args) {
@@ -1700,6 +1797,10 @@ public class comm_thread extends Thread {
             Log.d("Engine_Driver", "comm_thread.wifiSend: " + (mainapp.isDCCEX ? "DCC-EX" : "") + "           -->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
             lastSentMs = now;
             socketWiT.Send(msg);
+
+            if (mainapp.DCCEXscreenIsOpen) { // only relevant to some DCC-EX commands that we want to see in the DCC-EC Screen.
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_COMMAND_ECHO, msg);
+            }
         } else {
             //requeue this message
             int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.WiThrottle_Msg_Interval + 5); //extra 5 for processing
@@ -1715,9 +1816,11 @@ public class comm_thread extends Thread {
      */
     private static boolean timingSensitive(String msg) {
         boolean ret = false;
-        if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
-            ret = true;
-        } //any function key message
+        if (!mainapp.isDCCEX) {
+            if (msg.matches("^M[0-5]A.{1,5}<;>F[0-1][\\d]{1,2}$")) {
+                ret = true;
+            } //any function key message
+        }
         if (ret) Log.d("Engine_Driver", "comm_thread.timingSensitive: timeSensitive msg, not requeuing:");
         return ret;
     }

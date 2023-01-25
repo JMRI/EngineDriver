@@ -176,8 +176,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected static int speedStepPref = 100;
     private static double[] displayUnitScales;            // display units per slider count
 
-    private static String VOLUME_INDICATOR = "v";
-    private static int[] GAMEPAD_INDICATOR = {1, 2, 3, 4, 5, 6};
+    private static final String VOLUME_INDICATOR = "v";
+    private static final int[] GAMEPAD_INDICATOR = {1, 2, 3, 4, 5, 6};
 
     private static final String SELECTED_LOCO_INDICATOR_NONE = "None";
     private static final String SELECTED_LOCO_INDICATOR_GAMEPAD = "Gamepad";
@@ -301,15 +301,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
     private static final String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
 
-    private static Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
-    private static Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
+    private static final Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
+    private static final Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
 
-    private static String FUNCTION_CONSIST_LATCHING = "latching";
-    private static String FUNCTION_CONSIST_NOT_LATCHING = "none";
+    private static final String FUNCTION_CONSIST_LATCHING = "latching";
+    private static final String FUNCTION_CONSIST_NOT_LATCHING = "none";
 
-    private static int FUNCTION_CONSIST_LATCHING_NA = -1;
-    private static int FUNCTION_CONSIST_LATCHING_NO = 1;
-    private static int FUNCTION_CONSIST_LATCHING_YES = 2;
+    private static final int FUNCTION_CONSIST_LATCHING_NA = -1;
+    private static final int FUNCTION_CONSIST_LATCHING_NO = 1;
+    private static final int FUNCTION_CONSIST_LATCHING_YES = 2;
 
     private static final int SOUNDS_TYPE_LOCO = 0;
     private static final int SOUNDS_TYPE_BELL = 1;
@@ -498,7 +498,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
     private int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static int GAMEPAD_KEYS_LENGTH = 21;
+    private static final int GAMEPAD_KEYS_LENGTH = 21;
     private static int[] BUTTON_ACTION_NUMBERS ={
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
@@ -1643,6 +1643,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else {
             mainapp.stopAllSounds();
         }
+
+        mainapp.prefActionBarShowDccExButton = prefs.getBoolean("prefActionBarShowDccExButton",
+                getResources().getBoolean(R.bool.prefActionBarShowDccExButtonDefaultValue));
     }
 
     protected void getDirectionButtonPrefs() {
@@ -6527,6 +6530,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayWebViewMenuButton(TMenu);
             displayEsuMc2KnobMenuButton(TMenu);
             mainapp.displayDeviceSoundsThrottleButton(TMenu);
+            mainapp.displayDccExButton(TMenu);
 //            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
         vThrotScrWrap.invalidate();
@@ -6691,6 +6695,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             displayEsuMc2KnobMenuButton(menu);
         }
         mainapp.displayDeviceSoundsThrottleButton(TMenu);
+        mainapp.displayDccExButton(TMenu);
 
 //        mainapp.adjustToolbarButtonSpacing(toolbar);
 
@@ -6729,6 +6734,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
+            case R.id.dcc_ex_button:
             case R.id.dcc_ex_mnu:
                 in = new Intent().setClass(this, dcc_ex.class);
                 startActivity(in);

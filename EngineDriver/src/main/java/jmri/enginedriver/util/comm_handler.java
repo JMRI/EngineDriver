@@ -257,6 +257,23 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.DCCEX_COMMAND_ECHO: { // DCC-EX only
+            if (msg.obj.toString().charAt(1)!='#')
+               mainapp.alert_activities(message_type.DCCEX_COMMAND_ECHO, msg.obj.toString());
+            break;
+         }
+
+         case message_type.REQUEST_TRACKS: { // DCC-EX only
+            comm_thread.sendRequestTracks();
+            break;
+         }
+
+         case message_type.WRITE_TRACK: { // DCC-EX only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendTrack(args[0], args[1], msg.arg1);
+            break;
+         }
+
          case message_type.REQUEST_CV: { // DCC-EX only
             comm_thread.sendReadCv(msg.arg1);
             break;

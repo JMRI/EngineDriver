@@ -1149,6 +1149,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void setConnectionProtocolOption() {
         prefDCCEXconnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDCCEXconnectionOptionDefaultValue));
+        mainapp.prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
 
         if (mainapp.prefDCCEX) {
             DCCEXconnectionOptionSpinner.setSelection(0);

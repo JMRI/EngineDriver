@@ -1239,6 +1239,9 @@
     <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen</string>
     <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
 
+    <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the ECC-EX screen.\n(For native DCC-EX connections only.)</string>
+    <string name="prefActionBarShowDccExButtonTitle">DCC-EX button?</string>
+
     <string name="prefHapticFeedbackTitle">Haptic Feedback (Vibration)</string>
     <string name="prefHapticFeedbackSummary">Haptic feedback (vibrate) on speed changes</string>
     <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
@@ -1250,8 +1253,8 @@
     <string name="prefLeftRightSwipePreferencesSummary">Options for swipes to change screens</string>
 
     <!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
-<!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->
-<!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
+    <!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->
+    <!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
 
     <string name="prefHapticFeedbackDurationTitle">Haptic Feedback Duration</string>
     <string name="prefHapticFeedbackDurationSummary">Duration of each vibration (in milliseconds).</string>
@@ -1285,9 +1288,12 @@
     <string name="DCCEXnextCommandButtonLabel">Next</string>
     <string name="DCCEXsendCommandLabel">"DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small>"</string>
 
-    <string name="DCCEXcommonCvsLabel" >Common CVs</string>
+    <string name="DCCEXcommonCvsLabel" >NMRA Standard CVs</string>
+
+    <string name="DCCEXsetTrackButtonLabel">Set</string>
 
     <string name="DCCEXSucceeded" >Succeeded</string>
     <string name="DCCEXFailed" >Failed</string>
 
 </resources>
+
