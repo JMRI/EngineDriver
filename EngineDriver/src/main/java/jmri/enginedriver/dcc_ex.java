@@ -474,7 +474,7 @@ public class dcc_ex extends AppCompatActivity {
                 dccExTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccExTrackTypeIndex[i]] ? View.VISIBLE : View.GONE);
             }
         }
-        sendCommandButton.setEnabled(DCCEXsendCommandValue.length() != 0);
+        sendCommandButton.setEnabled( (DCCEXsendCommandValue.length()!= 0) && (DCCEXsendCommandValue.charAt(0)!='<') );
         previousCommandButton.setEnabled((DCCEXpreviousCommandIndex >= 0));
         nextCommandButton.setEnabled((DCCEXpreviousCommandIndex >= 0));
     }
