@@ -1091,6 +1091,12 @@ public class comm_thread extends Thread {
 
         } else { // DCC-EX
             if (responseStr.length() >= 3) {
+                if (!(responseStr.charAt(0) == '<')) {
+                    if (responseStr.contains("<")) { // see if we can clean it up
+                        responseStr = responseStr.substring(responseStr.indexOf("<"));
+                    }
+                }
+
                 if (responseStr.charAt(0) == '<') {
                     if ((mainapp.DCCEXscreenIsOpen) && (responseStr.charAt(1)!='#') ) {
                         mainapp.alert_activities(message_type.DCCEX_RESPONSE, responseStr);

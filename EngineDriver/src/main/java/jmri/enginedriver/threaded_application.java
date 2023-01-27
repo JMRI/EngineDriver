@@ -951,7 +951,7 @@ public class threaded_application extends Application {
         } else if (serverType.equals("Digitrax")) {
             WiThrottle_Msg_Interval = 200; //increase the interval for LnWi
         } else if ( (serverType.equals("DCC-EX")) && (isDCCEX) ) {
-            WiThrottle_Msg_Interval = 200; //increase the interval for DCC-EX
+            WiThrottle_Msg_Interval = 100; //increase the interval for DCC-EX
         }
     }
 

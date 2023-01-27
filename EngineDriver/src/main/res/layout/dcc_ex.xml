@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".9"
+            android:layout_weight=".94"
             android:orientation="vertical">
 
             <LinearLayout
@@ -250,7 +250,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="A"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -303,7 +303,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="B"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -356,7 +356,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="C"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -409,7 +409,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="D"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -462,7 +462,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="E"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -515,7 +515,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="F"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -568,7 +568,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="G"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -621,7 +621,7 @@
                                 android:padding="1sp"
                                 android:layout_weight=".05"
                                 android:text="H"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
                             <Spinner
@@ -774,7 +774,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".7"
-                    android:padding="4sp"
+                    android:padding="2sp"
+                    android:layout_marginBottom="2sp"
                     android:text="@string/DCCEXcommonCvsLabel"
                     android:textSize="12sp" />
 
@@ -785,9 +786,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="4sp"
-                    android:layout_marginBottom="4sp"
+                    android:layout_marginBottom="2sp"
                     android:layout_weight=".3"
-                    android:padding="4sp"
+                    android:padding="2sp"
                     android:text=""
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary" />
@@ -801,6 +802,7 @@
                 android:ellipsize="none"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:paddingTop="0dp"
                 android:paddingBottom="2dp"
                 android:text=""
                 tools:ignore="RtlHardcoded" />
@@ -808,24 +810,54 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
+                android:paddingTop="2dp"
                 android:background="#888888"
                 android:orientation="vertical" />
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight=".4">
+            <LinearLayout
+                android:id="@+id/dexc_DCCEXresponsesAndSendsLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="0sp"
+                android:layout_marginTop="0sp"
+                android:background="#00000000"
+                android:orientation="vertical"
+                android:layout_weight=".4"
+                android:weightSum="1">
 
-                <TextView
-                    android:id="@+id/dexc_DCCEXresponsesLabel"
-                    style="?attr/floating_text_style"
+                <ScrollView
+                    android:id="@+id/dexc_DCCEXresponsesScrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8sp"
-                    android:text=""
-                    android:textSize="12sp" />
+                    android:layout_height="0dp"
+                    android:layout_weight=".7">
 
-            </ScrollView>
+                    <TextView
+                        android:id="@+id/dexc_DCCEXresponsesLabel"
+                        style="?attr/floating_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8sp"
+                        android:text=""
+                        android:textSize="12sp" />
+
+                </ScrollView>
+
+                <ScrollView
+                    android:id="@+id/dexc_DCCEXsendsScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".3">
+
+                    <TextView
+                        android:id="@+id/dexc_DCCEXsendsLabel"
+                        style="?attr/floating_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8sp"
+                        android:text=""
+                        android:textSize="12sp" />
+
+                </ScrollView>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -834,9 +866,16 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="3dp"
-            android:layout_weight=".1"
+            android:layout_weight=".06"
             android:paddingLeft="6dp"
             android:paddingRight="6dp">
+
+            <RelativeLayout
+                android:id="@+id/dcc_ex_bottom_button_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0sp"
+                android:orientation="horizontal">
 
             <Button
                 android:id="@+id/dcc_ex_button_close"
@@ -844,6 +883,26 @@
                 android:layout_gravity="left"
                 android:text="@string/logviewerClose"
                 tools:ignore="RtlHardcoded" />
+
+                <Button
+                    android:id="@+id/dexc_DCCEXclearCommandsButton"
+                    style="?attr/ed_normal_button_style"
+                    android:layout_gravity="left"
+                    android:text="@string/DCCEXclearCommands"
+                    tools:ignore="RtlHardcoded"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
+
+                <!--            <Button-->
+<!--                android:id="@+id/dexc_DCCEXhideSendsButton"-->
+<!--                style="?attr/ed_normal_button_style"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:text="@string/DCCEXhideSends"-->
+<!--                tools:ignore="RtlHardcoded"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_alignParentRight="true" />-->
+
+            </RelativeLayout>
 
         </TableLayout>
 

@@ -40,6 +40,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -70,9 +71,14 @@ public class dcc_ex extends AppCompatActivity {
     private String DCCEXinfoStr = "";
 
     private TextView DCCEXresponsesLabel;
+    private TextView DCCEXsendsLabel;
     private String DCCEXresponsesStr = "";
+    private String DCCEXsendsStr = "";
+    private ScrollView DCCEXresponsesScrollView;
+    private ScrollView DCCEXsendsScrollView;
 
     ArrayList<String> DCCEXresponsesListHtml = new ArrayList<>();
+    ArrayList<String> DCCEXsendsListHtml = new ArrayList<>();
 
     private int dccCvsIndex = 0;
     String[] dccCvsEntryValuesArray;
@@ -82,6 +88,7 @@ public class dcc_ex extends AppCompatActivity {
     String[] dccExActionTypeEntryValuesArray;
     String[] dccExActionTypeEntriesArray; // display version
 
+    private boolean DCCEXhideSends = false;
 
     private static final int PROGRAMMING_TRACK = 0;
     private static final int PROGRAMMING_ON_MAIN = 1;
@@ -95,6 +102,8 @@ public class dcc_ex extends AppCompatActivity {
     Button previousCommandButton;
     Button nextCommandButton;
     Button writeTracksButton;
+//    Button hideSendsButton;
+    Button clearCommandsButton;
 
     private LinearLayout dexcProgrammingCommonCvsLayout;
     private LinearLayout dexcProgrammingAddressLayout;
@@ -402,6 +411,39 @@ public class dcc_ex extends AppCompatActivity {
         }
     }
 
+    public class clear_commands_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            DCCEXresponsesListHtml.clear();
+            DCCEXsendsListHtml.clear();
+            DCCEXresponsesStr ="";
+            DCCEXsendsStr ="";
+            refreshDCCEXview();
+        }
+    }
+
+//    public class hide_sends_button_listener implements View.OnClickListener {
+//        public void onClick(View v) {
+//            DCCEXhideSends = !DCCEXhideSends;
+//
+//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) findViewById(R.id.dexc_DCCEXresponsesAndSendsLayout).getLayoutParams();
+//            LinearLayout.LayoutParams responsesParams = (LinearLayout.LayoutParams) DCCEXresponsesScrollView.getLayoutParams();
+//            LinearLayout.LayoutParams sendsParams = (LinearLayout.LayoutParams) DCCEXsendsScrollView.getLayoutParams();
+//            int h = params.height;
+//            if (DCCEXhideSends) {
+//                DCCEXsendsScrollView.setVisibility(View.GONE);
+//                responsesParams.height = h;
+//                sendsParams.height = 0;
+//                DCCEXresponsesScrollView.setVisibility(View.GONE);
+//            } else {
+//                DCCEXsendsScrollView.setVisibility(View.VISIBLE);
+//                responsesParams.height = (int) (h * 0.7);
+//                sendsParams.height = (int) (h * 0.3);
+//            }
+//            DCCEXresponsesScrollView.setLayoutParams(responsesParams);
+//            DCCEXsendsScrollView.setLayoutParams(sendsParams);
+//        }
+//    }
+
     private void witRetry(String s) {
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
@@ -498,6 +540,7 @@ public class dcc_ex extends AppCompatActivity {
         }
 
         DCCEXresponsesLabel.setText(Html.fromHtml(DCCEXresponsesStr));
+        DCCEXsendsLabel.setText(Html.fromHtml(DCCEXsendsStr));
 
         showHideButtons();
 
@@ -527,10 +570,14 @@ public class dcc_ex extends AppCompatActivity {
         if (inbound) {
             DCCEXresponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + Html.escapeHtml(msg) + "</b><br />");
         } else {
-            DCCEXresponsesListHtml.add("<small><small>" + currentTime + " </small></small> ► : &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <i>" + Html.escapeHtml(msg) + "</i><br />");
+//            DCCEXsendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <i>" + Html.escapeHtml(msg) + "</i><br />");
+            DCCEXsendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : <i>" + Html.escapeHtml(msg) + "</i><br />");
         }
-        if (DCCEXresponsesListHtml.size()>60) {
+        if (DCCEXresponsesListHtml.size()>40) {
             DCCEXresponsesListHtml.remove(0);
+        }
+        if (DCCEXsendsListHtml.size()>30) {
+            DCCEXsendsListHtml.remove(0);
         }
 
         DCCEXresponsesStr ="<p>";
@@ -538,6 +585,12 @@ public class dcc_ex extends AppCompatActivity {
             DCCEXresponsesStr = DCCEXresponsesListHtml.get(i) + DCCEXresponsesStr;
         }
         DCCEXresponsesStr = DCCEXresponsesStr + "</p>";
+
+        DCCEXsendsStr ="<p>";
+        for (int i=0; i<DCCEXsendsListHtml.size(); i++) {
+            DCCEXsendsStr = DCCEXsendsListHtml.get(i) + DCCEXsendsStr;
+        }
+        DCCEXsendsStr = DCCEXsendsStr + "</p>";
     }
 
     // ************************************************************************************************************* //
@@ -626,6 +679,8 @@ public class dcc_ex extends AppCompatActivity {
 
         DCCEXresponsesLabel = findViewById(R.id.dexc_DCCEXresponsesLabel);
         DCCEXresponsesLabel.setText("");
+        DCCEXsendsLabel = findViewById(R.id.dexc_DCCEXsendsLabel);
+        DCCEXsendsLabel.setText("");
 
         Button closeButton = findViewById(R.id.dcc_ex_button_close);
         close_button_listener closeClickListener = new close_button_listener();
@@ -742,6 +797,18 @@ public class dcc_ex extends AppCompatActivity {
             writeTracksButton = findViewById(R.id.dexc_DCCEXwriteTracksButton);
             write_tracks_button_listener writeTracksClickListener = new write_tracks_button_listener();
             writeTracksButton.setOnClickListener(writeTracksClickListener);
+
+            DCCEXresponsesScrollView = findViewById(R.id.dexc_DCCEXresponsesScrollView);
+            DCCEXsendsScrollView = findViewById(R.id.dexc_DCCEXsendsScrollView);
+
+            clearCommandsButton = findViewById(R.id.dexc_DCCEXclearCommandsButton);
+            clear_commands_button_listener clearCommandsClickListener = new clear_commands_button_listener();
+            clearCommandsButton.setOnClickListener(clearCommandsClickListener);
+
+//            hideSendsButton = findViewById(R.id.dexc_DCCEXhideSendsButton);
+//            hide_sends_button_listener hideSendsClickListener = new hide_sends_button_listener();
+//            hideSendsButton.setOnClickListener(hideSendsClickListener);
+
         }
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 

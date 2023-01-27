@@ -1286,7 +1286,9 @@
     <string name="DCCEXsendCommandButtonLabel">Send</string>
     <string name="DCCEXpreviousCommandButtonLabel">Prior</string>
     <string name="DCCEXnextCommandButtonLabel">Next</string>
-    <string name="DCCEXsendCommandLabel">"DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small>"</string>
+    <string name="DCCEXsendCommandLabel">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
+<!--    <string name="DCCEXhideSends">Hide Sends</string>-->
+    <string name="DCCEXclearCommands">Clear</string>
 
     <string name="DCCEXcommonCvsLabel" >NMRA Standard CVs</string>
 
