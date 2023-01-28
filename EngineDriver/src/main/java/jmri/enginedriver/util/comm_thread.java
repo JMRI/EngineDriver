@@ -1455,7 +1455,11 @@ public class comm_thread extends Thread {
                 for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
                     if (mainapp.turnoutIDsDCCEX[i] == Integer.parseInt(args[1])) {
                         mainapp.turnoutStatesDCCEX[i] = args[2];
-                        mainapp.turnoutNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
+                        if ( (args.length>3) && (args[3].length()>2) ) {
+                            mainapp.turnoutNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
+                        } else {
+                            mainapp.turnoutNamesDCCEX[i] = "";
+                        }
                         mainapp.turnoutDetailsReceivedDCCEX[i] = true;
                         break;
                     }
