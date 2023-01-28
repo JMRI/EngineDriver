@@ -85,6 +85,10 @@ public interface message_type {
     int REQUEST_CV = 63;
     int RECEIVED_CV = 64;
     int DCCEX_RESPONSE = 65;
-    int DCCEX_SEND_COMMAND = 66;
-    int WRITE_POM_CV = 67;
+    int DCCEX_COMMAND_ECHO = 66;
+    int DCCEX_SEND_COMMAND = 67;
+    int WRITE_POM_CV = 68;
+    int RECEIVED_TRACKS = 69;
+    int REQUEST_TRACKS = 70;
+    int WRITE_TRACK = 71;
 }

@@ -705,6 +705,13 @@
             android:summary="@string/prefAppIconActionSummary"
             android:title="@string/prefAppIconActionTitle" />
 
+        <CheckBoxPreference
+            android:icon="?attr/ed_dcc_ex_button"
+            android:defaultValue="@bool/prefActionBarShowDccExButtonDefaultValue"
+            android:key="prefActionBarShowDccExButton"
+            android:summary="@string/prefActionBarShowDccExButtonSummary"
+            android:title="@string/prefActionBarShowDccExButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
 
     </PreferenceCategory>
 

@@ -93,6 +93,7 @@
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/dcc_ex_button_icon</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
 
@@ -171,6 +172,7 @@
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
@@ -244,6 +246,7 @@
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
@@ -321,6 +324,7 @@
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
@@ -406,6 +410,7 @@
         <item name="ed_clock_icon">@drawable/fast_clock_black</item>
         <item name="ed_web_view_button">@drawable/web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/dcc_ex_button_icon</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
         <item name="ed_icon">@drawable/ic_launcher</item>
