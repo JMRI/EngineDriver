@@ -39,46 +39,62 @@
                     android:layout_margin="5dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/dss_throttle0_label"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8sp"
-                        android:text="@string/prefDeviceSounds0Summary"
-                         />
+                        android:layout_marginTop="5dp"
+                        android:background="?attr/ed_background_highlight_secondary"
+                        android:orientation="vertical">
 
-                    <Spinner
-                        android:id="@+id/dss_throttle0"
-                        android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/dss_throttle0_label"
+                            style="?attr/floating_text_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8sp"
+                            android:text="@string/prefDeviceSounds0Summary"
+                             />
+
+                        <Spinner
+                            android:id="@+id/dss_throttle0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/prefDeviceSoundsDefaultValue"
+                            tools:ignore="RtlHardcoded" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="10dp"
-                        android:text="@string/prefDeviceSoundsDefaultValue"
-                        tools:ignore="RtlHardcoded" />
+                        android:layout_marginTop="5dp"
+                        android:background="?attr/ed_background_highlight_secondary"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/dss_throttle1_label"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8sp"
-                        android:text="@string/prefDeviceSounds1Summary"
-                        />
+                        <TextView
+                            android:id="@+id/dss_throttle1_label"
+                            style="?attr/floating_text_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8sp"
+                            android:text="@string/prefDeviceSounds1Summary"
+                            />
 
-                    <Spinner
-                        android:id="@+id/dss_throttle1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="10dp"
-                        android:text="@string/prefDeviceSoundsDefaultValue"
-                        tools:ignore="RtlHardcoded" />
+                        <Spinner
+                            android:id="@+id/dss_throttle1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="10dp"
+                            android:text="@string/prefDeviceSoundsDefaultValue"
+                            tools:ignore="RtlHardcoded" />
 
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
