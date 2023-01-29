@@ -41,6 +41,8 @@
     <attr name="ed_web_view_button" format="reference" />
     <attr name="ed_in_device_sounds_button" format="reference" />
     <attr name="ed_dcc_ex_button" format="reference" />
+    <attr name="ed_background_highlight" format="reference" />
+    <attr name="ed_background_highlight_secondary" format="reference" />
 
     <attr name="ed_advanced_preferences" format="reference" />
 
