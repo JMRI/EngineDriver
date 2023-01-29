@@ -38,9 +38,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="1sp"
-                    android:layout_weight=".2"
+                    android:layout_weight=".15"
                     android:text="@string/DCCEXactionTypeLabel"
-                    android:textSize="12sp" />
+                    android:textAlignment="viewEnd"
+                    android:gravity="end"
+                    android:textSize="14sp" />
 
                 <Spinner
                     android:id="@+id/dexc_action_type_list"
@@ -51,7 +53,7 @@
                     android:paddingRight="20dp"
                     android:paddingBottom="2dp"
                     android:text=""
-                    android:layout_weight=".8"
+                    android:layout_weight=".85"
                     tools:ignore="RtlHardcoded" />
 
             </LinearLayout>
