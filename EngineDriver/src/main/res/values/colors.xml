@@ -184,6 +184,11 @@
     <color name="buttonFnSelectedFill_colorful">#FF262626</color>
     <color name="buttonFnSelectedInsideStroke_colorful">#FF3D00</color>
 
+    <color name="background_highlight_black">#994E4E4E</color>
+    <color name="background_highlight_colorful">#33FFA600</color>
+    <color name="background_highlight_secondary_black">#75363636</color>
+    <color name="background_highlight_secondary_colorful">#12FFA600</color>
+
 
 
 </resources>

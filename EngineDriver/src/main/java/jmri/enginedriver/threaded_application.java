@@ -2329,6 +2329,10 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
+    public String getDCCEXVersion() {
+        return DCCEXversion;
+    }
+
     static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {
         int newVal;
         try {

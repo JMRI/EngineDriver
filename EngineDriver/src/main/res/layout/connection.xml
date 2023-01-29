@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:padding="8sp"
-            android:text="@string/prefDCCEXSummary" />
+            android:text="@string/useProtocolDCCEX" />
 
         <Spinner
             android:id="@+id/cons_DCCEXconnectionOption"
