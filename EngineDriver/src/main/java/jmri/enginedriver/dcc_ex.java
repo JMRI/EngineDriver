@@ -67,6 +67,7 @@ public class dcc_ex extends AppCompatActivity {
     private String DCCEXsendCommandValue = "";
     private EditText etDCCEXsendCommandValue;
 
+    private LinearLayout DCCEXwriteInfoLayout;
     private TextView DCCEXwriteInfoLabel;
     private String DCCEXinfoStr = "";
 
@@ -173,12 +174,14 @@ public class dcc_ex extends AppCompatActivity {
 
                 case message_type.DCCEX_COMMAND_ECHO:  // informational response
                     displayCommands(msg.obj.toString(), false);
-                    refreshDCCEXview();
+//                    refreshDCCEXview();
+                    refreshDCCEXcommandsView();
                     break;
 
                 case message_type.DCCEX_RESPONSE:  // informational response
                     displayCommands(msg.obj.toString(), true);
-                    refreshDCCEXview();
+//                    refreshDCCEXview();
+                    refreshDCCEXcommandsView();
                     break;
 
                 case message_type.WRITE_DECODER_SUCCESS:
@@ -497,6 +500,7 @@ public class dcc_ex extends AppCompatActivity {
             dexcProgrammingAddressLayout.setVisibility(View.VISIBLE);
             dexcProgrammingCvLayout.setVisibility(View.VISIBLE);
             dexcDCCEXtrackLinearLayout.setVisibility(View.GONE);
+            DCCEXwriteInfoLayout.setVisibility(View.VISIBLE);
 
             sendCommandButton.setEnabled(false);
             writeAddressButton.setEnabled(DCCEXaddress.length() != 0);
@@ -512,6 +516,7 @@ public class dcc_ex extends AppCompatActivity {
 
             dexcProgrammingAddressLayout.setVisibility(View.GONE);
             dexcProgrammingCvLayout.setVisibility(View.GONE);
+            DCCEXwriteInfoLayout.setVisibility(View.GONE);
             dexcDCCEXtrackLinearLayout.setVisibility(View.VISIBLE);
 
             for (int i = 0; i < mainapp.DCCEX_MAX_TRACKS; i++) {
@@ -541,14 +546,18 @@ public class dcc_ex extends AppCompatActivity {
             readCvButton.setVisibility(View.GONE);
         }
 
-        DCCEXresponsesLabel.setText(Html.fromHtml(DCCEXresponsesStr));
-        DCCEXsendsLabel.setText(Html.fromHtml(DCCEXsendsStr));
+        refreshDCCEXcommandsView();
 
         showHideButtons();
 
         if (menu != null) {
             mainapp.displayEStop(menu);
         }
+    }
+
+    public void refreshDCCEXcommandsView() {
+        DCCEXresponsesLabel.setText(Html.fromHtml(DCCEXresponsesStr));
+        DCCEXsendsLabel.setText(Html.fromHtml(DCCEXsendsStr));
     }
 
     public void refreshDCCEXtracksView() {
@@ -668,6 +677,7 @@ public class dcc_ex extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
+        DCCEXwriteInfoLayout = findViewById(R.id.dexc_DCCEXwriteInfoLayout);
         DCCEXwriteInfoLabel = findViewById(R.id.dexc_DCCEXwriteInfoLabel);
         DCCEXwriteInfoLabel.setText("");
 

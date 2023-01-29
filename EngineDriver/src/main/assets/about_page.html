@@ -24,8 +24,10 @@
     <li>Support for USB volume dials as a Gamepad type</li>
     <li>Preference for setting what a second press of the Stop button on a gamepad does</li>
     <li>Prevent some crashes reported to Play Store</li>
-    <li>Option to use native DCC-EX commands instead of WiThrottle on an EX-Command Station</li>
-    <li>Able to read and write CVs when using native DCC-EX commands</li>
+    <li>Option to use the native DCC-EX command protocol instead of WiThrottle on EX-CommandStations</li>
+    <li>Able to read and write CVs when using native the DCC-EX command protocol</li>
+    <li>Able to issue DCC-EX commands directly</li>
+    <li>Able control the Track Manager feature of DCC-EX</li>
     <li>Correct a misalignment of the touches on all the vertical throttles.</li>
 </ul>
 <p><em><a
@@ -36,7 +38,7 @@
         href="https://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">WiThrottle Server</a>. Supported servers include <a href="https://jmri.org"
                                                                             target="_blank">JMRI</a>,
-    <a href="https://dcc-ex.com" target="_blank">DCC-EX</a>, <a
+    <a href="https://dcc-ex.com" target="_blank">DCC-EX EX-CommandStation</a> (using either the wiThrottle Protocol or the native DCC-EX command protocol), <a
             href="https://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC&nbsp;Prodigy&nbsp;WiFi</a>,
     <a href="https://www.digitrax.com/products/wireless/lnwi/"
        target="_blank">Digitrax&nbsp;LnWi</a>, <a
@@ -70,6 +72,15 @@
     address.</p>
 <h3>Prerequisites (for Digitrax LnWi):</h3>
 <p>Connect the LnWi, and verify your device can connect to its network and obtain an IP address.</p>
+<h3>Prerequisites (for DCC-EX EX-CommandStation):</h3>
+<p>Engine Driver can connect directly to DCC-EX EX-CommandStations, that are in Station Mode or
+    Access Point Mode, using either the wiThrottle protocol or the native DCC-EX command protocol.
+    Engine Driver will use wiThottle by default.  If you wish to use native DCC-EX commands
+    you must change the Engine Driver preference. <br />
+    If you use the native DCC-EX commands an additional menu item (DCC-EX) will be available for
+    programming CVs and other functions. <br />
+    Note: If you connect the EX-CommandStation via JMRI, you must use wiThrottle, and therefor the
+    additional features will not be available.</p>
 <h3>Operation:</h3>
 <p>On your phone, start the Engine Driver app and wait for your server's address to show up in
     "Discovered Services".</p>

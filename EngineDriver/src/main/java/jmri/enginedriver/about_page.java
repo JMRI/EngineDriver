@@ -58,8 +58,13 @@ public class about_page extends AppCompatActivity {
         s = "EngineDriver:" + mainapp.appVersion;
         if (mainapp.getHostIp() != null) {
             // WiT info
-            if (mainapp.getWithrottleVersion() != 0.0) {
-                s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
+            if (!mainapp.isDCCEX) {
+                if (mainapp.getWithrottleVersion() != 0.0) {
+                    s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
+                    s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
+                }
+            } else {
+                s += ", DCC-EX CS:v" + mainapp.getDCCEXVersion();
                 s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
             }
             s += String.format(", Host:%s", mainapp.getHostIp());

@@ -208,12 +208,51 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/dexc_programmingCommonCvsLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:background="#00000000"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".2"
+                    android:padding="2sp"
+                    android:layout_marginBottom="2sp"
+                    android:text="@string/DCCEXcommonCvsLabel"
+                    android:textSize="12sp"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end" />
+
+                <Spinner
+                    android:id="@+id/dexc_dcc_cv_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:text=""
+                    android:layout_weight=".8"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
                 android:id="@+id/dexc_DCCEXtrackLinearLayout"
                 android:layout_width="fill_parent"
-                android:layout_height="0sp"
+                android:layout_height="120sp"
                 android:layout_margin="0sp"
                 android:padding="5sp"
-                android:layout_weight=".3"
                 android:weightSum="1"
                 android:orientation="horizontal"
                 tools:ignore="NestedWeights">
@@ -675,11 +714,10 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="0sp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
                 android:background="#00000000"
                 android:orientation="horizontal"
-                android:layout_weight=".1"
                 android:weightSum="1">
 
                 <TextView
@@ -721,7 +759,7 @@
                     android:text="@string/DCCEXsendCommandButtonLabel" />
 
                 <TableLayout
-                    android:id="@+id/gamepad_buttons_extra"
+                    android:id="@+id/dexc_commandsExtraButtonsLayout"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -754,58 +792,34 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8sp"
-                android:background="#888888"
-                android:orientation="vertical" />
-
-            <LinearLayout
-                android:id="@+id/dexc_programmingCommonCvsLayout"
-                android:layout_width="fill_parent"
+                android:id="@+id/dexc_DCCEXwriteInfoLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2sp"
+                android:layout_marginTop="0sp"
                 android:background="#00000000"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="vertical">
 
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".7"
-                    android:padding="2sp"
-                    android:layout_marginBottom="2sp"
-                    android:text="@string/DCCEXcommonCvsLabel"
-                    android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="6sp"
+                    android:background="#888888"
+                    android:orientation="vertical" />
 
                 <TextView
                     android:id="@+id/dexc_DCCEXwriteInfoLabel"
                     style="?attr/floating_text_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="4sp"
-                    android:layout_marginBottom="2sp"
-                    android:layout_weight=".3"
+                    android:layout_marginTop="1sp"
+                    android:layout_marginBottom="1sp"
                     android:padding="2sp"
                     android:text=""
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
-
-            <Spinner
-                android:id="@+id/dexc_dcc_cv_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="none"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="0dp"
-                android:paddingBottom="2dp"
-                android:text=""
-                tools:ignore="RtlHardcoded" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
