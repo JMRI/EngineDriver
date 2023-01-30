@@ -961,5 +961,32 @@
     <string name="TtsGamepadTestSpeedZero">Null</string>
     <string name="prefGamePadDoublePressStopTitle">Double Press Stop -Aktion</string>
     <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
+    <string name="prefDCCEXSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
+    <string name="prefDCCEXTitle">Verwenden Sie native DCC-EX-Befehle</string>
+    <string name="useProtocolDCCEX">Verwenden Sie native DCC-EX-Befehle (nicht withrottle)</string>
+    <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
+    <string name="prefDCCEXconnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
+    <string name="prefDCCEXconnectionOptionTitle">Protokolloption anzeigen</string>
+    <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den ECC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
+    <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
+    <string name="DCCEXactionTypeLabel">Handlung</string>
+    <string name="DCCEXclearCommands">Klar</string>
+    <string name="DCCEXconnectionOptionTitle">Verbindungsprotokoll</string>
+    <string name="DCCEXFailed">Aktion: fehlgeschlagen</string>
+    <string name="DCCEXnextCommandButtonLabel">Nächste</string>
+    <string name="DCCEXpreviousCommandButtonLabel">Frühere</string>
+    <string name="DCCEXreadAddressButtonLabel">Lesen</string>
+    <string name="DCCEXrouteHandoff">Weiterleiten</string>
+    <string name="DCCEXrouteSet">Satz</string>
+    <string name="DCCEXsendCommandButtonLabel">Senden</string>
+    <string name="DCCEXsetTrackButtonLabel">Satz</string>
+    <string name="DCCEXSucceeded">Aktion erfolgreich</string>
+    <string name="DCCEXturnoutClosed">Abgeschlossen</string>
+    <string name="DCCEXturnoutInconsistent">Inkonsistent</string>
+    <string name="DCCEXturnoutThrown">Geworfen</string>
+    <string name="DCCEXturnoutUnknown">Unbekannt</string>
+    <string name="DCCEXwriteAddressButtonLabel">Schreiben</string>
+    <string name="DCCEXwriteAddressLabel">DCC Adresse</string>
+    <string name="DCCEXwriteCvValueLabel">Wert</string>
 
 </resources>

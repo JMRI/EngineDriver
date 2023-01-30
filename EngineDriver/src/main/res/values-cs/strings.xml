@@ -1147,5 +1147,32 @@
     <string name="TtsGamepadTestSpeedZero">Nula</string>
     <string name="prefGamePadDoublePressStopSummary">Při stisknutí libovolného tlačítka vyberte akci, které je nakonfigurováno jako „Stop“</string>
     <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
+    <string name="prefDCCEXSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
+    <string name="prefDCCEXTitle">Použijte nativní příkazy DCC-EX</string>
+    <string name="useProtocolDCCEX">Použijte nativní příkazy DCC-EX (nikoli srottle)</string>
+    <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
+    <string name="prefDCCEXconnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
+    <string name="prefDCCEXconnectionOptionTitle">Zobrazit možnost protokolu</string>
+    <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku ECC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
+    <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
+    <string name="DCCEXactionTypeLabel">Akce</string>
+    <string name="DCCEXclearCommands">Průhledná</string>
+    <string name="DCCEXconnectionOptionTitle">Protokol připojení</string>
+    <string name="DCCEXFailed">Akce selhala</string>
+    <string name="DCCEXnextCommandButtonLabel">další</string>
+    <string name="DCCEXpreviousCommandButtonLabel">Předchozí</string>
+    <string name="DCCEXreadAddressButtonLabel">Číst</string>
+    <string name="DCCEXrouteHandoff">Ruce pryč</string>
+    <string name="DCCEXrouteSet">Soubor</string>
+    <string name="DCCEXsendCommandButtonLabel">Poslat</string>
+    <string name="DCCEXsetTrackButtonLabel">Soubor</string>
+    <string name="DCCEXSucceeded">Akce uspěla</string>
+    <string name="DCCEXturnoutClosed">ZAVŘENO</string>
+    <string name="DCCEXturnoutInconsistent">Nekonzistentní</string>
+    <string name="DCCEXturnoutThrown">Hodil</string>
+    <string name="DCCEXturnoutUnknown">Neznámý</string>
+    <string name="DCCEXwriteAddressButtonLabel">Psát si</string>
+    <string name="DCCEXwriteAddressLabel">Adresa DCC</string>
+    <string name="DCCEXwriteCvValueLabel">Hodnota</string>
 
 </resources>

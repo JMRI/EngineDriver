@@ -1013,6 +1013,9 @@ public class dcc_ex extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
             }
 
+            dccCvsIndex = 0;
+            dccExCommonCvsSpinner.setSelection(dccCvsIndex);
+
             refreshDCCEXview();
             refreshDCCEXtracksView();
         }

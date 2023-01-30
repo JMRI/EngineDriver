@@ -69,7 +69,7 @@
     <string name="reverse">Indietro</string>
     <string name="none">Niente</string>
     <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
-    <string name="copy_function_labels">Copiare Etichette dall\'Elenco</string>
+    <string name="copy_function_labels">Copiare Etichette dall\\\'Elenco</string>
     <string name="fb_header">Modifica Funzioni</string>
 
     <string name="fbResetFunctionLabels">Resettare Tutto</string>
@@ -895,6 +895,33 @@
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
     <string name="prefGamePadDoublePressStopTitle">Azione di arresto a doppia stampa</string>
-    <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \\\'Stop\\\'</string>
+    <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \'Stop\'</string>
+    <string name="prefDCCEXSummary">Utilizzare i comandi DCC-EX nativi invece di Withrottle per tutte le connessioni. \nNOTA: non avrà effetto fino a quando non riavvia il driver del motore e si connette a un server.</string>
+    <string name="prefDCCEXTitle">Usa i comandi DCC-Ex nativi</string>
+    <string name="useProtocolDCCEX">Usa i comandi DCC-EX nativi (non withrottle)</string>
+    <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
+    <string name="prefDCCEXconnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
+    <string name="prefDCCEXconnectionOptionTitle">Mostra l\'opzione protocollo</string>
+    <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo ECC-EX. (Solo per connessioni DCC-Ex native.)</string>
+    <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
+    <string name="DCCEXactionTypeLabel">Azione</string>
+    <string name="DCCEXclearCommands">Chiaro</string>
+    <string name="DCCEXconnectionOptionTitle">Protocollo di connessione</string>
+    <string name="DCCEXFailed">L\'azione non è riuscita</string>
+    <string name="DCCEXnextCommandButtonLabel">Prossimo</string>
+    <string name="DCCEXpreviousCommandButtonLabel">Prima</string>
+    <string name="DCCEXreadAddressButtonLabel">Leggi</string>
+    <string name="DCCEXrouteHandoff">Giù le mani</string>
+    <string name="DCCEXrouteSet">Impostare</string>
+    <string name="DCCEXsendCommandButtonLabel">Inviare</string>
+    <string name="DCCEXsetTrackButtonLabel">Impostare</string>
+    <string name="DCCEXSucceeded">L\'azione è riuscita</string>
+    <string name="DCCEXturnoutClosed">Chiuso</string>
+    <string name="DCCEXturnoutInconsistent">Incoerente</string>
+    <string name="DCCEXturnoutThrown">Gettato</string>
+    <string name="DCCEXturnoutUnknown">Sconosciuto</string>
+    <string name="DCCEXwriteAddressButtonLabel">Scrivi</string>
+    <string name="DCCEXwriteAddressLabel">Indirizzo DCC</string>
+    <string name="DCCEXwriteCvValueLabel">Valore</string>
 
 </resources>

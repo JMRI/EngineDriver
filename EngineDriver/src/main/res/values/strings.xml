@@ -1238,7 +1238,7 @@
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the wiThrottle protocol.</string>
 
     <string name="prefDCCEXconnectionOptionTitle">Show protocol option</string>
-    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen.\</string>
+    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen.</string>
     <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
 
     <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the ECC-EX screen.\n(For native DCC-EX connections only.)</string>
@@ -1271,8 +1271,8 @@
     <string name="directionIndicatorForward" translatable="false">▲ </string>  <!-- DO NOT TRANSLATE -->
     <string name="directionIndicatorReverse" translatable="false">▼ </string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="DCCEXrouteSet" >Set</string>
-    <string name="DCCEXrouteHandoff" >HandOff</string>
+    <string name="DCCEXrouteSet">Set</string>
+    <string name="DCCEXrouteHandoff">HandOff</string>
 
     <string name="DCCEXturnoutClosed">Closed</string>
     <string name="DCCEXturnoutThrown">Thrown</string>
@@ -1296,8 +1296,8 @@
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
 
-    <string name="DCCEXSucceeded" >Action Succeeded</string>
-    <string name="DCCEXFailed" >Action Failed</string>
+    <string name="DCCEXSucceeded">Action Succeeded</string>
+    <string name="DCCEXFailed">Action Failed</string>
 
 </resources>
 

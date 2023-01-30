@@ -232,4 +232,9 @@
         <item>no enclavament</item>
     </string-array>
 
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Trilha de programação (modo de serviço)</item>
+        <item>Programa no principal (modo de operação)</item>
+        <item>Gerente de faixa/distrito</item>
+    </string-array>
 </resources>

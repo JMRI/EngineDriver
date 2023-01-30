@@ -448,4 +448,10 @@
         <item>Curseur: cran par cran</item>
         <item>Curseur: plus rapide à 28, 100 et 128 crans</item>
     </string-array>
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Programming Track (Service mode)</item>
+        <item>Program on Main (Operation mode)</item>
+        <item>Track/District Manager</item>
+    </string-array>
 </resources>

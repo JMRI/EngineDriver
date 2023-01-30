@@ -250,4 +250,10 @@
         <item>aggancio</item>
         <item>non Latching</item>
     </string-array>
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Programming Track (Service mode)</item>
+        <item>Program on Main (Operation mode)</item>
+        <item>Track/District Manager</item>
+    </string-array>
 </resources>
