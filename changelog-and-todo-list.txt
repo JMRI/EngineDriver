@@ -7,6 +7,8 @@
  * Prevent some crashes reported to Play Store
  * Support for using the native DCC-EX commands instead of WiThrottle on an EX-Command Station
  * Able to read and write CVs when using native DCC-EX commands
+ * Able to issue DCC-EX commands directly
+ * Able control the Track Manager feature of DCC-EX
  * Correct a misalignment of the touches on all the vertical throttles.
  * Add IoTT Stick to server list on About page
  **Version 2.33.154
