@@ -185,6 +185,8 @@ public class threaded_application extends Application {
     public String client_ssid = "UNKNOWN";    //string of the connected SSID
     public String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
 
+    public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
+
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public boolean prefDCCEX = false;
@@ -203,6 +205,9 @@ public class threaded_application extends Application {
     public String [] rosterLocoNamesDCCEX;  // used to process the roster list
     public String [] rosterLocoFunctionsDCCEX;  // used to process the roster list
     public boolean [] rosterDetailsReceivedDCCEX;  // used to process the roster list
+
+    public int DCCEXpreviousCommandIndex = -1;
+    public ArrayList<String> DCCEXpreviousCommandList = new ArrayList<>();
 
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle

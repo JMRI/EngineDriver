@@ -1241,7 +1241,7 @@
     <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen.</string>
     <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
 
-    <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the ECC-EX screen.\n(For native DCC-EX connections only.)</string>
+    <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the DCC-EX screen.\n(For native DCC-EX connections only.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX button?</string>
 
     <string name="prefHapticFeedbackTitle">Haptic Feedback (Vibration)</string>
@@ -1293,6 +1293,7 @@
     <string name="DCCEXclearCommands">Clear</string>
 
     <string name="DCCEXcommonCvsLabel" >NMRA CVs</string>
+    <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
 

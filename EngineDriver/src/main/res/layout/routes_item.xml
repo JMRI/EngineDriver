@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
@@ -16,21 +17,24 @@
             android:paddingTop="15dp"
             android:paddingBottom="4dp"
             android:text="testing string string string string"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/rt_system_name_hidden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="this is hidden"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/rt_system_name"
             style="?attr/list_id_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="testing string" />
+            android:text="testing string"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
     <Button
@@ -38,7 +42,11 @@
         style="?attr/ed_list_button_style"
         android:layout_width="0dp"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.35"
+        android:layout_weight="0.25"
         android:autoSizeTextType="uniform"
-        android:text="testing" />
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeStepGranularity="1sp"
+        android:text="testing"
+        tools:ignore="HardcodedText,UnusedAttribute" />
 </LinearLayout>

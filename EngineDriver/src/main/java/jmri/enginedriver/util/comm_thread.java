@@ -650,7 +650,26 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX    Route: </START id>      Automation: </START id addr>
             String systemName = cmd.substring(1);
-            String msgTxt = "</START " + systemName + ">";
+            String msgTxt = "</START";
+            try {
+                String whichLoco = "";
+                int type = -1;
+                whichLoco = mainapp.getConsist(mainapp.whichThrottleLastTouch).getLeadAddr();
+                if (whichLoco.length()>0) {
+                    String routeType = "";
+                    int routeId = Integer.parseInt(systemName);
+                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
+                        if (mainapp.routeIDsDCCEX[i]==routeId) {
+                            routeType = mainapp.routeTypesDCCEX[i];
+                            break;
+                        }
+                    }
+                    if (routeType.equals("A")) // automation
+                       msgTxt = msgTxt + " " + whichLoco.substring(1);
+                }
+            } catch (Exception ignored) {
+            }
+            msgTxt = msgTxt + " " + systemName + ">";
             wifiSend(msgTxt);
 //            Log.d("Engine_Driver", "comm_thread.sendRoute DCC-EX: " + msgTxt);
         }
@@ -1156,8 +1175,13 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'p': // power response
+                            String oldState = mainapp.power_state;
                             mainapp.power_state = responseStr.substring(2, 3);
-                            responseStr = "PPA" + responseStr.charAt(2);
+                            if (mainapp.power_state.equals(oldState)) {
+                                skipAlert = true;
+                            } else {
+                                responseStr = "PPA" + responseStr.charAt(2);
+                            }
                             break;
 
                         case 'j': //roster, turnouts / routes lists

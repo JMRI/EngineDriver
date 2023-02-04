@@ -353,7 +353,6 @@ public class throttle_switching_left_or_right extends throttle {
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
-                // whichVolume = 'S'; //set the next throttle to use volume control
                 tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
             }
 

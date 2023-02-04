@@ -21,7 +21,12 @@
     <li>Corrigez le mode de jeu Android pour GamePads</li>
     <li>Prise en charge des cadrans de volume USB comme type de manche de jeu</li>
     <li>Préférence pour définir ce qu'une deuxième appuyez sur le bouton d'arrêt sur une manette de jeu</li>
-    <li>Améliorations quand bascule entre affichages sur écran des préférences</li>
+    <li>Empêcher certains accidents signalés pour jouer Store</li>
+    <li>Option pour utiliser le protocole de commande DCC-EX natif au lieu de Withrottle sur les ex-commandes</li>
+    <li>Capable de lire et d'écrire des CV lors de l'utilisation du protocole de commande DCC-EX natif le DCC-EX</li>
+    <li>Capable d'émettre des commandes DCC-EX directement</li>
+    <li>Contrôler la fonctionnalité du gestionnaire de piste de DCC-EX</li>
+    <li>Corrigez un désalignement des touches sur toutes les throttes verticaux</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
@@ -55,6 +60,15 @@
 <p>Brancher le module WiFi MRC, et vérifier que votre terminal se connecte sur son réseau WiFi et obtient une adresse IP.</p>
 <h3>Prérequis (pourLnWi Digitrax):</h3>
 <p>Brancher le LnWi, et vérifier que votre terminal se connecte sur son réseau LnWi et obtiend une adresse IP.</p>
+<h3>Prérequis (pour DCC-EX ex-CommandStation):</h3>
+<p>Le conducteur du moteur peut se connecter directement aux ex-commandes DCC-EX, qui sont en mode station ou
+    Mode de point d'accès, en utilisant le protocole Withrottle ou le protocole de commande DCC-EX natif.
+    Le pilote du moteur utilisera Withottle par défaut. Si vous souhaitez utiliser les commandes DCC-EX natives
+    Vous devez modifier la préférence du conducteur du moteur. <br />
+    Si vous utilisez les commandes DCC-EX natives, un élément de menu supplémentaire (DCC-EX) sera disponible pour
+    Programmation CVS et autres fonctions. <br />
+    Remarque: Si vous connectez l'ex-commandite via JMRI, vous devez utiliser avec withrottle, et donc le
+    Des fonctionnalités supplémentaires ne seront pas disponibles.</p>
 <h3>Opérations:</h3>
 <p>Sur votre téléphone, démarrer l application Engine Driver et attendre de voir apparaitre l adresse de votre serveur dans les "Services Découverts".</p>
 <p>Clicker sur l adresse correspondant à votre réseau, ou bien entrer adresse IP et n° de port de votre serveur WiThrottle

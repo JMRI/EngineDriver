@@ -233,8 +233,8 @@
     </string-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
-        <item>Programming Track (Service mode)</item>
-        <item>Program on Main (Operation mode)</item>
+        <item>Track de programación (modo de servicio)</item>
+        <item>Programa en Main (modo de operación)</item>
         <item>Track/District Manager</item>
     </string-array>
 </resources>

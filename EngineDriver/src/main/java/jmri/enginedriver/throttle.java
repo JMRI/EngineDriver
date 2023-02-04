@@ -1884,9 +1884,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case SPEED_COMMAND_FROM_BUTTONS:
                 if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE) {
                     speedUpdateAndNotify(whichThrottle, speed);
+                    mainapp.whichThrottleLastTouch = whichThrottle;
                 } else {
                     if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE) {
                         speedChangeAndNotify(whichThrottle, speed);
+                        mainapp.whichThrottleLastTouch = whichThrottle;
                     } else {
                         if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
                             isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
@@ -1933,6 +1935,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if ( (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE)
                         || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_ZERO) ){
                     speedChangeAndNotify(whichThrottle, -prefSpeedButtonsSpeedStep);
+                    mainapp.whichThrottleLastTouch = whichThrottle;
                 } else {
                     int targetSpeed = 0;
                     if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_TO_RETURN) {
@@ -1980,9 +1983,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case SPEED_COMMAND_FROM_VOLUME:
                 speedChangeAndNotify(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
+                mainapp.whichThrottleLastTouch = whichThrottle;
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
@@ -1999,6 +2004,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE)
                         || (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ){
                     speedChangeAndNotify(whichThrottle, prefSpeedButtonsSpeedStep);
+                    mainapp.whichThrottleLastTouch = whichThrottle;
                 } else {
                     int targetSpeed = 0;
                     if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_TO_RETURN) {
@@ -2036,9 +2042,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case SPEED_COMMAND_FROM_VOLUME:
                 speedChangeAndNotify(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
+                mainapp.whichThrottleLastTouch = whichThrottle;
                 speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
                 break;
         }
@@ -2854,6 +2862,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (getConsist(whichT).isActive()) { // found next active throttle
                     whichVolume = whichT;
                     setVolumeIndicator();
+                    mainapp.whichThrottleLastTouch = whichT;
                     break;  // done
                 } else {                            // move to next throttle
                     i++;
@@ -2876,6 +2885,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     setSelectedLocoAdditionalIndicator(whichThrottle, true);
                 }
             }
+            mainapp.whichThrottleLastTouch = whichThrottle;
         }
     }
 
@@ -3660,6 +3670,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                     } else {
                         whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to control... and use that one
+                        mainapp.whichThrottleLastTouch = whichThrottle;
                     }
 
                     boolean isActive = getConsist(whichThrottle).isActive();
@@ -3785,6 +3796,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                     } else {
                         whichThrottle = whichVolume;  // work out which throttle the volume keys are currently set to contol... and use that one
+                        mainapp.whichThrottleLastTouch = whichThrottle;
                     }
 
                     boolean isActive = getConsist(whichThrottle).isActive();
@@ -5186,6 +5198,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             if (getConsist(whichThrottle).isActive() && !(IS_ESU_MCII && isEsuMc2Stopped)) { // only assign if Active and, if an ESU MCII not in Stop mode
                                 whichVolume = whichThrottle;
+                                mainapp.whichThrottleLastTouch = whichThrottle;
                                 set_labels();
                             }
                             if (IS_ESU_MCII && isEsuMc2Stopped) {

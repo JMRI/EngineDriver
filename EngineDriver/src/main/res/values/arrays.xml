@@ -1220,6 +1220,55 @@
         <item>95</item>
     </string-array>
 
+    <string-array name="dccExCommonCommandsEntries">  <!-- display version -->
+        <item>&lt;select&gt;</item>
+        <item>Join MAIN=PROG</item>
+        <item>UnJoin PROG</item>
+        <item>CS Status</item>
+        <item>All Sensors</item>
+        <item>All Turnouts/Points</item>
+        <item>All Outputs</item>
+        <item>Track Manager</item>
+        <item>Route/Automation {loco} {id}</item>
+        <item>Kill all Automations</item>
+        <item>ACK Limit {mA}</item>
+        <item>ACK Min {µS}</item>
+        <item>ACK Max {µS}</item>
+        <item>Reboot/Reset CS</item>
+    </string-array>
+    <string-array name="dccExCommonCommandsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item />
+        <item>1 JOIN</item>
+        <item>1 PROG</item>
+        <item>s</item>
+        <item>S</item>
+        <item>T</item>
+        <item>Q</item>
+        <item>=</item>
+        <item>/ START</item>
+        <item>/ KILL ALL</item>
+        <item>D ACK LIMIT</item>
+        <item>D ACK MIN</item>
+        <item>D ACK MAX</item>
+        <item>D RESET</item>
+    </string-array>
+    <integer-array name="dccExCommonCommandsHasParameters" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item>
+        <item>0</item>  // 1 JOIN
+        <item>0</item>  // 1 PROG
+        <item>0</item>  // s
+        <item>0</item>  // S
+        <item>0</item>  // T
+        <item>0</item>  // Q
+        <item>0</item>  // =
+        <item>1</item>  // /START
+        <item>0</item>  // /KILL ALL
+        <item>1</item>  // D ACK LIMIT
+        <item>1</item>  // D ACK MIN
+        <item>1</item>  // D ACK MAX
+        <item>0</item>  // D RESET
+    </integer-array>
+
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Programming Track (Service mode)</item>
         <item>Program on Main (Operation mode)</item>
@@ -1236,7 +1285,7 @@
         <item>DCC MAIN</item>
         <item>DCC PROG</item>
         <item>DC</item>
-        <item>DC(X) reversed polarity</item>
+        <item>DC reversed polarity (DCX)</item>
     </string-array>
     <string-array name="dccExTrackTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
