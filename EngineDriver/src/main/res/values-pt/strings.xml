@@ -899,6 +899,33 @@
     <string name="TtsGamepadTestSpeedMax">Máx</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
     <string name="prefGamePadDoublePressStopTitle">Ação dupla de stop stop</string>
-    <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \\\'Stop\\\'</string>
+    <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
+    <string name="prefDCCEXSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
+    <string name="prefDCCEXTitle">Use comandos nativos do DCC-EX</string>
+    <string name="useProtocolDCCEX">Use comandos nativos do DCC-EX (não Withrottle)</string>
+    <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
+    <string name="prefDCCEXconnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
+    <string name="prefDCCEXconnectionOptionTitle">Mostrar opção de protocolo</string>
+    <string name="prefActionBarShowDccExButtonSummary">Mostrar botão na barra de ação para acessar a tela ECC-EX. (Somente para conexões nativas do DCC-EX.)</string>
+    <string name="prefActionBarShowDccExButtonTitle">Botão dcc-ex?</string>
+    <string name="DCCEXactionTypeLabel">Ação</string>
+    <string name="DCCEXclearCommands">Claro</string>
+    <string name="DCCEXconnectionOptionTitle">Protocolo de conexão</string>
+    <string name="DCCEXFailed">Ação: falhou</string>
+    <string name="DCCEXnextCommandButtonLabel">Próximo</string>
+    <string name="DCCEXpreviousCommandButtonLabel">Prévio</string>
+    <string name="DCCEXreadAddressButtonLabel">Ler</string>
+    <string name="DCCEXrouteHandoff">Não interferir</string>
+    <string name="DCCEXrouteSet">Definir</string>
+    <string name="DCCEXsendCommandButtonLabel">Mandar</string>
+    <string name="DCCEXsetTrackButtonLabel">Definir</string>
+    <string name="DCCEXSucceeded">A ação foi bem -sucedida</string>
+    <string name="DCCEXturnoutClosed">Fechadas</string>
+    <string name="DCCEXturnoutInconsistent">Inconsistente</string>
+    <string name="DCCEXturnoutThrown">Jogado</string>
+    <string name="DCCEXturnoutUnknown">Desconhecido</string>
+    <string name="DCCEXwriteAddressButtonLabel">Escreva</string>
+    <string name="DCCEXwriteAddressLabel">Endereço DCC</string>
+    <string name="DCCEXwriteCvValueLabel">Valor</string>
 
 </resources>

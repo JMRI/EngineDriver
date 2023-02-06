@@ -35,21 +35,22 @@
 
                 <TextView
                     style="?attr/floating_text_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:padding="1sp"
+                    android:paddingTop="1sp"
+                    android:padding="0sp"
                     android:layout_weight=".15"
                     android:text="@string/DCCEXactionTypeLabel"
                     android:textAlignment="viewEnd"
                     android:gravity="end"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/dexc_action_type_list"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="none"
-                    android:paddingLeft="20dp"
+                    android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="2dp"
                     android:text=""
@@ -272,8 +273,7 @@
                     android:layout_width="0sp"
                     android:layout_height="fill_parent"
                     android:orientation="vertical"
-                    android:weightSum="1"
-                    android:layout_weight=".7">
+                    android:layout_weight=".90">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -289,7 +289,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -311,7 +310,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -321,7 +320,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -342,7 +341,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -364,7 +362,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -374,7 +372,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -395,7 +393,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -417,7 +414,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -427,7 +424,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -448,7 +445,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -470,7 +466,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -480,7 +476,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -501,7 +497,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -523,7 +518,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -533,7 +528,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -554,7 +549,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -576,7 +570,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -586,7 +580,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -607,7 +601,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -629,7 +622,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -639,7 +632,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -660,7 +653,6 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:layout_weight=".25"
                             android:weightSum="1" >
 
                             <TextView
@@ -682,7 +674,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".45"
+                                android:layout_weight=".7"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -692,7 +684,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="8sp"
                                 android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
+                                android:layout_weight=".25"
                                 android:inputType="number"
                                 android:maxLength="5"
                                 android:paddingRight="8sp"
@@ -715,9 +707,13 @@
                     style="?attr/ed_small_button_style"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".15"
-                    android:padding="4sp"
-                    android:text="@string/DCCEXsetTrackButtonLabel" />
+                    android:layout_weight=".1"
+                    android:padding="0sp"
+                    android:autoSizeMinTextSize="8sp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeStepGranularity="1sp"
+                    android:text="@string/DCCEXsetTrackButtonLabel"
+                    tools:ignore="UnusedAttribute" />
 
 
             </LinearLayout>
@@ -800,6 +796,47 @@
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dexc_CommonCommandsLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:layout_marginLeft="20sp"
+                android:background="?attr/ed_background_highlight_secondary"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:padding="2sp"
+                    android:layout_marginBottom="2sp"
+                    android:text="@string/DCCEXcommonCommnadsLabel"
+                    android:textSize="12sp"
+                    android:textAlignment="viewEnd"
+                    android:gravity="end"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+                <Spinner
+                    android:id="@+id/dexc_common_commands_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="none"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:text=""
+                    android:layout_weight=".7"
+                    tools:ignore="RtlHardcoded" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/dexc_DCCEXwriteInfoLayout"
@@ -903,14 +940,14 @@
 
             <Button
                 android:id="@+id/dcc_ex_button_close"
-                style="?attr/ed_normal_button_style"
+                style="?attr/ed_small_button_style"
                 android:layout_gravity="left"
                 android:text="@string/logviewerClose"
                 tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXclearCommandsButton"
-                    style="?attr/ed_normal_button_style"
+                    style="?attr/ed_small_button_style"
                     android:layout_gravity="left"
                     android:text="@string/DCCEXclearCommands"
                     tools:ignore="RtlHardcoded"

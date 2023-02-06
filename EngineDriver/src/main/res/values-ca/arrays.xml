@@ -232,4 +232,9 @@
         <item>no enclavament</item>
     </string-array>
 
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Pista de programació (mode de servei)</item>
+        <item>Programa al principal (mode de funcionament)</item>
+        <item>Gerent de pista/districte</item>
+    </string-array>
 </resources>

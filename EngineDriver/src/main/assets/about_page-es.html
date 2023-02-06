@@ -21,6 +21,12 @@
     <li>Arreglar el modo de juego de Android para gamepads</li>
     <li>Soporte para los diales de volumen USB como tipo de gamepad</li>
     <li>Preferencia por configurar lo que un segundo presione del botón de parada en un gamepad hace</li>
+    <li>Evite que algunos accidentes se informaran a Play Store</li>
+    <li>Opción para usar el protocolo de comando DCC-EX nativo en lugar de Withrottle en ex comandaciones</li>
+    <li>Capaz de leer y escribir CVS al usar nativo del protocolo de comando DCC-EX</li>
+    <li>Capaz de emitir comandos DCC-EX directamente</li>
+    <li>Capaz de controlar la función de administrador de pista de DCC-EX</li>
+    <li>Corregir una desalineación de los toques de todos los aceleradores verticales</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
@@ -53,6 +59,15 @@
 <p>Conecta al módulo MRC WiFi, y verifica que el dispositivo puede conectar a la red y obtiene una dirección IP.</p>
 <h3>Prerequisitos (para Digitrax LnWi):</h3>
 <p>Conecta a LnWi, y verifica que el dispositivo puede conectar a la red y obtiene una dirección IP.</p>
+<h3>Prerrequisitos (para DCC-EX Ex-Commandstation):</h3>
+<p>El controlador del motor puede conectarse directamente a las ex comandantes de DCC-EX, que están en modo de estación o
+    Modo de punto de acceso, utilizando el protocolo WitroTtle o el protocolo de comando DCC-EX nativo.
+    El controlador del motor usará Withottle de forma predeterminada. Si desea usar comandos nativos de DCC-EX
+    Debe cambiar la preferencia del controlador del motor. <br />
+    Si utiliza los comandos nativos de DCC-EX, un elemento de menú adicional (DCC-EX) estará disponible para
+    Programación de CVS y otras funciones. <br />
+    Nota: Si conecta la ex comanducción a través de JMRI, debe usar Withrottle y, por lo tanto, para el
+    No estarán disponibles características adicionales.</p>
 <h3>Modo de operacioón:</h3>
 <p>En el teléfono, inicia la app Engine Driver y espera a que se muestre la dirección de tu servidor en la
     sección de "Servidores Encontrados".</p>

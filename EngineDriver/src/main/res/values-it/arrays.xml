@@ -250,4 +250,10 @@
         <item>aggancio</item>
         <item>non Latching</item>
     </string-array>
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Traccia di programmazione (modalità di servizio)</item>
+        <item>Programma su Main (Modalità operativa)</item>
+        <item>Manager di pista/distrettuale</item>
+    </string-array>
 </resources>

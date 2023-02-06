@@ -21,6 +21,12 @@
     <li>Corregiu el mode de joc d'Android per a GamePads</li>
     <li>Suport per al volum USB Dials com a tipus GamePad</li>
     <li>Preferència per configurar el que fa un segon premsa del botó STOP en un GamePad</li>
+    <li>Eviteu que alguns accidents es diuen que Play Store</li>
+    <li>Opció per utilitzar el protocol de comandament natiu DCC-EX en lloc de WithRottle a les ex-comandaments</li>
+    <li>Capaç de llegir i escriure CVS quan utilitzeu el protocol de comandament DCC-EX</li>
+    <li>És capaç d'emetre les ordres DCC-EX directament</li>
+    <li>Control capaç de la funció de gestor de pista de DCC-EX</li>
+    <li>Corregiu una desalineació dels tocs a tots els acceleradors verticals</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
@@ -57,6 +63,15 @@
 <h3>Mode de precedir:</h3>
 <p>En el telèfon, inicia l'app Engine Driver i espera a que es mostri l'adreça del teu servidor en la
     secció de "Servidors Trobats".</p>
+<h3>Requisits previs (per a DCC-EX Ex-CommandStation):</h3>
+<p>El controlador del motor es pot connectar directament a les excomandstacions DCC-EX, que es troben en mode d'estació o
+    Mode del punt d'accés, utilitzant el protocol WithRottle o el protocol d'ordres DCC-EX natiu.
+    El controlador del motor utilitzarà de manera predeterminada amb el botxí. Si voleu utilitzar ordres natives DCC-EX
+    Heu de canviar la preferència del controlador del motor. <br />
+    Si utilitzeu les ordres natives DCC-EX, hi haurà disponible un element de menú addicional (DCC-EX)
+    CVS de programació i altres funcions. <br />
+    NOTA: Si connecteu l'excomandstation mitjançant JMRI, heu d'utilitzar WithRottle i, per tant
+    No hi haurà funcions addicionals.</p>
 <p>Fes clic en Servidors Trobats, o pots entrar directament l'adreça IP i el port del tu servidor WiThrottle.
     (Utilizant els valors mostrats en la finestra del WiThrottle.)<br/>Desitges "Auto Connectar al primer
     Servidor de WiThrottle?" ho pots activar en les preferències. Està disponible en el servidor "demo"
