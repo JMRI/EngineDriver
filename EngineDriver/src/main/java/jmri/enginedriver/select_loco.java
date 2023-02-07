@@ -191,6 +191,8 @@ public class select_loco extends AppCompatActivity {
 
     String overrideThrottleName;
 
+    private int maxAddr = 9999;
+
     private Toolbar toolbar;
 
     // populate the on-screen roster view from global hashmap
@@ -1421,6 +1423,8 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
+        if (mainapp.isDCCEX) maxAddr = 10239;  // DCC-EX supports the full range
+
         set_labels();
         overrideThrottleName = "";
 
@@ -1716,6 +1720,14 @@ public class select_loco extends AppCompatActivity {
             try {
                 addr = Integer.parseInt(txt);
             } catch (NumberFormatException e) {
+                la.setText(""); //clear the bad entry
+            }
+
+            if (addr>maxAddr) {
+                addr = -1;
+                Toast.makeText(getApplicationContext(),
+                        getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr))
+                        , Toast.LENGTH_LONG).show();
                 la.setText(""); //clear the bad entry
             }
         }

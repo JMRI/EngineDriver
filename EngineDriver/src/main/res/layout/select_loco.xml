@@ -226,7 +226,7 @@
             android:hint="@string/select_loco_address"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
-            android:maxLength="4"
+            android:maxLength="5"
             android:shadowColor="#FFFFFFFF"
             android:shadowDx="1"
             android:shadowDy="1"
