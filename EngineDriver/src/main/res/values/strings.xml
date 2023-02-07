@@ -897,6 +897,7 @@
     <string name="toastRosterHelp">Touch to select a Roster Entry,\n  or change entry method.\nLong press for details.</string>
     <string name="toastConnectionsListHelp">Touch to select a Server,\n  or enter Server Address and Port.\nSwipe Right to remove an entry.</string>
     <string name="toastLocoAlreadySelected">Loco \'%1$s\' already selected</string>
+    <string name="toastAddressExceedsMax">Address \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
     <string name="toastConsistEditHelp">Touch to change facing. Swipe Right to remove an entry.</string>

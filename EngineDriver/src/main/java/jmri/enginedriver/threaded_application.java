@@ -904,7 +904,7 @@ public class threaded_application extends Application {
         return null;
     }
 
-    public int getWhichThrottleFromAddress(String addr_str) {
+    public int getWhichThrottleFromAddress(String addr_str, int startAt) {
 //        if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
 //            addr_str = cvtToAddrP(addr_str);
 //        }
@@ -912,8 +912,8 @@ public class threaded_application extends Application {
         Consist con = null;
         int whichThrottle = -1;
         boolean found = false;
-        if (consists.length>0) {
-            for (int i=0; i<consists.length; i++) {
+        if (consists.length>=startAt) {
+            for (int i=startAt; i<consists.length; i++) {
                 con = mainapp.consists[i];
                 for (Consist.ConLoco l : con.getLocos()) {
                     if (l.getAddress().equals(addr_str)) {
