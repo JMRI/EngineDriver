@@ -489,6 +489,8 @@ public class comm_thread extends Thread {
                     }
                 }
             }
+            wifiSend("<U DISCONNECT>");  // this is not a real command.  just a placeholder that will be ignored by the CS
+            shutdown(true);
         }
     }
 
@@ -1470,9 +1472,58 @@ public class comm_thread extends Thread {
 
     private static void processDCCEXturnouts(String [] args) {
 
-        if ( (args!=null) && (args.length>1)) {
-            if ( ((args.length < 4) || (args[3].charAt(0) != '"')) // turnouts list  <jT id1 id2 id3 ...>
-               &&  !((args.length == 3) || (args[2].charAt(0) == 'X')) ) {   // not... <jT id X>
+        if (args!=null)  {
+            if ( (args.length == 1)  // no Turnouts <jT>
+                    || ((args.length == 4) && ((args[3].charAt(0) == '"') || (args[3].charAt(0) == 'X')) ) ) { // individual turnout  <jT id state "[desc]">
+                boolean ready = true;
+                boolean noTurnouts = false;
+
+                if ( args.length == 1) { // no turnouts
+                    noTurnouts = true;
+                } else {
+                    for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
+                        if (mainapp.turnoutIDsDCCEX[i] == Integer.parseInt(args[1])) {
+                            mainapp.turnoutStatesDCCEX[i] = args[2];
+                            if ((args.length > 3) && (args[3].length() > 2)) {
+                                mainapp.turnoutNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
+                            } else {
+                                mainapp.turnoutNamesDCCEX[i] = "";
+                            }
+                            mainapp.turnoutDetailsReceivedDCCEX[i] = true;
+                            break;
+                        }
+                    }
+                    // check if we have all of them
+                    for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
+                        if (!mainapp.turnoutDetailsReceivedDCCEX[i]) {
+                            ready = false;
+                            break;
+                        }
+                    }
+                }
+                if (ready) {
+                    mainapp.turnoutStringDCCEX = "PTL";
+                    if (!noTurnouts) {
+                        for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
+                            mainapp.turnoutStringDCCEX = mainapp.turnoutStringDCCEX
+                                    + "]\\[" + mainapp.turnoutIDsDCCEX[i]
+                                    + "}|{" + mainapp.turnoutNamesDCCEX[i]
+                                    + "}|{" + (mainapp.turnoutStatesDCCEX[i].equals("T") ? 4 : 2);
+                        }
+                    }
+                    processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
+                    processTurnoutList(mainapp.turnoutStringDCCEX);
+                    mainapp.turnoutStringDCCEX = "";
+                    mainapp.DCCEXlistsRequested++;
+                    Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts complete. Count: " + mainapp.DCCEXlistsRequested);
+                }
+
+            } else { // turnouts list  <jT id1 id2 id3 ...>
+
                 if (mainapp.turnoutStringDCCEX.equals("")) {
                     mainapp.turnoutStringDCCEX = "";
                     mainapp.turnoutIDsDCCEX = new int[args.length - 1];
@@ -1485,54 +1536,60 @@ public class comm_thread extends Thread {
                         wifiSend("<JT " + args[i + 1] + ">");
                     }
                 }
-            } else {  // individual turnout  <jT id state "[desc]">
-                for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                    if (mainapp.turnoutIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                        mainapp.turnoutStatesDCCEX[i] = args[2];
-                        if ( (args.length>3) && (args[3].length()>2) ) {
-                            mainapp.turnoutNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
-                        } else {
-                            mainapp.turnoutNamesDCCEX[i] = "";
-                        }
-                        mainapp.turnoutDetailsReceivedDCCEX[i] = true;
-                        break;
-                    }
-                }
-                // check if we have all of them
-                boolean ready = true;
-                for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                    if (!mainapp.turnoutDetailsReceivedDCCEX[i]) {
-                        ready = false;
-                        break;
-                    }
-                }
-                if (ready) {
-                    mainapp.turnoutStringDCCEX = "PTT";
-                    for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                        mainapp.turnoutStringDCCEX = mainapp.turnoutStringDCCEX
-                                + "]\\[" + mainapp.turnoutIDsDCCEX[i]
-                                + "}|{" + mainapp.turnoutNamesDCCEX[i]
-                                + "}|{" + (mainapp.turnoutStatesDCCEX[i].equals("T") ? 4 : 2);
-                    }
-                    processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
-                    processTurnoutList(mainapp.turnoutStringDCCEX);
-                    mainapp.turnoutStringDCCEX = "";
-                    mainapp.DCCEXlistsRequested++;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts complete. Count: " + mainapp.DCCEXlistsRequested);
-                }
             }
         }
     } // end processDCCEXturnouts()
 
     private static void processDCCEXroutes(String [] args) {
 
-        if ( (args!=null) && (args.length>1)) {
-            if ( ((args.length < 4) || (args[3].charAt(0) != '"'))  // routes list   <jA id1 id2 id3 ...>
-               && !((args.length == 3) || (args[2].charAt(0) == 'X')) ) {  // not... <jA id X>
+        if (args != null)  {
+            if ( (args.length == 1)  // no Turnouts <jT>
+                    || ((args.length == 4) && ((args[3].charAt(0) == '"') || (args[3].charAt(0) == 'X')) ) ) { // individual routes  <jA id type "[desc]">
+
+                boolean ready = true;
+                boolean noRoutes = false;
+
+                if ( args.length == 1) { // no turnouts
+                    noRoutes = true;
+                } else {
+                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
+                        if (mainapp.routeIDsDCCEX[i] == Integer.parseInt(args[1])) {
+                            mainapp.routeTypesDCCEX[i] = args[2];
+                            mainapp.routeNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
+                            mainapp.routeDetailsReceivedDCCEX[i] = true;
+                            break;
+                        }
+                    }
+                    // check if we have all of them
+
+                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
+                        if (!mainapp.routeDetailsReceivedDCCEX[i]) {
+                            ready = false;
+                            break;
+                        }
+                    }
+                }
+                if (ready) {
+                    mainapp.routeStringDCCEX = "PRL";
+                    if (!noRoutes) {
+                        for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
+                            mainapp.routeStringDCCEX = mainapp.routeStringDCCEX
+                                    + "]\\[" + mainapp.routeIDsDCCEX[i]
+                                    + "}|{" + mainapp.routeNamesDCCEX[i]
+                                    + "}|{" + (mainapp.routeTypesDCCEX[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
+                        }
+                    }
+                    processRouteTitles("PRT]\\[Routes}|{Route]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
+                    processRouteList(mainapp.routeStringDCCEX);
+                    mainapp.routeStringDCCEX = "";
+                    mainapp.DCCEXlistsRequested++;
+                    Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + mainapp.DCCEXlistsRequested);
+                }
+
+            } else { // routes list   <jA id1 id2 id3 ...>
+
                 if (mainapp.routeStringDCCEX.equals("")) {
                     mainapp.routeStringDCCEX = "";
                     mainapp.routeIDsDCCEX = new int[args.length - 1];
@@ -1545,39 +1602,6 @@ public class comm_thread extends Thread {
                         mainapp.routeDetailsReceivedDCCEX[i] = false;
                         wifiSend("<JA " + args[i + 1] + ">");
                     }
-                }
-            } else {  // individual route   <jA id type "[description]">
-                for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                    if (mainapp.routeIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                        mainapp.routeTypesDCCEX[i] = args[2];
-                        mainapp.routeNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
-                        mainapp.routeDetailsReceivedDCCEX[i] = true;
-                        break;
-                    }
-                }
-                // check if we have all of them
-                boolean ready = true;
-                for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                    if (!mainapp.routeDetailsReceivedDCCEX[i]) {
-                        ready = false;
-                        break;
-                    }
-                }
-                if (ready) {
-                    mainapp.routeStringDCCEX = "PRL";
-                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                        mainapp.routeStringDCCEX = mainapp.routeStringDCCEX
-                                + "]\\[" + mainapp.routeIDsDCCEX[i]
-                                + "}|{" + mainapp.routeNamesDCCEX[i]
-                                + "}|{" + (mainapp.routeTypesDCCEX[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
-                    }
-                    processRouteTitles("PRT]\\[Routes}|{Route]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
-                    processRouteList(mainapp.routeStringDCCEX);
-                    mainapp.routeStringDCCEX = "";
-                    mainapp.DCCEXlistsRequested++;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + mainapp.DCCEXlistsRequested);
                 }
             }
         }

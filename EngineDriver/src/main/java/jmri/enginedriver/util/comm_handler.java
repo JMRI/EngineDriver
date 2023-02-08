@@ -203,18 +203,22 @@ public class comm_handler extends Handler {
 
             // arg1 = 1 means shutdown with no delays
             if (msg.arg1 == 1) {
-//               commThread.wifiSend("Q");
-//               commThread.shutdown(true);
                commThread.sendDisconnect();
+               commThread.shutdown(false);
             } else {
-               // At this point TA needs to send the quit message to WiT and then shutdown.
-               // However the DISCONNECT message also tells the Throttle activity to release all throttles
-               // and that process can take some time:
-               //  release request messages and possibly zero speed messages need to be sent to WiT
-               //  for each active throttle and WiT will respond with release messages.
-               // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
-               mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1500L, message_type.WIFI_QUIT);
-               if (!mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
+               if (!mainapp.isDCCEX) {
+                  // At this point TA needs to send the quit message to WiT and then shutdown.
+                  // However the DISCONNECT message also tells the Throttle activity to release all throttles
+                  // and that process can take some time:
+                  //  release request messages and possibly zero speed messages need to be sent to WiT
+                  //  for each active throttle and WiT will respond with release messages.
+                  // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
+                  mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1500L, message_type.WIFI_QUIT);
+                  if (!mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
+                     commThread.shutdown(false);
+                  }
+               } else { // for DCC-EX
+                  commThread.sendDisconnect();
                   commThread.shutdown(false);
                }
             }
