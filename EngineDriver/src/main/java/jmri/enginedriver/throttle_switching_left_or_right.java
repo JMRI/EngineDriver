@@ -564,6 +564,9 @@ public class throttle_switching_left_or_right extends throttle {
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
+        //avoid npe
+        if (vsbSwitchingSpeeds == null) return;
+
         if (!newEnabledState) {
                 vsbSwitchingSpeeds[whichThrottle].setProgress(0); // set slider to 0 if disabled
             }

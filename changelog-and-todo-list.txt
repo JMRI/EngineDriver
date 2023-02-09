@@ -1,4 +1,5 @@
 **Version 2.34.160
+ * Prevent some crashes reported to Play Store
 **Version 2.34.156
  * Better sorting of Turnout/Points list where numbers are in the names
  * Fix Android Game mode for gamepads
