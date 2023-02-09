@@ -1,3 +1,4 @@
+**Version 2.34.162
 **Version 2.34.160
  * Prevent some crashes reported to Play Store
 **Version 2.34.156
