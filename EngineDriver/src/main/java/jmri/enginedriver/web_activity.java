@@ -511,6 +511,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     protected void onSaveInstanceState(Bundle outState) {
+        if (webView == null) return;
         super.onSaveInstanceState(outState);
         Bundle bundle = new Bundle();
         webView.saveState(bundle);
@@ -518,6 +519,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     protected void onRestoreInstanceState(@NonNull Bundle state) {
+        if (webView == null) return;
         super.onRestoreInstanceState(state);
         Bundle bundle = new Bundle();
         webView.saveState(bundle);

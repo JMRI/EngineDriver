@@ -1488,7 +1488,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
             int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
 
-            if ((index<fixed.length) && (fixed[index] == 0)) {
+            if ((index >=0) && (index<fixed.length) && (fixed[index] == 0)) {
                 enable = false;
             }
 
@@ -1780,7 +1780,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
-            if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+            if ((key != null) && !prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
                 switch (key) {
                     case "prefImportExport":
                         if (!parentActivity.importExportPreferences.currentlyImporting) {
