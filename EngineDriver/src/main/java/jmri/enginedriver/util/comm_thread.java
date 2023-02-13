@@ -374,7 +374,6 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             if (!address.equals("*")) {
-//                msgTxt = String.format("<t 0 %s 0 1>", address.substring(1));  //add requested loco to this throttle
                 msgTxt = String.format("<t %s>", address.substring(1));  //add requested loco to this throttle
 
                 Consist con = mainapp.consists[whichThrottle];
@@ -426,22 +425,22 @@ public class comm_thread extends Thread {
             msgTxt = String.format("M%s-%s<;>r", mainapp.throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*"));
             mainapp.sendMsgDelay(mainapp.comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
 
-        } else { // DCC-EX
-            if ((addr.length() == 0) || (addr.equals("*"))) { // release all on the throttle
-                if (mainapp.throttleLocoReleaseListDCCEX[whichThrottle] != null) {
-                    for (String addrStr : mainapp.throttleLocoReleaseListDCCEX[whichThrottle]) {
-                        msgTxt = String.format("<- %s>", addrStr.substring(1));
-                        wifiSend(msgTxt);
-                        //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
-                    }
-                }
-            } else {
-                msgTxt = String.format("<- %s>", mainapp.throttleIntToString(whichThrottle));
-                wifiSend(msgTxt);
-            }
-
-//            Log.d("Engine_Driver", "comm_thread.sendReleaseLoco DCC-EX: " + msgTxt);
-        }
+        }  // else { // DCC-EX
+//            if ((addr.length() == 0) || (addr.equals("*"))) { // release all on the throttle
+//                if (mainapp.throttleLocoReleaseListDCCEX[whichThrottle] != null) {
+//                    for (String addrStr : mainapp.throttleLocoReleaseListDCCEX[whichThrottle]) {
+//                        msgTxt = String.format("<- %s>", addrStr.substring(1));
+//                        wifiSend(msgTxt);
+//                        //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
+//                    }
+//                }
+//            } else {
+//                msgTxt = String.format("<- %s>", mainapp.throttleIntToString(whichThrottle));
+//                wifiSend(msgTxt);
+//            }
+//
+////            Log.d("Engine_Driver", "comm_thread.sendReleaseLoco DCC-EX: " + msgTxt);
+//        }
     }
 
     protected void reacquireAllConsists() {
@@ -1199,6 +1198,9 @@ public class comm_thread extends Thread {
                                 case 'R': // roster
                                     skipAlert = processDCCEXroster(args);
                                     break;
+                                case 'C': // fastclock
+                                    processDCCEXfastClock(args);
+                                    return;
                             }
                             break;
 
@@ -1315,10 +1317,14 @@ public class comm_thread extends Thread {
 
                     sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
                     sendJoinDCCEX();
+                    mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
+
                 } else {
                     mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[1]);  //send response to running activities
                 }
-            } // else {} did not succeed
+            }  else {// else {} did not succeed
+                threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.DCCEXrequestLocoIdFailed), Toast.LENGTH_SHORT);
+            }
 
         } else {
             mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[1]);  //send response to running activities
@@ -1470,11 +1476,26 @@ public class comm_thread extends Thread {
         return skipAlert;
     } // end processDCCEXroster()
 
+    private static void processDCCEXfastClock(String [] args) {
+        if (args!=null)  {
+            if (args.length == 3) { // <jC mmmm ss>
+                mainapp.fastClockSeconds = 0L;
+                try {
+                    mainapp.fastClockSeconds = Long.parseLong(args[1]) * 60;
+                    mainapp.alert_activities(message_type.TIME_CHANGED, "");     //tell activities the time has changed
+                } catch (NumberFormatException e) {
+                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + args + "'");
+                }
+            }
+        }
+    }
+
     private static void processDCCEXturnouts(String [] args) {
 
         if (args!=null)  {
             if ( (args.length == 1)  // no Turnouts <jT>
-                    || ((args.length == 4) && ((args[3].charAt(0) == '"') || (args[3].charAt(0) == 'X')) ) ) { // individual turnout  <jT id state "[desc]">
+                    || ((args.length == 3) && ((args[2].charAt(0) == 'C') || (args[2].charAt(0) == 'T') || (args[2].charAt(0) == 'X')) ) // <jT id state>     or <jT id X>
+                    || ((args.length == 4) && (args[3].charAt(0) == '"') ) ) { // individual turnout  <jT id state "[desc]">
                 boolean ready = true;
                 boolean noTurnouts = false;
 
@@ -1517,23 +1538,34 @@ public class comm_thread extends Thread {
                             + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
                     processTurnoutList(mainapp.turnoutStringDCCEX);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
                     mainapp.turnoutStringDCCEX = "";
                     mainapp.DCCEXlistsRequested++;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts complete. Count: " + mainapp.DCCEXlistsRequested);
+
+                    int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
+                    Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts complete. Count: " + count);
+                    mainapp.turnoutsBeingProcessedDCCEX = false;
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
-                if (mainapp.turnoutStringDCCEX.equals("")) {
-                    mainapp.turnoutStringDCCEX = "";
-                    mainapp.turnoutIDsDCCEX = new int[args.length - 1];
-                    mainapp.turnoutNamesDCCEX = new String[args.length - 1];
-                    mainapp.turnoutStatesDCCEX = new String[args.length - 1];
-                    mainapp.turnoutDetailsReceivedDCCEX = new boolean[args.length - 1];
-                    for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        mainapp.turnoutIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
-                        mainapp.turnoutDetailsReceivedDCCEX[i] = false;
-                        wifiSend("<JT " + args[i + 1] + ">");
+                Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts list received.");
+                if (!mainapp.turnoutsBeingProcessedDCCEX) {
+                    mainapp.turnoutsBeingProcessedDCCEX = true;
+                    if (mainapp.turnoutStringDCCEX.equals("")) {
+                        mainapp.turnoutStringDCCEX = "";
+                        mainapp.turnoutIDsDCCEX = new int[args.length - 1];
+                        mainapp.turnoutNamesDCCEX = new String[args.length - 1];
+                        mainapp.turnoutStatesDCCEX = new String[args.length - 1];
+                        mainapp.turnoutDetailsReceivedDCCEX = new boolean[args.length - 1];
+                        for (int i = 0; i < args.length - 1; i++) { // first will be blank
+                            mainapp.turnoutIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
+                            mainapp.turnoutDetailsReceivedDCCEX[i] = false;
+                            wifiSend("<JT " + args[i + 1] + ">");
+                        }
+
+                        int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
+                        Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts list received. Count: " + count);
                     }
                 }
             }
@@ -1544,7 +1576,8 @@ public class comm_thread extends Thread {
 
         if (args != null)  {
             if ( (args.length == 1)  // no Turnouts <jT>
-                    || ((args.length == 4) && ((args[3].charAt(0) == '"') || (args[3].charAt(0) == 'X')) ) ) { // individual routes  <jA id type "[desc]">
+                    || ((args.length == 3) && ((args[2].charAt(0) == 'R') || (args[2].charAt(0) == 'A') || (args[2].charAt(0) == 'X')) )  // <jA id type>  or <jA id X>
+                    || ((args.length == 4) && (args[3].charAt(0) == '"') ) ) { // individual routes  <jA id type "[desc]">
 
                 boolean ready = true;
                 boolean noRoutes = false;
@@ -1583,24 +1616,35 @@ public class comm_thread extends Thread {
                             + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
                     processRouteList(mainapp.routeStringDCCEX);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
                     mainapp.routeStringDCCEX = "";
                     mainapp.DCCEXlistsRequested++;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + mainapp.DCCEXlistsRequested);
+
+                    int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
+                    Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + count);
+                    mainapp.routesBeingProcessedDCCEX = false;
                 }
 
-            } else { // routes list   <jA id1 id2 id3 ...>
+            } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
 
-                if (mainapp.routeStringDCCEX.equals("")) {
-                    mainapp.routeStringDCCEX = "";
-                    mainapp.routeIDsDCCEX = new int[args.length - 1];
-                    mainapp.routeNamesDCCEX = new String[args.length - 1];
-                    mainapp.routeTypesDCCEX = new String[args.length - 1];
-                    mainapp.routeStatesDCCEX = new String[args.length - 1];
-                    mainapp.routeDetailsReceivedDCCEX = new boolean[args.length - 1];
-                    for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        mainapp.routeIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
-                        mainapp.routeDetailsReceivedDCCEX[i] = false;
-                        wifiSend("<JA " + args[i + 1] + ">");
+                Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes list received.");
+                if (!mainapp.routesBeingProcessedDCCEX) {
+                    mainapp.routesBeingProcessedDCCEX = true;
+                    if (mainapp.routeStringDCCEX.equals("")) {
+                        mainapp.routeStringDCCEX = "";
+                        mainapp.routeIDsDCCEX = new int[args.length - 1];
+                        mainapp.routeNamesDCCEX = new String[args.length - 1];
+                        mainapp.routeTypesDCCEX = new String[args.length - 1];
+                        mainapp.routeStatesDCCEX = new String[args.length - 1];
+                        mainapp.routeDetailsReceivedDCCEX = new boolean[args.length - 1];
+                        for (int i = 0; i < args.length - 1; i++) { // first will be blank
+                            mainapp.routeIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
+                            mainapp.routeDetailsReceivedDCCEX[i] = false;
+                            wifiSend("<JA " + args[i + 1] + ">");
+                        }
+
+                        int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
+                        Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes list received. Count: " + count);
                     }
                 }
             }

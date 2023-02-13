@@ -1,0 +1,12 @@
+<full-backup-content>
+<!--    <include  domain=["file" | "database" | "sharedpref" | "external" | "root"] path="string" />-->
+<!--    <exclude  domain=["file" | "database" | "sharedpref" | "external" | "root"] path="string" />-->
+    <include domain="sharedpref" path="." />
+    <exclude domain="sharedpref" path="jmri.enginedriver_preferences_no_backup.xml" />
+
+    <include domain="file" path="." />
+    <!--    <include domain="database" path="." />-->
+    <include domain="external" path="." />
+    <include domain="root" path="." />
+
+</full-backup-content>

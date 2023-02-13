@@ -91,4 +91,5 @@ public interface message_type {
     int RECEIVED_TRACKS = 69;
     int REQUEST_TRACKS = 70;
     int WRITE_TRACK = 71;
+    int REQUEST_REFRESH_THROTTLE = 72;
 }

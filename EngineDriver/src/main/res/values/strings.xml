@@ -1301,5 +1301,7 @@
     <string name="DCCEXSucceeded">Action Succeeded</string>
     <string name="DCCEXFailed">Action Failed</string>
 
+    <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
+
 </resources>
 

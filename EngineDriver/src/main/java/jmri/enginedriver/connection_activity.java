@@ -449,7 +449,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         //check for "default" throttle name and make it more unique
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        if (!prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) {
+        SharedPreferences prefsNoBackup = getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
+        if (!prefsNoBackup.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) {
             Intent intent = new Intent(this, intro_activity.class); // Call the AppIntro java class
             startActivity(intent);
             mainapp.introIsRunning = true;
@@ -914,7 +915,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     private void getConnectionsListImpl(String addressToRemove, String portToRemove) {
         importExportConnectionList.connections_list.clear();
 
-        if (prefs.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
+        SharedPreferences prefsNoBackup = getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
+        if (prefsNoBackup.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
 
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                 //alert user that recent connections list requires SD Card

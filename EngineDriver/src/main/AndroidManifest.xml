@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmri.enginedriver"
     android:versionCode="162"
-    android:versionName="2.34.162" android:installLocation="auto">
+    android:versionName="2.34.162h" android:installLocation="auto">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
@@ -38,6 +38,8 @@
         android:name="jmri.enginedriver.threaded_application"
         android:allowBackup="true"
         android:fullBackupOnly="true"
+        android:fullBackupContent="@xml/auto_backup_rules"
+        android:dataExtractionRules="@xml/auto_backup_rules_new"
         android:description="@string/app_description"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
