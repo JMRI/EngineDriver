@@ -104,7 +104,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "7";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "8";  // set this to a different string to force the intro to run on next startup.
 
     private threaded_application mainapp = this;
     public comm_thread commThread;
@@ -212,13 +212,14 @@ public class threaded_application extends Application {
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
-
+    public boolean turnoutsBeingProcessedDCCEX = false;
     public String turnoutStringDCCEX = ""; // used to process the turnout list
     public int [] turnoutIDsDCCEX;  // used to process the turnout list
     public String [] turnoutNamesDCCEX;  // used to process the turnout list
     public String [] turnoutStatesDCCEX;  // used to process the turnout list
     public boolean [] turnoutDetailsReceivedDCCEX;  // used to process the turnout list
 
+    public boolean routesBeingProcessedDCCEX = false;
     public String routeStringDCCEX = ""; // used to process the route list
     public int [] routeIDsDCCEX;  // used to process the route list
     public String [] routeNamesDCCEX;  // used to process the route list

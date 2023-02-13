@@ -198,7 +198,8 @@ public class intro_activity extends AppIntro2 {
         super.onDonePressed(currentFragment);
 
         introComplete = true;
-        prefs.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
+        SharedPreferences prefsNoBackup = mainapp.getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
+        prefsNoBackup.edit().putString("prefRunIntro", mainapp.INTRO_VERSION).commit();
 
         prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));

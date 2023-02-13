@@ -1112,6 +1112,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         set_labels();
                 }
                 break;
+                case message_type.REQUEST_REFRESH_THROTTLE:
+//                    refreshMenu();
+                    set_labels();
+                    Log.d("Engine_Driver", "throttle.throttle_handler: REQUEST_REFRESH_THROTTLE");
+                    break;
                 case message_type.REFRESH_FUNCTIONS:
                     setAllFunctionLabelsAndListeners();
                     for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -6523,6 +6528,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
         }
 
+        refreshMenu();
+
+        vThrotScrWrap.invalidate();
+        // Log.d("Engine_Driver","ending set_labels");
+    }
+
+    private void refreshMenu() {
         //adjust several items in the menu
         if (TMenu != null) {
             mainapp.actionBarIconCountThrottle = 0;
@@ -6546,10 +6558,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayDccExButton(TMenu);
 //            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
-        vThrotScrWrap.invalidate();
-        // Log.d("Engine_Driver","ending set_labels");
     }
-
 
     @Override
     public boolean onKeyUp(int key, KeyEvent event) {

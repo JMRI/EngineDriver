@@ -1188,7 +1188,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             Log.d("Engine_Driver", "Settings: SettingsFragment onCreatePreferences()");
-            setPreferencesFromResource(R.xml.preferences, rootKey);
+                setPreferencesFromResource(R.xml.preferences, rootKey);
 
             Activity a = getActivity();
 //            if(a instanceof SettingsActivity) {
