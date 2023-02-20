@@ -2369,10 +2369,12 @@ public class comm_thread extends Thread {
                 mainapp.comm_msg_handler.removeCallbacks(this);             //remove pending requests
                 if (heartbeatIntervalSetpoint != 0) {
                     boolean anySent = false;
-                    for (int i = 0; i < mainapp.numThrottles; i++) {
-                        if (mainapp.consists[i].isActive()) {
-                            sendRequestSpeedAndDir(i);
-                            anySent = true;
+                    if (!mainapp.isDCCEX) {
+                        for (int i = 0; i < mainapp.numThrottles; i++) {
+                            if (mainapp.consists[i].isActive()) {
+                                sendRequestSpeedAndDir(i);
+                                anySent = true;
+                            }
                         }
                     }
                     // prior to JMRI 4.20 there were cases where WiT might not respond to
