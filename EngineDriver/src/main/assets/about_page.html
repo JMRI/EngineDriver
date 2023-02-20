@@ -6,10 +6,9 @@
     <style type="text/css">
         p {margin-top:0;padding-left:1em;}
         h3 {margin-bottom:0;}
-        dl {padding-left: 2em;}
-        ul {margin-left:1em;margin-top:-1em;padding-left:0;}
-        ul li {position:relative;left:1em;padding-right:1em;}​
-
+        dl {padding-left:2em;}
+        ul {margin-top:-1em}
+        ul>li>ul {margin-top:0em;}
     </style>
 </head>
 <body>
@@ -19,17 +18,17 @@
 </div>
 <p><b>Changes for this version include:</b></p>
 <ul>
-    <li>Better sorting of Turnout/Points list where numbers are in the names</li>
+    <li>Better sorting of Turnout/Points list where numbers in names</li>
     <li>Fix Android Game mode for gamepads</li>
-    <li>Support for USB volume dials as a Gamepad type</li>
-    <li>Preference for setting what a second press of the Stop button on a gamepad does</li>
+    <li>Support USB volume dials as gamepad type</li>
+    <li>Preference for setting 2nd press of gamepad Stop button</li>
     <li>Prevent some crashes reported to Play Store</li>
-    <li>DCC-EX Direct-Connect Only:<ul><br />
+    <li>DCC-EX Direct-Connect Only:<ul>
         <li>Option to use the native DCC-EX protocol</li>
         <li>Read and write CVs</li>
         <li>Issue DCC-EX commands</li>
         <li>Control Track Manager feature</li></ul>
-    <li>Correct a misalignment of the touches on all the vertical throttles</li>
+    <li>Correct touch misalignment on vertical throttles</li>
     <li>Use Backup by Google One to save/restore Preferences and settings.</li>
     <li>Fix activity transitions</li>
 </ul>
@@ -41,7 +40,7 @@
         href="https://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
         target="_blank">WiThrottle Server</a>. Supported servers include <a href="https://jmri.org"
                                                                             target="_blank">JMRI</a>,
-    <a href="https://dcc-ex.com" target="_blank">DCC-EX EX-CommandStation</a> (using either the wiThrottle Protocol or the native DCC-EX command protocol), <a
+    <a href="https://dcc-ex.com" target="_blank">DCC-EX EX-CommandStation</a> (using either the WiThrottle Protocol or the native DCC-EX command protocol), <a
             href="https://www.modelrectifier.com/category-s/332.htm" target="_blank">MRC&nbsp;Prodigy&nbsp;WiFi</a>,
     <a href="https://www.digitrax.com/products/wireless/lnwi/"
        target="_blank">Digitrax&nbsp;LnWi</a>, <a
@@ -77,12 +76,12 @@
 <p>Connect the LnWi, and verify your device can connect to its network and obtain an IP address.</p>
 <h3>Prerequisites (for DCC-EX EX-CommandStation):</h3>
 <p>Engine Driver can connect directly to DCC-EX EX-CommandStations, that are in Station Mode or
-    Access Point Mode, using either the wiThrottle protocol or the native DCC-EX command protocol.
-    Engine Driver will use wiThottle by default.  If you wish to use native DCC-EX commands
+    Access Point Mode, using either the WiThrottle protocol or the native DCC-EX command protocol.
+    Engine Driver will use WiThrottle by default.  If you wish to use native DCC-EX commands
     you must change the Engine Driver preference. <br />
     If you use the native DCC-EX commands an additional menu item (DCC-EX) will be available for
     programming CVs and other functions. <br />
-    Note: If you connect the EX-CommandStation via JMRI, you must use wiThrottle, and therefor the
+    Note: If you connect the EX-CommandStation via JMRI, you must use WiThrottle, and therefor the
     additional features will not be available.</p>
 <h3>Operation:</h3>
 <p>On your phone, start the Engine Driver app and wait for your server's address to show up in
