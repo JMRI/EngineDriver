@@ -65,6 +65,7 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6597,7 +6598,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (webView != null) {
                         setImmersiveModeOn(webView, false);
                     }
-                    mainapp.checkExit(this);
+                    if (mainapp.throttle_msg_handler!=null) {
+                        mainapp.checkExit(this);
+                    } else { // something has gone wrong and the activity did not shut down properly so force it
+                        disconnect();
+                    }
                     return (true); // stop processing this key
                 }
             } else {
@@ -7990,8 +7995,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(in);
-            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+            ActivityOptions options;
+            if (deltaX>0) {
+                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_right_in, R.anim.push_right_out);
+            } else {
+                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_left_in, R.anim.push_left_out);
+            }
+            startActivity(in, options.toBundle());
+//            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
         }
     }
 }
