@@ -1,4 +1,6 @@
 **Version 2.34.162
+ * Fix activity transitions
+ * Use Backup by Google One to save/restore Preferences and settings.
 **Version 2.34.160
  * Prevent some crashes reported to Play Store
 **Version 2.34.156
