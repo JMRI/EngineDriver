@@ -157,7 +157,7 @@ public class dcc_ex extends AppCompatActivity {
             switch (msg.what) {
                 case message_type.RECEIVED_DECODER_ADDRESS:
                     String response_str = msg.obj.toString();
-                    if ((response_str.length() > 0) && (!response_str.equals("-1"))) {  //refresh address
+                    if ( (response_str.length() > 0) && !(response_str.charAt(0)=='-') ) {  //refresh address
                         DCCEXaddress = response_str;
                         DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXSucceeded);
                     } else {
@@ -169,7 +169,7 @@ public class dcc_ex extends AppCompatActivity {
                     String cvResponseStr = msg.obj.toString();
                     if (cvResponseStr.length() > 0) {
                         String[] cvArgs = cvResponseStr.split("(\\|)");
-                        if ((cvArgs[0].equals(DCCEXcv)) && (!cvArgs[1].equals("-1"))) { // response matches what we got back
+                        if ((cvArgs[0].equals(DCCEXcv)) && !(cvArgs[1].charAt(0)=='-') ) { // response matches what we got back
                             DCCEXcvValue = cvArgs[1];
                             DCCEXinfoStr = getApplicationContext().getResources().getString(R.string.DCCEXSucceeded);
                         } else {
