@@ -1216,7 +1216,7 @@ public class comm_thread extends Thread {
 
                         case 'w': // response from an address write or other CV write
                             responseStr = args[1];
-                            if (!args[1].equals("-1")) {
+                            if (!(args[1].charAt(0) =='-')) {
                                 mainapp.alert_activities(message_type.WRITE_DECODER_SUCCESS, responseStr);
                             } else {
                                 mainapp.alert_activities(message_type.WRITE_DECODER_FAIL, responseStr);
@@ -1292,7 +1292,7 @@ public class comm_thread extends Thread {
         String responseStr = "";
 
         if (requestLocoIdForWhichThrottleDCCEX!=-1) { // if -1, request came from the CV read/write screen
-            if (!args[1].equals("-1")) {
+            if (!(args[1].charAt(0) =='-')) {
                 String addrStr = args[1];
                 if (Integer.parseInt(args[1]) <= 127) {
                     addrStr = "S" + addrStr;
