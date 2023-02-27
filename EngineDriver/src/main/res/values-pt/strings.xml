@@ -86,7 +86,7 @@
     <string name="loco_direction_right_extra">"\u00B7T\u00B7"</string>
     <string name="locoPressToSelect">Selecionar</string>
     <string name="powerWillNotWorkTitle">Não funcionará!</string>
-    <string name="powerWillNotWork">JMRI tem regulado o controle de energia wiThrottle para desligado.\nremoverá agora o Ícone de Energia.\nMostrará de novo quando a regulagem JMRI estará ligada.</string>
+    <string name="powerWillNotWork">JMRI tem regulado o controle de energia WiThrottle para desligado.\nremoverá agora o Ícone de Energia.\nMostrará de novo quando a regulagem JMRI estará ligada.</string>
     <string name="current_locos">Locomotivas Atualmente Selecionadas</string>
     <string name="release">Soltar</string>
     <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>

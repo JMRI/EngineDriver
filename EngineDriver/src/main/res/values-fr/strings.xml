@@ -82,7 +82,7 @@
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Sélection</string>
     <string name="powerWillNotWorkTitle">Ne fonctionnera pas!</string>
-    <string name="powerWillNotWork">JMRI a coupé l alimentation wiThrottle.\nEffacement icone alimentation.\nAffichage Icone alimentation quand JMRI sera actif.</string>
+    <string name="powerWillNotWork">JMRI a coupé l alimentation WiThrottle.\nEffacement icone alimentation.\nAffichage Icone alimentation quand JMRI sera actif.</string>
     <string name="current_locos">Locomotive sélectionnée</string>
     <string name="release">Déselection</string>
     <string name="releaseThrottleNumber">Déselection Commande %1$s</string>

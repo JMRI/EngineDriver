@@ -81,7 +81,7 @@
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Seleccionar</string>
     <string name="powerWillNotWorkTitle">¡No funcionará!</string>
-    <string name="powerWillNotWork">JMRI tiene el control de alimentación wiThrottle apagado.\nEliminará el icono de tensión de vía.\nSe mostrará de nuevo cuando se active en el JMRI</string>
+    <string name="powerWillNotWork">JMRI tiene el control de alimentación WiThrottle apagado.\nEliminará el icono de tensión de vía.\nSe mostrará de nuevo cuando se active en el JMRI</string>
     <string name="current_locos">Lomotoras seleccionadas actualmente</string>
     <string name="release">Libera</string>
     <string name="releaseThrottleNumber">Libera Controlador %1$s</string>
