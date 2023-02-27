@@ -69,7 +69,7 @@
     <string name="reverse">Indietro</string>
     <string name="none">Niente</string>
     <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
-    <string name="copy_function_labels">Copiare Etichette dall\\\'Elenco</string>
+    <string name="copy_function_labels">Copiare Etichette dall\'Elenco</string>
     <string name="fb_header">Modifica Funzioni</string>
 
     <string name="fbResetFunctionLabels">Resettare Tutto</string>
@@ -755,7 +755,7 @@
     <string name="prefThrottleSwitchOption2Summary">Button Switch Throttle passerà tra il tipo di schermo nella preferenza precedente e questo.</string>
     <string name="prefThrottleSwitchOption2Title">Acceleratore Tipo di interruttore seconda schermata</string>
     <string name="recent_consists">Seleziona da Locomotive recenti</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">Pulsante Preferenze \\\'limite di velocità\\\'</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Pulsante Preferenze \'limite di velocità\'</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Sfondo Change Succeeded.</string>
     <string name="throttleSwitchAction">Passare da una schermata a farfalla</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferenze immagine di sfondo</string>
@@ -764,11 +764,11 @@
     <string name="gamepad_test_menu">\≡ Test Gamepad</string>
     <string name="prefSwipeDownOptionSummary">Che cosa dovrebbe accadere quando si scorrere verso il basso la vista acceleratore.</string>
     <string name="prefSwipeDownOptionTitle">Swipe l\'azione verso il basso nella vista Throttle?</string>
-    <string name="prefPauseSpeedButtonTitle">Visualizza \\\'Pausa\\\' pulsante</string>
+    <string name="prefPauseSpeedButtonTitle">Visualizza \'Pausa\' pulsante</string>
     <string name="prefPauseSpeedButtonSummary">Mostra un pulsante per rallentare e fermare la locomotiva, per poi tornare alla velocità sul rilascio.</string>
-    <string name="prefPauseSpeedRateTitle">\\\'Pausa\\\' tasso pulsante</string>
+    <string name="prefPauseSpeedRateTitle">\'Pausa\' tasso pulsante</string>
     <string name="prefPauseSpeedRateSummary">Numero di millisecondi tra variazioni di passo di velocità per l\'azione di pausa.</string>
-    <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' step pulsante</string>
+    <string name="prefPauseSpeedStepTitle">\'Pausa\' step pulsante</string>
     <string name="prefPauseSpeedStepSummary">dimensione del passo cambia per l\'azione Pausa.</string>
 
     <string name="prefAllowMobileDataTitle">Consenti connessione dati mobile</string>
@@ -783,7 +783,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">nessuna</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">aggancio</string>
     <string name="prefFunctionConsistLocosDefaultValue">condurre</string>
-    <string name="functionConsistHelpText">Utilizzato solo per il \\ \'Special \\\' costituito opzioni seguente funzione. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
+    <string name="functionConsistHelpText">Utilizzato solo per il \'Special\' costituito opzioni seguente funzione. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
     <string name="functionConsistHeader">Consistono azioni di funzione</string>
     <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni - macchinista</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra timestamp su Log</string>

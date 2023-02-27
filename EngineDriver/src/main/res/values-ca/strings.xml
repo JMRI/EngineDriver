@@ -883,7 +883,7 @@
     <string name="idngo_label">Sol·licitar ID de Locomotora</string>
     <string name="idngo_button">Sol·licitar ID de Locomotora</string>
     <string name="idngo_help_text">Premi el botó per enviar una petició al servidor per identificar i adquirir la Locomotora que ja està a la via de programació i tornar el valor a aquest Controlador</string>
-    <string name="prefKidsTimerButtonDefaultSummary">L\\\'hora predeterminada si utilitzeu el botó TOOLLBAR per activar el temporitzador.</string>
+    <string name="prefKidsTimerButtonDefaultSummary">L\'hora predeterminada si utilitzeu el botó TOOLLBAR per activar el temporitzador.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Predeterminat per al botó</string>
     <string name="prefKidsTimerButtonSummary">Mostra el botó temporitzador per activar el temporitzador.</string>
     <string name="prefKidsTimerButtonTitle">Mostra el botó de temporitzador?</string>

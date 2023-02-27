@@ -824,7 +824,7 @@
     <string name="prefThrottleSwitchOption2Summary">Drosselklappenschalter-Knopf schaltet zwischen dem Bildschirmtyp in der vorherige Präferenz und dieser.</string>
     <string name="prefThrottleSwitchOption2Title">Drosselklappenschalter Zweiten Bildschirmtyp</string>
     <string name="recent_consists">Wählen Sie aus Neuen Lokomotiven</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">\\\'Limit Geschwindigkeit\\‘ Schaltfläche Einstellungen</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">\'Limit Geschwindigkeit\\‘ Schaltfläche Einstellungen</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Hintergrund ändern Succeeded.</string>
     <string name="throttleSwitchAction">Schalten Gas Screens</string>
     <string name="prefBackgroundImagePreferencesTitle">Hintergrundbild Einstellungen</string>
@@ -832,12 +832,12 @@
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
     <string name="prefSwipeDownOptionSummary">Was soll passieren, wenn Sie auf dem Drosselklappen Blick nach unten wischen.</string>
     <string name="prefSwipeDownOptionTitle">Swipe nach unten Aktion in der Drossel Ansicht?</string>
-    <string name="prefPauseSpeedButtonTitle">Show \\\'Pause\\\' Taste</string>
+    <string name="prefPauseSpeedButtonTitle">Show \'Pause\' Taste</string>
     <string name="prefPauseSpeedButtonSummary">Zeigen Sie auf eine Schaltfläche zu verlangsamen und die Lok zu stoppen, dann wieder auf Geschwindigkeit auf Release.</string>
-    <string name="prefPauseSpeedRateTitle">\\\'Pause\\\' Taste Rate</string>
+    <string name="prefPauseSpeedRateTitle">\'Pause\' Taste Rate</string>
     <string name="prefPauseSpeedRateSummary">Anzahl der Millisekunden zwischen Gangstufe Änderungen für die Pause Aktion.</string>
-    <string name="prefPauseSpeedStepTitle">\\\'Pause\\\' Taste Schritt</string>
-    <string name="prefPauseSpeedStepSummary">\\ \'Pause \\\' Taste Schritt Schrittgröße ändert sich für die Pause Aktion.</string>
+    <string name="prefPauseSpeedStepTitle">\'Pause\' Taste Schritt</string>
+    <string name="prefPauseSpeedStepSummary">\'Pause\' Taste Schritt Schrittgröße ändert sich für die Pause Aktion.</string>
 
     <string name="prefAllowMobileDataTitle">Lassen Sie mobile Datenverbindung</string>
     <string name="prefAllowMobileDataSummary">Lassen Sie das Gerät JMRI über Mobile Daten verbinden.</string>
@@ -892,8 +892,8 @@
     <string name="idngo_label">Anfordern Loco ID</string>
     <string name="idngo_button">Anfordern Loco ID</string>
     <string name="idngo_help_text">Drücken Sie die Taste eine Anfrage an den Server zu identifizieren und zu erwerben, die Lok bereits auf dem Programmiergleis und gibt den Wert an diese Drossel zu senden.</string>
-    <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Klicken Sie den Button. - die Erlaubnis erteilen. - Klicken Sie auf \\\'Zurück \\‘ hier zurückzukehren...</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignorieren Sie diese, wenn Sie don\\\'t Notwendigkeit Lokomotivführer, um die Helligkeit zu verändern.</string>
+    <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Klicken Sie den Button. - die Erlaubnis erteilen. - Klicken Sie auf \'Zurück \\‘ hier zurückzukehren...</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorieren Sie diese, wenn Sie don\'t Notwendigkeit Lokomotivführer, um die Helligkeit zu verändern.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver muss ACCESS_FINE_LOCATION Berechtigungen aktuelle WLAN SSID abzurufen.</string>
     <string name="prefKidsTimerButtonDefaultSummary">Standardzeit, wenn Sie die TOOLLBAR-Taste verwenden, um den Timer zu aktivieren.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Standard für Button.</string>

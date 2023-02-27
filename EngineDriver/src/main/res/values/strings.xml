@@ -1100,7 +1100,7 @@
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\\\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>

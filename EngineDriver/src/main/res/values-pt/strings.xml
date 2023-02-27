@@ -758,7 +758,7 @@
     <string name="prefThrottleSwitchOption2Summary">Mudar acelerador botão irá alternar entre o tipo de ecrã na preferência anterior e este.</string>
     <string name="prefThrottleSwitchOption2Title">Acelerador Tipo de interruptor segunda tela</string>
     <string name="recent_consists">Seleccione a partir das locomotivas recentes</string>
-    <string name="prefLimitSpeedButtonPreferencesTitle">Preferências \\\'Limite de velocidade\\\' botão</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Preferências \'Limite de velocidade\' botão</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">Mudar fundo Sucedido.</string>
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
@@ -767,11 +767,11 @@
     <string name="gamepad_test_menu">\≡ Teste Gamepad</string>
     <string name="prefSwipeDownOptionSummary">O que deve acontecer quando você deslizar para baixo na visão do acelerador.</string>
     <string name="prefSwipeDownOptionTitle">ação baixo furto na visão do acelerador?</string>
-    <string name="prefPauseSpeedButtonTitle">Mostrar \\\'Pausa\\\' botão</string>
+    <string name="prefPauseSpeedButtonTitle">Mostrar \'Pausa\' botão</string>
     <string name="prefPauseSpeedButtonSummary">Mostrar um botão para abrandar e parar a locomotiva, em seguida, retornar à velocidade na liberação.</string>
-    <string name="prefPauseSpeedRateTitle">\\\'Pausa\\\' taxa de botão</string>
+    <string name="prefPauseSpeedRateTitle">\'Pausa\' taxa de botão</string>
     <string name="prefPauseSpeedRateSummary">Número de milissegundos entre o passo mudanças de velocidade para a ação Pausa.</string>
-    <string name="prefPauseSpeedStepTitle">\\\'Pausa\\\' passo botão</string>
+    <string name="prefPauseSpeedStepTitle">\'Pausa\' passo botão</string>
     <string name="prefPauseSpeedStepSummary">tamanho do passo muda para a ação Pausa.</string>
 
     <string name="prefAllowMobileDataTitle">Permitir conexão de dados móveis</string>
@@ -786,7 +786,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">Nenhum</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">trancando</string>
     <string name="prefFunctionConsistLocosDefaultValue">conduzir</string>
-    <string name="functionConsistHelpText">Apenas usada para o \\ \'especial \\\' consistem de função seguintes opções. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
+    <string name="functionConsistHelpText">Apenas usada para o \'especial \' consistem de função seguintes opções. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
     <string name="functionConsistHeader">Consistem Ações de função</string>
     <string name="app_name_consist_functions">Consistem configurações de funções - Driver Motor</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar Timestamps em Log</string>
@@ -828,7 +828,7 @@
     <string name="idngo_button">Solicitar Loco ID</string>
     <string name="idngo_help_text">Pressione o botão para enviar um pedido ao servidor para identificar e adquirir o loco já no caminho de programação e retornar o valor para este acelerador.</string>
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Clique no botão abaixo - Conceder a permissão - Clique em \'Voltar\' para voltar aqui...</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignorar esta se você don\\\'t \'Engine Driver necessidade do motor para alterar o brilho.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorar esta se você don\'t \'Engine Driver necessidade do motor para alterar o brilho.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver do motor precisa de permissões ACCESS_FINE_LOCATION para recuperar SSID wi-fi atual.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir inverso</string>
     <string name="prefKidsTimerEnableReverseSummary">Ative o botão inverso.</string>
