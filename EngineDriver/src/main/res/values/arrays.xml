@@ -1633,6 +1633,8 @@
 
         <!-- Action Bar Preferences -->
         <item>prefActionBarShowServerDescription</item>
+        <item>prefAppIconAction</item>
+        <item>prefActionBarShowDccExButton</item>
 
         <!-- Throttle Control Preferences -->
         <item>maximum_throttle_preference</item>
@@ -1680,6 +1682,9 @@
         <item>prefConnectTimeoutMs</item>
         <item>prefSocketTimeoutMs</item>
         <item>prefFeedbackOnDisconnect</item>
+        <item>prefDCCEX</item>
+        <item>prefDCCEXconnectionOption</item>
+        <item>prefHeartbeatResponseFactor</item>
 
         <!-- Web Preferences -->
         <item>WebOrientation</item>

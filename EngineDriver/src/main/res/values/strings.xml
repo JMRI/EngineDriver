@@ -114,6 +114,7 @@
     <string name="web_not_available_page_url">file:///android_asset/web_not_available.html</string>
 -->
     <string name="mrc_settings">MRC Settings</string>
+    <string name="dccesp_settings">DCC ESP Settings</string>
     <string name="loco">Loco:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>

@@ -1131,6 +1131,8 @@ public class threaded_application extends Application {
                     if ("MRC".equals(getServerType())) {
                         //for MRC, the web view is only for settings, so also change the text
                         item.setTitle(R.string.mrc_settings);
+                    } else if ("DCCESP".equals(getServerType())) {
+                        item.setTitle(R.string.dccesp_settings);
                     }
                 } else {
                     item.setVisible(false);
