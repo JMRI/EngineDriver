@@ -2419,7 +2419,11 @@ public class comm_thread extends Thread {
         }
 
         public void enable() {
-            telMgr.listen(this, PhoneStateListener.LISTEN_CALL_STATE);
+            try {
+                telMgr.listen(this, PhoneStateListener.LISTEN_CALL_STATE);
+            } catch (SecurityException e) {
+                Log.e("Engine_Driver", "SecurityException encountered (and ignored) for telMgr");
+            }
         }
 
         @Override

@@ -114,12 +114,13 @@
     <string name="web_not_available_page_url">file:///android_asset/web_not_available.html</string>
 -->
     <string name="mrc_settings">MRC Settings</string>
+    <string name="dccesp_settings">DCC ESP Settings</string>
     <string name="loco">Loco:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
     <string name="locoPressToSelect">Select</string>
     <string name="powerWillNotWorkTitle">Will Not Work!</string>
-    <string name="powerWillNotWork">Server has the wiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
+    <string name="powerWillNotWork">Server has the WiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
     <string name="current_locos">Currently Selected Locos</string>
     <string name="release">Release</string>
     <string name="releaseThrottleNumber">Release Throttle %1$s</string>
@@ -1100,7 +1101,7 @@
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\\\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
@@ -1116,8 +1117,8 @@
     <!-- Introduction / Setup Wizard -->
 
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
-    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC or DigiTrax WiThrottle server to control your DCC locos and devices. The following pages will guide you through initial setup.</string>
-
+    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC, DigiTrax, WifiTrax, IoTT Stick or DCC-EX WiThrottle server to control your DCC locos and devices.
+        The following pages will guide you through initial setup.</string>
     <string name="introAndroid11Title">Android 11 Changes</string>
     <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the
         Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder.
@@ -1233,13 +1234,13 @@
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
     <string name="prefDCCEXTitle">Use native DCC-EX commands</string>
-    <string name="prefDCCEXSummary">Use the native DCC-EX &lt;&gt; commands instead of wiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
+    <string name="prefDCCEXSummary">Use the native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 
-    <string name="useProtocolDCCEX">Use native DCC-EX commands (not wiThrottle)</string>
-    <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the wiThrottle protocol.</string>
+    <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)</string>
+    <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDCCEXconnectionOptionTitle">Show protocol option</string>
-    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between wiThrottle and DCC-EX protocols in the Connection Screen.</string>
+    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between WiThrottle and DCC-EX protocols in the Connection Screen.</string>
     <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
 
     <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the DCC-EX screen.\n(For native DCC-EX connections only.)</string>

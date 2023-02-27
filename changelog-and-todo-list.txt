@@ -1,6 +1,9 @@
 **Version 2.34.162
  * Fix activity transitions
  * Use Backup by Google One to save/restore Preferences and settings.
+ * tolerate lack of PHONE permissions
+ * move a few Preferences to Advanced
+ * set "Web" menu to "DCC ESP" for DCCESP server
 **Version 2.34.160
  * Prevent some crashes reported to Play Store
 **Version 2.34.156
@@ -689,11 +692,9 @@
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
- *   TODO: support negative responses to permissions prompts, limiting functionality
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: allow zoom out more than the page width
- *   TODO: set "Web" menu to "DCC EXP" if HTDCCESP
  * routes
  *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
@@ -704,7 +705,6 @@
  *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
  *   TODO: provide for adding/editing names of recent connections
- *   TODO: add option to enable/disable sound and vibrate warning on disconnect
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add "Check for Updates" link to first menu and to About page.
@@ -753,7 +753,7 @@
  * preferences:
  * log_viewer:
  *
- * These require changes to WiThrottle
+ * These require changes to WiThrottle Server
  *   add Light control page
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   resend roster list when items are added or removed, by adding listeners to WiT
