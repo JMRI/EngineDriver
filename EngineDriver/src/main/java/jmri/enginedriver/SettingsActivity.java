@@ -1536,6 +1536,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     || (parentActivity.prefThrottleScreenType.equals("Vertical Left"))  || (parentActivity.prefThrottleScreenType.equals("Vertical Right"))
                     || (parentActivity.prefThrottleScreenType.equals("Switching"))
                     || (parentActivity.prefThrottleScreenType.equals("Tablet Switching Left"))
+                    || (parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left"))
                     || (parentActivity.prefThrottleScreenType.equals("Switching Left"))  || (parentActivity.prefThrottleScreenType.equals("Switching Right"))) {
                 enable = false;
             }
@@ -1557,6 +1558,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     || parentActivity.prefThrottleScreenType.equals("Switching Right")
                     || parentActivity.prefThrottleScreenType.equals("Switching Horizontal")
                     || parentActivity.prefThrottleScreenType.equals("Tablet Switching Left")
+                    || parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left")
                     || parentActivity.prefThrottleScreenType.equals("Simple");
             parentActivity.enableDisablePreference(getPreferenceScreen(), "WebViewLocation", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseWebViewSize", enable);

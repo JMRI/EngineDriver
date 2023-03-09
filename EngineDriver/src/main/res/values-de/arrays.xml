@@ -68,6 +68,7 @@
         <item>Switching &#8211; Horizontal (3)</item>
         <item tools:ignore="TypographyDashes">Einfach &#8211; Tablet empfohlen (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Shunting Left (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Keine</item>

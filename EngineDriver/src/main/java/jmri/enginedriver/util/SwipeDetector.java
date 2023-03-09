@@ -26,6 +26,10 @@ public class SwipeDetector implements View.OnTouchListener {
         return mSwipeDetected != Action.None;
     }
 
+    public void swipeReset() {
+        mSwipeDetected = Action.None;
+    }
+
     public Action getAction() {
         return mSwipeDetected;
     }
