@@ -135,6 +135,7 @@
         <item tools:ignore="TypographyDashes">Horizontal Switching (1-3)</item>
         <item tools:ignore="TypographyDashes">Simple (1-6) (Tablet Recommended)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Left (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -150,6 +151,7 @@
         <item >Switching Horizontal</item>
         <item >Simple</item>
         <item >Tablet Switching Left</item>
+        <item >Tablet Vertical Left</item>
     </string-array>
 
     <integer-array name="prefThrottleScreenTypeMaxThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -165,6 +167,7 @@
         <item >3</item>  <!-- Switching Horizontal -->
         <item >6</item>  <!-- Simple -->
         <item >6</item>  <!-- Tablet Switching Left -->
+        <item >6</item>  <!-- Tablet Vertical Left -->
     </integer-array>
 
     <integer-array name="prefThrottleScreenTypeFixedThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -180,6 +183,7 @@
         <item >0</item>  <!-- Switching Horizontal -->
         <item >0</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
+        <item >0</item>  <!-- Tablet Vertical Left -->
     </integer-array>
 
     <integer-array name="prefThrottleScreenTypeSupportsWebView" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -195,6 +199,7 @@
         <item >0</item>  <!-- Switching Horizontal -->
         <item >1</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
+        <item >1</item>  <!-- Tablet Vertical Left -->
     </integer-array>
 
     <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1239,6 +1244,7 @@
         <item>ACK Min {µS}</item>
         <item>ACK Max {µS}</item>
         <item>Reboot/Reset CS</item>
+        <item>Reset HAL Devices</item>
     </string-array>
     <string-array name="dccExCommonCommandsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item />
@@ -1255,6 +1261,7 @@
         <item>D ACK MIN</item>
         <item>D ACK MAX</item>
         <item>D RESET</item>
+        <item>D HAL RESET</item>
     </string-array>
     <integer-array name="dccExCommonCommandsHasParameters" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>

@@ -70,6 +70,7 @@
         <item >Switching &#8211; Horizontal (3)</item>
         <item >Semplice &#8211; Consigliato Tablet (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Shunting Sinistra (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Sinistra (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

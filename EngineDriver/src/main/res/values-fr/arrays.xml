@@ -73,6 +73,7 @@
         <item tools:ignore="TypographyDashes">Switching - Horizontal (3)</item>
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Gauche (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

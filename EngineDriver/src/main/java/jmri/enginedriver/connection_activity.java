@@ -205,6 +205,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             if (connectionsListSwipeDetector.swipeDetected()) { // check for swipe
                 if (connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
                     clearConnectionsListItem(v, position, id);
+                    connectionsListSwipeDetector.swipeReset();
 //                } else {
                 }
             } else {  //no swipe
