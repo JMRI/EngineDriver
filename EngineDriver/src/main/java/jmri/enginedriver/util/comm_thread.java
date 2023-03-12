@@ -392,6 +392,9 @@ public class comm_thread extends Thread {
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
                 }
                 mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1000L, message_type.REFRESH_FUNCTIONS);
+
+                mainapp.alert_activities(message_type.RESPONSE, "M" + whichThrottle + "A" + address +"<;>s1");
+
             } else { // requesting the loco id on the programming track.  Using the DCC-EX driveway feature
                 requestLocoIdForWhichThrottleDCCEX = whichThrottle;
                 wifiSend("<R>");
@@ -425,22 +428,7 @@ public class comm_thread extends Thread {
             msgTxt = String.format("M%s-%s<;>r", mainapp.throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*"));
             mainapp.sendMsgDelay(mainapp.comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
 
-        }  // else { // DCC-EX
-//            if ((addr.length() == 0) || (addr.equals("*"))) { // release all on the throttle
-//                if (mainapp.throttleLocoReleaseListDCCEX[whichThrottle] != null) {
-//                    for (String addrStr : mainapp.throttleLocoReleaseListDCCEX[whichThrottle]) {
-//                        msgTxt = String.format("<- %s>", addrStr.substring(1));
-//                        wifiSend(msgTxt);
-//                        //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
-//                    }
-//                }
-//            } else {
-//                msgTxt = String.format("<- %s>", mainapp.throttleIntToString(whichThrottle));
-//                wifiSend(msgTxt);
-//            }
-//
-////            Log.d("Engine_Driver", "comm_thread.sendReleaseLoco DCC-EX: " + msgTxt);
-//        }
+        }  // else  // DCC-EX has no equivalent
     }
 
     protected void reacquireAllConsists() {
@@ -1338,8 +1326,11 @@ public class comm_thread extends Thread {
         int dir = 0;
         int speed = Integer.parseInt(args[3]);
         if (speed >= 128) {
-            speed = speed - 128;
+            speed = speed - 129;
             dir = 1;
+        }
+        if ((dir==0) && (speed>1)) {
+            speed = speed - 1; // get round and idiotic design of the speed command
         }
 
         String addr_str = args[1];
@@ -1351,6 +1342,8 @@ public class comm_thread extends Thread {
         for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {   //loco may be the lead on more that one throttle
             int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
             if (whichThrottle >= 0) {
+                mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
+                mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>V" + speed;
                 mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
