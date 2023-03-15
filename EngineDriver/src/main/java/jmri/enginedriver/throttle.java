@@ -2949,6 +2949,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "MagicseeR1A":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1A);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
+            case "MagicseeR1C":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1C);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             case "FlydigiWee2":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
                 bGamePadKeysUp = bGamePadKeys;

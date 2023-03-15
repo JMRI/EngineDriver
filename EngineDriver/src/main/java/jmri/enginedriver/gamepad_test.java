@@ -216,6 +216,16 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeysUp = bGamePadKeys;
                 gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
                 break;
+            case "MagicseeR1A":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1A);
+                bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
+                break;
+            case "MagicseeR1C":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1C);
+                bGamePadKeysUp = bGamePadKeys;
+                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
+                break;
             case "FlydigiWee2":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
                 bGamePadKeysUp = bGamePadKeys;

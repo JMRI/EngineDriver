@@ -457,6 +457,9 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             wifiSend("<!>");
+            for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                sendSpeed(throttleIndex, 0);
+            }
 //            Log.d("Engine_Driver", "comm_thread.sendEStop DCC-EX: ");
         }
     }
@@ -717,13 +720,15 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
+                    String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                    msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.lastKnownDirDCCEX[whichThrottle] = newDir;
 //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
                 }
             } else {
-                msgTxt = String.format("<t 0 %s %d %d>", addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
+                String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                msgTxt = String.format(fmt, addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
                 wifiSend(msgTxt);
                 mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
 //                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
@@ -747,7 +752,8 @@ public class comm_thread extends Thread {
                 int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), speed, newDir);
+                String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
             }
@@ -1329,8 +1335,10 @@ public class comm_thread extends Thread {
             speed = speed - 129;
             dir = 1;
         }
-        if ((dir==0) && (speed>1)) {
-            speed = speed - 1; // get round and idiotic design of the speed command
+        if (speed>1) {
+           speed = speed - 1; // get round and idiotic design of the speed command
+        } else {
+            speed=0;
         }
 
         String addr_str = args[1];

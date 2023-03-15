@@ -931,6 +931,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 break;
 */
             case "MagicseeR1B":
+            case "MagicseeR1A":
+            case "MagicseeR1C":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
                 break;
             case "FlydigiWee2":
