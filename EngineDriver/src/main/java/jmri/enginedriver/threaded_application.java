@@ -451,6 +451,7 @@ public class threaded_application extends Application {
 
     public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
     public int[] lastKnownDirDCCEX = {0,0,0,0,0,0};
+    public long[] lastSpeedCommandSentTimeDCCEX = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
 
