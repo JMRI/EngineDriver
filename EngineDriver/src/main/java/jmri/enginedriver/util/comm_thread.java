@@ -610,22 +610,27 @@ public class comm_thread extends Thread {
     }
 
     protected void sendTurnout(String cmd) {
+//        Log.d("Engine_Driver", "comm_thread.sendTurnout: cmd=" + cmd);
+        char action = cmd.charAt(0); //first char is action (C=close,T=throw,2=toggle)
+        String systemName = cmd.substring(1); //remainder is systemName
+        String cs = mainapp.getTurnoutState(systemName);
+        if (cs == null) cs = ""; //avoid npe
         if (!mainapp.isDCCEX) { // not DCC-EX
-            wifiSend("PTA" + cmd);
+            //special "toggle" handling for LnWi
+            if (mainapp.getServerType().equals("Digitrax") && action == '2') {
+                action = cs.equals("4")?'T':'C';
+            }
+            wifiSend("PTA" + action + systemName);
 
-        } else { //DCC-EX
-            String systemName = cmd.substring(1);
+        } else { //DCC-EX, includes special toggle handling
             String translatedState = "T";
-            switch (cmd.charAt(0)) {
+            switch (action) {
                 case 'C':
                     translatedState = "C";
                 case '2': { // toggle
-                    int pos = findTurnoutPos(systemName);
-                    if (pos >= 0) {
-                        if (mainapp.to_states[pos].equals("4")) {
+                     if (cs.equals("4")) {
                             translatedState = "C";
-                        }
-                    }
+                     }
                 }
             }
             String msgTxt = "<T " + cmd.substring(1) + " " + translatedState + ">";              // format <T id 0|1|T|C>
@@ -957,8 +962,8 @@ public class comm_thread extends Thread {
                         if (mainapp.withrottle_version >= 2.0) {
                             if (!mainapp.withrottle_version.equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
-                            } else {
-                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: version already set to " + mainapp.withrottle_version + ", ignoring");
+//                            } else {
+//                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: version already set to " + mainapp.withrottle_version + ", ignoring");
                             }
                         } else {
                             threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), Toast.LENGTH_SHORT);
@@ -1740,24 +1745,14 @@ public class comm_thread extends Thread {
         return pos;
     }
 
-    //parse turnout change to update mainapp array entry
+    //parse turnout change to update mainapp lists
     //  PTA<NewState><SystemName>
     //  PTA2LT12
     static void processTurnoutChange(String responseStr) {
-        if (mainapp.to_system_names == null) return;  //ignore if turnouts not defined
         String newState = responseStr.substring(3, 4);
         String systemName = responseStr.substring(4);
-//        int pos = -1;
-//        for (String sn : mainapp.to_system_names) {
-//            pos++;
-//            if (sn != null && sn.equals(systemName)) {
-//                break;
-//            }
-//        }
-        int pos = findTurnoutPos(systemName);
-        if (pos >= 0 && pos <= mainapp.to_system_names.length) {  //if found, update to new value
-            mainapp.to_states[pos] = newState;
-        }
+        //save new turnout state for later lookups
+        mainapp.putTurnoutState(systemName, newState);
     }  //end of processTurnoutChange
 
     //parse turnout list into appropriate app variable array
@@ -1769,7 +1764,6 @@ public class comm_thread extends Thread {
         //initialize app arrays (skipping first)
         mainapp.to_system_names = new String[ta.length - 1];
         mainapp.to_user_names = new String[ta.length - 1];
-        mainapp.to_states = new String[ta.length - 1];
         int i = 0;
         for (String ts : ta) {
             if (i > 0) { //skip first chunk, just message id
@@ -1777,7 +1771,7 @@ public class comm_thread extends Thread {
                 if (tv.length == 3) { //make sure split worked
                     mainapp.to_system_names[i - 1] = tv[0];
                     mainapp.to_user_names[i - 1] = tv[1];
-                    mainapp.to_states[i - 1] = tv[2];
+                    mainapp.putTurnoutState(tv[0], tv[2]);
                 }
             }  //end if i>0
             i++;
@@ -1801,9 +1795,12 @@ public class comm_thread extends Thread {
             }  //end if i>0
             i++;
         }  //end for
-
+        //workaround for bug in LnWi (they define 2/4, but send C/T)
+        if (mainapp.getServerType().equals("Digitrax")) {
+            mainapp.to_state_names.put("T","Thrown");
+            mainapp.to_state_names.put("C","Closed");
+        }
     }
-
     //parse route list into appropriate app variable array
     //  PRA<NewState><SystemName>
     //  PRA2LT12

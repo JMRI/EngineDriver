@@ -176,8 +176,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get values from global array
                         String systemName = mainapp.to_system_names[pos];
-                        String currentState = mainapp.to_states[pos];
-                        String currentStateDesc = getCurrentStateDesc(currentState);
+                        String currentState = mainapp.getTurnoutState(systemName);
+                        String currentStateDesc = getTurnoutStateDesc(currentState);
 
                         //put values into temp hashmap
                         HashMap<String, String> hm = new HashMap<>();
@@ -266,9 +266,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 for (String username : mainapp.to_user_names) {
                     boolean hasUserName = (username != null && !username.equals(""));
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
-                        //get values from global array
-                        String currentState = mainapp.to_states[pos];
-                        String currentStateDesc = getCurrentStateDesc(currentState);
+                        //get state from recents array
+                        String systemName = mainapp.to_system_names[pos];
+                        String currentState = mainapp.getTurnoutState(systemName);
+                        String currentStateDesc = getTurnoutStateDesc(currentState);
 
                         boolean found = false;
                         for (int i = 0; i < turnouts_lv.getCount() && !found; i++) {
@@ -350,9 +351,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 trn.setText(disabledText);
             trnPrefix.setEnabled(false);
         }
-        if (mainapp.getServerType().equals("Digitrax")) {  //Digitrax LnWi does not support toggle
-            butTog.setEnabled(false);
-        }
 
         if (TuMenu != null) {
             mainapp.displayEStop(TuMenu);
@@ -379,7 +377,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         if ("PTA".equals(com1) || "PTL".equals(com1)) {
                             refresh_turnout_view();
                             refreshTurnoutViewStates();
-                            refreshRecentTurnoutView();
+                            refreshRecentTurnoutViewStates();
                             //show server list first time it arrives
                             if ("PTL".equals(com1) && !mainapp.shownRosterTurnouts) {
                                 showMethod(WHICH_METHOD_ROSTER);
@@ -397,7 +395,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.WIT_CON_RECONNECT:
                     refresh_turnout_view();
                     refreshTurnoutViewStates();
-                    refreshRecentTurnoutView();
+                    refreshRecentTurnoutViewStates();
                     break;
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
@@ -945,7 +943,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         //since we always do the same action no need to distinguish between requests
         refresh_turnout_view();
         refreshTurnoutViewStates();
-        refreshRecentTurnoutView();
+        refreshRecentTurnoutViewStates();
     }
 
     private void disconnect() {
@@ -1021,6 +1019,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 rbRoster.setChecked(false);
 
                 loadRecentTurnoutsList();
+
                 break;
             }
             case WHICH_METHOD_ROSTER: {
@@ -1091,8 +1090,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         for (int pos = 0; pos < mainapp.to_user_names.length; pos++) {
                             String systemName = mainapp.to_system_names[pos];
                             if (systemName != null && systemName.equals(toAddress)) {
-                                currentState = mainapp.to_states[pos];
-                                currentStateDesc = getCurrentStateDesc(currentState);
+                                currentState = mainapp.getTurnoutState(systemName);
+                                currentStateDesc = getTurnoutStateDesc(currentState);
                             }
                         }
                     }
@@ -1217,7 +1216,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public void clearRecentTurnoutsList() {
 
         for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= 0; i--) {
-            // only load the turnout if it came from the current server
+            // only remove the turnout if it came from the current server
             if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip)) {
                 importExportPreferences.recent_turnout_name_list.remove(i);
                 importExportPreferences.recent_turnout_address_list.remove(i);
@@ -1235,39 +1234,27 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
 
-    public void refreshRecentTurnoutView() {
+    //sets the button state for each turnout in Recents view
+    public void refreshRecentTurnoutViewStates() {
+//        Log.d("Engine_Driver","refreshRecentTurnoutViewStates called...........");
         if (mainapp.isTurnoutControlAllowed()) {
-            if (mainapp.to_user_names != null) { //none defined
-                int pos = 0;
-                boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
-                for (String username : mainapp.to_user_names) {
-                    boolean hasUserName = (username != null && !username.equals(""));
-                    if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
-                        //get values from global array
-                        String systemName = mainapp.to_system_names[pos];
-                        String currentState = mainapp.to_states[pos];
-                        String currentStateDesc = getCurrentStateDesc(currentState);
-                        for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
-                            if (systemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
-
-                                View view = getViewByPosition(i, recentTurnoutsListView);
-                                if (view != null) {
-                                    Button b = view.findViewById(R.id.turnout_recent_toggle);
-                                    Button bt = view.findViewById(R.id.turnout_recent_throw);
-                                    Button bc = view.findViewById(R.id.turnout_recent_close);
-
-                                    showHideTurnoutButtons(currentStateDesc, b, bt, bc);
-                                }
-                            }
-                        }
-                    }
-                    pos++;
+            int i = 0;
+            for (HashMap<String, String> rthm : recentTurnoutsList) {
+                String sn = rthm.get("turnout");
+                String cs = mainapp.getTurnoutState(sn);
+                String csd = getTurnoutStateDesc(cs);
+                View view = getViewByPosition(i, recentTurnoutsListView);
+                if (view != null) {
+                    Button b = view.findViewById(R.id.turnout_recent_toggle);
+                    Button bt = view.findViewById(R.id.turnout_recent_throw);
+                    Button bc = view.findViewById(R.id.turnout_recent_close);
+                    showHideTurnoutButtons(csd, b, bt, bc);
                 }
+                i++;
             }
         }
         updateTurnoutEntry();
     }
-
 
     View getViewByPosition(int pos, ListView listView) {
         final int firstListItemPosition = listView.getFirstVisiblePosition();
@@ -1309,32 +1296,24 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     "");
     }
 
-    private String getCurrentStateDesc(String currentState) {
-        String currentStateDesc = mainapp.to_state_names.get(currentState);
-        if (currentStateDesc == null || currentState.equals(TURNOUT_STATE_UNKNOWN)) {
-            currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
+    private String getTurnoutStateDesc(String state) {
+        String stateDesc = mainapp.to_state_names.get(state);
+        if (stateDesc == null || state.equals(TURNOUT_STATE_UNKNOWN)) {
+            stateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
         }
-        return currentStateDesc;
+        return stateDesc;
     }
 
     private void setTurnoutRowButtonState(View vRow, Button bToggle, Button bThrow, Button bClose) {
         TextView snv = vRow.findViewById(R.id.to_system_name);
         String systemName = snv.getText().toString();
-        String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
-        boolean found = false;
-        for (int i = 0; i < mainapp.to_system_names.length && !found; i++) {
-            if (systemName.equals(mainapp.to_system_names[i])) {
-                currentStateDesc = getCurrentStateDesc(mainapp.to_states[i]);
-                found = true;
-            }
-        }
+        String currentStateDesc = getTurnoutStateDesc(mainapp.getTurnoutState(systemName));
         showHideTurnoutButtons(currentStateDesc, bToggle, bThrow, bClose);
     }
 
     private void showHideTurnoutButtons(String currentStateDesc, Button bToggle, Button bThrow, Button bClose) {
         if ((currentStateDesc.equals(TURNOUT_STATE_UNKNOWN_LABEL)) ||
-                (currentStateDesc.equals(getApplicationContext().getResources().getString(R.string.toggle_button))) ||
-                (mainapp.getServerType().equals("Digitrax"))) {  //Digitrax LnWi does not support toggle
+                (currentStateDesc.equals(getApplicationContext().getResources().getString(R.string.toggle_button)))) {
             bToggle.setVisibility(View.GONE);
             bThrow.setVisibility(View.VISIBLE);
             bClose.setVisibility(View.VISIBLE);
