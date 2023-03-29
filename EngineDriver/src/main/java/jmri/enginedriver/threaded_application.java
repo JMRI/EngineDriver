@@ -127,7 +127,8 @@ public class threaded_application extends Application {
     public boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
     public String[] to_system_names;
     public String[] to_user_names;
-    public String[] to_states;
+//    public String[] to_states;
+    private HashMap<String, String> turnout_states; //includes manual and system
     public HashMap<String, String> to_state_names;
     public String[] rt_system_names;
     public String[] rt_user_names;
@@ -984,20 +985,18 @@ public class threaded_application extends Application {
         host_ip = null;
         setServerType("");
         setServerDescription("");
-//        jmriMetadata = null;
         power_state = null;
-        to_states = null;
         to_system_names = null;
         to_user_names = null;
         to_state_names = null;
+        turnout_states = new HashMap<String, String>();
         rt_states = null;
         rt_system_names = null;
         rt_user_names = null;
         rt_state_names = null;
 
         prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
-         mainapp.isDCCEX = prefDCCEX;
-//        knownDCCEXserverIps = new HashMap<>();
+        mainapp.isDCCEX = prefDCCEX;
 
         DCCEXversion = "";
         DCCEXlistsRequested = -1;
@@ -2340,6 +2339,18 @@ public class threaded_application extends Application {
 
     public String getDCCEXVersion() {
         return DCCEXversion;
+    }
+
+    public String getTurnoutState(String turnoutSystemName) {
+        String state = turnout_states.get(turnoutSystemName);
+        return state;
+    }
+
+    public void putTurnoutState(String turnoutSystemName, String newState) {
+        turnout_states.put(turnoutSystemName, newState);
+        if (turnoutSystemName.substring(0,2).equals("LT")) { //also store with prefix removed
+            turnout_states.put(turnoutSystemName.substring(2), newState);
+        }
     }
 
     static public int getIntPrefValue(SharedPreferences sharedPreferences, String key, String defaultVal) {

@@ -111,7 +111,7 @@ public class ImportExportPreferences {
         try {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
-            String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
+            @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
             Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
             Log.d("Engine_Driver", m);
             res = true;
@@ -228,7 +228,7 @@ public class ImportExportPreferences {
         return res;
     }
 
-    @SuppressLint("ApplySharedPref")
+    @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
     @SuppressWarnings({ "unchecked" })
     boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file");
@@ -329,7 +329,7 @@ public class ImportExportPreferences {
                     }
                     prefEdit.putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET); // reset the preference
 
-                    String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
+                    @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
                     Log.d("Engine_Driver", "ImportExportPreferences: " + m);
                     Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
@@ -929,24 +929,11 @@ public class ImportExportPreferences {
         return engineAddressHtml;
     }
 
-//    public String getSourceHtmlString(int source) {
-//        String addressSourceString = "?";
-//        switch (source) {
-//            case WHICH_SOURCE_ROSTER:
-//                addressSourceString = " <big>≡</big> ";
-//                break;
-//            case WHICH_SOURCE_ADDRESS:
-//                addressSourceString = "<sub><small><small><small>└─┘</small></small></small></sub>";
-//                break;
-//        }
-//        return addressSourceString;
-//    }
-
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Writing recent turnouts list to file");
+//        Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Writing recent turnouts list to file");
 
 //        File sdcard_path = Environment.getExternalStorageDirectory();
 //        File engine_list_file = new File(sdcard_path,RECENT_TURNOUTS_FILENAME);
@@ -974,7 +961,8 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
-            Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Write recent turnouts list to file completed successfully");
+            Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: " +
+                    "Write recent turnouts list to file completed successfully with " + recent_turnout_address_list.size() + " entries.");
         } catch (IOException except) {
             Log.e("Engine_Driver",
                     "writeRecentTurnoutsListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
@@ -1006,7 +994,7 @@ public class ImportExportPreferences {
     }
 
         void getRecentTurnoutsListFromFile() {
-        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
+//        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in /sdcard/engine_driver/recent_engine_list.txt
@@ -1054,7 +1042,8 @@ public class ImportExportPreferences {
                 }
                 list_reader.close();
             }
-            Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Read recent turnouts list from file complete successfully");
+            Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: " +
+                    "Read recent turnouts list from file completed successfully with " + recent_turnout_address_list.size() + " entries.");
 
         } catch (IOException except) {
             Log.e("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Error reading recent turnouts file. "

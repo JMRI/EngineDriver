@@ -1,4 +1,7 @@
 **Version 2.35.164
+ * New 'Tablet Vertical Left (1-6)' throttle screen layout
+ * Fix for when deleting servers from the recent list
+ * Improve Recent Turnouts state display and toggling
 **Version 2.34.162
  * Fix activity transitions
  * Use Backup by Google One to save/restore Preferences and settings.
@@ -717,6 +720,7 @@
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
  * throttle:
+ *   TODO: Tablet Switching Left (1-6) with direction buttons
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
  *   TODO: dynamically shrink the "other" throttle when not in use to maximize # of funcs shown
@@ -729,10 +733,9 @@
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
  *   TODO: make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: support webview on Top
- *   TODO: retrieve vsDecoder sounds and play when appropriate
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
- *   TODO: User request to have re-arrangeable function buttons
+ *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  * In Phone Loco Sounds (throttle):
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
