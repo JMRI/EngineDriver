@@ -88,6 +88,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.Consist.ConLoco;
@@ -2347,9 +2349,11 @@ public class threaded_application extends Application {
     }
 
     public void putTurnoutState(String turnoutSystemName, String newState) {
-        turnout_states.put(turnoutSystemName, newState);
-        if (turnoutSystemName.substring(0,2).equals("LT")) { //also store with prefix removed
-            turnout_states.put(turnoutSystemName.substring(2), newState);
+        turnout_states.put(turnoutSystemName, newState); //store state by systemName e.g. "LT65"
+        Pattern p = Pattern.compile(".T(\\d*)");  //  then store by digits only "65"
+        Matcher m = p.matcher(turnoutSystemName);
+        if (m.matches()) {
+            turnout_states.put(m.group(1), newState);
         }
     }
 
