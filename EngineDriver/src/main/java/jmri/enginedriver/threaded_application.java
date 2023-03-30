@@ -452,8 +452,11 @@ public class threaded_application extends Application {
     public static final int GAMEPAD_GOOD = 1;
     public static final int GAMEPAD_BAD = 2;
 
+    public boolean prefGamePadIgnoreJoystick = false;
+
     public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
     public int[] lastKnownDirDCCEX = {0,0,0,0,0,0};
+    public long[] lastSpeedCommandSentTimeDCCEX = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
 
@@ -2598,7 +2601,7 @@ public class threaded_application extends Application {
     // listener for the joystick events
     public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
-        if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+        if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
             int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), 0); // dummy eventKeyCode

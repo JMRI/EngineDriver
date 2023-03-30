@@ -294,6 +294,10 @@
     <string name="prefGamePadDoublePressStopTitle">Double press Stop action</string>
     <string name="prefGamePadDoublePressStopSummary">Choose the action when you press any button that as configured as \\\'Stop\\\'</string>
     <string name="prefGamePadDoublePressStopDefaultValue" translatable="false">Forward/Reverse Toggle</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefGamePadIgnoreJoystickTitle">Ignore joystick actions</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Select this if you have problems with the DPad producing both keycodes and joystick events</string>
+
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->

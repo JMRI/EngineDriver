@@ -232,6 +232,8 @@
         <item >Mocute MTK</item>
         <item >Mocute Android-Game</item>
         <item >MagicseeR1 Android-Game B</item>
+        <item >MagicseeR1 Android-Mode A</item>
+        <item >MagicseeR1 Android-Mode C</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>

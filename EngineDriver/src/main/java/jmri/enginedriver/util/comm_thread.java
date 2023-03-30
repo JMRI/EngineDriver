@@ -48,6 +48,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -457,6 +458,9 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             wifiSend("<!>");
+            for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                sendSpeed(throttleIndex, 0);
+            }
 //            Log.d("Engine_Driver", "comm_thread.sendEStop DCC-EX: ");
         }
     }
@@ -722,13 +726,15 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
+                    String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                    msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.lastKnownDirDCCEX[whichThrottle] = newDir;
 //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
                 }
             } else {
-                msgTxt = String.format("<t 0 %s %d %d>", addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
+                String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                msgTxt = String.format(fmt, addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
                 wifiSend(msgTxt);
                 mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
 //                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
@@ -748,14 +754,17 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             Consist con = mainapp.consists[whichThrottle];
             String msgTxt = "";
+            int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
+            mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
             for (Consist.ConLoco l : con.getLocos()) {
-                int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                msgTxt = String.format("<t 0 %s %d %d>", l.getAddress().substring(1), speed, newDir);
+                String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
             }
+            mainapp.lastSpeedCommandSentTimeDCCEX[whichThrottle] = Calendar.getInstance().getTimeInMillis();
         }
     }
 
@@ -1331,11 +1340,13 @@ public class comm_thread extends Thread {
         int dir = 0;
         int speed = Integer.parseInt(args[3]);
         if (speed >= 128) {
-            speed = speed - 129;
+            speed = speed - 128;
             dir = 1;
         }
-        if ((dir==0) && (speed>1)) {
-            speed = speed - 1; // get round and idiotic design of the speed command
+        if (speed>1) {
+           speed = speed - 1; // get round and idiotic design of the speed command
+        } else {
+            speed=0;
         }
 
         String addr_str = args[1];
@@ -1344,23 +1355,29 @@ public class comm_thread extends Thread {
         } else {
             addr_str = "L" + addr_str;
         }
+        Long timeSinceLastCommand;
+
         for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {   //loco may be the lead on more that one throttle
             int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
             if (whichThrottle >= 0) {
-                mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
-                mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
-                responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>V" + speed;
-                mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
-                responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
-                mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                timeSinceLastCommand = Calendar.getInstance().getTimeInMillis() - mainapp.lastSpeedCommandSentTimeDCCEX[whichThrottle];
 
-                // Process the functions
-                int fnState;
-                for (int i = 0; i < 27; i++) {
-                    fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
-                    processFunctionState(whichThrottle, i, (fnState != 0));
-                    responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
+                if (timeSinceLastCommand>1000) {  // don't process an incoming speed if we sent a command for this throttle in the last second
+                    mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
+                    mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                    responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>V" + speed;
                     mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                    responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
+                    mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+
+                    // Process the functions
+                    int fnState;
+                    for (int i = 0; i < 27; i++) {
+                        fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+                        processFunctionState(whichThrottle, i, (fnState != 0));
+                        responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
+                        mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                    }
                 }
 
                 throttleIndex = whichThrottle; // skip ahead

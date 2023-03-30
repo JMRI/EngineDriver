@@ -1305,6 +1305,13 @@
                     android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
                     android:title="@string/prefGamepadTestEnforceTestingSimpleTitle"
                     android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefGamePadIgnoreJoystickDefaultValue"
+                    android:key="prefGamePadIgnoreJoystick"
+                    android:summary="@string/prefGamePadIgnoreJoystickSummary"
+                    android:title="@string/prefGamePadIgnoreJoystickTitle"
+                    android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
         </PreferenceScreen>
 

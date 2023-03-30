@@ -296,7 +296,7 @@ public class dcc_ex extends AppCompatActivity {
                 try {
                     Integer cv = Integer.decode(cvStr);
                     int cvValue = Integer.decode(cvValueStr);
-                    if ((cv > 0) && (cvValue > 0)) {
+                    if (cv > 0) {
                         DCCEXcv = cv.toString();
                         DCCEXcvValue = Integer.toString(cvValue);
                         mainapp.buttonVibration();
