@@ -984,6 +984,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefGamepadTestNow", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamePadSpeedButtonsSpeedStep", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadTestEnforceTestingSimple", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadIgnoreJoystick", thisEnabled);
 
     }
 

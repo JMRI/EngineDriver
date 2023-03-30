@@ -1332,6 +1332,7 @@
         <item>1</item>  // D ACK MIN
         <item>1</item>  // D ACK MAX
         <item>0</item>  // D RESET
+        <item>0</item>  // D HAL RESET
     </integer-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->

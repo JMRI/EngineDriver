@@ -749,8 +749,9 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             Consist con = mainapp.consists[whichThrottle];
             String msgTxt = "";
+            int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
+            mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
             for (Consist.ConLoco l : con.getLocos()) {
-                int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
                 String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
@@ -1334,7 +1335,7 @@ public class comm_thread extends Thread {
         int dir = 0;
         int speed = Integer.parseInt(args[3]);
         if (speed >= 128) {
-            speed = speed - 129;
+            speed = speed - 128;
             dir = 1;
         }
         if (speed>1) {

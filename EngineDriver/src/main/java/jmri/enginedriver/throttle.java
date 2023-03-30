@@ -1578,6 +1578,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefGamepadOnlyOneGamepad = prefs.getBoolean("prefGamepadOnlyOneGamepad", getResources().getBoolean(R.bool.prefGamepadOnlyOneGamepadDefaultValue));
 
         prefGamePadDoublePressStop = prefs.getString("prefGamePadDoublePressStop", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
+        mainapp.prefGamePadIgnoreJoystick = prefs.getBoolean("prefGamePadIgnoreJoystick", getResources().getBoolean(R.bool.prefGamePadIgnoreJoystickDefaultValue));
 
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
@@ -3825,6 +3826,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
                         }
+
+                        // if the preference name has "-rotate" at the end of it swap the direction keys around
+                        if (mainapp.prefGamePadType.contains("-rotate")) {
+                            if ((keyCode>=19) && (keyCode<=22)) {
+                                if (keyCode==19) { keyCode=22; }  // was Up -> Right
+                                else if (keyCode==20) { keyCode=21; } // was Down -> Left
+                                else if (keyCode==21) { keyCode=20; } // was Left -> Down
+                                else if (keyCode==22) { keyCode=19; } // was Right -> Up
+                            }
+                        }
+
                         int rslt = -1;
                         int actionNo = -1;
                         for (int i=0; i<=20; i++){

@@ -405,7 +405,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d("Engine_Driver", "dgme " + event.getAction());
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
-            if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+            if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
                 int action;
 
                 float xAxis;
@@ -613,6 +613,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         prefGamepadTestEnforceTestingSimple = prefs.getBoolean("prefGamepadTestEnforceTestingSimple", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingSimpleDefaultValue));
+        mainapp.prefGamePadIgnoreJoystick = prefs.getBoolean("prefGamePadIgnoreJoystick", getResources().getBoolean(R.bool.prefGamePadIgnoreJoystickDefaultValue));
 
         // tone generator for feedback sounds
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
