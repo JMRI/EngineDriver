@@ -989,7 +989,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void enableDisablePreference(PreferenceScreen prefScreen, String key, boolean enable) {
-        Log.d("Engine_Driver", "Settings: enableDisablePreference(): key: " + key);
+//        Log.d("Engine_Driver", "Settings: enableDisablePreference(): key: " + key);
         Preference p = prefScreen.findPreference(key);
         if (p != null) {
             p.setSelectable(enable);
