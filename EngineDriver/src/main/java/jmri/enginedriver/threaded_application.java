@@ -2351,10 +2351,10 @@ public class threaded_application extends Application {
         return state;
     }
 
-    public void putTurnoutState(String turnoutSystemName, String newState) {
-        turnout_states.put(turnoutSystemName, newState); //store state by systemName e.g. "LT65"
-        Pattern p = Pattern.compile(".T(\\d*)");  //  then store by digits only "65"
-        Matcher m = p.matcher(turnoutSystemName);
+    public void putTurnoutState(String turnoutName, String newState) {
+        turnout_states.put(turnoutName, newState); //store state by systemName e.g. "LT65"
+        Pattern p = Pattern.compile(".T(\\d*)");  //  also store by digits only "65"
+        Matcher m = p.matcher(turnoutName);
         if (m.matches()) {
             turnout_states.put(m.group(1), newState);
         }

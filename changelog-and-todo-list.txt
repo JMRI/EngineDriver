@@ -2,6 +2,8 @@
  * New 'Tablet Vertical Left (1-6)' throttle screen layout
  * Fix for when deleting servers from the recent list
  * Improve Recent Turnouts state display and toggling
+ * Some fixes for DCC-EX
+ * Support for Modes A & C on the MagicSee R1 gamepads
 **Version 2.34.162
  * Fix activity transitions
  * Use Backup by Google One to save/restore Preferences and settings.

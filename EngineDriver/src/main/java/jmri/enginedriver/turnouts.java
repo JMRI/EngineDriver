@@ -76,6 +76,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 
@@ -460,7 +462,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
                 if (reloadRecents) {
                     loadRecentTurnoutsList();
-                    showHideRecentsList();
                 }
                 mainapp.buttonVibration();
             }
@@ -486,7 +487,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, _buttonType + turnoutSystemName);    // C=Close T=Throw 2=toggle
 
             saveRecentTurnoutsList(true);
-            showHideRecentsList();
             mainapp.buttonVibration();
         }
     }
@@ -512,7 +512,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
             removingTurnoutOrForceReload = true;
             saveRecentTurnoutsList(true);
-            showHideRecentsList();
             mainapp.buttonVibration();
         }
     }
@@ -699,8 +698,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         recentTurnoutsListView.setOnTouchListener(recentTurnoutsGestureListener);
 
         loadRecentTurnoutsList();
-
-
         b = findViewById(R.id.clear_turnouts_list_button);
         b.setOnClickListener(new clearRecentTurnoutsListButton());
 
@@ -984,10 +981,28 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
 
-            showHideRecentsList();
+            //suppress manual entries that have been updated, e.g. hide "92" if "LT92" found
+            // first build list of entries to be removed, then skip them when copying
+            ArrayList<String> toSuppress = new ArrayList<>();
+            Pattern p = Pattern.compile(".T(\\d*)");
+            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
+                String sn = rthm.get("turnout");
+                Matcher m = p.matcher(sn);
+                if (m.matches()) { //name includes prefix
+                    toSuppress.add(m.group(1)); // add digits to remove list
+                }
+            }
 
+            //replace recent list with from temp list, suppressing where requested
             recentTurnoutsList.clear();
-            recentTurnoutsList.addAll(tempRecentTurnoutsList);
+            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
+                String sn = rthm.get("turnout");
+                if (!toSuppress.contains(sn)) {
+                    recentTurnoutsList.add(rthm);
+                } else {
+                    Log.d("Engine_Driver","skipping sn="+sn);
+                }
+            }
             recentTurnoutsListAdapter.notifyDataSetChanged();
         }
     }
@@ -1013,13 +1028,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             case WHICH_METHOD_ADDRESS: {
                 llAddress.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.GONE);
-                llRecent.setVisibility(View.GONE);
+                llRecent.setVisibility(View.VISIBLE);
 
                 rbAddress.setChecked(true);
                 rbRoster.setChecked(false);
 
                 loadRecentTurnoutsList();
-
+//                refreshRecentTurnoutViewStates();
                 break;
             }
             case WHICH_METHOD_ROSTER: {
@@ -1072,34 +1087,20 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
 
             String str = hm.get("turnout_source");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.to_recent_source);
-                name.setText(Html.fromHtml(str));
-                int i = Integer.parseInt(str);
+            TextView name = view.findViewById(R.id.to_recent_source);
+            name.setText(Html.fromHtml(str));
+            int i = Integer.parseInt(str);
 
-                Button b = view.findViewById(R.id.turnout_recent_toggle);
-                if (i != WHICH_SOURCE_ROSTER) {
-                    b.setVisibility(LinearLayout.GONE);
-                } else {
-                    Button bt = view.findViewById(R.id.turnout_recent_throw);
-                    Button bc = view.findViewById(R.id.turnout_recent_close);
+            Button b = view.findViewById(R.id.turnout_recent_toggle);
+            Button bt = view.findViewById(R.id.turnout_recent_throw);
+            Button bc = view.findViewById(R.id.turnout_recent_close);
 
-                    String currentState;
-                    String currentStateDesc = TURNOUT_STATE_UNKNOWN_LABEL;
-                    if (mainapp.to_user_names != null) {
-                        for (int pos = 0; pos < mainapp.to_user_names.length; pos++) {
-                            String systemName = mainapp.to_system_names[pos];
-                            if (systemName != null && systemName.equals(toAddress)) {
-                                currentState = mainapp.getTurnoutState(systemName);
-                                currentStateDesc = getTurnoutStateDesc(currentState);
-                            }
-                        }
-                    }
-                    b.setText(currentStateDesc);
+            String currentState = mainapp.getTurnoutState(toAddress);
+            String currentStateDesc = getTurnoutStateDesc(currentState);
+            b.setText(currentStateDesc);
 
-                    showHideTurnoutButtons(currentStateDesc, b, bt, bc);
-                }
-            }
+            showHideTurnoutButtons(currentStateDesc, b, bt, bc);
+
             return view;
         }
     }
@@ -1119,7 +1120,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         removingTurnoutOrForceReload = true;
         saveRecentTurnoutsList(true);
         loadRecentTurnoutsList();
-        showHideRecentsList();
     }
 
 
@@ -1236,7 +1236,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     //sets the button state for each turnout in Recents view
     public void refreshRecentTurnoutViewStates() {
-//        Log.d("Engine_Driver","refreshRecentTurnoutViewStates called...........");
         if (mainapp.isTurnoutControlAllowed()) {
             int i = 0;
             for (HashMap<String, String> rthm : recentTurnoutsList) {
@@ -1267,20 +1266,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return listView.getChildAt(childIndex);
         }
     }
-
-
-    void showHideRecentsList() {
-        int visible = View.GONE;
-        if (currentSelectTurnoutMethod.equals(WHICH_METHOD_ADDRESS)) { // not set to address/recent
-            if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) { // has an SD Card
-                if (importExportPreferences.recent_turnout_address_list.size() > 0) { // if the list is empty
-                    visible = View.VISIBLE;  // hide the list
-                }
-            }
-        }
-        llRecent.setVisibility(visible);
-    }
-
 
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
