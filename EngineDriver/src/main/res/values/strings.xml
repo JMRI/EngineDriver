@@ -297,6 +297,7 @@
 
     <string name="prefGamePadIgnoreJoystickTitle">Ignore joystick actions</string>
     <string name="prefGamePadIgnoreJoystickSummary">Select this if you have problems with the DPad producing both keycodes and joystick events</string>
+
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
