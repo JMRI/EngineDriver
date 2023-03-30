@@ -1034,7 +1034,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 rbRoster.setChecked(false);
 
                 loadRecentTurnoutsList();
-//                refreshRecentTurnoutViewStates();
                 break;
             }
             case WHICH_METHOD_ROSTER: {
