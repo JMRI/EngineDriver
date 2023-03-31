@@ -312,7 +312,7 @@ public class dcc_ex extends AppCompatActivity {
                     Integer cv = Integer.decode(cvStr);
                     int cvValue = Integer.decode(cvValueStr);
                     Integer addr = Integer.decode(addrStr);
-                    if ((addr > 2) && (addr <= 9999) && (cv > 0) && (cvValue > 0)) {
+                    if ((addr > 2) && (addr <= 10239) && (cv > 0)) {
                         DCCEXaddress = addr.toString();
                         DCCEXcv = cv.toString();
                         DCCEXcvValue = Integer.toString(cvValue);
