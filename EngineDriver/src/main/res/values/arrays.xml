@@ -219,6 +219,7 @@
         <item >iCade+DPAD-rotate</item>
         <item >MTK-rotate</item>
         <item >Game-rotate</item>
+        <item >Game-alternate-rotate</item>
         <item tools:ignore="Typos">MagicseeR1B</item>
         <item tools:ignore="Typos">MagicseeR1A</item>
         <item tools:ignore="Typos">MagicseeR1C</item>
@@ -236,6 +237,7 @@
         <item >Mocute iCade+DPAD</item>
         <item >Mocute MTK</item>
         <item >Mocute Android-Game</item>
+        <item >Mocute Android-Game (Alternate)</item>
         <item tools:ignore="Typos">MagicseeR1 Android-Game B</item>
         <item tools:ignore="Typos">MagicseeR1 Android-Mode A</item>
         <item tools:ignore="Typos">MagicseeR1 Android-Mode C</item>
@@ -487,6 +489,30 @@
         <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown = KEYCODE_DPAD_DOWN;
         <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft = KEYCODE_DPAD_LEFT;
         <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight = KEYCODE_DPAD_RIGHT;
+        <item>@integer/KeyCode_Button_Start</item> //gamepadStart
+        <item>@integer/KeyCode_Button_X</item> //gamepadX
+        <item>@integer/KeyCode_Button_Y</item> //gamepadY
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </integer-array>
+    <integer-array name="prefGamePadGameAlternate" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_DUMMY_Dpad_Up</item> //gamepadDpadUp
+        <item>@integer/KeyCode_DUMMY_Dpad_Down</item> //gamepadDpadDown
+        <item>@integer/KeyCode_DUMMY_Dpad_Left</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_DUMMY_Dpad_Right</item> //gamepadDpadRight
         <item>@integer/KeyCode_Button_Start</item> //gamepadStart
         <item>@integer/KeyCode_Button_X</item> //gamepadX
         <item>@integer/KeyCode_Button_Y</item> //gamepadY
