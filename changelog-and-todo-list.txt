@@ -1,4 +1,6 @@
+**Version 2.35.170
 **Version 2.35.168
+ * fixed regression with LnWi states
 **Version 2.35.164
  * New 'Tablet Vertical Left (1-6)' throttle screen layout
  * Fix for when deleting servers from the recent list
