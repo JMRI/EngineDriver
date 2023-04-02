@@ -993,7 +993,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
 
-            //replace recent list with from temp list, suppressing where requested
+            //replace recent list from temp list, suppressing where requested
             recentTurnoutsList.clear();
             for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
                 String sn = rthm.get("turnout");

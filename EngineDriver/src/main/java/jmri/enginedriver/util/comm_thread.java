@@ -622,7 +622,7 @@ public class comm_thread extends Thread {
         if (!mainapp.isDCCEX) { // not DCC-EX
             //special "toggle" handling for LnWi
             if (mainapp.getServerType().equals("Digitrax") && action == '2') {
-                action = cs.equals("4")?'T':'C';
+                action = cs.equals("C")?'T':'C'; //LnWi states are C/T (not 2/4)
             }
             wifiSend("PTA" + action + systemName);
 
