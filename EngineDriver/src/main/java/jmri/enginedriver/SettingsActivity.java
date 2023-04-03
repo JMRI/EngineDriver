@@ -918,6 +918,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             case "MTK-rotate":
             case "Game":
             case "Game-rotate":
+            case "Game-alternate-rotate":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
 /*

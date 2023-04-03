@@ -109,4 +109,9 @@
     <integer name="KeyCode_Media_Previous">88</integer>
     <integer name="KeyCode_Media_Mute"> 164</integer>
 
+    <integer name="KeyCode_DUMMY_Dpad_Up"> 519</integer>
+    <integer name="KeyCode_DUMMY_Dpad_Down"> 520</integer>
+    <integer name="KeyCode_DUMMY_Dpad_Left"> 521</integer>
+    <integer name="KeyCode_DUMMY_Dpad_Right"> 522</integer>
+
 </resources>

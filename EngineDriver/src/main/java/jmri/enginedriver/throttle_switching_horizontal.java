@@ -578,10 +578,12 @@ public class throttle_switching_horizontal extends throttle {
 
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
-        if (!newEnabledState) {
+        if (hsbSwitchingSpeeds != null) {
+            if (!newEnabledState) {
                 hsbSwitchingSpeeds[whichThrottle].setProgress(0); // set slider to 0 if disabled
             }
-        hsbSwitchingSpeeds[whichThrottle].setEnabled(newEnabledState);
+            hsbSwitchingSpeeds[whichThrottle].setEnabled(newEnabledState);
+        }
     } // end of enable_disable_buttons
 
     // helper function to enable/disable all children for a group
