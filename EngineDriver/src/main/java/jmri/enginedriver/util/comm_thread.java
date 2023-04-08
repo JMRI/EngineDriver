@@ -627,6 +627,21 @@ public class comm_thread extends Thread {
             wifiSend("PTA" + action + systemName);
 
         } else { //DCC-EX, includes special toggle handling
+
+            String to_id = cmd.substring(1);
+            // check to see if the turnout is known and add it if it is not
+            boolean found = false;
+            for (int i=0; i<mainapp.to_system_names.length; i++) {
+                if (mainapp.to_system_names[i].equals(to_id)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                String msgTxt = "<T " + to_id + " DCC " + to_id + ">";
+                wifiSend(msgTxt);
+            }
+
             String translatedState = "T";
             switch (action) {
                 case 'C':
@@ -637,7 +652,7 @@ public class comm_thread extends Thread {
                      }
                 }
             }
-            String msgTxt = "<T " + cmd.substring(1) + " " + translatedState + ">";              // format <T id 0|1|T|C>
+            String msgTxt = "<T " + to_id + " " + translatedState + ">";              // format <T id 0|1|T|C>
             wifiSend(msgTxt);
 //            Log.d("Engine_Driver", "comm_thread.sendTurnout DCC-EX: " + msgTxt);
         }
