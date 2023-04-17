@@ -696,7 +696,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
         // try the pref setting
         if (urlRestoreStep == 2) {
-            String url = mainapp.createUrl(prefs.getString("InitialWebPage", getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue)));
+            mainapp.defaultWebViewURL = prefs.getString("InitialWebPage",
+                    getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+            String url = mainapp.createUrl(mainapp.defaultWebViewURL);
             if (url != null) {      // if port is valid
                 webView.loadUrl(url);
             }

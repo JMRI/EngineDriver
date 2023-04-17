@@ -117,6 +117,8 @@ public class threaded_application extends Application {
     public volatile int web_server_port = 0; //default port for jmri web server
     private String serverType = ""; //should be set by server in initial command strings
     private String serverDescription = ""; //may be set by server in initial command strings
+    public String defaultWebViewURL;
+    public String defaultThrottleWebViewURL;
     public volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
     public volatile Consist[] consists;
@@ -1291,7 +1293,13 @@ public class threaded_application extends Application {
      * @return true or false
      */
     public boolean isWebAllowed() {
-        return (web_server_port > 0);
+        boolean rslt = false;
+        if (web_server_port > 0) {
+            rslt = true;
+        } else if (defaultWebViewURL.startsWith("http".toLowerCase())) {
+            rslt = true;
+        }
+        return rslt;
     }
 
     /**
@@ -1513,8 +1521,8 @@ public class threaded_application extends Application {
             defaultUrl = "";
             Log.d("Engine_Driver", "t_a: ignoring web url for MRC");
         }
-        if (port > 0) {
-            if (defaultUrl.startsWith("http")) { //if url starts with http, use it as is
+        if ( (port > 0) || (defaultUrl.startsWith("http".toLowerCase())) ) {
+            if (defaultUrl.startsWith("http".toLowerCase())) { //if url starts with http, use it as is
                 url = defaultUrl;
             } else { //, else prepend servername and port and slash if needed           
                 url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/") ? "" : "/") + defaultUrl;
