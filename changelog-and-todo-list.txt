@@ -1,4 +1,5 @@
 **Version 2.35.170
+ * allow external web view on CSs without web servers
 **Version 2.35.168
  * fixed regression with LnWi states
 **Version 2.35.164
