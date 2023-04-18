@@ -1296,7 +1296,7 @@ public class threaded_application extends Application {
         boolean rslt = false;
         if (web_server_port > 0) {
             rslt = true;
-        } else if (defaultWebViewURL.startsWith("http".toLowerCase())) {
+        } else if (defaultWebViewURL.toLowerCase().startsWith("http")) {
             rslt = true;
         }
         return rslt;
@@ -1521,8 +1521,8 @@ public class threaded_application extends Application {
             defaultUrl = "";
             Log.d("Engine_Driver", "t_a: ignoring web url for MRC");
         }
-        if ( (port > 0) || (defaultUrl.startsWith("http".toLowerCase())) ) {
-            if (defaultUrl.startsWith("http".toLowerCase())) { //if url starts with http, use it as is
+        if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
+            if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
                 url = defaultUrl;
             } else { //, else prepend servername and port and slash if needed           
                 url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/") ? "" : "/") + defaultUrl;
