@@ -1529,6 +1529,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // increase the web view height if the preference is set
         prefIncreaseWebViewSize = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
+        mainapp.defaultWebViewURL = prefs.getString("InitialWebPage",
+                getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
+        mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrotWebPage",
+                getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue));
 
         prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
@@ -6413,8 +6417,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         else {
             if (url == null || url.equals(noUrl)) {                // if initializing
-                url = mainapp.createUrl(prefs.getString("InitialThrotWebPage",
-                        getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue)));
+                mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrotWebPage",
+                        getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue));
+                url = mainapp.createUrl(mainapp.defaultThrottleWebViewURL);
                 if (url == null) {      //if port is invalid
                     url = noUrl;
                 }
