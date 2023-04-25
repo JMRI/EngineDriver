@@ -1694,6 +1694,7 @@ public class comm_thread extends Thread {
         LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<>();
         int i = 0;
         for (String ts : ta) {
+            if (i > mainapp.MAX_FUNCTION_NUMBER+1) break; //ignore unupported functions
             if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
                 function_labels_temp.put(i - 1, ts); //index is hashmap key, value is label string
             }  //end if i>0

@@ -566,7 +566,7 @@ public class threaded_application extends Application {
         }
 
         for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
-            function_states[i] = new boolean[32];
+            function_states[i] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1];
         }
 
 //        dlMetadataTask = new DownloadMetaTask();
@@ -1016,12 +1016,12 @@ public class threaded_application extends Application {
         try {
             consists = new Consist[maxThrottles];
             function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
-            function_states = new boolean[maxThrottles][32];
+            function_states = new boolean[maxThrottles][mainapp.MAX_FUNCTION_NUMBER+1];
 
             for (int i = 0; i < maxThrottles; i++) {
                 consists[i] = new Consist();
                 function_labels[i] = new LinkedHashMap<Integer, String>();
-                function_states[i] = new boolean[32];        // also allocated in onCreate() ???
+                function_states[i] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
 
                 lastKnownSpeedDCCEX[i] = 0;
                 lastKnownDirDCCEX[i] = 0;
