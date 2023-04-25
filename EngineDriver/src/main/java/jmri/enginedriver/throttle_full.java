@@ -94,6 +94,8 @@ public class throttle_full extends throttle {
     void set_function_state(int whichThrottle, int function) {
         // Log.d("Engine_Driver","starting set_function_request");
 
+        if (function > mainapp.MAX_FUNCTION_NUMBER) return; //bail if this function number not supported
+
         Button b;
         boolean[] fs;   // copy of this throttle's function state array
         b = functionMaps[whichThrottle].get(function);

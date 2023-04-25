@@ -149,7 +149,7 @@ public class comm_handler extends Handler {
             if (releaseAll || mainapp.consists[whichThrottle].isEmpty()) {
                addr = "";
                mainapp.function_labels[whichThrottle] = new LinkedHashMap<>();
-               mainapp.function_states[whichThrottle] = new boolean[32];
+               mainapp.function_states[whichThrottle] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1];
             }
             if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
                     mainapp.getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
