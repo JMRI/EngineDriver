@@ -869,7 +869,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">aucun</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">verrouillage</string>
     <string name="prefFunctionConsistLocosDefaultValue">de tete</string>
-    <string name="functionConsistHelpText">Utilisation uniquement pour \'Special\' les options suivantes en UM. Choisiir methode  affichage texte des fonctions pour chaque loco de l UM.</string>
+    <string name="functionConsistHelpText">Utilisation uniquement pour \'Special\' les options suivantes en UM + DCC-EX. Choisiir methode  affichage texte des fonctions pour chaque loco de l UM.</string>
     <string name="functionConsistHeader">Fonctions UM actives</string>
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>

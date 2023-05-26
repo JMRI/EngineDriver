@@ -195,6 +195,7 @@ public class threaded_application extends Application {
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public boolean prefDCCEX = false;
+    public boolean prefDCCEXUseFunctionsOfLocosFoundInRoster = false;
     public String DCCEXversion = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
@@ -1003,6 +1004,7 @@ public class threaded_application extends Application {
         rt_state_names = null;
 
         prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
+        prefDCCEXUseFunctionsOfLocosFoundInRoster = prefs.getBoolean("prefDCCEXUseFunctionsOfLocosFoundInRoster", mainapp.getResources().getBoolean(R.bool.prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue));
         mainapp.isDCCEX = prefDCCEX;
 
         DCCEXversion = "";

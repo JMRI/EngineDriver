@@ -6206,8 +6206,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end onResume
 
     private void showHideConsistMenus(){
-        if (mainapp.consists==null) {
-            Log.d("Engine_Driver", "showHideConsistMenu consists[] is null");
+        if ((mainapp.consists==null) && (!mainapp.isDCCEX)) {
+            Log.d("Engine_Driver", "showHideConsistMenu consists[] is null and not DCC-EX");
             return;
         }
 
@@ -6261,7 +6261,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) ) {
                 isSpecial = true;
             }
-            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial);
+            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
+            if ((!isSpecial) && (mainapp.isDCCEX)) {
+                TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
+            } else {
+                TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionConsistSettings);
+            }
         }
     }
 
@@ -6465,7 +6470,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                     } else {
                         if (mainapp.consists != null) {  //avoid npe maybe
-                            if (mainapp.consists[whichThrottle] != null && !mainapp.consists[whichThrottle].isLeadFromRoster()) {
+                            if (mainapp.consists[whichThrottle] != null && !mainapp.consists[whichThrottle].isLeadFromRoster()
+                                    && !mainapp.consists[whichThrottle].isLeadServerSuppliedFunctionLabels() ) {
                                 function_labels_temp = mainapp.function_labels_default;
                             } else {
                                 function_labels_temp = mainapp.function_labels_default_for_roster;
@@ -6573,6 +6579,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayPowerStateMenuButton(TMenu);
             mainapp.setPowerMenuOption(TMenu);
             mainapp.setDCCEXMenuOption(TMenu);
+            showHideConsistMenus();
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
             mainapp.setTurnoutsMenuOption(TMenu);
@@ -6742,6 +6749,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayTimerMenuButton(menu, kidsTimerRunning);
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
+        showHideConsistMenus();
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setFlashlightButton(menu);

@@ -1914,6 +1914,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
+                    case "prefDCCEXUseFunctionsOfLocosFoundInRoster":
+                        parentActivity.mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster = sharedPreferences.getBoolean("prefDCCEXUseFunctionsOfLocosFoundInRoster",
+                                getResources().getBoolean(R.bool.prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue));
+                        break;
+
                 }
             }
         }

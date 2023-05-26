@@ -850,8 +850,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">cap</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">Enclavament</string>
     <string name="prefFunctionConsistLocosDefaultValue">Davantera</string>
-    <string name="functionConsistHelpText">Només s\'utilitza per a les següents funcions de Tracció Múltiple \'Especial\'. Seleccioneu com es buscarà el text de cada funció en les etiquetes de funció per a cada Tracció Múltiple</string>
-    <string name="functionConsistHeader">Accions de Funcions de Tracció Múltiple</string>
+    <string name="functionConsistHelpText">Només s\'utilitza per a les següents funcions de Tracció Múltiple \'Especial\' + DCC-EX. Seleccioneu com es buscarà el text de cada funció en les etiquetes de funció per a cada Tracció Múltiple</string>
+    <string name="functionConsistHeader">Accions de Funcions</string>
     <string name="app_name_consist_functions">Ajustos de les Funcions de Tracció Múltiple</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra marques de temps en els registres</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra la Data i l\'Hora per a cada entrada en la pantalla de registres</string>

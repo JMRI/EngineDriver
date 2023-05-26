@@ -17,6 +17,7 @@
     <string name="exit">Exit</string>
     <string name="settings">Function Defaults</string>
     <string name="functionConsistSettings">Consist Function Settings</string>
+    <string name="dccExFunctionSettings">DCC-EX Function Settings</string>
     <string name="fb_label">Function Label</string>
     <string name="fb_column_label">Label</string>
     <string name="fb_column_function">Funct#</string>
@@ -29,8 +30,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">none</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">latching</string>
     <string name="prefFunctionConsistLocosDefaultValue">lead</string>
-    <string name="functionConsistHelpText">Only used for the \'Special\' consist function following options. Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
-    <string name="functionConsistHeader">Consist Function Actions</string>
+    <string name="functionConsistHelpText">Used for:\na) the \'Special\' consist function following options.\nb) non-roster locos when using the DCC-EX native protocol.\n\nFor \'a\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
+    <string name="functionConsistHeader">Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
     <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
@@ -1237,8 +1238,14 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
+    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation Preferences</string>
+    <string name="prefDCCEXPreferencesSummary">Options for using a EX-CommandStation</string>
+
     <string name="prefDCCEXTitle">Use native DCC-EX commands</string>
     <string name="prefDCCEXSummary">Use the native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
+
+    <string name="prefDCCEXUseFunctionsOfLocosFoundInRosterTitle">Allow Roster address matching</string>
+    <string name="prefDCCEXUseFunctionsOfLocosFoundInRosterSummary">If enabled, functions of the first found matching roster entry for an \'entered\' loco address will be used. Only if no loco matches will it use the default funtions. MANDATORY if you have a \'default\' roster entry in the EX-CS</string>
 
     <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>

@@ -99,6 +99,7 @@ public class comm_thread extends Thread {
         prefs = myPrefs;
 
         mainapp.prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
+        mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster = prefs.getBoolean("prefDCCEXUseFunctionsOfLocosFoundInRoster", mainapp.getResources().getBoolean(R.bool.prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
 
         this.start();
@@ -948,11 +949,16 @@ public class comm_thread extends Thread {
                         Log.d("Engine_Driver", "comm_thread.processWifiResponse: loco " + addr + " dropped from " + mainapp.throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
-                        if (mainapp.consists[whichThrottle].isLeadFromRoster()) { // if not from the roster ignore the function labels that WiT has sent back
+                        if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
+                        || (mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster) ) { // unless overidden by the preference
                             String lead;
                             lead = mainapp.consists[whichThrottle].getLeadAddr();
-                            if (lead.equals(addr))                        //*** temp - only process if for lead engine in consist
+                            if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                                 processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
+                                if (!mainapp.consists[whichThrottle].isLeadFromRoster()) {
+                                    mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
+                                }
+                            }
                             mainapp.consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], mainapp);
                         }
 
@@ -1694,7 +1700,7 @@ public class comm_thread extends Thread {
         LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<>();
         int i = 0;
         for (String ts : ta) {
-            if (i > mainapp.MAX_FUNCTION_NUMBER+1) break; //ignore unupported functions
+            if (i > mainapp.MAX_FUNCTION_NUMBER+1) break; //ignore unsupported functions
             if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
                 function_labels_temp.put(i - 1, ts); //index is hashmap key, value is label string
             }  //end if i>0

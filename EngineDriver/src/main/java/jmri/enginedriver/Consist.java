@@ -214,6 +214,16 @@ public final class Consist {
         return isRoster;
     }
 
+    public Boolean isLeadServerSuppliedFunctionLabels() {
+        boolean isServerSuppliedFunctionLabels = false;
+        if (!isEmpty() && leadAddr != null) {
+            ConLoco l = con.get(leadAddr);
+            if ((l != null) && (l.getIsServerSuppliedFunctionlabels()))
+                isServerSuppliedFunctionLabels = true;
+        }
+        return isServerSuppliedFunctionLabels;
+    }
+
     // set how the loco was originally selected
     public void setWhichSource(String address, int whichSource) {
 
