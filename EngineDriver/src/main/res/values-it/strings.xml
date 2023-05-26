@@ -783,8 +783,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">nessuna</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">aggancio</string>
     <string name="prefFunctionConsistLocosDefaultValue">condurre</string>
-    <string name="functionConsistHelpText">Utilizzato solo per il \'Special\' costituito opzioni seguente funzione. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
-    <string name="functionConsistHeader">Consistono azioni di funzione</string>
+    <string name="functionConsistHelpText">Utilizzato solo per il \'Special\' costituito opzioni seguente funzione + DCC-EX. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
+    <string name="functionConsistHeader">Azioni di funzione</string>
     <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni - macchinista</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra timestamp su Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>

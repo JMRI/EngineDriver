@@ -786,7 +786,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">Nenhum</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">trancando</string>
     <string name="prefFunctionConsistLocosDefaultValue">conduzir</string>
-    <string name="functionConsistHelpText">Apenas usada para o \'especial \' consistem de função seguintes opções. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
+    <string name="functionConsistHelpText">Apenas usada para o \'especial \' consistem de função seguintes opções + DCC-EX. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
     <string name="functionConsistHeader">Consistem Ações de função</string>
     <string name="app_name_consist_functions">Consistem configurações de funções - Driver Motor</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar Timestamps em Log</string>

@@ -33,6 +33,7 @@ public class Loco {
     private String rosterName;                  //null if loco has no roster entry
     private boolean confirmed;                  //set after WiT responds that engine is assigned to throttle
     private boolean isFromRoster;                  //true if the entry was found in the roster (for the function button label check)
+    private boolean isServerSuppliedFunctionLabels;  //true if the the server supplied a function list from the loco (for the function button label check)
     private LinkedHashMap<Integer, String> functionLabels;
     private int functionLabelsMaxKey = 0;          // highest function number that contains a string (not null)
 
@@ -66,6 +67,7 @@ public class Loco {
         this.confirmed = false;
         this.rosterName = null;
         this.isFromRoster = false;
+        this.isServerSuppliedFunctionLabels = false;
         this.functionLabels = null;
     }
 
@@ -75,6 +77,7 @@ public class Loco {
         this.rosterName = l.rosterName;
         this.confirmed = l.confirmed;
         this.isFromRoster = l.isFromRoster;
+        this.isServerSuppliedFunctionLabels = l.isServerSuppliedFunctionLabels;
         this.functionLabels = l.functionLabels;
     }
 
@@ -132,6 +135,13 @@ public class Loco {
     }
     public void setIsFromRoster(boolean isFromRoster) {
         this.isFromRoster = isFromRoster;
+    }
+
+    public boolean getIsServerSuppliedFunctionlabels() {
+        return this.isServerSuppliedFunctionLabels;
+    }
+    public void setIsServerSuppliedFunctionlabels(boolean isFromRoster) {
+        this.isServerSuppliedFunctionLabels = isServerSuppliedFunctionLabels;
     }
 
     //provide description if present, otherwise provide formatted address

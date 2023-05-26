@@ -838,8 +838,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">ninguna</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">enclavamiento</string>
     <string name="prefFunctionConsistLocosDefaultValue">Delantera</string>
-    <string name="functionConsistHelpText">Solo se utiliza para las siguientes opciones de la función de Tracción Múltiple \'Especial\'. Selección de cómo se buscará el texto de cada función en las etiquetas de función para cada Locomotora de la Tracción Múltiple.</string>
-    <string name="functionConsistHeader">Acciones de Funciones en las Tracciones Múltiples</string>
+    <string name="functionConsistHelpText">Solo se utiliza para las siguientes opciones de la función de Tracción Múltiple \'Especial\' + DCC-EX. Selección de cómo se buscará el texto de cada función en las etiquetas de función para cada Locomotora de la Tracción Múltiple.</string>
+    <string name="functionConsistHeader">Acciones de Funciones</string>
     <string name="app_name_consist_functions">Ajustes de las Funciones de Tracción Múltiple</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar marcas de tiempo en registro</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Fecha y Hora para cada entrada en la pantalla de registro</string>

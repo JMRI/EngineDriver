@@ -851,8 +851,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">keiner</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">Rast</string>
     <string name="prefFunctionConsistLocosDefaultValue">führen</string>
-    <string name="functionConsistHelpText" tools:ignore="Typos">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
-    <string name="functionConsistHeader">Consist Funktion Aktionen</string>
+    <string name="functionConsistHelpText" tools:ignore="Typos">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen + DCC-EX. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
+    <string name="functionConsistHeader">Funktion Aktionen</string>
     <string name="app_name_consist_functions">Consist Funktionseinstellungen - Lokomotivführer</string>
     <string name="prefShowTimeOnLogEntryTitle">Zeige Zeitstempel auf Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Zeigen Datum Zeit für jeden Eintrag auf dem Log-Bildschirm.</string>

@@ -1049,7 +1049,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">žádný</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">aretací</string>
     <string name="prefFunctionConsistLocosDefaultValue">Vést</string>
-    <string name="functionConsistHelpText">Používá se pouze pro \'Speciální\\‘ skládat volby funkce následující. Zvolit, jak bude text každé funkce hledali v popisky funkčních pro každou lokomotivu v sestavě.</string>
+    <string name="functionConsistHelpText">Používá se pouze pro \'Speciální\\‘ skládat volby funkce následující + DCC-EX. Zvolit, jak bude text každé funkce hledali v popisky funkčních pro každou lokomotivu v sestavě.</string>
     <string name="functionConsistHeader">Skládat Funkce Akce</string>
     <string name="app_name_consist_functions">Skládat nastavení funkcí - strojvedoucí</string>
     <string name="prefShowTimeOnLogEntryTitle">Zobrazovat časová razítka na Log</string>

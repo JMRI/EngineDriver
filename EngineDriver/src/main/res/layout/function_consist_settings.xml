@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:padding="9sp"
                 android:text="@string/functionConsistHelpText"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <Button
                 android:id="@+id/functionConsistReset"
@@ -58,7 +58,8 @@
                 android:orientation="vertical"
                 tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
 
-                <TableRow>  <!--Header-->
+                <TableRow
+                    android:weightSum="1" >  <!--Header-->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/function_consist_LocosHeader"
                         android:layout_width="wrap_content"
                         android:layout_weight=".33"
                         android:text="@string/functionConsistColumnLocos"
@@ -83,7 +85,8 @@
 
                 </TableRow>
 
-                <TableRow>  <!--Row 00-->
+                <TableRow
+                    android:weightSum="1" >  <!--Row 00-->
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -102,7 +105,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -121,7 +125,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -140,7 +145,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -159,7 +165,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -178,7 +185,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -197,7 +205,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -216,7 +225,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -235,7 +245,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -254,7 +265,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -273,7 +285,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -292,7 +305,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -311,7 +325,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -330,7 +345,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -349,7 +365,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -368,7 +385,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -387,7 +405,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -406,7 +425,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -425,7 +445,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -444,7 +465,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -463,7 +485,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -482,7 +505,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -501,7 +525,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -520,7 +545,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -539,7 +565,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -558,7 +585,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -577,7 +605,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -596,7 +625,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"
@@ -615,7 +645,8 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow
+                    android:weightSum="1" >
 
                     <TextView
                         style="?attr/edit_label_style"

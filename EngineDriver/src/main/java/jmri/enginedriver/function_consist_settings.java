@@ -70,6 +70,12 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     private static String[] LOCOS = {"lead", "lead and trail", "all","trail"};
     private static String[] LATCHING = {"latching", "none"};
 
+    boolean isSpecial = false;
+    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+
     SharedPreferences prefs;
 
     private Toolbar toolbar;
@@ -115,6 +121,13 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         //put pointer to this activity's handler in main app's shared variable
         mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler();
 
+        if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) ) {
+            isSpecial = true;
+        }
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -122,7 +135,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             mainapp.setToolbarTitle(toolbar,
                     getApplicationContext().getResources().getString(R.string.app_name),
-                    getApplicationContext().getResources().getString(R.string.app_name_functions),
+                    getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
                     "");
         }
 
@@ -265,7 +278,12 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 ((TextView) r.getChildAt(0)).setText(aLbl.get(ndx));
                 Spinner sLocos = (Spinner) r.getChildAt(1);
 //                sLocos.setSelection(getSpinnerIndex(sLocos, aLocos.get(ndx)));
+
                 sLocos.setSelection(getArrayIndex(LOCOS, aLocos.get(ndx)));
+                if ((!isSpecial) && (mainapp.isDCCEX)) { // if it is for DCC-EX only, don't show the lead/trail etc options
+                    sLocos.setVisibility(View.GONE);
+                    findViewById(R.id.function_consist_LocosHeader).setVisibility(View.GONE);
+                }
                 Spinner sLatching = (Spinner) r.getChildAt(2);
 //                sLatching.setSelection(getSpinnerIndex(sLatching, aLatching.get(ndx)));
                 sLatching.setSelection(getArrayIndex(LATCHING, aLatching.get(ndx)));

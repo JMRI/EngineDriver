@@ -1783,18 +1783,42 @@
             android:title="@string/prefFeedbackWhenGoingToBackgroundTitle"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDCCEXDefaultValue"
-            android:key="prefDCCEX"
-            android:summary="@string/prefDCCEXSummary"
-            android:title="@string/prefDCCEXTitle"
-            android:layout="@layout/checkbox_no_icon" />
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefDCCEXconnectionOptionDefaultValue"
-            android:key="prefDCCEXconnectionOption"
-            android:summary="@string/prefDCCEXconnectionOptionSummary"
-            android:title="@string/prefDCCEXconnectionOptionTitle"
-            android:layout="@layout/checkbox_no_icon" />
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefDccExPreferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefDCCEXPreferencesSummary"
+            android:title="@string/prefDCCEXPreferencesTitle">
+
+            <PreferenceCategory
+                android:title="@string/prefDCCEXPreferencesTitle"
+                android:layout="@layout/category_icon_left"
+                android:icon="@drawable/category_dcc_ex" >
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDCCEXDefaultValue"
+                    android:key="prefDCCEX"
+                    android:summary="@string/prefDCCEXSummary"
+                    android:title="@string/prefDCCEXTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDCCEXconnectionOptionDefaultValue"
+                    android:key="prefDCCEXconnectionOption"
+                    android:summary="@string/prefDCCEXconnectionOptionSummary"
+                    android:title="@string/prefDCCEXconnectionOptionTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue"
+                    android:key="prefDCCEXUseFunctionsOfLocosFoundInRoster"
+                    android:summary="@string/prefDCCEXUseFunctionsOfLocosFoundInRosterSummary"
+                    android:title="@string/prefDCCEXUseFunctionsOfLocosFoundInRosterTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
