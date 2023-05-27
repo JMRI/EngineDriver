@@ -127,7 +127,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     boolean prefAllowMobileData = false;
     boolean prefDCCEXconnectionOption = false;
-    boolean prefDCCEXUseFunctionsOfLocosFoundInRoster = false;
+    boolean prefAlwaysUseFunctionsFromServer = false;
     Spinner DCCEXconnectionOptionSpinner;
 
     private Toolbar toolbar;

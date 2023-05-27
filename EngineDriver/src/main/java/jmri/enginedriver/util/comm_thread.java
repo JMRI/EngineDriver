@@ -99,7 +99,7 @@ public class comm_thread extends Thread {
         prefs = myPrefs;
 
         mainapp.prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
-        mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster = prefs.getBoolean("prefDCCEXUseFunctionsOfLocosFoundInRoster", mainapp.getResources().getBoolean(R.bool.prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue));
+        mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
 
         this.start();
@@ -950,7 +950,7 @@ public class comm_thread extends Thread {
 
                     } else if (com2 == 'L') { //list of function buttons
                         if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
-                        || (mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster) ) { // unless overidden by the preference
+                        || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overidden by the preference
                             String lead;
                             lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist

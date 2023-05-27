@@ -1593,6 +1593,14 @@
             android:summary="@string/prefRosterFilterSummary"
             android:title="@string/prefRosterFilterTitle"
             android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
+            android:key="prefAlwaysUseFunctionsFromServer"
+            android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
+            android:title="@string/prefAlwaysUseFunctionsFromServerTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1807,12 +1815,6 @@
                     android:key="prefDCCEXconnectionOption"
                     android:summary="@string/prefDCCEXconnectionOptionSummary"
                     android:title="@string/prefDCCEXconnectionOptionTitle"
-                    android:layout="@layout/checkbox_no_icon" />
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue"
-                    android:key="prefDCCEXUseFunctionsOfLocosFoundInRoster"
-                    android:summary="@string/prefDCCEXUseFunctionsOfLocosFoundInRosterSummary"
-                    android:title="@string/prefDCCEXUseFunctionsOfLocosFoundInRosterTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>

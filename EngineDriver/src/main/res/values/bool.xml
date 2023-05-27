@@ -108,6 +108,6 @@
 
     <bool name="prefActionBarShowServerDescriptionDefaultValue">false</bool>
     <bool name="prefActionBarShowDccExButtonDefaultValue">false</bool>
-    <bool name="prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue">false</bool>
+    <bool name="prefAlwaysUseFunctionsFromServerDefaultValue">false</bool>
 
 </resources>
