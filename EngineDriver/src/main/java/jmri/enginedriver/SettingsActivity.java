@@ -1354,6 +1354,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         mainapp.prefHapticFeedbackButtons = prefs.getBoolean("prefHapticFeedbackButtons", getResources().getBoolean(R.bool.prefHapticFeedbackButtonsDefaultValue));
                         break;
 
+                    case "prefAlwaysUseFunctionsFromServer":
+                        parentActivity.mainapp.prefAlwaysUseFunctionsFromServer = sharedPreferences.getBoolean("prefAlwaysUseFunctionsFromServer",
+                                getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
+                        break;
+
                 }
             }
         }
@@ -1912,11 +1917,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefSwitchingThrottleSliderDeadZone":
                         parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_DEAD_ZONE;
                         parentActivity.forceRestartAppOnPreferencesClose = true;
-                        break;
-
-                    case "prefDCCEXUseFunctionsOfLocosFoundInRoster":
-                        parentActivity.mainapp.prefDCCEXUseFunctionsOfLocosFoundInRoster = sharedPreferences.getBoolean("prefDCCEXUseFunctionsOfLocosFoundInRoster",
-                                getResources().getBoolean(R.bool.prefDCCEXUseFunctionsOfLocosFoundInRosterDefaultValue));
                         break;
 
                 }
