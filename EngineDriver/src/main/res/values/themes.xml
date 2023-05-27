@@ -90,6 +90,7 @@
         <item name="ed_power_red_button">@drawable/power_red</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
@@ -171,6 +172,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
@@ -247,6 +249,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
@@ -327,6 +330,7 @@
         <item name="ed_power_red_button">@drawable/power_red_outline</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
         <item name="ed_clock_icon">@drawable/fast_clock</item>
         <item name="ed_web_view_button">@drawable/web_view_outline</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
@@ -415,6 +419,7 @@
         <item name="ed_power_red_button">@drawable/power_red</item>
 
         <item name="ed_folder_icon">@drawable/folder</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex</item>
         <item name="ed_clock_icon">@drawable/fast_clock_black</item>
         <item name="ed_web_view_button">@drawable/web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
