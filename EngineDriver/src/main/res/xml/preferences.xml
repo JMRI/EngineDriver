@@ -1792,7 +1792,7 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_dcc_ex_icon"
             android:key="prefDccExPreferences"
             android:layout="@layout/checkbox_icon_left_highlight"
             android:persistent="false"
