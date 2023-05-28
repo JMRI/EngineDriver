@@ -1,6 +1,7 @@
 **Version 2.35.170
  * allow external web view on CSs without web servers
- * option to allow the server to return the function labels of non-roster loco
+ * Better checks for limiting function numbers
+ * option to always use function labels from server
  * For DCC-EX, allow overriding of the default latching behaviour of all/any functions
 **Version 2.35.168
  * fixed regression with LnWi states
