@@ -1761,6 +1761,7 @@
 <!--        <item>prefDeviceSoundsBellIsMomentary</item>-->
         <item>prefDeviceSoundsButton</item>
         <item>prefDeviceSoundsAdditionalPreferences</item>
+        <item>prefAlwaysUseFunctionsFromServer</item>
 
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>
