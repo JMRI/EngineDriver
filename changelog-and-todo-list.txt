@@ -3,6 +3,7 @@
  * Better checks for limiting function numbers
  * option to always use function labels from server
  * For DCC-EX, allow overriding of the default latching behaviour of all/any functions
+ * Fix: Refresh Roster list after populating from DCC-EX
 **Version 2.35.168
  * fixed regression with LnWi states
 **Version 2.35.164

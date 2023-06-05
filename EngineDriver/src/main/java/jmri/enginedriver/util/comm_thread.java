@@ -1454,7 +1454,8 @@ public class comm_thread extends Thread {
                             processRosterList(mainapp.rosterStringDCCEX);
                             mainapp.rosterStringDCCEX = "";
                             mainapp.DCCEXlistsRequested++;
-                            Log.d("Engine_Driver", "comm_thread.processDCCEXroster: Roster complete. Count: " + mainapp.DCCEXlistsRequested);
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
+                            Log.d("Engine_Driver", "comm_thread.processDCCEXroster: Roster complete. Count: " + mainapp.rosterIDsDCCEX.length);
                         }
                     }
 
