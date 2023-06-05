@@ -1394,10 +1394,14 @@ public class comm_thread extends Thread {
                     // Process the functions
                     int fnState;
                     for (int i = 0; i < 27; i++) {
-                        fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
-                        processFunctionState(whichThrottle, i, (fnState != 0));
-                        responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
-                        mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                        try {
+                            fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+                            processFunctionState(whichThrottle, i, (fnState != 0));
+                            responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
+                            mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                        } catch (NumberFormatException e) {
+                            Log.w("Engine_Driver", "unable to parseInt: '" + e.getMessage() + "'");
+                        }
                     }
                 }
 

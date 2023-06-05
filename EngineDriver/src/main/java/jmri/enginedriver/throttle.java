@@ -1726,6 +1726,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void reloadWeb() {
+        if (webView == null) return;
         webView.stopLoading();
         load_webview(); // reload
     }
@@ -4880,7 +4881,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d("Engine_Driver", "doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
         int soundTypeArrayIndex = soundType -1;
 
-        if ( (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)  // only dealing with the first two throttles for now
+        if ( (mainapp.consists != null)
+                && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)  // only dealing with the first two throttles for now
                 && (mainapp.consists[whichThrottle].isActive()) ) {
 
             if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
