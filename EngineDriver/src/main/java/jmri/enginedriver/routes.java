@@ -308,19 +308,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
     }
 
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return myGesture.onTouchEvent(event);
-//    }
-
-
-//    public void setTitleToIncludeThrotName() {
-//        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//        setTitle(getApplicationContext().getResources().getString(R.string.app_name_routes) + "    |    Throttle Name: " +
-//                prefs.getString("throttle_name_preference", defaultName));
-//    }
-
     /**
      * Called when the activity is first created.
      */
