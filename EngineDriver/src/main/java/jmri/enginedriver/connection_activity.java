@@ -676,18 +676,12 @@ public class connection_activity extends AppCompatActivity implements Permission
     private void set_labels() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         TextView v = findViewById(R.id.ca_footer);
-        String s = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
-        v.setText(getString(R.string.throttle_name, s));
+        String throttleName = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+        throttleName = mainapp.fixThrottleName(throttleName); //insure uniqueness
+        v.setText(getString(R.string.throttle_name, throttleName));
 
         //sets the tile to include throttle name.
-        //String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
         if (toolbar != null) {
-//                setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
-//                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));// + "    |    Throttle Name: " + prefs.getString("throttle_name_preference", defaultName));
-
-//                mainapp.setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
-//                        + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-//                        , "");
             mainapp.setToolbarTitle(toolbar,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_connect),
