@@ -955,9 +955,7 @@ public class comm_thread extends Thread {
                             lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                                 processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
-                                if (!mainapp.consists[whichThrottle].isLeadFromRoster()) {
-                                    mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
-                                }
+                                mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                             }
                             mainapp.consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], mainapp);
                         }

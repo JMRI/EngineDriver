@@ -141,7 +141,7 @@ public class Loco {
         return this.isServerSuppliedFunctionLabels;
     }
     public void setIsServerSuppliedFunctionlabels(boolean isFromRoster) {
-        this.isServerSuppliedFunctionLabels = isServerSuppliedFunctionLabels;
+        this.isServerSuppliedFunctionLabels = isFromRoster;
     }
 
     //provide description if present, otherwise provide formatted address
