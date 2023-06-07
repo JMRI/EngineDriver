@@ -473,6 +473,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         delete_settings_file("recent_engine_list.txt");
         delete_auto_import_settings_files();
 
+        threaded_application.INTRO_VERSION = "0"; // force the re-run of the intro
+
         reload();
 
         forceRestartApp(mainapp.FORCED_RESTART_REASON_RESET);
