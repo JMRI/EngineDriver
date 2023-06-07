@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,8 +35,6 @@ public class about_page extends AppCompatActivity {
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
 
-    private Toolbar toolbar;
-
     /**
      * Called when the activity is first created.
      */
@@ -53,50 +50,7 @@ public class about_page extends AppCompatActivity {
 
         // format and show version info
         TextView v = findViewById(R.id.about_info);
-        String s;
-        // ED version info
-        s = "EngineDriver:" + mainapp.appVersion;
-        if (mainapp.getHostIp() != null) {
-            // WiT info
-            if (!mainapp.isDCCEX) {
-                if (mainapp.getWithrottleVersion() != 0.0) {
-                    s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
-                    s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
-                }
-            } else {
-                s += ", DCC-EX CS:v" + mainapp.getDCCEXVersion();
-                s += String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
-            }
-            s += String.format(", Host:%s", mainapp.getHostIp());
-            s += String.format(", Port:%s", mainapp.getConnectedPort());
-            //show server type and description if set
-            String sServer;
-            if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
-                sServer = mainapp.getServerDescription();
-            } else {
-                sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
-            }
-            if (!sServer.isEmpty()) {
-                s += String.format(", Server:%s", sServer);
-//            } else {
-//                // otherwise show JMRI version info from web if populated
-//                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
-//                if (JmriMetadata != null && JmriMetadata.size() > 0) {
-//                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
-//                    if (JmriMetadata.get("activeProfile") != null) {
-//                        s += ", ActiveProfile:" + JmriMetadata.get("activeProfile");
-//                    }
-//                }
-            }
-        }
-        s += String.format(", SSID:%s, Net:%s", mainapp.client_ssid, mainapp.client_type);
-        if (mainapp.client_address_inet4 != null) {
-            s += String.format(", IP:%s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
-        }
-        s += String.format(", OS: %s, SDK: %s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
-
-        // show info
-        v.setText(s);
+        v.setText(mainapp.getAboutInfo());
 
         // show ED webpage
         WebView webview = findViewById(R.id.about_webview);
@@ -105,7 +59,7 @@ public class about_page extends AppCompatActivity {
         //put pointer to this activity's handler in main app's shared variable
         mainapp.about_page_msg_handler = new about_page_handler();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -153,7 +107,6 @@ public class about_page extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
         switch (item.getItemId()) {
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();

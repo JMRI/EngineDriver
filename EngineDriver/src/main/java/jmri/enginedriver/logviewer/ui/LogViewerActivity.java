@@ -120,7 +120,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     "");
         }
 
-        logAboutInfo();
+        Log.d("Engine_Driver", mainapp.getAboutInfo());
 
     } // end onCreate
 
@@ -249,7 +249,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
             Log.d("Engine_Driver", "Logging started to: " + logFile.toString());
-            logAboutInfo();
+            Log.d("Engine_Driver", mainapp.getAboutInfo());
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -435,47 +435,5 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             isRunning = false;
             if (logprocess != null) logprocess.destroy();
         }
-    }
-
-    private void logAboutInfo() {
-        String s = "";
-        // device info
-        s += "About: " + String.format("OS:%s, SDK:%s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
-        if (mainapp.client_address_inet4 != null) {
-            s += ", " + String.format("IP:%s", mainapp.client_address_inet4.toString().replaceAll("/", ""));
-            s += String.format(" SSID:%s Net:%s", mainapp.client_ssid, mainapp.client_type);
-        }
-
-        // ED version info
-        s += ", EngineDriver: " + mainapp.appVersion;
-        if (mainapp.getHostIp() != null) {
-            // WiT info
-            if (mainapp.getWithrottleVersion() != 0.0) {
-                s += ", WiThrottle:v" + mainapp.getWithrottleVersion();
-                s +=  String.format(", Heartbeat:%dms", mainapp.heartbeatInterval);
-            }
-            s += String.format(", Host:%s", mainapp.getHostIp() );
-            s += String.format(", Port:%s", mainapp.connectedPort);
-            //show server type and description if set
-            String sServer;
-            if (mainapp.getServerDescription().contains(mainapp.getServerType())) {
-                sServer = mainapp.getServerDescription();
-            } else {
-                sServer = mainapp.getServerType() + " " + mainapp.getServerDescription();
-            }
-            if (!sServer.isEmpty()) {
-                s += ", Server:" + sServer;
-//            } else {
-//                // otherwise show JMRI version info from web if populated
-//                HashMap<String, String> JmriMetadata = threaded_application.jmriMetadata;
-//                if (JmriMetadata != null && JmriMetadata.size() > 0) {
-//                    s += ", JMRI v" + JmriMetadata.get("JMRIVERCANON") + " build:" + JmriMetadata.get("JMRIVERSION");
-//                    if (JmriMetadata.get("activeProfile") != null) {
-//                        s += ", Active Profile:" + JmriMetadata.get("activeProfile");
-//                    }
-//                }
-            }
-        }
-        Log.d("Engine_Driver", s);
     }
 }

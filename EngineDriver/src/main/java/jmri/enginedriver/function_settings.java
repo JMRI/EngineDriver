@@ -80,12 +80,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     private Toolbar toolbar;
 
-//    public void setTitleToIncludeThrotName() {
-//        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
-//        setTitle(getApplicationContext().getResources().getString(R.string.app_name_functions) + "    |    Throttle Name: " +
-//                prefs.getString("throttle_name_preference", defaultName));
-//    }
-
     /**
      * Called when the activity is first created.
      */

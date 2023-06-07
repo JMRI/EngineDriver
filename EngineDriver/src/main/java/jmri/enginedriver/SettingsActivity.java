@@ -477,13 +477,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         reload();
 
-        forceRestartApp(mainapp.FORCED_RESTART_REASON_RESET);
+        forceRestartApp(threaded_application.FORCED_RESTART_REASON_RESET);
     }
 
     private void delete_auto_import_settings_files() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File dir = new File(sdcard_path, ENGINE_DRIVER_DIR); // in case the folder does not already exist
             File dir = new File(context.getExternalFilesDir(null), ENGINE_DRIVER_DIR);
             File[] edFiles = dir.listFiles(new FilenameFilter() {
                 @Override

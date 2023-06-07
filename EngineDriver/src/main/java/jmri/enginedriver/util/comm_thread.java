@@ -309,11 +309,6 @@ public class comm_thread extends Thread {
     }
 
     private static void sendThrottleName(Boolean sendHWID) {
-//        String serverType = mainapp.knownDCCEXserverIps.get(mainapp.host_ip);
-//        if ( (!mainapp.isDCCEX) && (serverType != null) && (!serverType.equals("JMRI")) && (mainapp.prefDCCEX) ) { //assume it is DCC-EX
-//            mainapp.isDCCEX = true;
-//            Log.d("Engine_Driver", "comm_thread.sendThrottleName DCC-EX: Believe this is DCC-EX system ");
-//        }
         mainapp.isDCCEX = mainapp.prefDCCEX;
 
         if (!mainapp.isDCCEX) { // not DCC-EX

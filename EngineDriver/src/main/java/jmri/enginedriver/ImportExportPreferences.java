@@ -239,7 +239,7 @@ public class ImportExportPreferences {
 
         if (!exportedPreferencesFileName.equals(".ed")) {
 
-            // save a few values so that we can reset them. i.e. efffectively don't import them
+            // save a few values so that we can reset them. i.e. effectively don't import them
             String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
             String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);

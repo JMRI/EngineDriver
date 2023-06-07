@@ -1,3 +1,4 @@
+**Version 2.35.172
 **Version 2.35.170
  * allow external web view on CSs without web servers
  * Better checks for limiting function numbers
@@ -5,6 +6,8 @@
  * For DCC-EX, allow overriding of the default latching behaviour of all/any functions
  * Fix: Refresh Roster list after populating from DCC-EX
  * Fix: Avoid several NPEs reported to Play Console
+ * Fix: improve throttle name uniqueness
+ * added DCC-EX Protocol indication to About page
 **Version 2.35.168
  * fixed regression with LnWi states
 **Version 2.35.164

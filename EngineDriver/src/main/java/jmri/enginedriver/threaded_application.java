@@ -977,6 +977,41 @@ public class threaded_application extends Application {
     public void setServerDescription(String serverDescription) {
         this.serverDescription = serverDescription;
     }
+    public String getAboutInfo() {
+        String s = "";
+        // device info
+        s += "About: " + String.format("OS:%s, SDK:%s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+        if (client_address_inet4 != null) {
+            s += ", " + String.format("IP:%s", client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format(" SSID:%s Net:%s", client_ssid, client_type);
+        }
+
+        // ED version info
+        s += ", EngineDriver: " + appVersion;
+        if (getHostIp() != null) {
+            // WiT info
+            if (getWithrottleVersion() != 0.0) {
+                s += ", WiThrottle:v" + getWithrottleVersion();
+                s +=  String.format(", Heartbeat:%dms", heartbeatInterval);
+            }
+            s += String.format(", Host:%s", getHostIp() );
+            s += String.format(", Port:%s", connectedPort);
+            //show server type and description if set
+            String sServer;
+            if (getServerDescription().contains(getServerType())) {
+                sServer = getServerDescription();
+            } else {
+                sServer = getServerType() + " " + getServerDescription();
+            }
+            if (!sServer.isEmpty()) {
+                s += ", Server:" + sServer;
+            }
+        }
+        if (prefDCCEX) {
+            s += ", DCC-EX protocol";
+        }
+        return s;
+    }
 
     //reinitialize statics in activities as required to be ready for next launch
     public static void reinitStatics() {
