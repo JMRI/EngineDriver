@@ -20,7 +20,7 @@
     <string name="dccExFunctionSettings">DCC-EX Function Settings</string>
     <string name="fb_label">Function Label</string>
     <string name="fb_column_label">Label</string>
-    <string name="fb_column_function">Funct#</string>
+    <string name="fb_column_function">Func#</string>
     <string name="function_buttons">function_buttons</string>
     <string name="introMenu">Intro/Setup Wizard</string>
 
@@ -693,13 +693,13 @@
     <string name="functionButton01DefaultValue">Bell</string>
     <string name="functionButton02DefaultValue">Horn</string>
     <string name="soundsButtonHornShortDefaultValue">Horn Short</string>
-    <string name="functionButton03DefaultValue" translatable="false">3</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton04DefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton05DefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton06DefaultValue" translatable="false">6</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton07DefaultValue" translatable="false">7</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton08DefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
-    <string name="functionButton09DefaultValue" translatable="false">9</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton03DefaultValue" translatable="false">03</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton04DefaultValue" translatable="false">04</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton05DefaultValue" translatable="false">05</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton06DefaultValue" translatable="false">06</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton07DefaultValue" translatable="false">07</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton08DefaultValue" translatable="false">08</string>  <!-- DO NOT TRANSLATE -->
+    <string name="functionButton09DefaultValue" translatable="false">09</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="functionButton10DefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton11DefaultValue" translatable="false">11</string>  <!-- DO NOT TRANSLATE -->
