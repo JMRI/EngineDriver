@@ -103,34 +103,21 @@
       <item name="android:textSize">18sp</item>
       <item name="android:singleLine">true</item>
       <item name="android:ellipsize">none</item>
-      <item name="android:layout_width">0dp</item>
       <item name="android:layout_height">48dp</item>
-      <item name="android:maxLength">7</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">7</item>
+      <item name="android:maxLength">16</item>
       <item name="android:shadowColor">#FFFFFFFF</item>
       <item name="android:shadowDx">1</item>
       <item name="android:shadowDy">1</item>
       <item name="android:shadowRadius">0.2</item>
-    </style>
+
+  </style>
 
   <style name="spinner" parent="Widget.AppCompat.Spinner">
     <item name="android:ellipsize">none</item>
     <item name="android:dropDownVerticalOffset">18dip</item>
   </style>
-
-<!--  <style name="spinner_popup_window_style" parent="Widget.AppCompat.PopupWindow">
-      <item name="android:shadowColor">@color/solidWhite</item>
-      <item name="android:shadowRadius">60</item>
-  </style>
-
-  <style name="spinner_list_popup_window_style" parent="Widget.AppCompat.ListPopupWindow">
-      <item name="android:shadowColor">@color/solidWhite</item>
-      <item name="android:shadowRadius">60</item>
-  </style>
-
-  <style name="spinner_popup_menu_style" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:shadowColor">@color/solidWhite</item>
-    <item name="android:shadowRadius">60</item>
-  </style>-->
 
   <style name="spinner_item" parent="Widget.AppCompat.TextView.SpinnerItem">
     <item name="android:textColor">@color/primary_text</item>
@@ -162,6 +149,8 @@
       <item name="android:singleLine">true</item>
       <item name="android:maxLength">2</item>
       <item name="android:inputType">number</item>
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_weight">3</item>
       <item name="android:shadowColor">#FFFFFFFF</item>
       <item name="android:shadowDx">1</item>
       <item name="android:shadowDy">1</item>
@@ -192,7 +181,6 @@
     <item name="fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">#FFFFFF</item>
     <item name="android:textSize">18sp</item>
-<!--    <item name="android:textStyle">bold</item> -->
 
     <item name="android:background">#717171</item>
     <item name="android:layout_width">fill_parent</item>
@@ -288,7 +276,6 @@
       <item name="fontFamily">sans-serif-condensed</item>
       <item name="android:textColor">#FF000000</item>
       <item name="android:textSize">18sp</item>
-<!--      <item name="android:textStyle">bold</item>  -->
 
       <item name="android:background">#FFFFFFFF</item>
       <item name="android:layout_width">fill_parent</item>
@@ -1143,7 +1130,6 @@
   </style>
 
   <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">
-    <!--<item name="android:popupBackground">@color/colorPrimary</item>-->
     <item name="android:popupBackground">@color/windowBackground_colorful</item>
   </style>
   <style name="ItemTextAppearance_colorful">
@@ -1154,7 +1140,6 @@
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:background">@color/windowBackground_colorful</item>
   </style>
-
 
   <style name="WindowAnimations">
     <item name="android:activityOpenEnterAnimation">
