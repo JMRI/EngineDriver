@@ -1139,7 +1139,7 @@ public class comm_thread extends Thread {
                         mainapp.alert_activities(message_type.DCCEX_RESPONSE, responseStr);
                     }
 
-
+                    //split on spaces, with stuff between doublequotes treated as one item
                     String[] args = responseStr.substring(1, responseStr.length() - 1).split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 999);
 
                     switch (responseStr.charAt(1)) {
@@ -1403,11 +1403,15 @@ public class comm_thread extends Thread {
         }
     } // end processDCCEXlocos()
 
+    //handle the two different <jR> replies:
+    //   <jR [id1 id2 id3 …]>
+    //   <jR id ˮˮ|ˮdescˮ ˮˮ|ˮfunct1/funct2/funct3/…ˮ>
     private static boolean processDCCEXroster(String [] args) {
         boolean skipAlert = true;
 
         if ( (args!=null) && (args.length>1)) {
             if ( (args.length<3) || (args[2].charAt(0) != '"') ) {  // loco list
+                //   <jR [id1 id2 id3 …]>
                 if (mainapp.rosterStringDCCEX.equals("")) {
                     mainapp.rosterStringDCCEX = "";
                     mainapp.rosterIDsDCCEX = new int[args.length - 1];
@@ -1415,12 +1419,17 @@ public class comm_thread extends Thread {
                     mainapp.rosterLocoFunctionsDCCEX = new String[args.length - 1];
                     mainapp.rosterDetailsReceivedDCCEX = new boolean[args.length - 1];
                     for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        mainapp.rosterIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
+                        try {
+                            mainapp.rosterIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
+                            wifiSend("<JR " + args[i + 1] + ">");  //request the details for this entry
+                        } catch (NumberFormatException e) {
+                            Log.e("Engine_Driver","processDCCEXroster parse error: " + e.getMessage());
+                        }
                         mainapp.rosterDetailsReceivedDCCEX[i] = false;
-                        wifiSend("<JR " + args[i + 1] + ">");
                     }
                 }
             } else {  // individual loco
+                //   <jR id ˮˮ|ˮdescˮ ˮˮ|ˮfunct1/funct2/funct3/…ˮ>
                 if (mainapp.DCCEXlistsRequested < 3) {
                     if (mainapp.rosterIDsDCCEX != null) {
                         for (int i = 0; i < mainapp.rosterIDsDCCEX.length; i++) {
