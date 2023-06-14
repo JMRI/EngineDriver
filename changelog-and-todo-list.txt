@@ -1,5 +1,6 @@
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
+ * Fix: avoid crash on DCC-EX roster entry
 **Version 2.35.170
  * allow external web view on CSs without web servers
  * Better checks for limiting function numbers
