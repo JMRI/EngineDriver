@@ -404,6 +404,7 @@
         <item>Komplex textu shoda - Lead loco aktivován vždy, Trail řídí pravidly níže</item>
         <item>Speciální Exact - Olovo a All Trail aktivován v případě, že přesně shodovat s popisky funkčních</item>
         <item>Zvláštní Částečné - Olovo a All Trail aktivován v případě, že částečně odpovídat štítkům funkce</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->

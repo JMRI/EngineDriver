@@ -290,10 +290,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int BUTTON_PRESS_MESSAGE_UP = 0;
     private static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
 
-    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
     private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
@@ -1053,7 +1054,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
-                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
+                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
                                                     || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
                                                 set_function_state(whichThrottle, function);
                                             }
@@ -2390,8 +2391,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Consist con = mainapp.consists[whichThrottle];
 
         if ( ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) )
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))  ) )
                 || (mainapp.isDCCEX)
         ) {
             int doPress = -1;
@@ -2405,9 +2407,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     doPress = 2; //up
                 }
             } else { //latching
+                isLatching = FUNCTION_CONSIST_LATCHING_YES;
                 if (!downPress) { //only process the release
                     doPress = 0;
-                    isLatching = FUNCTION_CONSIST_LATCHING_YES;
                 }
             }
 
@@ -4645,7 +4647,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean trail = false;
         boolean followLeadFunction = false;
 
-        if (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
             if (!lab.equals("")) {
                 lead = (prefSelectiveLeadSound &&
                         (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
@@ -4676,16 +4678,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         con = mainapp.consists[whichThrottle];
 
         String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
-        if ( ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
-            || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-            || (!mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) )
+        if ( ( (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
+                || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))  )
             && (con.size()==1)
             && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
         ) {
-                tempPrefConsistFollowRuleStyle = CONSIST_FUNCTION_RULE_STYLE_ORIGINAL;
+                tempPrefConsistFollowRuleStyle = mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL;
         }
 
-        if (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
 
             String addr = "";
             if (leadOnly)
@@ -4713,7 +4716,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         } else {  //Complex or SpecialExact or SpecialPartial
 
-            if (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) { // if Complex, always activate the lead loco
+            if (tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) { // if Complex, always activate the lead loco
                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
                 } else {
@@ -4727,8 +4730,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             for (Consist.ConLoco l : con.getLocos()) {
                 boolean processThisLoco = true;
                 if ((l.getAddress().equals(con.getLeadAddr()))
-                        && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                        && (!tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                        && (!tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                        && (!tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                        && (!tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))
                         && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
                 ) {  // for complex ignore the lead as we have already set it
                     processThisLoco = false;
@@ -4742,7 +4746,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mainapp);
                     if (functionList.size()>0) {
                         for (int i = 0; i < functionList.size(); i++) {
-                            if ( (tempPrefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
+                            if ( (tempPrefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
                                 || (isLatching == FUNCTION_CONSIST_LATCHING_NA) ) {
                                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i));
@@ -6259,8 +6263,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             boolean isSpecial = false;
             if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                    && ( (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) ) ) {
+                    && ( (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                        || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                        || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))   ) ) {
                 isSpecial = true;
             }
             TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);

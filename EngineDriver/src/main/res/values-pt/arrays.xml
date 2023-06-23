@@ -205,6 +205,7 @@
         <item>Complexo de correspondência de texto - loco Chumbo sempre activado, Trail segue as regras abaixo</item>
         <item>Especial Exact - Chumbo e Tudo Trail activado se eles correspondem exactamente às etiquetas de função</item>
         <item>Especial Parcial - Chumbo e Tudo Trail ativado se eles correspondem parcialmente os rótulos de função</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->

@@ -188,6 +188,7 @@
         <item>Komplexe Textabgleich - Lead Lok immer dann aktiviert, folgt Trail Regeln unten</item>
         <item>Besondere Exact - Lead and All Trail aktiviert, wenn sie genau die Funktion Etiketten entsprechen</item>
         <item>Spezielles Teil - Blei und alle Trail aktiviert, wenn sie teilweise die Funktion Etiketten entsprechen</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->

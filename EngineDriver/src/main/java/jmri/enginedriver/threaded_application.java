@@ -338,10 +338,11 @@ public class threaded_application extends Application {
 
     public boolean prefAlwaysUseDefaultFunctionLabels = false;
     public String prefConsistFollowRuleStyle = "original";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+    public static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+    public static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
     public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
     public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     public boolean prefShowTimeOnLogEntry = false;
     public boolean prefFeedbackOnDisconnect = true;
