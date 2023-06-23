@@ -59,7 +59,7 @@ public class comm_handler extends Handler {
          //Start or Stop jmdns stuff, or add "fake" discovered servers
          case message_type.SET_LISTENER:
             if (mainapp.client_ssid != null &&
-                    mainapp.client_ssid.matches("DCCEX_[0-9a-f]{6}$")) {
+                    mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
                mainapp.isDCCEX = mainapp.prefDCCEX;

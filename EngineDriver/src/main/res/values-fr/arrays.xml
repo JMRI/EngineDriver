@@ -198,6 +198,7 @@
         <item>Correspondance exacte du texte - loco de tete toujours active, les autres locos suivent les règles suivantes</item>
         <item>Correspondance complete - Fonctions appliquees a toutes les locos en cas de correspondance exacte des libelles</item>
         <item>Correspondance partielle - Fonctions appliquees a toutes les locos en cas de correspondance partielle des libelles</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->

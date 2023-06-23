@@ -188,6 +188,7 @@
         <item>Text complex coincident - Locomotora capdavantera sempre acticada, Trail segueix les regles següents</item>
         <item>Especial exacta - Capdavantera i tota la resta activat si coincideixen exactament les etiquetes de funció</item>
         <item>Especial Parcial - Capdavantera i tota la resta activat si coincideixen parcialment les etiquetes de funció</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora capdavantera - Coincidència parcial</item>

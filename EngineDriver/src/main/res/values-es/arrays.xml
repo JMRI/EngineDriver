@@ -188,6 +188,7 @@
         <item>Complejo texto coincidente - loco plomo siempre activado, Trail sigue las reglas siguientes</item>
         <item>Especial exacta - El plomo y el Camino para activarse si coinciden exactamente las etiquetas de función</item>
         <item>Especial Parcial - Plomo y Camino para activarse si coinciden parcialmente las etiquetas de función</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora delantera - Coincidencia parcial</item>

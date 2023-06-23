@@ -138,10 +138,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected boolean prefHideSlider = false;
 
     private String prefConsistFollowRuleStyle = "original";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
+//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     private boolean ignoreThisThrottleNumChange = false;
 
@@ -1035,7 +1036,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
         boolean enable = false;
-        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
             enable = true;
         }
 
@@ -1044,7 +1045,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF2", enable);
 
         enable = false;
-        if (prefConsistFollowRuleStyle.equals(CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
+        if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
             enable = true;
         }
 

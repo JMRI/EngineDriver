@@ -1548,12 +1548,14 @@
         <item>complex</item>
         <item>specialExact</item>
         <item>specialPartial</item>
+        <item>specialPartialContainsOnly</item>
     </string-array>
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Simple text matching (original)</item>
-        <item>Complex text matching - Lead loco always activated, Trail follows rules below</item>
-        <item>Special Exact - Lead and All Trail activated if they exactly match the function labels</item>
-        <item>Special Partial - Lead and All Trail activated if they partially match the function labels</item>
+        <item>Complex text matching - Lead loco always activated, Trail follows preference rules below</item>
+        <item>Special Exact - Activated if the roster function label EXACTLY MATCHES the Default Label</item>
+        <item>Special Partial - Activated if the roster function label CONTAINS Default Label or vice-versa</item>
+        <item>Special Partial Contains Only - Activated if the roster function label CONTAINS Default Label</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

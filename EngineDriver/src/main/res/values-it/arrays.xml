@@ -207,6 +207,7 @@
         <item>testo complesso di corrispondenza - Loco di piombo sempre attivato, Sentiero segue le regole qui sotto</item>
         <item>Speciale esatta - Piombo e All Trail attivato se corrispondono esattamente le etichette delle funzioni</item>
         <item>Speciale parziale - Piombo e All Trail attivati ​​se in parte corrispondono alle etichette di funzione</item>
+        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Lead Loco - Partial Part</item>

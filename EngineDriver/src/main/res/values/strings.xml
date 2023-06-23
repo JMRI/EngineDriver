@@ -1007,8 +1007,8 @@
     <string name="ConsistEditLabelLead">LEAD</string>
     <string name="ConsistEditLabelTrail">TRAIL</string>
 
-    <string name="prefConsistFollowRuleStyleTitle">Consist Functions - Follow Rule Style</string>
-    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">Which style of rules to follow in a consist when function buttons are pressed.\nNote: If \'Use Default function labels\' is enabled, \'Special...\' will also apply to the lead (or only) loco.</string>
+    <string name="prefConsistFollowRuleStyleTitle">Consist &amp; Default Functions - Follow Rule Style</string>
+    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">Which style of rules to follow when function buttons are pressed in either a) a consist , b) when enforcing the Default Function labels.\nNote: If \'Use Default function labels\' is enabled, \'Special...\' will also apply to the lead (or only) loco.</string>
     <string name="prefConsistFollowRuleStyleDefaultValue" translatable="false">original</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefConsistFollowTitle">Consist Function Follow Preferences</string>
