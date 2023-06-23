@@ -1,6 +1,9 @@
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry
+ * Additional option for the Consist Follow Function feature
+ * Fix: bug fix in the Consist Follow Function feature
+ * include uppercase MAC addresses in DCC-EX match
 **Version 2.35.170
  * allow external web view on CSs without web servers
  * Better checks for limiting function numbers
