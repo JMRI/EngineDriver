@@ -511,7 +511,7 @@ public class comm_thread extends Thread {
                 if (mainapp.function_states[whichThrottle][fn]) { // currently pressed
                     if (fState == 1) newfState = 0;
                 } else { // not currently pressed
-                    if (fState == 1) newfState = 1;
+                    if (fState == 0) newfState = 1;
                 }
             } else {
                 newfState = fState;
@@ -1386,16 +1386,21 @@ public class comm_thread extends Thread {
                     responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
                     mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
 
-                    // Process the functions
-                    int fnState;
-                    for (int i = 0; i < 27; i++) {
-                        try {
-                            fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
-                            processFunctionState(whichThrottle, i, (fnState != 0));
-                            responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
-                            mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
-                        } catch (NumberFormatException e) {
-                            Log.w("Engine_Driver", "unable to parseInt: '" + e.getMessage() + "'");
+
+                    // only process the functions if it is the lead loco
+                    Consist con = mainapp.consists[whichThrottle];
+                    if (con.getLeadAddr().equals(addr_str)) {
+                        // Process the functions
+                        int fnState;
+                        for (int i = 0; i < 27; i++) {
+                            try {
+                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+                                processFunctionState(whichThrottle, i, (fnState != 0));
+                                responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
+                                mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                            } catch (NumberFormatException e) {
+                                Log.w("Engine_Driver", "unable to parseInt: '" + e.getMessage() + "'");
+                            }
                         }
                     }
                 }
