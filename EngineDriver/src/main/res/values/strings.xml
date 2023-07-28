@@ -1315,5 +1315,18 @@
 
     <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
 
+
+    <string name="cv29SpeedSteps14">Speed Steps: 14</string>
+    <string name="cv29SpeedSteps28">Speed Steps: 28/128</string>
+    <string name="cv29AnalogueConversionOn">Analogue Conversion: ON</string>
+    <string name="cv29AnalogueConversionOff">Analogue Conversion: OFF</string>
+    <string name="cv29DirectionForward">Normal Direction: Forward</string>
+    <string name="cv29DirectionReverse">Normal Direction: Reverse</string>
+    <string name="cv29AddressSize2bit">Address Size: 2 bit (0-127)</string>
+    <string name="cv29AddressSize4bit">Address Size: 4 bit (1-10239)</string>
+    <string name="cv29SpeedTableNo">Speed Table: Not used (uses CV 2,5 &amp; 6)</string>
+    <string name="cv29SpeedTableYes">Speed Table: In use</string>
+    <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>
+
 </resources>
 
