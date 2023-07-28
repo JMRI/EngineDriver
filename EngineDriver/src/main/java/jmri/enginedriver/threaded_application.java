@@ -2799,6 +2799,10 @@ public class threaded_application extends Application {
         return (((1 << k) - 1) & (number >> (p - 1)));
     }
 
+    public int toggleBit(int n, int k) {
+        return (n ^ (1 << (k - 1)));
+    }
+
     // for DCC-EX we need to temp store the list of locos so we can remove them individually
     public void storeThrottleLocosForReleaseDCCEX(int whichThrottle) {
         if (isDCCEX) {

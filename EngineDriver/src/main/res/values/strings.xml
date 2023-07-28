@@ -1326,6 +1326,7 @@
     <string name="cv29AddressSize4bit">Address Size: 4 bit (1-10239)</string>
     <string name="cv29SpeedTableNo">Speed Table: Not used (uses CV 2,5 &amp; 6)</string>
     <string name="cv29SpeedTableYes">Speed Table: In use</string>
+    <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>
 
 </resources>
 

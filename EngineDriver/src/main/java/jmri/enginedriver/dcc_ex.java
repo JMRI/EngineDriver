@@ -1163,6 +1163,12 @@ public class dcc_ex extends AppCompatActivity {
                 rslt = rslt +  cv29AddressSize;
 
                 DCCEXresponsesStr = "<p>" + rslt + "</p>" + DCCEXresponsesStr;
+
+                DCCEXresponsesStr = "<p>"
+                        + String.format(getApplicationContext().getResources().getString(R.string.cv29SpeedToggleDirection),
+                        mainapp.toggleBit(cvValue,1) )
+                        + "</p>" + DCCEXresponsesStr;
+
             } catch (Exception e) {
                 Log.e("EX_Toolbox", "Error processign cv29: " + e.getMessage());
             }
