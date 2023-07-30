@@ -459,7 +459,7 @@ public class threaded_application extends Application {
     public boolean prefGamePadIgnoreJoystick = false;
 
     public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
-    public int[] lastKnownDirDCCEX = {0,0,0,0,0,0};
+    public int[] lastKnownDirDCCEX = {1,1,1,1,1,1};
     public long[] lastSpeedCommandSentTimeDCCEX = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
@@ -1062,7 +1062,7 @@ public class threaded_application extends Application {
                 function_states[i] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
 
                 lastKnownSpeedDCCEX[i] = 0;
-                lastKnownDirDCCEX[i] = 0;
+                lastKnownDirDCCEX[i] = 1;
             }
 
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
