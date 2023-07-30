@@ -747,7 +747,9 @@ public class comm_thread extends Thread {
                 String fmt = ( (Float.valueOf(mainapp.DCCEXversion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
                 wifiSend(msgTxt);
-                mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
+                    mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                }
 //                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
             }
         }
@@ -1380,15 +1382,19 @@ public class comm_thread extends Thread {
 
                 if (timeSinceLastCommand>1000) {  // don't process an incoming speed if we sent a command for this throttle in the last second
                     mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
-                    mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
                     responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>V" + speed;
                     mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
-                    responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
-                    mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
 
+                    Consist con = mainapp.consists[whichThrottle];
+
+                    // only process the direction if it is the lead loco
+                    if (con.getLeadAddr().equals(addr_str)) {
+                        mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                        responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>R" + dir;
+                        mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
+                    }
 
                     // only process the functions if it is the lead loco
-                    Consist con = mainapp.consists[whichThrottle];
                     if (con.getLeadAddr().equals(addr_str)) {
                         // Process the functions
                         int fnState;
