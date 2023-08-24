@@ -4,6 +4,10 @@
  * Additional option for the Consist Follow Function feature
  * Fix: bug fix in the Consist Follow Function feature
  * include uppercase MAC addresses in DCC-EX match
+ * Fix for DCC-EX locos being reversed in a consist
+ * Fix for DCC-EX consist light editing not working
+ * Fix for DCC-EX functions not being activated correctly when in a consist
+ * CV29 read in DCC-EX. Additional information provided
 **Version 2.35.170
  * allow external web view on CSs without web servers
  * Better checks for limiting function numbers

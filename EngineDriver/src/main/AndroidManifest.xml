@@ -47,6 +47,7 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
+<!--        android:hasFragileUserData="true"-->
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity
             android:name=".intro_activity"
