@@ -137,7 +137,7 @@ public class dcc_ex extends AppCompatActivity {
     static final int WHICH_CV_VALUE = 2;
     static final int WHICH_COMMAND = 3;
 
-    static final int TRACK_TYPE_OFF_INDEX = 0;
+    static final int TRACK_TYPE_OFF_NONE_INDEX = 0;
     static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
     static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
     static final int TRACK_TYPE_DC_INDEX = 3;
@@ -421,7 +421,7 @@ public class dcc_ex extends AppCompatActivity {
                         try {
                             id = Integer.parseInt(dccExTrackTypeIdEditText[i].getText().toString());
                             mainapp.DCCEXtrackId[i] = id.toString();
-                            if (mainapp.DCCEXtrackType[i] != TRACK_TYPE_OFF_INDEX) {
+                            if (mainapp.DCCEXtrackType[i] != TRACK_TYPE_OFF_NONE_INDEX) {
                                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, id);
                             }
                         } catch (Exception e) {
@@ -749,7 +749,7 @@ public class dcc_ex extends AppCompatActivity {
             vn = Float.valueOf(mainapp.DCCEXversion);
         } catch (Exception e) { } // invalid version
 
-        if (vn <= 04.002007) {  /// need to remove the track manager option
+        if (vn <= 04.002007) {  // need to remove the track manager option
             dccExActionTypeEntryValuesArray = new String [2];
             dccExActionTypeEntriesArray = new String [2];
             for (int i=0; i<2; i++) {
@@ -780,6 +780,9 @@ public class dcc_ex extends AppCompatActivity {
         dccExTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
 //        final List<String> dccTrackTypeValuesList = new ArrayList<>(Arrays.asList(dccExTrackTypeEntryValuesArray));
         dccExTrackTypeEntriesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntries); // display version
+        if (vn <= 04.002068) {  /// need to change the NONE to OFF in track manager
+            dccExTrackTypeEntriesArray[0] = "OFF";
+        }
 //        final List<String> dccTrackTypeEntriesList = new ArrayList<>(Arrays.asList(dccExTrackTypeEntriesArray));
 
         for (int i=0; i<mainapp.DCCEX_MAX_TRACKS; i++) {
@@ -831,23 +834,24 @@ public class dcc_ex extends AppCompatActivity {
             dccExTrackTypeSpinner[i].setAdapter(track_type_spinner_adapter);
             dccExTrackTypeSpinner[i].setOnItemSelectedListener(new track_type_spinner_listener(dccExTrackTypeSpinner[i], i));
             dccExTrackTypeSpinner[i].setSelection(dccExTrackTypeIndex[i]);
+        }
 
-            writeTracksButton = findViewById(R.id.dexc_DCCEXwriteTracksButton);
-            write_tracks_button_listener writeTracksClickListener = new write_tracks_button_listener();
-            writeTracksButton.setOnClickListener(writeTracksClickListener);
+        writeTracksButton = findViewById(R.id.dexc_DCCEXwriteTracksButton);
+        write_tracks_button_listener writeTracksClickListener = new write_tracks_button_listener();
+        writeTracksButton.setOnClickListener(writeTracksClickListener);
 
-            DCCEXresponsesScrollView = findViewById(R.id.dexc_DCCEXresponsesScrollView);
-            DCCEXsendsScrollView = findViewById(R.id.dexc_DCCEXsendsScrollView);
+        DCCEXresponsesScrollView = findViewById(R.id.dexc_DCCEXresponsesScrollView);
+        DCCEXsendsScrollView = findViewById(R.id.dexc_DCCEXsendsScrollView);
 
-            clearCommandsButton = findViewById(R.id.dexc_DCCEXclearCommandsButton);
-            clear_commands_button_listener clearCommandsClickListener = new clear_commands_button_listener();
-            clearCommandsButton.setOnClickListener(clearCommandsClickListener);
+        clearCommandsButton = findViewById(R.id.dexc_DCCEXclearCommandsButton);
+        clear_commands_button_listener clearCommandsClickListener = new clear_commands_button_listener();
+        clearCommandsButton.setOnClickListener(clearCommandsClickListener);
 
 //            hideSendsButton = findViewById(R.id.dexc_DCCEXhideSendsButton);
 //            hide_sends_button_listener hideSendsClickListener = new hide_sends_button_listener();
 //            hideSendsButton.setOnClickListener(hideSendsClickListener);
 
-        }
+
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
         toolbar = findViewById(R.id.toolbar);
@@ -1105,10 +1109,17 @@ public class dcc_ex extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             dccExTrackTypeIndex[myIndex] = mySpinner.getSelectedItemPosition();
+            if (dccExTrackTypeIndex[myIndex] == TRACK_TYPE_DCC_PROG_INDEX) {
+                for (int i=0; i<8; i++) {
+                    if ( (dccExTrackTypeIndex[i] == TRACK_TYPE_DCC_PROG_INDEX) && (myIndex != i) ) { // only one prog allowed
+                        dccExTrackTypeSpinner[i].setSelection(TRACK_TYPE_OFF_NONE_INDEX);
+                    }
+                }
+            }
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the soft keyboard to close
             }
 
             refreshDCCEXview();

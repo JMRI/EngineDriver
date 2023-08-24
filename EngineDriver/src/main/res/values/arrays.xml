@@ -1272,7 +1272,7 @@
         <item>Acceleration Adjustment</item>
         <item>Deceleration Adjustment</item>
 
-        <item>Mode Control</item>
+        <item>Mode Control (dir, addr size, etc.)</item>
 
         <item>Kick Start</item>
         <item>Forward Trim</item>
@@ -1373,7 +1373,7 @@
     </string-array>
 
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
-        <item>OFF</item>
+        <item>NONE</item>  <!-- if less than v4.2.68 this needs to be changed to OFF -->
         <item>DCC MAIN</item>
         <item>DCC PROG</item>
         <item>DC</item>
