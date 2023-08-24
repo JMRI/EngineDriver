@@ -1,3 +1,4 @@
+**Version 2.35.174
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry
