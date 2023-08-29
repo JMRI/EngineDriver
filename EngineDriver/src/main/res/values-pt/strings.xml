@@ -743,7 +743,7 @@
     <string name="dialogResetPreferencesQuestion">Confirme que deseja redefinir todas as preferências. \nTodas as preferências atuais serão perdidos.</string>
     <string name="dialogConfirmImportPreferencesTitle">Preferências de importação</string>
     <string name="dialogImportPreferencesQuestion">Confirme que deseja preferências de importação. \nTodas as preferências atuais serão perdidos.</string>
-    <string name="permissionsReadImages">Engine Driver precisa de permissões de armazenamento para imagens de fundo carga.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver precisa de permissões de armazenamento para imagens de fundo carga.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Nenhuma imagem foi selecionada</string>
     <string name="prefBackgroundImageFileNameSummary">Digite o nome do arquivo de imagem de fundo.</string>
     <string name="prefBackgroundImageFileNameTitle">Fundo Nome do Arquivo de Imagem</string>
@@ -868,7 +868,7 @@
     <string name="toastInitialisingSounds">Inicializando em sons de loco telefônicos.</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Botão de sino travamento / momentâneo</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botão Bell é momentâneo. (Travamento se desmarcado.)</string>
-    <string name="permissionsReadLegacyFiles">O driver do motor precisa de permissões de armazenamento para carregar as configurações legadas (local de localização).</string>
+<!--    <string name="permissionsReadLegacyFiles">O driver do motor precisa de permissões de armazenamento para carregar as configurações legadas (local de localização).</string>-->
     <string name="permissionsReadPhoneState">O driver do motor precisa de permissões de telefone para pausar as operações quando estiver em uma chamada.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferências adicionais</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Preferências adicionais em Telefone Loco Sounds</string>

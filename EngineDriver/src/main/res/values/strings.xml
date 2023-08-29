@@ -1096,8 +1096,8 @@
 <!--    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>-->
 <!--    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>-->
 <!--    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>-->
-    <string name="permissionsReadImages">Engine Driver needs STORAGE permissions to load background images.</string>
-    <string name="permissionsReadLegacyFiles">Engine Driver needs STORAGE permissions to load legacy (old location) settings.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver needs STORAGE permissions to load background images.</string>
+<!--    <string name="permissionsReadLegacyFiles">Engine Driver needs STORAGE permissions to load legacy (old location) settings.</string>-->
 <!--    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>-->
 <!--    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>-->
@@ -1111,6 +1111,13 @@
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
     <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
+
+<!-- needed for API 33 -->
+    <string name="permissionsREAD_MEDIA_IMAGES">EX-Toolbox needs READ_MEDIA_IMAGES permissions to load background images.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">EX-Toolbox needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">EX-Toolbox needs NOTIFICATION permissions to warn you when push into background.</string>
+<!-- needed for API 33 -->
+
     <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
     <string name="permissionsAppSettingsButton">App settings</string>
     <string name="permissionsSystemSettingsButton">System settings</string>
@@ -1322,8 +1329,8 @@
     <string name="cv29AnalogueConversionOff">Analogue Conversion: OFF</string>
     <string name="cv29DirectionForward">Normal Direction: Forward</string>
     <string name="cv29DirectionReverse">Normal Direction: Reverse</string>
-    <string name="cv29AddressSize2bit">Address Size: 2 bit (0-127)</string>
-    <string name="cv29AddressSize4bit">Address Size: 4 bit (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Address Size: 2 bit (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Address Size: 4 bit (1-10239)</string>
     <string name="cv29SpeedTableNo">Speed Table: Not used (uses CV 2,5 &amp; 6)</string>
     <string name="cv29SpeedTableYes">Speed Table: In use</string>
     <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>

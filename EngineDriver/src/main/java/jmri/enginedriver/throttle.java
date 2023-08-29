@@ -7647,10 +7647,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected void loadBackgroundImage() {
         if (prefBackgroundImage) {
-//            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_PREFERENCES)) {
-            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_IMAGES)) {
+//            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_IMAGES)) {
+//                loadBackgroundImageImpl();
+//            }
+//<!-- needed for API 33 -->
+            if ( ( (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
+                    && (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_IMAGES)) )
+                    || ( (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                    && (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_MEDIA_IMAGES)) ) ) {
                 loadBackgroundImageImpl();
             }
+//<!-- needed for API 33 -->
         }
     }
 

@@ -795,7 +795,7 @@
     <string name="dialogResetPreferencesQuestion">Confirme que desea restablecer todas las preferencias.\nPerderá todas sus preferencias actuales</string>
     <string name="dialogConfirmImportPreferencesTitle">Importar las preferencias</string>
     <string name="dialogImportPreferencesQuestion">Confirme que desea importar las preferencias.\nPerderá todas sus preferencias actuales</string>
-    <string name="permissionsReadImages">Engine Driver necesita permisos de almacenamiento para cargar las imágenes de fondo</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver necesita permisos de almacenamiento para cargar las imágenes de fondo</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">No se seleccionó ninguna imagen</string>
     <string name="prefBackgroundImageFileNameSummary">Introduzca el nombre del archivo de imagen de fondo</string>
     <string name="prefBackgroundImageFileNameTitle">Nombre del archivo de la imagen de fondo</string>
@@ -916,7 +916,7 @@
     <string name="toastInitialisingSounds">Inicialización en el teléfono Loco sonidos.</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Botón de campana Latching / Momenty</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botón de campana es momentáneo. (Enganchando si no se controla).</string>
-    <string name="permissionsReadLegacyFiles">El controlador del motor necesita permisos de almacenamiento para cargar la configuración de Legacy (antigua ubicación).</string>
+<!--    <string name="permissionsReadLegacyFiles">El controlador del motor necesita permisos de almacenamiento para cargar la configuración de Legacy (antigua ubicación).</string>-->
     <string name="permissionsReadPhoneState">El controlador del motor necesita permisos telefónicos para pausar las operaciones cuando se llame.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferencias adicionales</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Adicional en teléfono loco sonidas preferencias</string>
@@ -958,7 +958,7 @@
     <string name="DCCEXactionTypeLabel">Acción</string>
     <string name="DCCEXclearCommands">Claro</string>
     <string name="DCCEXconnectionOptionTitle">Protocolo de conexión</string>
-    <string name="DCCEXFailed">Accion: Fallida</string>
+    <string name="DCCEXFailed" tools:ignore="Typos">Accion: Fallida</string>
     <string name="DCCEXnextCommandButtonLabel">Próximo</string>
     <string name="DCCEXpreviousCommandButtonLabel">Previo</string>
     <string name="DCCEXreadAddressButtonLabel">Leer</string>

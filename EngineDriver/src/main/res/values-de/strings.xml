@@ -809,7 +809,7 @@
     <string name="dialogResetPreferencesQuestion">Bestätigen Sie, dass Sie alle Präferenzen wollen zurückgesetzt. \n Alle aktuellen Einstellungen gehen verloren.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importeinstellungen</string>
     <string name="dialogImportPreferencesQuestion">Bestätigen Sie, dass Sie Voreinstellungen für den Import möchten. \n Alle werden die aktuellen Einstellungen verloren.</string>
-    <string name="permissionsReadImages">Engine Driver muss STORAGE Berechtigungen Last Hintergrundbildern.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver muss STORAGE Berechtigungen Last Hintergrundbildern.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Kein Bild ausgewählt wurde</string>
     <string name="prefBackgroundImageFileNameSummary">Geben Sie den Namen des Hintergrundbilddatei.</string>
     <string name="prefBackgroundImageFileNameTitle">Hintergrund Bilddateinamen</string>
@@ -933,7 +933,7 @@
     <string name="toastInitialisingSounds">Initialisieren in Telefon-Loco-Sounds.</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Die Bell-Taste ist momentan. (Verriegelung, wenn nicht markiert.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Glockenknopfverriegelung / momentan</string>
-    <string name="permissionsReadLegacyFiles">Der Engine-Treiber benötigt Speicherberechtigungen, um die Einstellungen der Alt- (alten Standort-) zu laden.</string>
+<!--    <string name="permissionsReadLegacyFiles">Der Engine-Treiber benötigt Speicherberechtigungen, um die Einstellungen der Alt- (alten Standort-) zu laden.</string>-->
     <string name="permissionsReadPhoneState">Engine-Treiber benötigt Telefonberechtigungen, um den Betrieb bei einem Anruf anzuhalten.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Zusätzliche Präferenzen</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Zusätzlich in Telefon Loco Sounds-Vorlieben</string>

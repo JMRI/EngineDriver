@@ -460,7 +460,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.applyTheme(this);
 
-        checkForLegacyFiles();
+//        checkForLegacyFiles();
 
         setContentView(R.layout.connection);
 
@@ -709,11 +709,26 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
             //we must have location permissions to get SSID.
             PermissionsHelper phi = PermissionsHelper.getInstance();
-            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
+//            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
+//                }
+//            }
+//<!-- needed for API 33 -->
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
+                    }
+                }
+            } else {
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES);
+                    }
                 }
             }
+//<!-- needed for API 33 -->
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
             mainapp.client_ssid = wifiinfo.getSSID();
@@ -1063,52 +1078,52 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    void checkForLegacyFiles() {
-        if (PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, PermissionsHelper.READ_LEGACY_FILES)) {
-            checkForLegacyFilesImpl();
-        }
-    }
-
-    protected void checkForLegacyFilesImpl() {
-        File sdcard_path = Environment.getExternalStorageDirectory();
-        File legacy_dir = new File(sdcard_path, "engine_driver");
-        if (legacy_dir.isDirectory()) {
-            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy folder found:");
-        }
-
-        File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
-        File legacyConnection_file = new File(sdcard_path, "engine_driver/connections_list.txt");
-
-//        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
-        if ( (!connection_file.exists()) && (legacyConnection_file.exists()) ) {
-
-            String[] childFiles = legacy_dir.list();
-            if (childFiles!=null) {
-                for (int i = 0; i < childFiles.length; i++) {
-                    try {
-//                File legacy_file = new File(sdcard_path, "engine_driver/" + filename);
-                        File legacy_file = new File(sdcard_path, "engine_driver/" + childFiles[i]);
-                        File new_file = new File(context.getExternalFilesDir(null), childFiles[i]);
-
-                        if (legacy_file.exists()) {
-                            if (!new_file.exists()) {
-                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found:" + childFiles[i]);
-//                    Files.copy(legacy_file.getPath(),new_file.getPath(),REPLACE_EXISTING);
-                                copyFileUsingStream(legacy_file, new_file);
-                            } else {
-                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found but new file exists:" + childFiles[i]);
-                            }
-                        } else {
-                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file not found:" + childFiles[i]);
-                        }
-
-                    } catch (Exception e) {
-                        Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - copy failed: " + childFiles[i]);
-                    }
-                }
-            }
-        }
-    }
+//    void checkForLegacyFiles() {
+//        if (PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, PermissionsHelper.READ_LEGACY_FILES)) {
+//            checkForLegacyFilesImpl();
+//        }
+//    }
+//
+//    protected void checkForLegacyFilesImpl() {
+//        File sdcard_path = Environment.getExternalStorageDirectory();
+//        File legacy_dir = new File(sdcard_path, "engine_driver");
+//        if (legacy_dir.isDirectory()) {
+//            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy folder found:");
+//        }
+//
+//        File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+//        File legacyConnection_file = new File(sdcard_path, "engine_driver/connections_list.txt");
+//
+////        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
+//        if ( (!connection_file.exists()) && (legacyConnection_file.exists()) ) {
+//
+//            String[] childFiles = legacy_dir.list();
+//            if (childFiles!=null) {
+//                for (int i = 0; i < childFiles.length; i++) {
+//                    try {
+////                File legacy_file = new File(sdcard_path, "engine_driver/" + filename);
+//                        File legacy_file = new File(sdcard_path, "engine_driver/" + childFiles[i]);
+//                        File new_file = new File(context.getExternalFilesDir(null), childFiles[i]);
+//
+//                        if (legacy_file.exists()) {
+//                            if (!new_file.exists()) {
+//                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found:" + childFiles[i]);
+////                    Files.copy(legacy_file.getPath(),new_file.getPath(),REPLACE_EXISTING);
+//                                copyFileUsingStream(legacy_file, new_file);
+//                            } else {
+//                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found but new file exists:" + childFiles[i]);
+//                            }
+//                        } else {
+//                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file not found:" + childFiles[i]);
+//                        }
+//
+//                    } catch (Exception e) {
+//                        Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - copy failed: " + childFiles[i]);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     //source  https://www.journaldev.com/861/java-copy-file
     void copyFileUsingStream(File source, File dest) throws IOException {

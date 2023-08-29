@@ -740,7 +740,7 @@
     <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
     <string name="dialogImportPreferencesQuestion">Confermare che si desidera preferenze di importazione. \nALL sarà perso preferenze correnti.</string>
-    <string name="permissionsReadImages">Engine Driver ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Nessun immagine è stata selezionata</string>
     <string name="prefBackgroundImageFileNameSummary">Immettere il nome del file di immagine di sfondo.</string>
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
@@ -865,7 +865,7 @@
     <string name="toastInitialisingSounds">Inizializzando nei suoni del telefono del telefono.</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell pulsante chiaggiatore / momentatore</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Il pulsante Bell è momentaneo. (Chiusura se non controllata.)</string>
-    <string name="permissionsReadLegacyFiles">Il driver del motore ha bisogno di autorizzazioni di archiviazione per caricare le impostazioni legacy (Posizione vecchia).</string>
+<!--    <string name="permissionsReadLegacyFiles">Il driver del motore ha bisogno di autorizzazioni di archiviazione per caricare le impostazioni legacy (Posizione vecchia).</string>-->
     <string name="permissionsReadPhoneState">Il driver del motore ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Ulteriori preferenze</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Ulteriori preferenze del telefono dei suoni del telefono</string>

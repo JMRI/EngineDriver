@@ -915,7 +915,7 @@
 <!--    <string name="permissionsStoreRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení.</string>-->
 <!--    <string name="permissionsClearRecentConnections">Engine Driver potřebuje oprávnění STORAGE pro vymazání nedávných připojení.</string>-->
 <!--    <string name="permissionsReadPreferences">Engine Driver potřebuje oprávnění STORAGE pro čtení předvoleb.</string>-->
-<!--    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění STORAGE pro načtení obrázků pozadí.</string>-->
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver potřebuje oprávnění STORAGE pro načtení obrázků pozadí.</string>-->
 <!--    <string name="permissionsStorePreferences">Engine Driver potřebuje oprávnění STORAGE pro uložení předvoleb.</string>-->
 <!--    <string name="permissionsClearPreferences">Engine Driver potřebuje oprávnění STORAGE pro vymazání předvoleb.</string>-->
 <!--    <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>-->
@@ -1114,14 +1114,14 @@
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
     <string name="pauseSpeedButtonLabel">Pauza</string>
-    <string name="permissionsReadImages">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementSummary">Vynutit krok rychlosti, který má být použit, když dlouho stiskněte nižší rychlost na jezdci. n Pokud není zaškrtnuto, rychlost okamžitě přeskočí na dotykovou rychlost.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Krok rychlosti na snižování?</string>
     <string name="soundsButtonHornShortDefaultValue">Roh krátký</string>
     <string name="toastInitialisingSounds">Inicializace v telefonu Loco zvuky.</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Tlačítko Bell je momentální. (Zabezpečení, pokud není zaškrtnuto.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell Tlačítko Latching / Momentary</string>
-    <string name="permissionsReadLegacyFiles">Ovladač motoru potřebuje oprávnění pro ukládání dat pro nastavení starší (staré umístění).</string>
+<!--    <string name="permissionsReadLegacyFiles">Ovladač motoru potřebuje oprávnění pro ukládání dat pro nastavení starší (staré umístění).</string>-->
     <string name="permissionsReadPhoneState">Ovladač motoru potřebuje telefonní oprávnění k pozastavení operací při volání.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Další preference</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Další v telefonu Loco Sounds Preferences</string>
