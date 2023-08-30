@@ -825,7 +825,7 @@
     <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES PREFERENCES REINITIALISEES</string>
     <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
     <string name="dialogImportPreferencesQuestion">Confirmer l import des préférences.\nLes préférences actuelles seront affacées</string>
-    <string name="permissionsReadImages">Engine Driver a besoin des permission d acces STOCKAGE pour charger les images de fond.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver a besoin des permission d acces STOCKAGE pour charger les images de fond.</string>
     <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image selectionnee</string>
     <string name="prefBackgroundImageFileNameSummary">Entrer le nom de l image d Arriere Plan</string>
     <string name="prefBackgroundImageFileNameTitle">Nom du fichier d Arriere Plan</string>
@@ -945,7 +945,7 @@
     <string name="toastInitialisingSounds">Initialisation dans les sons téléphoniques sur Loco.</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botton Bell est momentané. (Verrouillage si décoché.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bouton bouton Locking / Momentaire</string>
-    <string name="permissionsReadLegacyFiles">Le pilote de moteur a besoin d\'autorisations de stockage pour charger les paramètres hérités (anciens emplacement).</string>
+<!--    <string name="permissionsReadLegacyFiles">Le pilote de moteur a besoin d\'autorisations de stockage pour charger les paramètres hérités (anciens emplacement).</string>-->
     <string name="permissionsReadPhoneState">Le pilote de moteur a besoin d\'autorisations téléphoniques pour mettre en pause des opérations lors d\'un appel.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Préférences supplémentaires</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Supplémentaire dans le téléphone Loco Sounds Préférences</string>
