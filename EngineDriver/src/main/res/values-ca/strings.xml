@@ -984,4 +984,13 @@
     <string name="DCCEXwriteAddressButtonLabel">Escriure</string>
     <string name="DCCEXwriteAddressLabel">Adreça DCC</string>
     <string name="DCCEXwriteCvValueLabel">Valorar</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos Read_Media_Images per carregar imatges de fons.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>
+    <string name="prefDCCEXPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>
+    <string name="prefDCCEXPreferencesSummary">Opcions per utilitzar un EX-CommandStation</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Utilitzeu sempre etiquetes de funcions des del servidor</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Quan es desactivi, utilitzeu etiquetes predeterminades EnginedRiver per a locos seleccionats per adreça (no classificació), ignorant les etiquetes predeterminades del servidor.</string>
 </resources>

@@ -923,5 +923,14 @@
     <string name="DCCEXwriteAddressButtonLabel">Scrivi</string>
     <string name="DCCEXwriteAddressLabel">Indirizzo DCC</string>
     <string name="DCCEXwriteCvValueLabel">Valore</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignora le azioni del joystick</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Seleziona questo se hai problemi con il DPAD che produce sia i codici chiave che gli eventi del joystick</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita di read_media_images autorizzazioni per caricare le immagini di sfondo.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver ha bisogno di vicinanze_wifi_devices autorizzazioni per recuperare l\'attuale SSID WiFi.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver ha bisogno di autorizzazioni di notifica per avvertirti quando si spinge in background.</string>
+    <string name="prefDCCEXPreferencesTitle">Preferenze DCC-EX - EX-CommandStation</string>
+    <string name="prefDCCEXPreferencesSummary">Opzioni per l\'utilizzo di un EX-CommandStation</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Usa sempre le etichette delle funzioni dal server</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Se disabilitato, utilizzare ENGINEDRIVER Etichette predefinite per LOCOS selezionati per indirizzo (non elenco), ignorando le etichette predefinite del server.</string>
 
 </resources>

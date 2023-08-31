@@ -898,7 +898,7 @@
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máx</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
-    <string name="prefGamePadDoublePressStopTitle">Ação dupla de stop stop</string>
+    <string name="prefGamePadDoublePressStopTitle">Ação dupla de stop</string>
     <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
     <string name="prefDCCEXSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
     <string name="prefDCCEXTitle">Use comandos nativos do DCC-EX</string>
@@ -927,5 +927,14 @@
     <string name="DCCEXwriteAddressButtonLabel">Escreva</string>
     <string name="DCCEXwriteAddressLabel">Endereço DCC</string>
     <string name="DCCEXwriteCvValueLabel">Valor</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignore as ações do joystick</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Selecione isso se tiver problemas com o DPAD produzindo códigos -chave e eventos de joystick</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver precisa de permissões read_media_images para carregar imagens em segundo plano.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver precisa de permissões nas proximidades de recuperar o WiFi SSID atual.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver precisa de permissões de notificação para avisá -lo quando formar em segundo plano.</string>
+    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation Preferências</string>
+    <string name="prefDCCEXPreferencesSummary">Opções para usar um EX-CommandStation</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Sempre use rótulos de função do servidor</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Quando desativado, use os rótulos padrão do EnginEnRiver para locos selecionados por endereço (não lista), ignorando os rótulos padrão do servidor.</string>
 
 </resources>

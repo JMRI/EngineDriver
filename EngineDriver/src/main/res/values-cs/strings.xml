@@ -1174,5 +1174,14 @@
     <string name="DCCEXwriteAddressButtonLabel">Psát si</string>
     <string name="DCCEXwriteAddressLabel">Adresa DCC</string>
     <string name="DCCEXwriteCvValueLabel">Hodnota</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignorujte akce joysticku</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Vyberte to, pokud máte problémy s DPAD produkujícími jak události klíčových kódů, tak joysticků</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
+    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation preference</string>
+    <string name="prefDCCEXPreferencesSummary">Možnosti použití EX-CommandStation</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
 
 </resources>

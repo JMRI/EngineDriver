@@ -41,7 +41,7 @@
     <string name="app_name_throttle_long">Engine Driver - Throttle</string>
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
-    <string name="app_name_dcc_ex">DCC-EX</string>
+    <string name="app_name_dcc_ex" translatable="false">DCC-EX</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
@@ -1113,9 +1113,9 @@
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
 
 <!-- needed for API 33 -->
-    <string name="permissionsREAD_MEDIA_IMAGES">EX-Toolbox needs READ_MEDIA_IMAGES permissions to load background images.</string>
-    <string name="permissionsNEARBY_WIFI_DEVICES">EX-Toolbox needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>
-    <string name="permissionsPOST_NOTIFICATIONS">EX-Toolbox needs NOTIFICATION permissions to warn you when push into background.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver needs READ_MEDIA_IMAGES permissions to load background images.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver needs NOTIFICATION permissions to warn you when push into background.</string>
 <!-- needed for API 33 -->
 
     <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
@@ -1301,18 +1301,18 @@
 
     <string name="DCCEXactionTypeLabel">Action</string>
     <string name="DCCEXwriteAddressLabel">DCC Address</string>
-    <string name="DCCEXwriteCvLabel">CV</string>
+    <string name="DCCEXwriteCvLabel" translatable="false">CV</string>
     <string name="DCCEXwriteCvValueLabel">Value</string>
     <string name="DCCEXwriteAddressButtonLabel">Write</string>
     <string name="DCCEXreadAddressButtonLabel">Read</string>
     <string name="DCCEXsendCommandButtonLabel">Send</string>
     <string name="DCCEXpreviousCommandButtonLabel">Prior</string>
     <string name="DCCEXnextCommandButtonLabel">Next</string>
-    <string name="DCCEXsendCommandLabel">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
+    <string name="DCCEXsendCommandLabel" translatable="false">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
 <!--    <string name="DCCEXhideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
-    <string name="DCCEXcommonCvsLabel" >NMRA CVs</string>
+    <string name="DCCEXcommonCvsLabel" translatable="false">NMRA CVs</string>
     <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
