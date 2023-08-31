@@ -999,5 +999,14 @@
     <string name="DCCEXwriteAddressButtonLabel">Écrivez</string>
     <string name="DCCEXwriteAddressLabel">Adresse DCC</string>
     <string name="DCCEXwriteCvValueLabel">Évaluer</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions de joystick</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Sélectionnez-le si vous avez des problèmes avec le DPAD produisant à la fois des cocodes KeyCy et des événements de joystick</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver a besoin de lectures de lecture_media_images pour charger des images d\'arrière-plan.</string>
+    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver a besoin de permissions à proximité_wifi_devices pour récupérer le WiFi SSID actuel.</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver a besoin d\\\'autorisations de notification pour vous avertir lors de la poussée en arrière-plan.</string>
+    <string name="prefDCCEXPreferencesTitle">Préférences DCC-EX - EX-CommandStation</string>
+    <string name="prefDCCEXPreferencesSummary">Options d\\\'utilisation d\\\'un EX-CommandStation</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Utilisez toujours des étiquettes de fonction du serveur</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Lorsqu\'il est désactivé, utilisez les étiquettes par défaut de modriver pour les locos sélectionnés par l\\\'adresse (pas la liste), ignorant les étiquettes par défaut du serveur.</string>
 
 </resources>
