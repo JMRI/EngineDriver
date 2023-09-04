@@ -230,16 +230,13 @@ public class intro_activity extends AppIntro2 {
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-//        setBarColor(Color.parseColor("#3F51B5"));
         setBarColor(getResources().getColor(R.color.intro_buttonbar_background));
-//        setSeparatorColor(Color.parseColor("#2196F3"));
 
         // Hide Skip/Done button.
         showSkipButton(false);
         setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
-        // NOTE: you will probably need to ask VIBRATE permission in Manifest.
         setVibrate(false);
         //setVibrateIntensity(30);
         setWizardMode(true);
@@ -263,16 +260,14 @@ public class intro_activity extends AppIntro2 {
         prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        if ( (!prefTheme.equals(originalPrefTheme)) || (!prefTheme.equals(originalPrefThrottleType)) ) {
-
+        if (!prefTheme.equals(originalPrefTheme))  {
             // the theme has changed so need to restart the app.
             Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-            Runtime.getRuntime().exit(0); // really force the kill
-
+//            Runtime.getRuntime().exit(0); // really force the kill
         }
         mainapp.introIsRunning = false;
         this.finish();

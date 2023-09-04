@@ -1,6 +1,7 @@
 **Version 2.36.174
  * remove check for legacy files
  * Permission changes to support API level 33
+ * For Android 10+ - option to retain all data on uninstall
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry

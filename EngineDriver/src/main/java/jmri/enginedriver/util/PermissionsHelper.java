@@ -271,7 +271,7 @@ public class PermissionsHelper {
 
 //<!-- needed for API 33 -->
                 case READ_MEDIA_IMAGES:
-                    Log.d("EX_Toolbox", "Requesting READ_MEDIA_IMAGES permissions");
+                    Log.d("Engine_Driver", "Requesting READ_MEDIA_IMAGES permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.READ_MEDIA_IMAGES},
                             requestCode);
@@ -280,13 +280,13 @@ public class PermissionsHelper {
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.NEARBY_WIFI_DEVICES},
                             requestCode);
-                    Log.d("EX_Toolbox", "Requesting NEARBY_WIFI_DEVICES permissions");
+                    Log.d("Engine_Driver", "Requesting NEARBY_WIFI_DEVICES permissions");
                     break;
                 case POST_NOTIFICATIONS:
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.POST_NOTIFICATIONS},
                             requestCode);
-                    Log.d("EX_Toolbox", "Requesting POST_NOTIFICATIONS permissions");
+                    Log.d("Engine_Driver", "Requesting POST_NOTIFICATIONS permissions");
                     break;
 //<!-- needed for API 33 -->
 
@@ -470,7 +470,7 @@ public class PermissionsHelper {
             case CONNECT_TO_SERVER:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
 //                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) &&
-                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
+//                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
             case ACCESS_FINE_LOCATION:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION);
