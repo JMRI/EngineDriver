@@ -140,9 +140,9 @@ public class intro_activity extends AppIntro2 {
             askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
         }
 
-//<!-- needed for API 33 -->
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-//<!-- needed for API 33 -->
+////<!-- needed for API 33 -->
+//        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+////<!-- needed for API 33 -->
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                 SliderPage sliderPage = new SliderPage();
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
@@ -153,20 +153,20 @@ public class intro_activity extends AppIntro2 {
                 slideNumber = slideNumber + 1;
                 askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, slideNumber);
             }
-//<!-- needed for API 33 -->
-        } else {
-            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
-                SliderPage sliderPage = new SliderPage();
-                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES));
-                sliderPage.setImageDrawable(R.drawable.icon_xl);
-                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
-                addSlide(AppIntroFragment.newInstance(sliderPage));
-                slideNumber = slideNumber + 1;
-                askForPermissions(new String[]{Manifest.permission.NEARBY_WIFI_DEVICES}, slideNumber);
-            }
-        }
-//<!-- needed for API 33 -->
+////<!-- needed for API 33 -->
+//        } else {
+//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
+//                SliderPage sliderPage = new SliderPage();
+//                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
+//                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES));
+//                sliderPage.setImageDrawable(R.drawable.icon_xl);
+//                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+//                addSlide(AppIntroFragment.newInstance(sliderPage));
+//                slideNumber = slideNumber + 1;
+//                askForPermissions(new String[]{Manifest.permission.NEARBY_WIFI_DEVICES}, slideNumber);
+//            }
+//        }
+////<!-- needed for API 33 -->
 
 //        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.VIBRATE )) {
 //            SliderPage sliderPage5 = new SliderPage();

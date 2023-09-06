@@ -715,19 +715,19 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                }
 //            }
 //<!-- needed for API 33 -->
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
                     }
                 }
-            } else {
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES);
-                    }
-                }
-            }
+//            } else {
+//                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES);
+//                    }
+//                }
+//            }
 //<!-- needed for API 33 -->
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 

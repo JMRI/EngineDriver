@@ -48,7 +48,7 @@ public class PermissionsHelper {
             VIBRATE,
             READ_IMAGES,
 //            READ_LEGACY_FILES,
-            NEARBY_WIFI_DEVICES,
+//            NEARBY_WIFI_DEVICES,
             READ_MEDIA_IMAGES,
             POST_NOTIFICATIONS
     })
@@ -76,7 +76,7 @@ public class PermissionsHelper {
 //    public static final int READ_LEGACY_FILES = 48;
 
 //<!-- needed for API 33 -->
-    public static final int NEARBY_WIFI_DEVICES = 49;
+//    public static final int NEARBY_WIFI_DEVICES = 49;
     public static final int READ_MEDIA_IMAGES = 50;
     public static final int POST_NOTIFICATIONS = 51;
 //<!-- needed for API 33 -->
@@ -180,8 +180,8 @@ public class PermissionsHelper {
 //<!-- needed for API 33 -->
             case READ_MEDIA_IMAGES:
                 return context.getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES);
-            case NEARBY_WIFI_DEVICES:
-                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
+//            case NEARBY_WIFI_DEVICES:
+//                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
                 return context.getResources().getString(R.string.permissionsPOST_NOTIFICATIONS);
 //<!-- needed for API 33 -->
@@ -276,12 +276,12 @@ public class PermissionsHelper {
                                     Manifest.permission.READ_MEDIA_IMAGES},
                             requestCode);
                     break;
-                case NEARBY_WIFI_DEVICES:
-                    activity.requestPermissions(new String[]{
-                                    Manifest.permission.NEARBY_WIFI_DEVICES},
-                            requestCode);
-                    Log.d("Engine_Driver", "Requesting NEARBY_WIFI_DEVICES permissions");
-                    break;
+//                case NEARBY_WIFI_DEVICES:
+//                    activity.requestPermissions(new String[]{
+//                                    Manifest.permission.NEARBY_WIFI_DEVICES},
+//                            requestCode);
+//                    Log.d("Engine_Driver", "Requesting NEARBY_WIFI_DEVICES permissions");
+//                    break;
                 case POST_NOTIFICATIONS:
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.POST_NOTIFICATIONS},
@@ -427,8 +427,8 @@ public class PermissionsHelper {
 //<!-- needed for API 33 -->
             case READ_MEDIA_IMAGES:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
-            case NEARBY_WIFI_DEVICES :
-                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
+//            case NEARBY_WIFI_DEVICES :
+//                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS ) == PackageManager.PERMISSION_GRANTED;
 //<!-- needed for API 33 -->
@@ -479,8 +479,8 @@ public class PermissionsHelper {
 
             case READ_MEDIA_IMAGES:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
-            case NEARBY_WIFI_DEVICES:
-                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
+//            case NEARBY_WIFI_DEVICES:
+//                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS);
 
