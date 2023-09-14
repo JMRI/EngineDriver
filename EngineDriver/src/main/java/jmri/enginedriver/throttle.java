@@ -3705,6 +3705,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         mGamepadAutoIncrement = false;
                         mGamepadAutoDecrement = false;
                         GamepadFeedbackSoundStop();
+                        Log.d("Engine_Driver", "dispatchGenericMotionEvent: ACTION_UP"
+                                + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                                + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                        );
                     }
 
                     boolean rslt = false;
@@ -3836,6 +3840,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
+                            Log.d("Engine_Driver", "dispatchKeyEvent (not Keyboard): ACTION_UP"
+                                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                            );
                         }
 
                         // if the preference name has "-rotate" at the end of it swap the direction keys around
@@ -3873,6 +3881,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
+                            Log.d("Engine_Driver", "dispatchKeyEvent: ACTION_UP"
+                                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                            );
                         }
                         performKeyboardKeyAction(keyCode, action, isShiftPressed, repeatCnt, whichThrottle, whichGamePadIsEventFrom);
                         return (true); // stop processing this key
@@ -3978,6 +3990,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         private GamepadRptUpdater(int WhichThrottle, int StepMultiplier) {
             whichThrottle = WhichThrottle;
             stepMultiplier = StepMultiplier;
+
+            Log.d("Engine_Driver", "GamepadRptUpdater: WhichThrottle: " + whichThrottle
+                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+            );
 
             try {
                 REP_DELAY = Integer.parseInt(prefs.getString("prefGamePadSpeedArrowsThrottleRepeatDelay",  getApplicationContext().getResources().getString(R.string.prefGamePadSpeedButtonsRepeatDefaultValue)));
