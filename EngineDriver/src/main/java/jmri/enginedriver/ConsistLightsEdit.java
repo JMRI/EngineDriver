@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -288,6 +290,9 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
 //        consistObjList = new ArrayList<>();
 
+        //Set the buttons
+        Button closeButton = findViewById(R.id.consist_lights_edit_button_close);
+        closeButton.setOnClickListener(new close_button_listener(this));
 
         //update consist list
         refreshConsistLists();
@@ -439,4 +444,19 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
+    public class close_button_listener implements View.OnClickListener {
+        Activity _consistEditLightsActivity;
+
+        close_button_listener(Activity consistEditLightsActivity) {
+            _consistEditLightsActivity = consistEditLightsActivity;
+        }
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+            setResult(result, resultIntent);
+            finish();  //end this activity
+            connection_activity.overridePendingTransition(_consistEditLightsActivity, R.anim.fade_in, R.anim.fade_out);
+        }
+    }
 }

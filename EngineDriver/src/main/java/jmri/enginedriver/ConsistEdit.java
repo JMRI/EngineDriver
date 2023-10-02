@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -283,6 +285,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             }
         });
 
+        //Set the buttons
+        Button closeButton = findViewById(R.id.consist_edit_button_close);
+        closeButton.setOnClickListener(new ConsistEdit.close_button_listener(this));
+
         //update consist list
         refreshConsistLists();
         result = RESULT_OK;
@@ -471,4 +477,20 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         }
     }
 
+    public class close_button_listener implements View.OnClickListener {
+        Activity _consistEditActivity;
+
+        close_button_listener(Activity consistEditActivity) {
+            _consistEditActivity = consistEditActivity;
+        }
+
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+            setResult(result, resultIntent);
+            finish();  //end this activity
+            connection_activity.overridePendingTransition(_consistEditActivity, R.anim.fade_in, R.anim.fade_out);
+        }
+    }
 }
