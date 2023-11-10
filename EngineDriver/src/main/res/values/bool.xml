@@ -110,4 +110,6 @@
     <bool name="prefActionBarShowDccExButtonDefaultValue">false</bool>
     <bool name="prefAlwaysUseFunctionsFromServerDefaultValue">false</bool>
 
+    <bool name="prefHideInstructionalToastsDefaultValue">false</bool>
+
 </resources>

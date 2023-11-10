@@ -1497,7 +1497,9 @@ public class select_loco extends AppCompatActivity {
                 rbRecentConsists.setChecked(false);
                 rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRoster) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
+                    if (!mainapp.prefHideInstructionalToasts) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG).show();
+                    }
                     mainapp.shownToastRoster = true;
                 }
 
@@ -1522,7 +1524,9 @@ public class select_loco extends AppCompatActivity {
                 rbRecentConsists.setChecked(false);
                 rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRecentLocos) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
+                    if (!mainapp.prefHideInstructionalToasts) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentsHelp), Toast.LENGTH_LONG).show();
+                    }
                     mainapp.shownToastRecentLocos = true;
                 }
 
@@ -1547,7 +1551,9 @@ public class select_loco extends AppCompatActivity {
                 rbRecentConsists.setChecked(true);
                 rbIDnGo.setChecked(false);
                 if (!mainapp.shownToastRecentConsists) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
+                    if (!mainapp.prefHideInstructionalToasts) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), Toast.LENGTH_LONG).show();
+                    }
                     mainapp.shownToastRecentConsists = true;
                 }
 
@@ -1891,7 +1897,9 @@ public class select_loco extends AppCompatActivity {
                 recent_engine_list.remove(position);
                 saveRecentLocosList(true);
                 engine_list_view.invalidateViews();
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+                if (!mainapp.prefHideInstructionalToasts) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -1934,7 +1942,9 @@ public class select_loco extends AppCompatActivity {
                 recent_consists_list.remove(position);
                 updateRecentConsists(true);
                 consists_list_view.invalidateViews();
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+                if (!mainapp.prefHideInstructionalToasts) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

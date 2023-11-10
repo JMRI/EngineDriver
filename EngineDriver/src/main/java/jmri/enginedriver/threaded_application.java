@@ -358,6 +358,7 @@ public class threaded_application extends Application {
     public static final int SCREEN_SWIPE_INDEX_WEB = 2;
     public static final int SCREEN_SWIPE_INDEX_TURNOUTS = 3;
 
+    public boolean prefHideInstructionalToasts = false;
 
     public boolean prefSwipeThoughTurnouts = true;
     public boolean prefSwipeThoughRoutes = true;
@@ -587,6 +588,8 @@ public class threaded_application extends Application {
         prefFeedbackOnDisconnect = prefs.getBoolean("prefFeedbackOnDisconnect",
                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
 
+        prefHideInstructionalToasts = prefs.getBoolean("prefHideInstructionalToasts",
+                getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
 
     } // end onCreate
 

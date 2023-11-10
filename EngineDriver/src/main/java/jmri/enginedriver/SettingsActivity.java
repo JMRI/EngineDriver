@@ -1915,6 +1915,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
                         break;
 
+                    case "prefHideInstructionalToasts":
+                        parentActivity.mainapp.prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts",
+                                getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
+                        break;
+
                     case "prefSwitchingThrottleSliderDeadZone":
                         parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_DEAD_ZONE;
                         parentActivity.forceRestartAppOnPreferencesClose = true;

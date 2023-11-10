@@ -127,7 +127,11 @@ public class comm_handler extends Handler {
             //attempt connection to WiThrottle server
             comm_thread.socketWiT = new comm_thread.socketWifi();
             if (comm_thread.socketWiT.connect()) {
-               if (mainapp.isDCCEX) threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.usingProtocolDCCEX), Toast.LENGTH_LONG);
+               if (mainapp.isDCCEX) {
+                  if (!mainapp.prefHideInstructionalToasts) {
+                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.usingProtocolDCCEX), Toast.LENGTH_LONG);
+                  }
+               }
 
                commThread.sendThrottleName();
                mainapp.sendMsgDelay(mainapp.comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);

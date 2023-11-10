@@ -2052,13 +2052,20 @@
                     android:title="@string/prefHostImportExportTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefShowTimeOnLogEntryDefaultValue"
                     android:key="prefShowTimeOnLogEntry"
                     android:summary="@string/prefShowTimeOnLogEntrySummary"
                     android:title="@string/prefShowTimeOnLogEntryTitle"
                     android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
+                    android:key="prefHideInstructionalToasts"
+                    android:summary="@string/prefHideInstructionalToastsSummary"
+                    android:title="@string/prefHideInstructionalToastsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
