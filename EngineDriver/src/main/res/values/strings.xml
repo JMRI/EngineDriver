@@ -1190,6 +1190,9 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirm that you want remove all the Recent Connections</string>
 
+    <string name="prefHideInstructionalToastsTitle">Hide Instructional Hints</string>
+    <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>
+
     <string name="dialogConfirmResetPreferencesTitle">Reset Preferences</string>
     <string name="dialogResetPreferencesQuestion">Confirm that you want reset all preferences.\nALL current preferences will be lost.</string>
 

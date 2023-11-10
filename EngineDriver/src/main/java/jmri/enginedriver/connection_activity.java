@@ -276,7 +276,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 connected_hostname = connected_hostip; //copy ip to name
                 connect();
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+                if (!mainapp.prefHideInstructionalToasts) {
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+                }
             }
             mainapp.buttonVibration();
         }
@@ -304,7 +306,9 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+                    if (!mainapp.prefHideInstructionalToasts) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+                    }
 //                        new saveConnectionsList().execute();
                     importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "");
                 }
@@ -343,7 +347,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connect();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+                    if (!mainapp.prefHideInstructionalToasts) {
+                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -942,7 +948,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (importExportConnectionList.connections_list.size() > 0)) {
                         // use connToast so onPause can cancel toast if connection is made
-                        connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                        if (!mainapp.prefHideInstructionalToasts) {
+                            connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                        }
                         connToast.show();
                     }
                 }
