@@ -734,6 +734,7 @@
  *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
  * turnouts
+ *   TODO: add state-based color (maybe just for colorful theme?)
  *   TODO: support client entry/edit of username for servers without usernames
  *   TODO: combine loco control and turnout control in one page
  *   TODO: pref to sort by system name vs. user name
@@ -774,6 +775,7 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
+ *   TODO: add "Owner" field to filter
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
