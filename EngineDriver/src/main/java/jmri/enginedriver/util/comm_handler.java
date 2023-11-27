@@ -280,6 +280,12 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.WRITE_TRACK_POWER: { // DCC-EX only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendTrackPower(args[0], msg.arg1);
+            break;
+         }
+
          case message_type.REQUEST_CV: { // DCC-EX only
             comm_thread.sendReadCv(msg.arg1);
             break;

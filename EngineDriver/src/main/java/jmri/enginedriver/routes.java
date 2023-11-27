@@ -50,6 +50,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -57,7 +58,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -118,7 +121,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         //clear and rebuild
         routesFullList.clear();
         locationList.clear();
-        if (mainapp.rt_state_names != null) {  //not allowed
+        if (mainapp.routeStateNames != null) {  //not allowed
             if (mainapp.rt_user_names != null) { //none defined
                 int pos = 0;
                 String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
@@ -127,40 +130,48 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     boolean hasUserName = (username != null && !username.equals(""));
                     if (hasUserName || !hideIfNoUserName) {  //skip routes without usernames if pref is set
                         //get values from global array
-                        String systemname = mainapp.rt_system_names[pos];
-                        String currentstate = mainapp.rt_states[pos];
-                        String currentstatedesc = mainapp.rt_state_names.get(currentstate);
+                        String systemName = mainapp.routeSystemNames[pos];
+                        String currentState = mainapp.routeStates[pos];
+                        String currentDCCEXstate = String.valueOf(mainapp.routeDCCEXstates[pos]);
+                        String currentDCCEXlabel = mainapp.routeDCCEXlabels[pos];
+
+                        String currentstatedesc = mainapp.routeStateNames.get(currentState);
                         if (currentstatedesc == null) {
                             currentstatedesc = "   ???";
                         }
 
-                        //put values into temp hashmap
-                        HashMap<String, String> hm = new HashMap<>();
-                        if (hasUserName)
-                            hm.put("rt_user_name", username);
-                        else
-                            hm.put("rt_user_name", systemname);
-                        hm.put("rt_system_name_hidden", systemname);
-                        if (!hidesystemroutes) {  //check prefs for show or not show this
-                            hm.put("rt_system_name", systemname);
+                        if (!currentDCCEXstate.equals("-1") ) { // is DCC-EX
+                            currentstatedesc = currentDCCEXlabel;
                         }
-                        hm.put("rt_current_state_desc", currentstatedesc);
-                        routesFullList.add(hm);
 
-                        //if location is new, add to list
-                        if (del.length() > 0 && hasUserName) {
-                            int delim = username.indexOf(del);
-                            if (delim >= 0) {
-                                String loc = username.substring(0, delim);
-                                if (!locationList.contains(loc))
-                                    locationList.add(loc);
+                        if (!currentDCCEXstate.equals("2")) { // not hidden
+                            //put values into temp hashmap
+                            HashMap<String, String> hm = new HashMap<>();
+                            if (hasUserName)
+                                hm.put("rt_user_name", username);
+                            else
+                                hm.put("rt_user_name", systemName);
+                            hm.put("rt_system_name_hidden", systemName);
+                            if (!hidesystemroutes) {  //check prefs for show or not show this
+                                hm.put("rt_system_name", systemName);
+                            }
+                            hm.put("rt_current_state_desc", currentstatedesc);
+                            hm.put("rt_current_dccex_state", currentDCCEXstate);
+                            routesFullList.add(hm);
+
+                            //if location is new, add to list
+                            if (del.length() > 0 && hasUserName) {
+                                int delim = username.indexOf(del);
+                                if (delim >= 0) {
+                                    String loc = username.substring(0, delim);
+                                    if (!locationList.contains(loc))
+                                        locationList.add(loc);
+                                }
                             }
                         }
-                        //
                     }
                     pos++;
                 }
-                //              routes_list_adapter.notifyDataSetChanged();
             }
         }
         updateRouteEntry();
@@ -175,6 +186,37 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         locationSpinner.setSelection(locationListAdapter.getPosition(location));
 
         filterRouteView();
+    }
+
+    private void setDCCEXbuttonStates() {
+        ListView listView = findViewById(R.id.routes_list);
+
+        for (int i=0; i<listView.getChildCount(); i++) {
+            LinearLayout itemLayout = (LinearLayout) listView.getChildAt(i);
+            TextView textView = (TextView) itemLayout.getChildAt(2);
+            Button button = (Button) itemLayout.getChildAt(1);
+// testing
+            RelativeLayout rl = (RelativeLayout) itemLayout.getChildAt(0);
+            TextView tv = (TextView) rl.getChildAt(0);
+            String tx = (String) tv.getText();
+//
+            String state = (String) textView.getText();
+            switch (state) {
+                case "0":
+                default:
+                    button.setEnabled(true);
+                    button.setSelected(false);
+                    break;
+                case "1":
+                    button.setEnabled(true);
+                    button.setSelected(true);
+                    break;
+                case "2":
+                    button.setEnabled(false);
+                    button.setSelected(false);
+                    break;
+            }
+        }
     }
 
     private void filterRouteView() {
@@ -199,24 +241,24 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private int updateRouteEntry() {
 //        Log.d("Engine_Driver", "routes: updateRouteEntry()");
 
-        Button butSet = findViewById(R.id.route_toggle);
-        EditText rte = findViewById(R.id.route_entry);
-        String route = rte.getText().toString().trim();
+        Button routeButton = findViewById(R.id.route_toggle);
+        EditText routeEntry = findViewById(R.id.route_entry);
+        String route = routeEntry.getText().toString().trim();
         int txtLen = route.length();
-        if (mainapp.rt_state_names != null) {
-            rte.setEnabled(true);
-            butSet.setText(getString(R.string.set));
+        if (mainapp.routeStateNames != null) {
+            routeEntry.setEnabled(true);
+            routeButton.setText(getString(R.string.set));
             // don't allow Set button if nothing entered
             if (txtLen > 0) {
-                butSet.setEnabled(true);
+                routeButton.setEnabled(true);
             } else {
-                butSet.setEnabled(false);
+                routeButton.setEnabled(false);
             }
         } else {
-            rte.setEnabled(false);
-            butSet.setEnabled(false);
-            if (!rte.getText().toString().equals(getString(R.string.disabled)))
-                rte.setText(getString(R.string.disabled));
+            routeEntry.setEnabled(false);
+            routeButton.setEnabled(false);
+            if (!routeEntry.getText().toString().equals(getString(R.string.disabled)))
+                routeEntry.setText(getString(R.string.disabled));
         }
 
         if (RMenu != null) {
@@ -311,7 +353,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        Log.d("Engine_Driver", "routes: onCreate");
@@ -335,8 +376,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         //Set up a list adapter to allow adding the list of recent connections to the UI.
         routes_list = new ArrayList<>();
         routes_list_adapter = new SimpleAdapter(this, routes_list, R.layout.routes_item,
-                new String[]{"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc"},
-                new int[]{R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc}) {
+                new String[]{"rt_user_name", "rt_system_name_hidden", "rt_system_name", "rt_current_state_desc", "rt_current_dccex_state"},
+                new int[]{R.id.rt_user_name, R.id.rt_system_name_hidden, R.id.rt_system_name, R.id.rt_current_state_desc, R.id.rt_current_dccex_state}) {
             //set up listener for each state button
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -347,10 +388,20 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 }
                 return row;
             }
-
         };
+
         routes_lv = findViewById(R.id.routes_list);
         routes_lv.setAdapter(routes_list_adapter);
+
+        if (mainapp.isDCCEX) {
+            // need to setup a listerner so that we can update the buttons states AFTER the list has been fully updated
+            ViewTreeObserver viewTreeObserver = routes_lv.getViewTreeObserver();
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                public void onGlobalLayout() {
+                    setDCCEXbuttonStates();
+                }
+            });
+        }
 
         OnTouchListener gestureListener = new ListView.OnTouchListener() {
             public boolean onTouch(View v, @NonNull MotionEvent event) {

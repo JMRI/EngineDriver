@@ -4,6 +4,8 @@
  * For Android 10+ - option to retain all data on uninstall
  * Added close buttons to the Consist Edit and Consist Light Edit screens
  * Added preference to hide Instructional/Help toast popups
+ * Added support for DCC-EX EXRAIL commands: ROUTE_INACTIVE(id), ROUTE_ACTIVE(id), ROUTE_HIDDEN(id), ROUTE_CAPTION(id,"label")
+ * Added support for DCC-EX individual track/district power control
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry
