@@ -134,10 +134,12 @@ public class threaded_application extends Application {
 //    public String[] to_states;
     private HashMap<String, String> turnout_states; //includes manual and system
     public HashMap<String, String> to_state_names;
-    public String[] rt_system_names;
+    public String[] routeSystemNames;
     public String[] rt_user_names;
-    public String[] rt_states;
-    public HashMap<String, String> rt_state_names; //if not set, routes are not allowed
+    public String[] routeStates;
+    public String[] routeDCCEXlabels; // only used by the DCC-EX protocol
+    public int[] routeDCCEXstates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
+    public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
     public Map<String, String> consist_entries;
     public static DownloadRosterTask dlRosterTask = null;
@@ -202,6 +204,7 @@ public class threaded_application extends Application {
     public boolean DCCEXscreenIsOpen = false;
 
     public int [] DCCEXtrackType = {1, 2, 0, 0, 0, 0, 0, 0};
+    public int [] DCCEXtrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
     public boolean [] DCCEXtrackAvailable = {false, false, false, false, false, false, false, false};
     public String [] DCCEXtrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
@@ -231,7 +234,9 @@ public class threaded_application extends Application {
     public String [] routeNamesDCCEX;  // used to process the route list
     public String [] routeTypesDCCEX;  // used to process the route list
     public String [] routeStatesDCCEX;  // used to process the route list
+    public String [] routeLabelsDCCEX;  // used to process the route list
     public boolean [] routeDetailsReceivedDCCEX;  // used to process the route list
+    public boolean routeStatesReceivedDCCEX = false;
 
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
@@ -1037,10 +1042,12 @@ public class threaded_application extends Application {
         to_user_names = null;
         to_state_names = null;
         turnout_states = new HashMap<String, String>();
-        rt_states = null;
-        rt_system_names = null;
+        routeStates = null;
+        routeSystemNames = null;
         rt_user_names = null;
-        rt_state_names = null;
+        routeStateNames = null;
+        routeDCCEXlabels = null;
+        routeDCCEXstates = null;
 
         prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
@@ -1355,13 +1362,13 @@ public class threaded_application extends Application {
 
     /**
      * Is Route Control allowed for this connection?
-     * based on setting of rt_state_names for now
+     * based on setting of routeStateNames for now
      * this hides/shows menu options and activities
      *
      * @return true or false
      */
     public boolean isRouteControlAllowed() {
-        return (rt_state_names != null);
+        return (routeStateNames != null);
     }
 
     /**

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
@@ -21,7 +22,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_weight="9">
+            android:layout_weight="4">
 
             <Button
                 android:id="@+id/power_control_button"
@@ -40,6 +41,346 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:text="@string/press_to_toggle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_weight="4">
+
+            <ScrollView
+                android:id="@+id/DCCEXtrackPowerScrollView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0sp"
+                    android:padding="0sp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower0layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="A"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton0"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType0"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower1layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="B"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton1"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType1"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower2layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="C"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton2"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType2"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower3layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="D"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton3"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType3"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower4layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="E"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton4"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType4"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower5layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="F"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton5"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType5"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower6layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="G"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton6"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType6"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DCCEXtrackPower7layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:paddingBottom="4dp"
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="1sp"
+                            android:layout_weight=".05"
+                            android:text="H"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+
+                        <Button
+                            android:id="@+id/DCCEXpowerControlButton7"
+                            android:layout_width="34dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center"
+                            android:padding="10dp"
+                            android:src="?attr/ed_power_yellow_button" />
+
+                        <TextView
+                            android:id="@+id/DCCEXpowerControlTrackType7"
+                            style="?attr/floating_text_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:layout_weight=".25"
+                            android:textSize="14sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
         </LinearLayout>
 
         <TableLayout

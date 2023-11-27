@@ -287,6 +287,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -301,6 +302,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_0"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_0_list"
                                 android:layout_width="0sp"
@@ -310,7 +319,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -339,6 +348,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -353,6 +363,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_1"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_1_list"
                                 android:layout_width="0sp"
@@ -362,7 +380,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -391,6 +409,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -405,6 +424,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_2"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_2_list"
                                 android:layout_width="0sp"
@@ -414,7 +441,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -443,6 +470,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -457,6 +485,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_3"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_3_list"
                                 android:layout_width="0sp"
@@ -466,7 +502,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".63"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -495,6 +531,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -509,6 +546,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_4"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_4_list"
                                 android:layout_width="0sp"
@@ -518,7 +563,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -547,6 +592,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -561,6 +607,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_5"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_5_list"
                                 android:layout_width="0sp"
@@ -570,7 +624,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -599,6 +653,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -613,6 +668,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_6"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_6_list"
                                 android:layout_width="0sp"
@@ -622,7 +685,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -651,6 +714,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
+                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
                             android:weightSum="1" >
@@ -665,6 +729,14 @@
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
 
+                            <Button
+                                android:id="@+id/dccex_power_control_button_7"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:src="?attr/ed_power_yellow_button" />
+
                             <Spinner
                                 android:id="@+id/dexc_track_type_7_list"
                                 android:layout_width="0sp"
@@ -674,7 +746,7 @@
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".7"
+                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText

@@ -89,7 +89,7 @@ public class comm_thread extends Thread {
     static final int TRACK_TYPE_DC_INDEX = 3;
     static final int TRACK_TYPE_DCX_INDEX = 4;
 
-    static final String [] TRACK_TYPES = { "OFF", "MAIN", "PROG", "DC", "DCX"};
+    static final String [] TRACK_TYPES = { "NONE", "MAIN", "PROG", "DC", "DCX"};
     static final boolean [] TRACK_TYPES_NEED_ID = { false, false, false, true, true };
 
     public comm_thread(threaded_application myApp, SharedPreferences myPrefs) {
@@ -588,6 +588,13 @@ public class comm_thread extends Thread {
         }
     }
 
+    protected static void sendTrackPower(String track, int powerState) {
+        if (mainapp.isDCCEX) { // DCC-EX only
+            String msgTxt = "<" + ((char) ('0' + powerState)) + " " + track + ">";
+            wifiSend(msgTxt);
+        }
+    }
+
     protected static void sendTrack(String track, String type, int id) {
         if (mainapp.isDCCEX) { // DCC-EX only
             String msgTxt = "";
@@ -692,6 +699,16 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             String msgTxt = String.format("<%d>", pState);
+            wifiSend(msgTxt);
+//            Log.d("Engine_Driver", "comm_thread.sendPower DCC-EX: " + msgTxt);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    protected void sendPower(int pState, int track) {  // DCC-EX only
+        char trackLetter = (char) ('A' + track);
+        if (mainapp.isDCCEX) { //DCC-EX
+            String msgTxt = String.format("<%d %s>", pState, trackLetter);
             wifiSend(msgTxt);
 //            Log.d("Engine_Driver", "comm_thread.sendPower DCC-EX: " + msgTxt);
         }
@@ -1197,13 +1214,8 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'p': // power response
-                            String oldState = mainapp.power_state;
-                            mainapp.power_state = responseStr.substring(2, 3);
-                            if (mainapp.power_state.equals(oldState)) {
-                                skipAlert = true;
-                            } else {
-                                responseStr = "PPA" + responseStr.charAt(2);
-                            }
+                            processDCCEXpowerResponse(args);
+                            skipAlert = true;
                             break;
 
                         case 'j': //roster, turnouts / routes lists
@@ -1214,6 +1226,11 @@ public class comm_thread extends Thread {
                                     break;
                                 case 'A': // automations/routes
                                     processDCCEXroutes(args);
+                                    break;
+                                case 'B': // automation/route update (Inactive, Active, Hidden, Caption)
+                                    processDCCEXrouteUpdate(args);
+                                    responseStr = "PRA";
+                                    skipAlert = false;
                                     break;
                                 case 'R': // roster
                                     skipAlert = processDCCEXroster(args);
@@ -1263,6 +1280,74 @@ public class comm_thread extends Thread {
     }  //end of processWifiResponse
 
     /* ***********************************  *********************************** */
+
+    private static  void processDCCEXpowerResponse ( String [] args) { // <p0|1 [A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
+        String oldState = mainapp.power_state;
+        String responseStr = "";
+        if (args.length==1) {  // <p0|1>
+            mainapp.power_state = args[0].substring(1, 2);
+            if (!mainapp.power_state.equals(oldState)) {
+                responseStr = "PPA" + args[0].charAt(1);
+                mainapp.alert_activities(message_type.RESPONSE, responseStr);
+                if (args[0].charAt(1)!='2') {
+                    for (int i = 0; i < mainapp.DCCEXtrackType.length; i++) {
+                        mainapp.DCCEXtrackPower[i] = args[0].charAt(1) - '0';
+                        responseStr = "PXX" + ((char) (i + '0')) + args[0].charAt(1);
+                        mainapp.alert_activities(message_type.RESPONSE, responseStr);
+                    }
+                }
+            }
+
+        } else { // <p0|1 A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX>
+            if (args[1].length()==1) {  // <p0|1 A|B|C|D|E|F|G|H|>
+                int trackNo = args[1].charAt(0) - 'A';
+                mainapp.DCCEXtrackPower[trackNo] = args[0].charAt(1) - '0';
+                responseStr = "PXX" + ((char) (trackNo + '0')) + args[0].charAt(1);
+                mainapp.alert_activities(message_type.RESPONSE, responseStr);
+
+            } else { // <p0|1 MAIN|PROG|DC|DCX>
+                int trackType = 0;
+                for (int i=0; i<TRACK_TYPES.length; i++) {
+                    if (args[1].equals(TRACK_TYPES[i])) {
+                        trackType = i;
+                        break;
+                    }
+                }
+                for (int i=0; i<mainapp.DCCEXtrackType.length; i++) {
+                    if (mainapp.DCCEXtrackType[i] == trackType) {
+                        mainapp.DCCEXtrackPower[i] = args[0].charAt(1) - '0';
+                        responseStr = "PXX" + ((char) (i + '0')) + args[0].charAt(1);
+                        mainapp.alert_activities(message_type.RESPONSE, responseStr);
+                    }
+                }
+            }
+            boolean globalPowerOn = true;
+            boolean globalPowerOff = true;
+            for (int i=0; i<mainapp.DCCEXtrackType.length; i++) {
+                if ( (mainapp.DCCEXtrackAvailable[i]) && (mainapp.DCCEXtrackType[i] != 0) ) {  // not "NONE"
+                    if (mainapp.DCCEXtrackPower[i] == 1) {
+                        globalPowerOff = false;
+                    }
+                    if (mainapp.DCCEXtrackPower[i] == 0) {
+                        globalPowerOn = false;
+                    }
+                }
+            }
+
+            if (!globalPowerOn && !globalPowerOff) {
+                mainapp.power_state = "2";
+                mainapp.alert_activities(message_type.RESPONSE, "PPA2"); // inconsistant
+            } else {
+                if (globalPowerOn) {
+                    mainapp.power_state = "1";
+                    mainapp.alert_activities(message_type.RESPONSE, "PPA1");
+                } else {
+                    mainapp.power_state = "0";
+                    mainapp.alert_activities(message_type.RESPONSE, "PPA0");
+                }
+            }
+        }
+    }
 
     private static void processDCCEXRequestCvResponse (String [] args) {
         String cv = "";
@@ -1667,6 +1752,18 @@ public class comm_thread extends Thread {
                     mainapp.routeStringDCCEX = "";
                     mainapp.DCCEXlistsRequested++;
 
+                    if (mainapp.routeStatesReceivedDCCEX) { // we received some DCC-EX route states before the list was complete
+                        for (int i=0; i<mainapp.routeIDsDCCEX.length;i++) {
+                            if (mainapp.routeStatesDCCEX[i]!=null) { mainapp.routeDCCEXstates[i] = Integer.parseInt(mainapp.routeStatesDCCEX[i]);
+                            } else { mainapp.routeDCCEXstates[i] = 0;
+                            };
+                            if (mainapp.routeLabelsDCCEX[i]!=null) {
+                                mainapp.routeDCCEXlabels[i] = mainapp.routeLabelsDCCEX[i];
+                            } else { mainapp.routeDCCEXlabels[i] = mainapp.getResources().getString(R.string.DCCEXrouteSet);
+                            }
+                        }
+                    }
+
                     int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
                     Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + count);
                     mainapp.routesBeingProcessedDCCEX = false;
@@ -1683,6 +1780,7 @@ public class comm_thread extends Thread {
                         mainapp.routeNamesDCCEX = new String[args.length - 1];
                         mainapp.routeTypesDCCEX = new String[args.length - 1];
                         mainapp.routeStatesDCCEX = new String[args.length - 1];
+                        mainapp.routeLabelsDCCEX = new String[args.length - 1];
                         mainapp.routeDetailsReceivedDCCEX = new boolean[args.length - 1];
                         for (int i = 0; i < args.length - 1; i++) { // first will be blank
                             mainapp.routeIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
@@ -1697,6 +1795,43 @@ public class comm_thread extends Thread {
             }
         }
     } // end processDCCEXroutes()
+
+    static void processDCCEXrouteUpdate(String [] args) {
+        if (args != null) {
+            int pos = -1;
+            boolean foundInMainList = false;
+            if (mainapp.routeSystemNames != null) {
+                for (String sn : mainapp.routeSystemNames) {
+                    pos++;
+                    if (sn != null && sn.equals(args[1])) {
+                        foundInMainList = true;
+                        if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found, update to new value
+                            if (args[2].charAt(0) != '"') { // <jB id "stuff">
+                                mainapp.routeDCCEXstates[pos] = Integer.parseInt(args[2]);
+                            } else { // <jB id <state>    state: 0=inactive 1=active 2=hidden
+                                mainapp.routeDCCEXlabels[pos] = args[2].substring(1, args[2].length() - 1);;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            if (!foundInMainList) { // received a value before the main route list has been built. need to save them for later.
+                int routeId = Integer.valueOf(args[1]);
+                for (int i=0; i<mainapp.routeIDsDCCEX.length;i++) {
+                    if (mainapp.routeIDsDCCEX[i]==routeId) {
+                        if (args[2].charAt(0) != '"') { // <jB id "stuff">
+                            mainapp.routeStatesDCCEX[i] = args[2];
+                        } else { // <jB id <state>    state: 0=inactive 1=active 2=hidden
+                            mainapp.routeLabelsDCCEX[i] = args[2].substring(1, args[2].length() - 1);;
+                        }
+                        mainapp.routeStatesReceivedDCCEX = true;
+                        break;
+                    }
+                }
+            }
+        }
+    } // end processDCCEXrouteUpdate()
 
     /* ***********************************  *********************************** */
 
@@ -1858,14 +1993,14 @@ public class comm_thread extends Thread {
         String newState = responseStr.substring(3, 4);
         String systemName = responseStr.substring(4);
         int pos = -1;
-        for (String sn : mainapp.rt_system_names) {
+        for (String sn : mainapp.routeSystemNames) {
             pos++;
             if (sn != null && sn.equals(systemName)) {
                 break;
             }
         }
-        if (pos >= 0 && pos <= mainapp.rt_system_names.length) {  //if found, update to new value
-            mainapp.rt_states[pos] = newState;
+        if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found, update to new value
+            mainapp.routeStates[pos] = newState;
         }
     }  //end of processRouteChange
 
@@ -1876,27 +2011,35 @@ public class comm_thread extends Thread {
 
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //initial separation
         //initialize app arrays (skipping first)
-        mainapp.rt_system_names = new String[ta.length - 1];
+        mainapp.routeSystemNames = new String[ta.length - 1];
         mainapp.rt_user_names = new String[ta.length - 1];
-        mainapp.rt_states = new String[ta.length - 1];
+        mainapp.routeStates = new String[ta.length - 1];
+        mainapp.routeDCCEXlabels = new String[ta.length - 1];
+        mainapp.routeDCCEXstates = new int[ta.length - 1];
         int i = 0;
         for (String ts : ta) {
             if (i > 0) { //skip first chunk, just message id
                 String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                mainapp.rt_system_names[i - 1] = tv[0];
+                mainapp.routeSystemNames[i - 1] = tv[0];
                 mainapp.rt_user_names[i - 1] = tv[1];
-                mainapp.rt_states[i - 1] = tv[2];
+                mainapp.routeStates[i - 1] = tv[2];
+                if (!mainapp.isDCCEX) {
+                    mainapp.routeDCCEXlabels[i - 1] = "";
+                    mainapp.routeDCCEXstates[i - 1] = -1;
+                } else {
+                    mainapp.routeDCCEXlabels[i - 1] = mainapp.getResources().getString(R.string.DCCEXrouteSet);
+                    mainapp.routeDCCEXstates[i - 1] = 0;
+                }
             }  //end if i>0
             i++;
         }  //end for
 
     }
 
-    static void processRouteTitles(String responseStr) {
-        //PRT
+    static void processRouteTitles(String responseStr) { //e.g  PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8     only used for wiThrottle
 
         //clear the global variable
-        mainapp.rt_state_names = new HashMap<>();
+        mainapp.routeStateNames = new HashMap<>();
 
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //initial separation
         //initialize app arrays (skipping first)
@@ -1904,7 +2047,7 @@ public class comm_thread extends Thread {
         for (String ts : ta) {
             if (i > 1) { //skip first 2 chunks
                 String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into value and key
-                mainapp.rt_state_names.put(tv[1], tv[0]);
+                mainapp.routeStateNames.put(tv[1], tv[0]);
             }  //end if i>0
             i++;
         }  //end for
