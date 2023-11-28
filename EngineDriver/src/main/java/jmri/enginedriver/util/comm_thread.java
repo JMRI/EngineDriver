@@ -83,11 +83,11 @@ public class comm_thread extends Thread {
 
     private static int requestLocoIdForWhichThrottleDCCEX;
 
-    static final int TRACK_TYPE_OFF_INDEX = 0;
-    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
-    static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
-    static final int TRACK_TYPE_DC_INDEX = 3;
-    static final int TRACK_TYPE_DCX_INDEX = 4;
+//    static final int TRACK_TYPE_OFF_INDEX = 0;
+//    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
+//    static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
+//    static final int TRACK_TYPE_DC_INDEX = 3;
+//    static final int TRACK_TYPE_DCX_INDEX = 4;
 
     static final String [] TRACK_TYPES = { "NONE", "MAIN", "PROG", "DC", "DCX"};
     static final boolean [] TRACK_TYPES_NEED_ID = { false, false, false, true, true };
@@ -143,6 +143,7 @@ public class comm_thread extends Thread {
             hm.put("ip_address", ip_address);
             hm.put("port", ((Integer) port).toString());
             hm.put("host_name", host_name);
+            hm.put("ssid", mainapp.client_ssid);
 
             mainapp.knownDCCEXserverIps.put(ip_address, serverType);
 
@@ -245,6 +246,7 @@ public class comm_thread extends Thread {
         hm.put("ip_address", server_addr);
         hm.put("port", entryPort);
         hm.put("host_name", entryName);
+        hm.put("ssid", mainapp.client_ssid);
 
         mainapp.knownDCCEXserverIps.put(server_addr, serverType);
 

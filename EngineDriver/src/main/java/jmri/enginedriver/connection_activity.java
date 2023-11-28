@@ -98,12 +98,14 @@ public class connection_activity extends AppCompatActivity implements Permission
     private String connected_hostip;
     private String connected_hostname;
     private int connected_port;
+    private String connected_ssid;
 
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
     private static final String DUMMY_HOST = "999";
     private static final String DUMMY_ADDRESS = "999";
     private static final int DUMMY_PORT = 999;
+    private static final String DUMMY_SSID = "";
 
     private static Method overridePendingTransition;
 
@@ -220,6 +222,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         connected_hostname = hnv.getText().toString();
                         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
                         connected_port = Integer.parseInt(hpv.getText().toString());
+                        connected_ssid = mainapp.client_ssid;
                         break;
                 }
                 connect();
@@ -274,6 +277,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     return;
                 }
                 connected_hostname = connected_hostip; //copy ip to name
+                connected_ssid = mainapp.client_ssid;
                 connect();
             } else {
                 if (!mainapp.prefHideInstructionalToasts) {
@@ -290,11 +294,13 @@ public class connection_activity extends AppCompatActivity implements Permission
         TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
         TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
+        TextView ssidView = (TextView) vg.getChildAt(3); // get port from 4th box
         if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
             getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
             connected_hostip = DUMMY_ADDRESS;
             connected_hostname = DUMMY_HOST;
             connected_port = DUMMY_PORT;
+            connected_ssid = DUMMY_SSID;
 
             Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
             anim.setDuration(500);
@@ -310,7 +316,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
                     }
 //                        new saveConnectionsList().execute();
-                    importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "");
+                    importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "", connected_ssid);
                 }
 
                 @Override
@@ -344,6 +350,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         return;
                     }
                     connected_hostname = tm.get("host_name"); //copy ip to name
+                    connected_ssid = mainapp.client_ssid;
                     connect();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
                 } else {
@@ -405,10 +412,11 @@ public class connection_activity extends AppCompatActivity implements Permission
                 case message_type.CONNECTED:
                     //use asynctask to save the updated connections list to the connections_list.txt file
 //                        new saveConnectionsList().execute();
-                    importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "");
+                    importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "", mainapp.client_ssid);
                     mainapp.connectedHostName = connected_hostname;
                     mainapp.connectedHostip = connected_hostip;
                     mainapp.connectedPort = connected_port;
+                    mainapp.connectedSsid = mainapp.client_ssid;
 
                     loadSharedPreferencesFromFile();
 
@@ -476,8 +484,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
         discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
-                new String[]{"ip_address", "host_name", "port"},
-                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
+                new String[]{"ip_address", "host_name", "port", "ssid"},
+                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label});
         ListView discover_list = findViewById(R.id.discovery_list);
         discover_list.setAdapter(discovery_list_adapter);
         discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
@@ -486,8 +494,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         //Set up a list adapter to allow adding the list of recent connections to the UI.
 //            connections_list = new ArrayList<>();
         connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connections_list_item,
-                new String[]{"ip_address", "host_name", "port"},
-                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label});
+                new String[]{"ip_address", "host_name", "port", "ssid"},
+                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label});
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnTouchListener(connectionsListSwipeDetector = new SwipeDetector());
@@ -803,6 +811,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         return super.onCreateOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.

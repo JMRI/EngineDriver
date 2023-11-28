@@ -287,12 +287,11 @@ public class threaded_application extends Application {
     public String connectedHostName = "";
     @NonNull
     public String connectedHostip = "";
-
     public int getConnectedPort() {
         return connectedPort;
     }
-
     public int connectedPort = 0;
+    public String connectedSsid = "";
 
     public String languageCountry = "en";
 
@@ -385,14 +384,14 @@ public class threaded_application extends Application {
 
     public SoundPool soundPool;
 
-    private static final int SOUNDS_TYPE_LOCO = 0;
-    private static final int SOUNDS_TYPE_BELL = 1;
-    private static final int SOUNDS_TYPE_HORN = 2;
-    private static final int SOUNDS_TYPE_HORN_SHORT = 3;
-
-    private static final int SOUNDS_BELL_HORN_START = 0;
-    private static final int SOUNDS_BELL_HORN_LOOP = 1;
-    private static final int SOUNDS_BELL_HORN_END = 2;
+//    private static final int SOUNDS_TYPE_LOCO = 0;
+//    private static final int SOUNDS_TYPE_BELL = 1;
+//    private static final int SOUNDS_TYPE_HORN = 2;
+//    private static final int SOUNDS_TYPE_HORN_SHORT = 3;
+//
+//    private static final int SOUNDS_BELL_HORN_START = 0;
+//    private static final int SOUNDS_BELL_HORN_LOOP = 1;
+//    private static final int SOUNDS_BELL_HORN_END = 2;
 
     public boolean prefDeviceSoundsButton = false;
     public boolean prefDeviceSoundsBellIsMomentary = false;
@@ -2328,7 +2327,7 @@ public class threaded_application extends Application {
         importExportConnectionList.connections_list.clear();
         importExportConnectionList.getConnectionsList("", "");
         importExportConnectionList.saveConnectionsListExecute(
-                this, connectedHostip, connectedHostName, connectedPort, retrievedServerName);
+                this, connectedHostip, connectedHostName, connectedPort, retrievedServerName, connectedSsid);
         connectedHostName = retrievedServerName;
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
