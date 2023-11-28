@@ -33,6 +33,7 @@ class ImportExportConnectionList {
     private static final String DUMMY_HOST = "999";
     private static final String DUMMY_ADDRESS = "999";
     private static final int DUMMY_PORT = 999;
+    private static final String DUMMY_SSID = "";
 
     private static final int FAILURE_REASON_ERROR_READING = 1;
     public String failureReason = "";
@@ -59,16 +60,24 @@ class ImportExportConnectionList {
                     String host_name;
                     String port_str;
                     Integer port = 0;
-                    List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                    String ssid_str;
+                    List<String> parts = Arrays.asList(line.split(":", 4)); //split record from file, max of 4 parts
                     if (parts.size() > 1) {  //skip if not split
                         if (parts.size() == 2) {  //old style, use part 1 for ip and host
                             host_name = parts.get(0);
                             ip_address = parts.get(0);
                             port_str = parts.get(1);
-                        } else {                          //new style, get all 3 parts
+                            ssid_str = "";
+                        } else if (parts.size() == 3) { //new style
                             host_name = parts.get(0);
                             ip_address = parts.get(1);
                             port_str = parts.get(2);
+                            ssid_str = "";
+                        } else { //new new style, get all 4 parts
+                            host_name = parts.get(0);
+                            ip_address = parts.get(1);
+                            port_str = parts.get(2);
+                            ssid_str = parts.get(3);
                         }
                         try {  //attempt to convert port to integer
                             port = Integer.decode(port_str);
@@ -82,6 +91,7 @@ class ImportExportConnectionList {
                                     hm.put("ip_address", ip_address);
                                     hm.put("host_name", host_name);
                                     hm.put("port", port.toString());
+                                    hm.put("ssid", ssid_str);
                                     if (!connections_list.contains(hm)) {    // suppress dups
                                         connections_list.add(hm);
                                     }
@@ -110,13 +120,14 @@ class ImportExportConnectionList {
             hm.put("ip_address", demo_host);
             hm.put("host_name", demo_host);
             hm.put("port", demo_port);
+            hm.put("ssid", "");
             connections_list.add(hm);
         }
 //        connection_list_adapter.notifyDataSetChanged();
     }
 
-    public void saveConnectionsListExecute(threaded_application myApp, String ip, String name, int port, String wsName) {
-        new saveConnectionsList(myApp, ip, name, port, wsName).execute();
+    public void saveConnectionsListExecute(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName) {
+        new saveConnectionsList(myApp, ip, name, port, wsName, ssidName).execute();
     }
 
     class saveConnectionsList extends AsyncTask<Void, Void, String> {
@@ -127,12 +138,14 @@ class ImportExportConnectionList {
         private String connected_hostname;
         private Integer connected_port;
         private String webServerName;  //name from the webServer
+        private String connected_ssid;
 
-        public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName) {
+        public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName) {
             mainapp = myApp;
             connected_hostip = ip;
             connected_hostname = name;
             connected_port = port;
+            connected_ssid = ssidName;
             webServerName = wsName;
         }
 
@@ -156,9 +169,9 @@ class ImportExportConnectionList {
                     //Write selected connection to file, then write all others (skipping selected if found)
                     if ( ((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                         || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) ) {
-                        list_output.format("%s:%s:%d\n", connected_hostname, connected_hostip, connected_port);
+                        list_output.format("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid);
                     } else {
-                        list_output.format("%s:%s:%d\n", webServerName, connected_hostip, connected_port);
+                        list_output.format("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, connected_ssid);
                     }
                 }
                 if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
@@ -180,6 +193,7 @@ class ImportExportConnectionList {
                     String li = t.get("ip_address");
                     String lh = t.get("host_name");
                     Integer lp = Integer.valueOf(t.get("port"));
+                    String ssid = t.get("ssid");
 
                     boolean doWrite = true;
                     if (connected_hostip.equals(li) && (connected_port.intValue() == lp.intValue())){  //dont write it out if same as selected
@@ -189,7 +203,7 @@ class ImportExportConnectionList {
                         doWrite = false;
                     }
                     if (doWrite) {
-                        list_output.format("%s:%s:%d\n", lh, li, lp);
+                        list_output.format("%s:%s:%d:%s\n", lh, li, lp, ssid);
                     }
                 }
                 list_output.flush();
@@ -212,9 +226,9 @@ class ImportExportConnectionList {
 
                     if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                             || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {
-                        log_output.format("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, currentDateAndTime);
                     } else {
-                        log_output.format("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, currentDateAndTime);
                     }
 
                     log_output.flush();
