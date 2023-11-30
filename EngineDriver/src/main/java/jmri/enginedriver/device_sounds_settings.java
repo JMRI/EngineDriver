@@ -54,6 +54,8 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
 

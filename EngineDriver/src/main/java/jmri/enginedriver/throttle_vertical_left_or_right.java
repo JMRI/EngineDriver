@@ -34,9 +34,7 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
-// for changing the screen brightness
-
-// used for supporting Keyboard and Gamepad input;
+import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_vertical_left_or_right extends throttle {
 

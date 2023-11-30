@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package jmri.enginedriver.util;
+package jmri.enginedriver.comms;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -60,9 +60,9 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-import jmri.enginedriver.Consist;
+import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.R;
-import jmri.enginedriver.message_type;
+import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 
 public class comm_thread extends Thread {
@@ -1566,31 +1566,33 @@ public class comm_thread extends Thread {
                         int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                         if (whichThrottle >= 0) {
                             String lead = mainapp.consists[whichThrottle].getLeadAddr();
-                            if (lead.equals(addr_str)) {                       // only process the functions for lead engine in consist
-                                if (args[3].length() > 2) {                       // only process the functions for lead engine in consist
-                                    String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                                    StringBuilder responseStrBuilder = new StringBuilder("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                                    for (int i = 0; i < fnArgs.length; i++) {
-                                        if (fnArgs[i].length() == 0) {
-                                            responseStrBuilder.append("]\\[");
-                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                        } else {
-                                            if (fnArgs[i].charAt(0) == '*') { // is NOT latching
-                                                responseStrBuilder.append(fnArgs[i].substring(1)).append("]\\[");
+                            if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
+                                if ( (mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // only process the functions if the lead engine from the roster or the override preference is set
+                                    if (args[3].length() > 2) {
+                                        String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
+                                        StringBuilder responseStrBuilder = new StringBuilder("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                        for (int i = 0; i < fnArgs.length; i++) {
+                                            if (fnArgs[i].length() == 0) {
+                                                responseStrBuilder.append("]\\[");
                                                 mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
                                             } else {
-                                                responseStrBuilder.append(fnArgs[i]).append("]\\[");
-                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                                if (fnArgs[i].charAt(0) == '*') { // is NOT latching
+                                                    responseStrBuilder.append(fnArgs[i].substring(1)).append("]\\[");
+                                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                                } else {
+                                                    responseStrBuilder.append(fnArgs[i]).append("]\\[");
+                                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                                }
                                             }
                                         }
-                                    }
-                                    processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
+                                        processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
 
-                                    mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString(), mainapp);
-                                    skipAlert = false;
-                                } else {
-                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
+                                        mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString(), mainapp);
+                                        skipAlert = false;
+                                    } else {
+                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
+                                    }
                                 }
                             }
 

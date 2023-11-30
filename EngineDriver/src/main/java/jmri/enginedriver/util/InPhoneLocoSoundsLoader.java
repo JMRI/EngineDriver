@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.message_type;
+import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 
 public class InPhoneLocoSoundsLoader {

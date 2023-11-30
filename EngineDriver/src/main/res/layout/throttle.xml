@@ -128,7 +128,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_0"
@@ -260,7 +260,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -572,7 +572,7 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="36dp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_1"
@@ -706,7 +706,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -1014,7 +1014,7 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_2"
@@ -1146,7 +1146,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"

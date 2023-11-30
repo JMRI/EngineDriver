@@ -58,6 +58,8 @@ import android.webkit.WebViewClient;
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 

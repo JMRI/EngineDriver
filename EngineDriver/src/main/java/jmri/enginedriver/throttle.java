@@ -141,10 +141,21 @@ import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
+
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.util.HorizontalSeekBar;
+import jmri.enginedriver.util.VerticalSeekBar;
+
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+import jmri.enginedriver.util.ShakeDetector;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.type.direction_button;
+import jmri.enginedriver.type.function_button;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
@@ -593,7 +604,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // The following are used for the shake detection
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private shakeDetector shakeDetector;
+    private jmri.enginedriver.util.ShakeDetector shakeDetector;
     private static final String ACCELERATOROMETER_SHAKE_NONE = "None";
     private static final String ACCELERATOROMETER_SHAKE_NEXT_V = "NextV";
     private static final String ACCELERATOROMETER_SHAKE_DIM_SCREEN= "Dim";
@@ -1412,8 +1423,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (accelerometer != null) {
-                shakeDetector = new shakeDetector(getApplicationContext());
-                shakeDetector.setOnShakeListener(new shakeDetector.OnShakeListener() {
+                shakeDetector = new ShakeDetector(getApplicationContext());
+                shakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
 
                     @Override
                     public void onShake(int count) {

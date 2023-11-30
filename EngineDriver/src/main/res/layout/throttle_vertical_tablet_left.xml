@@ -21,7 +21,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -264,7 +263,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -653,7 +652,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="126"
-                                        android:textSize="36sp" />
+                                        android:textSize="36sp"
+                                        tools:ignore="HardcodedText" />
 
                                     <TextView
                                         android:id="@+id/volume_indicator_1"
@@ -781,7 +781,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_1"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -1169,7 +1169,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="126"
-                                        android:textSize="36sp" />
+                                        android:textSize="36sp"
+                                        tools:ignore="HardcodedText" />
 
                                     <TextView
                                         android:id="@+id/volume_indicator_2"
@@ -1297,7 +1298,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_2"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -1653,7 +1654,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="126"
-                                        android:textSize="36sp" />
+                                        android:textSize="36sp"
+                                        tools:ignore="HardcodedText" />
 
                                     <TextView
                                         android:id="@+id/volume_indicator_3"
@@ -1781,7 +1783,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_3"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -2137,7 +2139,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="126"
-                                        android:textSize="36sp" />
+                                        android:textSize="36sp"
+                                        tools:ignore="HardcodedText" />
 
                                     <TextView
                                         android:id="@+id/volume_indicator_4"
@@ -2265,7 +2268,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_4"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -2621,7 +2624,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="126"
-                                        android:textSize="36sp" />
+                                        android:textSize="36sp"
+                                        tools:ignore="HardcodedText" />
 
                                     <TextView
                                         android:id="@+id/volume_indicator_5"
@@ -2749,7 +2753,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_5"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"

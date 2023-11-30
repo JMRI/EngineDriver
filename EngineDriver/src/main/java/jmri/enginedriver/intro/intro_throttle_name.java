@@ -18,7 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 
 public class intro_throttle_name extends Fragment {

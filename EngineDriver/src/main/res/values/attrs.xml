@@ -6,6 +6,7 @@
     <attr name="edit_func_style" format="reference" />
     <attr name="list_item_style" format="reference" />
     <attr name="list_id_style" format="reference" />
+    <attr name="list_extras_style" format="reference" />
     <attr name="EDListView" format="reference" />
     <attr name="listSeparatorTextViewStyle" format="reference" />
 

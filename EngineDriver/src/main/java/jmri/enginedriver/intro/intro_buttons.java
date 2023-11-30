@@ -18,7 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -31,8 +31,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
+
+import jmri.enginedriver.R;
 
 /**
  * Created by andrew on 11/17/16.

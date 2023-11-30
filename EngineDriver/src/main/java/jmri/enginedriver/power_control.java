@@ -36,11 +36,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
+
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class power_control extends AppCompatActivity {
 

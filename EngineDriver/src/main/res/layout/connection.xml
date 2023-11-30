@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/connection_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -19,7 +19,9 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/host_ip" />
+            android:text="@string/host_ip"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp" />
 
         <EditText
             android:id="@+id/host_ip"
@@ -31,7 +33,8 @@
             android:inputType="numberDecimal"
             android:digits="0123456789."
             android:maxLength="60"
-            android:singleLine="true" />
+            android:singleLine="true"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/port"
@@ -44,7 +47,8 @@
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:maxLength="5"
-            android:singleLine="true" />
+            android:singleLine="true"
+            tools:ignore="Autofill,RtlHardcoded" />
 
         <TextView
             android:id="@+id/port_title"
@@ -56,14 +60,16 @@
             android:layout_marginLeft="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="@string/port" />
+            android:text="@string/port"
+            tools:ignore="RtlHardcoded" />
         <Button
             android:id="@+id/connect"
             style="?attr/ed_normal_button_style"
             android:layout_width="fill_parent"
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
-            android:text="@string/connect_button" />
+            android:text="@string/connect_button"
+            tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>
 
@@ -71,7 +77,10 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/discovered_services" />
+        android:text="@string/discovered_services"
+        android:paddingLeft="2dp"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -87,12 +96,16 @@
             android:background="#00000000"
             android:footerDividersEnabled="true" />
     </LinearLayout>
+
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:id="@+id/recent_connections_heading"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/recent_connections" />
+        android:text="@string/recent_connections"
+        android:paddingLeft="2dp"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -114,7 +127,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/DCCEXconnectionOptionTitle"
-        android:visibility="gone"  />
+        android:visibility="gone"
+        android:paddingLeft="2dp" />
 
     <LinearLayout
         android:id="@+id/cons_DCCEXconnectionOption_layout"
@@ -161,9 +175,11 @@
         android:layout_height="35dp"
         android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
+        android:layout_marginStart="2dp"
         android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/host_numeric"

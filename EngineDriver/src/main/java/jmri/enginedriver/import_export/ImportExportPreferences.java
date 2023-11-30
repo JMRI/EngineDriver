@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * Created by Peter Akers on 17-Dec-17.
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.import_export;
 
 import static java.lang.Math.min;
 import static jmri.enginedriver.threaded_application.context;
@@ -44,9 +44,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
+
 public class ImportExportPreferences {
 
-    boolean currentlyImporting = false;
+    public boolean currentlyImporting = false;
 
     //private String exportedPreferencesFileName =  "exported_preferences.ed";
     public static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
@@ -57,25 +61,25 @@ public class ImportExportPreferences {
     private static final String RECENT_CONSISTS_FILENAME = "recent_consist_list.txt";
     private static final String RECENT_ENGINES_FILENAME = "recent_engine_list.txt";
 
-    ArrayList<Integer> recent_loco_address_list;
-    ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
-    ArrayList<String> recent_loco_name_list;
+    public ArrayList<Integer> recent_loco_address_list;
+    public ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
+    public ArrayList<String> recent_loco_name_list;
 //    ArrayList<String> recent_loco_name_html_list;
-    ArrayList<Integer> recent_loco_source_list;
+public ArrayList<Integer> recent_loco_source_list;
 
-    ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
-    ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
-    ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
-    ArrayList<String> consistNameList = new ArrayList<>();
-    ArrayList<String> consistNameHtmlList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
+    public ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
+    public ArrayList<String> consistNameList = new ArrayList<>();
+    public ArrayList<String> consistNameHtmlList = new ArrayList<>();
 
-    ArrayList<String> recent_turnout_address_list;
-    ArrayList<String> recent_turnout_name_list;
-    ArrayList<Integer> recent_turnout_source_list;
-    ArrayList<String> recent_turnout_server_list;
+    public ArrayList<String> recent_turnout_address_list;
+    public ArrayList<String> recent_turnout_name_list;
+    public ArrayList<Integer> recent_turnout_source_list;
+    public ArrayList<String> recent_turnout_server_list;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -139,7 +143,7 @@ public class ImportExportPreferences {
         return res;
     }
 
-    boolean saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+    public boolean saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
         Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file");
         boolean res = false;
 
@@ -230,7 +234,7 @@ public class ImportExportPreferences {
 
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
     @SuppressWarnings({ "unchecked" })
-    boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
+    public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
@@ -427,7 +431,7 @@ public class ImportExportPreferences {
         return res;
     }
 
-    void getRecentLocosListFromFile() {
+    public void getRecentLocosListFromFile() {
         Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
         if (recent_loco_address_list == null) { //make sure arrays are valid
             recent_loco_address_list = new ArrayList<>();
@@ -494,7 +498,7 @@ public class ImportExportPreferences {
         }
     }
 
-    void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
+    public void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
@@ -534,7 +538,7 @@ public class ImportExportPreferences {
         }
     }
 
-    void getRecentConsistsListFromFile() {
+    public void getRecentConsistsListFromFile() {
         Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
         consistEngineAddressList = new ArrayList<>();
@@ -694,7 +698,7 @@ public class ImportExportPreferences {
         return rslt;
     }
 
-    String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
+    public String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
         String rslt = "<span>" + addr.toString()
                 +"<small><small>("+ (size==0 ? "S":"L") +")"  + "</small></small>"
 //                + "<small><small>" + (dir==0 ? "▲":"▼") + "</small></small>"
@@ -706,7 +710,7 @@ public class ImportExportPreferences {
 
     }
 
-    int addCurrentConistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
+    public int addCurrentConistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
@@ -773,7 +777,7 @@ public class ImportExportPreferences {
     }
 
 
-    void writeRecentConsistsListToFile(SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
+    public void writeRecentConsistsListToFile(SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
         Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Writing recent consists list to file");
 
         // write it out from the saved preferences to the file
@@ -932,7 +936,7 @@ public class ImportExportPreferences {
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
+    public void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
 //        Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Writing recent turnouts list to file");
 
 //        File sdcard_path = Environment.getExternalStorageDirectory();
@@ -993,7 +997,7 @@ public class ImportExportPreferences {
         return(false);
     }
 
-        void getRecentTurnoutsListFromFile() {
+        public void getRecentTurnoutsListFromFile() {
 //        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This

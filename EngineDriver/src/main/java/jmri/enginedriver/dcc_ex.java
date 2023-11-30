@@ -55,6 +55,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
+
 public class dcc_ex extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp

@@ -39,6 +39,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class reconnect_status extends AppCompatActivity {
 

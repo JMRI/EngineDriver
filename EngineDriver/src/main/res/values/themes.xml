@@ -57,6 +57,7 @@
         <item name="edit_func_style">@style/edit_func_style</item>
         <item name="list_item_style">@style/list_item_style</item>
         <item name="list_id_style">@style/list_id_style</item>
+        <item name="list_extras_style">@style/list_extras_style</item>
         <item name="EDListView">@style/EDListView</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style</item>
@@ -103,7 +104,7 @@
         <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
 
-    <!-- also appears 'round' theme' -->
+    <!-- appears as 'high contrast' theme' -->
     <style name="app_theme_black" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_black_preferences</item>
 
@@ -136,6 +137,7 @@
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_black</item>
         <item name="list_id_style">@style/list_id_style_black</item>
+        <item name="list_extras_style">@style/list_extras_style_black</item>
         <item name="EDListView">@style/EDListView_black</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_black</item>
@@ -214,6 +216,7 @@
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
+        <item name="list_extras_style">@style/list_extras_style_outline</item>
         <item name="EDListView">@style/EDListView_black</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_black</item>
@@ -294,6 +297,7 @@
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
+        <item name="list_extras_style">@style/list_extras_style_outline</item>
         <item name="EDListView">@style/EDListView_black</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_ultra</item>
@@ -383,6 +387,7 @@
         <item name="edit_func_style">@style/edit_func_style_colorful</item>
         <item name="list_item_style">@style/list_item_style_colorful</item>
         <item name="list_id_style">@style/list_id_style_colorful</item>
+        <item name="list_extras_style">@style/list_extras_style_colorful</item>
         <item name="EDListView">@style/EDListView_colorful</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_colorful</item>

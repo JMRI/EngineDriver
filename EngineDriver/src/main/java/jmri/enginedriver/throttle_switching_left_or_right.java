@@ -37,6 +37,8 @@ import android.widget.SeekBar;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.util.VerticalSeekBar;
+
 public class throttle_switching_left_or_right extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 2;

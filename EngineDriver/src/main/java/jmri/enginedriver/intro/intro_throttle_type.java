@@ -18,7 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -33,6 +33,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import jmri.enginedriver.R;
 
 public class intro_throttle_type extends Fragment {
 

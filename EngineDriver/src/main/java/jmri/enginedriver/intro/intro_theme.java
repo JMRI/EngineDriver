@@ -18,7 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -40,6 +40,7 @@ import android.widget.TextView;
 import java.util.Random;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.R;
 
 
 public class intro_theme extends Fragment {

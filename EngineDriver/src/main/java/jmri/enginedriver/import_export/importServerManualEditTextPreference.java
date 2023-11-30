@@ -1,4 +1,4 @@
-package jmri.enginedriver;
+package jmri.enginedriver.import_export;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+
+import jmri.enginedriver.R;
 
 public class importServerManualEditTextPreference extends EditTextPreference {
     private Context context;
