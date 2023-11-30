@@ -21,7 +21,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -52,8 +51,7 @@
                 <ImageView
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" >
+                    android:layout_height="fill_parent" >
                 </ImageView>
 
                 <LinearLayout
@@ -136,7 +134,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_0"
@@ -263,7 +261,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_0"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -318,14 +316,16 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_0"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_mute_0"
@@ -333,7 +333,8 @@
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
                                         android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                        android:text="@string/deviceSoundsMuteButton" />
+                                        android:text="@string/deviceSoundsMuteButton"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_bell_0"
@@ -781,7 +782,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_1"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -814,7 +815,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1295,7 +1296,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_2"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -1781,7 +1782,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_3"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -1814,7 +1815,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2267,7 +2268,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_4"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -2300,7 +2301,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2753,7 +2754,7 @@
                                 android:text="@string/UpButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.VerticalSeekBar
+                            <jmri.enginedriver.util.VerticalSeekBar
                                 android:id="@+id/speed_5"
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
@@ -2786,7 +2787,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">

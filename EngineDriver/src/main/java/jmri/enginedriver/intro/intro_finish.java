@@ -18,8 +18,9 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,20 +28,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class intro_alert extends Fragment {
+import jmri.enginedriver.R;
+
+public class intro_finish extends Fragment {
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_alert");
+        Log.d("Engine_Driver", "intro_finish");
         super.onActivityCreated(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_alert, container, false);
+        return inflater.inflate(R.layout.intro_finish, container, false);
     }
 
 }

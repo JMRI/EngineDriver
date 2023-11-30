@@ -1,4 +1,4 @@
-package jmri.enginedriver;
+package jmri.enginedriver.import_export;
 
 import static jmri.enginedriver.threaded_application.context;
 
@@ -22,7 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-class ImportExportConnectionList {
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
+
+public class ImportExportConnectionList {
     public ArrayList<HashMap<String, String>> connections_list;
     private SharedPreferences prefs;
     private boolean prefHideDemoServer = false;

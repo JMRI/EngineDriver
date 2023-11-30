@@ -18,7 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.intro;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import jmri.enginedriver.R;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_write_settings extends Fragment {

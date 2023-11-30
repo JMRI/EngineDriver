@@ -80,6 +80,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.util.LocaleHelper;
 
 //public class turnouts extends AppCompatActivity implements OnGestureListener {
 public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {

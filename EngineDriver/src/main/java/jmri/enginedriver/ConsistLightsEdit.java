@@ -50,7 +50,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import jmri.enginedriver.Consist.ConLoco;
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;

@@ -35,7 +35,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -79,10 +78,15 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jmri.enginedriver.intro.intro_activity;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.import_export.ImportExportConnectionList;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class connection_activity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     //    private ArrayList<HashMap<String, String>> connections_list;

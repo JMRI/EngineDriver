@@ -16,7 +16,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package jmri.enginedriver.util;
+package jmri.enginedriver.comms;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -33,7 +33,7 @@ import java.util.LinkedHashMap;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.message_type;
+import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 
 public class comm_handler extends Handler {

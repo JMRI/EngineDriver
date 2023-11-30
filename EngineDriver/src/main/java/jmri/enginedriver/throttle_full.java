@@ -32,6 +32,9 @@ import android.widget.LinearLayout;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.util.HorizontalSeekBar;
+
 public class throttle_full extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;

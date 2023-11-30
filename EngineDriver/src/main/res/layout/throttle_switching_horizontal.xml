@@ -286,7 +286,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -297,7 +297,7 @@
                                 android:thumb="?attr/ed_thumb"
                                 android:visibility="gone"  />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_switching_0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -769,7 +769,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -780,7 +780,7 @@
                                 android:thumb="?attr/ed_thumb"
                                 android:visibility="gone"/>
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_switching_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -1248,7 +1248,7 @@
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -1259,7 +1259,7 @@
                                 android:thumb="?attr/ed_thumb"
                                 android:visibility="gone"  />
 
-                            <jmri.enginedriver.HorizontalSeekBar
+                            <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_switching_2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"

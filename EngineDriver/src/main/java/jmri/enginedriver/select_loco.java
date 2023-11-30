@@ -92,9 +92,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jmri.enginedriver.Consist.ConLoco;
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.util.SwipeDetector;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.address_type;
+
 import jmri.jmrit.roster.RosterEntry;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class select_loco extends AppCompatActivity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;

@@ -1,4 +1,4 @@
-package jmri.enginedriver;
+package jmri.enginedriver.util;
 
 /*From sample code from Jason McReynolds jasonmcreynolds.com and stackoverflow.com
 
@@ -24,9 +24,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
-import android.util.FloatMath;
 
-public class shakeDetector implements SensorEventListener {
+import jmri.enginedriver.R;
+
+public class ShakeDetector implements SensorEventListener {
 
     /*
      * The gForce that is necessary to register as shake.
@@ -45,7 +46,7 @@ public class shakeDetector implements SensorEventListener {
 
     private Context mContext;
 
-    public shakeDetector(Context context) {
+    public ShakeDetector(Context context) {
         mContext = context;
     }
 

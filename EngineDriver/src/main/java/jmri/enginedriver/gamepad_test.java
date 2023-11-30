@@ -70,6 +70,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
+
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
     private threaded_application mainapp;  // hold pointer to mainapp

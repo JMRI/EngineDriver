@@ -55,6 +55,8 @@ import java.util.ArrayList;
 
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 @SuppressLint("ApplySharedPref")
 public class function_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {

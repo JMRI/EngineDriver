@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.message_type;
+import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;

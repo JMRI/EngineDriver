@@ -18,9 +18,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 */
 
-package jmri.enginedriver;
-
-import static jmri.enginedriver.threaded_application.context;
+package jmri.enginedriver.intro;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -37,8 +35,8 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
-import java.io.File;
-
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_activity extends AppIntro2 {

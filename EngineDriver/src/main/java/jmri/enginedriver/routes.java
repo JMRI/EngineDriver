@@ -72,6 +72,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
 
 public class routes extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 

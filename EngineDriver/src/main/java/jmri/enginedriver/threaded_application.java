@@ -92,13 +92,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
-import jmri.enginedriver.Consist.ConLoco;
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.enginedriver.util.PermissionsHelper;
-import jmri.enginedriver.util.comm_handler;
-import jmri.enginedriver.util.comm_thread;
+import jmri.enginedriver.comms.comm_handler;
+import jmri.enginedriver.comms.comm_thread;
+import jmri.enginedriver.util.ImageDownloader;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.import_export.ImportExportConnectionList;
+import jmri.enginedriver.util.LocaleHelper;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
 
@@ -111,7 +118,7 @@ public class threaded_application extends Application {
     private threaded_application mainapp = this;
     public comm_thread commThread;
     public volatile String host_ip = null; //The IP address of the WiThrottle server.
-    volatile String logged_host_ip = null;
+    public volatile String logged_host_ip = null;
     public volatile int port = 0; //The TCP port that the WiThrottle server is running on
     public Double withrottle_version = 0.0; //version of withrottle server
     public volatile int web_server_port = 0; //default port for jmri web server
@@ -123,9 +130,9 @@ public class threaded_application extends Application {
     //shared variables returned from the withrottle server, stored here for easy access by other activities
     public volatile Consist[] consists;
     public LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
-    LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
+    public LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
     LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with no function labels
-    LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
+    public LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
     public LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
 
     public boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles

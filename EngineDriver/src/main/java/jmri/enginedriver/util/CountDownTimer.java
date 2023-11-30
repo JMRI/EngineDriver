@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package jmri.enginedriver;
+package jmri.enginedriver.util;
 
 public abstract class CountDownTimer {
     public CountDownTimer(long millisInFuture, long countDownInterval) {

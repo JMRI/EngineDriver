@@ -1,4 +1,4 @@
-package jmri.enginedriver;
+package jmri.enginedriver.util;
 
 
 import android.annotation.SuppressLint;
@@ -9,6 +9,9 @@ import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
+
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 @SuppressLint("AppCompatCustomView")
 public class HorizontalSeekBar extends SeekBar {

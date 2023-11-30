@@ -15,11 +15,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-package jmri.enginedriver;
+package jmri.enginedriver.type;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import jmri.enginedriver.threaded_application;
 
 //
 // EngineDriver Loco
@@ -163,7 +165,7 @@ public class Loco {
         return this.addr.substring(1) + "<small><small>(" + this.addr.substring(0, 1) + ")</small></small>";  //reformat from L2591 to 2591(L)
     }
 
-    public void setFunctionLabels(String functionLabelsString,threaded_application mainapp) {
+    public void setFunctionLabels(String functionLabelsString, threaded_application mainapp) {
         String[] ta = mainapp.splitByString(functionLabelsString, "]\\[");  //split into list of labels
 
         //populate a temp label array from RF command string

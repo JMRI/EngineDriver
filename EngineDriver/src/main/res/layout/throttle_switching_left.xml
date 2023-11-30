@@ -109,7 +109,7 @@
                                     android:text="@string/UpButton"
                                     android:textSize="30sp" />
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
@@ -120,7 +120,7 @@
                                     android:paddingRight="30dp"
                                     android:visibility="gone"/>
 
-                                <jmri.enginedriver.VerticalSeekBar
+                                <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"

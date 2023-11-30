@@ -15,9 +15,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-package jmri.enginedriver;
+package jmri.enginedriver.type;
 
-interface direction_button {
+public interface direction_button {
     //Constant values for the direction buttons:
     int LEFT = 990;
     int RIGHT = 992;

@@ -37,6 +37,9 @@ import android.widget.SeekBar;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.util.HorizontalSeekBar;
+
 public class throttle_switching_horizontal extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
