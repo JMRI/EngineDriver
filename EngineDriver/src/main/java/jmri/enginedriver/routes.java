@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.InputDevice.getDevice;
-
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -31,16 +29,15 @@ import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.InputDevice;
+//import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,7 +45,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -89,7 +85,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private static String location = null;
     private Spinner locationSpinner;
 
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
     private Menu RMenu;
 
     private Toolbar toolbar;
@@ -134,8 +130,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                         //get values from global array
                         String systemName = mainapp.routeSystemNames[pos];
                         String currentState = mainapp.routeStates[pos];
-                        String currentDCCEXstate = String.valueOf(mainapp.routeDCCEXstates[pos]);
-                        String currentDCCEXlabel = mainapp.routeDCCEXlabels[pos];
+                        String currentDCCEXstate = String.valueOf(mainapp.routeDccexStates[pos]);
+                        String currentDCCEXlabel = mainapp.routeDccexLabels[pos];
 
                         String currentstatedesc = mainapp.routeStateNames.get(currentState);
                         if (currentstatedesc == null) {
@@ -197,11 +193,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             LinearLayout itemLayout = (LinearLayout) listView.getChildAt(i);
             TextView textView = (TextView) itemLayout.getChildAt(2);
             Button button = (Button) itemLayout.getChildAt(1);
-// testing
-            RelativeLayout rl = (RelativeLayout) itemLayout.getChildAt(0);
-            TextView tv = (TextView) rl.getChildAt(0);
-            String tx = (String) tv.getText();
-//
             String state = (String) textView.getText();
             switch (state) {
                 case "0":
@@ -273,6 +264,10 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     class routes_handler extends Handler {
+
+        public routes_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
 //            Log.d("Engine_Driver", "routes: routes_handler: handleMessage");
@@ -355,6 +350,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 //        Log.d("Engine_Driver", "routes: onCreate");
@@ -372,7 +368,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.routes_msg_handler = new routes_handler();
+        mainapp.routes_msg_handler = new routes_handler(Looper.getMainLooper());
 
         routesFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
@@ -405,15 +401,15 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             });
         }
 
-        OnTouchListener gestureListener = new ListView.OnTouchListener() {
-            public boolean onTouch(View v, @NonNull MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                    mainapp.buttonVibration();
-//                }
-                return myGesture != null && myGesture.onTouchEvent(event);
-            }
-        };
-        routes_lv.setOnTouchListener(gestureListener);
+//        OnTouchListener gestureListener = new ListView.OnTouchListener() {
+//            public boolean onTouch(View v, @NonNull MotionEvent event) {
+////                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+////                    mainapp.buttonVibration();
+////                }
+//                return myGesture != null && myGesture.onTouchEvent(event);
+//            }
+//        };
+//        routes_lv.setOnTouchListener(gestureListener);
 
         EditText rte = findViewById(R.id.route_entry);
         rte.addTextChangedListener(new TextWatcher() {
@@ -466,7 +462,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         //update route list
         refresh_route_view();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -606,67 +602,67 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         // Handle all of the possible menu actions.
         Intent in;
-        switch (item.getItemId()) {
-            case R.id.throttle_button_mnu:
-            case R.id.throttle_mnu:
-                in = mainapp.getThrottleIntent();
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.turnouts_mnu:
-                in = new Intent().setClass(this, turnouts.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.web_mnu:
-                in = new Intent().setClass(this, web_activity.class);
-                startACoreActivity(this, in, false, 0);
-                mainapp.webMenuSelected = true;
-                return true;
-            case R.id.exit_mnu:
-                mainapp.checkExit(this);
-                return true;
-            case R.id.power_control_mnu:
-                in = new Intent().setClass(this, power_control.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.settings_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.dcc_ex_mnu:
-                in = new Intent().setClass(this, dcc_ex.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.about_mnu:
-                in = new Intent().setClass(this, about_page.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(RMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, RMenu);
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if ( (item.getItemId() == R.id.throttle_button_mnu )
+        || (item.getItemId() == R.id.throttle_mnu) ) {
+            in = mainapp.getThrottleIntent();
+            startACoreActivity(this, in, false, 0);
+            if (item.getItemId() == R.id.throttle_button_mnu ) { mainapp.buttonVibration(); }
+            return true;
+        } else if (item.getItemId() == R.id.turnouts_mnu) {
+            in = new Intent().setClass(this, turnouts.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
+        } else if (item.getItemId() == R.id.web_mnu) {
+            in = new Intent().setClass(this, web_activity.class);
+            startACoreActivity(this, in, false, 0);
+            mainapp.webMenuSelected = true;
+            return true;
+        } else if (item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkExit(this);
+            return true;
+        } else if (item.getItemId() == R.id.power_control_mnu) {
+            in = new Intent().setClass(this, power_control.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.settings_mnu) {
+            in = new Intent().setClass(this, SettingsActivity.class);
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.dcc_ex_mnu) {
+            in = new Intent().setClass(this, dcc_ex.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.logviewer_menu) {
+            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(logviewer);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.about_mnu) {
+            in = new Intent().setClass(this, about_page.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(RMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, RMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -843,7 +839,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

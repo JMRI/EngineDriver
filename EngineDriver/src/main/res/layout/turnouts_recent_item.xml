@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
+
     <RelativeLayout
         android:id="@+id/to_recent_item"
         android:layout_width="0dp"
@@ -18,7 +20,8 @@
             android:paddingTop="15dp"
             android:paddingBottom="4dp"
             android:text="Test user name string"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:id="@+id/to_recent_system_name"
@@ -27,7 +30,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
-            android:text="System name" />
+            android:text="System name"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:id="@+id/to_recent_source"
@@ -37,7 +41,8 @@
             android:paddingLeft="5dp"
             android:paddingTop="2dp"
             android:text="Source"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
     </RelativeLayout>
 
     <Button

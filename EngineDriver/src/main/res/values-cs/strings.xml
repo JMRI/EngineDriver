@@ -18,10 +18,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Konec</string>
     <string name="settings">Nastavení funkcí</string>
-    <string name="fb_label">Funkce štítek</string>
+<!--    <string name="fb_label">Funkce štítek</string>-->
     <string name="fb_column_label">Štítek</string>
     <string name="fb_column_function">Fn#</string>
-    <string name="function_buttons">Funkce tlačítko</string>
+<!--    <string name="function_buttons">Funkce tlačítko</string>-->
     <string name="introMenu">Úvodní/Nastavení Průvodce</string>
 
     <string name="app_description">Engine Driver – Ovladač pro váš telefon Android. Tato aplikace se může připojit k JMRI, MRC nabo DigiTrax WiThrottle serveru a může řídit vaše lokomotivy. Rychlost, směr a až 29 DCC funkcí je podporováno pro jednu až šest lokomotiv.</string>
@@ -53,7 +53,7 @@
     <string name="notification_text">Klepnutím znovu otevřete Engine Driver</string>
     <string name="host_ip">Host Name nebo Adresa</string>
     <string name="port">Port</string>
-    <string name="loco_address">Adresa lokomotivy</string>
+<!--    <string name="loco_address">Adresa lokomotivy</string>-->
     <string name="connect_button">Připojit</string>
     <string name="recent_connections">Nedávná připojení</string>
     <string name="select_loco_heading">Získat lokomotivu, Způsob – Ovladač %1$s</string>
@@ -64,10 +64,10 @@
     <string name="rosterDetailsDialogTitle">"Podrobnosti evidence pro "</string>
     <string name="recent_engines">Vybrat z Nedávných lokomotiv</string>
     <string name="recent_consists">Vybrat z Nedávných souprav</string>
-    <string name="direction">Vpřed</string>
-    <string name="speed">Rychlost:</string>
+<!--    <string name="direction">Vpřed</string>-->
+<!--    <string name="speed">Rychlost:</string>-->
     <string name="discovered_services">Nalezené servery</string>
-    <string name="save_settings">Uložit nastavení</string>
+<!--    <string name="save_settings">Uložit nastavení</string>-->
     <string name="stop">Zastavit</string>
     <string name="forward">Vpřed</string>
     <string name="reverse">Vzad</string>
@@ -101,19 +101,19 @@
     <string name="locoPressToSelect">Vybrat</string>
     <string name="powerWillNotWorkTitle">Nebude fungovat!</string>
     <string name="powerWillNotWork">JMRI má vypnuto ovládání napájení přes WiThrottle.\nIkona napájení bude odstraněna.\nPokud bude v nastavení JMRI zapnuto ovládání napájení, tak se znovu zobrazí.</string>
-    <string name="current_locos">Aktuálně vybrané lokomotivy</string>
+<!--    <string name="current_locos">Aktuálně vybrané lokomotivy</string>-->
     <string name="release">Propustit</string>
-    <string name="releaseThrottleNumber">Propustit ovladač %1$s</string>
+<!--    <string name="releaseThrottleNumber">Propustit ovladač %1$s</string>-->
     <string name="releaseThrottleLocos">Propustit\n%1$s</string>
     <string name="turnouts">Výhybky</string>
-    <string name="turnouts_label">Ovládání výhybek</string>
+<!--    <string name="turnouts_label">Ovládání výhybek</string>-->
     <string name="turnouts_direct_entry_label">Zadejte číslo výhybky nebo název</string>
     <string name="turnouts_location_label">Filtrovat podle umístění</string>
     <string name="turnouts_list_label">Výhybky (klikem na stav přepnete)</string>
     <string name="turnouts_turnout">Výhybka</string>
     <string name="location_all">Všechna umístění</string>
     <string name="routes">Trasy</string>
-    <string name="routes_label">Ovládání tras</string>
+<!--    <string name="routes_label">Ovládání tras</string>-->
     <string name="routes_direct_entry_label">Zadejte systémový název trasy</string>
     <string name="routes_location_label">Filtrovat podle umístění</string>
     <string name="routes_list_label">Trasa (klikem na stav aktivujete)</string>
@@ -124,7 +124,7 @@
     <string name="close_button">Přímo</string>
     <string name="toggle_button">Přehodit</string>
     <string name="power_control_label">Nastavení ovládání napájení kolejiště</string>
-    <string name="power_control_button">neznámý</string>
+<!--    <string name="power_control_button">neznámý</string>-->
     <string name="press_to_toggle">Stiskněte tlačítko pro přepnutí stavu napájení kolejiště.</string>
     <string name="power_control_not_allowed">Ovládání napájení není povoleno. Změňte v předvolbách/nastavení na serveru.</string>
     <string name="reconnect_label">Stav pokusu o znovupřipojení</string>
@@ -135,8 +135,8 @@
     <string name="sl_recent_engine_notice">Nedávné lokomotivy nejsou k dispozici – nebyla nalezena CD karta.</string>
     <string name="power">Napájení</string>
     <string name="throttle">Ovladač</string>
-    <string name="on">Zapnuto</string>
-    <string name="off">Vypnuto</string>
+<!--    <string name="on">Zapnuto</string>-->
+<!--    <string name="off">Vypnuto</string>-->
     <string name="set">Nastavit</string>
     <string name="disabled">Zakázáno</string>
     <string name="volume_indicator">v</string>
@@ -157,7 +157,7 @@
     <string name="logviewerClose">Zavřít</string>
     <string name="logviewerSave">Spustit ukládání do souboru</string>
 
-    <string name="prefTitle">Předvolby</string>
+<!--    <string name="prefTitle">Předvolby</string>-->
     <string name="prefSummary">Předvolby pro Engine Driver</string>
     <string name="preferences">Předvolby</string>
     <string name="prefSwipeUpDownTitle">Předvolby přetážení prstem</string>
@@ -217,10 +217,10 @@
     <string name="prefGamePadSummary">Zvolte typ Gamepad\/USB a ostatní volby</string>
     <string name="prefGamePadTypeTitle">Typ Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Vyberte volbu které nejlépe podporuje váš Gamepad.</string>
-    <string name="prefGamePadStartButtonTitle">Akce tlačítka Start na Gamepad</string>
-    <string name="prefGamePadStartButtonSummary">Vyberte akci pro stisk tlačítka Start.</string>
+<!--    <string name="prefGamePadStartButtonTitle">Akce tlačítka Start na Gamepad</string>-->
+<!--    <string name="prefGamePadStartButtonSummary">Vyberte akci pro stisk tlačítka Start.</string>-->
 
-    <string name="prefGamePadFeedbackVolumeTitle">Gamepad klik na tlačítko hlasitost %</string>
+    <string name="prefGamePadFeedbackVolumeTitle">Gamepad klik na tlačítko hlasitost \%</string>
     <string name="prefGamePadFeedbackVolumeSummary">Nastavete procento hlasitost při kliku na tlačítko Gamepad.</string>
 
 
@@ -360,11 +360,11 @@
     <string name="prefRosterFilterTitle">Filtr Evidence</string>
     <string name="prefRosterFilterSummary">Zobrazit pouze záznamy evidence obsahující…</string>
 
-    <string name="FilterRosterList">Filtr</string>
+<!--    <string name="FilterRosterList">Filtr</string>-->
     <string name="FilterRosterListHint">Obsahuje…</string>
     <string name="rosterEmpty">Nemohu najít žádné záznamy v evidenci JMRI. Místo toho použijte volbu \'DCC adresa\' nebo \'Nedávné\'.</string>
 
-    <string name="LocoSelectMethodQuestion">Metoda: </string>
+<!--    <string name="LocoSelectMethodQuestion">Metoda: </string>-->
     <string name="LocoSelectMethodAddress">DCC adresa</string>
     <string name="LocoSelectMethodRoster">Evidence serveru</string>
     <string name="LocoSelectMethodRecent">Nedávné Lokomotivy</string>
@@ -399,23 +399,23 @@
 
 
     <string name="prefTurnoutsTitle">Předvolby Výhybky a Trasy</string>
-    <string name="prefHardwareSystemTitle">Výhybky systém připojení</string>
+<!--    <string name="prefHardwareSystemTitle">Výhybky systém připojení</string>-->
 
-    <string name="prefHardwareSystemSummary">Vyberte systém připojení (předpona) pro použití přímého zadávání povelů výhybek</string>
+<!--    <string name="prefHardwareSystemSummary">Vyberte systém připojení (předpona) pro použití přímého zadávání povelů výhybek</string>-->
     <string name="prefHideSystemRouteNamesTitle">Skrýt systémové názvy Tras?</string>
     <string name="prefHideSystemRouteNamesSummary">Skryje systémové názvy pro Trasy, použijte pro úsporu místa v seznamu Tras.</string>
     <string name="prefDelimiterTitle">Oddělovač umístění</string>
 
     <string name="prefDelimiterSummary">Nastavete znak který označuje konec v umístění části názvů výhybek a tras.</string>
 
-    <string name="prefScreenBrightnessDimTitle">Stmívání obrazovky hodnota v %</string>
+    <string name="prefScreenBrightnessDimTitle">Stmívání obrazovky hodnota v \%</string>
     <string name="prefScreenBrightnessDimSummary">Nastavení jasu pro použití stmívání obrazovky (0%-99%). Zakáže automatický nebo adaptivní jas pokud je nastaven.</string>
 
 
     <string name="logViewer">Zobrazit protokol</string>
     <string name="clearLocoList">Vymazat seznam</string>
     <string name="ClearConnList">Vymazat poslední seznam</string>
-    <string name="clearConsistsList">Vymazat seznam Souprav</string>
+<!--    <string name="clearConsistsList">Vymazat seznam Souprav</string>-->
     <string name="prefEmerStopTitle">Zobrazit tlačítko nouzového zastavení?</string>
     <string name="prefEmerStopSummary">Zobrazit tlačítko nouzového zastavení lokomotivy v liště akcí?</string>
     <string name="EStop">EStop</string>
@@ -494,8 +494,8 @@
     <string name="prefImportExportErrorReadingFrom">"Dovoz \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
     <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
 
-    <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>
-    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\jmri.enginedriver\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>
+<!--    <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>-->
+<!--    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\jmri.enginedriver\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>-->
 
     
     <string name="prefImportServerAutoTitle">Automaticky importovat ze všech serverů</string>
@@ -546,8 +546,8 @@
     <string name="prefHideDemoServerTitle">Skrýt Demo Server</string>
     <string name="prefHideDemoServerSummary">Skryje Demo Server \'jmri.mstevetodd.com\' v seznamu připojení.</string>
 
-    <string name="prefDirectionButtonsTitle">Štítka tlačítka směru</string>
-    <string name="prefDirectionButtonsSummary">Štítky pro všechna tlačítka směru.</string>
+<!--    <string name="prefDirectionButtonsTitle">Štítka tlačítka směru</string>-->
+<!--    <string name="prefDirectionButtonsSummary">Štítky pro všechna tlačítka směru.</string>-->
 
 
     <string name="prefDirectionButtonLongPressDelayTitle">Směrová tlačítka zpoždení dlouhého stisknutí</string>
@@ -641,7 +641,7 @@
     <string name="gamepadTestKeycodeLabel">Kód klávesy:\s\s</string>
     <string name="gamepadTestFunctionLabel">Funkce:\s\s</string>
     <string name="gamepadTestCompleteLabel">Stav testu:\s\s</string>
-    <string name="gamepadTestDeviceName">BT:</string>
+<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="gamepadTestHelp">Srolujte dolů abyste viděli úplné pokyny…\n\nStiskněte VŠECHNY Dpad A čtyři primární tlačítka nebo Gamepad NEBUDE PRACOVAT.\n\nPokud nemůžete aktivovat všechny tlačítka, změňte režim Gamepad (přečtěte si pokyny k vašemu Gamepad) nebo zkuste jiný typ Gamepad (výše uvedené).\n\n\'ZPĚT\' nebo \'ZRUŠIT\' ukončí test ale Gamepad NEBUDE PRACOVAT.\n\'PŘESKOČIT\' nebo třikrát stisk tlačítka Gamepad \'Snížit rychlost\' vynutí přeskočení testu, i když Gamepad nepracuje správně.\n\'RESET\' přinutí EngineDriver se domnívat že žádný Gamepad dosud nebyl použit.\nJestliže je vybrán \'jednoduchý\' test tak jeden stisk tlačítka \'Snížit rychlost\' přeskočí test.\nPoužijte \'Test Gamepad\' volbu nabídky pro návrat na tuto stránku.</string>
     <string name="gamepadTestHelpNonForced">Pokud nemůžete aktivovat všechny tlačítka změňte režim Gamepad (přečtěte si pokyny k vašemu Gamepad) nebo zkuste jiný typ Gamepad (výše uvedené).\nZ obrazovky ovladače můžete být požádán o opakování testu Gamepad pokud ho použijete poprvé.</string>
     <string name="gamepadTestIncomplete">"Test nedokončen"</string>
@@ -697,7 +697,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Obrazovka ovladače setmělá – přetáhněte pro obnovení</string>
     <string name="toastSwipeUpViewHidden">Zobrazení webu je dočasně skryto. Pro trvalé skrytí proveďte změnu v předvolbách</string>
     <string name="toastThrottleAlertEstop">Upozornění: Lokomotiva %1$s je nastavena na ESTOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z webového serveru byl úspěšný.</string>
+<!--    <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z webového serveru byl úspěšný.</string>-->
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s-%2$s). Nastavím na %3$s.</string>
@@ -705,7 +705,7 @@
     <string name="toastPreferencesResetSucceeded">Předvolby Nastavení na výchozí hodnoty!</string>
     <string name="toastPreferencesImportServerManualFailed">Import předvoleb se serveru selhal! Zkontrolujte, že je soubor správný. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import předvoleb ze serveru se zdařil. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Import předvoleb ze souboru se zdařil.</string>
+<!--    <string name="toastPreferencesImportSucceeded">Import předvoleb ze souboru se zdařil.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Změna tématu se zdařila.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Změna typu stránky ovladače se zdařila.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Změna místního nastavení (Jazyka) se zdařila.</string>
@@ -714,10 +714,10 @@
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Neplatné číslo výhybky.</string>
-    <string name="toastTurnoutCommandTo">Příkaz odeslán na výhybku %1$s</string>
-    <string name="toastTurnoutCommandToClose">Přímo</string>
-    <string name="toastTurnoutCommandToThrow">Do odbočky</string>
-    <string name="toastTurnoutCommandToToggle">Přehodit</string>
+<!--    <string name="toastTurnoutCommandTo">Příkaz odeslán na výhybku %1$s</string>-->
+<!--    <string name="toastTurnoutCommandToClose">Přímo</string>-->
+<!--    <string name="toastTurnoutCommandToThrow">Do odbočky</string>-->
+<!--    <string name="toastTurnoutCommandToToggle">Přehodit</string>-->
 
     <!--    Toast messages for the Connection Activity -->
     <string name="toastConnectEnterAddress">Zadejte nebo vyberte adresu a port</string>
@@ -732,7 +732,7 @@
     <string name="toastPreferencesImportServerAutoSucceeded">Automatický Import předvoleb ze serveru byl úspěšný. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
-    <string name="toastRoutesCommandSent">"Příkaz odeslaný k nastavení trasy "</string>
+<!--    <string name="toastRoutesCommandSent">"Příkaz odeslaný k nastavení trasy "</string>-->
 
     <!--    Toast messages for the Import/Export -->
     <string name="toastImportExportExportSucceeded">Export předvolby do \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' byl úspěšný.</string>
@@ -741,11 +741,11 @@
     <string name="toastImportExportImportFailed">Export předvolby z \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' selhal!</string>
     <string name="toastImportExportServerImportFailed">Nebyly importovány předvolby z \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. Možná jste dosud neuložili předvolby pro tohoto hostitele.</string>
     <string name="toastImportExportCannotImport">Nemohu importovat předvolby. Není připojení na hostitele.</string>
-    <string name="toastImportExportCannotExport">Nemohu exportovat předvolby pro určitého hosta. Host není připojen.</string>
+<!--    <string name="toastImportExportCannotExport">Nemohu exportovat předvolby pro určitého hosta. Host není připojen.</string>-->
 
     <!--    Toast messages for the Select Loco Activity -->
-    <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
-    <string name="toastSelectConsistsConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné soupravy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
+<!--    <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
+<!--    <string name="toastSelectConsistsConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné soupravy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
     <string name="toastNumThrottles">Zvolený typ obrazovky nepodporuje tolik ovladačů. Omezuji na %1$s.</string>
     <string name="toastRecentsHelp">Dotykem vyberete položku Nedávný záznam,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování.\nPřetažením doprava odeberete položku.</string>
     <string name="toastRecentConsistsHelp">Dotykem vyberete položku záznam Soupravy,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování (pro zadané adresy) nebo zobrazte detaily Evidence.\nPřetažením doprava odeberte záznam.</string>
@@ -763,9 +763,9 @@
     <string name="toastSaveLogFile">Zahájeno protokolování do souboru %1$s. Protokolování bude pokračovat až do ukončení aplikace Engine Driver.</string>
 
     <!--    Toast messages for the Turnouts Activity -->
-    <string name="toastRecentTurnoutCleared">Výhybka odebrána ze seznamu</string>
-    <string name="toastRecentTurnoutsConfirmClear">Potvrďte, že chcete odebrat všechny nedávné Výhybky OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>
-    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>
+<!--    <string name="toastRecentTurnoutCleared">Výhybka odebrána ze seznamu</string>-->
+<!--    <string name="toastRecentTurnoutsConfirmClear">Potvrďte, že chcete odebrat všechny nedávné Výhybky OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
+<!--    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>-->
 
     <string name="RecentsNameEditTitle">Název nedávné lokomotivy</string>
     <string name="RecentsNameEditText">Zadejte název lokomotivy</string>
@@ -832,11 +832,11 @@
     <string name="toastFlashlightOffFailed">Je mi líto! Při vypnutí svítilny došlo k problému&#8230;</string>
 
     <string name="webViewButtonBar">Tlačítko webového zobrazení</string>
-    <string name="webViewAction">Zobrazit/skrýt webový pohled</string>
+<!--    <string name="webViewAction">Zobrazit/skrýt webový pohled</string>-->
     <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí?\n(vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
 
-    <string name="logViewerTitle">Prohlížeč protokolu aktivity | %1$s</string>
+<!--    <string name="logViewerTitle">Prohlížeč protokolu aktivity | %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
@@ -927,7 +927,7 @@
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_FINE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
     <string name="permissionsVIBRATE">Engine Driver potřebuje oprávnění VIBRATE aby poskytl další zpětnou vazbu.</string>
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
-    <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>
+<!--    <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>-->
     <string name="permissionsAppSettingsButton">Nastavení aplikace</string>
     <string name="permissionsSystemSettingsButton">Nastavení systému</string>
     <string name="permissionsRetryButton">Opakovat</string>
@@ -1062,10 +1062,10 @@
     <string name="prefSwipeThroughWebTitle">Přejeďte přes web?</string>
     <string name="prefSwipeThroughWebSummary">Zahrnout obrazovku webového při umisťování mezi obrazovkami.</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Přejeďte přes web zakázán.</string>
-    <string name="prefTurnMobileDataOnOffTitle">Dades mòbils</string>
-    <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>
+<!--    <string name="prefTurnMobileDataOnOffTitle">Dades mòbils</string>-->
+<!--    <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
-    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="prefFeedbackOnDisconnectTitle">Zpětná vazba na Odpojit</string>
     <string name="prefFeedbackOnDisconnectSummary">Přehrát zvuk a vibrovat na nečekaném odpojení.</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alert pozadí</string>
@@ -1089,10 +1089,10 @@
     <string name="prefKidsTimerEnableReverseSummary">Povolit tlačítko zpět.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Potvrďte, že chcete odstranit všechna nedávná připojení</string>
-    <string name="introAndroid11Title">Android 11 změn</string>
-    <string name="introAndroid11Summary">Kvůli změnám vynuceným společností Google pro Android 11, umístění, kde jsou uloženy soubory ovladače motoru, musí být přesunuty ze složky \'\\engine_driver\' na \'\\Android\\data\\jmri.enginedriver\\files\' složku. \nVaše data budou automaticky zkopírována do této nové složky.</string>
-    <string name="introAndroid11Summary1">Ovladač motoru není schopen odstranit původní soubory v \'\\engine_driver\', ale již nejsou potřebné nebo používány. Takže je můžete odstranit ručně, pokud si přejete.</string>
-    <string name="introAndroid11Summary2">Poznámka: Pokud aplikaci odinstalujete, budou automaticky vymazány všechny soubory v této nové složce (včetně exportovaných předvoleb). Takže je důležité zkopírovat soubory jinde před vymazáním aplikace.</string>
+<!--    <string name="introAndroid11Title">Android 11 změn</string>-->
+<!--    <string name="introAndroid11Summary">Kvůli změnám vynuceným společností Google pro Android 11, umístění, kde jsou uloženy soubory ovladače motoru, musí být přesunuty ze složky \'\\engine_driver\' na \'\\Android\\data\\jmri.enginedriver\\files\' složku. \nVaše data budou automaticky zkopírována do této nové složky.</string>-->
+<!--    <string name="introAndroid11Summary1">Ovladač motoru není schopen odstranit původní soubory v \'\\engine_driver\', ale již nejsou potřebné nebo používány. Takže je můžete odstranit ručně, pokud si přejete.</string>-->
+<!--    <string name="introAndroid11Summary2">Poznámka: Pokud aplikaci odinstalujete, budou automaticky vymazány všechny soubory v této nové složce (včetně exportovaných předvoleb). Takže je důležité zkopírovat soubory jinde před vymazáním aplikace.</string>-->
     <string name="prefDeviceSoundsCategoryTitle">V telefonu lokomoti zvuku hlasitosti</string>
     <string name="prefDeviceSounds0Summary">Hrát základní lokomoti zvuky v telefonu pro škrticí klapku 1</string>
     <string name="prefDeviceSounds0Title">Triptle 1 loko zvuky</string>
@@ -1147,40 +1147,40 @@
     <string name="TtsGamepadTestSpeedZero">Nula</string>
     <string name="prefGamePadDoublePressStopSummary">Při stisknutí libovolného tlačítka vyberte akci, které je nakonfigurováno jako „Stop“</string>
     <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
-    <string name="prefDCCEXSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
-    <string name="prefDCCEXTitle">Použijte nativní příkazy DCC-EX</string>
+    <string name="prefDccexSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
+    <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
     <string name="useProtocolDCCEX">Použijte nativní příkazy DCC-EX (nikoli srottle)</string>
     <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
-    <string name="prefDCCEXconnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
-    <string name="prefDCCEXconnectionOptionTitle">Zobrazit možnost protokolu</string>
+    <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
+    <string name="prefDccexConnectionOptionTitle">Zobrazit možnost protokolu</string>
     <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku ECC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Akce</string>
     <string name="DCCEXclearCommands">Průhledná</string>
-    <string name="DCCEXconnectionOptionTitle">Protokol připojení</string>
-    <string name="DCCEXFailed">Akce selhala</string>
-    <string name="DCCEXnextCommandButtonLabel">další</string>
-    <string name="DCCEXpreviousCommandButtonLabel">Předchozí</string>
-    <string name="DCCEXreadAddressButtonLabel">Číst</string>
+    <string name="DccexConnectionOptionTitle">Protokol připojení</string>
+    <string name="DccexFailed">Akce selhala</string>
+    <string name="DccexNextCommandButtonLabel">další</string>
+    <string name="DccexPreviousCommandButtonLabel">Předchozí</string>
+    <string name="DccexReadAddressButtonLabel">Číst</string>
     <string name="DCCEXrouteHandoff">Ruce pryč</string>
     <string name="DCCEXrouteSet">Soubor</string>
-    <string name="DCCEXsendCommandButtonLabel">Poslat</string>
+    <string name="DccexSendCommandButtonLabel">Poslat</string>
     <string name="DCCEXsetTrackButtonLabel">Soubor</string>
-    <string name="DCCEXSucceeded">Akce uspěla</string>
+    <string name="DccexSucceeded">Akce uspěla</string>
     <string name="DCCEXturnoutClosed">ZAVŘENO</string>
     <string name="DCCEXturnoutInconsistent">Nekonzistentní</string>
     <string name="DCCEXturnoutThrown">Hodil</string>
     <string name="DCCEXturnoutUnknown">Neznámý</string>
-    <string name="DCCEXwriteAddressButtonLabel">Psát si</string>
-    <string name="DCCEXwriteAddressLabel">Adresa DCC</string>
-    <string name="DCCEXwriteCvValueLabel">Hodnota</string>
+    <string name="DccexWriteAddressButtonLabel">Psát si</string>
+    <string name="DccexWriteAddressLabel">Adresa DCC</string>
+    <string name="DccexWriteCvValueLabel">Hodnota</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorujte akce joysticku</string>
     <string name="prefGamePadIgnoreJoystickSummary">Vyberte to, pokud máte problémy s DPAD produkujícími jak události klíčových kódů, tak joysticků</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.</string>
-    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>
+<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
-    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation preference</string>
-    <string name="prefDCCEXPreferencesSummary">Možnosti použití EX-CommandStation</string>
+    <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation preference</string>
+    <string name="prefDccexPreferencesSummary">Možnosti použití EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
 

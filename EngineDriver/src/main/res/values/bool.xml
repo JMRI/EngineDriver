@@ -15,8 +15,8 @@
 -->
 <resources>
     <bool name="prefIncreaseSliderHeightDefaultValue">false</bool>
-    <bool name="prefUseOneThrottleDefaultValue">false</bool>
-    <bool name="prefUseTwoThrottleDefaultValue">false</bool>
+<!--    <bool name="prefUseOneThrottleDefaultValue">false</bool>-->
+<!--    <bool name="prefUseTwoThrottleDefaultValue">false</bool>-->
     <bool name="prefSelectiveLeadSoundDefaultValue">true</bool>
     <bool name="prefSelectiveLeadSoundF1DefaultValue">false</bool>
     <bool name="prefSelectiveLeadSoundF2DefaultValue">false</bool>
@@ -46,14 +46,14 @@
     <bool name="prefThrottleViewImmersiveModeHideToolbarDefaultValue">false</bool>
     <bool name="prefAlwaysUseDefaultFunctionLabelsDefaultValue">false</bool>
     <bool name="prefConsistLightsLongClickDefaultValue">false</bool>
-    <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>
+<!--    <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>-->
     <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
     <bool name="prefSwapForwardReverseButtonsLongPressDefaultValue">false</bool>
     <bool name="prefGamepadTestEnforceTestingDefaultValue">true</bool>
     <bool name="prefGamepadTestEnforceTestingSimpleDefaultValue">false</bool>
     <bool name="prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue">true</bool>
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
-    <bool name="prefAutoImportExportDefaultValue">false</bool>
+<!--    <bool name="prefAutoImportExportDefaultValue">false</bool>-->
 
     <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
     <bool name="prefVolumeKeysFollowLastTouchedThrottleDefaultValue">false</bool>
@@ -94,8 +94,8 @@
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
-    <bool name="prefDCCEXDefaultValue">false</bool>
-    <bool name="prefDCCEXconnectionOptionDefaultValue">false</bool>
+    <bool name="prefDccexDefaultValue">false</bool>
+    <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
     <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
 
     <bool name="prefKidsTimerEnableReverseDefaultValue">false</bool>

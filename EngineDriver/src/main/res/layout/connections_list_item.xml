@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test.test.test"
-        android:layout_toLeftOf="@id/seperator_item_label"
+        android:layout_toLeftOf="@id/separator_item_label"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
@@ -49,11 +49,11 @@
         android:paddingStart="10dp"
         android:paddingRight="0dp"
         android:text="ssid"
-        tools:ignore="HardcodedText"
+        tools:ignore="HardcodedText,RtlHardcoded"
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:id="@+id/seperator_item_label"
+        android:id="@+id/separator_item_label"
         style="?attr/list_id_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_toLeftOf="@id/port_item_label"
         android:paddingLeft="4dp"
         android:text=":"
-        tools:ignore="HardcodedText,RtlHardcoded"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:ignore="HardcodedText,RtlHardcoded, RtlSymmetry" />
 
 </RelativeLayout>

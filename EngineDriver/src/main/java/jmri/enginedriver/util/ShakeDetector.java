@@ -23,7 +23,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.preference.PreferenceManager;
 
 import jmri.enginedriver.R;
 
@@ -52,7 +51,7 @@ public class ShakeDetector implements SensorEventListener {
 
 
     public void setOnShakeListener(OnShakeListener listener) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences prefs = mContext.getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAccelerometerShakeThreshold = prefs.getString("prefAccelerometerShakeThreshold", mContext.getResources().getString(R.string.prefAccelerometerShakeThresholdDefaultValue));
         prefFloatAccelerometerShakeThreshold = Float.parseFloat(prefAccelerometerShakeThreshold);
 

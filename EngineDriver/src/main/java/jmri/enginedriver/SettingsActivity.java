@@ -26,8 +26,6 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,10 +33,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.ToneGenerator;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -61,16 +59,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 
@@ -107,27 +100,27 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String IMPORT_EXPORT_OPTION_EXPORT = "Export";
     private static final String IMPORT_EXPORT_OPTION_IMPORT = "Import";
     private static final String IMPORT_EXPORT_OPTION_RESET = "Reset";
-    private static final String IMPORT_EXPORT_OPTION_IMPORT_URL = "URL";
+//    private static final String IMPORT_EXPORT_OPTION_IMPORT_URL = "URL";
 
     private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
 
     private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
     private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
-    private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
+//    private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
 
     private static final String DEMO_HOST = "jmri.mstevetodd.com";
     private String[] prefHostImportExportEntriesFound = {"None"};
     private String[] prefHostImportExportEntryValuesFound = {"None"};
 
-    private ProgressDialog pDialog;
-    public static final int PROGRESS_BAR_TYPE = 0;
+//    private ProgressDialog pDialog;
+//    public static final int PROGRESS_BAR_TYPE = 0;
 
     private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
     private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
-    private static final String PREF_IMPORT_ALL_FULL = "Yes";
-    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-    private static final String PREF_IMPORT_ALL_RESET = "-";
+//    private static final String PREF_IMPORT_ALL_FULL = "Yes";
+//    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
+//    private static final String PREF_IMPORT_ALL_RESET = "-";
 
     private boolean forceRestartAppOnPreferencesClose = false;
     private int forceRestartAppOnPreferencesCloseReason = 0;
@@ -180,10 +173,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
-        mainapp.settings_msg_handler = new SettingsActivity.settings_handler();
+        mainapp.settings_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
-        mainapp.preferences_msg_handler = new SettingsActivity.settings_handler();
+//        mainapp.preferences_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
 
         iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
 
@@ -225,11 +218,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         super.onResume();
 
         Log.d("Engine_Driver", "settings.onResume() called");
-        try {
-            dismissDialog(PROGRESS_BAR_TYPE);
-        } catch (Exception e) {
-            Log.d("Engine_Driver", "settings.onResume() no dialog to kill");
-        }
+//        try {
+//            dismissDialog(PROGRESS_BAR_TYPE);
+//        } catch (Exception e) {
+//            Log.d("Engine_Driver", "settings.onResume() no dialog to kill");
+//        }
 
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -274,7 +267,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             mainapp.settings_msg_handler.removeCallbacksAndMessages(null);
             mainapp.settings_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.preferences_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.settings_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
         if (forceRestartAppOnPreferencesClose) {
             forceRestartApp(forceRestartAppOnPreferencesCloseReason);
@@ -366,15 +359,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     public boolean overwiteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
-        boolean res = false;
+//        boolean res = false;
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
             public void onClick(DialogInterface dialog, int which) {
-                boolean res = false;
+//                boolean res = false;
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+//                        res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                        importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                         overwiteFile = true;
                         break;
 
@@ -405,6 +399,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private void loadSharedPreferencesFromFileDialog(final SharedPreferences sharedPreferences, final String exportedPreferencesFileName, final String deviceId, final int forceRestartReason) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
+            @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
@@ -446,6 +441,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
+            @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
@@ -527,14 +523,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("HandlerLeak")
     private class settings_handler extends Handler {
 
+        public settings_handler(Looper looper) {
+            super(looper);
+        }
+
         @SuppressLint("ApplySharedPref")
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
                     String response_str = msg.obj.toString();
                     if (response_str.length() >= 3) {
-                        char com1 = response_str.charAt(0);
-                        char com2 = response_str.charAt(2);
+//                        char com1 = response_str.charAt(0);
+//                        char com2 = response_str.charAt(2);
 
                         String comA = response_str.substring(0, 3);
                         //update power icon
@@ -545,7 +545,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File Found");
-                    loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, mainapp.FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
+                    loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, threaded_application.FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL);
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
                     Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File not Found");
@@ -561,130 +561,124 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) { // dialog for the progress bar
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (id) {
-            case PROGRESS_BAR_TYPE: // we set this to 0
-                pDialog = new ProgressDialog(this);
-                pDialog.setMessage("Downloading file. Please wait...");
-                pDialog.setIndeterminate(false);
-                pDialog.setMax(100);
-                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                pDialog.setCancelable(true);
-                pDialog.show();
-                return pDialog;
-            default:
-                return null;
-        }
-    }
-
-    class importFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
-
-        //Before starting background thread Show Progress Bar Dialog
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showDialog(PROGRESS_BAR_TYPE);
-        }
-
-        // Importing file in background thread
-        @SuppressLint("ApplySharedPref")
-        @Override
-        protected String doInBackground(String... f_url) {
-            Log.d("Engine_Driver", "Settings: Import preferences from Server: start");
-            int count;
-            String n_url = f_url[0].trim();
-
-            if ((mainapp.connectedHostip != null)) {
-                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
-            } else {
-                Log.d("Engine_Driver", "Settings: Import preferences from Server: Not currently connected");
-                return null;
-            }
-
-            try {
-                URL url = new URL(n_url);
-                URLConnection conection = url.openConnection();
-                conection.connect();
-
-                // to help show a 0-100% progress bar
-                int lengthOfFile = conection.getContentLength();
-
-                // download the file
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
-
-//                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
-
-                // Output stream
-//                FileOutputStream output = new FileOutputStream(Environment
-//                        .getExternalStorageDirectory().toString()
-//                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
-                FileOutputStream output = new FileOutputStream(context.getExternalFilesDir(null)
-                        + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
-
-                byte data[] = new byte[1024];
-
-                long total = 0;
-
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    // publishing the progress....
-                    // After this onProgressUpdate will be called
-                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
-
-                    // writing data to file
-                    output.write(data, 0, count);
-                }
-
-                // flushing output
-                output.flush();
-
-                // closing streams
-                output.close();
-                input.close();
-
-                dismissDialog(PROGRESS_BAR_TYPE);
-                prefs.edit().putString("prefPreferencesImportFileName", n_url).commit();
-                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
-
-            } catch (Exception e) {
-                Log.e("Engine_Driver", "Settings: Import preferences from Server Failed: " + e.getMessage());
-                try {
-                    dismissDialog(PROGRESS_BAR_TYPE);
-                } catch (Exception ignored) {
-                }
-                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
-                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
-            }
-
-            Log.d("Engine_Driver", "Settings: Import preferences from Server: End");
-            return null;
-        }
-
-        protected void onProgressUpdate(String... progress) {  //update progress bar
-            // setting progress percentage
-            pDialog.setProgress(Integer.parseInt(progress[0]));
-        }
-
-        @Override
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after the file was downloaded
-            dismissDialog(PROGRESS_BAR_TYPE);
-
-        }
-
-    }
-
-    protected void loadImagefromGallery() {
-//        if (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_PREFERENCES)) {
-//            loadImagefromGalleryImpl();
+//    @Override
+//    protected Dialog onCreateDialog(int id) { // dialog for the progress bar
+//        //noinspection SwitchStatementWithTooFewBranches
+//        switch (id) {
+//            case PROGRESS_BAR_TYPE: // we set this to 0
+//                pDialog = new ProgressDialog(this);
+//                pDialog.setMessage("Downloading file. Please wait...");
+//                pDialog.setIndeterminate(false);
+//                pDialog.setMax(100);
+//                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//                pDialog.setCancelable(true);
+//                pDialog.show();
+//                return pDialog;
+//            default:
+//                return null;
 //        }
 //    }
+
+//    class importFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
 //
-//    public void loadImagefromGalleryImpl() {
-        // Create intent to Open Image applications like Gallery, Google Photos
+//        //Before starting background thread Show Progress Bar Dialog
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            showDialog(PROGRESS_BAR_TYPE);
+//        }
+//
+//        // Importing file in background thread
+//        @SuppressLint("ApplySharedPref")
+//        @Override
+//        protected String doInBackground(String... f_url) {
+//            Log.d("Engine_Driver", "Settings: Import preferences from Server: start");
+//            int count;
+//            String n_url = f_url[0].trim();
+//
+//            if ((mainapp.connectedHostip != null)) {
+//                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
+//            } else {
+//                Log.d("Engine_Driver", "Settings: Import preferences from Server: Not currently connected");
+//                return null;
+//            }
+//
+//            try {
+//                URL url = new URL(n_url);
+//                URLConnection conection = url.openConnection();
+//                conection.connect();
+//
+//                // to help show a 0-100% progress bar
+//                int lengthOfFile = conection.getContentLength();
+//
+//                // download the file
+//                InputStream input = new BufferedInputStream(url.openStream(),
+//                        8192);
+//
+////                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
+//
+//                // Output stream
+////                FileOutputStream output = new FileOutputStream(Environment
+////                        .getExternalStorageDirectory().toString()
+////                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+//                FileOutputStream output = new FileOutputStream(context.getExternalFilesDir(null)
+//                        + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+//
+//                byte data[] = new byte[1024];
+//
+//                long total = 0;
+//
+//                while ((count = input.read(data)) != -1) {
+//                    total += count;
+//                    // publishing the progress....
+//                    // After this onProgressUpdate will be called
+//                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
+//
+//                    // writing data to file
+//                    output.write(data, 0, count);
+//                }
+//
+//                // flushing output
+//                output.flush();
+//
+//                // closing streams
+//                output.close();
+//                input.close();
+//
+//                dismissDialog(PROGRESS_BAR_TYPE);
+//                prefs.edit().putString("prefPreferencesImportFileName", n_url).commit();
+//                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
+//
+//            } catch (Exception e) {
+//                Log.e("Engine_Driver", "Settings: Import preferences from Server Failed: " + e.getMessage());
+//                try {
+//                    dismissDialog(PROGRESS_BAR_TYPE);
+//                } catch (Exception ignored) {
+//                }
+//                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+//                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
+//            }
+//
+//            Log.d("Engine_Driver", "Settings: Import preferences from Server: End");
+//            return null;
+//        }
+//
+//        protected void onProgressUpdate(String... progress) {  //update progress bar
+//            // setting progress percentage
+//            pDialog.setProgress(Integer.parseInt(progress[0]));
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String file_url) {
+//            // dismiss the dialog after the file was downloaded
+//            dismissDialog(PROGRESS_BAR_TYPE);
+//
+//        }
+//
+//    }
+
+    protected void loadImagefromGallery() {
+       // Create intent to Open Image applications like Gallery, Google Photos
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // Start the Intent
@@ -722,30 +716,28 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, SAMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(SAMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, SAMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(SAMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
-
+    @SuppressLint("ApplySharedPref")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("Engine_Driver", "Settings: onActivityResult()");
@@ -770,7 +762,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 edit.commit();
 
                 forceRestartAppOnPreferencesClose = true;
-                forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_BACKGROUND;
+                forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_BACKGROUND;
             }
             else {
                 Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
@@ -844,7 +836,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             forceRestartAppOnPreferencesClose = true;
-            forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH;
+            forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_THROTTLE_SWITCH;
         }
     }
 
@@ -917,25 +909,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
 
         switch (prefGamePadType) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-            case "MTK":
-            case "MTK-rotate":
-            case "Game":
-            case "Game-rotate":
-            case "Game-alternate-rotate":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
-                break;
-/*
-            case "VRBoxA":
-            case "VRBoxA-rotate":
-            case "VRBoxC":
-            case "VRBoxC-rotate":
-            case "VRBoxiC":
-            case "VRBoxiC-rotate":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVRBoxLabels);
-                break;
-*/
             case "MagicseeR1B":
             case "MagicseeR1A":
             case "MagicseeR1C":
@@ -959,6 +932,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             case "None":
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
                 break;
+            case "iCade+DPAD":
+            case "iCade+DPAD-rotate":
+            case "MTK":
+            case "MTK-rotate":
+            case "Game":
+            case "Game-rotate":
+            case "Game-alternate-rotate":
             default:
                 gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
                 break;
@@ -1040,7 +1020,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
         boolean enable = false;
-        if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
             enable = true;
         }
 
@@ -1049,7 +1029,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF2", enable);
 
         enable = false;
-        if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
+        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
             enable = true;
         }
 
@@ -1164,25 +1144,25 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //        private String[] prefHostImportExportEntriesFound = {"None"};
 //        private String[] prefHostImportExportEntryValuesFound = {"None"};
 
-        private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
-        private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
+//        private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
+//        private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
         private String prefThemeOriginal = "Default";
 
-        private static final String PREF_IMPORT_ALL_FULL = "Yes";
-        private static final String PREF_IMPORT_ALL_PARTIAL = "No";
+//        private static final String PREF_IMPORT_ALL_FULL = "Yes";
+//        private static final String PREF_IMPORT_ALL_PARTIAL = "No";
         private static final String PREF_IMPORT_ALL_RESET = "-";
 
         public String[] advancedPreferences;
 
-        public static final int RESULT_LOAD_IMG = 1;
+//        public static final int RESULT_LOAD_IMG = 1;
 
         protected String defaultName;
         SettingsActivity parentActivity;
 
-        private static final String TAG = SettingsFragment.class.getName();
+//        private static final String TAG = SettingsFragment.class.getName();
         public static final String PAGE_ID = "page_id";
-        public static final String FRAGMENT_TAG = "my_preference_fragment";
+//        public static final String FRAGMENT_TAG = "my_preference_fragment";
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1241,13 +1221,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
                 switch (key) {
                     case "throttle_name_preference": {
-                        String currentValue = parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+//                        String currentValue = parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+                        parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
                         break;
                     }
-                    case "maximum_throttle_preference":
-                        //limit new value to 1-100 (%)
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
-                        break;
                     case "maximum_throttle_change_preference":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "25");
                         break;
@@ -1273,6 +1250,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         mainapp.soundsReloadSounds = true;
                         iplsLoader.loadSounds();
                         break;
+                    case "maximum_throttle_preference":
                     case "prefDeviceSoundsLocoVolume":
                     case "prefDeviceSoundsBellVolume":
                     case "prefDeviceSoundsHornVolume":
@@ -1304,7 +1282,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
                         sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
                         parentActivity.forceReLaunchAppOnPreferencesClose = true;
-                        parentActivity.forceRestartApp(mainapp.FORCED_RESTART_REASON_LOCALE);
+                        parentActivity.forceRestartApp(threaded_application.FORCED_RESTART_REASON_LOCALE);
                         break;
 
                     case "prefThrottleScreenType":
@@ -1329,7 +1307,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefTheme":
                         String prefTheme = sharedPreferences.getString("prefTheme", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
                         if (!prefTheme.equals(prefThemeOriginal)) {
-                            parentActivity.forceRestartApp(mainapp.FORCED_RESTART_REASON_THEME);
+                            parentActivity.forceRestartApp(threaded_application.FORCED_RESTART_REASON_THEME);
                         }
                         break;
 
@@ -1339,7 +1317,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "prefAllowMobileData":
                         parentActivity.mainapp.haveForcedWiFiConnection = false;
-                        parentActivity.forceRestartAppOnPreferencesCloseReason = mainapp.FORCED_RESTART_REASON_FORCE_WIFI;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_FORCE_WIFI;
                         parentActivity.forceReLaunchAppOnPreferencesClose = true;
                         break;
 
@@ -1352,7 +1330,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         mainapp.prefThrottleViewImmersiveModeHideToolbar = sharedPreferences.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
                         parentActivity.forceReLaunchAppOnPreferencesClose =true;
-                        parentActivity.forceRestartAppOnPreferencesCloseReason =  mainapp.FORCED_RESTART_REASON_IMMERSIVE_MODE;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_IMMERSIVE_MODE;
                         break;
 
                     case "prefHapticFeedbackButtons":
@@ -1368,6 +1346,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         }
 
+        @SuppressLint("ApplySharedPref")
         void setPreferencesUI() {
             Log.d("Engine_Driver", "Settings: setPreferencesUI()");
             prefs = parentActivity.prefs;
@@ -1461,7 +1440,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 showHideThrottleWebViewPreferences(prefs);
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
-                prefs.edit().putInt("prefForcedRestartReason", mainapp.FORCED_RESTART_REASON_NONE).commit();
+                prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE).commit();
                 prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
 
                 if (!prefs.getString("prefImportExport", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
@@ -1525,6 +1504,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleSwitchOption2", !enable);
         }
 
+        @SuppressLint("ApplySharedPref")
         private void setSwipeThroughWebPreference() {
             String to = prefs.getString("ThrottleOrientation",
                     getResources().getString(R.string.prefThrottleOrientationDefaultValue));
@@ -1604,7 +1584,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
                 Log.d("Engine_Driver", "Settings: removePreference: failed: " + preference);
-                return;
             }
         }
 
@@ -1612,7 +1591,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (!prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedPreference1 : advancedPreferences) {
 // //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
-                    Preference advancedPreference = (Preference) findPreference(advancedPreference1);
+                    Preference advancedPreference = findPreference(advancedPreference1);
                     if (advancedPreference != null) {
                         removePreference(advancedPreference);
                     } else {
@@ -1662,6 +1641,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             return (f);
         }
 
+        @SuppressLint("ApplySharedPref")
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
@@ -1775,7 +1755,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
                 Log.d("Engine_Driver", "Settings: removeSubPreference: failed: " + preference);
-                return;
             }
         }
 
@@ -1783,7 +1762,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedSubPreference1 : advancedSubPreferences) {
 // //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
-                    Preference advancedSubPreference = (Preference) findPreference(advancedSubPreference1);
+                    Preference advancedSubPreference = findPreference(advancedSubPreference1);
                     if (advancedSubPreference != null) {
                         removeSubPreference(advancedSubPreference);
                     } else {
@@ -1802,15 +1781,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         if (!parentActivity.importExportPreferences.currentlyImporting) {
                             parentActivity.exportedPreferencesFileName = "exported_preferences.ed";
                             String currentValue = sharedPreferences.getString(key, "");
-                            if (currentValue.equals(IMPORT_EXPORT_OPTION_EXPORT)) {
-                                parentActivity.saveSharedPreferencesToFile(sharedPreferences,
-                                        parentActivity.exportedPreferencesFileName, true);
-                            } else if (currentValue.equals(IMPORT_EXPORT_OPTION_IMPORT)) {
-                                parentActivity.loadSharedPreferencesFromFileDialog(sharedPreferences,
-                                        parentActivity.exportedPreferencesFileName, parentActivity.deviceId,
-                                        parentActivity.mainapp.FORCED_RESTART_REASON_IMPORT);
-                            } else if (currentValue.equals(IMPORT_EXPORT_OPTION_RESET)) {
-                                parentActivity.resetPreferencesDialog();
+                            switch (currentValue) {
+                                case IMPORT_EXPORT_OPTION_EXPORT:
+                                    parentActivity.saveSharedPreferencesToFile(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, true);
+                                    break;
+                                case IMPORT_EXPORT_OPTION_IMPORT:
+                                    parentActivity.loadSharedPreferencesFromFileDialog(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, parentActivity.deviceId,
+                                            threaded_application.FORCED_RESTART_REASON_IMPORT);
+                                    break;
+                                case IMPORT_EXPORT_OPTION_RESET:
+                                    parentActivity.resetPreferencesDialog();
+                                    break;
                             }
                         }
                         break;
@@ -1826,14 +1809,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                             String currentValue = sharedPreferences.getString(key, "");
                             if (!currentValue.equals(IMPORT_EXPORT_OPTION_NONE)) {
                                 String action = currentValue.substring(0, IMPORT_PREFIX.length());
-                                parentActivity.exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length(), currentValue.length());
+                                parentActivity.exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length());
                                 if (action.equals(EXPORT_PREFIX)) {
                                     parentActivity.saveSharedPreferencesToFile(sharedPreferences,
                                             parentActivity.exportedPreferencesFileName, true);
                                 } else if (action.equals(IMPORT_PREFIX)) {
                                     parentActivity.loadSharedPreferencesFromFile(sharedPreferences,
                                             parentActivity.exportedPreferencesFileName, parentActivity.deviceId,
-                                            parentActivity.mainapp.FORCED_RESTART_REASON_IMPORT);
+                                            threaded_application.FORCED_RESTART_REASON_IMPORT);
                                 }
                             }
                         }
@@ -1860,7 +1843,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefBackgroundImageFileName":
                     case "prefBackgroundImagePosition":
                         parentActivity.forceRestartAppOnPreferencesClose = true;
-                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_BACKGROUND;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_BACKGROUND;
                         break;
 
                     case "prefTtsWhen":
@@ -1880,7 +1863,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "prefAccelerometerShakeThreshold":
                         parentActivity.limitFloatPrefValue(getPreferenceScreen(), sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
-                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_SHAKE_THRESHOLD;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_SHAKE_THRESHOLD;
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
@@ -1906,9 +1889,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.result = RESULT_ESUMCII;
                         break;
                     case "prefEsuMc2ButtonsRepeatDelay":
-                        // limit check new value
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 9999, "500");
-                        break;
                     case "prefEsuMc2StopButtonDelay":
                         // limit check new value
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 9999, "500");
@@ -1925,7 +1905,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
 
                     case "prefSwitchingThrottleSliderDeadZone":
-                        parentActivity.forceRestartAppOnPreferencesCloseReason = parentActivity.mainapp.FORCED_RESTART_REASON_DEAD_ZONE;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_DEAD_ZONE;
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 

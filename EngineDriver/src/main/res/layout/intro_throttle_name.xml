@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/intro_background"
@@ -53,7 +54,8 @@
             android:maxLength="255"
             android:singleLine="true"
             android:text="@string/prefThrottleNameDefaultValue"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
         <TextView
             android:id="@+id/intro_throttle_name_summary1"
@@ -70,6 +72,7 @@
         android:id="@+id/imageView"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/intro_withrottle_window" />
+        app:srcCompat="@drawable/intro_withrottle_window"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.InputDevice.getDevice;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
@@ -40,6 +39,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +50,6 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -199,8 +198,6 @@ public class select_loco extends AppCompatActivity {
     String overrideThrottleName;
 
     private int maxAddr = 9999;
-
-    private Toolbar toolbar;
 
     // populate the on-screen roster view from global hashmap
     public void refresh_roster_list() {
@@ -400,14 +397,12 @@ public class select_loco extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     class select_loco_handler extends Handler {
 
+        public select_loco_handler(Looper looper) {
+            super(looper);
+        }
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case message_type.ROSTER_UPDATE:
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
-                    //refresh labels when any roster response is received
-                    roster_list_adapter.notifyDataSetChanged();
-                    set_labels();
-                    break;
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
 //                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
@@ -441,6 +436,8 @@ public class select_loco extends AppCompatActivity {
 //                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
                     witRetry(msg.obj.toString());
                     break;
+                case message_type.ROSTER_UPDATE:
+//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
                 case message_type.WIT_CON_RECONNECT:
 //                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
                     roster_list_adapter.notifyDataSetChanged();
@@ -600,8 +597,8 @@ public class select_loco extends AppCompatActivity {
                     }
                     if ( (image_file != null) && (image_file.exists()) ) {
                         try {
-                            int inWidth = 0;
-                            int inHeight = 0;
+                            int inWidth;
+                            int inHeight;
 
                             InputStream in = new FileInputStream(image_file.getPath());
 
@@ -1150,12 +1147,11 @@ public class select_loco extends AppCompatActivity {
 
             String rosterEntryIcon = hm.get("roster_icon");
             if (rosterEntryIcon != null) {
-                String imgFileName = "";
+//                String imgFileName = "";
                 ViewGroup vg = (ViewGroup) v;
                 if (vg!=null) {
                     ImageView iv = (ImageView) vg.getChildAt(0);
                     if (iv != null) {
-                        int x = 1;
                         writeLocoImageToFile(rosterNameString, iv);
                     }
                 }
@@ -1213,6 +1209,7 @@ public class select_loco extends AppCompatActivity {
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -1229,7 +1226,7 @@ public class select_loco extends AppCompatActivity {
         setContentView(layoutViewId);
 
         // put pointer to this activity's handler in main app's shared variable
-        mainapp.select_loco_msg_handler = new select_loco_handler();
+        mainapp.select_loco_msg_handler = new select_loco_handler(Looper.getMainLooper());
 
         prefRosterFilter = prefs.getString("prefRosterFilter", this.getResources().getString(R.string.prefRosterFilterDefaultValue));
         prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
@@ -1410,22 +1407,16 @@ public class select_loco extends AppCompatActivity {
             @Override
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.select_loco_method_roster_button:
-                        showMethod(WHICH_METHOD_ROSTER);
-                        break;
-                    case R.id.select_loco_method_recent_button:
-                        showMethod(WHICH_METHOD_RECENT);
-                        break;
-                    case R.id.select_loco_method_address_button:
+                if (checkedId == R.id.select_loco_method_roster_button) {
+                    showMethod(WHICH_METHOD_ROSTER);
+                } else if (checkedId == R.id.select_loco_method_recent_button) {
+                    showMethod(WHICH_METHOD_RECENT);
+                } else if (checkedId == R.id.select_loco_method_address_button) {
                         showMethod(WHICH_METHOD_ADDRESS);
-                        break;
-                    case R.id.select_consists_method_recent_button:
+                } else if (checkedId == R.id.select_consists_method_recent_button) {
                         showMethod(WHICH_METHOD_CONSIST);
-                        break;
-                    case R.id.select_loco_method_idngo:
-                        showMethod(WHICH_METHOD_IDNGO);
-                        break;
+                } else if (checkedId == R.id.select_loco_method_idngo) {
+                    showMethod(WHICH_METHOD_IDNGO);
                 }
             }
         });
@@ -1438,7 +1429,7 @@ public class select_loco extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -1689,26 +1680,24 @@ public class select_loco extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, SMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(SMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, SMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(SMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -1762,12 +1751,10 @@ public class select_loco extends AppCompatActivity {
             ba.setEnabled(false);
         }
 
-        return;
     }
 
     // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
     protected boolean onLongRosterListItemClick(int position) {
-        String iconURL = "";
         RosterEntry re = null;
         HashMap<String, String> hm = roster_list.get(position);
         String rosterNameString = hm.get("roster_name");
@@ -1779,13 +1766,13 @@ public class select_loco extends AppCompatActivity {
                 return true;
             }
         }
-        iconURL = hm.get("roster_icon");
+        String iconURL = hm.get("roster_icon");
         showRosterDetailsDialog(re, rosterNameString, rosterAddressString, iconURL);
         return true;
     }
 
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
-        String res = "";
+        String res;
         Log.d("Engine_Driver", "select_loco: Showing details for roster entry " + rosterNameString);
         final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
         dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
@@ -2195,7 +2182,7 @@ public class select_loco extends AppCompatActivity {
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);
@@ -2218,11 +2205,9 @@ public class select_loco extends AppCompatActivity {
             int scaledHeight = (int) (((double) maxHeight) * context.getResources().getDisplayMetrics().density);  //52dp
             double ratio = ((float) scaledHeight) / originalHeight;
             int scaledWidth = (int) (((double) originalWidth) * ratio);
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true);
-            return resizedBitmap;
+            return Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true);
         } else {
-            Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, originalWidth, originalHeight, true);
-            return resizedBitmap;
+            return Bitmap.createScaledBitmap(bitmap, originalWidth, originalHeight, true);
         }
     }
 

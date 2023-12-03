@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import jmri.enginedriver.R;
@@ -62,10 +63,12 @@ public class InPhoneLocoSoundsLoader {
    }
 
    public class LoadSoundCompleteDelayed implements Runnable {
-      int loadDelay =0;
+      int loadDelay;
+
       public LoadSoundCompleteDelayed(int delay) {
          loadDelay = delay;
       }
+
       @Override
       public void run() {
          Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run: (locoSound)");
@@ -85,7 +88,7 @@ public class InPhoneLocoSoundsLoader {
       mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", context.getResources().getString(R.string.prefDeviceSoundsDefaultValue));
 
       boolean soundAlreadyLoaded = true;
-      for (int throttleIndex = 0; throttleIndex < mainapp.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
+      for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
          if (!mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex].equals(mainapp.prefDeviceSounds[throttleIndex])) {
             soundAlreadyLoaded = false;
             break;
@@ -378,7 +381,7 @@ public class InPhoneLocoSoundsLoader {
 
    void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
 //        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file: '" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo);
-      int duration = 0;
+      int duration;
 
       if (fileName.length() > 0) {
          File file = new File(context.getExternalFilesDir(null), fileName);
@@ -454,7 +457,6 @@ public class InPhoneLocoSoundsLoader {
                 Log.d("Engine_Driver", "getIplsList: Found: " + fileName);
             }
         }
-        int x=1;
     }
 
    public void getIplsDetails(String fileName) {
@@ -465,7 +467,7 @@ public class InPhoneLocoSoundsLoader {
 
       File iplsFile = new File(context.getExternalFilesDir(null), fileName);
       if (iplsFile.exists()) {
-         BufferedReader list_reader = null;
+         BufferedReader list_reader;
          try {
             list_reader = new BufferedReader(
                     new FileReader(iplsFile));
@@ -577,9 +579,8 @@ public class InPhoneLocoSoundsLoader {
          }
       }
 
-      for (int i = 0; i < iplsLocoSoundsFileName.length; i++) {
-         iplsLocoSoundsFileName[i] = "";
-      }
+      Arrays.fill(iplsLocoSoundsFileName, "");
+
       for (int i = 0; i < 3; i++) {
          iplsBellSoundsFileName[i] = "";
          iplsHornSoundsFileName[i] = "";

@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.TextUtils.substring;
-import static android.view.InputDevice.getDevice;
 
 import static jmri.enginedriver.threaded_application.context;
 
@@ -34,6 +33,7 @@ import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -42,8 +42,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.InputDevice;
+//import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +51,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -98,7 +96,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static String location = null;
     private Spinner locationSpinner;
 
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
     private Menu TuMenu;
 
     private static final int WHICH_SOURCE_ADDRESS = 1;
@@ -154,7 +152,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private VelocityTracker mVelocityTracker;
 
     private EditText trn;
-    private TextView trnStatic;
+//    private TextView trnStatic;
 
     public void refresh_turnout_view() {
         //specify logic for sort comparison (by username)
@@ -223,6 +221,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         filterTurnoutView();
     }
 
+    @SuppressLint("DefaultLocale")
     String formatNumberInName (String name) {
         String tempName = name;
         String tempNo = "";
@@ -244,7 +243,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 tempChar = name.charAt(i);
                 if ((tempChar>='0') && (tempChar<='9')) {  // numeric
                    haveNo = true;
-                   tempNo = tempNo + name.substring(i,i+1);
+                   tempNo = tempNo + name.charAt(i);
                 } else {
                     if (haveNo) {
                         tempVal = Integer.parseInt(tempNo);
@@ -252,7 +251,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         haveNo = false;
                         tempNo = "";
                     }
-                    tempName = tempName + name.substring(i,i+1);
+                    tempName = tempName + name.charAt(i);
                 }
             }
             if (haveNo) {
@@ -369,6 +368,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     class turnouts_handler extends Handler {
+
+        public turnouts_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             String response_str;
@@ -527,7 +530,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -544,7 +547,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         setContentView(R.layout.turnouts);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.turnouts_msg_handler = new turnouts_handler();
+        mainapp.turnouts_msg_handler = new turnouts_handler(Looper.getMainLooper());
 
 //        myGesture = new GestureDetector(this);
 
@@ -579,12 +582,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         turnouts_lv = findViewById(R.id.turnouts_list);
         turnouts_lv.setAdapter(turnouts_list_adapter);
 
-        OnTouchListener gestureListener = new ListView.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return myGesture != null && myGesture.onTouchEvent(event);
-            }
-        };
-        turnouts_lv.setOnTouchListener(gestureListener);
+//        OnTouchListener gestureListener = new ListView.OnTouchListener() {
+//            @SuppressLint("ClickableViewAccessibility")
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return myGesture != null && myGesture.onTouchEvent(event);
+//            }
+//        };
+//        turnouts_lv.setOnTouchListener(gestureListener);
 
         turnouts_lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -693,12 +697,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         };
         recentTurnoutsListView = findViewById(R.id.turnouts_recent_list);
         recentTurnoutsListView.setAdapter(recentTurnoutsListAdapter);
-        OnTouchListener recentTurnoutsGestureListener = new ListView.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return myGesture != null && myGesture.onTouchEvent(event);
-            }
-        };
-        recentTurnoutsListView.setOnTouchListener(recentTurnoutsGestureListener);
+//        OnTouchListener recentTurnoutsGestureListener = new ListView.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return myGesture != null && myGesture.onTouchEvent(event);
+//            }
+//        };
+//        recentTurnoutsListView.setOnTouchListener(recentTurnoutsGestureListener);
 
         loadRecentTurnoutsList();
         b = findViewById(R.id.clear_turnouts_list_button);
@@ -727,13 +731,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             @Override
 
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.select_turnout_method_address_button:
-                        showMethod(WHICH_METHOD_ADDRESS);
-                        break;
-                    case R.id.select_turnout_method_roster_button:
-                        showMethod(WHICH_METHOD_ROSTER);
-                        break;
+                if (checkedId == R.id.select_turnout_method_address_button) {
+                    showMethod(WHICH_METHOD_ADDRESS);
+                } else if (checkedId == R.id.select_turnout_method_roster_button) {
+                    showMethod(WHICH_METHOD_ROSTER);
                 }
             }
         });
@@ -810,7 +811,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            return;
         }
     }
 
@@ -823,7 +823,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         super.onDestroy();
 
         if (mainapp.turnouts_msg_handler != null) {
-            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);;
+            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
             mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
             mainapp.turnouts_msg_handler = null;
         } else {
@@ -836,7 +836,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
 
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
 
         if (key == KeyEvent.KEYCODE_BACK) {
@@ -1091,7 +1091,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             String str = hm.get("turnout_source");
             TextView name = view.findViewById(R.id.to_recent_source);
             name.setText(Html.fromHtml(str));
-            int i = Integer.parseInt(str);
+//            int i = Integer.parseInt(str);
 
             Button b = view.findViewById(R.id.turnout_recent_toggle);
             Button bt = view.findViewById(R.id.turnout_recent_throw);
@@ -1453,7 +1453,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

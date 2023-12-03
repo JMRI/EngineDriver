@@ -21,7 +21,6 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 package jmri.enginedriver.intro;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,16 +29,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Random;
-
-import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.R;
 
 
@@ -47,15 +39,13 @@ public class intro_theme extends Fragment {
 
     private SharedPreferences prefs;
     private String currentValue = "";
-    private String defaultName = "";
+//    private String defaultName = "";
     private TextView v;
-    private Spinner spinner;
-    private int introThemeValueIndex = 1;
+//    private Spinner spinner;
+//    private int introThemeValueIndex = 1;
     private String[] nameEntries;
     private String[] nameEntryValues;
 
-
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_theme");
@@ -66,15 +56,15 @@ public class intro_theme extends Fragment {
 
         nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntryValues);
-        v = (RadioButton) getView().findViewById(R.id.intro_theme_default_name);
+        v = getView().findViewById(R.id.intro_theme_default_name);
         v.setText(nameEntries[0]);
-        v = (RadioButton) getView().findViewById(R.id.intro_theme_black_name);
+        v = getView().findViewById(R.id.intro_theme_black_name);
         v.setText(nameEntries[1]);
-        v = (RadioButton) getView().findViewById(R.id.intro_theme_outline_name);
+        v = getView().findViewById(R.id.intro_theme_outline_name);
         v.setText(nameEntries[2]);
-        v = (RadioButton) getView().findViewById(R.id.intro_theme_ultra_name);
+        v = getView().findViewById(R.id.intro_theme_ultra_name);
         v.setText(nameEntries[3]);
-        v = (RadioButton) getView().findViewById(R.id.intro_theme_colorful_name);
+        v = getView().findViewById(R.id.intro_theme_colorful_name);
         v.setText(nameEntries[4]);
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);

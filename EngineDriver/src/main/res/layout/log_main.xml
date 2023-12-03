@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -42,13 +43,15 @@
                     android:id="@+id/logviewer_button_close"
                     style="?attr/ed_normal_button_style"
                     android:layout_gravity="left"
-                    android:text="@string/logviewerClose" />
+                    android:text="@string/logviewerClose"
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/logviewer_button_save"
                     style="?attr/ed_normal_button_style"
                     android:layout_gravity="right"
-                    android:text="@string/logviewerSave" />
+                    android:text="@string/logviewerSave"
+                    tools:ignore="RtlHardcoded" />
             </TableRow>
 
         </TableLayout>

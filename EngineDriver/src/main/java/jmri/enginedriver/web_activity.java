@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.InputDevice.getDevice;
-
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -34,13 +32,13 @@ import android.gesture.GestureOverlayView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -219,6 +217,10 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     @SuppressLint("HandlerLeak")
     class web_handler extends Handler {
+
+        public web_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -408,7 +410,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         //put pointer to this activity's handler in main app's shared variable
 //        mainapp.web_msg_handler = new web_handler();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -481,7 +483,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         Log.d("Engine_Driver", "throttle.onStart() called");
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.web_msg_handler == null)
-            mainapp.web_msg_handler = new web_handler();
+            mainapp.web_msg_handler = new web_handler(Looper.getMainLooper());
     }
 
     @Override
@@ -747,7 +749,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

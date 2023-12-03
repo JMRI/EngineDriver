@@ -122,16 +122,17 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/cons_DCCEXconnectionOption_heading"
+        android:id="@+id/cons_DccexConnectionOption_heading"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/DCCEXconnectionOptionTitle"
+        android:text="@string/DccexConnectionOptionTitle"
         android:visibility="gone"
-        android:paddingLeft="2dp" />
+        android:paddingLeft="2dp"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout
-        android:id="@+id/cons_DCCEXconnectionOption_layout"
+        android:id="@+id/cons_DccexConnectionOption_layout"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".15"
@@ -140,7 +141,7 @@
         android:visibility="gone" >
 
         <TextView
-            android:id="@+id/cons_DCCEXconnectionOption_Label"
+            android:id="@+id/cons_DccexConnectionOption_Label"
             style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,12 +150,12 @@
             android:text="@string/useProtocolDCCEX" />
 
         <Spinner
-            android:id="@+id/cons_DCCEXconnectionOption"
+            android:id="@+id/cons_DccexConnectionOption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:ellipsize="none"
-            android:entries="@array/prefYesNoEntryValues"
+            android:entries="@array/prefYesNoEntries"
             android:entryValues="@array/prefYesNoEntryValues"
             android:padding="0dp"
             android:paddingLeft="20dp"

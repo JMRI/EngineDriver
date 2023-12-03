@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:keepScreenOn="true"
     android:orientation="vertical"
     android:id="@+id/routes_screen">
@@ -44,13 +43,15 @@
 
                     <EditText
                         android:id="@+id/route_entry"
+                        android:inputType="text"
                         android:layout_width="120sp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.75"
                         android:hint="@string/routes_route"
                         android:imeOptions="actionDone"
                         android:maxLength="80"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        tools:ignore="Autofill" />
 
                     <Button
                         android:id="@+id/route_toggle"

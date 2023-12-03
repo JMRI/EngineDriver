@@ -3,13 +3,14 @@
 
 package jmri.enginedriver.util;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 public class SwipeDetector implements View.OnTouchListener {
 
-    public static enum Action {
+    public enum Action {
         LR, // Left to Right
         RL, // Right to Left
         TB, // Top to bottom
@@ -17,7 +18,7 @@ public class SwipeDetector implements View.OnTouchListener {
         None // when no action was detected
     }
 
-    private static final String logTag = "SwipeDetector";
+//    private static final String logTag = "SwipeDetector";
     private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
     private Action mSwipeDetected = Action.None;
@@ -34,6 +35,7 @@ public class SwipeDetector implements View.OnTouchListener {
         return mSwipeDetected;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {

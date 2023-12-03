@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
@@ -15,7 +16,8 @@
         android:paddingBottom="4dp"
         android:paddingTop="15dp"
         android:text="loco_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/con_loco_addr_hidden"
@@ -32,15 +34,16 @@
             style="?attr/list_id_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lead" />
+            android:text="lead"
+            tools:ignore="HardcodedText" />
 
         <TextView
-            android:layout_alignLeft="@id/con_lead_label"
             android:id="@+id/con_trail_label"
             style="?attr/list_id_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="trail" />
+            android:text="trail"
+            tools:ignore="HardcodedText,RtlHardcoded" />
     </LinearLayout>
 
     <TextView
@@ -51,12 +54,14 @@
         android:layout_alignParentRight="true"
         android:paddingTop="15dp"
         android:text="facing"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        tools:ignore="RelativeOverlap,RtlHardcoded">
 
         <TextView
             android:id="@+id/con_facing_label"

@@ -50,7 +50,7 @@ public class throttle_switching_horizontal extends throttle {
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
-    private static final int TICK_TYPE_0_100 = 0;
+//    private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
     private int[] throttleMidPointZero = {0,0,0};
@@ -75,14 +75,14 @@ public class throttle_switching_horizontal extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        maxThrottlePcnt = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
 
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -406,7 +406,7 @@ public class throttle_switching_horizontal extends throttle {
             llSetSpds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = mainapp.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
@@ -518,7 +518,7 @@ public class throttle_switching_horizontal extends throttle {
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 // set height of each area
-                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
+                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights[throttleIndex]);
                 llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
                 lls[throttleIndex].setLayoutParams(llLp);
 
@@ -662,6 +662,7 @@ public class throttle_switching_horizontal extends throttle {
             limitedJump[whichThrottle] = false;
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             // Log.d("Engine_Driver", "onTouchThrottle action " + event.getAction());
@@ -826,12 +827,12 @@ public class throttle_switching_horizontal extends throttle {
     int speedChange(int whichThrottle, int change) {
 
         HorizontalSeekBar switchingThrottleSlider = getSwitchingThrottleSlider(whichThrottle);
-        double displayUnitScale = getDisplayUnitScale(whichThrottle);
+//        double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSliderPosition = switchingThrottleSlider.getProgress();
         int lastScaleSpeed;
         int scaleSpeed;
         int speed;
-        int lastSpeed;
+//        int lastSpeed;
 
         if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
             change = change * -1;

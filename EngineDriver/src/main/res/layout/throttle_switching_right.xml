@@ -21,7 +21,6 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -53,7 +52,7 @@
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1" >
+                    tools:ignore="ContentDescription" >
                 </ImageView>
 
                 <LinearLayout
@@ -171,7 +170,7 @@
                                             android:paddingTop="4dp"
                                             android:text="@string/directionIndicatorForward"
                                             android:textSize="14sp"
-                                            tools:ignore="HardcodedText,RtlHardcoded" />
+                                            tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded" />
 
                                         <TextView
                                             android:id="@+id/direction_indicator_reverse_0"
@@ -182,7 +181,7 @@
                                             android:layout_toLeftOf="@id/speed_value_label_0"
                                             android:text="@string/directionIndicatorReverse"
                                             android:textSize="14sp"
-                                            tools:ignore="HardcodedText,RtlHardcoded" />
+                                            tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded" />
 
                                         <TextView
                                             android:id="@+id/volume_indicator_0"
@@ -242,7 +241,7 @@
                                                 android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                             <TextView
-                                                android:id="@+id/loco_left_direction_indicaton_0"
+                                                android:id="@+id/loco_left_direction_indication_0"
                                                 style="?attr/ed_loco_label_style"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
@@ -269,7 +268,7 @@
                                                 android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                             <TextView
-                                                android:id="@+id/loco_right_direction_indicaton_0"
+                                                android:id="@+id/loco_right_direction_indication_0"
                                                 style="?attr/ed_loco_label_style"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
@@ -292,7 +291,7 @@
 
                                     <LinearLayout
                                         android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent"
+                                        android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
                                         <Button

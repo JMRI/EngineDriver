@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -79,8 +80,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private Spinner spinner;
 
     SharedPreferences prefs;
-
-    private Toolbar toolbar;
 
     /**
      * Called when the activity is first created.
@@ -160,9 +159,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.function_settings_msg_handler = new function_settings_handler();
+        mainapp.function_settings_msg_handler = new function_settings_handler(Looper.getMainLooper());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -228,31 +227,33 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, FMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(FMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, FMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(FMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
     @SuppressLint("HandlerLeak")
     class function_settings_handler extends Handler {
+
+        public function_settings_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -267,7 +268,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                     }
                     break;
                 }
-
+                default:
+                    break;
             }
         }
     }
@@ -293,6 +295,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     }
 
     //take data from arrays and update the editing view
+    @SuppressLint("SetTextI18n")
     void move_settings_to_view() {
         ViewGroup t = findViewById(R.id.label_func_table); //table
         //loop thru input rows, skipping first (headings)
@@ -566,7 +569,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
             }
         } else {
-            switch (requestCode) {
+//            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
 //                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
@@ -575,10 +578,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 //                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
-                default:
+//                default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
-            }
+//            }
         }
     }
 

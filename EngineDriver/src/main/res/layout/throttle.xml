@@ -51,7 +51,7 @@
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1" >
+                    tools:ignore="ContentDescription">
                 </ImageView>
 
                 <LinearLayout
@@ -188,7 +188,7 @@
                                         android:text="@string/forward" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_0"
+                                        android:id="@+id/loco_left_direction_indication_0"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
                                         android:text="@string/reverse" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_0"
+                                        android:id="@+id/loco_right_direction_indication_0"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -306,25 +306,29 @@
                                             android:id="@+id/device_sounds_mute_0"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/deviceSoundsMuteButton" />
+                                            android:text="@string/deviceSoundsMuteButton"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_bell_0"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton01DefaultValue" />
+                                            android:text="@string/functionButton01DefaultValue"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_horn_0"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/functionButton02DefaultValue"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_horn_short_0"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/soundsButtonHornShortDefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue"
+                                            tools:ignore="RtlHardcoded" />
                                     </TableRow>
                                 </TableLayout>
 
@@ -571,7 +575,7 @@
                                     android:layout_alignParentRight="true"
                                     android:enabled="false"
                                     android:text="0"
-                                    android:textSize="36dp"
+                                    android:textSize="36sp"
                                     tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
@@ -631,7 +635,7 @@
                                         android:text="@string/forward" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_1"
+                                        android:id="@+id/loco_left_direction_indication_1"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -672,7 +676,7 @@
                                         android:text="@string/reverse" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_1"
+                                        android:id="@+id/loco_right_direction_indication_1"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -752,25 +756,29 @@
                                             android:id="@+id/device_sounds_mute_1"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/deviceSoundsMuteButton" />
+                                            android:text="@string/deviceSoundsMuteButton"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_bell_1"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton01DefaultValue" />
+                                            android:text="@string/functionButton01DefaultValue"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_horn_1"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/functionButton02DefaultValue" />
+                                            android:text="@string/functionButton02DefaultValue"
+                                            tools:ignore="RtlHardcoded" />
 
                                         <Button
                                             android:id="@+id/device_sounds_horn_short_1"
                                             style="?attr/ed_fn_button_style"
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/soundsButtonHornShortDefaultValue" />
+                                            android:text="@string/soundsButtonHornShortDefaultValue"
+                                            tools:ignore="RtlHardcoded" />
                                     </TableRow>
                                 </TableLayout>
 
@@ -1073,7 +1081,7 @@
                                         android:text="@string/forward" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_2"
+                                        android:id="@+id/loco_left_direction_indication_2"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -1114,7 +1122,7 @@
                                         android:text="@string/reverse" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_2"
+                                        android:id="@+id/loco_right_direction_indication_2"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"

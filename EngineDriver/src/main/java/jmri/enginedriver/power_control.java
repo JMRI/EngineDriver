@@ -17,20 +17,18 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.InputDevice.getDevice;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,27 +50,29 @@ public class power_control extends AppCompatActivity {
     private Menu PMenu;
 
     static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX"};
-    private Button dccExTrackPowerButton[] = {null, null, null, null, null, null, null, null};
+    private Button[] dccExTrackPowerButton = {null, null, null, null, null, null, null, null};
     private LinearLayout[] dccExTrackTypeLayout = {null, null, null, null, null, null, null, null};
     private TextView[] dccExTrackType = {null, null, null, null, null, null, null, null};
 
     float vn = 4; // DCC-EC Version number
 
-    private Toolbar toolbar;
-
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     class power_control_handler extends Handler {
+
+        public power_control_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
-                    if (response_str.length() >= 3 && response_str.substring(0, 3).equals("PPA")) {  //refresh power state
+                    if (response_str.length() >= 3 && response_str.startsWith("PPA")) {  //refresh power state
                         refresh_power_control_view();
                     }
                     if ( (response_str.length() == 5) && ("PXX".equals(response_str.substring(0, 3))) ) {  // individual track power response
-                        refreshDCCEXtracksView();
+                        refreshDccexTracksView();
                     }
                     break;
                 case message_type.WIT_CON_RETRY:
@@ -88,7 +88,7 @@ public class power_control extends AppCompatActivity {
                     disconnect();
                     break;
                 case message_type.RECEIVED_TRACKS:
-                    refreshDCCEXtracksView();
+                    refreshDccexTracksView();
                     break;
             }
         }
@@ -123,7 +123,7 @@ public class power_control extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            if (mainapp.DCCEXtrackPower[myTrack] == 0 ) {
+            if (mainapp.DccexTrackPower[myTrack] == 0 ) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 1);
             } else {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 0);
@@ -144,12 +144,12 @@ public class power_control extends AppCompatActivity {
         btn.setBackground(img);
     }
 
-    public void refreshDCCEXtracksView() {
+    public void refreshDccexTracksView() {
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             if (vn >= 05.002005) {  /// need to remove the track power options
-                dccExTrackTypeLayout[i].setVisibility(mainapp.DCCEXtrackAvailable[i] ? View.VISIBLE : View.GONE);
-                dccExTrackType[i].setText(TRACK_TYPES[mainapp.DCCEXtrackType[i]]);
-                setPowerbutton(dccExTrackPowerButton[i],mainapp.DCCEXtrackPower[i]);
+                dccExTrackTypeLayout[i].setVisibility(mainapp.DccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
+                dccExTrackType[i].setText(TRACK_TYPES[mainapp.DccexTrackType[i]]);
+                setPowerbutton(dccExTrackPowerButton[i],mainapp.DccexTrackPower[i]);
             } else {
                 dccExTrackTypeLayout[i].setVisibility(View.GONE);
             }
@@ -202,14 +202,14 @@ public class power_control extends AppCompatActivity {
         setContentView(R.layout.power_control);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.power_control_msg_handler = new power_control_handler();
+        mainapp.power_control_msg_handler = new power_control_handler(Looper.getMainLooper());
 
         // request this as early as possible
         if (mainapp.isDCCEX) mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
         try {
-            vn = Float.valueOf(mainapp.DCCEXversion);
-        } catch (Exception e) { } // invalid version
+            vn = Float.valueOf(mainapp.DccexVersion);
+        } catch (Exception ignored) { } // invalid version
 
         power_on_drawable = getResources().getDrawable(R.drawable.power_green);
         power_off_drawable = getResources().getDrawable(R.drawable.power_red);
@@ -225,46 +225,46 @@ public class power_control extends AppCompatActivity {
         close_button_listener close_click_listener = new close_button_listener();
         closeButton.setOnClickListener(close_click_listener);
 
-        for (int i=0; i < mainapp.DCCEX_MAX_TRACKS; i++) {
+        for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             switch (i) {
                 default:
                 case 0:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower0layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower0layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton0);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType0);
                     break;
                 case 1:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower1layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower1layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton1);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType1);
                     break;
                 case 2:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower2layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower2layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton2);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType2);
                     break;
                 case 3:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower3layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower3layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton3);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType3);
                     break;
                 case 4:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower4layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower4layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton4);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType4);
                     break;
                 case 5:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower5layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower5layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton5);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType5);
                     break;
                 case 6:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower6layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower6layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton6);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType6);
                     break;
                 case 7:
-                    dccExTrackTypeLayout[i] = findViewById(R.id.DCCEXtrackPower7layout);
+                    dccExTrackTypeLayout[i] = findViewById(R.id.DccexTrackPower7layout);
                     dccExTrackPowerButton[i] = findViewById(R.id.DCCEXpowerControlButton7);
                     dccExTrackType[i] = findViewById(R.id.DCCEXpowerControlTrackType7);
                     break;
@@ -273,7 +273,7 @@ public class power_control extends AppCompatActivity {
             dccExTrackPowerButton[i].setOnClickListener(buttonListener);
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -301,7 +301,7 @@ public class power_control extends AppCompatActivity {
         }
         //update power state
         refresh_power_control_view();
-        refreshDCCEXtracksView();
+        refreshDccexTracksView();
     }
 
     /**
@@ -334,26 +334,24 @@ public class power_control extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, PMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(PMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, PMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(PMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -400,7 +398,7 @@ public class power_control extends AppCompatActivity {
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

@@ -62,7 +62,7 @@ public class comm_handler extends Handler {
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
-               mainapp.isDCCEX = mainapp.prefDCCEX;
+               mainapp.isDCCEX = mainapp.prefDccex;
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
@@ -145,7 +145,7 @@ public class comm_handler extends Handler {
 
          //Release one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
          case message_type.RELEASE: {
-            int delays = 0;
+//            int delays = 0;
             String addr = msg.obj.toString();
             final int whichThrottle = msg.arg1;
             final boolean releaseAll = (addr.length() == 0);
@@ -153,12 +153,12 @@ public class comm_handler extends Handler {
             if (releaseAll || mainapp.consists[whichThrottle].isEmpty()) {
                addr = "";
                mainapp.function_labels[whichThrottle] = new LinkedHashMap<>();
-               mainapp.function_states[whichThrottle] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1];
+               mainapp.function_states[whichThrottle] = new boolean[threaded_application.MAX_FUNCTION_NUMBER +1];
             }
             if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
                     mainapp.getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
                comm_thread.sendSpeedZero(whichThrottle);
-               delays++;
+//               delays++;
             }
 
 //                        sendReleaseLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
@@ -221,7 +221,7 @@ public class comm_handler extends Handler {
                   commThread.shutdown(false);
                }
                if (mainapp.isDCCEX) {
-                  commThread.wifiSend("<U DISCONNECT>");  // this is not a real command.  just a placeholder that will be ignored by the CS
+                  comm_thread.wifiSend("<U DISCONNECT>");  // this is not a real command.  just a placeholder that will be ignored by the CS
                }
             }
 
@@ -259,7 +259,7 @@ public class comm_handler extends Handler {
          }
 
          case message_type.DCCEX_SEND_COMMAND: { // DCC-EX only
-            comm_thread.sendDCCEXcommand(msg.obj.toString());
+            comm_thread.sendDccexCommand(msg.obj.toString());
             break;
          }
 

@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +67,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     private static ArrayList<String> aLocos = new ArrayList<>();
     private static ArrayList<String> aLatching = new ArrayList<>();
     private Menu FMenu;
-    private EditText et;
+//    private EditText et;
 
     private static String[] LOCOS = {"lead", "lead and trail", "all","trail"};
     private static String[] LATCHING = {"latching", "none"};
@@ -80,8 +80,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 //    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     SharedPreferences prefs;
-
-    private Toolbar toolbar;
 
     /**
      * Called when the activity is first created.
@@ -122,17 +120,17 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler();
+        mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler(Looper.getMainLooper());
 
         if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY)) ) ) {
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY)) ) ) {
             isSpecial = true;
         }
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
@@ -201,31 +199,33 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, FMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(FMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, FMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(FMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
     @SuppressLint("HandlerLeak")
     class function_consist_settings_handler extends Handler {
+
+        public function_consist_settings_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -240,6 +240,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                     }
                     break;
                 }
+                default:
+                    break;
 
             }
         }
@@ -267,7 +269,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             aLocos.add(mainapp.function_consist_locos.get(f));
             aLatching.add(mainapp.function_consist_latching.get(f));
         }
-        int x = 1;
     }
 
     //take data from arrays and update the editing view
@@ -323,9 +324,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         for (int i = 1; i < t.getChildCount(); i++) {
             r = (ViewGroup) t.getChildAt(i);
             //get the 2 inputs from each row
-            int locosIndex = ((Spinner) r.getChildAt(1)).getSelectedItemPosition();;
+            int locosIndex = ((Spinner) r.getChildAt(1)).getSelectedItemPosition();
             String locoString = LOCOS[locosIndex];
-            int latchingIndex = ((Spinner) r.getChildAt(2)).getSelectedItemPosition();;
+            int latchingIndex = ((Spinner) r.getChildAt(2)).getSelectedItemPosition();
             String latchingString = LATCHING[latchingIndex];
 
             if (aFnc.size() < i) {
@@ -365,10 +366,10 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     public class reset_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);;
-            String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);;
-            String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);;
-            int func = 0;
+            String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
+            String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
+            String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
+//            int func = 0;
 
             for (int i = 0; i <= 28; i++) {
                 if (aFnc.size() <= i) {
@@ -463,7 +464,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 PermissionsHelper.getInstance().requestNecessaryPermissions(function_consist_settings.this, requestCode);
             }
         } else {
-            switch (requestCode) {
+//            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
 //                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
@@ -472,10 +473,10 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 //                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
-                default:
+//                default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
-            }
+//            }
         }
     }
 

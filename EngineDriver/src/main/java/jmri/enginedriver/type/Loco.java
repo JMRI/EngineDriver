@@ -39,7 +39,7 @@ public class Loco {
     private LinkedHashMap<Integer, String> functionLabels;
     private int functionLabelsMaxKey = 0;          // highest function number that contains a string (not null)
 
-    private static final String CONSIST_FUNCTION_ACTION_NONE = "none";
+//    private static final String CONSIST_FUNCTION_ACTION_NONE = "none";
     private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
     private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
     private static final String CONSIST_FUNCTION_ACTION_ALL = "all";
@@ -154,7 +154,7 @@ public class Loco {
     }
 
     private String formatAddress() {
-        return this.addr.substring(1) + "(" + this.addr.substring(0, 1) + ")";  //reformat from L2591 to 2591(L)
+        return this.addr.substring(1) + "(" + this.addr.charAt(0) + ")";  //reformat from L2591 to 2591(L)
     }
 
     public String toHtml() {
@@ -162,11 +162,11 @@ public class Loco {
     }
 
     private String formatAddressHtml() {
-        return this.addr.substring(1) + "<small><small>(" + this.addr.substring(0, 1) + ")</small></small>";  //reformat from L2591 to 2591(L)
+        return this.addr.substring(1) + "<small><small>(" + this.addr.charAt(0) + ")</small></small>";  //reformat from L2591 to 2591(L)
     }
 
     public void setFunctionLabels(String functionLabelsString, threaded_application mainapp) {
-        String[] ta = mainapp.splitByString(functionLabelsString, "]\\[");  //split into list of labels
+        String[] ta = threaded_application.splitByString(functionLabelsString, "]\\[");  //split into list of labels
 
         //populate a temp label array from RF command string
         functionLabels = new LinkedHashMap<>();
@@ -202,7 +202,7 @@ public class Loco {
              if (functionLabels != null) {
                  for (int i = 0; i <= functionLabelsMaxKey; i++) {
                      if (functionLabels.get(i) != null) {
-                         if (functionLabels.get(i).toLowerCase().equals(lab.toLowerCase())) {
+                         if (functionLabels.get(i).equalsIgnoreCase(lab)) {
                              functionNumber = i;
                          }
                      }
@@ -221,7 +221,7 @@ public class Loco {
         List<Integer> functionList = new ArrayList<>();
         Integer matchingRule = -1;
 
-        if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
+        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
             // work out if/which rule the activated function matches
             for (int i = 0; i < prefConsistFollowStrings.size(); i++) {
 //            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
@@ -265,7 +265,7 @@ public class Loco {
                     for (int i = 0; i <= functionLabelsMaxKey; i++) {
                         if (functionLabels != null) {
                             if (functionLabels.get(i) != null) {
-                                if (functionLabels.get(i).toLowerCase().equals(prefConsistFollowStrings.get(matchingRule).toLowerCase())) {
+                                if (functionLabels.get(i).equalsIgnoreCase(prefConsistFollowStrings.get(matchingRule))) {
                                     functionList.add(i);
                                 }
                             }
@@ -322,12 +322,12 @@ public class Loco {
 
                         if (processThis) {
                             String fl = functionLabels.get(i).toLowerCase().trim();
-                            if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT)) {
+                            if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT)) {
                                 if (fl.equals(sl)) {
                                     functionList.add(i);
                                 }
                             } else {
-                                if (prefConsistFollowRuleStyle.equals(mainapp.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) {
+                                if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) {
                                     if ((fl.contains(sl)) || (sl.contains(fl))) {
                                         functionList.add(i);
                                     }

@@ -82,13 +82,13 @@ public ArrayList<Integer> recent_loco_source_list;
     public ArrayList<String> recent_turnout_server_list;
 
     private static final int WHICH_SOURCE_UNKNOWN = 0;
-    private static final int WHICH_SOURCE_ADDRESS = 1;
-    private static final int WHICH_SOURCE_ROSTER = 2;
+//    private static final int WHICH_SOURCE_ADDRESS = 1;
+//    private static final int WHICH_SOURCE_ROSTER = 2;
 
-    private static final int LIGHT_OFF = 0;
+//    private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
       private static final int LIGHT_UNKNOWN = 2;
-    public static final int LIGHT_ON = 3;
+//    public static final int LIGHT_ON = 3;
 
     private static final int FORCED_RESTART_REASON_NONE = 0;
 
@@ -96,9 +96,9 @@ public ArrayList<Integer> recent_loco_source_list;
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
-    private static final int PREF_TYPE_INT = 0;
-    private static final int PREF_TYPE_BOOLEAN = 1;
-    private static final int PREF_TYPE_STRING = 2;
+//    private static final int PREF_TYPE_INT = 0;
+//    private static final int PREF_TYPE_BOOLEAN = 1;
+//    private static final int PREF_TYPE_STRING = 2;
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
@@ -185,7 +185,7 @@ public ArrayList<Integer> recent_loco_source_list;
 
         int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
 
-        int prefCount = 0;
+        int prefCount;
         if (prefImportExportLocoList) {  // now clean out the preference data
 
             Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Normal Cleanout of old Recent Locos preferences");
@@ -459,10 +459,10 @@ public ArrayList<Integer> recent_loco_source_list;
                             addr = Integer.decode(line.substring(0, splitPos));
                             size = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
                             if (line.length()>splitPos+2) { // has the name extras
-                                if (line.substring(splitPos + 2,splitPos + 3).equals("~")) { // old format
+                                if (line.charAt(splitPos + 2) == '~') { // old format
                                     locoName = line.substring(splitPos + 3);
                                 }else {
-                                    if (line.substring(splitPos + 3,splitPos + 4).equals("~")) { // new format. Includes the source
+                                    if (line.charAt(splitPos + 3) == '~') { // new format. Includes the source
                                         source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
                                         locoName = line.substring(splitPos + 4);
                                     }

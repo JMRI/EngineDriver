@@ -51,7 +51,7 @@
             android:layout_weight="4">
 
             <ScrollView
-                android:id="@+id/DCCEXtrackPowerScrollView"
+                android:id="@+id/DccexTrackPowerScrollView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -64,7 +64,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower0layout"
+                        android:id="@+id/DccexTrackPower0layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -99,12 +99,12 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower1layout"
+                        android:id="@+id/DccexTrackPower1layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -139,11 +139,11 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower2layout"
+                        android:id="@+id/DccexTrackPower2layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -178,12 +178,12 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                 </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower3layout"
+                        android:id="@+id/DccexTrackPower3layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -218,11 +218,11 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower4layout"
+                        android:id="@+id/DccexTrackPower4layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -257,11 +257,11 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower5layout"
+                        android:id="@+id/DccexTrackPower5layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -296,11 +296,11 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower6layout"
+                        android:id="@+id/DccexTrackPower6layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -335,11 +335,11 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/DCCEXtrackPower7layout"
+                        android:id="@+id/DccexTrackPower7layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0sp"
@@ -374,7 +374,7 @@
                             android:paddingLeft="10dp"
                             android:layout_weight=".25"
                             android:textSize="14sp"
-                            tools:ignore="HardcodedText" />
+                            tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -396,7 +396,8 @@
                 android:id="@+id/power_button_close"
                 style="?attr/ed_normal_button_style"
                 android:layout_gravity="left"
-                android:text="@string/logviewerClose" />
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
 
         </TableLayout>
 

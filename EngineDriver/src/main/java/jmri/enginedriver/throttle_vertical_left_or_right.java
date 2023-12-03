@@ -264,7 +264,7 @@ public class throttle_vertical_left_or_right extends throttle {
                 }
             }
             int textSize = (int) (conNomTextSize * textScale * 0.95);
-            if (prefThrottleScreenType != "Vertical") {
+            if (!prefThrottleScreenType.equals("Vertical")) {
                 textSize = (int) (conNomTextSize * textScale);
             }
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
@@ -317,7 +317,7 @@ public class throttle_vertical_left_or_right extends throttle {
                 screenHeight = screenHeight - titleBar;
             }
         }
-        int keepHeight = screenHeight;  // default height
+//        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
@@ -351,7 +351,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        int prefVerticalStopButtonMargin = mainapp.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
+        int prefVerticalStopButtonMargin = threaded_application.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
@@ -369,10 +369,10 @@ public class throttle_vertical_left_or_right extends throttle {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
 
-                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+                bLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                 bLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bLSpds[throttleIndex].requestLayout();
-                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.FILL_PARENT;
+                bRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                 bRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
                 bRSpds[throttleIndex].requestLayout();
             } else {
