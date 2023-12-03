@@ -1643,18 +1643,18 @@
         <item>Fill - Distort if needed</item>
     </string-array>
 
-    <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item>NONE</item>
-        <item>1</item>
-        <item>2</item>
-        <item>12</item>
-    </string-array>
-    <string-array name="prefThrottleSwitchWebViewEntries">  <!-- display version -->
-        <item>None</item>
-        <item>First Layout only</item>
-        <item>Second Layout only</item>
-        <item>Both First and Second Layouts</item>
-    </string-array>
+<!--    <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
+<!--        <item>NONE</item>-->
+<!--        <item>1</item>-->
+<!--        <item>2</item>-->
+<!--        <item>12</item>-->
+<!--    </string-array>-->
+<!--    <string-array name="prefThrottleSwitchWebViewEntries">  &lt;!&ndash; display version &ndash;&gt;-->
+<!--        <item>None</item>-->
+<!--        <item>First Layout only</item>-->
+<!--        <item>Second Layout only</item>-->
+<!--        <item>Both First and Second Layouts</item>-->
+<!--    </string-array>-->
 
     <string-array name="prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -1774,7 +1774,7 @@
         <item>prefSocketTimeoutMs</item>
         <item>prefFeedbackOnDisconnect</item>
         <item>prefDCCEX</item>
-        <item>prefDCCEXconnectionOption</item>
+        <item>prefDCCEXConnectionOption</item>
         <item>prefHeartbeatResponseFactor</item>
 
         <!-- Web Preferences -->

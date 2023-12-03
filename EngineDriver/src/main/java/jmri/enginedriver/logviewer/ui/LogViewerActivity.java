@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -51,7 +52,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
     private Menu AMenu;
-    private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +73,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-                TextView logItem = (TextView) view;
-                String logItemText = logItem.getText().toString();
-
                 final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
                 String text = ((TextView) view).getText().toString();
                 builder.setMessage(text);
@@ -103,9 +100,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         logReaderTask.execute();
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.logviewer_msg_handler = new logviewer_handler();
+        mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -156,26 +153,24 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, AMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(AMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, AMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(AMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -206,6 +201,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @SuppressLint("HandlerLeak")
     class logviewer_handler extends Handler {
 
+        public logviewer_handler(Looper looper) {
+            super(looper);
+        }
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
@@ -219,7 +218,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     }
                     break;
                 }
-
+                default:
+                    break;
             }
         }
     }

@@ -24,11 +24,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
+//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -61,7 +62,7 @@ import jmri.enginedriver.util.LocaleHelper;
 public class ConsistEdit extends AppCompatActivity implements OnGestureListener {
     public static final int LIGHT_OFF = 0;
     public static final int LIGHT_FOLLOW = 1;
-    public static final int LIGHT_UNKNOWN = 2;
+//    public static final int LIGHT_UNKNOWN = 2;
     public static final int LIGHT_ON = 3;
 
     public static final String LIGHT_TEXT_OFF = "Off";
@@ -92,11 +93,9 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     SwipeDetector LvSwipeDetector;
     ListView consistLV;
 
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
 
     private SharedPreferences prefs;
-
-    private Toolbar toolbar;
 
     public void refreshConsistLists() {
         //clear and rebuild
@@ -155,6 +154,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     @SuppressLint("HandlerLeak")
     class ConsistEditHandler extends Handler {
 
+        public ConsistEditHandler(Looper looper) {
+            super(looper);
+        }
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
@@ -199,6 +202,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,8 +217,8 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         setContentView(R.layout.consist);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.consist_edit_msg_handler = new ConsistEditHandler();
-        myGesture = new GestureDetector(this);
+        mainapp.consist_edit_msg_handler = new ConsistEditHandler(Looper.getMainLooper());
+//        myGesture = new GestureDetector(this);
 
         CONSIST_EDIT_LABEL_LEAD = getResources().getString(R.string.ConsistEditLabelLead);
         CONSIST_EDIT_LABEL_TRAIL = getResources().getString(R.string.ConsistEditLabelTrail);
@@ -304,7 +308,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             mainapp.shownToastConsistEdit = true;
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -375,26 +379,24 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, CEMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(CEMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, CEMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(CEMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -455,7 +457,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
             if (LvSwipeDetector.swipeDetected()) {
                 if (LvSwipeDetector.getAction() == SwipeDetector.Action.LR) {
-                    ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                    ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
                     TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
                     String address = addrv.getText().toString();
 
@@ -467,7 +469,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 }
             } else {  //no swipe
                 // When an item is clicked,
-                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
                 TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
                 String address = addrv.getText().toString();
 

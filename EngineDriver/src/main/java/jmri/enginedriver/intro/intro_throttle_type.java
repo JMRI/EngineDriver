@@ -29,9 +29,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import jmri.enginedriver.R;
@@ -41,13 +39,11 @@ public class intro_throttle_type extends Fragment {
     private SharedPreferences prefs;
     private String currentValue = "";
     private TextView v;
-    private Spinner spinner;
-    private int introThrottleTypeValueIndex = 1;
+//    private Spinner spinner;
+//    private int introThrottleTypeValueIndex = 1;
     private String[] nameEntries;
     private String[] nameEntryValues;
 
-
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_throttle_type");
@@ -57,29 +53,29 @@ public class intro_throttle_type extends Fragment {
 
         nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_default_name);
+        v = getView().findViewById(R.id.intro_throttle_type_default_name);
         v.setText(nameEntries[0]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_vertical_name);
+        v = getView().findViewById(R.id.intro_throttle_type_vertical_name);
         v.setText(nameEntries[1]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_big_left_name);
+        v = getView().findViewById(R.id.intro_throttle_type_big_left_name);
         v.setText(nameEntries[2]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_big_right_name);
+        v = getView().findViewById(R.id.intro_throttle_type_big_right_name);
         v.setText(nameEntries[3]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_vertical_left_name);
+        v = getView().findViewById(R.id.intro_throttle_type_vertical_left_name);
         v.setText(nameEntries[4]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_vertical_right_name);
+        v = getView().findViewById(R.id.intro_throttle_type_vertical_right_name);
         v.setText(nameEntries[5]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_name);
+        v = getView().findViewById(R.id.intro_throttle_type_switching_name);
         v.setText(nameEntries[6]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_left_name);
+        v = getView().findViewById(R.id.intro_throttle_type_switching_left_name);
         v.setText(nameEntries[7]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_right_name);
+        v = getView().findViewById(R.id.intro_throttle_type_switching_right_name);
         v.setText(nameEntries[8]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_switching_horizontal_name);
+        v = getView().findViewById(R.id.intro_throttle_type_switching_horizontal_name);
         v.setText(nameEntries[9]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_simple_name);
+        v = getView().findViewById(R.id.intro_throttle_type_simple_name);
         v.setText(nameEntries[10]);
-        v = (RadioButton) getView().findViewById(R.id.intro_throttle_type_tablet_switching_left_name);
+        v = getView().findViewById(R.id.intro_throttle_type_tablet_switching_left_name);
         v.setText(nameEntries[11]);
 
 

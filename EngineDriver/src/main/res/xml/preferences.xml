@@ -1796,25 +1796,25 @@
             android:key="prefDccExPreferences"
             android:layout="@layout/checkbox_icon_left_highlight"
             android:persistent="false"
-            android:summary="@string/prefDCCEXPreferencesSummary"
-            android:title="@string/prefDCCEXPreferencesTitle">
+            android:summary="@string/prefDccexPreferencesSummary"
+            android:title="@string/prefDccexPreferencesTitle">
 
             <PreferenceCategory
-                android:title="@string/prefDCCEXPreferencesTitle"
+                android:title="@string/prefDccexPreferencesTitle"
                 android:layout="@layout/category_icon_left"
                 android:icon="@drawable/category_dcc_ex" >
 
                 <CheckBoxPreference
-                    android:defaultValue="@bool/prefDCCEXDefaultValue"
+                    android:defaultValue="@bool/prefDccexDefaultValue"
                     android:key="prefDCCEX"
-                    android:summary="@string/prefDCCEXSummary"
-                    android:title="@string/prefDCCEXTitle"
+                    android:summary="@string/prefDccexSummary"
+                    android:title="@string/prefDccexTitle"
                     android:layout="@layout/checkbox_no_icon" />
                 <CheckBoxPreference
-                    android:defaultValue="@bool/prefDCCEXconnectionOptionDefaultValue"
+                    android:defaultValue="@bool/prefDccexConnectionOptionDefaultValue"
                     android:key="prefDCCEXconnectionOption"
-                    android:summary="@string/prefDCCEXconnectionOptionSummary"
-                    android:title="@string/prefDCCEXconnectionOptionTitle"
+                    android:summary="@string/prefDccexConnectionOptionSummary"
+                    android:title="@string/prefDccexConnectionOptionTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>

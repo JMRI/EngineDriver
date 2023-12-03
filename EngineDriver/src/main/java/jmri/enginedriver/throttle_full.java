@@ -97,7 +97,7 @@ public class throttle_full extends throttle {
     void set_function_state(int whichThrottle, int function) {
         // Log.d("Engine_Driver","starting set_function_request");
 
-        if (function > mainapp.MAX_FUNCTION_NUMBER) return; //bail if this function number not supported
+        if (function > threaded_application.MAX_FUNCTION_NUMBER) return; //bail if this function number not supported
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array
@@ -345,7 +345,7 @@ public class throttle_full extends throttle {
             llSetSpds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = mainapp.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
@@ -457,7 +457,7 @@ public class throttle_full extends throttle {
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 // set height of each area
-                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, heights[throttleIndex]);
+                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights[throttleIndex]);
                 llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
                 lls[throttleIndex].setLayoutParams(llLp);
 

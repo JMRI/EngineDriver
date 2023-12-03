@@ -16,13 +16,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.util;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
-import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
@@ -39,7 +39,7 @@ Modified from code by gunhansancar on 07/10/15.
 
 public class LocaleHelper {
 
-    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
+//    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
     public static String languageCountry = "";  // will contain the default language at launch
     private static String prefLocale ="";
 
@@ -60,7 +60,7 @@ public class LocaleHelper {
 
     public static Context setLocale(Context context, String language) {
 
-        if (!language.toUpperCase().equals(languageCountry.toUpperCase())) {   // if it as the same as the language at launch do nothing
+        if (!language.equalsIgnoreCase(languageCountry)) {   // if it as the same as the language at launch do nothing
             if (Build.VERSION.SDK_INT >= 17) {
                 return updateResources(context, language);
             }
@@ -72,7 +72,7 @@ public class LocaleHelper {
 
     private static String getLanguagePreference(Context context) {
         SharedPreferences prefs;
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         prefLocale = prefs.getString("prefLocale", context.getResources().getString(R.string.prefLocaleDefaultValue));
 
         if (prefLocale.equals("Default")) {
@@ -81,6 +81,7 @@ public class LocaleHelper {
         return prefLocale;
     }
 
+    @SuppressLint("AppBundleLocaleChanges")
     @TargetApi(17)
     private static Context updateResources(Context context, String language) {
 
@@ -94,7 +95,6 @@ public class LocaleHelper {
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
     private static Context updateResourcesLegacy(Context context, String language) {
 
         Locale locale = new Locale(language);

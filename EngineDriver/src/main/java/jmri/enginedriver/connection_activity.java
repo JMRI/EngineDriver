@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -36,6 +37,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -132,9 +134,9 @@ public class connection_activity extends AppCompatActivity implements Permission
     int rootViewHeight = 0;
 
     boolean prefAllowMobileData = false;
-    boolean prefDCCEXconnectionOption = false;
-    boolean prefAlwaysUseFunctionsFromServer = false;
-    Spinner DCCEXconnectionOptionSpinner;
+    boolean prefDccexConnectionOption = false;
+//    boolean prefAlwaysUseFunctionsFromServer = false;
+    Spinner dccexConnectionOptionSpinner;
 
     private Toolbar toolbar;
 
@@ -356,7 +358,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connected_hostname = tm.get("host_name"); //copy ip to name
                     connected_ssid = mainapp.client_ssid;
                     connect();
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
                 } else {
                     if (!mainapp.prefHideInstructionalToasts) {
                         Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
@@ -372,7 +374,10 @@ public class connection_activity extends AppCompatActivity implements Permission
     //Handle messages from the communication thread back to the UI thread.
     @SuppressLint("HandlerLeak")
     private class ui_handler extends Handler {
-        @SuppressWarnings("unchecked")
+
+        public ui_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -445,14 +450,14 @@ public class connection_activity extends AppCompatActivity implements Permission
     /**
      * Called when the activity is first created.
      */
-    @SuppressLint("ApplySharedPref")
+    @SuppressLint({"ApplySharedPref", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //    timestamp = SystemClock.uptimeMillis();
         Log.d("Engine_Driver", "connection.onCreate ");
         mainapp = (threaded_application) this.getApplication();
-        mainapp.connection_msg_handler = new ui_handler();
+        mainapp.connection_msg_handler = new ui_handler(Looper.getMainLooper());
 
         mainapp.connectedHostName = "";
         mainapp.connectedHostip = "";
@@ -463,7 +468,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         mainapp.consist_entries = null;
         mainapp.roster = null;
 
-        connToast = Toast.makeText(this, "", Toast.LENGTH_LONG);    // save toast obj so it can be cancelled
+        connToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
 
         //check for "default" throttle name and make it more unique
@@ -588,11 +593,11 @@ public class connection_activity extends AppCompatActivity implements Permission
         });
 
 
-        DCCEXconnectionOptionSpinner = findViewById(R.id.cons_DCCEXconnectionOption);
-        DCCEXconnectionOptionSpinner.setOnItemSelectedListener(new DCCEXconnectionOption_listener());
+        dccexConnectionOptionSpinner = findViewById(R.id.cons_DccexConnectionOption);
+        dccexConnectionOptionSpinner.setOnItemSelectedListener(new DccexConnectionOption_listener());
         setConnectionProtocolOption();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -820,38 +825,38 @@ public class connection_activity extends AppCompatActivity implements Permission
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
-        switch (item.getItemId()) {
-            case R.id.exit_mnu:
-                mainapp.checkExit(this);
-                return true;
-            case R.id.settings_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.about_mnu:
-                in = new Intent().setClass(this, about_page.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.ClearconnList:
-                clearConnectionsList();
-                getConnectionsList();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, CMenu);
-                return true;
-            case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.intro_mnu:
-                in = new Intent().setClass(this, intro_activity.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            default:
+        if (item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkExit(this);
+            return true;
+        } else if (item.getItemId() == R.id.settings_mnu) {
+            in = new Intent().setClass(this, SettingsActivity.class);
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.about_mnu) {
+            in = new Intent().setClass(this, about_page.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.ClearconnList) {
+            clearConnectionsList();
+            getConnectionsList();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, CMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.logviewer_menu) {
+            in = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.intro_mnu) {
+            in = new Intent().setClass(this, intro_activity.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else {
                 return super.onOptionsItemSelected(item);
         }
     }
@@ -963,8 +968,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                         // use connToast so onPause can cancel toast if connection is made
                         if (!mainapp.prefHideInstructionalToasts) {
                             connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                            connToast.setDuration(LENGTH_LONG);
+                            connToast.show();
                         }
-                        connToast.show();
                     }
                 }
             }
@@ -1016,7 +1022,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), LENGTH_LONG).show();
             }
         }
     }
@@ -1032,7 +1038,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
@@ -1042,7 +1048,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), LENGTH_LONG).show();
             }
         }
     }
@@ -1099,53 +1105,6 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-//    void checkForLegacyFiles() {
-//        if (PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, PermissionsHelper.READ_LEGACY_FILES)) {
-//            checkForLegacyFilesImpl();
-//        }
-//    }
-//
-//    protected void checkForLegacyFilesImpl() {
-//        File sdcard_path = Environment.getExternalStorageDirectory();
-//        File legacy_dir = new File(sdcard_path, "engine_driver");
-//        if (legacy_dir.isDirectory()) {
-//            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy folder found:");
-//        }
-//
-//        File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
-//        File legacyConnection_file = new File(sdcard_path, "engine_driver/connections_list.txt");
-//
-////        if ( (!connection_file.exists()) && (legacy_dir!=null) ) {
-//        if ( (!connection_file.exists()) && (legacyConnection_file.exists()) ) {
-//
-//            String[] childFiles = legacy_dir.list();
-//            if (childFiles!=null) {
-//                for (int i = 0; i < childFiles.length; i++) {
-//                    try {
-////                File legacy_file = new File(sdcard_path, "engine_driver/" + filename);
-//                        File legacy_file = new File(sdcard_path, "engine_driver/" + childFiles[i]);
-//                        File new_file = new File(context.getExternalFilesDir(null), childFiles[i]);
-//
-//                        if (legacy_file.exists()) {
-//                            if (!new_file.exists()) {
-//                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found:" + childFiles[i]);
-////                    Files.copy(legacy_file.getPath(),new_file.getPath(),REPLACE_EXISTING);
-//                                copyFileUsingStream(legacy_file, new_file);
-//                            } else {
-//                                Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file found but new file exists:" + childFiles[i]);
-//                            }
-//                        } else {
-//                            Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - legacy file not found:" + childFiles[i]);
-//                        }
-//
-//                    } catch (Exception e) {
-//                        Log.d("Engine_Driver", "ca: checkForLegacyFilesImpl - copy failed: " + childFiles[i]);
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     //source  https://www.journaldev.com/861/java-copy-file
     void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
@@ -1164,16 +1123,16 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    public class DCCEXconnectionOption_listener implements AdapterView.OnItemSelectedListener {
+    public class DccexConnectionOption_listener implements AdapterView.OnItemSelectedListener {
 
         @SuppressLint("ApplySharedPref")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Spinner spinner = findViewById(R.id.cons_DCCEXconnectionOption);
+            Spinner spinner = findViewById(R.id.cons_DccexConnectionOption);
             int spinnerPosition = spinner.getSelectedItemPosition();
-            mainapp.prefDCCEX = spinnerPosition == 0;
-            prefs.edit().putBoolean("prefDCCEX", mainapp.prefDCCEX).commit();  //set the preference
+            mainapp.prefDccex = spinnerPosition == 0;
+            prefs.edit().putBoolean("prefDCCEX", mainapp.prefDccex).commit();  //set the preference
         }
 
         @Override
@@ -1182,18 +1141,18 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     private void setConnectionProtocolOption() {
-        prefDCCEXconnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDCCEXconnectionOptionDefaultValue));
-        mainapp.prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
+        prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
+        mainapp.prefDccex = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDccexDefaultValue));
 
-        if (mainapp.prefDCCEX) {
-            DCCEXconnectionOptionSpinner.setSelection(0);
+        if (mainapp.prefDccex) {
+            dccexConnectionOptionSpinner.setSelection(0);
         } else {
-            DCCEXconnectionOptionSpinner.setSelection(1);
+            dccexConnectionOptionSpinner.setSelection(1);
         }
 
-        TextView DCCEXheading =  findViewById(R.id.cons_DCCEXconnectionOption_heading);
-        LinearLayout DCCEXlayout =  findViewById(R.id.cons_DCCEXconnectionOption_layout);
-        if (prefDCCEXconnectionOption) {
+        TextView DCCEXheading =  findViewById(R.id.cons_DccexConnectionOption_heading);
+        LinearLayout DCCEXlayout =  findViewById(R.id.cons_DccexConnectionOption_layout);
+        if (prefDccexConnectionOption) {
             DCCEXheading.setVisibility(View.VISIBLE);
             DCCEXlayout.setVisibility(View.VISIBLE);
         } else {

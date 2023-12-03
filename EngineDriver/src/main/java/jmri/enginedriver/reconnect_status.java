@@ -28,6 +28,7 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -50,11 +51,13 @@ public class reconnect_status extends AppCompatActivity {
     private boolean retryFirst = false;
     private Menu RCMenu;
 
-    private Toolbar toolbar;
-
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     class reconnect_status_handler extends Handler {
+
+        public reconnect_status_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -81,6 +84,7 @@ public class reconnect_status extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void refresh_reconnect_status(String status) {
         TextView tv = findViewById(R.id.reconnect_status);
         if (status != null) {
@@ -135,7 +139,7 @@ public class reconnect_status extends AppCompatActivity {
         setContentView(R.layout.reconnect_page);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.reconnect_status_msg_handler = new reconnect_status_handler();
+        mainapp.reconnect_status_msg_handler = new reconnect_status_handler(Looper.getMainLooper());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -157,7 +161,7 @@ public class reconnect_status extends AppCompatActivity {
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -237,18 +241,15 @@ public class reconnect_status extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.exit_mnu:
-                mainapp.checkExit(this, true);
-                return true;
-            case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-
-            default:
+        if (item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkExit(this, true);
+            return true;
+        } else if (item.getItemId() == R.id.logviewer_menu) {
+            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(logviewer);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else {
                 return super.onOptionsItemSelected(item);
         }
     }

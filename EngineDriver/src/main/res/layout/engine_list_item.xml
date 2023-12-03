@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="3px">
+    android:paddingLeft="3dp"
+    tools:ignore="RtlHardcoded,RtlSymmetry" >
 
     <ImageView
         android:id="@+id/engine_icon_image"
@@ -11,7 +12,7 @@
         android:layout_height="54dp"
         android:layout_alignParentRight="true"
         android:contentDescription="roster icon"
-        tools:ignore="HardcodedText,RtlHardcoded"></ImageView>
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
         android:id="@+id/engine_name_label"
@@ -21,7 +22,7 @@
         android:includeFontPadding="false"
         android:paddingLeft="2dp"
         android:text="TestAddress"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <TextView
         android:id="@+id/engine_item_label"

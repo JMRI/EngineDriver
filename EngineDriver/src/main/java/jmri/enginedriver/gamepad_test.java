@@ -39,12 +39,13 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
+//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -78,7 +79,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu GPTMenu;
 
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
 
     private int result;
 
@@ -114,7 +115,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private Button[] bButtons;
 
-    private TextView tvGamepadMode;
+//    private TextView tvGamepadMode;
     private TextView tvGamepadKeyCode;
     private TextView tvGamepadKeyFunction;
     private TextView tvGamepadComplete;
@@ -131,12 +132,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private TextToSpeech myTts;
 
-    private Toolbar toolbar;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     void GamepadFeedbackSound(boolean invalidAction) {
         if (invalidAction)
@@ -330,7 +329,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
 
         if (testComplete) {
-
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
             if (!whichGamepadNo.equals(" ")) {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
@@ -340,7 +338,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 }
             }
         }
-		return testComplete;
+        return testComplete;
     }
 
     private void setButtonOff(Button btn) {
@@ -402,7 +400,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
         allKeyCodes = allKeyCodes +  sKeyCode + " ";
         if( allKeyCodes.length()>45) {
-            allKeyCodes = allKeyCodes.substring( allKeyCodes.length()-45,allKeyCodes.length());
+            allKeyCodes = allKeyCodes.substring( allKeyCodes.length()-45);
         }
         tvGamepadAllKeyCodes.setText(allKeyCodes);
     }
@@ -614,7 +612,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         setContentView(R.layout.gamepad_test);
         //put pointer to this activity's handler in main app's shared variable
-        myGesture = new GestureDetector(this);
+//        myGesture = new GestureDetector(this);
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -691,9 +689,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.gamepad_test_msg_handler = new gamepad_test_handler();
+        mainapp.gamepad_test_msg_handler = new gamepad_test_handler(Looper.getMainLooper());
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -760,30 +758,33 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, GPTMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(GPTMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, GPTMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(GPTMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
     @SuppressLint("HandlerLeak")
     class gamepad_test_handler extends Handler {
+
+        public gamepad_test_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             //noinspection SwitchStatementWithTooFewBranches

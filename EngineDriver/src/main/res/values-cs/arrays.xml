@@ -440,12 +440,12 @@
         <item>Vyplnit - V případě potřeby zkřivit</item>
     </string-array>
 
-    <string-array name="prefThrottleSwitchWebViewEntries">  <!-- display version -->
-        <item>Žádný</item>
-        <item>Pouze první rozvržení</item>
-        <item>Pouze druhé rozvržení</item>
-        <item>První i druhé rozvržení</item>
-    </string-array>
+<!--    <string-array name="prefThrottleSwitchWebViewEntries">  &lt;!&ndash; display version &ndash;&gt;-->
+<!--        <item>Žádný</item>-->
+<!--        <item>Pouze první rozvržení</item>-->
+<!--        <item>Pouze druhé rozvržení</item>-->
+<!--        <item>První i druhé rozvržení</item>-->
+<!--    </string-array>-->
 
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->

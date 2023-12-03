@@ -8,6 +8,7 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Surface;
 import android.widget.Toast;
@@ -16,9 +17,7 @@ import jmri.enginedriver.R;
 
 /**
  * Represents an on-device flashlight.
- *
  * Provides different methods to operate depending on the device API level
- *
  * @author Matthew Harris  Copyright (C) 2018.
  */
 
@@ -73,14 +72,11 @@ public abstract class Flashlight {
 
     /**
      * Concrete implementation for Froyo API8 (and later) devices
-     *
      * This uses the legacy {@link android.hardware.Camera} API.
-     *
      * On certain devices, we need to ensure that the orientation of the camera preview
      * matches that of the activity, otherwise 'bad things happen' using the newly available
      * {@link android.hardware.Camera#setDisplayOrientation(int)} method.
      */
-    @TargetApi(Build.VERSION_CODES.FROYO)
     private static class FroyoFlashlight extends Flashlight {
         private static Camera camera;
 
@@ -146,10 +142,10 @@ public abstract class Flashlight {
 
     /**
      * Concrete implementation for Marshmallow API 23 (and later) devices
-     *
      * This uses the {@link android.hardware.camera2.CameraManager#setTorchMode(String, boolean)}
      * method now available in API 23 to greatly simplify things.
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @TargetApi(Build.VERSION_CODES.M)
     private static class MarshmallowFlashlight extends Flashlight {
 

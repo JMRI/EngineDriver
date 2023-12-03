@@ -51,7 +51,8 @@
                 <ImageView
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
+                    android:layout_height="fill_parent"
+                    tools:ignore="ContentDescription" >
                 </ImageView>
 
                 <LinearLayout
@@ -193,7 +194,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_0"
+                                        android:id="@+id/loco_left_direction_indication_0"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -221,7 +222,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_0"
+                                        android:id="@+id/loco_right_direction_indication_0"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -308,7 +309,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -342,7 +343,8 @@
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
                                         android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                        android:text="@string/functionButton01DefaultValue" />
+                                        android:text="@string/functionButton01DefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_horn_0"
@@ -350,7 +352,8 @@
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
                                         android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                        android:text="@string/functionButton02DefaultValue" />
+                                        android:text="@string/functionButton02DefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_horn_short_0"
@@ -358,7 +361,8 @@
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
                                         android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                        android:text="@string/soundsButtonHornShortDefaultValue" />
+                                        android:text="@string/soundsButtonHornShortDefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_0"
@@ -366,7 +370,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 
@@ -655,7 +660,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_1"
@@ -714,7 +719,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_1"
+                                        android:id="@+id/loco_left_direction_indication_1"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -742,7 +747,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_1"
+                                        android:id="@+id/loco_right_direction_indication_1"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -829,7 +834,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -837,42 +842,48 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_1"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_mute_1"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/deviceSoundsMuteButton" />
+                                        android:text="@string/deviceSoundsMuteButton"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_bell_1"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/functionButton01DefaultValue" />
+                                        android:text="@string/functionButton01DefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_horn_1"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/functionButton02DefaultValue" />
+                                        android:text="@string/functionButton02DefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/device_sounds_horn_short_1"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/soundsButtonHornShortDefaultValue" />
+                                        android:text="@string/soundsButtonHornShortDefaultValue"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_1"
@@ -880,7 +891,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 
@@ -1158,7 +1170,7 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_2"
@@ -1169,7 +1181,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_2"
@@ -1184,7 +1196,7 @@
                                     android:paddingRight="0dp"
                                     android:text="@string/volume_indicator"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/gamepad_indicator_2"
@@ -1199,7 +1211,7 @@
                                     android:paddingRight="0dp"
                                     android:text=""
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -1228,7 +1240,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_2"
+                                        android:id="@+id/loco_left_direction_indication_2"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -1256,7 +1268,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_2"
+                                        android:id="@+id/loco_right_direction_indication_2"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -1343,7 +1355,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -1351,14 +1363,16 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_2"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_2"
@@ -1366,7 +1380,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 
@@ -1644,7 +1659,7 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_3"
@@ -1655,7 +1670,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_3"
@@ -1670,7 +1685,7 @@
                                     android:paddingRight="0dp"
                                     android:text="@string/volume_indicator"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/gamepad_indicator_3"
@@ -1685,7 +1700,7 @@
                                     android:paddingRight="0dp"
                                     android:text=""
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -1714,7 +1729,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_3"
+                                        android:id="@+id/loco_left_direction_indication_3"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -1742,7 +1757,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_3"
+                                        android:id="@+id/loco_right_direction_indication_3"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -1829,7 +1844,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -1837,14 +1852,16 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_3"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_3"
@@ -1852,7 +1869,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 
@@ -2130,7 +2148,7 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_4"
@@ -2141,7 +2159,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_4"
@@ -2156,7 +2174,7 @@
                                     android:paddingRight="0dp"
                                     android:text="@string/volume_indicator"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/gamepad_indicator_4"
@@ -2171,7 +2189,7 @@
                                     android:paddingRight="0dp"
                                     android:text=""
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -2200,7 +2218,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_4"
+                                        android:id="@+id/loco_left_direction_indication_4"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -2228,7 +2246,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_4"
+                                        android:id="@+id/loco_right_direction_indication_4"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -2315,7 +2333,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -2323,14 +2341,16 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_4"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_4"
@@ -2338,7 +2358,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 
@@ -2616,7 +2637,7 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/label_percent"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_5"
@@ -2627,7 +2648,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="36sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_5"
@@ -2642,7 +2663,7 @@
                                     android:paddingRight="0dp"
                                     android:text="@string/volume_indicator"
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                                 <TextView
                                     android:id="@+id/gamepad_indicator_5"
@@ -2657,7 +2678,7 @@
                                     android:paddingRight="0dp"
                                     android:text=""
                                     android:textSize="12sp"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -2686,7 +2707,7 @@
                                         android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_left_direction_indicaton_5"
+                                        android:id="@+id/loco_left_direction_indication_5"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -2714,7 +2735,7 @@
                                         android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                     <TextView
-                                        android:id="@+id/loco_right_direction_indicaton_5"
+                                        android:id="@+id/loco_right_direction_indication_5"
                                         style="?attr/ed_loco_label_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -2801,7 +2822,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button
@@ -2809,14 +2830,16 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
+                                        android:text="@string/limitSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <Button
                                         android:id="@+id/pause_speed_5"
                                         style="?attr/ed_normal_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                        android:text="@string/pauseSpeedButtonLabel"
+                                        tools:ignore="RtlHardcoded" />
 
                                     <TableLayout
                                         android:id="@+id/function_buttons_table_5"
@@ -2824,7 +2847,8 @@
                                         android:layout_height="wrap_content"
                                         android:paddingLeft="3dp"
                                         android:paddingRight="0dp"
-                                        android:stretchColumns="0">
+                                        android:stretchColumns="0"
+                                        tools:ignore="RtlHardcoded">
 
                                         <TableRow>
 

@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
 
 @SuppressWarnings("UnnecessaryContinue")
 public class RosterEntry {
@@ -400,7 +401,7 @@ public class RosterEntry {
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
             functionLockables = new boolean[getMAXFNNUM() + 1]; // counts zero
-            for (int i = 0; i < functionLockables.length; i++) functionLockables[i] = true;
+            Arrays.fill(functionLockables, true);
         }
         if (fn >= 0 && fn <= getMAXFNNUM()) {
             functionLockables[fn] = lockable;

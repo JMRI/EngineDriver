@@ -16,10 +16,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Sortir</string>
     <string name="settings">Funcions per defecte</string>
-    <string name="fb_label">Etiquetes de funcions</string>
+<!--    <string name="fb_label">Etiquetes de funcions</string>-->
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
-    <string name="function_buttons">botons_de_funcions</string>
+<!--    <string name="function_buttons">botons_de_funcions</string>-->
     <string name="introMenu">Introducció</string>
 
     <string name="app_description">Engine Driver - Un Controlador per al teu telèfon Android. Aquesta aplicació permet connectar a servidors Withrottle com el JMRI, MRC o Digitrax, i tripular les teves Locomotores. La velocitat, la direcció, i més de 29 funcions DCC estan suportades per a una o dues Locomotores</string>
@@ -50,7 +50,7 @@
     <string name="notification_text">Prémer per reobrir Engine Driver</string>
     <string name="host_ip">Nom del Host o Adreça</string>
     <string name="port">Port</string>
-    <string name="loco_address">Adreça de Locomotora</string>
+<!--    <string name="loco_address">Adreça de Locomotora</string>-->
     <string name="connect_button">Connectar</string>
     <string name="recent_connections">Connexions recents</string>
     <string name="select_loco_heading">Adquirir Locomotora, mètode - Controlador %1$s</string>
@@ -59,10 +59,10 @@
     <string name="acquire_button">Adquirir</string>
     <string name="roster_list">Selecciona des de la flota/Tracció Múltiple</string>
     <string name="recent_engines">Selecciona des de Lomotores recents</string>
-    <string name="direction">Adelante</string>
-    <string name="speed">Velocitat:</string>
+<!--    <string name="direction">Adelante</string>-->
+<!--    <string name="speed">Velocitat:</string>-->
     <string name="discovered_services">Descobreix servidors</string>
-    <string name="save_settings">Desa els paràmetres</string>
+<!--    <string name="save_settings">Desa els paràmetres</string>-->
     <string name="stop">Atura</string>
     <string name="forward">Endavant</string>
     <string name="reverse">Enrere</string>
@@ -83,19 +83,19 @@
     <string name="locoPressToSelect">Seleccionar</string>
     <string name="powerWillNotWorkTitle">No funcionarà!</string>
     <string name="powerWillNotWork">JMRI té el control d\'alimentació WiThrottle apagat.\nEliminarà la tecla de corrent de via.\nEs mostrarà de nou quan s\'activi en el JMRI</string>
-    <string name="current_locos">Lomotores seleccionades actualment</string>
+<!--    <string name="current_locos">Lomotores seleccionades actualment</string>-->
     <string name="release">Allibera</string>
-    <string name="releaseThrottleNumber">Allibera Controlador %1$s</string>
+<!--    <string name="releaseThrottleNumber">Allibera Controlador %1$s</string>-->
     <string name="releaseThrottleLocos">Allibera\n %1$s</string>
     <string name="turnouts">Agulles</string>
-    <string name="turnouts_label">Control d\'agulles</string>
+<!--    <string name="turnouts_label">Control d\'agulles</string>-->
     <string name="turnouts_direct_entry_label">Entra agulla#</string>
     <string name="turnouts_location_label">Filtra per localització</string>
     <string name="turnouts_list_label">Agulles (prèm per commutar)</string>
     <string name="turnouts_turnout">Agulla</string>
     <string name="location_all">TOTES LES LOCALITZACIONS</string>
     <string name="routes">Rutes</string>
-    <string name="routes_label">Control de rutes</string>
+<!--    <string name="routes_label">Control de rutes</string>-->
     <string name="routes_direct_entry_label">Entra el nom de la ruta</string>
     <string name="routes_location_label">Filtra per localització</string>
     <string name="routes_list_label">Ruta (prèm per commutar)</string>
@@ -106,7 +106,7 @@
     <string name="close_button">Directe</string>
     <string name="toggle_button">Commuta</string>
     <string name="power_control_label">Control de corrent de via</string>
-    <string name="power_control_button">Desconegut</string>
+<!--    <string name="power_control_button">Desconegut</string>-->
     <string name="press_to_toggle">Prèm per canviar l\'estat de la corrent de via</string>
     <string name="power_control_not_allowed">Control de corrent de via no permès. Modifica\'l a preferències/configuració en el servidor</string>
     <string name="reconnect_label">Intenta reconnectar</string>
@@ -117,8 +117,8 @@
     <string name="sl_recent_engine_notice">Locomotores recents no disponible - No s\'ha trobat targeta SD</string>
     <string name="power">Corrent de via</string>
     <string name="throttle">Controlador</string>
-    <string name="on">Encès</string>
-    <string name="off">Apagat</string>
+<!--    <string name="on">Encès</string>-->
+<!--    <string name="off">Apagat</string>-->
     <string name="set">Estableix</string>
     <string name="disabled">Deshabilitat</string>
     <string name="volume_indicator">v</string>
@@ -128,7 +128,7 @@
     <string name="exit_title">Sortir</string>
     <string name="steal_text">Agafa l\'adreça %1$s?</string>
     <string name="steal_title">Agafa</string>
-    <string name="prefTitle">Preferències</string>
+<!--    <string name="prefTitle">Preferències</string>-->
     <string name="prefSummary">Preferències del Engine Driver</string>
     <string name="preferences">Preferències</string>
     <string name="prefSwipeUpDownTitle">Desplaça cap amunt-avall les preferències</string>
@@ -176,9 +176,9 @@
     <string name="prefGamePadSummary">Escull tipus de gamepad\/USB i altres opcions</string>
     <string name="prefGamePadTypeTitle">Tipus de gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Trieu l\'opció que millor admeti el vostre gamepad</string>
-    <string name="prefGamePadStartButtonTitle">Acció de la tecla d\'inici de gamepad</string>
-    <string name="prefGamePadStartButtonSummary">Trieu l\'acció quan premeu la tecla inici</string>
-    <string name="prefGamePadFeedbackVolumeTitle">% del clic de la tecla del gamepad </string>
+<!--    <string name="prefGamePadStartButtonTitle">Acció de la tecla d\'inici de gamepad</string>-->
+<!--    <string name="prefGamePadStartButtonSummary">Trieu l\'acció quan premeu la tecla inici</string>-->
+    <string name="prefGamePadFeedbackVolumeTitle">\% del clic de la tecla del gamepad </string>
     <string name="prefGamePadFeedbackVolumeSummary">Estableix el percentatge de volum per als clics de la tecla del gamepad</string>
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Retard de repetició de la tecla de velocitat</string>
@@ -297,15 +297,15 @@
 
     <string name="prefMaximumRecentConnectionsSummary">Màxim de connexions recents a mostrar en la llista</string>
     <string name="prefTurnoutsTitle">Preferències d\'agulles i rutes</string>
-    <string name="prefHardwareSystemTitle">Sistema Hardware d\'agulles</string>
+<!--    <string name="prefHardwareSystemTitle">Sistema Hardware d\'agulles</string>-->
 
-    <string name="prefHardwareSystemSummary">Selecciona el hardware del sistema a utilitzar per entrar ordres d\'agulles</string>
+<!--    <string name="prefHardwareSystemSummary">Selecciona el hardware del sistema a utilitzar per entrar ordres d\'agulles</string>-->
     <string name="prefHideSystemRouteNamesTitle">Amaga noms de rutes del sistema?</string>
     <string name="prefHideSystemRouteNamesSummary">Amaga noms del sistema per a les rutes, utilizat per estalviar espai en la llista de rutes</string>
     <string name="prefDelimiterTitle">Delimitador d\'ubicació</string>
 
     <string name="prefDelimiterSummary">Estableix el caràcter per a marcar el final d\'una localització d\'una agulla i nom de rutes</string>
-    <string name="prefScreenBrightnessDimTitle">Canvia % la brillantor de la pantalla</string>
+    <string name="prefScreenBrightnessDimTitle">Canvia \% la brillantor de la pantalla</string>
     <string name="prefScreenBrightnessDimSummary">Paràmetres de la brillantor a utilizar quan la canviem en la pantalla (0%-99%). Deshabilita automàticament Brillantor-automàtic, adapta brillantor si es possible. </string>
 
     <string name="logViewer">Veure Log</string>
@@ -362,8 +362,8 @@
     <string name="prefAutoImportExportTitle">Importació/exportació específica de host automàtic</string>
     <string name="prefAutoImportExportSummary">En cada connexió amb un host, AUTOMÀTICAMENT \'Importa\' les preferències per aquest host, i opcionalment \'Exporta\' quan desconecti. \n(Per a restablir constantment a un estat conegut, estableix en \'Importació automàtica tan sols al connectar\' després de la primera vegada, o després de desar-ho manualment (a continuació).)</string>
 
-    <string name="prefImportServerManualTitle">Importa des del servidor actual (manualment)</string>
-    <string name="prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència</string>
+<!--    <string name="prefImportServerManualTitle">Importa des del servidor actual (manualment)</string>-->
+<!--    <string name="prefImportServerManualSummary">Fitxer del servidor a \'Importar\' un conjunt de preferències del servidor actualment connectat.\nEl fitxer ha d\'estar al \'/\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' del servidor i el servidor web ha d\'estar executat.\nObjectiu: la importació començarà immediatament a desar aquesta preferència</string>-->
 
     <string name="prefImportServerAutoTitle">Importació automàtica de tots els servidors</string>
     <string name="prefImportServerAutoSummary">Importa automàticament les preferències dels servidors a la connexió.\n(Si el fitxer \'\\engine_driver\' folder to \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' està al servidor i si és més recent que s\'hagi verificat l\'última vegada.)</string>
@@ -412,8 +412,8 @@
 
     <string name="prefHideDemoServerTitle">Amaga la demo del servidor</string>
     <string name="prefHideDemoServerSummary">Amaga la demo del servidor\'jmri.mstevetodd.com\' en la llista de connexions</string>
-    <string name="prefDirectionButtonsTitle">Etiquetes de les tecles de direcció</string>
-    <string name="prefDirectionButtonsSummary">Etiquetes per a totes les tecles de direcció</string>
+<!--    <string name="prefDirectionButtonsTitle">Etiquetes de les tecles de direcció</string>-->
+<!--    <string name="prefDirectionButtonsSummary">Etiquetes per a totes les tecles de direcció</string>-->
 
 
     <string name="prefAccelerometerTitle">Preferencies de l\'acceleròmetre</string>
@@ -478,7 +478,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Pantalla del Controlador aclarida - Llisca cap amunt per a restaurar</string>
     <string name="toastSwipeUpViewHidden">Vista web temporalment oculta. Per ocultar-la permanenment realitza canvis en les preferències</string>
     <string name="toastThrottleAlertEstop">Alerta: Engine %1$s establert a ESTOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit</string>
+<!--    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit</string>-->
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">El valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s</string>
@@ -486,17 +486,17 @@
     <string name="toastPreferencesResetSucceeded">¡Reinicia les preferències a valors per defecte!</string>
     <string name="toastPreferencesImportServerManualFailed">La importació del servidor ha fallat. Comproveu que el fitxer és correcte. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Preferències importar des del fitxer S\'ha superat</string>
+<!--    <string name="toastPreferencesImportSucceeded">Preferències importar des del fitxer S\'ha superat</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema</string>
     <string name="toastPreferencesThrottleChangeSucceeded">S\'ha produït un canvi de tipus de modificació de la pàgina de successos</string>
     <string name="toastPreferencesLocaleChangeSucceeded">S\'ha produït un canvi en l\'idioma</string>
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Número d\'agulla incorrecte</string>
-    <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %1$s</string>
-    <string name="toastTurnoutCommandToClose">Directe</string>
-    <string name="toastTurnoutCommandToThrow">Desviada</string>
-    <string name="toastTurnoutCommandToToggle">Commuta</string>
+<!--    <string name="toastTurnoutCommandTo">Comanda enviada a l\'agulla %1$s</string>-->
+<!--    <string name="toastTurnoutCommandToClose">Directe</string>-->
+<!--    <string name="toastTurnoutCommandToThrow">Desviada</string>-->
+<!--    <string name="toastTurnoutCommandToToggle">Commuta</string>-->
     <string name="toastConnectEnterAddress">Entra o selecciona una adreça i un port</string>
     <string name="toastConnectInvalidPort">Port incorrecte, reintenta-ho</string>
     <string name="toastConnectConnected">Connectat al Servidor: %1$s Port: %2$s</string>
@@ -507,15 +507,15 @@
     <string name="toastConnectRemoveDemoHostError">El servidor de "demo" només es pot eliminar mitjançant la modificació de les preferències</string>
     <string name="toastConnectRemoved">Servidor esborrat de la llista</string>
 
-    <string name="toastRoutesCommandSent">"Comanda enviada per establir la ruta"</string>
+<!--    <string name="toastRoutesCommandSent">"Comanda enviada per establir la ruta"</string>-->
     <string name="toastImportExportExportSucceeded">L\'exportació de preferències a \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha tingut èxit</string>
     <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha tingut èxit</string>
     <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha fallat!</string>
     <string name="toastImportExportImportFailed">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha fallat!</string>
     <string name="toastImportExportServerImportFailed">Preferències no importades des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host</string>
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host</string>
-    <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host</string>
-    <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores recents prement la tecla \'Netejar llista\' DE NOU</string>
+<!--    <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host</string>-->
+<!--    <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores recents prement la tecla \'Netejar llista\' DE NOU</string>-->
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Inici de sessió iniciat al fitxer %1$s. El registre continuarà fins que surti de l\’aplicació Engine Driver</string>
@@ -594,7 +594,7 @@
     <string name="prefRosterFilterTitle">Filtre de la flota</string>
     <string name="prefRosterFilterSummary">Només s\'inclouen les entrades de la flota que comencin amb &#8230;</string>
 
-    <string name="FilterRosterList">Filtre</string>
+<!--    <string name="FilterRosterList">Filtre</string>-->
     <string name="FilterRosterListHint">Conté&#8230;</string>
 
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
@@ -634,7 +634,7 @@
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
     <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\'! No has desat les preferències per aquest host</string>
     <string name="prefImportExportErrorNotConnected">No connectat a un host</string>
-    <string name="logViewerTitle">Activitat en visualitzador de Logs | Nom del Controlador: %1$s</string>
+<!--    <string name="logViewerTitle">Activitat en visualitzador de Logs | Nom del Controlador: %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">DAVANTERA</string>
@@ -642,7 +642,6 @@
 
     <string name="prefConsistFollowRuleStyleTitle">Funcions de Tracció Múltiple: segueix l\'estil de regla</string>
     <string name="prefConsistFollowRuleStyleSummary">Quin estil de regles de Tracció Múltiple es seguirà quan es pressionen les tecles de funció</string>
-    <string name="prefConsistFollowRuleStyleDefaultValue">Original</string>
 
     <string name="prefConsistFollowTitle">Preferències de funcions en Tracció Múltiple</string>
     <string name="prefConsistFollowSummary">Opcions de com es comportaran les funcions en una Tracció Múltiple</string>
@@ -650,8 +649,6 @@
     <string name="prefConsistFollowString1DefaultValue">LLUM</string>
     <string name="prefConsistFollowString2DefaultValue">XIULET,BOTZINA,CAMPANA</string>
     <string name="prefConsistFollowStringOtherDefaultValue" />
-    <string name="prefConsistFollowAction1DefaultValue" translatable="false">lead</string>
-    <string name="prefConsistFollowAction2DefaultValue" translatable="false">lead</string>
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
 
     <string name="prefConsistFollowDefaultActionTitle">Si fallen Tots els partits Acció</string>
@@ -720,7 +717,7 @@
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver necessita permisos GEOLOCALITZACIO per obtenir informació de la connexó wifi SSID</string>
     <string name="permissionsVIBRATE">Engine Driver necessita permisos vibrar per proporcionar informació addicional</string>
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada</string>
-    <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació</string>
+<!--    <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació</string>-->
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
     <string name="permissionsRetryButton">Torneu a provar</string>
     <string name="permissionsRequestTitle">Permisos necessaris</string>
@@ -765,7 +762,7 @@
     <string name="edit_consist_lights_throttle_5">Edita llums de la TM Regulador 5</string>
     <string name="edit_consist_lights_throttle_6">Edita llums de la TM Regulador 6</string>
     <string name="LocoSelectMethodRecentConsist">Tracció múltiples recents</string>
-    <string name="toastSelectConsistsConfirmClear">Confirma que vols eliminar totes les Traccions Múltiples recents prement la tecla \'Esborrar llista\' DE NOU</string>
+<!--    <string name="toastSelectConsistsConfirmClear">Confirma que vols eliminar totes les Traccions Múltiples recents prement la tecla \'Esborrar llista\' DE NOU</string>-->
     <string name="toastRecentConsistsHelp">Toca per seleccionar Tracció Múltiple.\nUn toc llarg per canviar el nom.\nLliscar cap a la dreta per eliminar una entrada</string>
     <string name="toastRecentsHelp">Toca per seleccionar una entrada recent.\nUn toc llarg per canviar el nom.\nLliscar cap a la dreta per eliminar una entrada</string>
     <string name="toastRosterHelp">Toca per seleccionar una entradda de la flota.\nUn toc llarg per a més detalls</string>
@@ -792,9 +789,9 @@
     <string name="turnoutsSelectionTypeHeading">Mètode de selecció d\'agulles</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definit</string>
     <string name="turnoutsRecentHeading">Agulles recents</string>
-    <string name="toastRecentTurnoutCleared">Agulla eliminada de la llista</string>
-    <string name="toastRecentTurnoutsConfirmClear">Confirma que vols eliminar totes les agulles recents prement la tecla \'Esborrar llista\' DE NOU</string>
-    <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada</string>
+<!--    <string name="toastRecentTurnoutCleared">Agulla eliminada de la llista</string>-->
+<!--    <string name="toastRecentTurnoutsConfirmClear">Confirma que vols eliminar totes les agulles recents prement la tecla \'Esborrar llista\' DE NOU</string>-->
+<!--    <string name="toastTurnoutsRecentsHelp">Pulsació llarga per eliminar una entrada</string>-->
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Canvia la zona morta del control lliscant</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Estableix la mida de la zona morta en el control lliscant de velocitat</string>
     <string name="dialogConfirmClearTitle">Neteja la llista</string>
@@ -864,7 +861,7 @@
     <string name="prefSwipeThroughWebSummary">Incloure pantalla Web quan lliscar entre les pantalles</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Lliscar a través del web deshabilitat</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per carregar i llegfir les preferències.</string>-->
-    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver Engine necesita permisos per activar o desactivar les dades mòbils.</string>
+<!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver Engine necesita permisos per activar o desactivar les dades mòbils.</string>-->
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
     <string name="prefFeedbackOnDisconnectTitle">Retroalimentació sobre la Desconnexió</string>
     <string name="prefFeedbackOnDisconnectSummary">Reproduir so i vibració en desconnexións inesperades</string>
@@ -890,10 +887,10 @@
     <string name="prefKidsTimerEnableReverseSummary">Activa el botó invers.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permetre el revés</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmeu que voleu eliminar totes les connexions recents</string>
-    <string name="introAndroid11Title">Canvis Android 11</string>
-    <string name="introAndroid11Summary">A causa dels canvis aplicats per Google per a Android 11, la ubicació on s\'emmagatzemen els fitxers del controlador del motor han de ser traslladats de la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\jmri.enginedriver\\files\'. Les vostres dades es copiaran automàticament a aquesta nova carpeta.</string>
-    <string name="introAndroid11Summary1">El controlador del motor no pot eliminar els fitxers originals a \'\\engine_driver\', però ja no es necessiten ni s\'utilitzaran. Per tant, podeu eliminar-los manualment si ho desitgeu.</string>
-    <string name="introAndroid11Summary2">Nota: Si desinstal·leu l\'aplicació, tots els fitxers d\'aquesta nova carpeta (incloses les preferències exportades) s\'eliminaran automàticament. Per tant, és important copiar els fitxers en altres llocs abans de suprimir l\'aplicació.</string>
+<!--    <string name="introAndroid11Title">Canvis Android 11</string>-->
+<!--    <string name="introAndroid11Summary">A causa dels canvis aplicats per Google per a Android 11, la ubicació on s\'emmagatzemen els fitxers del controlador del motor han de ser traslladats de la carpeta \'\\engine_driver\' a la carpeta \'\\Android\\data\\jmri.enginedriver\\files\'. Les vostres dades es copiaran automàticament a aquesta nova carpeta.</string>-->
+<!--    <string name="introAndroid11Summary1">El controlador del motor no pot eliminar els fitxers originals a \'\\engine_driver\', però ja no es necessiten ni s\'utilitzaran. Per tant, podeu eliminar-los manualment si ho desitgeu.</string>-->
+<!--    <string name="introAndroid11Summary2">Nota: Si desinstal·leu l\'aplicació, tots els fitxers d\'aquesta nova carpeta (incloses les preferències exportades) s\'eliminaran automàticament. Per tant, és important copiar els fitxers en altres llocs abans de suprimir l\'aplicació.</string>-->
     <string name="prefDeviceSoundsCategoryTitle">Al telèfon de telèfon sona el volum</string>
     <string name="prefDeviceSounds0Summary">Juga Basic Loco sona al telèfon per accelerar-se 1</string>
     <string name="prefDeviceSounds0Title">Accés 1 Loco sona</string>
@@ -935,7 +932,7 @@
     <string name="prefGamepadOnlyOneGamepadSummary">Si el controlador del motor activat no comprovarà si hi ha diversos jocs.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Només un Gamepad?</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Estat de reconnexió</string>
-    <string name="clearConsistsList">Clear consisteix a la llista</string>
+<!--    <string name="clearConsistsList">Clear consisteix a la llista</string>-->
     <string name="gamepad_test_reset">Restabliment complet dels jocs</string>
     <string name="limitSpeedButtonLabel">Velocitat límit</string>
     <string name="prefActionBarShowServerDescriptionSummary">Mostra la descripció del servidor actual a la barra d\'acció</string>
@@ -953,44 +950,44 @@
     <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Màxim</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
-    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>
+<!--    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>-->
     <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
     <string name="prefGamePadDoublePressStopSummary">Trieu l\'acció quan premeu qualsevol botó que es configuri com a \"parar\"</string>
     <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
-    <string name="prefDCCEXSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
-    <string name="prefDCCEXTitle">Utilitzeu ordres natives DCC-EX</string>
+    <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
+    <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Utilitzeu les ordres natives DCC-EX (no withrottle)</string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
-    <string name="prefDCCEXconnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
-    <string name="prefDCCEXconnectionOptionTitle">Mostra l\'opció de protocol</string>
+    <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
+    <string name="prefDccexConnectionOptionTitle">Mostra l\'opció de protocol</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra el botó a la barra d’acció per accedir a la pantalla ECC-EX. (Només per a connexions natives DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acció</string>
     <string name="DCCEXclearCommands">Clar</string>
-    <string name="DCCEXconnectionOptionTitle">Protocol de connexió</string>
-    <string name="DCCEXFailed">L\'acció ha fallat</string>
-    <string name="DCCEXnextCommandButtonLabel">Pròxim</string>
-    <string name="DCCEXpreviousCommandButtonLabel">Previ</string>
-    <string name="DCCEXreadAddressButtonLabel">Llegir</string>
+    <string name="DccexConnectionOptionTitle">Protocol de connexió</string>
+    <string name="DccexFailed">L\'acció ha fallat</string>
+    <string name="DccexNextCommandButtonLabel">Pròxim</string>
+    <string name="DccexPreviousCommandButtonLabel">Previ</string>
+    <string name="DccexReadAddressButtonLabel">Llegir</string>
     <string name="DCCEXrouteHandoff">Mà</string>
     <string name="DCCEXrouteSet">Conjunt</string>
-    <string name="DCCEXsendCommandButtonLabel">Enviar</string>
+    <string name="DccexSendCommandButtonLabel">Enviar</string>
     <string name="DCCEXsetTrackButtonLabel">Conjunt</string>
-    <string name="DCCEXSucceeded">L\'acció va tenir èxit</string>
+    <string name="DccexSucceeded">L\'acció va tenir èxit</string>
     <string name="DCCEXturnoutClosed">Tancada</string>
     <string name="DCCEXturnoutInconsistent">Incomponent</string>
     <string name="DCCEXturnoutThrown">Llençada</string>
     <string name="DCCEXturnoutUnknown">Desconeguda</string>
-    <string name="DCCEXwriteAddressButtonLabel">Escriure</string>
-    <string name="DCCEXwriteAddressLabel">Adreça DCC</string>
-    <string name="DCCEXwriteCvValueLabel">Valorar</string>
+    <string name="DccexWriteAddressButtonLabel">Escriure</string>
+    <string name="DccexWriteAddressLabel">Adreça DCC</string>
+    <string name="DccexWriteCvValueLabel">Valorar</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos Read_Media_Images per carregar imatges de fons.</string>
-    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>
+<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>
-    <string name="prefDCCEXPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>
-    <string name="prefDCCEXPreferencesSummary">Opcions per utilitzar un EX-CommandStation</string>
+    <string name="prefDccexPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>
+    <string name="prefDccexPreferencesSummary">Opcions per utilitzar un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Utilitzeu sempre etiquetes de funcions des del servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quan es desactivi, utilitzeu etiquetes predeterminades EnginedRiver per a locos seleccionats per adreça (no classificació), ignorant les etiquetes predeterminades del servidor.</string>
 </resources>

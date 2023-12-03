@@ -24,11 +24,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
+//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -36,7 +37,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -81,11 +81,9 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
 
     private SharedPreferences prefs;
-
-    private Toolbar toolbar;
 
     public void refreshConsistLists() {
         //clear and rebuild
@@ -135,6 +133,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     @SuppressLint("HandlerLeak")
     class ConsistLightsEditHandler extends Handler {
 
+        public ConsistLightsEditHandler(Looper looper) {
+            super(looper);
+        }
+
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
@@ -176,14 +178,15 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     /**
      * Called when the activity is first created.
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,8 +200,8 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
         setContentView(R.layout.consist_lights);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.consist_lights_edit_msg_handler = new ConsistLightsEditHandler();
-        myGesture = new GestureDetector(this);
+        mainapp.consist_lights_edit_msg_handler = new ConsistLightsEditHandler(Looper.getMainLooper());
+//        myGesture = new GestureDetector(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -231,7 +234,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
             //When an entry is clicked, toggle the lights state for that loco
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
+                ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
                 TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
                 String address = addrv.getText().toString();
 
@@ -283,14 +286,15 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
             }
         });
 
-        OnTouchListener gestureListener = new OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                mainapp.buttonVibration();
-                return myGesture.onTouchEvent(event);
-            }
-        };
-
-        consistLV.setOnTouchListener(gestureListener);
+//        OnTouchListener gestureListener = new OnTouchListener() {
+//            @SuppressLint("ClickableViewAccessibility")
+//            public boolean onTouch(View v, MotionEvent event) {
+//                mainapp.buttonVibration();
+//                return myGesture.onTouchEvent(event);
+//            }
+//        };
+//
+//        consistLV.setOnTouchListener(gestureListener);
 
 //        consistObjList = new ArrayList<>();
 
@@ -302,7 +306,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         refreshConsistLists();
         result = RESULT_OK;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -374,26 +378,24 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, CLEMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(CLEMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, CLEMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(CLEMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

@@ -51,7 +51,7 @@ public class throttle_switching_left_or_right extends throttle {
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
-    private static final int TICK_TYPE_0_100 = 0;
+//    private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
     private int[] throttleMidPointZero = {0,0,0,0,0,0};
@@ -76,7 +76,7 @@ public class throttle_switching_left_or_right extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        maxThrottlePcnt = mainapp.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
@@ -416,7 +416,7 @@ public class throttle_switching_left_or_right extends throttle {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
-//        int sep = (int) (denScale * 12); // seperator
+//        int sep = (int) (denScale * 12); // separator
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
 //        int throttleWidth = (screenWidth - (sep * (mainapp.numThrottles-1)))/ mainapp.numThrottles;
@@ -436,7 +436,7 @@ public class throttle_switching_left_or_right extends throttle {
                 screenHeight = screenHeight - titleBar;
             }
         }
-        int keepHeight = screenHeight;  // default height
+//        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
@@ -470,7 +470,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         LinearLayout.LayoutParams stopButtonParams;
         stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        int prefVerticalStopButtonMargin = mainapp.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
+        int prefVerticalStopButtonMargin = threaded_application.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
         stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
@@ -648,6 +648,7 @@ public class throttle_switching_left_or_right extends throttle {
             limitedJump[whichThrottle] = false;
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             // Log.d("Engine_Driver", "onTouchThrottle action " + event.getAction());
@@ -793,12 +794,12 @@ public class throttle_switching_left_or_right extends throttle {
     int speedChange(int whichThrottle, int change) {
 
         VerticalSeekBar switchingThrottleSlider = getSwitchingThrottleSlider(whichThrottle);
-        double displayUnitScale = getDisplayUnitScale(whichThrottle);
+//        double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSliderPosition = switchingThrottleSlider.getProgress();
         int lastScaleSpeed;
         int scaleSpeed;
         int speed;
-        int lastSpeed;
+//        int lastSpeed;
 
         if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
             change = change * -1;
@@ -994,6 +995,7 @@ public class throttle_switching_left_or_right extends throttle {
             whichThrottle = new_whichThrottle;
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_UP) {

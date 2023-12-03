@@ -32,7 +32,6 @@ import jmri.enginedriver.R;
 
 public class intro_alert extends Fragment {
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_alert");

@@ -144,8 +144,8 @@ public class threaded_application extends Application {
     public String[] routeSystemNames;
     public String[] rt_user_names;
     public String[] routeStates;
-    public String[] routeDCCEXlabels; // only used by the DCC-EX protocol
-    public int[] routeDCCEXstates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
+    public String[] routeDccexLabels; // only used by the DCC-EX protocol
+    public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
     public Map<String, String> consist_entries;
@@ -203,17 +203,17 @@ public class threaded_application extends Application {
 
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
-    public boolean prefDCCEX = false;
+    public boolean prefDccex = false;
     public boolean prefAlwaysUseFunctionsFromServer = false;
-    public String DCCEXversion = "";
+    public String DccexVersion = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
-    public boolean DCCEXscreenIsOpen = false;
+    public boolean dccexScreenIsOpen = false;
 
-    public int [] DCCEXtrackType = {1, 2, 0, 0, 0, 0, 0, 0};
-    public int [] DCCEXtrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
-    public boolean [] DCCEXtrackAvailable = {false, false, false, false, false, false, false, false};
-    public String [] DCCEXtrackId = {"", "", "", "", "", "", "", ""};
+    public int [] DccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
+    public int [] DccexTrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
+    public boolean [] DccexTrackAvailable = {false, false, false, false, false, false, false, false};
+    public String [] DccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
 
     public String rosterStringDCCEX = ""; // used to process the roster list
@@ -222,8 +222,8 @@ public class threaded_application extends Application {
     public String [] rosterLocoFunctionsDCCEX;  // used to process the roster list
     public boolean [] rosterDetailsReceivedDCCEX;  // used to process the roster list
 
-    public int DCCEXpreviousCommandIndex = -1;
-    public ArrayList<String> DCCEXpreviousCommandList = new ArrayList<>();
+    public int dccexPreviousCommandIndex = -1;
+    public ArrayList<String> dccexPreviousCommandList = new ArrayList<>();
 
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
@@ -259,7 +259,7 @@ public class threaded_application extends Application {
     public volatile Handler power_control_msg_handler;
     public volatile Handler dcc_ex_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
-    public volatile Handler preferences_msg_handler;
+//    public volatile Handler preferences_msg_handler;
     public volatile Handler settings_msg_handler;
     public volatile Handler logviewer_msg_handler;
     public volatile Handler about_page_msg_handler;
@@ -274,7 +274,7 @@ public class threaded_application extends Application {
 
     //these constants are used for onFling
     public static final int SWIPE_MIN_DISTANCE = 120;
-    public static final int SWIPE_MAX_OFF_PATH = 250;
+//    public static final int SWIPE_MAX_OFF_PATH = 250;
     public static final int SWIPE_THRESHOLD_VELOCITY = 200;
     public static int min_fling_distance;           // pixel width needed for fling
     public static int min_fling_velocity;           // velocity needed for fling
@@ -333,7 +333,7 @@ public class threaded_application extends Application {
     public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
     public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
     public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 14;
-    public static final int FORCED_RESTART_REASON_GAMEPAD_RESET = 15;
+//    public static final int FORCED_RESTART_REASON_GAMEPAD_RESET = 15;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
@@ -379,7 +379,7 @@ public class threaded_application extends Application {
     public boolean prefThrottleViewImmersiveModeHideToolbar = true;
     public boolean prefActionBarShowServerDescription = false;
 
-    public static final String HAPTIC_FEEDBACK_NONE = "None";
+//    public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
 
@@ -442,8 +442,8 @@ public class threaded_application extends Application {
 
     public int[] soundsLocoSteps = new int[2];
 
-    private static final int SOUNDS_STARTUP_INDEX = 20;
-    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
+//    private static final int SOUNDS_STARTUP_INDEX = 20;
+//    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
@@ -466,7 +466,7 @@ public class threaded_application extends Application {
     public float[] gamePadLastyAxis2 = {0, 0, 0, 0, 0, 0, 0};
 
     public static final int GAMEPAD_GOOD = 1;
-    public static final int GAMEPAD_BAD = 2;
+//    public static final int GAMEPAD_BAD = 2;
 
     public boolean prefGamePadIgnoreJoystick = false;
 
@@ -503,22 +503,22 @@ public class threaded_application extends Application {
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-            Notification notification =
-                    new Notification.Builder(this)
-                            .setSmallIcon(R.drawable.icon_notification)
-                            .setContentTitle(this.getString(R.string.notification_title))
-                            .setContentText(this.getString(R.string.notification_text))
-                            .setContentIntent(contentIntent)
-                            .setOngoing(true)
-                            .setChannelId(channelId)
-                            .build();
+            Notification.Builder builder = new Notification.Builder(getApplicationContext(), mChannel.getId());
+
+            builder = builder
+                    .setSmallIcon(R.drawable.icon_notification)
+                    .setContentTitle(this.getString(R.string.notification_title))
+                    .setContentText(this.getString(R.string.notification_text))
+                    .setContentIntent(contentIntent)
+                    .setOngoing(true)
+                    .setChannelId(channelId);
 
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             manager.createNotificationChannel(mChannel);
-            manager.notify(ED_NOTIFICATION_ID, notification);
+            manager.notify(ED_NOTIFICATION_ID, builder.build());
         } else {
-            NotificationCompat.Builder builder =
+            @SuppressLint("IconColors") NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.icon)
                             .setContentTitle(this.getString(R.string.notification_title))
@@ -580,7 +580,7 @@ public class threaded_application extends Application {
         }
 
         for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
-            function_states[i] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1];
+            function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1];
         }
 
 //        dlMetadataTask = new DownloadMetaTask();
@@ -934,7 +934,7 @@ public class threaded_application extends Application {
 //            addr_str = cvtToAddrP(addr_str);
 //        }
         // assumes "S123" "L333" type address, not "123(S)"
-        Consist con = null;
+        Consist con;
         int whichThrottle = -1;
         boolean found = false;
         if (consists.length>=startAt) {
@@ -956,14 +956,14 @@ public class threaded_application extends Application {
 
     //convert a string of form L123 to 123(L)
     public String cvtToAddrP(String addr_str) {
-        return addr_str.substring(1) + "(" + addr_str.substring(0, 1) + ")";
+        return addr_str.substring(1) + "(" + addr_str.charAt(0) + ")";
     }
 
     //convert a string of form 123(L) to L123
     public String cvtToLAddr(String addr_str) {
         String[] sa = splitByString(addr_str, "(");  //split on the "("
         if (sa.length == 2) {
-            return sa[1].substring(0, 1) + sa[0]; //move length to front and return format L123
+            return sa[1].charAt(0) + sa[0]; //move length to front and return format L123
         } else {
             return addr_str; //just return input if format not as expected
         }
@@ -992,6 +992,7 @@ public class threaded_application extends Application {
     public void setServerDescription(String serverDescription) {
         this.serverDescription = serverDescription;
     }
+    @SuppressLint("DefaultLocale")
     public String getAboutInfo() {
         String s = "";
         // device info
@@ -1022,7 +1023,7 @@ public class threaded_application extends Application {
                 s += ", Server:" + sServer;
             }
         }
-        if (prefDCCEX) {
+        if (prefDccex) {
             s += ", DCC-EX protocol";
         }
         return s;
@@ -1052,16 +1053,16 @@ public class threaded_application extends Application {
         routeSystemNames = null;
         rt_user_names = null;
         routeStateNames = null;
-        routeDCCEXlabels = null;
-        routeDCCEXstates = null;
+        routeDccexLabels = null;
+        routeDccexStates = null;
 
-        prefDCCEX = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDCCEXDefaultValue));
+        prefDccex = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDccexDefaultValue));
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
-        mainapp.isDCCEX = prefDCCEX;
+        mainapp.isDCCEX = prefDccex;
 
-        DCCEXversion = "";
+        DccexVersion = "";
         DCCEXlistsRequested = -1;
-        DCCEXscreenIsOpen = false;
+        dccexScreenIsOpen = false;
 
         rosterStringDCCEX = "";
         turnoutStringDCCEX = "";
@@ -1070,12 +1071,12 @@ public class threaded_application extends Application {
         try {
             consists = new Consist[maxThrottles];
             function_labels = (LinkedHashMap<Integer, String>[]) new LinkedHashMap<?, ?>[maxThrottles];
-            function_states = new boolean[maxThrottles][mainapp.MAX_FUNCTION_NUMBER+1];
+            function_states = new boolean[maxThrottles][MAX_FUNCTION_NUMBER+1];
 
             for (int i = 0; i < maxThrottles; i++) {
                 consists[i] = new Consist();
                 function_labels[i] = new LinkedHashMap<Integer, String>();
-                function_states[i] = new boolean[mainapp.MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
+                function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
 
                 lastKnownSpeedDCCEX[i] = 0;
                 lastKnownDirDCCEX[i] = 1;
@@ -1981,7 +1982,7 @@ public class threaded_application extends Application {
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
         if (currentValue.equals("") || currentValue.equals(defaultName)) {
-            String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+            String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             if (deviceId != null && deviceId.length() >= 4) {
                 deviceId = deviceId.substring(deviceId.length() - 4);
             } else {
@@ -2258,14 +2259,14 @@ public class threaded_application extends Application {
                 }
                 Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: done");
             } else {
-                this.safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
+                safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
             }
         }
     }
 
     public void getServerNameFromWebServer() {
-        GetJsonFromUrl getJson = new GetJsonFromUrl(this);
-        getJson.execute("http://" + host_ip + ":" + web_server_port + "/json/railroad");
+//        GetJsonFromUrl getJson = new GetJsonFromUrl(this);
+//        getJson.execute("http://" + host_ip + ":" + web_server_port + "/json/railroad");
         webServerNameHasBeenChecked = true;
     }
 
@@ -2327,6 +2328,8 @@ public class threaded_application extends Application {
     @SuppressLint("ApplySharedPref")
     public void updateConnectionList(String retrievedServerName) {
         // if I don't have permissions, don't ask, just ignore
+
+//  commented out as I had not ide why this was being done.. Did not seem to achieve anything
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
@@ -2339,7 +2342,7 @@ public class threaded_application extends Application {
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+        String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         prefs.edit().putString("prefAndroidId", deviceId).commit();
         prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
@@ -2405,7 +2408,7 @@ public class threaded_application extends Application {
     }
 
     public String getDCCEXVersion() {
-        return DCCEXversion;
+        return DccexVersion;
     }
 
     public String getTurnoutState(String turnoutSystemName) {
@@ -2439,13 +2442,13 @@ public class threaded_application extends Application {
     public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle, String clockText) {
         if (toolbar != null) {
             toolbar.setTitle("");
-            TextView tvTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+            TextView tvTitle = toolbar.findViewById(R.id.toolbar_title);
             tvTitle.setText(title);
 
-            TextView tvIconTitle = (TextView) toolbar.findViewById(R.id.toolbar_icon_title);
+            TextView tvIconTitle = toolbar.findViewById(R.id.toolbar_icon_title);
             tvIconTitle.setText(iconTitle);
 
-            TextView tvIconHelp = (TextView) toolbar.findViewById(R.id.toolbar_icon_help);
+            TextView tvIconHelp = toolbar.findViewById(R.id.toolbar_icon_help);
             if (!prefFullScreenSwipeArea) {
                 tvIconHelp.setText("");
             } else {
@@ -2456,9 +2459,9 @@ public class threaded_application extends Application {
             int screenLayout = context.getResources().getConfiguration().screenLayout;
             screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
             if (screenLayout >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
-                tvToolbarServerDesc = (TextView) toolbar.findViewById(R.id.toolbar_server_desc_x_large);
+                tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc_x_large);
             } else {
-                tvToolbarServerDesc = (TextView) toolbar.findViewById(R.id.toolbar_server_desc);
+                tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc);
             }
             if (prefActionBarShowServerDescription) {
                 tvToolbarServerDesc.setText(getServerDescription());

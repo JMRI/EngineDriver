@@ -2,6 +2,7 @@
 <android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -23,7 +24,8 @@
             android:layout_height="56dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/toolbar_icon_title"
@@ -34,21 +36,22 @@
                 android:layout_marginLeft="4dp"
                 android:text="Engine Driver"
                 android:textColor="#fff"
-                android:textSize="8dp"
-                android:textStyle="italic" />
+                android:textSize="8sp"
+                android:textStyle="italic"
+                tools:ignore="HardcodedText,RtlHardcoded" />
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="left"
-                android:src="?attr/ed_icon" />
+                android:src="?attr/ed_icon"
+                tools:ignore="ContentDescription,RtlHardcoded" />
 
             <LinearLayout
-                android:id="@+id/toolbar_icon_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="RtlHardcoded">
 
                 <TextView
                     android:id="@+id/toolbar_icon_help"
@@ -59,7 +62,8 @@
                     android:layout_marginLeft="4dp"
                     android:text=""
                     android:textColor="#fff"
-                    android:textSize="8dp" />
+                    android:textSize="8sp"
+                    tools:ignore="RtlHardcoded" />
 
                 <TextView
                     android:id="@+id/toolbar_server_desc"
@@ -70,8 +74,9 @@
                     android:layout_marginLeft="4dp"
                     android:text=""
                     android:textColor="@color/secondary_text"
-                    android:textSize="8dp"
-                    android:textStyle="italic" />
+                    android:textSize="8sp"
+                    android:textStyle="italic"
+                    tools:ignore="RtlHardcoded" />
             </LinearLayout>
 
         </LinearLayout>
@@ -83,7 +88,8 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="36dp"
             android:layout_marginLeft="36dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/toolbar_clock"
@@ -94,7 +100,7 @@
                 android:layout_marginLeft="0dp"
                 android:text=""
                 android:textColor="#fff"
-                android:textSize="22dp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif-black" />
 
@@ -107,8 +113,9 @@
                 android:layout_marginLeft="0dp"
                 android:text="Engine Driver"
                 android:textColor="#fff"
-                android:textSize="12dp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <TextView
@@ -118,8 +125,9 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/secondary_text"
-            android:textSize="14dp"
-            android:textStyle="italic" />
+            android:textSize="14sp"
+            android:textStyle="italic"
+            tools:ignore="RelativeOverlap,RtlHardcoded" />
 
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

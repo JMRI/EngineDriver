@@ -18,8 +18,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Saída</string>
     <string name="settings">Padrão das Funções</string>
-    <string name="fb_label">Rótulo Função</string>
-    <string name="function_buttons">botões_função</string>
+<!--    <string name="fb_label">Rótulo Função</string>-->
+<!--    <string name="function_buttons">botões_função</string>-->
     <string name="introMenu">Introdução</string>
 
     <string name="app_description">Engine Driver - Controlador para o seu fone Android. Este aplicativo pode conectaro ao JMRI, MRC ou servidor Digitrax WiThrottle, e controlar seus desvios e locomotivas. Velocidade, direção, e até 29 funcções DCC são suportadas para uma ou duas locomotivas.</string>
@@ -50,7 +50,7 @@
     <string name="notification_text">Aperte para reabrir Engine Driver</string>
     <string name="host_ip">Nome Host ou Endereço</string>
     <string name="port">Porta</string>
-    <string name="loco_address">Endereço Locomotiva</string>
+<!--    <string name="loco_address">Endereço Locomotiva</string>-->
     <string name="connect_button">Conectar</string>
     <string name="recent_connections">Conexões Recentes</string>
     <string name="select_loco_heading">Adquira Loco, Método - Controlador %1$s</string>
@@ -59,10 +59,10 @@
     <string name="acquire_button">Adquirir</string>
     <string name="roster_list">Selecionar da Lista/Comboios</string>
     <string name="recent_engines">Selecionar das Locomotivas Recentes</string>
-    <string name="direction">Frente</string>
-    <string name="speed">Velocidade:</string>
+<!--    <string name="direction">Frente</string>-->
+<!--    <string name="speed">Velocidade:</string>-->
     <string name="discovered_services">Servidores Encontrados</string>
-    <string name="save_settings">Salvar Configuração</string>
+<!--    <string name="save_settings">Salvar Configuração</string>-->
     <string name="stop">Pare</string>
     <string name="forward">Frente</string>
     <string name="reverse">Reverso</string>
@@ -87,19 +87,19 @@
     <string name="locoPressToSelect">Selecionar</string>
     <string name="powerWillNotWorkTitle">Não funcionará!</string>
     <string name="powerWillNotWork">JMRI tem regulado o controle de energia WiThrottle para desligado.\nremoverá agora o Ícone de Energia.\nMostrará de novo quando a regulagem JMRI estará ligada.</string>
-    <string name="current_locos">Locomotivas Atualmente Selecionadas</string>
+<!--    <string name="current_locos">Locomotivas Atualmente Selecionadas</string>-->
     <string name="release">Soltar</string>
-    <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>
+<!--    <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>-->
     <string name="releaseThrottleLocos">Soltar\n%1$s</string>
     <string name="turnouts">Desvios</string>
-    <string name="turnouts_label">Controle Desvios</string>
+<!--    <string name="turnouts_label">Controle Desvios</string>-->
     <string name="turnouts_direct_entry_label">Inserir n. Desvio</string>
     <string name="turnouts_location_label">Filtrar por Local</string>
     <string name="turnouts_list_label">Desvios (clicar para alterar direção)</string>
     <string name="turnouts_turnout">Desvio</string>
     <string name="location_all">TODOS OS LOCAIS</string>
     <string name="routes">Rotas</string>
-    <string name="routes_label">Controle Rotas</string>
+<!--    <string name="routes_label">Controle Rotas</string>-->
     <string name="routes_direct_entry_label">Inserir Nome Rota de Sistema</string>
     <string name="routes_location_label">Filtrar por Local</string>
     <string name="routes_list_label">Rota (clicar para ativar)</string>
@@ -109,7 +109,7 @@
     <string name="close_button">Reto</string>
     <string name="toggle_button">Mudar</string>
     <string name="power_control_label">Regulagem Controle Energia da Maquete</string>
-    <string name="power_control_button">desconhecido</string>
+<!--    <string name="power_control_button">desconhecido</string>-->
     <string name="press_to_toggle">Apertar botão para mudar o estado de energia da maquete.</string>
     <string name="power_control_not_allowed">Controle de Energia não permitido. Mudar em Preferências no servidor.</string>
     <string name="reconnect_label">Status Tentativas de Re-conexão</string>
@@ -120,8 +120,8 @@
     <string name="sl_recent_engine_notice">Locomotivas recentes indisponíveis - SD Card não encontrada.</string>
     <string name="power">Energia</string>
     <string name="throttle">Acelerador</string>
-    <string name="on">Ligado</string>
-    <string name="off">Desligado</string>
+<!--    <string name="on">Ligado</string>-->
+<!--    <string name="off">Desligado</string>-->
     <string name="set">Definir</string>
     <string name="disabled">Desabilitado</string>
     <string name="volume_indicator">v</string>
@@ -140,7 +140,7 @@
     <string name="logviewerClose">echar</string>
     <string name="logviewerSave">Comece a gravar para arquivo</string>
 
-    <string name="prefTitle">Preferências</string>
+<!--    <string name="prefTitle">Preferências</string>-->
     <string name="prefSummary">Preferências para Engine Driver</string>
     <string name="preferences">Preferências</string>
     <string name="prefSwipeUpDownTitle">Preferências Deslizar para cima-baixo</string>
@@ -188,9 +188,9 @@
     <string name="prefGamePadSummary">Escolha do tipo de Gamepad\/USB e outras opções</string>
     <string name="prefGamePadTypeTitle">Tipo de Gamepad\/USB</string>
     <string name="prefGamePadTypeSummary">Escolha as opções que melhor suportam seu gamepad.</string>
-    <string name="prefGamePadStartButtonTitle">Ação Botão de Início do Gamepad</string>
-    <string name="prefGamePadStartButtonSummary">Escolha a ação quano aperta o botão Início.</string>
-    <string name="prefGamePadFeedbackVolumeTitle">Volume do Click % do Botão do Gamepad</string>
+<!--    <string name="prefGamePadStartButtonTitle">Ação Botão de Início do Gamepad</string>-->
+<!--    <string name="prefGamePadStartButtonSummary">Escolha a ação quano aperta o botão Início.</string>-->
+    <string name="prefGamePadFeedbackVolumeTitle">Volume do Click \% do Botão do Gamepad</string>
     <string name="prefGamePadFeedbackVolumeSummary">Definir a porcentagem de volume dos clicks dos botões do Gamepad.</string>
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Velocidade  de repetição dos botões de velocidade</string>
@@ -296,12 +296,11 @@
 
     <string name="prefRosterFilterTitle">Filtro da Lista</string>
     <string name="prefRosterFilterSummary">Incluir apenas entradas de lista que iniciem com…</string>
-    <string name="prefRosterFilterDefaultValue" />
-    <string name="FilterRosterList">Filtro</string>
+<!--    <string name="FilterRosterList">Filtro</string>-->
     <string name="FilterRosterListHint">Contém…</string>
     <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
 
-    <string name="LocoSelectMethodQuestion">Método: </string>
+<!--    <string name="LocoSelectMethodQuestion">Método: </string>-->
     <string name="LocoSelectMethodAddress">DCC Endereço</string>
     <string name="LocoSelectMethodRoster">JMRI Lista</string>
     <string name="LocoSelectMethodRecent">Recente</string>
@@ -325,15 +324,15 @@
 
     <string name="prefMaximumRecentConnectionsSummary">Máximo Conexões Recentes para mostrar na lista</string>
     <string name="prefTurnoutsTitle">Preferências Desvios e Rotas</string>
-    <string name="prefHardwareSystemTitle">Sistema Hardware de Desvios</string>
+<!--    <string name="prefHardwareSystemTitle">Sistema Hardware de Desvios</string>-->
 
-    <string name="prefHardwareSystemSummary">Selecionar sistema hardware para seleção direta dos comandos  dos desvios</string>
+<!--    <string name="prefHardwareSystemSummary">Selecionar sistema hardware para seleção direta dos comandos  dos desvios</string>-->
     <string name="prefHideSystemRouteNamesTitle">Esconder Nomes de Sistema das Rotas?</string>
     <string name="prefHideSystemRouteNamesSummary">Esconder Nomes de Sistema das Rotas, usado para economizar espaço nalista de Rotas.</string>
     <string name="prefDelimiterTitle">Delimitador de Localização</string>
 
     <string name="prefDelimiterSummary">Definir caractere que marca o fim da Localização noa nomes de Desvios e Rotas</string>
-    <string name="prefScreenBrightnessDimTitle">Redução de brilho da tela Valor %</string>
+    <string name="prefScreenBrightnessDimTitle">Redução de brilho da tela Valor \%</string>
     <string name="prefScreenBrightnessDimSummary">Luminosidade para uso com redução de brilho da tela (0%-99%). Automaticamente desabilita Auto-Brilho/ Brilho Adaptativo se definido.</string>
 
     <string name="logViewer">Ver Relatório</string>
@@ -390,8 +389,8 @@
     <string name="prefAutoImportExportTitle">Importar/Exportar específico para Auto host</string>
     <string name="prefAutoImportExportSummary">Para cada conexão a um host, \'Importar\' AUTOMATICAMENTE as preferências para aquele host, e opcionalmente \'Exportar\' ao desconectar.  (Para voltar constantemente a um estado conhecido, usar \'Auto Importação somente ao conectar\' após a primeira vez, ou após um salvamento manual (abaixo).)</string>
 
-    <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>
-    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'\\Android\\data\\jmri.enginedriver\\files\\\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>
+<!--    <string name="prefImportServerManualTitle">Importar desde el servidor actual (manualmente)</string>-->
+<!--    <string name="prefImportServerManualSummary">Archivo de servidor para \'Importar\' \'un conjunto de preferencias del servidor conectado actualmente.\nEl archivo debe estar en el \'\\Android\\data\\jmri.enginedriver\\files\\\'del servidor y el servidor web debe estar ejecutándose. \nAdvertencia: la importación comenzará inmediatamente al guardar esta preferencia.</string>-->
 
     <string name="prefImportServerAutoTitle">Importación automática desde todos los servidores</string>
     <string name="prefImportServerAutoSummary">Importa automáticamente las preferencias de los servidores en conexión. \n(Si el archivo \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' está en el servidor y si es más reciente que la última vez que se verificó.)</string>
@@ -444,8 +443,8 @@
 
     <string name="prefHideDemoServerTitle">Esconder Servidor Demo</string>
     <string name="prefHideDemoServerSummary">Esconder o servidor demo \'jmri.mstevetodd.com\' na lista de conexões.</string>
-    <string name="prefDirectionButtonsTitle">Etiquetas Botões Direção</string>
-    <string name="prefDirectionButtonsSummary">Etiquetas para todos os botões direção.</string>
+<!--    <string name="prefDirectionButtonsTitle">Etiquetas Botões Direção</string>-->
+<!--    <string name="prefDirectionButtonsSummary">Etiquetas para todos os botões direção.</string>-->
 
     <string name="prefAccelerometerTitle">Preferências Acelerômetro</string>
     <string name="prefAccelerometerSummary">Oções para movimento do dispositivona Página Controlador</string>
@@ -514,7 +513,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
     <string name="toastSwipeUpViewHidden">Vista Web temporariamente escondida. Para esconder permanentemente alterar as preferências</string>
     <string name="toastThrottleAlertEstop">Alerta: Locomotiva %1$s está Configurada em estado de ESTOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">A importação automática de preferências do servidor da Web do JMRI foi bem-sucedida.</string>
+<!--    <string name="toastThrottleImportServerAutoSucceeded">A importação automática de preferências do servidor da Web do JMRI foi bem-sucedida.</string>-->
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
@@ -522,7 +521,7 @@
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
     <string name="toastPreferencesImportServerManualFailed">Preferências de importação do servidor falhou! Verifique se o arquivo está correto. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferências Importar do servidor bem-sucedido. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>
+<!--    <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Mudança de tema é bem-sucedida.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Alteração do tipo de página do acelerador é bem-sucedida.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Mudança de idioma (idioma) é bem-sucedida.</string>
@@ -530,10 +529,10 @@
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber" tools:ignore="Typos">Numero de desvio inválido.</string>
-    <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>
-    <string name="toastTurnoutCommandToClose">Reto</string>
-    <string name="toastTurnoutCommandToThrow">Desviado</string>
-    <string name="toastTurnoutCommandToToggle">Alternar</string>
+<!--    <string name="toastTurnoutCommandTo">Comando enviado para o desvio %1$s</string>-->
+<!--    <string name="toastTurnoutCommandToClose">Reto</string>-->
+<!--    <string name="toastTurnoutCommandToThrow">Desviado</string>-->
+<!--    <string name="toastTurnoutCommandToToggle">Alternar</string>-->
     <string name="toastConnectEnterAddress">Inserir ou selecionar um endereço e uma porta</string>
     <string name="toastConnectInvalidPort">Número Porta inválido, tentar de novo.</string>
     <string name="toastConnectConnected">Conectado ao Servidor: %1$s Porta: %2$s</string>
@@ -544,15 +543,15 @@
     <string name="toastConnectRemoveDemoHostError">O servidor de demonstração só pode ser removido modificando as preferências.</string>
     <string name="toastConnectRemoved">Servidor removido da lista.</string>
 
-    <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>
+<!--    <string name="toastRoutesCommandSent">"Comando enviado para escolher Rota"</string>-->
     <string name="toastImportExportExportSucceeded">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' realizada com sucesso.</string>
     <string name="toastImportExportImportSucceeded">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' realizada com sucesso.</string>
     <string name="toastImportExportExportFailed">Exportação preferências para \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' falhou!</string>
     <string name="toastImportExportImportFailed">Importação preferências de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' falhou!</string>
     <string name="toastImportExportServerImportFailed">Preferências não importadas de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. Pode não ter salvo ainda as preferências para este host.</string>
     <string name="toastImportExportCannotImport">Impossível importar preferências. Não conectado ao host.</string>
-    <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>
-    <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>
+<!--    <string name="toastImportExportCannotExport">Impossível exportar preferências específicas do host. Não conectado ao host.</string>-->
+<!--    <string name="toastSelectLocoConfirmClear">Confirmar que deseja remover todas as Locomotivas Recentes apertando o botão \' Limpar Lista\' DE NOVO.</string>-->
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Iniciado no arquivo %1$s. O registro continuará até que você saia do aplicativo Engine Driver.</string>
@@ -651,7 +650,7 @@
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver precisa de permissões STORAGE para armazenar configurações de função.</string>-->
     <string name="permissionsVIBRATE">Engine Driver precisa de permissões vibrar para fornecer feedback adicional.</string>
     <string name="permissionsConnectToServer">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes e permissões PHONE para pausar operações quando em uma chamada.</string>
-    <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>
+<!--    <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>-->
     <string name="permissionsAppSettingsButton">Configurações do aplicativo</string>
     <string name="permissionsRetryButton">Tente novamente</string>
     <string name="permissionsRequestTitle">Permissões necessárias</string>
@@ -683,7 +682,7 @@
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
     <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
-    <string name="gamepadTestDeviceName">BT:</string>
+<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
@@ -706,7 +705,7 @@
     <string name="prefLimitSpeedPercentSummary">Defina o \% do acelerador que a velocidade será limitada a.</string>
     <string name="limitSpeedButtonLabel">limite de velocidade</string>
     <string name="LocoSelectMethodRecentConsist">recentes Consistem</string>
-    <string name="toastSelectConsistsConfirmClear">Confirme que deseja remover todas as recentes Consiste pressionando o botão \'Limpar lista\' outra vez.</string>
+<!--    <string name="toastSelectConsistsConfirmClear">Confirme que deseja remover todas as recentes Consiste pressionando o botão \'Limpar lista\' outra vez.</string>-->
     <string name="toastRecentConsistsHelp">Toque para selecionar.\nLongo pressione para mudar o nome.\nSwipe esquerda para a direita para remover uma entrada.</string>
     <string name="toastRecentsHelp">Toque para selecionar.\nLongo pressione para mudar o nome.\nSwipe esquerda para a direita para remover uma entrada.</string>
     <string name="toastRosterHelp">Toque para selecionar.\nLongo de imprensa para obter mais detalhes.</string>
@@ -729,9 +728,9 @@
     <string name="turnoutsSelectionTypeAddress">Endereço / recentes</string>
     <string name="turnoutsSelectionTypeHeading">O comparecimento às urnas Método de Selecção</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definiram</string>
-    <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>
-    <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \'Limpar Lista\' NOVAMENTE.</string>
-    <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>
+<!--    <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>-->
+<!--    <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \'Limpar Lista\' NOVAMENTE.</string>-->
+<!--    <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>-->
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Alternando acelerador Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Defina o tamanho da zona morta no controle deslizante do Switching do acelerador Tela</string>
     <string name="dialogConfirmClearTitle">Limpar lista</string>
@@ -799,15 +798,15 @@
     <string name="prefSwipeThroughWebTitle">Passe através da Web?</string>
     <string name="prefSwipeThroughWebSummary">Incluir tela Web Ao passar entre as telas.</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Passe através da web desativado.</string>
-    <string name="prefTurnMobileDataOnOffTitle">Dados móveis</string>
-    <string name="prefTurnMobileDataOnOffSummary">Vire Mobile Data off no início do Motor Motorista e voltar no próximo.</string>
+<!--    <string name="prefTurnMobileDataOnOffTitle">Dados móveis</string>-->
+<!--    <string name="prefTurnMobileDataOnOffSummary">Vire Mobile Data off no início do Motor Motorista e voltar no próximo.</string>-->
     <string name="webViewButtonBar">Web View Botão</string>
-    <string name="webViewAction">Show / Hide Vista Web</string>
+<!--    <string name="webViewAction">Show / Hide Vista Web</string>-->
     <string name="prefWebViewButtonTitle">Show / Hide botão Web View?</string>
-    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
+<!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
     <string name="prefWebViewButtonSummary">Mostrar Mostrar Esconder botão / Web Ver na barra de ação?\n(requer \'acelerador Web View\' preferência a ser ativado)</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
-    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsWriteSettings">Engine Driver precisa de definições de permissões WRITE para mudar o brilho da tela.</string>
     <string name="permissionsSystemSettingsButton">Configurações do sistema</string>
     <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
@@ -837,10 +836,10 @@
     <string name="prefKidsTimerButtonDefaultTitle">Padrão para botão</string>
     <string name="prefKidsTimerButtonDefaultSummary">Tempo padrão se estiver usando o botão ToollBar para ativar o temporizador.</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Confirme se você deseja remover todas as conexões recentes</string>
-    <string name="introAndroid11Title">Alterações Android 11.</string>
-    <string name="introAndroid11Summary">Devido a alterações aplicadas pelo Google para o Android 11, o local onde os arquivos de driver do motor são armazenados precisam ser movidos da pasta \'\\engine_driver\' para a pasta YYY. \nSeus dados serão automaticamente copiados para esta nova pasta.</string>
-    <string name="introAndroid11Summary1">O driver do motor não consegue excluir os arquivos originais em \'\\engine_driver\', mas eles não são mais necessários ou usados. Então você pode apagá-los manualmente se desejar.</string>
-    <string name="introAndroid11Summary2">Nota: Se você desinstalar o aplicativo, todos os arquivos nesta nova pasta (incluindo quaisquer preferências exportadas) serão automaticamente excluídas. Portanto, é importante copiar os arquivos em outro lugar antes de excluir o aplicativo.</string>
+<!--    <string name="introAndroid11Title">Alterações Android 11.</string>-->
+<!--    <string name="introAndroid11Summary">Devido a alterações aplicadas pelo Google para o Android 11, o local onde os arquivos de driver do motor são armazenados precisam ser movidos da pasta \'\\engine_driver\' para a pasta YYY. \nSeus dados serão automaticamente copiados para esta nova pasta.</string>-->
+<!--    <string name="introAndroid11Summary1">O driver do motor não consegue excluir os arquivos originais em \'\\engine_driver\', mas eles não são mais necessários ou usados. Então você pode apagá-los manualmente se desejar.</string>-->
+<!--    <string name="introAndroid11Summary2">Nota: Se você desinstalar o aplicativo, todos os arquivos nesta nova pasta (incluindo quaisquer preferências exportadas) serão automaticamente excluídas. Portanto, é importante copiar os arquivos em outro lugar antes de excluir o aplicativo.</string>-->
     <string name="prefDeviceSoundsCategoryTitle">No telefone loco sons de volume</string>
     <string name="prefDeviceSounds0Summary">Reproduzir Sons de Loco Básico no telefone para o acelerador 1</string>
     <string name="prefDeviceSounds0Title">Acelerador 1 loco sons</string>
@@ -882,7 +881,7 @@
     <string name="prefGamepadOnlyOneGamepadSummary">Se o driver do motor ativado não verificará vários gamepads.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Apenas um gamepad?</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Status Re-conexão</string>
-    <string name="clearConsistsList">Clear Consiste List</string>
+<!--    <string name="clearConsistsList">Clear Consiste List</string>-->
     <string name="gamepad_test_reset">GamePads Reset completo</string>
     <string name="prefActionBarShowServerDescriptionSummary">Mostre a descrição do servidor atual na barra de ação</string>
     <string name="prefActionBarShowServerDescriptionTitle">Mostrar descrição do servidor</string>
@@ -894,46 +893,46 @@
     <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
     <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi.\n\n nova tentativa</string>
     <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
-    <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$s segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
+    <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$dms segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máx</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
     <string name="prefGamePadDoublePressStopTitle">Ação dupla de stop</string>
     <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
-    <string name="prefDCCEXSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
-    <string name="prefDCCEXTitle">Use comandos nativos do DCC-EX</string>
+    <string name="prefDccexSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
+    <string name="prefDccexTitle">Use comandos nativos do DCC-EX</string>
     <string name="useProtocolDCCEX">Use comandos nativos do DCC-EX (não Withrottle)</string>
     <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
-    <string name="prefDCCEXconnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
-    <string name="prefDCCEXconnectionOptionTitle">Mostrar opção de protocolo</string>
+    <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
+    <string name="prefDccexConnectionOptionTitle">Mostrar opção de protocolo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar botão na barra de ação para acessar a tela ECC-EX. (Somente para conexões nativas do DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botão dcc-ex?</string>
     <string name="DCCEXactionTypeLabel">Ação</string>
     <string name="DCCEXclearCommands">Claro</string>
-    <string name="DCCEXconnectionOptionTitle">Protocolo de conexão</string>
-    <string name="DCCEXFailed">Ação: falhou</string>
-    <string name="DCCEXnextCommandButtonLabel">Próximo</string>
-    <string name="DCCEXpreviousCommandButtonLabel">Prévio</string>
-    <string name="DCCEXreadAddressButtonLabel">Ler</string>
+    <string name="DccexConnectionOptionTitle">Protocolo de conexão</string>
+    <string name="DccexFailed">Ação: falhou</string>
+    <string name="DccexNextCommandButtonLabel">Próximo</string>
+    <string name="DccexPreviousCommandButtonLabel">Prévio</string>
+    <string name="DccexReadAddressButtonLabel">Ler</string>
     <string name="DCCEXrouteHandoff">Não interferir</string>
     <string name="DCCEXrouteSet">Definir</string>
-    <string name="DCCEXsendCommandButtonLabel">Mandar</string>
+    <string name="DccexSendCommandButtonLabel">Mandar</string>
     <string name="DCCEXsetTrackButtonLabel">Definir</string>
-    <string name="DCCEXSucceeded">A ação foi bem -sucedida</string>
+    <string name="DccexSucceeded">A ação foi bem -sucedida</string>
     <string name="DCCEXturnoutClosed">Fechadas</string>
     <string name="DCCEXturnoutInconsistent">Inconsistente</string>
     <string name="DCCEXturnoutThrown">Jogado</string>
     <string name="DCCEXturnoutUnknown">Desconhecido</string>
-    <string name="DCCEXwriteAddressButtonLabel">Escreva</string>
-    <string name="DCCEXwriteAddressLabel">Endereço DCC</string>
-    <string name="DCCEXwriteCvValueLabel">Valor</string>
+    <string name="DccexWriteAddressButtonLabel">Escreva</string>
+    <string name="DccexWriteAddressLabel">Endereço DCC</string>
+    <string name="DccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignore as ações do joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Selecione isso se tiver problemas com o DPAD produzindo códigos -chave e eventos de joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver precisa de permissões read_media_images para carregar imagens em segundo plano.</string>
-    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver precisa de permissões nas proximidades de recuperar o WiFi SSID atual.</string>
+<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver precisa de permissões nas proximidades de recuperar o WiFi SSID atual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver precisa de permissões de notificação para avisá -lo quando formar em segundo plano.</string>
-    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation Preferências</string>
-    <string name="prefDCCEXPreferencesSummary">Opções para usar um EX-CommandStation</string>
+    <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferências</string>
+    <string name="prefDccexPreferencesSummary">Opções para usar um EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Sempre use rótulos de função do servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quando desativado, use os rótulos padrão do EnginEnRiver para locos selecionados por endereço (não lista), ignorando os rótulos padrão do servidor.</string>
 

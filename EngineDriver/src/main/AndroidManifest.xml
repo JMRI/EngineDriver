@@ -34,7 +34,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-permission android:name="android.permission.FLASHLIGHT" android:maxSdkVersion="22" />
     <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
-    <uses-permission android:name="android.permission.mod"/>
+<!--    <uses-permission android:name="android.permission.mod"/>-->
     <queries>
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />

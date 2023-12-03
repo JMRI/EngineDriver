@@ -18,10 +18,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Beenden</string>
     <string name="settings">Funktionsvorgaben</string>
-    <string name="fb_label">Funktionsbezeichnung</string>
+<!--    <string name="fb_label">Funktionsbezeichnung</string>-->
     <string name="fb_column_label">Bezeichn.</string>
     <string name="fb_column_function">F-Nr.</string>
-    <string name="function_buttons">Funktionstasten</string>
+<!--    <string name="function_buttons">Funktionstasten</string>-->
     <string name="introMenu">Einführung</string>
 
     <string name="app_description">Engine Driver - Fahrpult für ihr Android Telefon. Diese Anwendung kann eine Verbindung mit einem JMRI, MRC oder Digitrax WiThrottle Server erstellen und ermöglicht damit die Steuerung von Lokomotiven. Geschwindigkeit, Fahrrichtung und bis zu 29 DCC Funktionen werden für eine oder zwei Lokomotiven unterstützt.</string>
@@ -52,7 +52,7 @@
     <string name="notification_text">Antippen um Engine Driver wieder zu öffnen</string>
     <string name="host_ip">Hostname oder Adresse</string>
     <string name="port">Port</string>
-    <string name="loco_address">Lokadresse</string>
+<!--    <string name="loco_address">Lokadresse</string>-->
     <string name="connect_button">Verbinden</string>
     <string name="recent_connections">Letzte Verbindungen</string>
     <string name="select_loco_heading">Lokübernahme, Methode - Fahrregler %1$s</string>
@@ -61,10 +61,10 @@
     <string name="acquire_button">Übernehmen</string>
     <string name="roster_list">Auswahl aus Lokverzeichnis/Lokverbundeingaben</string>
     <string name="recent_engines">Auswahl aus kürzlich verwendeten Loks</string>
-    <string name="direction">Vorwärts</string>
-    <string name="speed">Geschwindigkeit:</string>
+<!--    <string name="direction">Vorwärts</string>-->
+<!--    <string name="speed">Geschwindigkeit:</string>-->
     <string name="discovered_services">Erkannte Server</string>
-    <string name="save_settings">Einstellungen Speichern</string>
+<!--    <string name="save_settings">Einstellungen Speichern</string>-->
     <string name="stop">Halt</string>
     <string name="forward">Vorwärts</string>
     <string name="reverse">Rückwärts</string>
@@ -83,19 +83,19 @@
     <string name="locoPressToSelect">Auswahl</string>
     <string name="powerWillNotWorkTitle">Funktioniert nicht!</string>
     <string name="powerWillNotWork">Stromschalter - Engine Driver</string>
-    <string name="current_locos">Aktuell gewählte Loks</string>
+<!--    <string name="current_locos">Aktuell gewählte Loks</string>-->
     <string name="release">Freigeben</string>
-    <string name="releaseThrottleNumber">Fahrregler %1$s freigeben</string>
+<!--    <string name="releaseThrottleNumber">Fahrregler %1$s freigeben</string>-->
     <string name="releaseThrottleLocos">\n%1$s freigeben</string>
     <string name="turnouts">Weichen</string>
-    <string name="turnouts_label">Weichen steuern</string>
+<!--    <string name="turnouts_label">Weichen steuern</string>-->
     <string name="turnouts_direct_entry_label">Weichennummer eingeben</string>
     <string name="turnouts_location_label">Filtern nach Ort</string>
     <string name="turnouts_list_label">Weichen (anklicken für Richtungsänderung)</string>
     <string name="turnouts_turnout">Weiche</string>
     <string name="location_all">ALLE ORTE</string>
     <string name="routes">Fahrstraßen</string>
-    <string name="routes_label">Fahrstraßen steuern</string>
+<!--    <string name="routes_label">Fahrstraßen steuern</string>-->
     <string name="routes_direct_entry_label">Systemname für Fahrstraße eingeben</string>
     <string name="routes_location_label">Filtern nach Ort</string>
     <string name="routes_list_label">Fahrstraße (anklicken zum Aktivieren)</string>
@@ -105,7 +105,7 @@
     <string name="close_button">╢ / ╟</string>
     <string name="toggle_button">Umlegen</string>
     <string name="power_control_label">Anlagenstrom steuern</string>
-    <string name="power_control_button">unbekannt</string>
+<!--    <string name="power_control_button">unbekannt</string>-->
     <string name="press_to_toggle">Knopf drücken um Anlagenstrom Ein/Aus zu schalten.</string>
     <string name="power_control_not_allowed">Steuerung des Anlagenstroms nicht erlaubt. Ändere die Einstellungen auf dem Server.</string>
     <string name="reconnect_label">Wiederverbindungsstatus</string>
@@ -116,8 +116,8 @@
     <string name="sl_recent_engine_notice">Liste kürzlich verwendeter Loks nicht verfügbar - Keine SD Karte gefunden.</string>
     <string name="power">Anlagenstrom</string>
     <string name="throttle">Fahrregler</string>
-    <string name="on">Ein</string>
-    <string name="off">Aus</string>
+<!--    <string name="on">Ein</string>-->
+<!--    <string name="off">Aus</string>-->
     <string name="set">Setze</string>
     <string name="disabled">Ausgeschaltet</string>
     <string name="volume_indicator">v</string>
@@ -127,7 +127,7 @@
     <string name="exit_title">Beenden</string>
     <string name="steal_text">Adresse %1$s stehlen?</string>
     <string name="steal_title">Stehlen</string>
-    <string name="prefTitle">Voreinstellungen</string>
+<!--    <string name="prefTitle">Voreinstellungen</string>-->
     <string name="prefSummary">Voreinstellungen für Engine Driver</string>
     <string name="preferences">Voreinstellungen</string>
     <string name="prefSwipeUpDownTitle">Voreinstellungen für Wischen nach oben/unten</string>
@@ -161,7 +161,7 @@
     <string name="prefShowAddressInsteadOfNameTitle">Zeige Adresse statt Name der Lok?</string>
     <string name="prefShowAddressInsteadOfNameSummary">DCC Adresse statt Name der Lok im Fahrregler anzeigen.</string>
     <string name="prefIncreaseWebViewSizeTitle">Vergrößere Web Ansicht?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Vergrößere Web Ansicht auf 60% für kleine Bildschirme.</string>
+    <string name="prefIncreaseWebViewSizeSummary">Vergrößere Web Ansicht auf 60\% für kleine Bildschirme.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Verwende immersiven Modus für die Anzeige des Fahrregler?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
     <string name="prefSwipeUpOptionTitle">Aktion für Wischen nach oben im Fahrregler?</string>
@@ -175,9 +175,9 @@
     <string name="prefGamePadSummary">Wähle den Gamepad\/USB Typ und andere Optionen</string>
     <string name="prefGamePadTypeTitle">Gamepad\/USB Typ</string>
     <string name="prefGamePadTypeSummary">Wähle die Option welche dein Gamepad am Besten unterstützt.</string>
-    <string name="prefGamePadStartButtonTitle">Gamepad Startknopf Aktion</string>
-    <string name="prefGamePadStartButtonSummary">Wähle die Aktion für das Drücken des Startknopfes.</string>
-    <string name="prefGamePadFeedbackVolumeTitle">Klickausmaß in % für Gamepad Knopf</string>
+<!--    <string name="prefGamePadStartButtonTitle">Gamepad Startknopf Aktion</string>-->
+<!--    <string name="prefGamePadStartButtonSummary">Wähle die Aktion für das Drücken des Startknopfes.</string>-->
+    <string name="prefGamePadFeedbackVolumeTitle">Klickausmaß in \% für Gamepad Knopf</string>
     <string name="prefGamePadFeedbackVolumeSummary">Setze das Prozentausmaß für Klicks mit dem Gamepad Knopf</string>
 
     <string name="prefGamePadSpeedButtonsRepeatTitle">Wiederholungsverzögerung für Geschwindigkeitsknopf</string>
@@ -308,15 +308,15 @@
 
     <string name="prefMaximumRecentConnectionsSummary">Maximum kürzlich verwendeter Verbindungen zum Anzeigen in Liste</string>
     <string name="prefTurnoutsTitle">Voreinstellungen für Weichen und Fahrstraßen</string>
-    <string name="prefHardwareSystemTitle">Hardware System der Weichen</string>
+<!--    <string name="prefHardwareSystemTitle">Hardware System der Weichen</string>-->
 
-    <string name="prefHardwareSystemSummary">Wähle Hardware System der Weichen für direkte Befehlseingaben</string>
+<!--    <string name="prefHardwareSystemSummary">Wähle Hardware System der Weichen für direkte Befehlseingaben</string>-->
     <string name="prefHideSystemRouteNamesTitle">Namen für Fahrstraßen ausblenden?</string>
     <string name="prefHideSystemRouteNamesSummary">Namen für Fahrstraßen ausblenden, verwendet zum Platz sparen in der Fahrstraßenliste.</string>
     <string name="prefDelimiterTitle">Abgrenzer für den Standort</string>
 
     <string name="prefDelimiterSummary">Setze das Zeichen welches das Ende des Standortanteils von Weichen und Fahrstraßennamen markiert</string>
-    <string name="prefScreenBrightnessDimTitle">Anzeigenabdunklung % Wert</string>
+    <string name="prefScreenBrightnessDimTitle">Anzeigenabdunklung \% Wert</string>
     <string name="prefScreenBrightnessDimSummary">Anzuwendende Helligkeitseinstellung für Anzeigenabdunklung (0%-99%). Automatische Abschaltung von Auto-Helligkeit / Adaptive Helligkeit wenn gesetzt.</string>
 
     <string name="logViewer">Log ansehen</string>
@@ -381,8 +381,8 @@
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
     <string name="prefAutoImportExportSummary">AUTOMATISCHER \'Import\' der Voreinstellungen für diesen Host und optionaler \'Export\' zu diesem beim Trennen der Verbindung bei jedem Verbindungsaufbau mit einem Host. \n(Um ständig auf einen bekannten Zustand zurückzusetzen, setze \'Auto Import nur bei Verbindungsaufbau\' nach dem ersten Mal oder nach einem manuellen Speichern (unten).)</string>
 
-    <string name="prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>
-    <string name="prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/\\Android\\data\\jmri.enginedriver\\files\\\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>
+<!--    <string name="prefImportServerManualTitle">Import vom aktuellen Server (manuell)</string>-->
+<!--    <string name="prefImportServerManualSummary">Serverdatei für \'Import\' eine Reihe von Einstellungen vom aktuell verbundenen Server.\nDie Datei muss sich im \'/\\Android\\data\\jmri.enginedriver\\files\\\' des Servers befinden und der Webserver muss ausgeführt werden.\nWarnung: Der Import wird sofort beim Speichern dieser Einstellung gestartet.</string>-->
 
     <string name="prefImportServerAutoTitle">Automatischer Import von allen Servern</string>
     <string name="prefImportServerAutoSummary">Importieren Sie automatisch die Einstellungen von den Servern, die mit der Verbindung verbunden sind.\n(Wenn sich die Datei \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' auf dem Server befindet und das aktuelle Mal das letzte Mal überprüft wurde</string>
@@ -424,9 +424,9 @@
 <!--    <string name="prefThemeDefaultValue">Standard</string> -->
     <string name="prefHideDemoServerTitle">Demo Server ausblenden</string>
     <string name="prefHideDemoServerSummary">Verberge den Demo Server \'jmri.mstevetodd.com\' in der Liste der Verbindungen.</string>
-    <string name="prefDirectionButtonsTitle">Bezeichnungen der Richtungsknöpfe</string>
-    <string name="prefDirectionButtonsSummary">Bezeichnungen für alle Richtungsknöpfe</string>
-    <string name="prefDirectionButtonsDefaultValue">Vorwärts</string>
+<!--    <string name="prefDirectionButtonsTitle">Bezeichnungen der Richtungsknöpfe</string>-->
+<!--    <string name="prefDirectionButtonsSummary">Bezeichnungen für alle Richtungsknöpfe</string>-->
+<!--    <string name="prefDirectionButtonsDefaultValue">Vorwärts</string>-->
 
     <string name="prefAccelerometerTitle">Voreinstellungen für Beschleunigungsmesser</string>
     <string name="prefAccelerometerSummary">Optionen für Gerätebewegung auf der Seite Fahrregler</string>
@@ -503,7 +503,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
     <string name="toastSwipeUpViewHidden">Web Ansicht temporär ausgeblendet. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastThrottleAlertEstop">Warnung: Lok %1$s hat NOT-STOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">Automatischer Import von Voreinstellungen vom JMRI-Webserver erfolgreich.</string>
+<!--    <string name="toastThrottleImportServerAutoSucceeded">Automatischer Import von Voreinstellungen vom JMRI-Webserver erfolgreich.</string>-->
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
@@ -511,17 +511,17 @@
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
     <string name="toastPreferencesImportServerManualFailed">Präferenzen Import vom Server fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import der Voreinstellungen vom Server erfolgreich. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>
+<!--    <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Theme-Wechsel erfolgreich.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Änderung der Drosselseite erfolgreich.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Gebietsschema (Sprache) Änderung erfolgreich.</string>
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Ungültige Weichennummer.</string>
-    <string name="toastTurnoutCommandTo">Befehl geschickt an Weiche %1$s</string>
-    <string name="toastTurnoutCommandToClose">Geradeaus</string>
-    <string name="toastTurnoutCommandToThrow">Ablenkend</string>
-    <string name="toastTurnoutCommandToToggle">Umlegen</string>
+<!--    <string name="toastTurnoutCommandTo">Befehl geschickt an Weiche %1$s</string>-->
+<!--    <string name="toastTurnoutCommandToClose">Geradeaus</string>-->
+<!--    <string name="toastTurnoutCommandToThrow">Ablenkend</string>-->
+<!--    <string name="toastTurnoutCommandToToggle">Umlegen</string>-->
     <string name="toastConnectEnterAddress">Adresse und Port eingeben oder auswählen</string>
     <string name="toastConnectInvalidPort">Ungültige Portnummer, Neueingabe.</string>
     <string name="toastConnectConnected">Verbunden mit Server: %1$s Port: %2$s</string>
@@ -532,15 +532,15 @@
     <string name="toastConnectRemoveDemoHostError">Der Demo-Server kann nur durch Ändern der Einstellungen entfernt werden.</string>
     <string name="toastConnectRemoved">Server wurde aus der Liste entfernt.</string>
 
-    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>
+<!--    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstraße "</string>-->
     <string name="toastImportExportExportSucceeded">Voreinstellungen exportieren zu \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
     <string name="toastImportExportImportSucceeded">Voreinstellungen importieren von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' war erfolgreich.</string>
     <string name="toastImportExportExportFailed">Voreinstellungen exportieren zu \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
     <string name="toastImportExportImportFailed">Voreinstellungen importieren von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ist fehlgeschlagen!</string>
     <string name="toastImportExportServerImportFailed">Voreinstellungen nicht importiert von \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="toastImportExportCannotImport">Kann Voreinstellungen nicht importieren. Mit keinem Host verbunden.</string>
-    <string name="toastImportExportCannotExport">Kann Host spezifische Voreinstellungen nicht exportieren. Mit keinem Host verbunden.</string>
-    <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in der Liste kürzlich verwendeter Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>
+<!--    <string name="toastImportExportCannotExport">Kann Host spezifische Voreinstellungen nicht exportieren. Mit keinem Host verbunden.</string>-->
+<!--    <string name="toastSelectLocoConfirmClear">Bestätige das Entfernen aller Einträge in der Liste kürzlich verwendeter Loks durch ERNEUTES Drücken des Knopfs \'Lösche Liste\'.  </string>-->
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Protokollierung in Datei %1$s gestartet. Die Protokollierung wird fortgesetzt, bis Sie die App "Engine Driver" beenden.</string>
@@ -613,7 +613,7 @@
     <string name="prefRosterFilterTitle">Lokverzeichnis filtern</string>
     <string name="prefRosterFilterSummary">Nur Lokverzeichniseinträge einbeziehen, die beginnen mit&#8230;</string>
 
-    <string name="FilterRosterList">Filter</string>
+<!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Enthält&#8230;</string>
 
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
@@ -642,7 +642,7 @@
     <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
     <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
 
-    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>
+<!--    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>-->
 
     <string name="ConsistEditLabelLead">FÜHREN</string>
     <string name="ConsistEditLabelTrail">WEG</string>
@@ -694,7 +694,7 @@
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver benötigt SPEICHER-Berechtigungen zum Speichern von Funktionseinstellungen.</string>-->
     <string name="permissionsVIBRATE">Lokomotivführer muss VIBRATE Berechtigungen zusätzliches Feedback geben.</string>
     <string name="permissionsConnectToServer">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen und PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
-    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>
+<!--    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>-->
     <string name="permissionsAppSettingsButton">App Einstellungen</string>
     <string name="permissionsRetryButton">Wiederholen</string>
     <string name="permissionsRequestTitle">Erforderliche Berechtigungen</string>
@@ -742,7 +742,7 @@
     <string name="prefEsuMc2KnobButtonSummary">Lassen Sie den Steuerknopf werden, indem eine Aktionstaste auf dem Bildschirm Drossel deaktiviert.</string>
     <string name="EsuMc2KnobAction">Aktivieren / Deaktivieren Knob</string>
     <string name="rosterEmpty">Kann keine enties im JMRI Roster finden. Verwenden Sie entweder die ‚DCC-Adresse‘ oder ‚Neue‘ Option statt.</string>
-    <string name="gamepadTestDeviceName">BT:</string>
+<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
     <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\n\nNeuer Versuch</string>
     <string name="prefConsistFollowDefaultActionTitle">Wenn Alle Spiele Fail-Aktion</string>
@@ -772,7 +772,7 @@
     <string name="prefLimitSpeedPercentSummary" tools:ignore="Typos">Stellen Sie den \% der Drosselklappe, die die Geschwindigkeit auf diese beschränkt sind.</string>
     <string name="limitSpeedButtonLabel">Grenzgeschwindigkeit</string>
     <string name="LocoSelectMethodRecentConsist">Aktuelle Consist</string>
-    <string name="toastSelectConsistsConfirmClear">Bestätigen Sie, dass Sie alle Besteht das Letzte wollen entfernen, indem die ‚Liste löschen‘ Taste erneut drücken.</string>
+<!--    <string name="toastSelectConsistsConfirmClear">Bestätigen Sie, dass Sie alle Besteht das Letzte wollen entfernen, indem die ‚Liste löschen‘ Taste erneut drücken.</string>-->
     <string name="toastRecentConsistsHelp">Tippen auswählen.\nLanges Drücken umzubenennen.\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
     <string name="toastRecentsHelp">Tippen auswählen.\nLanges Drücken umzubenennen.\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
     <string name="toastRosterHelp">Tippen auswählen.\nLange drücken für weitere Einzelheiten.</string>
@@ -795,9 +795,9 @@
     <string name="turnoutsSelectionTypeAddress">Adresse / Aktuelle</string>
     <string name="turnoutsSelectionTypeHeading">Turnout Auswahlmethode</string>
     <string name="turnoutsSelectionTypeRoster">%1$s Definierte</string>
-    <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>
-    <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>
-    <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>
+<!--    <string name="toastRecentTurnoutCleared">Weiche entfernt von der Liste</string>-->
+<!--    <string name="toastRecentTurnoutsConfirmClear">estätigen, dass Sie entfernen möchten alle die Neue Weichen durch die ‚Liste löschen‘ Taste erneut drücken.</string>-->
+<!--    <string name="toastTurnoutsRecentsHelp">Lange drücken, um einen Eintrag zu entfernen.</string>-->
     <string name="prefSwitchingThrottleSliderDeadZoneSummary">Schaltgas Dead Zone</string>
     <string name="prefSwitchingThrottleSliderDeadZoneTitle">Legen Sie die Größe der toten Zone auf dem Schieber des Schaltgas Bildschirm</string>
     <string name="dialogConfirmClearTitle">Liste leeren</string>
@@ -864,14 +864,14 @@
     <string name="prefSwipeThroughWebTitle">Swipe durch Web?</string>
     <string name="prefSwipeThroughWebSummary">Fügen Sie Web-Bildschirm, wenn zwischen den Bildschirmen klauen.</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Swipe durch Web deaktiviert.</string>
-    <string name="prefTurnMobileDataOnOffTitle">Mobile Daten</string>
-    <string name="prefTurnMobileDataOnOffSummary">Schalten Mobile Data off am Anfang der Lokomotivführer und wieder zu schließen.</string>
+<!--    <string name="prefTurnMobileDataOnOffTitle">Mobile Daten</string>-->
+<!--    <string name="prefTurnMobileDataOnOffSummary">Schalten Mobile Data off am Anfang der Lokomotivführer und wieder zu schließen.</string>-->
     <string name="webViewButtonBar">Web View-Taste</string>
-    <string name="webViewAction">Show / Hide Webansicht</string>
+<!--    <string name="webViewAction">Show / Hide Webansicht</string>-->
     <string name="prefWebViewButtonTitle">Show / Hide Web View-Taste?</string>
     <string name="prefWebViewButtonSummary">Anzeigen Show / Hide Webansicht Schaltfläche in der Aktionsleiste?\n(erfordert \'Drosselklappen Webansicht Präferenz aktiviert sein)</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
-    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="permissionsWriteSettings">Engine Driver muss Berechtigungen WRITE EINStELLUNGEN Helligkeit ändern.</string>
     <string name="permissionsSystemSettingsButton">Systemeinstellungen</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Drosselklappenschalter-Knopf Voreinstellungen</string>
@@ -902,10 +902,10 @@
     <string name="prefKidsTimerEnableReverseSummary">Aktivieren Sie die umgekehrte Taste.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">Bestätigen Sie, dass Sie alle jüngsten Verbindungen entfernen möchten</string>
-    <string name="introAndroid11Title">Android 11 ändert sich</string>
-    <string name="introAndroid11Summary">Durch Änderungen, die von Google für Android 11 erzwungen werden, muss der Speicherort, an dem die Motortreiberdateien gespeichert sind, vom \'\\engine_driver\' Ordner in den \'\\Android\\data\\jmri.enginedriver\\files\' Ordner verschoben werden. \nIhre Daten werden automatisch in diesen neuen Ordner kopiert.</string>
-    <string name="introAndroid11Summary1">Der Engine-Treiber kann die Originaldateien in \'\\engine_driver\' nicht löschen, jedoch nicht mehr benötigt oder verwendet. So können Sie sie manuell löschen, wenn Sie möchten.</string>
-    <string name="introAndroid11Summary2">Hinweis: Wenn Sie die App deinstallieren, werden alle Dateien in diesem neuen Ordner (einschließlich aller exportierten Voreinstellungen) automatisch gelöscht. Daher ist es wichtig, die Dateien an anderer Stelle zu kopieren, bevor Sie die App löschen.</string>
+<!--    <string name="introAndroid11Title">Android 11 ändert sich</string>-->
+<!--    <string name="introAndroid11Summary">Durch Änderungen, die von Google für Android 11 erzwungen werden, muss der Speicherort, an dem die Motortreiberdateien gespeichert sind, vom \'\\engine_driver\' Ordner in den \'\\Android\\data\\jmri.enginedriver\\files\' Ordner verschoben werden. \nIhre Daten werden automatisch in diesen neuen Ordner kopiert.</string>-->
+<!--    <string name="introAndroid11Summary1">Der Engine-Treiber kann die Originaldateien in \'\\engine_driver\' nicht löschen, jedoch nicht mehr benötigt oder verwendet. So können Sie sie manuell löschen, wenn Sie möchten.</string>-->
+<!--    <string name="introAndroid11Summary2">Hinweis: Wenn Sie die App deinstallieren, werden alle Dateien in diesem neuen Ordner (einschließlich aller exportierten Voreinstellungen) automatisch gelöscht. Daher ist es wichtig, die Dateien an anderer Stelle zu kopieren, bevor Sie die App löschen.</string>-->
     <string name="prefDeviceSoundsCategoryTitle">Im Telefon Loco klingt das Volumen</string>
     <string name="prefDeviceSounds0Summary">Play Basic Loco-Sounds im Telefon für Drossel 1</string>
     <string name="prefDeviceSounds0Title">Drosselklappe 1 Look Sounds</string>
@@ -947,7 +947,7 @@
     <string name="prefGamepadOnlyOneGamepadSummary">Wenn der aktivierte Motortreiber nicht nach mehreren Gamepads prüft.</string>
     <string name="prefGamepadOnlyOneGamepadTitle">Nur ein Gamepad?</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Wiederverbindungsstatus</string>
-    <string name="clearConsistsList">Clear besteht aus der Liste</string>
+<!--    <string name="clearConsistsList">Clear besteht aus der Liste</string>-->
     <string name="gamepad_test_reset">Gamepads Voller Zurücksetzen</string>
     <string name="prefActionBarShowServerDescriptionSummary">Zeigen Sie die Beschreibung des aktuellen Servers in der Aktionsleiste an</string>
     <string name="prefActionBarShowServerDescriptionTitle">Serverbeschreibung anzeigen</string>
@@ -961,40 +961,40 @@
     <string name="TtsGamepadTestSpeedZero">Null</string>
     <string name="prefGamePadDoublePressStopTitle">Double Press Stop -Aktion</string>
     <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
-    <string name="prefDCCEXSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
-    <string name="prefDCCEXTitle">Verwenden Sie native DCC-EX-Befehle</string>
+    <string name="prefDccexSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
+    <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
     <string name="useProtocolDCCEX">Verwenden Sie native DCC-EX-Befehle (nicht withrottle)</string>
     <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
-    <string name="prefDCCEXconnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
-    <string name="prefDCCEXconnectionOptionTitle">Protokolloption anzeigen</string>
+    <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
+    <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
     <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den ECC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
     <string name="DCCEXactionTypeLabel">Handlung</string>
     <string name="DCCEXclearCommands">Klar</string>
-    <string name="DCCEXconnectionOptionTitle">Verbindungsprotokoll</string>
-    <string name="DCCEXFailed">Aktion: fehlgeschlagen</string>
-    <string name="DCCEXnextCommandButtonLabel">Nächste</string>
-    <string name="DCCEXpreviousCommandButtonLabel">Frühere</string>
-    <string name="DCCEXreadAddressButtonLabel">Lesen</string>
+    <string name="DccexConnectionOptionTitle">Verbindungsprotokoll</string>
+    <string name="DccexFailed">Aktion: fehlgeschlagen</string>
+    <string name="DccexNextCommandButtonLabel">Nächste</string>
+    <string name="DccexPreviousCommandButtonLabel">Frühere</string>
+    <string name="DccexReadAddressButtonLabel">Lesen</string>
     <string name="DCCEXrouteHandoff">Weiterleiten</string>
     <string name="DCCEXrouteSet">Satz</string>
-    <string name="DCCEXsendCommandButtonLabel">Senden</string>
+    <string name="DccexSendCommandButtonLabel">Senden</string>
     <string name="DCCEXsetTrackButtonLabel">Satz</string>
-    <string name="DCCEXSucceeded">Aktion erfolgreich</string>
+    <string name="DccexSucceeded">Aktion erfolgreich</string>
     <string name="DCCEXturnoutClosed">Abgeschlossen</string>
     <string name="DCCEXturnoutInconsistent">Inkonsistent</string>
     <string name="DCCEXturnoutThrown">Geworfen</string>
     <string name="DCCEXturnoutUnknown">Unbekannt</string>
-    <string name="DCCEXwriteAddressButtonLabel">Schreiben</string>
-    <string name="DCCEXwriteAddressLabel">DCC Adresse</string>
-    <string name="DCCEXwriteCvValueLabel">Wert</string>
+    <string name="DccexWriteAddressButtonLabel">Schreiben</string>
+    <string name="DccexWriteAddressLabel">DCC Adresse</string>
+    <string name="DccexWriteCvValueLabel">Wert</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorieren Sie Joystick -Handlungen</string>
     <string name="prefGamePadIgnoreJoystickSummary">Wählen Sie dies aus, wenn Sie Probleme mit dem DPAD haben, der sowohl Schlüsselcodes als auch Joystick -Ereignisse erstellt</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.</string>
-    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver benötigt die Berechtigungen in der Nähe_WIFI_Devices, um die aktuelle WLAN -SSID abzurufen.</string>
+<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver benötigt die Berechtigungen in der Nähe_WIFI_Devices, um die aktuelle WLAN -SSID abzurufen.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>
-    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>
-    <string name="prefDCCEXPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
+    <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>
+    <string name="prefDccexPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
 

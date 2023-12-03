@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.InputDevice.getDevice;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -26,15 +25,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.GestureDetector;
+//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,7 +60,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu DSSMenu;
-    private GestureDetector myGesture;
+//    private GestureDetector myGesture;
 
     String[] valuesList;
 
@@ -81,14 +80,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     String prefDeviceSoundsBellVolume;
     String prefDeviceSoundsHornVolume;
     private SharedPreferences prefs;
-    private Toolbar toolbar;
 
     protected InPhoneLocoSoundsLoader iplsLoader;
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return myGesture.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return myGesture.onTouchEvent(event);
+//    }
 
     @SuppressLint("ApplySharedPref")
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
@@ -256,7 +254,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
         setContentView(R.layout.device_sounds_settings);
         //put pointer to this activity's handler in main app's shared variable
-        myGesture = new GestureDetector(this);
+//        myGesture = new GestureDetector(this);
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -300,7 +298,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         dss_throttle1.setOnItemSelectedListener(new spinner_listener_1());
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.device_sounds_settings_msg_handler = new device_sounds_settings_handler();
+        mainapp.device_sounds_settings_msg_handler = new device_sounds_settings_handler(Looper.getMainLooper());
 
 //        deviceSoundsEntryValuesArray = this.getResources().getStringArray(R.array.deviceSoundsEntryValues);
 //        deviceSoundsEntriesArray = this.getResources().getStringArray(R.array.deviceSoundsEntries);
@@ -388,7 +386,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             dss_throttle1_label.setAlpha(0.5f);
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -456,30 +454,33 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        switch (item.getItemId()) {
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, DSSMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(DSSMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, DSSMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(DSSMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
     @SuppressLint("HandlerLeak")
     class device_sounds_settings_handler extends Handler {
+
+        public device_sounds_settings_handler(Looper looper) {
+            super(looper);
+        }
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -494,6 +495,8 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                     }
                     break;
                 }
+                default:
+                    break;
             }
         }
     }
@@ -583,7 +586,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

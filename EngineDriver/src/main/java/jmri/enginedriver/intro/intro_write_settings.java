@@ -21,8 +21,8 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 package jmri.enginedriver.intro;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -31,17 +31,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_write_settings extends Fragment {
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_write_settings");
@@ -51,7 +46,9 @@ public class intro_write_settings extends Fragment {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                }
                 Uri uri = Uri.fromParts("package", getActivity().getApplicationContext().getPackageName(), null);
                 intent.setData(uri);
                 getActivity().startActivity(intent);

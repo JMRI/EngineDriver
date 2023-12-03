@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver.intro;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,7 +43,6 @@ public class intro_throttle_name extends Fragment {
 
     private threaded_application mainapp; //pointer back to application
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_throttle_name");
@@ -73,6 +73,7 @@ public class intro_throttle_name extends Fragment {
     }
 
 
+    @SuppressLint("ApplySharedPref")
     @Nullable
     @Override
     public void onDestroyView() {

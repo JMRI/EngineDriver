@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -53,7 +52,7 @@ public class VerticalSeekBar extends SeekBar {
 
 
 
-    // A change listener registrating start and stop of tracking. Need an own listener because the listener in SeekBar
+    // A change listener registering start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
     private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
@@ -74,7 +73,7 @@ public class VerticalSeekBar extends SeekBar {
     public VerticalSeekBar(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         mainapp = (threaded_application) context.getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -84,7 +83,7 @@ public class VerticalSeekBar extends SeekBar {
     public VerticalSeekBar(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mainapp = (threaded_application) context.getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -115,7 +114,7 @@ public class VerticalSeekBar extends SeekBar {
         if (!tickMarksChecked) {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
-            prefDisplaySpeedUnits = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
             steps = prefDisplaySpeedUnits;
             if (steps >= 100) {
@@ -197,6 +196,7 @@ public class VerticalSeekBar extends SeekBar {
         super.setOnSeekBarChangeListener(l);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public final boolean onTouchEvent(final MotionEvent event) {
         if (!isEnabled()) {
@@ -207,7 +207,7 @@ public class VerticalSeekBar extends SeekBar {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                float y = event.getY();
+//                float y = event.getY();
                 realTouchY = event.getY()-paddingLeft;
                 progress = getMax() - (int) (getMax() * realTouchY / realHeight);
                 if (progress<0) {progress = 0;}
@@ -254,7 +254,7 @@ public class VerticalSeekBar extends SeekBar {
     private void setSeekBarProgress(int progress, final boolean fromUser) {
         touchFromUser = fromUser;
 
-        int lastSpeed = this.getProgress();
+//        int lastSpeed = this.getProgress();
 
         if (progress != getProgress()) {
             super.setProgress(progress);

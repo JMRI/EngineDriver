@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -47,7 +46,7 @@ public class HorizontalSeekBar extends SeekBar {
     private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
     public boolean touchFromUser = false;
-    public boolean realTouch = true;
+//    public boolean realTouch = true;
 
     public threaded_application mainapp;  // hold pointer to mainapp
 
@@ -59,7 +58,7 @@ public class HorizontalSeekBar extends SeekBar {
     public HorizontalSeekBar(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         mainapp = (threaded_application) context.getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -69,7 +68,7 @@ public class HorizontalSeekBar extends SeekBar {
     public HorizontalSeekBar(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         mainapp = (threaded_application) context.getApplicationContext();
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -120,7 +119,7 @@ public class HorizontalSeekBar extends SeekBar {
                 additionalPadding = 15;
             }
 
-            gridMiddle = height / 2;
+            gridMiddle = ((float) height) / 2;
 
             switch (tickMarkType) {
                 default:

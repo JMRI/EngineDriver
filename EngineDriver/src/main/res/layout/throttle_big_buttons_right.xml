@@ -52,7 +52,7 @@
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_weight="1" >
+                    tools:ignore="ContentDescription" >
                 </ImageView>
 
                 <LinearLayout
@@ -201,7 +201,7 @@
                                             android:text="@string/prefLeftDirectionButtonsDefaultValue" />
 
                                         <TextView
-                                            android:id="@+id/loco_left_direction_indicaton_0"
+                                            android:id="@+id/loco_left_direction_indication_0"
                                             style="?attr/ed_loco_label_style"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
                                             android:text="@string/prefRightDirectionButtonsDefaultValue" />
 
                                         <TextView
-                                            android:id="@+id/loco_right_direction_indicaton_0"
+                                            android:id="@+id/loco_right_direction_indication_0"
                                             style="?attr/ed_loco_label_style"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
@@ -252,7 +252,8 @@
                             android:layout_weight="10"
                             android:baselineAligned="false"
                             android:layoutDirection="rtl"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            tools:targetApi="jelly_bean_mr1">
 
                             <LinearLayout
                                 android:id="@+id/throttle_0_SetSpeed"
@@ -315,7 +316,7 @@
 
                                 <LinearLayout
                                     android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
+                                    android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
                                     <Button

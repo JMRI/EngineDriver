@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor">
@@ -154,7 +153,7 @@
                         android:ellipsize="none"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:entries="@array/prefYesNoEntryValues"
+                        android:entries="@array/prefYesNoEntries"
                         android:entryValues="@array/prefYesNoEntryValues"
                         android:padding="0dp"/>
                 </LinearLayout>
@@ -185,7 +184,7 @@
                          android:paddingLeft="20dp"
                          android:paddingRight="20dp"
                          android:text="100"
-                         tools:ignore="RtlHardcoded" />
+                         tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
@@ -213,7 +212,7 @@
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:text="100"
-                        tools:ignore="RtlHardcoded" />
+                        tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
@@ -241,7 +240,7 @@
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:text="100"
-                        tools:ignore="RtlHardcoded" />
+                        tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
@@ -267,7 +266,7 @@
                         android:ellipsize="none"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:entries="@array/prefYesNoEntryValues"
+                        android:entries="@array/prefYesNoEntries"
                         android:entryValues="@array/prefYesNoEntryValues"
                         android:padding="0dp"/>
                 </LinearLayout>

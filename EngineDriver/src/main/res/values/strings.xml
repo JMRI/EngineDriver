@@ -18,10 +18,10 @@
     <string name="settings">Function Defaults</string>
     <string name="functionConsistSettings">Consist Function Settings</string>
     <string name="dccExFunctionSettings">DCC-EX Function Settings</string>
-    <string name="fb_label">Function Label</string>
+<!--    <string name="fb_label">Function Label</string>-->
     <string name="fb_column_label">Label</string>
     <string name="fb_column_function">Func#</string>
-    <string name="function_buttons">function_buttons</string>
+<!--    <string name="function_buttons">function_buttons</string>-->
     <string name="introMenu">Intro/Setup Wizard</string>
 
     <string name="functionConsistColumnLabel">Label</string>
@@ -72,7 +72,7 @@
     <string name="notification_text">Tap to reopen Engine Driver</string>
     <string name="host_ip">Host Name or Address</string>
     <string name="port">Port</string>
-    <string name="loco_address">Loco Address</string>
+<!--    <string name="loco_address">Loco Address</string>-->
     <string name="connect_button">Connect</string>
     <string name="recent_connections">Recent Servers</string>
     <string name="select_loco_heading">Acquire Loco, Method - Throttle %1$s</string>
@@ -83,10 +83,10 @@
     <string name="rosterDetailsDialogTitle">"Roster details for "</string>
     <string name="recent_engines">Select from Recent Locomotives</string>
     <string name="recent_consists">Select from Recent Consists</string>
-    <string name="direction">Fwd</string>
-    <string name="speed">Speed:</string>
+<!--    <string name="direction">Fwd</string>-->
+<!--    <string name="speed">Speed:</string>-->
     <string name="discovered_services">Discovered Servers</string>
-    <string name="save_settings">Save Settings</string>
+<!--    <string name="save_settings">Save Settings</string>-->
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
@@ -122,19 +122,19 @@
     <string name="locoPressToSelect">Select</string>
     <string name="powerWillNotWorkTitle">Will Not Work!</string>
     <string name="powerWillNotWork">Server has the WiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
-    <string name="current_locos">Currently Selected Locos</string>
+<!--    <string name="current_locos">Currently Selected Locos</string>-->
     <string name="release">Release</string>
-    <string name="releaseThrottleNumber">Release Throttle %1$s</string>
+<!--    <string name="releaseThrottleNumber">Release Throttle %1$s</string>-->
     <string name="releaseThrottleLocos">Release\n%1$s</string>
     <string name="turnouts">Turnouts</string>
-    <string name="turnouts_label">Control Turnouts</string>
+<!--    <string name="turnouts_label">Control Turnouts</string>-->
     <string name="turnouts_direct_entry_label">Enter Turnout # or name</string>
     <string name="turnouts_location_label">Filter by Location</string>
     <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
     <string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
-    <string name="routes_label">Control Routes</string>
+<!--    <string name="routes_label">Control Routes</string>-->
     <string name="routes_direct_entry_label">Enter Route System Name</string>
     <string name="routes_location_label">Filter by Location</string>
     <string name="routes_list_label">Route (click state to activate)</string>
@@ -145,7 +145,7 @@
     <string name="close_button">Close</string>
     <string name="toggle_button">Toggle</string>
     <string name="power_control_label">Control Layout Power Setting</string>
-    <string name="power_control_button">unknown</string>
+<!--    <string name="power_control_button">unknown</string>-->
     <string name="press_to_toggle">Press button to toggle layout power state.</string>
     <string name="power_control_not_allowed">Power Control not allowed.  Change in Preferences/Settings on server.</string>
     <string name="reconnect_label">Reconnect Attempt Status</string>
@@ -156,8 +156,8 @@
     <string name="sl_recent_engine_notice">Recent Locos unavailable - No SD card found.</string>
     <string name="power">Power</string>
     <string name="throttle">Throttle</string>
-    <string name="on">On</string>
-    <string name="off">Off</string>
+<!--    <string name="on">On</string>-->
+<!--    <string name="off">Off</string>-->
     <string name="set">Set</string>
     <string name="disabled">Disabled</string>
     <string name="volume_indicator">v</string>
@@ -185,7 +185,7 @@
     <string name="rosterEntryImageSaveButtonText">Save</string>
 
 
-    <string name="prefTitle">Preferences</string>
+<!--    <string name="prefTitle">Preferences</string>-->
     <string name="prefSummary">Preferences for Engine Driver</string>
     <string name="preferences">Preferences</string>
     <string name="prefSwipeUpDownTitle">Swipe Up-Down Preferences</string>
@@ -225,7 +225,7 @@
     <string name="prefShowAddressInsteadOfNameTitle">Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show loco DCC Address(es) instead of the Roster Name(s) on the Throttle screen</string>
     <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
-    <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60% for small screens</string>
+    <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60\% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
     <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
@@ -248,10 +248,10 @@
     <string name="prefGamePadSummary">Choose the Gamepad\/USB type and related options</string>
     <string name="prefGamePadTypeTitle">Gamepad\/USB type</string>
     <string name="prefGamePadTypeSummary">Choose the option that best supports your gamepad</string>
-    <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>
-    <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button</string>
+<!--    <string name="prefGamePadStartButtonTitle">Gamepad Start Button action</string>-->
+<!--    <string name="prefGamePadStartButtonSummary">Choose the action when you press the Start button</string>-->
 
-    <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume %</string>
+    <string name="prefGamePadFeedbackVolumeTitle">Gamepad Button Click Volume \%</string>
     <string name="prefGamePadFeedbackVolumeSummary">Set the volume percent for gamepad button clicks</string>
     <string name="prefGamePadFeedbackVolumeDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
@@ -353,7 +353,7 @@
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>
     <string name="prefNumOfThrottles">Number of throttles</string>
     <string name="prefNumOfThrottlesSummary">How many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
-    <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>
+<!--    <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>-->
 
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
     <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen Layout.\n(The number in brackets after the name is the number of throttles the layout can support.)</string>
@@ -431,12 +431,12 @@
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
-    <string name="prefRosterFilterDefaultValue" translatable="false" />
-    <string name="FilterRosterList">Filter</string>
+    <string name="prefRosterFilterDefaultValue" translatable="false"> </string>
+<!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
     <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
 
-    <string name="LocoSelectMethodQuestion">Method: </string>
+<!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
     <string name="LocoSelectMethodAddress">DCC Address</string>
     <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>
@@ -474,16 +474,16 @@
     <string name="prefHeartbeatResponseFactorDefaultValue" translatable="false">80</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
-    <string name="prefHardwareSystemTitle">Turnout Hardware System</string>
-    <string name="prefHardwareSystemDefaultValue" translatable="false">L</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>
+<!--    <string name="prefHardwareSystemTitle">Turnout Hardware System</string>-->
+<!--    <string name="prefHardwareSystemDefaultValue" translatable="false">L</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
+<!--    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>-->
     <string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
     <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list</string>
     <string name="prefDelimiterTitle">Location Delimiter</string>
     <string name="prefDelimiterDefaultValue" translatable="false">:</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefDelimiterSummary">Set the character that marks the end of the Location portion of Turnout and Route names</string>
 
-    <string name="prefScreenBrightnessDimTitle">Screen Dimming % Value</string>
+    <string name="prefScreenBrightnessDimTitle">Screen Dimming \% Value</string>
     <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
     <string name="prefScreenBrightnessDimDefaultValue" translatable="false">"5"</string>  <!-- DO NOT TRANSLATE -->
 
@@ -492,7 +492,7 @@
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
     <string name="ClearConnList">Clear Recent List</string>
-    <string name="clearConsistsList">Clear Consists List</string>
+<!--    <string name="clearConsistsList">Clear Consists List</string>-->
     <string name="prefEmerStopTitle">Emergency Stop button?</string>
     <string name="prefEmerStopSummary">Show loco Emergency Stop button in action bar</string>
     <string name="EStop">Estop</string>
@@ -544,16 +544,16 @@
 
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  <!-- DO NOT TRANSLATE -->
+<!--    <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
     <string name="NumThrottleDefaulValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
     <string name="server">Server</string>
     <string name="routes_route">Route System Name</string>
     <string name="label_percent" translatable="false">%</string>
-    <string name="label_14step" translatable="false">14</string>
-    <string name="label_27step" translatable="false">27</string>
-    <string name="label_28step" translatable="false">28</string>
-    <string name="label_128step" translatable="false">128</string>
+<!--    <string name="label_14step" translatable="false">14</string>-->
+<!--    <string name="label_27step" translatable="false">27</string>-->
+<!--    <string name="label_28step" translatable="false">28</string>-->
+<!--    <string name="label_128step" translatable="false">128</string>-->
     <string name="throttle_name">Throttle Name: %1$s</string>
 
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>
@@ -586,8 +586,8 @@
     <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
 
-    <string name="prefImportServerManualTitle">Import from current Server (manually)</string>
-    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'\\Android\\data\\jmri.enginedriver\\files\\\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>
+<!--    <string name="prefImportServerManualTitle">Import from current Server (manually)</string>-->
+<!--    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'\\Android\\data\\jmri.enginedriver\\files\\\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>-->
     <string name="prefImportServerManualDefaultValue" translatable="false">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportServerAutoTitle">Auto import from all Servers?</string>
@@ -638,9 +638,9 @@
     <string name="prefHideDemoServerTitle">Hide Demo Server</string>
     <string name="prefHideDemoServerSummary">Hide the Demo Server \'jmri.mstevetodd.com\' in the connection list</string>
 
-    <string name="prefDirectionButtonsTitle">Direction button Labels</string>
-    <string name="prefDirectionButtonsSummary">Labels for all Direction buttons</string>
-    <string name="prefDirectionButtonsDefaultValue">Forward</string>
+<!--    <string name="prefDirectionButtonsTitle">Direction button Labels</string>-->
+<!--    <string name="prefDirectionButtonsSummary">Labels for all Direction buttons</string>-->
+<!--    <string name="prefDirectionButtonsDefaultValue">Forward</string>-->
 
     <string name="prefDirectionButtonLongPressDelayTitle">Direction button Long Press Delay</string>
     <string name="prefDirectionButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the direction buttons</string>
@@ -751,7 +751,7 @@
     <string name="gamepadTestKeycodeLabel">Key code:</string>
     <string name="gamepadTestFunctionLabel">Function:</string>
     <string name="gamepadTestCompleteLabel">Test status:</string>
-    <string name="gamepadTestDeviceName">BT:</string>
+<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
     <string name="gamepadTestKeyboardHelp">Select \'Skip\' below to use the keyboard
 \n-----------------
@@ -845,7 +845,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Throttle Screen Dimmed - Swipe again to restore</string>
     <string name="toastSwipeUpViewHidden">Throttle Web View temporarily hidden. To hide permanently change in preferences</string>
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
-    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>
+<!--    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>-->
     <string name="toastInitialisingSounds">Initialising In Phone Loco Sounds.</string>
 
     <!--    Toast messages for the Preferences page-->
@@ -854,7 +854,7 @@
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
     <string name="toastPreferencesImportServerManualFailed">Preferences Import from Server failed! Check the file is correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server succeeded. (%1$s)</string>
-    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>
+<!--    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change succeeded.</string>
     <string name="toastPreferencesThrottleChangeSucceeded">Throttle Layout change succeeded.</string>
     <string name="toastPreferencesLocaleChangeSucceeded">Locale (Language) change succeeded.</string>
@@ -863,10 +863,10 @@
 
     <!--    Toast messages for the Turnout Activity -->
     <string name="toastTurnoutInvalidNumber">Invalid turnout number.</string>
-    <string name="toastTurnoutCommandTo">Command sent to %1$s turnout</string>
-    <string name="toastTurnoutCommandToClose">Close</string>
-    <string name="toastTurnoutCommandToThrow">Throw</string>
-    <string name="toastTurnoutCommandToToggle">Toggle</string>
+<!--    <string name="toastTurnoutCommandTo">Command sent to %1$s turnout</string>-->
+<!--    <string name="toastTurnoutCommandToClose">Close</string>-->
+<!--    <string name="toastTurnoutCommandToThrow">Throw</string>-->
+<!--    <string name="toastTurnoutCommandToToggle">Toggle</string>-->
 
     <!--    Toast messages for the Connection Activity -->
     <string name="toastConnectEnterAddress">Enter or select an address and port</string>
@@ -879,11 +879,11 @@
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
     <string name="toastConnectRemoved">Server removed from List.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
-    <string name="toastForcedWiFiFailed">Forced WiFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>
+<!--    <string name="toastForcedWiFiFailed">Forced WiFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>-->
     <string name="toastPreferencesChangedForceWiFi">\'Allow Mobile Data\' preference changed.</string>
 
     <!--    Toast messages for the Routes Activity -->
-    <string name="toastRoutesCommandSent">"Command sent to Set route "</string>
+<!--    <string name="toastRoutesCommandSent">"Command sent to Set route "</string>-->
 
     <!--    Toast messages for the Import/Export -->
     <string name="toastImportExportExportSucceeded">Preferences export to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' succeeded.</string>
@@ -892,11 +892,11 @@
     <string name="toastImportExportImportFailed">Preferences import from \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' failed!</string>
     <string name="toastImportExportServerImportFailed">Preferences not imported from \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
-    <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>
+<!--    <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>-->
 
     <!--    Toast messages for the Select Loco Activity -->
-    <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>
-    <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>
+<!--    <string name="toastSelectLocoConfirmClear">Confirm that you want remove all the Recent Locomotives by pressing the \'Clear List\' button AGAIN.</string>-->
+<!--    <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists by pressing the \'Clear List\' button AGAIN.</string>-->
     <string name="toastNumThrottles">Chosen Throttle Screen Layout does not support that many throttles. Changing to %1$s.</string>
     <string name="toastRecentsHelp">Touch to select a Recent Entry,\n  or change entry method.\nLong press to rename.\nSwipe Right to remove an entry.</string>
     <string name="toastRecentConsistsHelp">Touch to select a Consist Entry,\n  or change entry method.\nLong press to Rename (for entered addresses) or show Roster Details.\nSwipe Right to remove an entry.</string>
@@ -915,9 +915,9 @@
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
 
     <!--    Toast messages for the Turnouts Activity -->
-    <string name="toastRecentTurnoutCleared">Turnout removed from list</string>
-    <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Turnouts by pressing the \'Clear List\' button AGAIN.</string>
-    <string name="toastTurnoutsRecentsHelp">Long press to remove an entry.</string>
+<!--    <string name="toastRecentTurnoutCleared">Turnout removed from list</string>-->
+<!--    <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Turnouts by pressing the \'Clear List\' button AGAIN.</string>-->
+<!--    <string name="toastTurnoutsRecentsHelp">Long press to remove an entry.</string>-->
 
     <string name="RecentsNameEditTitle">Recent Loco Name</string>
     <string name="RecentsNameEditText">Enter a name for the Loco</string>
@@ -949,8 +949,8 @@
     <string name="prefTtsGamepadTestCompleteTitle">On Gamepad Test complete</string>
     <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test screen is finished </string>
 
-    <string name="prefTurnMobileDataOnOffTitle">Mobile Data</string>
-    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close </string>
+<!--    <string name="prefTurnMobileDataOnOffTitle">Mobile Data</string>-->
+<!--    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close </string>-->
 
     <string name="TtsVolumeThrottle">Throttle</string>
     <string name="TtsGamepadThrottle">Throttle</string>
@@ -997,11 +997,11 @@
     <string name="toastFlashlightOffFailed">Sorry! There was a problem switching off the flashlight&#8230;</string>
 
     <string name="webViewButtonBar">Throttle Web View Button</string>
-    <string name="webViewAction">Show/Hide Throttle Web View</string>
+<!--    <string name="webViewAction">Show/Hide Throttle Web View</string>-->
     <string name="prefWebViewButtonSummary">Show button in action bar to show/hide Throttle Web View.\n(requires \'Throttle Web View\' preference to be enabled)</string>
     <string name="prefWebViewButtonTitle">Throttle Web View button?</string>
 
-    <string name="logViewerTitle">LogViewerActivity | %1$s</string>
+<!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="ConsistEditLabelLead">LEAD</string>
@@ -1109,7 +1109,7 @@
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
-    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>
+<!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>-->
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
 
 <!-- needed for API 33 -->
@@ -1118,7 +1118,7 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver needs NOTIFICATION permissions to warn you when push into background.</string>
 <!-- needed for API 33 -->
 
-    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>
+<!--    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>-->
     <string name="permissionsAppSettingsButton">App settings</string>
     <string name="permissionsSystemSettingsButton">System settings</string>
     <string name="permissionsRetryButton">Retry</string>
@@ -1131,12 +1131,12 @@
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC, DigiTrax, WifiTrax, IoTT Stick or DCC-EX WiThrottle server to control your DCC locos and devices.
         The following pages will guide you through initial setup.</string>
-    <string name="introAndroid11Title">Android 11 Changes</string>
-    <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the
-        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder.
-        \nYour data will be automatically copied to this new folder.</string>
-    <string name="introAndroid11Summary1">Engine Driver is unable to delete the original files in \'\\engine_driver\' but they are no longer needed or used. So you can delete them manually if you wish.</string>
-    <string name="introAndroid11Summary2">Note: if you uninstall the app, ALL the files in this new folder (including any exported preferences) will be automatically deleted. So it is important to copy the files elsewhere BEFORE deleting the app.</string>
+<!--    <string name="introAndroid11Title">Android 11 Changes</string>-->
+<!--    <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the-->
+<!--        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder.-->
+<!--        \nYour data will be automatically copied to this new folder.</string>-->
+<!--    <string name="introAndroid11Summary1">Engine Driver is unable to delete the original files in \'\\engine_driver\' but they are no longer needed or used. So you can delete them manually if you wish.</string>-->
+<!--    <string name="introAndroid11Summary2">Note: if you uninstall the app, ALL the files in this new folder (including any exported preferences) will be automatically deleted. So it is important to copy the files elsewhere BEFORE deleting the app.</string>-->
 
     <string name="introThrottleNameSummary">Set a name for this device</string>
     <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>
@@ -1248,11 +1248,11 @@
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Background Alert</string>
     <string name="prefFeedbackWhenGoingToBackgroundSummary">Audible alert when the app is sent to the background</string>
 
-    <string name="prefDCCEXPreferencesTitle">DCC-EX - EX-CommandStation Preferences</string>
-    <string name="prefDCCEXPreferencesSummary">Options for using a EX-CommandStation</string>
+    <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferences</string>
+    <string name="prefDccexPreferencesSummary">Options for using a EX-CommandStation</string>
 
-    <string name="prefDCCEXTitle">Use native DCC-EX commands</string>
-    <string name="prefDCCEXSummary">Use the native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
+    <string name="prefDccexTitle">Use native DCC-EX commands</string>
+    <string name="prefDccexSummary">Use the native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
@@ -1260,9 +1260,9 @@
     <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
-    <string name="prefDCCEXconnectionOptionTitle">Show protocol option</string>
-    <string name="prefDCCEXconnectionOptionSummary">Show option to switch between WiThrottle and DCC-EX protocols in the Connection Screen.</string>
-    <string name="DCCEXconnectionOptionTitle">Connection Protocol</string>
+    <string name="prefDccexConnectionOptionTitle">Show protocol option</string>
+    <string name="prefDccexConnectionOptionSummary">Show option to switch between WiThrottle and DCC-EX protocols in the Connection Screen.</string>
+    <string name="DccexConnectionOptionTitle">Connection Protocol</string>
 
     <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the DCC-EX screen.\n(For native DCC-EX connections only.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX button?</string>
@@ -1303,16 +1303,16 @@
     <string name="DCCEXturnoutInconsistent">Inconsistent</string>
 
     <string name="DCCEXactionTypeLabel">Action</string>
-    <string name="DCCEXwriteAddressLabel">DCC Address</string>
-    <string name="DCCEXwriteCvLabel" translatable="false">CV</string>
-    <string name="DCCEXwriteCvValueLabel">Value</string>
-    <string name="DCCEXwriteAddressButtonLabel">Write</string>
-    <string name="DCCEXreadAddressButtonLabel">Read</string>
-    <string name="DCCEXsendCommandButtonLabel">Send</string>
-    <string name="DCCEXpreviousCommandButtonLabel">Prior</string>
-    <string name="DCCEXnextCommandButtonLabel">Next</string>
-    <string name="DCCEXsendCommandLabel" translatable="false">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
-<!--    <string name="DCCEXhideSends">Hide Sends</string>-->
+    <string name="DccexWriteAddressLabel">DCC Address</string>
+    <string name="DccexWriteCvLabel" translatable="false">CV</string>
+    <string name="DccexWriteCvValueLabel">Value</string>
+    <string name="DccexWriteAddressButtonLabel">Write</string>
+    <string name="DccexReadAddressButtonLabel">Read</string>
+    <string name="DccexSendCommandButtonLabel">Send</string>
+    <string name="DccexPreviousCommandButtonLabel">Prior</string>
+    <string name="DccexNextCommandButtonLabel">Next</string>
+    <string name="DccexSendCommandLabel" translatable="false">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
+<!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
     <string name="DCCEXcommonCvsLabel" translatable="false">NMRA CVs</string>
@@ -1320,8 +1320,8 @@
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
 
-    <string name="DCCEXSucceeded">Action Succeeded</string>
-    <string name="DCCEXFailed">Action Failed</string>
+    <string name="DccexSucceeded">Action Succeeded</string>
+    <string name="DccexFailed">Action Failed</string>
 
     <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
 
