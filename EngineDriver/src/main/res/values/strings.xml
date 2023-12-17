@@ -399,6 +399,8 @@
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recommend that you increase the Function Buttons Area size, or you won\'t be able to access the Bell/Horn/Mute sound functions</string>
     <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1 and F2 also activate IPLS Bell and Horn</string>
     <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1 and F2 activate Bell and Horn?</string>
+    <string name="prefDeviceSoundsHideMuteButtonSummary">Hide IPLS mute button on throttles</string>
+    <string name="prefDeviceSoundsHideMuteButtonTitle">Hide mute button</string>
 
     <string name="prefDeviceSoundsButtonSummary">Show an action bar button to change the in phone loco sounds options</string>
     <string name="prefDeviceSoundsButtonTitle">In phone sounds button</string>
@@ -1250,14 +1252,16 @@
 
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferences</string>
     <string name="prefDccexPreferencesSummary">Options for using a EX-CommandStation</string>
+    <string name="prefUseDccexProtocolDefaultValue">Auto</string>
 
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
-    <string name="prefDccexSummary">Use the native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections.\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
+    <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\"\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
-    <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)</string>
+    <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)"</string>
+    <string name="useProtocolDCCEXplusAutoHint">Use native DCC-EX commands. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\"</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>

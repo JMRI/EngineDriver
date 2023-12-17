@@ -94,7 +94,6 @@
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
-    <bool name="prefDccexDefaultValue">false</bool>
     <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
     <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
 
@@ -105,6 +104,7 @@
     <bool name="prefDeviceSoundsBellIsMomentaryDefaultValue">false</bool>
     <bool name="prefDeviceSoundsMomentumOverrideDefaultValue">false</bool>
     <bool name="prefDeviceSoundsF1F2ActivateBellHornDefaultValue">false</bool>
+    <bool name="prefDeviceSoundsHideMuteButtonDefaultValue">false</bool>
 
     <bool name="prefActionBarShowServerDescriptionDefaultValue">false</bool>
     <bool name="prefActionBarShowDccExButtonDefaultValue">false</bool>

@@ -1706,6 +1706,13 @@
                     android:title="@string/prefDeviceSoundsF1F2ActivateBellHornTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDeviceSoundsHideMuteButtonDefaultValue"
+                    android:key="prefDeviceSoundsHideMuteButton"
+                    android:summary="@string/prefDeviceSoundsHideMuteButtonSummary"
+                    android:title="@string/prefDeviceSoundsHideMuteButtonTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
@@ -1804,12 +1811,15 @@
                 android:layout="@layout/category_icon_left"
                 android:icon="@drawable/category_dcc_ex" >
 
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefDccexDefaultValue"
-                    android:key="prefDCCEX"
+                <ListPreference
+                    android:defaultValue="@string/prefUseDccexProtocolDefaultValue"
+                    android:key="prefUseDccexProtocol"
+                    android:entries="@array/prefYesNoAutoEntries"
+                    android:entryValues="@array/prefYesNoAutoEntryValues"
                     android:summary="@string/prefDccexSummary"
                     android:title="@string/prefDccexTitle"
                     android:layout="@layout/checkbox_no_icon" />
+
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefDccexConnectionOptionDefaultValue"
                     android:key="prefDCCEXconnectionOption"

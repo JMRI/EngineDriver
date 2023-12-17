@@ -1515,9 +1515,22 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
     <string-array name="prefYesNoEntries">  <!-- display version -->
         <item>Yes</item>
         <item>No</item>
+    </string-array>
+
+    <string-array name="prefYesNoAutoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>Yes</item>
+        <item>No</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="prefYesNoAutoEntries">  <!-- display version -->
+        <item>Yes</item>
+        <item>No</item>
+        <item>Auto</item>
     </string-array>
 
     <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1773,7 +1786,7 @@
         <item>prefConnectTimeoutMs</item>
         <item>prefSocketTimeoutMs</item>
         <item>prefFeedbackOnDisconnect</item>
-        <item>prefDCCEX</item>
+        <item>prefUseDccexProtocol</item>
         <item>prefDCCEXConnectionOption</item>
         <item>prefHeartbeatResponseFactor</item>
 

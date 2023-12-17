@@ -1235,7 +1235,11 @@ public class dcc_ex extends AppCompatActivity {
         } else if (powerState == 0) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
         } else {
-            mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            if (!mainapp.isDCCEX) {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            } else {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+            }
         }
         Drawable img = getResources().getDrawable(outValue.resourceId);
         btn.setBackground(img);

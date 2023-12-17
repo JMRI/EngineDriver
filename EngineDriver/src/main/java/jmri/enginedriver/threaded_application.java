@@ -203,7 +203,7 @@ public class threaded_application extends Application {
 
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
-    public boolean prefDccex = false;
+    public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
     public String DccexVersion = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
@@ -404,6 +404,7 @@ public class threaded_application extends Application {
     public boolean prefDeviceSoundsBellIsMomentary = false;
     public boolean prefDeviceSoundsMomentumOverride = false;
     public boolean prefDeviceSoundsF1F2ActivateBellHorn = false;
+    public boolean prefDeviceSoundsHideMuteButton = false;
     public String[] prefDeviceSounds = {"none", "none"};  //currently only supporting two throttles
     public String[] prefDeviceSoundsCurrentlyLoaded = {"none", "none"};  //currently only supporting two throttles
     public static final int SOUND_MAX_SUPPORTED_THROTTLES = 2;
@@ -475,6 +476,10 @@ public class threaded_application extends Application {
     public long[] lastSpeedCommandSentTimeDCCEX = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
+
+    public static final String DCCEX_PROTOCOL_OPTION_YES = "Yes";
+    public static final String DCCEX_PROTOCOL_OPTION_NO = "No";
+    public static final String DCCEX_PROTOCOL_OPTION_AUTO = "Auto";
 
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
@@ -1023,7 +1028,7 @@ public class threaded_application extends Application {
                 s += ", Server:" + sServer;
             }
         }
-        if (prefDccex) {
+        if (isDCCEX) {
             s += ", DCC-EX protocol";
         }
         return s;
@@ -1056,9 +1061,9 @@ public class threaded_application extends Application {
         routeDccexLabels = null;
         routeDccexStates = null;
 
-        prefDccex = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDccexDefaultValue));
+        prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
-        mainapp.isDCCEX = prefDccex;
+        mainapp.isDCCEX = (prefUseDccexProtocol.equals("Yes")) ? true: mainapp.isDCCEX;   // force it if the preference is set
 
         DccexVersion = "";
         DCCEXlistsRequested = -1;
@@ -1392,8 +1397,16 @@ public class threaded_application extends Application {
     public void setPowerStateButton(Menu menu) {
         if (menu != null) {
             TypedValue outValue = new TypedValue();
-            if ((power_state == null) || (power_state.equals("2"))) {
+            if (power_state == null) {
                 theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
+                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+            } else if (power_state.equals("2")) {
+                if (!mainapp.isDCCEX) {
+                    theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+                } else {
+                    theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+                }
                 menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
                 menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
             } else if (power_state.equals("1")) {

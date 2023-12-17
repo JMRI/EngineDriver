@@ -155,8 +155,8 @@
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:ellipsize="none"
-            android:entries="@array/prefYesNoEntries"
-            android:entryValues="@array/prefYesNoEntryValues"
+            android:entries="@array/prefYesNoAutoEntries"
+            android:entryValues="@array/prefYesNoAutoEntryValues"
             android:padding="0dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" />
