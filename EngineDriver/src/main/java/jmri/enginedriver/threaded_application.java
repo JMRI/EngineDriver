@@ -210,6 +210,7 @@ public class threaded_application extends Application {
 
     public boolean dccexScreenIsOpen = false;
 
+    public int dccExActionTypeIndex = 0;
     public int [] DccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
     public int [] DccexTrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
     public boolean [] DccexTrackAvailable = {false, false, false, false, false, false, false, false};
