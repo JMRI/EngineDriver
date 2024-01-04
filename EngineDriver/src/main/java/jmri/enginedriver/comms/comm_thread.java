@@ -98,7 +98,7 @@ public class comm_thread extends Thread {
         mainapp = myApp;
         prefs = myPrefs;
 
-        mainapp.prefDccex = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDccexDefaultValue));
+        mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
 
@@ -309,7 +309,7 @@ public class comm_thread extends Thread {
     }
 
     private static void sendThrottleName(Boolean sendHWID) {
-        mainapp.isDCCEX = mainapp.prefDccex;
+//        mainapp.isDCCEX = mainapp.prefDccex;
 
         if (!mainapp.isDCCEX) { // not DCC-EX
             String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));

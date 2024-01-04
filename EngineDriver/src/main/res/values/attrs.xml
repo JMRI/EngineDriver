@@ -34,6 +34,7 @@
     <attr name="ed_estop_button" format="reference" />
     <attr name="ed_timer_button" format="reference" />
     <attr name="ed_power_green_button" format="reference" />
+    <attr name="ed_power_green_red_button" format="reference" />
     <attr name="ed_power_yellow_button" format="reference" />
     <attr name="ed_power_red_button" format="reference" />
 

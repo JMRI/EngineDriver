@@ -45,6 +45,7 @@ public class power_control extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Drawable power_on_drawable;  //hold background graphics for power button
+    private Drawable power_on_and_off_drawable;
     private Drawable power_off_drawable;
     private Drawable power_unknown_drawable;
     private Menu PMenu;
@@ -138,7 +139,11 @@ public class power_control extends AppCompatActivity {
         } else if (powerState == 0) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
         } else {
-            mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            if (!mainapp.isDCCEX) {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            } else {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+            }
         }
         Drawable img = getResources().getDrawable(outValue.resourceId);
         btn.setBackground(img);
@@ -171,7 +176,11 @@ public class power_control extends AppCompatActivity {
                     currentImage = power_on_drawable;
                     break;
                 case "2":
-                    currentImage = power_unknown_drawable;
+                    if (!mainapp.isDCCEX) {
+                        currentImage = power_unknown_drawable;
+                    } else {
+                        currentImage = power_on_and_off_drawable;
+                    }
                     break;
                 default:
                     currentImage = power_off_drawable;
@@ -212,6 +221,7 @@ public class power_control extends AppCompatActivity {
         } catch (Exception ignored) { } // invalid version
 
         power_on_drawable = getResources().getDrawable(R.drawable.power_green);
+        power_on_and_off_drawable = getResources().getDrawable(R.drawable.power_green_red);
         power_off_drawable = getResources().getDrawable(R.drawable.power_red);
         power_unknown_drawable = getResources().getDrawable(R.drawable.power_yellow);
 

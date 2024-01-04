@@ -98,14 +98,14 @@ public class dcc_ex extends AppCompatActivity {
     String[] dccExCommonCommandsEntriesArray; // display version
     int[] dccExCommonCommandsHasParametersArray; // display version
 
-    private int dccExActionTypeIndex = 0;
+//    private int dccExActionTypeIndex = 0;
     String[] dccExActionTypeEntryValuesArray;
     String[] dccExActionTypeEntriesArray; // display version
 
 //    private boolean dccexHideSends = false;
 
     private static final int PROGRAMMING_TRACK = 0;
-    private static final int PROGRAMMING_ON_MAIN = 1;
+//    private static final int PROGRAMMING_ON_MAIN = 1;
     private static final int TRACK_MANAGER = 2;
 
     Button readAddressButton;
@@ -312,7 +312,7 @@ public class dcc_ex extends AppCompatActivity {
             String cvStr = etDccexCv.getText().toString();
             String cvValueStr = etDccexCvValue.getText().toString();
             String addrStr = etDccexWriteAddressValue.getText().toString();
-            if (dccExActionTypeIndex == PROGRAMMING_TRACK) {
+            if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
                 try {
                     Integer cv = Integer.decode(cvStr);
                     int cvValue = Integer.decode(cvValueStr);
@@ -540,7 +540,7 @@ public class dcc_ex extends AppCompatActivity {
     }
 
     private void showHideButtons() {
-        if (dccExActionTypeIndex != TRACK_MANAGER) {
+        if (mainapp.dccExActionTypeIndex != TRACK_MANAGER) {
             dexcProgrammingCommonCvsLayout.setVisibility(View.VISIBLE);
             dccExCommonCvsSpinner.setVisibility(View.VISIBLE);
 
@@ -552,7 +552,7 @@ public class dcc_ex extends AppCompatActivity {
             sendCommandButton.setEnabled(false);
             writeAddressButton.setEnabled(DccexAddress.length() != 0);
             readCvButton.setEnabled(DccexCv.length() != 0);
-            if (dccExActionTypeIndex == PROGRAMMING_TRACK) {
+            if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
                 writeCvButton.setEnabled(((DccexCv.length() != 0) && (DccexCvValue.length() != 0)));
             } else {
                 writeCvButton.setEnabled(((DccexCv.length() != 0) && (DccexCvValue.length() != 0) && (DccexAddress.length() != 0)));
@@ -583,7 +583,7 @@ public class dcc_ex extends AppCompatActivity {
         etDccexCvValue.setText(DccexCvValue);
 //        etDccexSendCommandValue.setText(dccexSendCommandValue);
 
-        if (dccExActionTypeIndex == PROGRAMMING_TRACK) {
+        if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
             readAddressButton.setVisibility(View.VISIBLE);
             writeAddressButton.setVisibility(View.VISIBLE);
             readCvButton.setVisibility(View.VISIBLE);
@@ -795,14 +795,14 @@ public class dcc_ex extends AppCompatActivity {
         final List<String> dccActionTypeValuesList = new ArrayList<>(Arrays.asList(dccExActionTypeEntryValuesArray));
         final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccExActionTypeEntriesArray));
 
-        dccExActionTypeIndex = PROGRAMMING_TRACK;
+//        mainapp.dccExActionTypeIndex = PROGRAMMING_TRACK;
         Spinner dcc_action_type_spinner = findViewById(R.id.dexc_action_type_list);
 //        ArrayAdapter<?> action_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExActionTypeEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<?> action_type_spinner_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dccExActionTypeEntriesArray);
         action_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dcc_action_type_spinner.setAdapter(action_type_spinner_adapter);
         dcc_action_type_spinner.setOnItemSelectedListener(new action_type_spinner_listener());
-        dcc_action_type_spinner.setSelection(dccExActionTypeIndex);
+        dcc_action_type_spinner.setSelection(mainapp.dccExActionTypeIndex);
 
         dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);
         dexcProgrammingAddressLayout = findViewById(R.id.dexc_programmingAddressLayout);
@@ -1113,7 +1113,7 @@ public class dcc_ex extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             Spinner spinner = findViewById(R.id.dexc_action_type_list);
-            dccExActionTypeIndex = spinner.getSelectedItemPosition();
+            mainapp.dccExActionTypeIndex = spinner.getSelectedItemPosition();
             resetTextField(WHICH_CV);
             resetTextField(WHICH_CV_VALUE);
             DccexInfoStr = "";
@@ -1235,7 +1235,11 @@ public class dcc_ex extends AppCompatActivity {
         } else if (powerState == 0) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
         } else {
-            mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            if (!mainapp.isDCCEX) {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            } else {
+                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+            }
         }
         Drawable img = getResources().getDrawable(outValue.resourceId);
         btn.setBackground(img);

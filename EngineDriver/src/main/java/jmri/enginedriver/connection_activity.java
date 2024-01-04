@@ -60,6 +60,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -136,7 +137,9 @@ public class connection_activity extends AppCompatActivity implements Permission
     boolean prefAllowMobileData = false;
     boolean prefDccexConnectionOption = false;
 //    boolean prefAlwaysUseFunctionsFromServer = false;
+    TextView dccexConnectionOptionLabel;
     Spinner dccexConnectionOptionSpinner;
+    String [] dccexConnectionOptionEntriesArray;
 
     private Toolbar toolbar;
 
@@ -231,6 +234,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         connected_ssid = mainapp.client_ssid;
                         break;
                 }
+                checkIfDccexServerName(connected_hostname);
                 connect();
                 mainapp.buttonVibration();
             }
@@ -284,6 +288,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 }
                 connected_hostname = connected_hostip; //copy ip to name
                 connected_ssid = mainapp.client_ssid;
+                checkIfDccexServerName(connected_hostname);
                 connect();
             } else {
                 if (!mainapp.prefHideInstructionalToasts) {
@@ -357,6 +362,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     }
                     connected_hostname = tm.get("host_name"); //copy ip to name
                     connected_ssid = mainapp.client_ssid;
+                    checkIfDccexServerName(connected_hostname);
                     connect();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
                 } else {
@@ -592,10 +598,15 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
         });
 
+        dccexConnectionOptionEntriesArray = this.getResources().getStringArray(R.array.prefYesNoAutoEntries);
 
+        dccexConnectionOptionLabel = findViewById(R.id.cons_DccexConnectionOption_Label);
         dccexConnectionOptionSpinner = findViewById(R.id.cons_DccexConnectionOption);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.prefYesNoAutoEntries, android.R.layout.simple_spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexConnectionOptionSpinner.setOnItemSelectedListener(new DccexConnectionOption_listener());
         setConnectionProtocolOption();
+
 
         toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -1088,6 +1099,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 case PermissionsHelper.CONNECT_TO_SERVER:
                     Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
 //                    connectImpl();
+                    checkIfDccexServerName(connected_hostname);
                     connect();
                     break;
                 default:
@@ -1131,8 +1143,15 @@ public class connection_activity extends AppCompatActivity implements Permission
 
             Spinner spinner = findViewById(R.id.cons_DccexConnectionOption);
             int spinnerPosition = spinner.getSelectedItemPosition();
-            mainapp.prefDccex = spinnerPosition == 0;
-            prefs.edit().putBoolean("prefDCCEX", mainapp.prefDccex).commit();  //set the preference
+            mainapp.prefUseDccexProtocol = dccexConnectionOptionEntriesArray[spinnerPosition];
+            prefs.edit().putString("prefUseDccexProtocol", mainapp.prefUseDccexProtocol).commit();  //set the preference
+
+            if ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES))
+            || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_NO)) ) {
+                dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
+            } else { // if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+                dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
+            }
         }
 
         @Override
@@ -1142,12 +1161,17 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void setConnectionProtocolOption() {
         prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
-        mainapp.prefDccex = prefs.getBoolean("prefDCCEX", mainapp.getResources().getBoolean(R.bool.prefDccexDefaultValue));
+        mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
 
-        if (mainapp.prefDccex) {
+        if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES)) {
             dccexConnectionOptionSpinner.setSelection(0);
-        } else {
+            dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
+        } else if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_NO)) {
             dccexConnectionOptionSpinner.setSelection(1);
+            dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
+        } else { // if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+            dccexConnectionOptionSpinner.setSelection(2);
+            dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
         }
 
         TextView DCCEXheading =  findViewById(R.id.cons_DccexConnectionOption_heading);
@@ -1159,5 +1183,10 @@ public class connection_activity extends AppCompatActivity implements Permission
             DCCEXheading.setVisibility(View.GONE);
             DCCEXlayout.setVisibility(View.GONE);
         }
+    }
+
+    void checkIfDccexServerName(String serverName) {
+        mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+                && (serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) );
     }
 }

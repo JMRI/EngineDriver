@@ -1664,6 +1664,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 getResources().getBoolean(R.bool.prefDeviceSoundsBellIsMomentaryDefaultValue));
         mainapp.prefDeviceSoundsF1F2ActivateBellHorn = prefs.getBoolean("prefDeviceSoundsF1F2ActivateBellHorn",
                 getResources().getBoolean(R.bool.prefDeviceSoundsF1F2ActivateBellHornDefaultValue));
+        mainapp.prefDeviceSoundsHideMuteButton = prefs.getBoolean("prefDeviceSoundsHideMuteButton",
+                getResources().getBoolean(R.bool.prefDeviceSoundsHideMuteButtonDefaultValue));
 
         if ( (!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")) ) {
             loadSounds();
@@ -7281,7 +7283,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         || ( (mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)
                                 && ( (!mainapp.prefThrottleViewImmersiveModeHideToolbar)
                                       || ( (mainapp.prefThrottleViewImmersiveModeHideToolbar) && (!immersiveModeIsOn) ) ) )
-                        ) {   // not in the toolbar area  or the tollbar is hidden
+                        ) {   // not in the toolbar area  or the toolbar is hidden
 
                         // swipe left/right
                         if (!isScreenLocked) {
@@ -7982,7 +7984,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
                         rslt = View.GONE;
                     }
-                    bMutes[whichThrottle].setVisibility(rslt);
+                    bMutes[whichThrottle].setVisibility( (mainapp.prefDeviceSoundsHideMuteButton) ? View.GONE : rslt);
                     bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setVisibility(rslt);

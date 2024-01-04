@@ -429,6 +429,12 @@
         <item>Non</item>
     </string-array>
 
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>Oui</item>
+        <item>Non</item>
+        <item>Auto</item>
+    </string-array>
+
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Réduire affichage aux dimensions écran</item>
         <item>Affichage plein écran - rogner si besoin</item>
