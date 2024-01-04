@@ -11,6 +11,7 @@
  * Significant reduction in the amount of lint.
  * Removal of some of the deprecated code
  * Added support for Auto selection of DCC-EX Native Protocol. (Server name must contain "DCCEX" or "DCC-EX".)
+ * remember the dropdown selection in the DCC-EX screen
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry
