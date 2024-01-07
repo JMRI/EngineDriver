@@ -71,7 +71,7 @@ public class throttle_simple extends throttle {
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++)
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 default:
                 case 0:
@@ -81,6 +81,7 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
@@ -89,6 +90,7 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_1);
                     break;
                 case 2:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
@@ -97,6 +99,7 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_2);
                     break;
                 case 3:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_3);
@@ -105,6 +108,7 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_3);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_3);
                     break;
                 case 4:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_4);
@@ -113,6 +117,7 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_4);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_4);
                     break;
                 case 5:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_5);
@@ -121,8 +126,13 @@ public class throttle_simple extends throttle {
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
                     llSetSpds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_5);
                     break;
             }
+
+            pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(throttleIndex);
+            bPauses[throttleIndex].setOnTouchListener(psvtl);
+        }
 
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();

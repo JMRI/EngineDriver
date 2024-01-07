@@ -145,6 +145,16 @@
                                     android:textSize="30sp" />
 
                                 <Button
+                                    android:id="@+id/button_pause_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
+
+                                <Button
                                     android:id="@+id/button_stop_0"
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"

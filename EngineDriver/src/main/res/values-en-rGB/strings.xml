@@ -55,4 +55,6 @@
 
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Points</string>
 
+    <string name="prefPauseAlternateButtonSummary">Show alternate \'Pause\' button near the \'Stop\' button. (Vertical layouts only)</string>
+
 </resources>

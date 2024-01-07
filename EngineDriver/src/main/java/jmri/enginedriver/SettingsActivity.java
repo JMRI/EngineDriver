@@ -985,6 +985,24 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    private void showHideLimitSpeedPreferences(PreferenceScreen prefScreen) {
+        boolean prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", false);
+
+        enableDisablePreference(prefScreen, "prefLimitSpeedPercent", prefLimitSpeedButton);
+    }
+
+    private void showHidePauseSpeedPreferences(PreferenceScreen prefScreen) {
+        boolean prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", false);
+
+        enableDisablePreference(prefScreen, "prefPauseSpeedRate", prefPauseSpeedButton);
+        enableDisablePreference(prefScreen, "prefPauseSpeedStep", prefPauseSpeedButton);
+
+        boolean enable =
+                !prefThrottleScreenType.equals("Default")
+                && !prefThrottleScreenType.equals("Switching Horizontal")
+                && prefPauseSpeedButton;
+        enableDisablePreference(prefScreen, "prefPauseAlternateButton", enable);
+    }
     private void showHideBackgroundImagePreferences(PreferenceScreen prefScreen) {
         boolean enable = true;
         if (prefBackgroundImage) {
@@ -1561,11 +1579,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             enable = !parentActivity.prefThrottleScreenType.equals("Default");
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTickMarksOnSliders", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefVerticalStopButtonMargin", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefLimitSpeedButton", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefLimitSpeedPercent", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefPauseSpeedButton", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefPauseSpeedRate", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefPauseSpeedStep", enable);
 
             enable = parentActivity.prefThrottleScreenType.equals("Default");
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefDecreaseLocoNumberHeight", enable);
@@ -1670,6 +1683,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
 
             parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+
+            parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
 
             // option is only available when there is no current connection
 
@@ -1853,6 +1869,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefConsistFollowRuleStyle":
                         parentActivity.prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
                         parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefLimitSpeedButton":
+                        parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefPauseSpeedButton":
+                        parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
                         break;
 
                     case "prefThrottleSwitchButtonDisplay":

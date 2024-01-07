@@ -211,6 +211,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected Button[] bFwds; // buttons
     protected Button[] bStops;
+    protected Button[] bPauses;
     protected Button[] bRevs;
     protected Button[] bSels;
     protected TextView[] tvbSelsLabels;
@@ -386,6 +387,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected boolean prefLimitSpeedButton = false;
     protected boolean prefPauseSpeedButton = false;
+    protected boolean prefPauseAlternateButton = false;
     protected int prefPauseSpeedRate = 200;
     protected int prefPauseSpeedStep = 2;
     protected int prefLimitSpeedPercent = 50;
@@ -1620,6 +1622,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
         speedStepPref = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
         prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", getResources().getBoolean(R.bool.prefPauseSpeedButtonDefaultValue));
+        prefPauseAlternateButton = prefs.getBoolean("prefPauseAlternateButton", getResources().getBoolean(R.bool.prefPauseAlternateButtonDefaultValue));
         prefPauseSpeedRate = Integer.parseInt(prefs.getString("prefPauseSpeedRate", getResources().getString(R.string.prefPauseSpeedRateDefaultValue)));
         prefPauseSpeedStep = Integer.parseInt(prefs.getString("prefPauseSpeedStep", getResources().getString(R.string.prefPauseSpeedStepDefaultValue)));
 
@@ -2579,6 +2582,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         bFwds[whichThrottle].setEnabled(newEnabledState);
         bStops[whichThrottle].setEnabled(newEnabledState);
+        if ( (bPauses!=null) && (bPauses[whichThrottle]!=null) ) {
+            bPauses[whichThrottle].setEnabled(newEnabledState);
+        }
         if ( (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
             && (!prefKidsTimerEnableReverse)) {
             bRevs[whichThrottle].setEnabled(false);
@@ -5569,49 +5575,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         select_function_button_touch_listener sfbt;
         arrow_speed_button_touch_listener asbl;
 
-        bSels = new Button[mainapp.maxThrottlesCurrentScreen];
-        tvbSelsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
-        bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
-        bLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
-
-        tvLeftDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvRightDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
-
-        bFwds = new Button[mainapp.maxThrottlesCurrentScreen];
-        bStops = new Button[mainapp.maxThrottlesCurrentScreen];
-        bRevs = new Button[mainapp.maxThrottlesCurrentScreen];
-        sbs = new SeekBar[mainapp.maxThrottlesCurrentScreen];
-
-        bLimitSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
-        isLimitSpeeds = new boolean[mainapp.maxThrottlesCurrentScreen];
-        limitSpeedSliderScalingFactors = new float[mainapp.maxThrottlesCurrentScreen];
-        bPauseSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
-        isPauseSpeeds = new int[mainapp.maxThrottlesCurrentScreen];
-
-        bMutes = new Button[mainapp.maxThrottlesCurrentScreen];
-        soundsIsMuted = new boolean[mainapp.maxThrottlesCurrentScreen];
-        bSoundsExtras = new Button[3][mainapp.maxThrottlesCurrentScreen];
-
-        tvGamePads = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
-        tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
-
-        lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llLocoIds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llLocoDirs = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-
-        fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
-
-        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottlesCurrentScreen];
-
-        displayUnitScales = new double[mainapp.maxThrottlesCurrentScreen];
-
-        changeTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
-        speedMessagePacingTimers = new SpeedPacingDelay[mainapp.maxThrottlesCurrentScreen];
+        initialiseArrays();
 
         // throttle layouts
         vThrotScr = findViewById(R.id.throttle_screen);
@@ -5714,6 +5678,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             //----------------------------------------
             Button bFwd = findViewById(R.id.button_fwd_0);
             Button bStop = findViewById(R.id.button_stop_0);
+            Button bPause = null;
             Button bRev = findViewById(R.id.button_rev_0);
             View v = findViewById(R.id.speed_cell_0);
             switch (i) {
@@ -6243,6 +6208,54 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
     } // end onResume
+
+    private void initialiseArrays() {
+        bSels = new Button[mainapp.maxThrottlesCurrentScreen];
+        tvbSelsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
+        bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
+
+        tvLeftDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvRightDirInds = new TextView[mainapp.maxThrottlesCurrentScreen];
+
+        bFwds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bStops = new Button[mainapp.maxThrottlesCurrentScreen];
+        bPauses = new Button[mainapp.maxThrottlesCurrentScreen];
+        bRevs = new Button[mainapp.maxThrottlesCurrentScreen];
+        sbs = new SeekBar[mainapp.maxThrottlesCurrentScreen];
+
+        bLimitSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
+        isLimitSpeeds = new boolean[mainapp.maxThrottlesCurrentScreen];
+        limitSpeedSliderScalingFactors = new float[mainapp.maxThrottlesCurrentScreen];
+        bPauseSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
+        isPauseSpeeds = new int[mainapp.maxThrottlesCurrentScreen];
+
+        bMutes = new Button[mainapp.maxThrottlesCurrentScreen];
+        soundsIsMuted = new boolean[mainapp.maxThrottlesCurrentScreen];
+        bSoundsExtras = new Button[3][mainapp.maxThrottlesCurrentScreen];
+
+        tvGamePads = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvSpdLabs = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvVols = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
+
+        lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoIds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoDirs = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+
+        fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
+
+        functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottlesCurrentScreen];
+
+        displayUnitScales = new double[mainapp.maxThrottlesCurrentScreen];
+
+        changeTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
+        speedMessagePacingTimers = new SpeedPacingDelay[mainapp.maxThrottlesCurrentScreen];
+
+    }
 
     private void showHideConsistMenus(){
         if ((mainapp.consists==null) && (!mainapp.isDCCEX)) {
@@ -7770,6 +7783,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case PAUSE_SPEED_ZERO: {
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_RETURN;
                 bPauseSpeeds[whichThrottle].setSelected(false);
+                if (bPauses[whichThrottle]!=null) bPauses[whichThrottle].setSelected(false);
                 speed = getSpeed(whichThrottle);
                 break;
             }
@@ -7778,6 +7792,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                 isPauseSpeeds[whichThrottle] = PAUSE_SPEED_START_TO_ZERO;
                 bPauseSpeeds[whichThrottle].setSelected(true);
+                if (bPauses[whichThrottle]!=null) bPauses[whichThrottle].setSelected(true);
                 pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
                 pauseDir[whichThrottle] = getDirection(whichThrottle);
                 break;
@@ -7798,6 +7813,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void disablePauseSpeed(int whichThrottle) {
         setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
         bPauseSpeeds[whichThrottle].setSelected(false);
+        if (bPauses[whichThrottle]!=null) bPauses[whichThrottle].setSelected(false);
         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;
         limitedJump[whichThrottle] = false;
     }
@@ -8071,8 +8087,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ((bPauseSpeeds != null) && (bPauseSpeeds[whichThrottle] != null)) {
             if (!prefPauseSpeedButton) {
                 bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
+                if (bPauses[whichThrottle]!=null) bPauses[whichThrottle].setVisibility(View.GONE);
             } else {
-                bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+                if ( (bPauses[whichThrottle]!=null) && (prefPauseAlternateButton) ) {
+                    bPauses[whichThrottle].setVisibility(View.VISIBLE);
+                    bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
+                } else {
+                    bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+                }
             }
         }
     }

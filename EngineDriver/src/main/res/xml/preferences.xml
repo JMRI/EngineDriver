@@ -697,11 +697,12 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <ListPreference
+            android:icon="?attr/ed_icon"
             android:defaultValue="@string/prefAppIconActionDefaultValue"
             android:entries="@array/prefAppIconActionEntries"
             android:entryValues="@array/prefAppIconActionEntryValues"
             android:key="prefAppIconAction"
-            android:layout="@layout/checkbox_no_icon"
+            android:layout="@layout/checkbox_icon_right"
             android:summary="@string/prefAppIconActionSummary"
             android:title="@string/prefAppIconActionTitle" />
 
@@ -841,6 +842,13 @@
                     android:key="prefPauseSpeedButton"
                     android:summary="@string/prefPauseSpeedButtonSummary"
                     android:title="@string/prefPauseSpeedButtonTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefPauseAlternateButtonDefaultValue"
+                    android:key="prefPauseAlternateButton"
+                    android:summary="@string/prefPauseAlternateButtonSummary"
+                    android:title="@string/prefPauseAlternateButtonTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <EditTextPreference
