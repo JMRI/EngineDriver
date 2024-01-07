@@ -1378,6 +1378,9 @@
         <item>DCC PROG</item>
         <item>DC</item>
         <item>DC reversed polarity (DCX)</item>
+        <item>AUTO - Auto Reverse DCC MAIN</item>
+        <item>EXT (not selectable)</item>
+        <item>BOOST (not selectable)</item>
     </string-array>
     <string-array name="dccExTrackTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -1385,6 +1388,9 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
     </string-array>
 
     <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->

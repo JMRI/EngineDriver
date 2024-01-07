@@ -70,7 +70,6 @@ public class throttle_big_buttons extends throttle {
                 break;
         }
 
-//        super.layoutViewId = R.layout.throttle_big_buttons_left;
         super.onCreate(savedInstanceState);
 
         if (mainapp.appIsFinishing) { return;}
@@ -89,23 +88,15 @@ public class throttle_big_buttons extends throttle {
         lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
-//        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-//        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            //noinspection SwitchStatementWithTooFewBranches
-            switch (throttleIndex) {
-                default:
-                case 0:
-                    lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
-//                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
-//                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
-                    vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
-                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
-                    break;
-            }
-        }
+        lThrottles[0] = findViewById(R.id.throttle_0);
+        lSpeeds[0] = findViewById(R.id.throttle_0_SetSpeed);
+        vsbSpeeds[0] = findViewById(R.id.speed_0);
+        svFnBtns[0] = findViewById(R.id.function_buttons_scroller_0);
+        bPauses[0] = findViewById(R.id.button_pause_0);
+
+        pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(0);
+        bPauses[0].setOnTouchListener(psvtl);
 
         setAllFunctionLabelsAndListeners();
 

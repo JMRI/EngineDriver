@@ -126,6 +126,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         bReset.setOnClickListener(reset_click_listener);
         bReset.setEnabled(true);
 
+        Button closeButton = findViewById(R.id.fb_button_close);
+        close_button_listener closeClickListener = new close_button_listener();
+        closeButton.setOnClickListener(closeClickListener);
+
         et = findViewById(R.id.fb_number_of_default_function_labels);
         et.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -593,4 +597,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
     }
 
+    public class close_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            finish();
+        }
+    }
 }

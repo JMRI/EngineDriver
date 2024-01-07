@@ -264,6 +264,16 @@
                                     android:textSize="30sp" />
 
                                 <Button
+                                    android:id="@+id/button_pause_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
+
+                                <Button
                                     android:id="@+id/button_stop_0"
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
@@ -967,6 +977,16 @@
                                     android:padding="0dp"
                                     android:text="@string/DownButton"
                                     android:textSize="30sp" />
+
+                                <Button
+                                    android:id="@+id/button_pause_1"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
 
                                 <Button
                                     android:id="@+id/button_stop_1"
@@ -1674,6 +1694,16 @@
                                     android:textSize="30sp" />
 
                                 <Button
+                                    android:id="@+id/button_pause_2"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
+
+                                <Button
                                     android:id="@+id/button_stop_2"
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
@@ -2349,6 +2379,16 @@
                                     android:padding="0dp"
                                     android:text="@string/DownButton"
                                     android:textSize="30sp" />
+
+                                <Button
+                                    android:id="@+id/button_pause_3"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
 
                                 <Button
                                     android:id="@+id/button_stop_3"
@@ -3028,6 +3068,16 @@
                                     android:textSize="30sp" />
 
                                 <Button
+                                    android:id="@+id/button_pause_4"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
+
+                                <Button
                                     android:id="@+id/button_stop_4"
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
@@ -3703,6 +3753,16 @@
                                     android:padding="0dp"
                                     android:text="@string/DownButton"
                                     android:textSize="30sp" />
+
+                                <Button
+                                    android:id="@+id/button_pause_5"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:enabled="false"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
 
                                 <Button
                                     android:id="@+id/button_stop_5"

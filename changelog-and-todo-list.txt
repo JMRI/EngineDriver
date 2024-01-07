@@ -13,6 +13,10 @@
  * Added support for Auto selection of DCC-EX Native Protocol. (Server name must contain "DCCEX" or "DCC-EX".)
  * remember the dropdown selection in the DCC-EX screen
  * update to jmdns-3.5.8.jar
+ * Added support for additional DCC-EX Track Types: AUTO, EXT, BOOST
+ * new preference to have the pause button near the stop button
+ * cleanup of the function defaults screen
+ * add close button to function defaults screen
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry

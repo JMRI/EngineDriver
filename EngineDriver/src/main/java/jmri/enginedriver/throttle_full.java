@@ -137,14 +137,17 @@ public class throttle_full extends throttle {
                 case 0:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
+                    bPauses[throttleIndex] = null;
                     break;
                 case 1:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
+                    bPauses[throttleIndex] = null;
                     break;
                 case 2:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
+                    bPauses[throttleIndex] = null;
                     break;
             }
 

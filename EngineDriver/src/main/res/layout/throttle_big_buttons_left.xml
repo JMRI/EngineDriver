@@ -605,6 +605,18 @@
                                     android:textSize="30sp" />
 
                                 <Button
+                                    android:id="@+id/button_pause_0"
+                                    style="?attr/ed_normal_button_style"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="80dp"
+                                    android:layout_weight=".2"
+                                    android:paddingTop="20dp"
+                                    android:enabled="false"
+                                    android:layout_marginBottom="30dp"
+                                    android:text="@string/pauseSpeedButtonLabel"
+                                    android:visibility="gone"/>
+
+                                <Button
                                     android:id="@+id/button_stop_0"
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="match_parent"
@@ -613,6 +625,7 @@
                                     android:enabled="false"
                                     android:paddingTop="20dp"
                                     android:text="@string/stop" />
+
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

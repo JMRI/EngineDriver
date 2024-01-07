@@ -128,6 +128,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
                     break;
                 case 1:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
@@ -136,6 +137,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_1);
                     break;
                 case 2:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
@@ -144,6 +146,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_2);
                     break;
                 case 3:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_3);
@@ -152,6 +155,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_3);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_3);
                     break;
                 case 4:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_4);
@@ -160,6 +164,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_4);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_4);
                     break;
                 case 5:
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_5);
@@ -168,8 +173,12 @@ public class throttle_vertical_left_or_right extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_5);
                     break;
             }
+
+            pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(throttleIndex);
+            bPauses[throttleIndex].setOnTouchListener(psvtl);
         }
 
         sliderType = SLIDER_TYPE_VERTICAL;

@@ -122,34 +122,42 @@ public class throttle_switching_left_or_right extends throttle {
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
                     break;
                 case 1:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_1);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_1);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_1);
                     break;
                 case 2:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_2);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_2);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_2);
                     break;
                 case 3:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_3);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_3);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_3);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_3);
                     break;
                 case 4:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_4);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_4);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_4);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_4);
                     break;
                 case 5:
                     fbs[throttleIndex] = findViewById(R.id.function_buttons_table_5);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_5);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_5);
+                    bPauses[throttleIndex] = findViewById(R.id.button_pause_5);
                     break;
             }
 
+            pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(throttleIndex);
+            bPauses[throttleIndex].setOnTouchListener(psvtl);
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {

@@ -84,6 +84,7 @@
 
     <bool name="prefLimitSpeedButtonDefaultValue">false</bool>
     <bool name="prefPauseSpeedButtonDefaultValue">false</bool>
+    <bool name="prefPauseAlternateButtonDefaultValue">false</bool>
     <bool name="prefHapticFeedbackButtonsDefaultValue">false</bool>
 <!--
     <bool name="prefPauseSpeedReverseDefaultValue">false</bool>

@@ -89,8 +89,8 @@ public class comm_thread extends Thread {
 //    static final int TRACK_TYPE_DC_INDEX = 3;
 //    static final int TRACK_TYPE_DCX_INDEX = 4;
 
-    static final String [] TRACK_TYPES = { "NONE", "MAIN", "PROG", "DC", "DCX"};
-    static final boolean [] TRACK_TYPES_NEED_ID = { false, false, false, true, true };
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
 
     public comm_thread(threaded_application myApp, SharedPreferences myPrefs) {
         super("comm_thread");

@@ -19,13 +19,17 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight=".5"
-            android:orientation="vertical">
+            android:layout_weight=".6"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
 
             <TextView
                 android:id="@+id/fs_heading"
                 style="?android:attr/listSeparatorTextViewStyle"
-                android:text="@string/fb_header" />
+                android:text="@string/fb_header"
+                android:paddingLeft="5dp"
+                android:layout_marginRight="10dp"
+                tools:ignore="RtlSymmetry" />
 
             <TextView
                 style="?attr/floating_text_style"
@@ -50,7 +54,7 @@
                 <TextView
                     android:id="@+id/fb_number_of_default_function_labels_label"
                     style="?attr/floating_text_style"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:padding="8sp"
                     android:text="@string/prefNumberOfDefaultFunctionLabelsTitle" />
@@ -58,7 +62,7 @@
                 <EditText
                     android:id="@+id/fb_number_of_default_function_labels"
                     style="?attr/edit_label_style"
-                    android:layout_width="60sp"
+                    android:layout_width="40sp"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/fb_number_of_default_function_labels_label"
                     android:inputType="number"
@@ -79,7 +83,7 @@
                 <TextView
                     android:id="@+id/fb_number_of_default_function_labels_for_roster_label"
                     style="?attr/floating_text_style"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:padding="8sp"
                     android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
@@ -87,7 +91,7 @@
                 <EditText
                     android:id="@+id/fb_number_of_default_function_labels_for_roster"
                     style="?attr/edit_label_style"
-                    android:layout_width="60sp"
+                    android:layout_width="40sp"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/fb_number_of_default_function_labels_for_roster_label"
                     android:inputType="number"
@@ -108,7 +112,7 @@
                 <TextView
                     android:id="@+id/fb_always_use_default_function_labels_label"
                     style="?attr/floating_text_style"
-                    android:layout_width="100dp"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
@@ -118,10 +122,15 @@
                 <Spinner
                     android:id="@+id/fb_always_use_default_function_labels"
                     style="?attr/edit_label_style"
-                    android:layout_width="60dip"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_margin="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
                     android:layout_toRightOf="@+id/fb_always_use_default_function_labels_label"
                     android:entries="@array/prefYesNoEntries"
                     android:entryValues="@array/prefYesNoEntryValues"
@@ -135,13 +144,22 @@
                 android:layout_height="wrap_content"
                 android:text="@string/fbResetFunctionLabels" />
 
+            <Button
+                android:id="@+id/fb_button_close"
+                style="?attr/ed_small_button_style"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="30dp"
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
+
         </LinearLayout>
 
         <ScrollView
             android:id="@+id/ScrollView01"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".5">
+            android:layout_weight=".4">
 
             <TableLayout
                 android:id="@+id/label_func_table"
@@ -154,7 +172,7 @@
 
                     <TextView
                         android:layout_weight="7"
-                        android:text="@string/fb_column_label" />
+                        android:text="@string/fb_column_label"/>
 
                     <TextView
                         android:layout_weight="3"
@@ -164,10 +182,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton00DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="00" />
                 </TableRow>
@@ -175,10 +195,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton01DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="01" />
                 </TableRow>
@@ -186,10 +208,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton02DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="02" />
                 </TableRow>
@@ -197,10 +221,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton03DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="03" />
                 </TableRow>
@@ -208,10 +234,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton04DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="04" />
                 </TableRow>
@@ -219,10 +247,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton05DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="05" />
                 </TableRow>
@@ -230,10 +260,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton06DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="06" />
                 </TableRow>
@@ -241,10 +273,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton07DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="07" />
                 </TableRow>
@@ -252,10 +286,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton08DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="08" />
                 </TableRow>
@@ -263,10 +299,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton09DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="09" />
                 </TableRow>
@@ -274,10 +312,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton10DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="10" />
                 </TableRow>
@@ -285,10 +325,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton11DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="11" />
                 </TableRow>
@@ -296,10 +338,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton12DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="12" />
                 </TableRow>
@@ -307,10 +351,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton13DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="13" />
                 </TableRow>
@@ -318,10 +364,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton14DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="14" />
                 </TableRow>
@@ -329,10 +377,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton15DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="15" />
                 </TableRow>
@@ -340,10 +390,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton16DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="16" />
                 </TableRow>
@@ -351,10 +403,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton17DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="17" />
                 </TableRow>
@@ -362,10 +416,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton18DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="18" />
                 </TableRow>
@@ -373,10 +429,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton19DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="19" />
                 </TableRow>
@@ -384,10 +442,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton20DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="20" />
                 </TableRow>
@@ -395,10 +455,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton21DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="21" />
                 </TableRow>
@@ -406,10 +468,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton22DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="22" />
                 </TableRow>
@@ -417,10 +481,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton23DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="23" />
                 </TableRow>
@@ -428,10 +494,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton24DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="24" />
                 </TableRow>
@@ -439,10 +507,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton25DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="25" />
                 </TableRow>
@@ -450,10 +520,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton26DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="26" />
                 </TableRow>
@@ -461,10 +533,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton27DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="27" />
                 </TableRow>
@@ -472,10 +546,12 @@
                 <TableRow>
 
                     <EditText
+                        android:layout_weight="7"
                         style="?attr/edit_label_style"
                         android:text="@string/functionButton28DefaultValue" />
 
                     <EditText
+                        android:layout_weight="3"
                         style="?attr/edit_func_style"
                         android:text="28" />
                 </TableRow>

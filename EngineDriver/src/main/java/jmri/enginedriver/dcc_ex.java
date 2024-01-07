@@ -150,8 +150,9 @@ public class dcc_ex extends AppCompatActivity {
 //    static final int TRACK_TYPE_DC_INDEX = 3;
 //    static final int TRACK_TYPE_DCX_INDEX = 4;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX"};
-    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
+    static final boolean[] TRACK_TYPES_SELECTABLE = {true, true, true, true, true, true, false, false};
 
     String cv29SpeedSteps;
     String cv29AnalogueMode;
@@ -443,17 +444,21 @@ public class dcc_ex extends AppCompatActivity {
                     type = TRACK_TYPES[typeIndex];
                     mainapp.DccexTrackType[i] = typeIndex;
 
-                    if (!TRACK_TYPES_NEED_ID[typeIndex]) {
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, 0);
-                    } else {
-                        try {
-                            id = Integer.parseInt(dccExTrackTypeIdEditText[i].getText().toString());
-                            mainapp.DccexTrackId[i] = id.toString();
-                            if (mainapp.DccexTrackType[i] != TRACK_TYPE_OFF_NONE_INDEX) {
-                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, id);
+                    if (TRACK_TYPES_SELECTABLE[typeIndex]) {
+                        if (!TRACK_TYPES_NEED_ID[typeIndex]) {
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, 0);
+                        } else {
+                            try {
+                                id = Integer.parseInt(dccExTrackTypeIdEditText[i].getText().toString());
+                                mainapp.DccexTrackId[i] = id.toString();
+                                if (mainapp.DccexTrackType[i] != TRACK_TYPE_OFF_NONE_INDEX) {
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, id);
+                                }
+                            } catch (Exception ignored) {
                             }
-                        } catch (Exception ignored) {
                         }
+                    } else {
+                        refreshDccexTracksView();
                     }
                 }
             }
@@ -618,6 +623,7 @@ public class dcc_ex extends AppCompatActivity {
             } else {
                 dccExTrackPowerButton[i].setVisibility(View.GONE);
             }
+            dccExTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.DccexTrackType[i]]);
         }
         showHideButtons();
 
@@ -1158,6 +1164,10 @@ public class dcc_ex extends AppCompatActivity {
                     }
                 }
             }
+            if (!TRACK_TYPES_SELECTABLE[dccExTrackTypeIndex[myIndex]]) {  // invalid option. reset the lot.
+                refreshDccexTracksView();
+            }
+
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {

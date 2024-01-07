@@ -676,7 +676,11 @@
     <string name="prefPauseSpeedStepTitle">\'Pause\' button Step</string>
     <string name="prefPauseSpeedStepSummary">Step size changes for the Pause action</string>
     <string name="prefPauseSpeedStepDefaultValue" translatable="false">2</string>
-<!--
+
+    <string name="prefPauseAlternateButtonTitle">Alternate \'Pause\' button</string>
+    <string name="prefPauseAlternateButtonSummary">Show alternate \'Pause\' button near the \'Stop\' button. (Vertical layouts only)</string>
+
+    <!--
     <string name="prefPauseSpeedReverseTitle">Change direction after pause</string>
     <string name="prefPauseSpeedReverseSummary">Select if the loco should change direction after pausing.</string>
 -->
