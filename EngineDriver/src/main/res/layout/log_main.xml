@@ -52,6 +52,18 @@
                     android:layout_gravity="right"
                     android:text="@string/logviewerSave"
                     tools:ignore="RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/logviewer_info"
+                    android:layout_width="220dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="right"
+                    android:text=""
+                    android:visibility="gone"
+                    style="?attr/list_extras_style"
+                    android:textSize="10sp"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+
             </TableRow>
 
         </TableLayout>
