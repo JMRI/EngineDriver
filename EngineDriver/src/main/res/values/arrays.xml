@@ -1320,11 +1320,18 @@
         <item>Track Manager</item>
         <item>Route/Automation {loco} {id}</item>
         <item>Kill all Automations</item>
+        <item>--- Diagnostic Commands ---</item>
         <item>ACK Limit {mA}</item>
         <item>ACK Min {µS}</item>
         <item>ACK Max {µS}</item>
         <item>Reboot/Reset CS</item>
         <item>Reset HAL Devices</item>
+        <item>Show All HAL Devices</item>
+        <item>PROG current boost</item>
+        <item>WIFI {ON|OFF}</item>
+        <item>ETHERNET {ON|OFF}</item>
+        <item>WiThrottle {ON|OFF}</item>
+        <item>Show free RAM</item>
     </string-array>
     <string-array name="dccExCommonCommandsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item />
@@ -1337,11 +1344,18 @@
         <item>=</item>
         <item>/ START</item>
         <item>/ KILL ALL</item>
+        <item />
         <item>D ACK LIMIT</item>
         <item>D ACK MIN</item>
         <item>D ACK MAX</item>
         <item>D RESET</item>
         <item>D HAL RESET</item>
+        <item>D HAL SHOW</item>
+        <item>D PROGBOOST</item>
+        <item>D WIFI</item>
+        <item>D ETHERNET</item>
+        <item>D WIT</item>
+        <item>D RAM</item>
     </string-array>
     <integer-array name="dccExCommonCommandsHasParameters" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -1354,11 +1368,18 @@
         <item>0</item>  // =
         <item>1</item>  // /START
         <item>0</item>  // /KILL ALL
+        <item>0</item>  // delimeter
         <item>1</item>  // D ACK LIMIT
         <item>1</item>  // D ACK MIN
         <item>1</item>  // D ACK MAX
         <item>0</item>  // D RESET
         <item>0</item>  // D HAL RESET
+        <item>0</item>  // D HAL SHOW
+        <item>0</item>  // D PROGBOOST
+        <item>1</item>  // D WIFI
+        <item>1</item>  // D ETHERNET
+        <item>1</item>  // D WIT
+        <item>1</item>  // D RAM
     </integer-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->

@@ -49,6 +49,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
+    private Button saveButton;
+    private TextView saveInfoTV;
+
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
     private Menu AMenu;
@@ -90,10 +93,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //        reset_button_listener reset_click_listener = new reset_button_listener();
 //        resetButton.setOnClickListener(reset_click_listener);
 
-        Button saveButton = findViewById(R.id.logviewer_button_save);
+        saveButton = findViewById(R.id.logviewer_button_save);
         save_button_listener save_click_listener = new save_button_listener();
         saveButton.setOnClickListener(save_click_listener);
-
+        saveInfoTV = findViewById(R.id.logviewer_info);
+        showHideSaveButton();
 
         logReaderTask = new LogReaderTask();
 
@@ -232,22 +236,14 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     private void saveLogFile() {
-//        navigateToHandler(PermissionsHelper.STORE_LOG_FILES);
-//        saveLogFileImpl();
-//    }
-//
-//    private void saveLogFileImpl() {
-//        File path = Environment.getExternalStorageDirectory();
-//        File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
-//        engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//
-//        File logFile = new File( engine_driver_dir, "logcat" + System.currentTimeMillis() + ".txt" );
         File logFile = new File(context.getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
 
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
             process = Runtime.getRuntime().exec("logcat -f " + logFile);
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
+            mainapp.logSaveFilename = logFile.toString();
+            showHideSaveButton();
             Log.d("Engine_Driver", "Logging started to: " + logFile.toString());
             Log.d("Engine_Driver", mainapp.getAboutInfo());
         } catch ( IOException e ) {
@@ -256,6 +252,16 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     }
 
+    void showHideSaveButton() {
+        if (mainapp.logSaveFilename.length()>0) {
+            saveButton.setVisibility(View.GONE);
+            saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
+            saveInfoTV.setVisibility(View.VISIBLE);
+        } else {
+            saveButton.setVisibility(View.VISIBLE);
+            saveInfoTV.setVisibility(View.GONE);
+        }
+    }
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {

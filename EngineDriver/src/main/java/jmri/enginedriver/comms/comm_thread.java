@@ -1709,14 +1709,14 @@ public class comm_thread extends Thread {
     private static void processDCCEXroutes(String [] args) {
 
         if (args != null)  {
-            if ( (args.length == 1)  // no Turnouts <jT>
+            if ( (args.length == 1)  // no Routes <jA>
                     || ((args.length == 3) && ((args[2].charAt(0) == 'R') || (args[2].charAt(0) == 'A') || (args[2].charAt(0) == 'X')) )  // <jA id type>  or <jA id X>
                     || ((args.length == 4) && (args[3].charAt(0) == '"') ) ) { // individual routes  <jA id type "[desc]">
 
                 boolean ready = true;
                 boolean noRoutes = false;
 
-                if ( args.length == 1) { // no turnouts
+                if ( args.length == 1) { // no Routes
                     noRoutes = true;
                 } else {
                     for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {

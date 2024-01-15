@@ -919,6 +919,7 @@
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">Logging Started in file %1$s. Logging will continue until you exit the Engine Driver app.</string>
+    <string name="infoSaveLogFile">Logging to: %s</string>
 
     <!--    Toast messages for the Turnouts Activity -->
 <!--    <string name="toastRecentTurnoutCleared">Turnout removed from list</string>-->

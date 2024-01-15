@@ -357,6 +357,7 @@ public class threaded_application extends Application {
     public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     public boolean prefShowTimeOnLogEntry = false;
+    public String logSaveFilename = "";
     public boolean prefFeedbackOnDisconnect = true;
 
     public String prefHapticFeedback = "None";
