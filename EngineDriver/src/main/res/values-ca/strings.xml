@@ -121,7 +121,6 @@
 <!--    <string name="off">Apagat</string>-->
     <string name="set">Estableix</string>
     <string name="disabled">Deshabilitat</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
     <string name="exit_text">Sortir de l\'Engine Driver?</string>
@@ -484,7 +483,7 @@
     <string name="toastPreferencesOutsideLimits">El valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesNotNumeric">El valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les preferències a valors per defecte!</string>
-    <string name="toastPreferencesImportServerManualFailed">La importació del servidor ha fallat. Comproveu que el fitxer és correcte. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualFailed">Import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
 <!--    <string name="toastPreferencesImportSucceeded">Preferències importar des del fitxer S\'ha superat</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema</string>
@@ -912,7 +911,7 @@
     <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomanem que augmenteu la mida de la zona de botons de la funció, o no podreu accedir a les funcions de so de campana / banya / silenci</string>
     <string name="pauseSpeedButtonLabel">Pausa</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Força el pas de velocitat que s\'utilitzarà quan fa temps que pressioni una velocitat inferior al control lliscant. \\nSi no es comprova, la velocitat saltarà immediatament a la velocitat tocada.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Força el pas de velocitat que s\'utilitzarà quan fa temps que pressioni una velocitat inferior al control lliscant. \nSi no es comprova, la velocitat saltarà immediatament a la velocitat tocada.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed ​​Pas de disminució?</string>
     <string name="soundsButtonHornShortDefaultValue">Banya curta</string>
     <string name="toastInitialisingSounds">Inicialització al telèfon de telèfon sona.</string>
@@ -946,7 +945,7 @@
     <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí? (vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
     <string name="rosterEmpty">No es pot trobar cap ingrés a la llista de JMRI. Utilitzeu l\'opció \'Adreça DCC\' o \'recent\'.</string>
-    <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \\n\\nReintentant</string>
+    <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \n\nReintentant</string>
     <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Màxim</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
@@ -957,12 +956,15 @@
     <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Utilitzeu les ordres natives DCC-EX (no withrottle)</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé</string>
+    <string name="useProtocolDCCEXplusAutoHint">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opció de protocol</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra el botó a la barra d’acció per accedir a la pantalla ECC-EX. (Només per a connexions natives DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acció</string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(exclou \'&lt;\' i \'>\')</small></string>
     <string name="DCCEXclearCommands">Clar</string>
     <string name="DccexConnectionOptionTitle">Protocol de connexió</string>
     <string name="DccexFailed">L\'acció ha fallat</string>
@@ -972,6 +974,7 @@
     <string name="DCCEXrouteHandoff">Mà</string>
     <string name="DCCEXrouteSet">Conjunt</string>
     <string name="DccexSendCommandButtonLabel">Enviar</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXsetTrackButtonLabel">Conjunt</string>
     <string name="DccexSucceeded">L\'acció va tenir èxit</string>
     <string name="DCCEXturnoutClosed">Tancada</string>
@@ -990,4 +993,7 @@
     <string name="prefDccexPreferencesSummary">Opcions per utilitzar un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Utilitzeu sempre etiquetes de funcions des del servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quan es desactivi, utilitzeu etiquetes predeterminades EnginedRiver per a locos seleccionats per adreça (no classificació), ignorant les etiquetes predeterminades del servidor.</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée sur manette verrouillée</string>
+    <string name="prefHapticFeedbackButtonsSummary">Retour haptique sur touches (vibration)</string>
+    <string name="prefHapticFeedbackButtonsTitle">Retour haptique sur touches</string>
 </resources>

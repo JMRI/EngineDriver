@@ -240,4 +240,15 @@
         <item>Programm auf dem Hauptmodus (Betriebsmodus)</item>
         <item>Spur/Bezirksleiter</item>
     </string-array>
+
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>Ja</item>
+        <item>NEIN</item>
+    </string-array>
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>Ja</item>
+        <item>NEIN</item>
+        <item>Auto</item>
+    </string-array>
+
 </resources>

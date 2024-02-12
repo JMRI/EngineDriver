@@ -139,7 +139,6 @@
 <!--    <string name="off">Vypnuto</string>-->
     <string name="set">Nastavit</string>
     <string name="disabled">Zakázáno</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="ok">"Ok"</string>
@@ -1150,12 +1149,14 @@
     <string name="prefDccexSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
     <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
     <string name="useProtocolDCCEX">Použijte nativní příkazy DCC-EX (nikoli srottle)</string>
+    <string name="useProtocolDCCEXplusAutoHint">Použijte nativní příkazy DCC-Ex. Pro „Auto“ musí jméno obsahovat „DCCEX“ nebo „DCC-EX“</string>
     <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
     <string name="prefDccexConnectionOptionTitle">Zobrazit možnost protokolu</string>
     <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku ECC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Akce</string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(vyloučit \'&lt;\' a \'&gt;\')</small></string>
     <string name="DCCEXclearCommands">Průhledná</string>
     <string name="DccexConnectionOptionTitle">Protokol připojení</string>
     <string name="DccexFailed">Akce selhala</string>
@@ -1165,6 +1166,7 @@
     <string name="DCCEXrouteHandoff">Ruce pryč</string>
     <string name="DCCEXrouteSet">Soubor</string>
     <string name="DccexSendCommandButtonLabel">Poslat</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXsetTrackButtonLabel">Soubor</string>
     <string name="DccexSucceeded">Akce uspěla</string>
     <string name="DCCEXturnoutClosed">ZAVŘENO</string>

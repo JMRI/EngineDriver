@@ -910,7 +910,7 @@
     <string name="app_name_device_sounds_settings">En el teléfono LOCO sonidos</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomendamos que aumente el tamaño del área de los botones de la función, o no podrá acceder a las funciones de sonido de campana / cuerno / mute</string>
     <string name="pauseSpeedButtonLabel">Pausa</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forzar el paso de velocidad que se utilizará cuando presiona mucho tiempo una velocidad más baja en el control deslizante. \\nSi no está marcado, la velocidad saltará inmediatamente a la velocidad conmovedora.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forzar el paso de velocidad que se utilizará cuando presiona mucho tiempo una velocidad más baja en el control deslizante. \nSi no está marcado, la velocidad saltará inmediatamente a la velocidad conmovedora.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Paso de velocidad en la disminución?</string>
     <string name="soundsButtonHornShortDefaultValue">Cuerno corto</string>
     <string name="toastInitialisingSounds">Inicialización en el teléfono Loco sonidos.</string>
@@ -950,12 +950,14 @@
     <string name="prefDccexSummary">Use los comandos nativos de DCC-EX en lugar de Withrottle para todas las conexiones. \nNota: No entrará en vigencia hasta que reinicie el controlador del motor y se conecte a un servidor.</string>
     <string name="prefDccexTitle">Use comandos nativos de DCC-EX</string>
     <string name="useProtocolDCCEX">Use comandos nativos de DCC-EX (no con Rottle)</string>
+    <string name="useProtocolDCCEXplusAutoHint">Use comandos nativos de DCC-EX. Para \'Auto\', el nombre debe contener \"DCCEX\" o \"DCC-EX\"</string>
     <string name="usingProtocolDCCEX">Usando el protocolo DCC-EX. Desactivar \"Use los comandos DCC-EX nativos\" Preferencia para usar el protocolo Witrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostrar opción para cambiar entre los protocolos Withrottle y DCC-EX en la pantalla de conexión.</string>
     <string name="prefDccexConnectionOptionTitle">Opción de protocolo Mostrar</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar el botón en la barra de acción para acceder a la pantalla ECC-EX. (Solo para conexiones nativas de DCC-EX).</string>
     <string name="prefActionBarShowDccExButtonTitle">¿Botón DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acción</string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(excluir \'&lt;\' y \'&gt;\')</small></string>
     <string name="DCCEXclearCommands">Claro</string>
     <string name="DccexConnectionOptionTitle">Protocolo de conexión</string>
     <string name="DccexFailed" tools:ignore="Typos">Accion: Fallida</string>
@@ -965,6 +967,7 @@
     <string name="DCCEXrouteHandoff">Manos libres</string>
     <string name="DCCEXrouteSet">Colocar</string>
     <string name="DccexSendCommandButtonLabel">Enviar</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXsetTrackButtonLabel">Colocar</string>
     <string name="DccexSucceeded">Acción tuvo éxito</string>
     <string name="DCCEXturnoutClosed">Cerrado</string>

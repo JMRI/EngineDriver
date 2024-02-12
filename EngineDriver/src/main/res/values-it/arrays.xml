@@ -258,4 +258,15 @@
         <item>Programma su Main (Modalità operativa)</item>
         <item>Manager di pista/distrettuale</item>
     </string-array>
+
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>SÌ</item>
+        <item>NO</item>
+    </string-array>
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>SÌ</item>
+        <item>NO</item>
+        <item>Auto</item>
+    </string-array>
+
 </resources>

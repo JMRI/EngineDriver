@@ -799,7 +799,7 @@
 <!--    <string name="prefTurnMobileDataOnOffSummary">Attivare Mobile Data off all\'inizio del macchinista e di nuovo in a distanza.</string>-->
     <string name="webViewButtonBar">Web View Pulsante</string>
 <!--    <string name="webViewAction">Mostra / Nascondi Web View</string>-->
-    <string name="prefWebViewButtonSummary">Visualizza Mostra Nascondi Web pulsante Visualizza / nella barra di azione? \\n(richiede \'acceleratore Web View\' preferenza da abilitare)</string>
+    <string name="prefWebViewButtonSummary">Visualizza Mostra Nascondi Web pulsante Visualizza / nella barra di azione? \n(richiede \'acceleratore Web View\' preferenza da abilitare)</string>
     <string name="prefWebViewButtonTitle">Mostra / Nascondi Web pulsante Vista?</string>
 <!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
@@ -858,7 +858,7 @@
     <string name="app_name_device_sounds_settings">Nei suoni del telefono del telefono</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Consiglia di aumentare i pulsanti della funzione Dimensioni dell\'area o non sarà possibile accedere alle funzioni del suono Bell / Horn / Mute Sound</string>
     <string name="pauseSpeedButtonLabel">Pausa</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forza il passaggio della velocità da utilizzare quando si preme a lungo una velocità inferiore sul cursore. \\nSe non viene controllato, la velocità salterà immediatamente alla velocità toccata.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Forza il passaggio della velocità da utilizzare quando si preme a lungo una velocità inferiore sul cursore. \nSe non viene controllato, la velocità salterà immediatamente alla velocità toccata.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Velocità passo dopo il decremento?</string>
     <string name="soundsButtonHornShortDefaultValue">Corta corta</string>
     <string name="toastInitialisingSounds">Inizializzando nei suoni del telefono del telefono.</string>
@@ -898,12 +898,14 @@
     <string name="prefDccexSummary">Utilizzare i comandi DCC-EX nativi invece di Withrottle per tutte le connessioni. \nNOTA: non avrà effetto fino a quando non riavvia il driver del motore e si connette a un server.</string>
     <string name="prefDccexTitle">Usa i comandi DCC-Ex nativi</string>
     <string name="useProtocolDCCEX">Usa i comandi DCC-EX nativi (non withrottle)</string>
+    <string name="useProtocolDCCEXplusAutoHint">Utilizzare comandi DCC-EX nativi. Per \'Auto\', il nome deve contenere \"DCCEX\" o \"DCC-EX\"</string>
     <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opzione protocollo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo ECC-EX. (Solo per connessioni DCC-Ex native.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Azione</string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(esclude \'&lt;\' e \'&gt;\')</small></string>
     <string name="DCCEXclearCommands">Chiaro</string>
     <string name="DccexConnectionOptionTitle">Protocollo di connessione</string>
     <string name="DccexFailed">L\'azione non è riuscita</string>
@@ -913,6 +915,7 @@
     <string name="DCCEXrouteHandoff">Giù le mani</string>
     <string name="DCCEXrouteSet">Impostare</string>
     <string name="DccexSendCommandButtonLabel">Inviare</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXsetTrackButtonLabel">Impostare</string>
     <string name="DccexSucceeded">L\'azione è riuscita</string>
     <string name="DCCEXturnoutClosed">Chiuso</string>
