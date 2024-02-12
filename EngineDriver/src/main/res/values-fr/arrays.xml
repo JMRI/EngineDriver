@@ -72,8 +72,8 @@
         <item tools:ignore="TypographyDashes">Switching - Droite (1)</item>
         <item tools:ignore="TypographyDashes">Switching - Horizontal (3)</item>
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
-        <item tools:ignore="TypographyDashes">Tablet Switching Gauche (1-6)</item>
-        <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
+        <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -124,9 +124,9 @@
         <item>Fonction 28</item>
         <item>Muet (IPLS)</item>
         <item>Cloche (IPLS)</item>
-        <item>Corne (IPLS)</item>
-        <item>Corne Court (IPLS)</item>
-        <item>Parler de la vitesse actuelle</item>
+        <item>Klaxon (IPLS)</item>
+        <item>Klaxon court (IPLS)</item>
+        <item>Annonce vitesse actuelle</item>
     </string-array>
 
 <!--
@@ -411,13 +411,13 @@
     </string-array>
 
     <string-array name="prefAutoImportExportEntries"> <!-- display version -->
-        <item>Rien</item>
+        <item>Aucun</item>
         <item>Auto Import/Export à la connexion/déconnexion</item>
         <item>Auto Import à la connexion seul.</item>
     </string-array>
 
     <string-array name="prefTtsThrottleResponseEntries"> <!-- display version -->
-        <item>Rien</item>
+        <item>Aucun</item>
         <item>Régulateur</item>
         <item>Régulateur + Loco</item>
         <item>Régulateur + Vitesse</item>
@@ -461,8 +461,19 @@
     </string-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
-        <item>Piste de programmation (mode de service)</item>
-        <item>Programme sur Main (mode opération)</item>
-        <item>Directeur de piste / district</item>
+        <item>Rail de programmation (mode service)</item>
+        <item>Programmation sur voie principale (mode opération)</item>
+        <item>Distric manager</item>
+    </string-array>
+
+    <string-array name="dccExTrackTypeEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>DCC Main</item>
+        <item>DCC Main</item>
+        <item>DCC Main</item>
+        <item>Inversion polarité DC</item>
+        <item>Inversion Auto DCC</item>
+        <item>EXT (non disponible)</item>
+        <item>BOOST (non disponible)</item>
     </string-array>
 </resources>

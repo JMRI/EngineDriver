@@ -18,6 +18,7 @@
  * cleanup of the function defaults screen
  * add close button to function defaults screen
  * hide 'save log' button after pressing. Show file name on the log screen.
+ * Additional French Translations by Alain Carasso
 **Version 2.35.172
  * Fix: allow 16 char for default function labels
  * Fix: avoid crash on DCC-EX roster entry

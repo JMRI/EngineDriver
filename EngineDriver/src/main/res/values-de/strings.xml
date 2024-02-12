@@ -120,7 +120,6 @@
 <!--    <string name="off">Aus</string>-->
     <string name="set">Setze</string>
     <string name="disabled">Ausgeschaltet</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <string name="exit_text">Engine Driver beenden?</string>
@@ -964,12 +963,14 @@
     <string name="prefDccexSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
     <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
     <string name="useProtocolDCCEX">Verwenden Sie native DCC-EX-Befehle (nicht withrottle)</string>
+    <string name="useProtocolDCCEXplusAutoHint">Verwenden Sie native DCC-EX-Befehle. Für \'Auto\' muss der Name \"DCCEX\" oder \"DCC-EX\" enthalten.</string>
     <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
     <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
     <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den ECC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
     <string name="DCCEXactionTypeLabel">Handlung</string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(ausschließen \'&lt;\' und \'&gt;\')</small></string>
     <string name="DCCEXclearCommands">Klar</string>
     <string name="DccexConnectionOptionTitle">Verbindungsprotokoll</string>
     <string name="DccexFailed">Aktion: fehlgeschlagen</string>
@@ -979,6 +980,7 @@
     <string name="DCCEXrouteHandoff">Weiterleiten</string>
     <string name="DCCEXrouteSet">Satz</string>
     <string name="DccexSendCommandButtonLabel">Senden</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXsetTrackButtonLabel">Satz</string>
     <string name="DccexSucceeded">Aktion erfolgreich</string>
     <string name="DCCEXturnoutClosed">Abgeschlossen</string>

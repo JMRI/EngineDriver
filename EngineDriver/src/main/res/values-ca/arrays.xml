@@ -239,4 +239,16 @@
         <item>Programa al principal (mode de funcionament)</item>
         <item>Gerent de pista/districte</item>
     </string-array>
+
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>Sí</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>Sí</item>
+        <item>No</item>
+        <item>Auto</item>
+    </string-array>
+
 </resources>
+

@@ -160,7 +160,7 @@
 <!--    <string name="off">Off</string>-->
     <string name="set">Set</string>
     <string name="disabled">Disabled</string>
-    <string name="volume_indicator">v</string>
+    <string name="volume_indicator" translatable="false">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="ok">"OK"</string>
@@ -542,7 +542,7 @@
     <string name="prefSpeedButtonsSpeedStepDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Speed step on Decrement?</string>
-    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Force the speed step to be used when long pressing a lower speed on the slider.\nIf not checked, the speed will immediately jump to the touched speed.</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">Force the speed step to be used when long pressing a lower speed on the slider. If not checked, the speed will immediately jump to the touched speed.</string>
 
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
@@ -804,8 +804,8 @@
     <string name="gamepadTestCancelNonForced">"Close"</string>
     <string name="gamepadTestSkip">"Skip"</string>
 
-    <string name="gamepadTestKeyCodesUpAction">"\u2191"</string>
-    <string name="gamepadTestKeyCodesDownAction">"\u2193"</string>
+    <string name="gamepadTestKeyCodesUpAction" translatable="false">"\u2191"</string>
+    <string name="gamepadTestKeyCodesDownAction" translatable="false">"\u2193"</string>
 
     <string name="gamepadTestKeyCodesUpCode">"Up"</string>
     <string name="gamepadTestKeyCodesDownCode">"Dn"</string>
@@ -1320,11 +1320,11 @@
     <string name="DccexSendCommandButtonLabel">Send</string>
     <string name="DccexPreviousCommandButtonLabel">Prior</string>
     <string name="DccexNextCommandButtonLabel">Next</string>
-    <string name="DccexSendCommandLabel" translatable="false">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
+    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
 <!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
-    <string name="DCCEXcommonCvsLabel" translatable="false">NMRA CVs</string>
+    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
