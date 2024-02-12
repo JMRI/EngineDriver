@@ -1,3 +1,4 @@
+**Version 2.36.176
 **Version 2.36.174
  * remove check for legacy files
  * Permission changes to support API level 33
