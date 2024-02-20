@@ -95,7 +95,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -7624,7 +7623,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int which) {
 
-                String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+//                String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                String deviceId = mainapp.getDeviceId();
                 String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:

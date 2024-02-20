@@ -31,7 +31,6 @@ import android.os.Build;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -315,14 +314,7 @@ public class comm_thread extends Thread {
             String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
             wifiSend("N" + s);  //send throttle name
             if (sendHWID) {
-                if (mainapp.deviceId.equals("")) {
-                    mainapp.deviceId = Settings.System.getString(mainapp.getContentResolver(), Settings.Secure.ANDROID_ID);
-                }
-                if (mainapp.deviceId.equals("")) {
-                    wifiSend("HU" + s);  //also send throttle name as the UDID
-                } else {
-                    wifiSend("HU" + mainapp.deviceId);
-                }
+                wifiSend("HU" + mainapp.getDeviceId());
             }
 
         } else { //DCC-EX // name is not relevant, so send a Command Station Status Request

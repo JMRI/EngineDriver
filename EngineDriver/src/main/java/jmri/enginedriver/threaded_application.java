@@ -53,7 +53,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
@@ -96,7 +95,6 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
-import jmri.enginedriver.util.GetJsonFromUrl;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.comms.comm_handler;
 import jmri.enginedriver.comms.comm_thread;
@@ -1997,16 +1995,10 @@ public class threaded_application extends Application {
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
         if (currentValue.equals("") || currentValue.equals(defaultName)) {
-            String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-            if (deviceId != null && deviceId.length() >= 4) {
-                deviceId = deviceId.substring(deviceId.length() - 4);
-            } else {
-                Random rand = new Random();
-                deviceId = String.valueOf(rand.nextInt(9999));  //use random string
-                if (MobileControl2.isMobileControl2()) {
-                    // Change default name for ESU MCII
-                    defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
-                }
+            deviceId = mainapp.getDeviceId();
+            if (MobileControl2.isMobileControl2()) {
+                // Change default name for ESU MCII
+                defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
             }
             newValue = defaultName + " " + deviceId;
         }
@@ -2357,7 +2349,7 @@ public class threaded_application extends Application {
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        String deviceId = mainapp.getDeviceId();
         prefs.edit().putString("prefAndroidId", deviceId).commit();
         prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 
@@ -2848,5 +2840,16 @@ public class threaded_application extends Application {
                 i++;
             }
         }
+    }
+
+    public String getDeviceId() {
+//        return Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);  // no longer permitted
+        mainapp.deviceId = prefs.getString("prefAndroidId", "");
+        if (mainapp.deviceId.equals("")) {
+            Random rand = new Random();
+            mainapp.deviceId = String.valueOf(rand.nextInt(9999)); //use random string
+            prefs.edit().putString("prefAndroidId", deviceId).commit();
+        }
+        return mainapp.deviceId;
     }
 }
