@@ -956,7 +956,7 @@
     <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Utilitzeu les ordres natives DCC-EX (no withrottle)</string>
-    <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
     <string name="useProtocolDCCEXplusAutoHint">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>

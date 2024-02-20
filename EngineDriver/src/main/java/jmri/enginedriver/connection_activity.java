@@ -39,7 +39,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -1049,7 +1048,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        String deviceId = mainapp.getDeviceId();
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
 

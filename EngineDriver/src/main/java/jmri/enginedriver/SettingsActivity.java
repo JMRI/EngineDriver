@@ -39,7 +39,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -170,7 +169,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        deviceId = mainapp.getDeviceId();
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
         mainapp.settings_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
@@ -1445,7 +1444,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
 
-                parentActivity.deviceId = Settings.System.getString(parentActivity.getContentResolver(), Settings.Secure.ANDROID_ID);
+                parentActivity.deviceId = mainapp.getDeviceId();
                 prefs.edit().putString("prefAndroidId", parentActivity.deviceId).commit();
 
                 // - - - - - - - - - - - -
