@@ -116,6 +116,9 @@ public class select_loco extends AppCompatActivity {
 
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
+    ArrayList<String> roster_owners_list;
+    String rosterOwnersFilter = "---";
+    int rosterOwnersFilterIndex = 0;
     private RosterSimpleAdapter roster_list_adapter;
     private RecentSimpleAdapter recent_list_adapter;
 
@@ -203,6 +206,8 @@ public class select_loco extends AppCompatActivity {
     public void refresh_roster_list() {
         // clear and rebuild
         roster_list.clear();
+//        roster_owners_list.clear();
+//        roster_owners_list.add("----");
         if (((mainapp.roster_entries != null)  // add roster and consist entries if any defined
                 && (mainapp.roster_entries.size() > 0))
                 || ((mainapp.consist_entries != null)
@@ -217,12 +222,47 @@ public class select_loco extends AppCompatActivity {
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
                 for (String rostername : rns) {
-                    if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))) {
-                        // put key and values into temp hashmap
-                        HashMap<String, String> hm = new HashMap<>();
-                        hm.put("roster_name", rostername);
-                        hm.put("roster_address", mainapp.roster_entries.get(rostername));
-                        hm.put("roster_entry_type", "loco");
+                    // put key and values into temp hashmap
+                    HashMap<String, String> hm = new HashMap<>();
+                    hm.put("roster_name", rostername);
+                    hm.put("roster_address", mainapp.roster_entries.get(rostername));
+                    hm.put("roster_entry_type", "loco");
+                    String owner = "";
+                    if ((mainapp.roster!=null) && (mainapp.roster.get(rostername)!=null)) {
+                        owner = mainapp.roster.get(rostername).getOwner();
+                        boolean foundOwner = false;
+                        for (int j=0;j< roster_owners_list.size(); j++) {
+                            if (roster_owners_list.get(j).equals(owner)) {
+                                foundOwner = true;
+                                break;
+                            }
+                        }
+                        if (!foundOwner) {
+                            roster_owners_list.add(owner);
+                        }
+                    }
+                    hm.put("roster_owner", owner);
+
+                    boolean includeInList = false;
+                    if ((prefRosterFilter.length() == 0) && (rosterOwnersFilterIndex==0) ) {
+                        includeInList = true;
+                    } else if ((prefRosterFilter.length() > 0) && (rosterOwnersFilterIndex==0)) {
+                         if (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase())) {
+                            includeInList = true;
+                         }
+                    } else if ((prefRosterFilter.length() == 0) && (rosterOwnersFilterIndex > 0)) {
+                        if (owner.equals(roster_owners_list.get(rosterOwnersFilterIndex))) {
+                            includeInList = true;
+                        }
+                    } else { // if ((prefRosterFilter.length() > 0) && (rosterOwnersFilterIndex > 0)) {
+                        if ( (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))
+                            && owner.equals(roster_owners_list.get(rosterOwnersFilterIndex)) ) {
+                            includeInList = true;
+                        }
+                    }
+
+//                    if ((prefRosterFilter.length() == 0) || (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))) {
+                    if (includeInList) {
                         //add icon if url set
                         if (mainapp.roster != null) {
                             if (mainapp.roster.get(rostername) != null) {
@@ -250,6 +290,7 @@ public class select_loco extends AppCompatActivity {
                     hm.put("roster_name", mainapp.consist_entries.get(consist_addr));
                     hm.put("roster_address", consist_addr);
                     hm.put("roster_entry_type", "consist");
+                    hm.put("roster_owner", "");
 
                     // add temp hashmap to list which view is hooked to
                     roster_list.add(hm);
@@ -275,6 +316,17 @@ public class select_loco extends AppCompatActivity {
             v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list_empty);
             v.setVisibility(GONE);
+
+            int visible = GONE;
+            boolean prefRosterOwnersFilterShowOption = prefs.getBoolean("prefRosterOwnersFilterShowOption", getResources().getBoolean(R.bool.prefRosterOwnersFilterShowOptionDefaultValue));
+            if ( (roster_owners_list.size()>1) && (prefRosterOwnersFilterShowOption) ) {
+                visible = VISIBLE;
+            }
+
+            v = findViewById(R.id.roster_list_filter_owner_label);
+            v.setVisibility(visible);
+            v = findViewById(R.id.roster_filter_owner);
+            v.setVisibility(visible);
 
         } else { // hide roster section if nothing to show
             View v = findViewById(R.id.roster_list_heading);
@@ -1156,6 +1208,7 @@ public class select_loco extends AppCompatActivity {
                     }
                 }
             }
+            String rosterEntryOwner = hm.get("roster_owner");
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
@@ -1244,8 +1297,10 @@ public class select_loco extends AppCompatActivity {
         roster_list = new ArrayList<>();
         roster_list_adapter = new RosterSimpleAdapter(this, roster_list,
                 R.layout.roster_list_item, new String[]{"roster_name",
-                "roster_address", "roster_icon"}, new int[]{R.id.roster_name_label,
-                R.id.roster_address_label, R.id.roster_icon_image});
+                "roster_address", "roster_icon", "roster_owner"}, new int[]{R.id.roster_name_label,
+                R.id.roster_address_label, R.id.roster_icon_image, R.id.roster_owner_label});
+        roster_owners_list = new ArrayList<>();
+
 
         roster_list_view = findViewById(R.id.roster_list);
         roster_list_view.setAdapter(roster_list_adapter);
@@ -1256,6 +1311,21 @@ public class select_loco extends AppCompatActivity {
                 return onLongRosterListItemClick(pos);
             }
         });
+
+
+
+        roster_list.clear();
+        roster_owners_list.clear();
+        roster_owners_list.add("----");
+
+        // Set the options for the owners
+        Spinner rosterFilterOwners = findViewById(R.id.roster_filter_owner);
+        spinner_adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, roster_owners_list);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        rosterFilterOwners.setAdapter(spinner_adapter);
+        rosterFilterOwners.setOnItemSelectedListener(new owners_filter_spinner_listener());
+        rosterOwnersFilter = prefs.getString("prefRosterOwnersFilterSelected", "---");
+        rosterFilterOwners.setSelection(0);
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
         recent_engine_list = new ArrayList<>();
@@ -1986,6 +2056,12 @@ public class select_loco extends AppCompatActivity {
             String iconURL = hm.get("roster_icon");
             loadRosterOrRecentImage(engineName, imageView, iconURL);
 
+            String owner = hm.get("roster_owner");
+            if (owner != null) {
+                TextView secondLine = view.findViewById(R.id.roster_owner_label);
+                secondLine.setText(owner);
+            }
+
             return view;
         }
     }
@@ -2287,6 +2363,22 @@ public class select_loco extends AppCompatActivity {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public class owners_filter_spinner_listener implements AdapterView.OnItemSelectedListener {
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Spinner spinner = findViewById(R.id.roster_filter_owner);
+            rosterOwnersFilterIndex = spinner.getSelectedItemPosition();
+            rosterOwnersFilter = spinner.getSelectedItem().toString();
+            spinner.setSelection(rosterOwnersFilterIndex);
+            refresh_roster_list();
+            prefs.edit().putString("prefRosterOwnersFilterSelected", rosterOwnersFilter).commit();
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
         }
     }
 }

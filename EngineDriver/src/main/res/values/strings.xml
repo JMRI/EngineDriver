@@ -436,7 +436,10 @@
     <string name="prefRosterFilterDefaultValue" translatable="false"> </string>
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
+    <string name="FilterRosterListFilterOwnerLabel">Filter by Owner</string>
     <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
+    <string name="prefRosterOwnersFilterShowOptionTitle">Filter by Roster Owner</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
     <string name="LocoSelectMethodAddress">DCC Address</string>
