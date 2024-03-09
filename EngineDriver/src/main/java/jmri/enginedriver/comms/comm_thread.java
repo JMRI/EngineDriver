@@ -1025,7 +1025,7 @@ public class comm_thread extends Thread {
                         }
 
                     } else if (responseStr.charAt(1) == 'm') { //info message sent from server to throttle
-                        threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_SHORT); // copy to UI as toast message
+                        threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                     }
                     break;
 
@@ -1152,7 +1152,7 @@ public class comm_thread extends Thread {
 
                     // remove any escaped double quotes
                     String s = responseStr.replace("\\\"", "'");
-                    //split on spaces, with stuff between doublequotes treated as one item
+                    //split on spaces, with stuff between double quotes treated as one item
                     String[] args = s.substring(1, responseStr.length() - 1).split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 999);
 
                     switch (responseStr.charAt(1)) {
@@ -1257,6 +1257,9 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             break;
 
+                        case 'm': //info message sent from server to throttle
+                            threaded_application.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
+                            break;
                     }
 
                 } else { // ignore responses that don't start with "<"
