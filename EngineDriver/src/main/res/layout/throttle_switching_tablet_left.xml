@@ -765,6 +765,39 @@
                                                     android:text="@string/functionButton28DefaultValue" />
                                             </TableRow>
 
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
+                                            </TableRow>
+
                                         </TableLayout>
                                     </LinearLayout>
                                 </ScrollView>
@@ -1480,6 +1513,39 @@
                                                     android:text="@string/functionButton28DefaultValue" />
                                             </TableRow>
 
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
+                                            </TableRow>
+
                                         </TableLayout>
                                     </LinearLayout>
                                 </ScrollView>
@@ -2165,6 +2231,39 @@
                                                     android:layout_width="0dp"
                                                     android:layout_weight="10"
                                                     android:text="@string/functionButton28DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
                                             </TableRow>
 
                                         </TableLayout>
@@ -2854,6 +2953,39 @@
                                                     android:text="@string/functionButton28DefaultValue" />
                                             </TableRow>
 
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
+                                            </TableRow>
+
                                         </TableLayout>
                                     </LinearLayout>
                                 </ScrollView>
@@ -3541,6 +3673,39 @@
                                                     android:text="@string/functionButton28DefaultValue" />
                                             </TableRow>
 
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
+                                            </TableRow>
+
                                         </TableLayout>
                                     </LinearLayout>
                                 </ScrollView>
@@ -4226,6 +4391,39 @@
                                                     android:layout_width="0dp"
                                                     android:layout_weight="10"
                                                     android:text="@string/functionButton28DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton29DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton30DefaultValue" />
+                                            </TableRow>
+
+                                            <TableRow
+                                                android:baselineAligned="false"
+                                                android:weightSum="10">
+
+                                                <Button
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="10"
+                                                    android:text="@string/functionButton31DefaultValue" />
                                             </TableRow>
 
                                         </TableLayout>

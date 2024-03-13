@@ -185,7 +185,9 @@ public class threaded_application extends Application {
     //  WiThrottle server, can be chgd for specific servers
     //   do not exceed 200, unless slider delay is also changed
 
-    public static final int MAX_FUNCTION_NUMBER = 28;        // maximum number of the function buttons supported.
+    public static final int MAX_FUNCTIONS = 32;              // total number of supported functions
+    public static final String MAX_FUNCTIONS_TEXT = "32";              // total number of supported functions
+    public static final int MAX_FUNCTION_NUMBER = 31;        // maximum number of the function buttons supported.
 
     public String deviceId = "";
 
@@ -696,8 +698,8 @@ public class threaded_application extends Application {
         String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
         String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
 
-        int numberOfDefaultFunctionLabels = 29;
-        int numberOfDefaultFunctionLabelsForRoster = 29;
+        int numberOfDefaultFunctionLabels = MAX_FUNCTIONS;
+        int numberOfDefaultFunctionLabelsForRoster = MAX_FUNCTIONS;
         if (!getAll) {
             try {
                 numberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue))) - 1;

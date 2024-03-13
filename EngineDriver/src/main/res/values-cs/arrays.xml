@@ -138,6 +138,9 @@
         <item >Funkce 26</item>
         <item >Funkce 27</item>
         <item >Funkce 28</item>
+        <item >Funkce 29</item>
+        <item >Funkce 30</item>
+        <item >Funkce 31</item>
         <item >Ztlumit (IPLS)</item>
         <item >Zvonek (IPLS)</item>
         <item >Roh (IPLS)</item>
@@ -304,6 +307,9 @@
         <item>Funkce 26</item>
         <item>Funkce 27</item>
         <item>Funkce 28</item>
+        <item>Funkce 29</item>
+        <item>Funkce 30</item>
+        <item>Funkce 31</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

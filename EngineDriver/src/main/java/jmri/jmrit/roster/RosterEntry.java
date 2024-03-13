@@ -34,7 +34,7 @@ public class RosterEntry {
     protected String _iconFilePath = "";
 
     static private String _defaultOwner = "";
-    final static int MAXFNNUM = 28;
+    final static int MAXFNNUM = 31;
 
     private String resourcesURL = "";
     private String rosterURL = "";

@@ -1478,7 +1478,7 @@ public class comm_thread extends Thread {
                     if (con.getLeadAddr().equals(addr_str)) {
                         // Process the functions
                         int fnState;
-                        for (int i = 0; i < 27; i++) {
+                        for (int i = 0; i < mainapp.MAX_FUNCTIONS; i++) {
                             try {
                                 fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
                                 processFunctionState(whichThrottle, i, (fnState != 0));

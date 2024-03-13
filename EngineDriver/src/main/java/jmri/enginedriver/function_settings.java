@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -72,8 +73,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private Menu FMenu;
     private EditText et;
     private EditText etForRoster;
-    private String prefNumberOfDefaultFunctionLabels = "29";
-    private String originalPrefNumberOfDefaultFunctionLabels = "29";
+    private String prefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
+    private String originalPrefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
     private String prefNumberOfDefaultFunctionLabelsForRoster = "4";
     private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
 //    private boolean prefAlwaysUseDefaultFunctionLabels = false;
@@ -347,11 +348,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             label = label.replace(":", " ");   //   and colons, as they confuse the save format
             String sfunc = ((EditText) r.getChildAt(1)).getText().toString();
             if (label.length() > 0 && sfunc.length() > 0) {
-                //verify function is valid number between 0 and 28
+                //verify function is valid number between 0 and 31
                 int func;
                 try {
                     func = Integer.parseInt(sfunc);
-                    if (func >= 0 && func <= 28) {
+                    if (func >= 0 && func < MAX_FUNCTIONS) {
                         if (aFnc.size() <= ndx) {
                             aLbl.add(label);
                             aFnc.add(func);
@@ -380,7 +381,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         int ndx = 0;
         for (Integer func : mainapp.function_labels[0].keySet()) {
             String label = mainapp.function_labels[0].get(func);
-            if (label.length() > 0 && func >= 0 && func <= 28) {
+            if (label.length() > 0 && func >= 0 && func < MAX_FUNCTIONS) {
                 if (aFnc.size() <= ndx) {
                     aLbl.add(label);
                     aFnc.add(func);
@@ -415,7 +416,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             String label = "";
             int func = 0;
 
-            for (int i = 0; i <= 28; i++) {
+            for (int i = 0; i < MAX_FUNCTIONS; i++) {
                 if (i==0) label = getResources().getString(R.string.functionButton00DefaultValue);
                 if (i==1) label = getResources().getString(R.string.functionButton01DefaultValue);
                 if (i==2) label = getResources().getString(R.string.functionButton02DefaultValue);
@@ -435,7 +436,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             }
 
             mainapp.prefAlwaysUseDefaultFunctionLabels = false;
-            prefNumberOfDefaultFunctionLabels = "29";
+            prefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
             prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
             mainapp.buttonVibration();
@@ -445,8 +446,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, 29, "29");
-        prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, 29, "4");
+        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, mainapp.MAX_FUNCTIONS_TEXT);
+        prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
 
         if (key == KeyEvent.KEYCODE_BACK) {
             move_view_to_settings();        //sync settings array to view
@@ -600,6 +601,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
+            prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, mainapp.MAX_FUNCTIONS_TEXT);
+            prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
+
             finish();
         }
     }

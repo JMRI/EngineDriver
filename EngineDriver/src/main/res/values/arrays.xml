@@ -307,6 +307,9 @@
         <item >Function 26</item>
         <item >Function 27</item>
         <item >Function 28</item>
+        <item >Function 29</item>
+        <item >Function 30</item>
+        <item >Function 31</item>
         <item >Mute (IPLS)</item>
         <item >Bell (IPLS)</item>
         <item >Horn (IPLS)</item>
@@ -354,6 +357,9 @@
         <item >Function 26</item>
         <item >Function 27</item>
         <item >Function 28</item>
+        <item >Function 29</item>
+        <item >Function 30</item>
+        <item >Function 31</item>
         <item >Mute (IPLS)</item>
         <item >Bell (IPLS)</item>
         <item >Horn (IPLS)</item>
@@ -1205,6 +1211,9 @@
         <item>Function 26</item>
         <item>Function 27</item>
         <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1246,6 +1255,9 @@
         <item>Function 26</item>
         <item>Function 27</item>
         <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
     </string-array>
 
     <string-array name="dccCvsEntries">  <!-- display version -->

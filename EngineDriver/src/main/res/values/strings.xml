@@ -98,7 +98,7 @@
     <string name="fbResetFunctionLabels">Reset All</string>
     <string name="prefNumberOfDefaultFunctionLabelsTitle">Number of Default Functions</string>
     <string name="prefNumberOfDefaultFunctionLabelsSummary">Limit the Function Labels shown if not available from the Server roster</string>
-    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue" translatable="false">29</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefNumberOfDefaultFunctionLabelsDefaultValue" translatable="false">32</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Number of Default Functions for Roster</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for Server Roster Entries with no function Labels</string>
@@ -731,7 +731,6 @@
     <string name="functionButton27DefaultValue" translatable="false">27</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton28DefaultValue" translatable="false">28</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton29DefaultValue" translatable="false">29</string>  <!-- DO NOT TRANSLATE -->
-
     <string name="functionButton30DefaultValue" translatable="false">30</string>  <!-- DO NOT TRANSLATE -->
     <string name="functionButton31DefaultValue" translatable="false">31</string>  <!-- DO NOT TRANSLATE -->
 

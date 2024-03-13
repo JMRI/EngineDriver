@@ -1,4 +1,5 @@
 **Version 2.36.178
+ * Support for 32 Functions
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID
 **Version 2.36.174
@@ -762,7 +763,6 @@
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add option to choose which server to automatically connect to
  * threaded_application
- *   TODO: add support for FKeys > 28
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one

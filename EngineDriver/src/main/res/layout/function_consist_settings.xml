@@ -666,6 +666,66 @@
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
                 </TableRow>
+
+                <TableRow
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton29DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton30DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:weightSum="1" >
+
+                    <TextView
+                        style="?attr/edit_label_style"
+                        android:layout_weight=".33"
+                        android:text="@string/functionButton31DefaultValue" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_weight=".33"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
             </TableLayout>
         </ScrollView>
     </LinearLayout>

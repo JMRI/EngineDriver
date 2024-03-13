@@ -559,6 +559,31 @@
                                                 android:layout_height="60dp"
                                                 android:text="@string/functionButton28DefaultValue" />
                                         </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_height="60dp"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_height="60dp"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:layout_height="60dp"
+                                                android:text="@string/functionButton31DefaultValue" />
+                                        </TableRow>
+
                                     </TableLayout>
                                 </LinearLayout>
                             </ScrollView>

@@ -585,6 +585,27 @@
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
                                         </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
+                                        </TableRow>
                                     </TableLayout>
 
                                 </LinearLayout>
@@ -840,7 +861,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="fill_parent"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1115,6 +1136,27 @@
                                             <Button
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
                                         </TableRow>
                                     </TableLayout>
 
@@ -1615,6 +1657,27 @@
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
                                         </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
+                                        </TableRow>
                                     </TableLayout>
 
                                 </LinearLayout>
@@ -1870,7 +1933,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="fill_parent"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2113,6 +2176,27 @@
                                             <Button
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
                                         </TableRow>
                                     </TableLayout>
 
@@ -2369,7 +2453,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="fill_parent"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2612,6 +2696,27 @@
                                             <Button
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
                                         </TableRow>
                                     </TableLayout>
 
@@ -2868,7 +2973,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="fill_parent"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -3111,6 +3216,27 @@
                                             <Button
                                                 style="?attr/ed_fn_button_style"
                                                 android:text="@string/functionButton28DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton29DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton30DefaultValue" />
+                                        </TableRow>
+
+                                        <TableRow>
+
+                                            <Button
+                                                style="?attr/ed_fn_button_style"
+                                                android:text="@string/functionButton31DefaultValue" />
                                         </TableRow>
                                     </TableLayout>
 
