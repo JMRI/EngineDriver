@@ -1603,6 +1603,13 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
+            android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
+            android:key="prefRosterOwnersFilterShowOption"
+            android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
+            android:title="@string/prefRosterOwnersFilterShowOptionTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
             android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
             android:key="prefAlwaysUseFunctionsFromServer"
             android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"

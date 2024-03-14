@@ -519,6 +519,21 @@
                                             android:text="@string/functionButton28DefaultValue" />
 
                                         <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton29DefaultValue" />
+
+                                        <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton30DefaultValue" />
+
+                                        <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton31DefaultValue" />
+                                    </TableRow>
+
+                                    <TableRow android:baselineAligned="false">
+
+                                        <Button
                                             android:id="@+id/limit_speed_0"
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="60dp"
@@ -1005,6 +1020,21 @@
                                             android:text="@string/functionButton28DefaultValue" />
 
                                         <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton29DefaultValue" />
+
+                                        <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton30DefaultValue" />
+
+                                        <Button
+                                            style="?attr/ed_fn_button_style"
+                                            android:text="@string/functionButton31DefaultValue" />
+                                    </TableRow>
+
+                                    <TableRow android:baselineAligned="false">
+
+                                        <Button
                                             android:id="@+id/limit_speed_1"
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="60dp"
@@ -1437,11 +1467,26 @@
                                         android:text="@string/functionButton27DefaultValue" />
                                 </TableRow>
 
-                                <TableRow>
+                                <TableRow android:baselineAligned="false">
 
                                     <Button
                                         style="?attr/ed_fn_button_style"
                                         android:text="@string/functionButton28DefaultValue" />
+
+                                    <Button
+                                        style="?attr/ed_fn_button_style"
+                                        android:text="@string/functionButton29DefaultValue" />
+
+                                    <Button
+                                        style="?attr/ed_fn_button_style"
+                                        android:text="@string/functionButton30DefaultValue" />
+
+                                    <Button
+                                        style="?attr/ed_fn_button_style"
+                                        android:text="@string/functionButton31DefaultValue" />
+                                </TableRow>
+
+                                <TableRow>
 
                                     <Button
                                         android:id="@+id/limit_speed_2"

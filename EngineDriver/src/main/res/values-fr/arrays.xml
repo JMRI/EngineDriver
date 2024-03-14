@@ -122,6 +122,9 @@
         <item>Fonction 26</item>
         <item>Fonction 27</item>
         <item>Fonction 28</item>
+        <item>Fonction 29</item>
+        <item>Fonction 30</item>
+        <item>Fonction 31</item>
         <item>Muet (IPLS)</item>
         <item>Cloche (IPLS)</item>
         <item>Klaxon (IPLS)</item>
@@ -408,6 +411,9 @@
         <item>Fonction 26</item>
         <item>Fonction 27</item>
         <item>Fonction 28</item>
+        <item>Fonction 29</item>
+        <item>Fonction 30</item>
+        <item>Fonction 31</item>
     </string-array>
 
     <string-array name="prefAutoImportExportEntries"> <!-- display version -->

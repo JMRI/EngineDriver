@@ -60,6 +60,7 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 import static android.view.KeyEvent.KEYCODE_Z;
+import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -560,7 +561,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected boolean prefThrottleViewImmersiveMode = false;
     protected boolean prefThrottleViewImmersiveModeHideToolbar = false;
-    protected int prefNumberOfDefaultFunctionLabels = 28;
+    protected int prefNumberOfDefaultFunctionLabels = MAX_FUNCTIONS;
     protected boolean prefDecreaseLocoNumberHeight = false;
     protected boolean pref_increase_slider_height_preference = false;
     protected boolean prefShowAddressInsteadOfName = false;
@@ -730,7 +731,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         FN25 ("Function 25", 25),
         FN26 ("Function 26", 26),
         FN27 ("Function 27", 27),
-        FN28 ("Function 28", 28);
+        FN28 ("Function 28", 28),
+        FN29 ("Function 29", 29),
+        FN30 ("Function 30", 30),
+        FN31 ("Function 31", 31);
 
         private String action;
         private int function;
@@ -4378,7 +4382,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case FN06: case FN07: case FN08: case FN09: case FN10: case FN11:
                 case FN12: case FN13: case FN14: case FN15: case FN16: case FN17:
                 case FN18: case FN19: case FN20: case FN21: case FN22: case FN23:
-                case FN24: case FN25: case FN26: case FN27: case FN28:
+                case FN24: case FN25: case FN26: case FN27: case FN28: case FN29:
+                case FN30: case FN31:
                     if (!isScreenLocked && repeatCnt == 0) {
                         if (action == ACTION_DOWN) {
                             mainapp.sendMsg(mainapp.comm_msg_handler,

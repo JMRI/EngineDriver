@@ -112,5 +112,6 @@
     <bool name="prefAlwaysUseFunctionsFromServerDefaultValue">false</bool>
 
     <bool name="prefHideInstructionalToastsDefaultValue">false</bool>
+    <bool name="prefRosterOwnersFilterShowOptionDefaultValue">true</bool>
 
 </resources>

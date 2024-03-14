@@ -555,6 +555,45 @@
                         style="?attr/edit_func_style"
                         android:text="28" />
                 </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        android:layout_weight="7"
+                        style="?attr/edit_label_style"
+                        android:text="@string/functionButton29DefaultValue" />
+
+                    <EditText
+                        android:layout_weight="3"
+                        style="?attr/edit_func_style"
+                        android:text="29" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        android:layout_weight="7"
+                        style="?attr/edit_label_style"
+                        android:text="@string/functionButton30DefaultValue" />
+
+                    <EditText
+                        android:layout_weight="3"
+                        style="?attr/edit_func_style"
+                        android:text="30" />
+                </TableRow>
+
+                <TableRow>
+
+                    <EditText
+                        android:layout_weight="7"
+                        style="?attr/edit_label_style"
+                        android:text="@string/functionButton31DefaultValue" />
+
+                    <EditText
+                        android:layout_weight="3"
+                        style="?attr/edit_func_style"
+                        android:text="31" />
+                </TableRow>
             </TableLayout>
         </ScrollView>
     </LinearLayout>

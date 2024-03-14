@@ -319,7 +319,7 @@
     <RelativeLayout
         android:id="@+id/roster_list_header_group"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="2dp">
 
@@ -351,6 +351,29 @@
             android:singleLine="true"
             android:textSize="14sp"
             android:importantForAutofill="no" />
+
+
+        <TextView
+            android:id="@+id/roster_list_filter_owner_label"
+            style="?attr/floating_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="2dp"
+            android:layout_alignTop="@id/roster_list_heading"
+            android:padding="8sp"
+            android:text="@string/FilterRosterListFilterOwnerLabel" />
+
+        <Spinner
+            android:id="@+id/roster_filter_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/roster_list_filter_owner_label"
+            android:layout_alignBottom="@id/roster_list_filter_owner_label"
+            tools:ignore="RtlHardcoded"
+            android:ellipsize = "none"
+            android:text="" />
 
     </RelativeLayout>
 

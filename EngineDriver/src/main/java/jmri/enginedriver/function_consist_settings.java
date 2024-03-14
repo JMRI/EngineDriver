@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -371,7 +372,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
 //            int func = 0;
 
-            for (int i = 0; i <= 28; i++) {
+            for (int i = 0; i < MAX_FUNCTIONS; i++) {
                 if (aFnc.size() <= i) {
                     aLbl.add(mainapp.function_labels_default.get(i));
                     aFnc.add(i);
