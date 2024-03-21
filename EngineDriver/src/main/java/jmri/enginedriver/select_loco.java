@@ -457,7 +457,7 @@ public class select_loco extends AppCompatActivity {
             switch (msg.what) {
                 case message_type.RESPONSE:
                     String response_str = msg.obj.toString();
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - message: " + response_str);
                     if (response_str.length() >= 3) {
                         String comA = response_str.substring(0, 3);
                         //update power icon
@@ -477,7 +477,7 @@ public class select_loco extends AppCompatActivity {
                                 set_labels();
                             break;
                         } else { // ignore everything else
-//                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
+                            Log.d("Engine_Driver", "select_loco: select_loco_handler - RESPONSE - ignoring message: " + response_str);
                             break;
                         }
                     }
@@ -485,20 +485,20 @@ public class select_loco extends AppCompatActivity {
                         set_labels();
                     break;
                 case message_type.WIT_CON_RETRY:
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RETRY");
                     witRetry(msg.obj.toString());
                     break;
                 case message_type.ROSTER_UPDATE:
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - ROSTER_UPDATE");
                 case message_type.WIT_CON_RECONNECT:
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - WIT_CON_RECONNECT");
                     roster_list_adapter.notifyDataSetChanged();
                     set_labels();
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
-//                    Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
+                    Log.d("Engine_Driver", "select_loco: select_loco_handler - DISCONNECT");
                     end_this_activity();
                     break;
             }
@@ -523,6 +523,7 @@ public class select_loco extends AppCompatActivity {
     boolean newEngine;              // save value across ConsistEdit activity
 
     void acquire_engine(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
+        Log.d("Engine_Driver", "select_loco: acquireEngine()");
         String roster_name = "";
         String sAddr = importExportPreferences.locoAddressToString(engine_address, address_size, true);
         Loco l = new Loco(sAddr);
@@ -539,9 +540,9 @@ public class select_loco extends AppCompatActivity {
         }
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d("Engine_Driver", "acquireEngine consists is null");
+                Log.d("Engine_Driver", "select_loco: acquireEngine() consists is null");
             else if (mainapp.consists[whichThrottle] == null)
-                Log.d("Engine_Driver", "acquireEngine consists[" + whichThrottle + "] is null");
+                Log.d("Engine_Driver", "select_loco: acquireEngine() consists[" + whichThrottle + "] is null");
             end_this_activity();
             return;
         }
@@ -577,7 +578,7 @@ public class select_loco extends AppCompatActivity {
                 return;
             }
         }
-//        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
+        Log.d("Engine_Driver", "select_loco: acquire_engine: sAddr:'" + sAddr +"'");
 
         if ((!consist.isActive()) && (numberInConsist < 1)) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
@@ -645,7 +646,7 @@ public class select_loco extends AppCompatActivity {
                     try {
                         image_file = new File(imgpath);
                     } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-                        Log.d("Engine_Driver", "Load image failed : " + imgpath);
+                        Log.d("Engine_Driver", "select_loco: Load image failed : " + imgpath);
                     }
                     if ( (image_file != null) && (image_file.exists()) ) {
                         try {
@@ -703,7 +704,7 @@ public class select_loco extends AppCompatActivity {
                             buttonRemoveRosterImage.setVisibility(VISIBLE);
                             buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
                         } catch (Exception e) {
-                            Log.d("Engine_Driver", "select_loco - load image - image file found but could not loaded");
+                            Log.d("Engine_Driver", "select_loco: load image - image file found but could not loaded");
                         }
                     }
                 }
@@ -723,8 +724,8 @@ public class select_loco extends AppCompatActivity {
 
             // check if it is already in the list and remove it
             for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
-                Log.d("Engine_Driver", "vLocoName='"+locoName+"', address="+engine_address+", size="+address_size);
-                Log.d("Engine_Driver", "sLocoName='"+importExportPreferences.recent_loco_name_list.get(i)+
+                Log.d("Engine_Driver", "select_loco: vLocoName='"+locoName+"', address="+engine_address+", size="+address_size);
+                Log.d("Engine_Driver", "select_loco: sLocoName='"+importExportPreferences.recent_loco_name_list.get(i)+
                         "', address="+importExportPreferences.recent_loco_address_list.get(i)+", size="+importExportPreferences.recent_loco_address_size_list.get(i));
                 if (engine_address == importExportPreferences.recent_loco_address_list.get(i)
                         && address_size == importExportPreferences.recent_loco_address_size_list.get(i)
@@ -733,7 +734,7 @@ public class select_loco extends AppCompatActivity {
                     importExportPreferences.recent_loco_address_size_list.remove(i);
                     importExportPreferences.recent_loco_name_list.remove(i);
                     importExportPreferences.recent_loco_source_list.remove(i);
-                    Log.d("Engine_Driver", "Loco '"+ locoName + "' removed from Recents");
+                    Log.d("Engine_Driver", "select_loco: Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
@@ -743,7 +744,7 @@ public class select_loco extends AppCompatActivity {
             importExportPreferences.recent_loco_address_size_list.add(0, address_size);
             importExportPreferences.recent_loco_name_list.add(0, locoName);
             importExportPreferences.recent_loco_source_list.add(0, locoSource);
-            Log.d("Engine_Driver", "Loco '"+ locoName + "' added to Recents");
+            Log.d("Engine_Driver", "select_loco: Loco '"+ locoName + "' added to Recents");
 
         }
 
@@ -1423,9 +1424,13 @@ public class select_loco extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    InputMethodManager imm =
-                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    try {
+                        InputMethodManager imm =
+                                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    } catch (Exception e) {
+                        Log.e("Engine_Driver", "select_loco: onCreate: unable to hide the soft keyboard");
+                    }
                     return true;
                 } else
                     return false;
@@ -1542,8 +1547,12 @@ public class select_loco extends AppCompatActivity {
                 rbRecentConsists.setChecked(false);
                 rbIDnGo.setChecked(false);
 
-                la.requestFocus();
-                imm.showSoftInput(la, InputMethodManager.SHOW_IMPLICIT);
+                try {
+                    la.requestFocus();
+                    imm.showSoftInput(la, InputMethodManager.SHOW_IMPLICIT);
+                } catch(Exception e) {
+                    Log.e("Engine_Driver", "select_loco: showMethod: unable to show the soft keyboard - address");
+                }
 
                 break;
             }
@@ -1570,8 +1579,11 @@ public class select_loco extends AppCompatActivity {
                     }
                     mainapp.shownToastRoster = true;
                 }
-
-                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                try {
+                    imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                } catch(Exception e) {
+                    Log.e("Engine_Driver", "select_loco: showMethod: unable to hide the soft keyboard - roster");
+                }
                 break;
             }
             case WHICH_METHOD_RECENT: {
@@ -1597,8 +1609,11 @@ public class select_loco extends AppCompatActivity {
                     }
                     mainapp.shownToastRecentLocos = true;
                 }
-
-                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                try {
+                    imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                } catch(Exception e) {
+                    Log.e("Engine_Driver", "select_loco: showMethod: unable to hide the soft keyboard - recent");
+                }
                 break;
             }
             case WHICH_METHOD_CONSIST: {
@@ -1624,8 +1639,11 @@ public class select_loco extends AppCompatActivity {
                     }
                     mainapp.shownToastRecentConsists = true;
                 }
-
-                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                try {
+                    imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                } catch(Exception e) {
+                    Log.e("Engine_Driver", "select_loco: showMethod: unable to hide the soft keyboard - recent consists");
+                }
                 break;
             }
             case WHICH_METHOD_IDNGO: {
@@ -1646,7 +1664,11 @@ public class select_loco extends AppCompatActivity {
                 rbRecentConsists.setChecked(false);
                 rbIDnGo.setChecked(true);
 
-                imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                try {
+                    imm.hideSoftInputFromWindow(la.getWindowToken(), 0);
+                } catch(Exception e) {
+                    Log.e("Engine_Driver", "select_loco: showMethod: unable to hide the soft keyboard - idngo");
+                }
 
                 break;
             }
@@ -1687,6 +1709,7 @@ public class select_loco extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "select_loco: resume()");
         super.onResume();
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -1722,14 +1745,14 @@ public class select_loco extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "select_loco.onDestroy() called");
+        Log.d("Engine_Driver", "select_loco: onDestroy() called");
         super.onDestroy();
 
         if (mainapp.select_loco_msg_handler != null) {
             mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
             mainapp.select_loco_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d("Engine_Driver", "select_loco: onDestroy: mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -1773,6 +1796,7 @@ public class select_loco extends AppCompatActivity {
 
     // end current activity
     void end_this_activity() {
+        Log.d("Engine_Driver", "select_loco: end_this_activity(): ending select_loco normally");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
         resultIntent.putExtra("overrideThrottleName", overrideThrottleName);
@@ -1927,7 +1951,7 @@ public class select_loco extends AppCompatActivity {
                 re = mainapp.roster.get(rosterEntryName);
             }
             if (re == null) {
-                Log.w("Engine_Driver", "Roster entry " + rosterEntryName + " not available.");
+                Log.w("Engine_Driver", "select_loco: Roster entry " + rosterEntryName + " not available.");
                 return true;
             }
             showRosterDetailsDialog(re, rosterEntryName, Integer.toString(rosterEntryAddress),"");
@@ -2117,7 +2141,7 @@ public class select_loco extends AppCompatActivity {
                 imageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
                 foundSavedImage = true;
             } catch (Exception e) {
-                Log.d("Engine_Driver", "select_loco - recent consists - image file found but could not loaded");
+                Log.d("Engine_Driver", "select_loco: recent consists - image file found but could not loaded");
             }
         }
         hasLocalRosterImage = foundSavedImage;
@@ -2302,7 +2326,7 @@ public class select_loco extends AppCompatActivity {
             fileOutputStream.close();
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "writeLocoImageToFile: Unable to save roster loco image");
+            Log.d("Engine_Driver", "select_loco: writeLocoImageToFile: Unable to save roster loco image");
             return false;
         }
     }
@@ -2316,7 +2340,7 @@ public class select_loco extends AppCompatActivity {
             if (dir.exists()) imageFile.delete();
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "removeLocoImageToFile: Unable to delete roster loco image");
+            Log.d("Engine_Driver", "select_loco: removeLocoImageToFile: Unable to delete roster loco image");
             return false;
         }
     }
@@ -2361,8 +2385,12 @@ public class select_loco extends AppCompatActivity {
     public void hideSoftKeyboard(View view) {
         // Check if no view has focus:
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            } catch (Exception e) {
+                Log.e("Engine_Driver", "select_loco: hideSoftKeyboard: unable to hide the soft keyboard");
+            }
         }
     }
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="jmri.enginedriver"
     android:versionCode="178"
-    android:versionName="2.36.178" android:installLocation="auto">
+    android:versionName="2.36.178f" android:installLocation="auto">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
