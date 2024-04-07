@@ -846,9 +846,9 @@
     <string name="functionConsistSettings">Consist Funktionseinstellungen</string>
     <string name="functionConsistColumnLabel">Etikette</string>
     <string name="functionConsistColumnLocos">Loco (n)</string>
-    <string name="functionConsistColumnLatching">Stromstoß</string>
+    <string name="functionConsistColumnLatching">Einrastend</string>
     <string name="prefFunctionConsistLatchingDefaultValue">keiner</string>
-    <string name="prefFunctionConsistLatchingLightBellDefaultValue">Rast</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">Einrastend</string>
     <string name="prefFunctionConsistLocosDefaultValue">führen</string>
     <string name="functionConsistHelpText" tools:ignore="Typos">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen + DCC-EX. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
     <string name="functionConsistHeader">Funktion Aktionen</string>

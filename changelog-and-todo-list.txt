@@ -1,5 +1,9 @@
 **Version 2.37.178
  * Support for 32 Functions
+ * bug fixes for the 'keyboard' gamepad type
+ * bug fix for the close button in function_defaults
+ * bug fix for Consist Light Editing
+**Version 2.36.177
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID
 **Version 2.36.174

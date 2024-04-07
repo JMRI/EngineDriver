@@ -366,7 +366,7 @@ public class comm_handler extends Handler {
             String addr = msg.obj.toString();
             final char cWhichThrottle = addr.charAt(0);
             addr = addr.substring(1);
-            commThread.sendForceFunction(cWhichThrottle, addr, msg.arg2, msg.arg1);
+            commThread.sendForceFunction(cWhichThrottle, addr, msg.arg1, msg.arg2);
             break;
          }
          //send command to change turnout.  msg = (T)hrow, (C)lose or (2)(toggle) + systemName

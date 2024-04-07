@@ -246,6 +246,10 @@ public class threaded_application extends Application {
     public boolean [] routeDetailsReceivedDCCEX;  // used to process the route list
     public boolean routeStatesReceivedDCCEX = false;
 
+    // only used to track the state of the numeric keys of an attached keyboard for DCCEX (0-9)
+    public int numericKeyIsPressed[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+    public int numericKeyFunctionStateAtTimePressed[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
     //For communication to each of the activities (set and unset by the activity)
@@ -697,6 +701,7 @@ public class threaded_application extends Application {
         String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
         String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
         String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
+        String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
 
         int numberOfDefaultFunctionLabels = MAX_FUNCTIONS;
         int numberOfDefaultFunctionLabelsForRoster = MAX_FUNCTIONS;

@@ -50,4 +50,8 @@
     <attr name="ed_advanced_preferences" format="reference" />
 
     <attr name="ed_icon" format="reference" />
+
+    <attr name="ed_dccex_button_cv_programmer_pom" format="reference" />
+    <attr name="ed_dccex_button_cv_programmer_prog_track" format="reference" />
+    <attr name="ed_dccex_button_track_manager" format="reference" />
 </resources>
