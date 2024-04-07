@@ -234,8 +234,8 @@
         <item>Trail Loco</item>
     </string-array>
     <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
-        <item>Stromstoß</item>
-        <item>nicht Stromstoß</item>
+        <item>einrastend</item>
+        <item>nicht einrastend</item>
     </string-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->

@@ -79,6 +79,7 @@ public class comm_thread extends Thread {
     protected static SharedPreferences prefs;
 
     protected String LATCHING_DEFAULT;
+    protected String LATCHING_DEFAULT_ENGLISH;
 
     private static int requestLocoIdForWhichThrottleDCCEX;
 
@@ -100,6 +101,7 @@ public class comm_thread extends Thread {
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
+        LATCHING_DEFAULT_ENGLISH = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
 
         this.start();
     }
@@ -474,11 +476,20 @@ public class comm_thread extends Thread {
     }
 
     protected void sendFunction(char cWhichThrottle, String addr, int fn, int fState) {
+        sendFunction(mainapp.throttleCharToInt(cWhichThrottle), addr, fn, fState, false);
+    }
+
+    protected void sendFunction(char cWhichThrottle, String addr, int fn, int fState, boolean force) {
         sendFunction(mainapp.throttleCharToInt(cWhichThrottle), addr, fn, fState);
     }
 
-    @SuppressLint("DefaultLocale")
     protected void sendFunction(int whichThrottle, String addr, int fn, int fState) {
+        sendFunction(whichThrottle, addr, fn, fState, false);
+    }
+
+    @SuppressLint("DefaultLocale")
+    protected void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean force) {
+
         if (!mainapp.isDCCEX) { // not DCC-EX
             if (addr.length() == 0) addr = "*";
             wifiSend(String.format("M%dA%s<;>F%d%d", whichThrottle, addr, fState, fn));
@@ -486,24 +497,50 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             String msgTxt;
 
-            String isLatching = mainapp.function_consist_latching.get(fn);
+            LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
+            LATCHING_DEFAULT_ENGLISH = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
+            String isLatching = LATCHING_DEFAULT;
+
             int newfState = -1;
 
             if (mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] != null) {  //  we have a roster specific latching for this
                 if (fn < mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle].length) {
                     isLatching = mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][fn] ? LATCHING_DEFAULT : "none";
                 }
-            } else {   // no roster entry
-                if (fn>2) { // assume it is latching
-                    isLatching = LATCHING_DEFAULT;
-                }
+            } else {   // no roster entry. go look at the DCC-EX/consist defaults
+                isLatching = mainapp.function_consist_latching.get(fn);
             }
 
-            if ((isLatching != null) && (isLatching.equals(LATCHING_DEFAULT))) {
-                if (mainapp.function_states[whichThrottle][fn]) { // currently pressed
-                    if (fState == 1) newfState = 0;
-                } else { // not currently pressed
-                    if (fState == 0) newfState = 1;
+            if (!force) {
+                if ((isLatching.equals(LATCHING_DEFAULT)) || (isLatching.equals(LATCHING_DEFAULT_ENGLISH))) {
+                    if (mainapp.function_states[whichThrottle][fn]) { // currently pressed
+                        if (fState == 1) newfState = 0;
+                    } else { // not currently pressed
+                        if (fState == 0) newfState = 1;
+                    }
+
+                    if (fn < 10) { // special case for attached keyboards keys 0-9
+                        if (mainapp.numericKeyIsPressed[fn] == 0) {  // key down
+//                        newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn]==0) ? 1 : 0;
+                            // do nothing
+                        } else if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
+                            newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn] == 0) ? 1 : 0;
+                            mainapp.numericKeyIsPressed[fn] = -1;
+                            mainapp.numericKeyFunctionStateAtTimePressed[fn] = -1;
+                        }
+                    }
+                } else {
+                    newfState = fState;
+
+                    if (fn < 10) { // special case for attached keyboards keys 0-9
+                        if (mainapp.numericKeyIsPressed[fn] == 0) {  // key is down
+                            newfState = 1; // ON
+                        } else if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
+                            newfState = 0; // OFF
+                            mainapp.numericKeyIsPressed[fn] = -1;  // these are not needed for momentary so just reset them
+                            mainapp.numericKeyFunctionStateAtTimePressed[fn] = -1;
+                        }
+                    }
                 }
             } else {
                 newfState = fState;
@@ -534,10 +571,10 @@ public class comm_thread extends Thread {
     protected void sendForceFunction(int whichThrottle, String addr, int fn, int fState) {
         if (!mainapp.isDCCEX) { // not DCC-EX
             if (addr.length() == 0) addr = "*";
-            wifiSend(String.format("M%dA%s<;>F%d%d", whichThrottle, addr, fn, fState));
+            wifiSend(String.format("M%dA%s<;>f%d%d", whichThrottle, addr, fn, fState));
 
         } else { //DCC-EX
-            sendFunction(whichThrottle, addr, fn, fState);
+            sendFunction(whichThrottle, addr, fn, fState, true);
         }
     }
 
@@ -1476,11 +1513,13 @@ public class comm_thread extends Thread {
 
                     // only process the functions if it is the lead loco
                     if (con.getLeadAddr().equals(addr_str)) {
+                        Log.d("Engine_Driver", "processDCCEXlocos(): process functions" );
                         // Process the functions
                         int fnState;
                         for (int i = 0; i < mainapp.MAX_FUNCTIONS; i++) {
                             try {
                                 fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+                                if (i==0) Log.d("Engine_Driver", "processDCCEXlocos(): function:" + i + " state: " + fnState);
                                 processFunctionState(whichThrottle, i, (fnState != 0));
                                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
                                 mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities

@@ -9,6 +9,7 @@
     <include layout="@layout/toolbar" />
 
     <TextView
+        android:id="@+id/dccex_HeadingLabel"
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/app_name_dcc_ex" />
 
@@ -16,7 +17,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="0dp"
         android:weightSum="1">
 
         <LinearLayout
@@ -24,6 +25,100 @@
             android:layout_height="0dp"
             android:layout_weight=".94"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="15sp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/dccex_cv_programmer_prog_track_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dccex_cv_programmer_prog_track_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:background="?attr/ed_dccex_button_cv_programmer_prog_track" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dccex_cv_programmer_pom_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0sp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dccex_cv_programmer_pom_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:background="?attr/ed_dccex_button_cv_programmer_pom" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/DCCEXbuttonCvProgrammerPoM"
+                        android:layout_gravity="center"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dccex_track_manager_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0sp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dccex_track_manager_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:background="?attr/ed_dccex_button_track_manager" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="0dp"
+                        android:text="@string/DCCEXbuttonTrackManager"
+                        android:layout_gravity="center"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -37,24 +132,24 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
-                    android:paddingTop="1sp"
-                    android:padding="0sp"
                     android:layout_weight=".15"
+                    android:gravity="end"
+                    android:padding="0sp"
+                    android:paddingTop="1sp"
                     android:text="@string/DCCEXactionTypeLabel"
                     android:textAlignment="viewEnd"
-                    android:gravity="end"
                     android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/dexc_action_type_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".85"
                     android:ellipsize="none"
                     android:paddingLeft="5dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="2dp"
                     android:text=""
-                    android:layout_weight=".85"
                     tools:ignore="RtlHardcoded" />
 
             </LinearLayout>
@@ -220,8 +315,8 @@
                 android:id="@+id/dexc_programmingCommonCvsLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2sp"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:background="?attr/ed_background_highlight_secondary"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -230,32 +325,31 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:padding="2sp"
                     android:layout_marginBottom="2sp"
-                    android:text="@string/DCCEXcommonCvsLabel"
-                    android:textSize="12sp"
-                    android:textAlignment="viewEnd"
+                    android:layout_weight=".2"
                     android:gravity="end"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:padding="2sp"
+                    android:text="@string/DCCEXcommonCvsLabel"
+                    android:textAlignment="viewEnd"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/dexc_dcc_cv_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_weight=".8"
                     android:ellipsize="none"
                     android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
                     android:paddingTop="0dp"
+                    android:paddingRight="0dp"
                     android:paddingBottom="2dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginLeft="0dp"
                     android:text=""
-                    android:layout_weight=".8"
                     tools:ignore="RtlHardcoded" />
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -263,41 +357,41 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120sp"
                 android:layout_margin="0sp"
+                android:orientation="horizontal"
                 android:padding="5sp"
                 android:weightSum="1"
-                android:orientation="horizontal"
                 tools:ignore="NestedWeights">
 
                 <ScrollView
                     android:id="@+id/dexc_DccexTrackScrollView"
                     android:layout_width="0sp"
                     android:layout_height="fill_parent"
-                    android:orientation="vertical"
-                    android:layout_weight=".90">
+                    android:layout_weight=".90"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="0sp"
-                        android:padding="0sp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="0sp">
 
                         <LinearLayout
                             android:id="@+id/dexc_DccexTrack0layout"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="A"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -314,12 +408,12 @@
                                 android:id="@+id/dexc_track_type_0_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -348,17 +442,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="B"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -375,12 +469,12 @@
                                 android:id="@+id/dexc_track_type_1_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -409,17 +503,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="C"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -436,12 +530,12 @@
                                 android:id="@+id/dexc_track_type_2_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -470,17 +564,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="D"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -497,12 +591,12 @@
                                 android:id="@+id/dexc_track_type_3_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".63"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".63"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -531,17 +625,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="E"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -558,12 +652,12 @@
                                 android:id="@+id/dexc_track_type_4_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -592,17 +686,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="F"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -619,12 +713,12 @@
                                 android:id="@+id/dexc_track_type_5_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -653,17 +747,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="G"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -680,12 +774,12 @@
                                 android:id="@+id/dexc_track_type_6_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -714,17 +808,17 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
-                            android:paddingBottom="4dp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:weightSum="1" >
+                            android:paddingBottom="4dp"
+                            android:weightSum="1">
 
                             <TextView
                                 style="?attr/floating_text_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="1sp"
                                 android:layout_weight=".05"
+                                android:padding="1sp"
                                 android:text="H"
                                 android:textSize="14sp"
                                 tools:ignore="HardcodedText" />
@@ -741,12 +835,12 @@
                                 android:id="@+id/dexc_track_type_7_list"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight=".65"
                                 android:ellipsize="none"
                                 android:paddingLeft="0dp"
                                 android:paddingRight="0dp"
                                 android:paddingBottom="2dp"
                                 android:text=""
-                                android:layout_weight=".65"
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
@@ -780,10 +874,10 @@
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".1"
-                    android:padding="0sp"
-                    android:autoSizeMinTextSize="8sp"
                     android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeMinTextSize="8sp"
                     android:autoSizeStepGranularity="1sp"
+                    android:padding="0sp"
                     android:text="@string/DCCEXsetTrackButtonLabel"
                     tools:ignore="UnusedAttribute" />
 
@@ -803,10 +897,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".3"
+                    android:gravity="end"
                     android:padding="4sp"
-                    android:textAlignment="viewEnd"
                     android:text="@string/DccexSendCommandLabel"
-                    android:gravity="end" />
+                    android:textAlignment="viewEnd" />
 
                 <EditText
                     android:id="@+id/dexc_DccexSendCommandValue"
@@ -842,11 +936,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="0dp"
-                    android:padding="0sp"
                     android:layout_weight=".15"
+                    android:padding="0sp"
                     android:weightSum="1">
 
                     <TableRow android:gravity="center_horizontal">
+
                         <Button
                             android:id="@+id/dexc_DccexPreviousCommandButton"
                             style="?attr/ed_small_button_style"
@@ -856,7 +951,9 @@
                             android:padding="2sp"
                             android:text="@string/DccexPreviousCommandButtonLabel" />
                     </TableRow>
+
                     <TableRow android:gravity="center_horizontal">
+
                         <Button
                             android:id="@+id/dexc_DccexNextCommandButton"
                             style="?attr/ed_small_button_style"
@@ -873,8 +970,8 @@
                 android:id="@+id/dexc_CommonCommandsLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2sp"
                 android:layout_marginLeft="20sp"
+                android:layout_marginTop="2sp"
                 android:background="?attr/ed_background_highlight_secondary"
                 android:orientation="horizontal"
                 android:weightSum="1">
@@ -883,28 +980,28 @@
                     style="?attr/floating_text_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:padding="2sp"
                     android:layout_marginBottom="2sp"
-                    android:text="@string/DCCEXcommonCommnadsLabel"
-                    android:textSize="12sp"
-                    android:textAlignment="viewEnd"
+                    android:layout_weight=".3"
                     android:gravity="end"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    android:padding="2sp"
+                    android:text="@string/DCCEXcommonCommnadsLabel"
+                    android:textAlignment="viewEnd"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp" />
 
                 <Spinner
                     android:id="@+id/dexc_common_commands_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_weight=".7"
                     android:ellipsize="none"
                     android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
                     android:paddingTop="0dp"
+                    android:paddingRight="0dp"
                     android:paddingBottom="2dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginLeft="0dp"
                     android:text=""
-                    android:layout_weight=".7"
                     tools:ignore="RtlHardcoded" />
 
             </LinearLayout>
@@ -943,18 +1040,18 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
-                android:paddingTop="2dp"
                 android:background="#888888"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:paddingTop="2dp" />
 
             <LinearLayout
                 android:id="@+id/dexc_DccexResponsesAndSendsLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="0sp"
                 android:layout_marginTop="0sp"
+                android:layout_weight=".4"
                 android:background="#00000000"
                 android:orientation="vertical"
-                android:layout_weight=".4"
                 android:weightSum="1">
 
                 <ScrollView
@@ -1010,30 +1107,30 @@
                 android:layout_margin="0sp"
                 android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/dcc_ex_button_close"
-                style="?attr/ed_small_button_style"
-                android:layout_gravity="left"
-                android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                <Button
+                    android:id="@+id/dcc_ex_button_close"
+                    style="?attr/ed_small_button_style"
+                    android:layout_gravity="left"
+                    android:text="@string/logviewerClose"
+                    tools:ignore="RtlHardcoded" />
 
                 <Button
                     android:id="@+id/dexc_DCCEXclearCommandsButton"
                     style="?attr/ed_small_button_style"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_gravity="left"
                     android:text="@string/DCCEXclearCommands"
-                    tools:ignore="RtlHardcoded"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    tools:ignore="RtlHardcoded" />
 
                 <!--            <Button-->
-<!--                android:id="@+id/dexc_DccexHideSendsButton"-->
-<!--                style="?attr/ed_normal_button_style"-->
-<!--                android:layout_gravity="left"-->
-<!--                android:text="@string/DccexHideSends"-->
-<!--                tools:ignore="RtlHardcoded"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_alignParentRight="true" />-->
+                <!--                android:id="@+id/dexc_DccexHideSendsButton"-->
+                <!--                style="?attr/ed_normal_button_style"-->
+                <!--                android:layout_gravity="left"-->
+                <!--                android:text="@string/DccexHideSends"-->
+                <!--                tools:ignore="RtlHardcoded"-->
+                <!--                android:layout_alignParentEnd="true"-->
+                <!--                android:layout_alignParentRight="true" />-->
 
             </RelativeLayout>
 

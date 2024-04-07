@@ -1289,7 +1289,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                     case "prefNumberOfDefaultFunctionLabels":
                         // limit check new value
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 29, "29");
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 32, "32");
                         parentActivity.mainapp.set_default_function_labels(false);
                         break;
 

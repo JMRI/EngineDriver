@@ -3554,20 +3554,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         resetKeyboardString();
                     }
                 }
-            } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'S')) {  // speed
+           } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'S')) {  // speed
                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
 //                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
                    keyboardString = keyboardString + num;
+//               }
+//               if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
+                 if (keyboardString.length() == 4) {  // have a three digit speed amount now
+                    int newSpeed = Math.min(Integer.parseInt(keyboardString.substring(1, 4)), 100);
+                    float vSpeed = 126 * ((float) newSpeed) / 100;
+                    newSpeed = (int) vSpeed;
+                    speedUpdateAndNotify(whichThrottle, newSpeed);
+//                        resetKeyboardString();
+                  }
                }
-               if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
+               if (action == ACTION_UP) {
                    if (keyboardString.length() == 4) {  // have a three digit speed amount now
-                        int newSpeed = Math.min(Integer.parseInt(keyboardString.substring(1, 4)), 100);
-                        float vSpeed = 126 * ((float) newSpeed) / 100;
-                        newSpeed = (int) vSpeed;
-                        speedUpdateAndNotify(whichThrottle, newSpeed);
-                        resetKeyboardString();
-                    }
-                }
+                       resetKeyboardString();
+                   }
+               }
             } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'T')) {    // specify Throttle number
                 if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
 //                    keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
@@ -3575,42 +3580,46 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                if (action == ACTION_DOWN) {
                    if (keyboardString.length() == 2) {  // have a complete Throttle number
-                        keyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
-                        if (keyboardThrottle > MAX_SCREEN_THROTTLES) {
-                            keyboardThrottle = -1;
-                        }
-                    }
-                } else {
-                    keyboardString = "";
-                }
-            }  else if (keyboardString.length() == 0) {  // direct function 0-9
-//                int fKey = keyCode - KEYCODE_0;
-                int fKey;
-               if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
-                   fKey = keyCode - KEYCODE_0;
+                       keyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
+                       if (keyboardThrottle > MAX_SCREEN_THROTTLES) {
+                           keyboardThrottle = -1;
+                       }
+                   }
                } else {
-                   if (keyCode!=KEYCODE_F10) {
-                       fKey = keyCode - KEYCODE_F1 + 1;
-                   } else {
-                       fKey = 0;
+                   keyboardString = "";
+               }
+           } else if (keyboardString.length() == 0) {  // direct function 0-9
+//                int fKey = keyCode - KEYCODE_0;
+               int fKey;
+               if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
+                  fKey = keyCode - KEYCODE_0;
+               } else {
+                  if (keyCode!=KEYCODE_F10) {
+                      fKey = keyCode - KEYCODE_F1 + 1;
+                  } else {
+                      fKey = 0;
+                  }
+               }
+               if (fKey<10) { // special case for attached keyboards keys 0-9
+                   mainapp.numericKeyIsPressed[fKey] = action;
+                   if (action == ACTION_DOWN) {
+                       mainapp.numericKeyFunctionStateAtTimePressed[fKey] = ((mainapp.function_states[whichThrottle][fKey]) ? 1 : 0);
                    }
                }
-                if (action == ACTION_DOWN) {
-                        doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-                } else {
-                    doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-                    resetKeyboardString();
-                }
-            }
+               doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
+               resetKeyboardString();
+           }
         }
     }
 
     void resetKeyboardString() {
+        Log.d("Engine_Driver", "throttle: resetKeyboardString()");
         keyboardString = "";
         keyboardThrottle = -1;  //reset it
     }
 
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt) {
+        Log.d("Engine_Driver", "throttle: doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
             if (lab != null) {
@@ -3853,7 +3862,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     boolean isActive = getConsist(whichThrottle).isActive();
 
                     if (keyCode != 0) {
-                        Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                        Log.d("Engine_Driver", "throttle: dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                     }
 
                     if (!mainapp.prefGamePadType.equals("Keyboard")) {
@@ -3898,17 +3907,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (whichGamePadIsEventFrom < mainapp.gamePadDeviceIdsTested.length) {// checked all the code and didn't find it
                             return (true); // ignore it
                         }
-                    } else {
+                    } else { // keyboard
                         if (action == ACTION_UP) {
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
-                            Log.d("Engine_Driver", "dispatchKeyEvent: ACTION_UP"
-                                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
-                                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
-                            );
                         }
-                        performKeyboardKeyAction(keyCode, action, isShiftPressed, repeatCnt, whichThrottle, whichGamePadIsEventFrom);
+                        Log.d("Engine_Driver", "throttle: dispatchKeyEvent: ACTION" + ((action == ACTION_UP) ? "UP" : "DOWN")
+                                + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                                + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                        );                        performKeyboardKeyAction(keyCode, action, isShiftPressed, repeatCnt, whichThrottle, whichGamePadIsEventFrom);
                         return (true); // stop processing this key
                     }
                 } else { // event is from a gamepad that has not finished testing. Ignore it

@@ -63,15 +63,15 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     //set up label, dcc function, toggle setting for each button
     private static boolean settingsCurrent = false;
-    private static ArrayList<String> aLbl = new ArrayList<>();
-    private static ArrayList<Integer> aFnc = new ArrayList<>();
-    private static ArrayList<String> aLocos = new ArrayList<>();
-    private static ArrayList<String> aLatching = new ArrayList<>();
+    private static final ArrayList<String> aLbl = new ArrayList<>();
+    private static final ArrayList<Integer> aFnc = new ArrayList<>();
+    private static final ArrayList<String> aLocos = new ArrayList<>();
+    private static final ArrayList<String> aLatching = new ArrayList<>();
     private Menu FMenu;
 //    private EditText et;
 
-    private static String[] LOCOS = {"lead", "lead and trail", "all","trail"};
-    private static String[] LATCHING = {"latching", "none"};
+    private static final String[] LOCOS = {"lead", "lead and trail", "all","trail"};
+    private static final String[] LATCHING = {"latching", "none"};
 
     boolean isSpecial = false;
 //    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
@@ -135,11 +135,14 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            mainapp.setToolbarTitle(toolbar,
-                    getApplicationContext().getResources().getString(R.string.app_name),
-                    getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
-                    "");
+            try {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                mainapp.setToolbarTitle(toolbar,
+                        getApplicationContext().getResources().getString(R.string.app_name),
+                        getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
+                        "");
+            } catch (Exception ignored) {
+            }
         }
 
     } //end onCreate
@@ -329,25 +332,22 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             String locoString = LOCOS[locosIndex];
             int latchingIndex = ((Spinner) r.getChildAt(2)).getSelectedItemPosition();
             String latchingString = LATCHING[latchingIndex];
+            settingsCurrent = false;
 
             if (aFnc.size() < i) {
                 aLbl.add(mainapp.function_labels_default.get(ndx));
                 aFnc.add(ndx);
-                settingsCurrent = false;
             } else {
                 aLbl.set(ndx, mainapp.function_labels_default.get(ndx));
                 aFnc.set(ndx, ndx);
-                settingsCurrent = false;
             }
 
             if (aLocos.size() < i) {
                 aLocos.add(locoString);
                 aLatching.add(latchingString);
-                settingsCurrent = false;
             } else {
                 aLocos.set(ndx, locoString);
                 aLatching.set(ndx, latchingString);
-                settingsCurrent = false;
             }
             ndx++;
         }
@@ -370,7 +370,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
             String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
             String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
-//            int func = 0;
+//            String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
 
             for (int i = 0; i < MAX_FUNCTIONS; i++) {
                 if (aFnc.size() <= i) {
@@ -443,7 +443,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             errMsg = except.getMessage();
             Log.e("settings_activity", "Error creating a PrintWriter, IOException: " + errMsg);
         }
-        if (errMsg.length() != 0)
+        if (!errMsg.isEmpty())
             Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
         else
             Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();

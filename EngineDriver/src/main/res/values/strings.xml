@@ -29,6 +29,7 @@
     <string name="functionConsistColumnLatching">Latching</string>
     <string name="prefFunctionConsistLatchingDefaultValue">none</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">latching</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValueEnglish" translatable="false">latching</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefFunctionConsistLocosDefaultValue">lead</string>
     <string name="functionConsistHelpText">Used for:\na) the \'Special\' consist function following options.\nb) non-roster locos when using the DCC-EX native protocol.\n\nFor \'a\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
     <string name="functionConsistHeader">Function Actions</string>
@@ -1333,6 +1334,13 @@
 
     <string name="DccexSucceeded">Action Succeeded</string>
     <string name="DccexFailed">Action Failed</string>
+
+    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs (PROG)</string>
+    <string name="DCCEXbuttonCvProgrammerPoM">CVs (PoM)</string>
+    <string name="DCCEXbuttonTrackManager">Track Mgr</string>
+    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
+    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
+    <string name="DCCEXheadingTrackManager">DCC-EX - Track/District Manager</string>
 
     <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
 

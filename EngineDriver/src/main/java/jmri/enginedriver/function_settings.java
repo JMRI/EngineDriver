@@ -601,6 +601,13 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
+
+            move_view_to_settings();        //sync settings array to view
+            if ( (!settingsCurrent)
+                    || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
+                    || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
+                saveSettings();         //save function labels to file
+
             prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, mainapp.MAX_FUNCTIONS_TEXT);
             prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
 

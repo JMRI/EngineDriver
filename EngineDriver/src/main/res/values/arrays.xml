@@ -1645,7 +1645,7 @@
         <item>none</item>
     </string-array>
     <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
-        <item>Latching </item>
+        <item>Latching</item>
         <item>Not Latching</item>
     </string-array>
 

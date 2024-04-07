@@ -102,6 +102,10 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
 
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager</item>
+
         <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
 
@@ -186,6 +190,10 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
+
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
     </style>
 
     <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
@@ -265,6 +273,10 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
+
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
     </style>
 
     <!-- appears as 'dark' theme -->
@@ -348,6 +360,10 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
+
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
     </style>
 
     <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
@@ -439,6 +455,10 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
         <item name="ed_icon">@drawable/ic_launcher</item>
+
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager</item>
     </style>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
