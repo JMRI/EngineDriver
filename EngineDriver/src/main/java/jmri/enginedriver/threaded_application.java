@@ -323,6 +323,8 @@ public class threaded_application extends Application {
     private ApplicationLifecycleHandler lifecycleHandler;
     public static Context context;
 
+    public long exitDoubleBackButtonInitiated = 0;
+
     public static final int FORCED_RESTART_REASON_NONE = 0;
     public static final int FORCED_RESTART_REASON_RESET = 1;
     public static final int FORCED_RESTART_REASON_IMPORT = 2;
@@ -742,7 +744,7 @@ public class threaded_application extends Application {
                             function_consist_latching.put(Integer.parseInt(temp[1]), temp[3]);
                         } else {
                             function_consist_locos.put(Integer.parseInt(temp[1]), locosDefault);
-                            if (i < 2) {
+                            if ((i<2) || (i>2)) { // make everything other than 'horn' latching by default
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingLightBellDefault);
                             } else {
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingDefault);
@@ -1738,12 +1740,48 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity) {
-        checkExit(activity, false);
+        boolean prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
+        if (!prefDoubleBackButtonToExit) {
+            checkAskExit(activity, false);
+        } else {
+            long time = System.currentTimeMillis();
+            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
+                exitDoubleBackButtonInitiated = time;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+            } else {
+                exitConfirmed = true;
+                exitDoubleBackButtonInitiated = 0;
+                sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
+                buttonVibration();
+            }
+        }
     }
 
-        // prompt for Exit
-    // must be called on the UI thread
     public void checkExit(final Activity activity, boolean forceFastDisconnect) {
+        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
+        if (!prefDoubleBackButtonToExit) {
+            checkAskExit(activity, forceFastDisconnect);
+        } else {
+            long time = System.currentTimeMillis();
+            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
+                exitDoubleBackButtonInitiated = time;
+                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+            } else {
+                exitConfirmed = true;
+                exitDoubleBackButtonInitiated = 0;
+                sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);  //trigger fast disconnect / shutdown sequence
+                buttonVibration();
+            }
+        }
+    }
+
+    public void checkAskExit(final Activity activity) {
+        checkAskExit(activity, false);
+    }
+    // prompt for Exit
+    // must be called on the UI thread
+    public void checkAskExit(final Activity activity, boolean forceFastDisconnect) {
+        exitDoubleBackButtonInitiated = 0;
         final AlertDialog.Builder b = new AlertDialog.Builder(activity);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(R.string.exit_title);
@@ -2453,16 +2491,24 @@ public class threaded_application extends Application {
         return newVal;
     }
 
-    public void setToolbarTitle(Toolbar toolbar, String title, String iconTitle, String clockText) {
-        if (toolbar != null) {
+    public int getToolbarHeight(Toolbar toolbar, LinearLayout statusLine,  LinearLayout screenNameLine) {
+        int rslt = 0;
+        if (toolbar!=null) rslt = toolbar.getHeight();
+        if (statusLine!=null) rslt = rslt + statusLine.getHeight();
+        if (screenNameLine!=null) rslt = rslt + + screenNameLine.getHeight();
+        return rslt;
+    }
+
+    public void setToolbarTitle(Toolbar toolbar, LinearLayout statusLine,  LinearLayout screenNameLine, String title, String iconTitle, String clockText) {
+        if ((toolbar != null) && (statusLine != null) && (screenNameLine != null)) {
             toolbar.setTitle("");
             TextView tvTitle = toolbar.findViewById(R.id.toolbar_title);
             tvTitle.setText(title);
 
-            TextView tvIconTitle = toolbar.findViewById(R.id.toolbar_icon_title);
+            TextView tvIconTitle = screenNameLine.findViewById(R.id.toolbar_icon_title);
             tvIconTitle.setText(iconTitle);
 
-            TextView tvIconHelp = toolbar.findViewById(R.id.toolbar_icon_help);
+            TextView tvIconHelp = statusLine.findViewById(R.id.toolbar_icon_help);
             if (!prefFullScreenSwipeArea) {
                 tvIconHelp.setText("");
             } else {
@@ -2475,7 +2521,7 @@ public class threaded_application extends Application {
             if (screenLayout >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
                 tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc_x_large);
             } else {
-                tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc);
+                tvToolbarServerDesc = statusLine.findViewById(R.id.toolbar_server_desc);
             }
             if (prefActionBarShowServerDescription) {
                 tvToolbarServerDesc.setText(getServerDescription());

@@ -4,14 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="32dp"
+    android:layout_marginBottom="0dp"
     android:background="?attr/ed_toolbar_background"
-    app:navigationContentDescription="Overflow Menu"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    app:contentInsetEnd="0dp"
     app:contentInsetLeft="5dp"
     app:contentInsetStart="5dp"
     app:contentInsetStartWithNavigation="0dp"
+    app:navigationContentDescription="Overflow Menu"
     >
 
     <RelativeLayout
@@ -21,24 +24,24 @@
         <LinearLayout
             android:id="@+id/toolbar_icon_layout"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="32dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:orientation="vertical"
             tools:ignore="RtlHardcoded">
 
-            <TextView
-                android:id="@+id/toolbar_icon_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
-                android:text="Engine Driver"
-                android:textColor="#fff"
-                android:textSize="8sp"
-                android:textStyle="italic"
-                tools:ignore="HardcodedText,RtlHardcoded" />
+<!--            <TextView-->
+<!--                android:id="@+id/toolbar_icon_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:layout_marginLeft="4dp"-->
+<!--                android:text="Engine Driver"-->
+<!--                android:textColor="#fff"-->
+<!--                android:textSize="8sp"-->
+<!--                android:textStyle="italic"-->
+<!--                tools:ignore="HardcodedText,RtlHardcoded" />-->
 
             <ImageView
                 android:layout_width="32dp"
@@ -47,37 +50,37 @@
                 android:src="?attr/ed_icon"
                 tools:ignore="ContentDescription,RtlHardcoded" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:ignore="RtlHardcoded">
+<!--            <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                tools:ignore="RtlHardcoded">-->
 
-                <TextView
-                    android:id="@+id/toolbar_icon_help"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:text=""
-                    android:textColor="#fff"
-                    android:textSize="8sp"
-                    tools:ignore="RtlHardcoded" />
+<!--                <TextView-->
+<!--                    android:id="@+id/toolbar_icon_help"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="left"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginLeft="4dp"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="#fff"-->
+<!--                    android:textSize="8sp"-->
+<!--                    tools:ignore="RtlHardcoded" />-->
 
-                <TextView
-                    android:id="@+id/toolbar_server_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:text=""
-                    android:textColor="@color/secondary_text"
-                    android:textSize="8sp"
-                    android:textStyle="italic"
-                    tools:ignore="RtlHardcoded" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/toolbar_server_desc"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="left"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:layout_marginLeft="4dp"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/secondary_text"-->
+<!--                    android:textSize="8sp"-->
+<!--                    android:textStyle="italic"-->
+<!--                    tools:ignore="RtlHardcoded" />-->
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 

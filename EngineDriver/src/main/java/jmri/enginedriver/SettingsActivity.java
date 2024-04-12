@@ -56,6 +56,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -84,7 +85,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public SharedPreferences prefs;
     public threaded_application mainapp;  // hold pointer to mainapp
 
+    private LinearLayout screenNameLine;
     private Toolbar toolbar;
+    private LinearLayout statusLine;
     private Menu SAMenu;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
@@ -179,12 +182,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
@@ -239,12 +244,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 //        mainapp.applyTheme(this,true);
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
@@ -693,6 +700,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         isInSubScreen = false;
         return (super.onKeyDown(key, event));
     }

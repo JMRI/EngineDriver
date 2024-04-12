@@ -97,7 +97,17 @@
                     android:title="@string/prefSwipeThroughRoutesTitle"
                     android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
+
         </PreferenceScreen>
+
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefDoubleBackButtonToExitDefaultValue"
+            android:key="prefDoubleBackButtonToExit"
+            android:summary="@string/prefDoubleBackButtonToExitSummary"
+            android:title="@string/prefDoubleBackButtonToExitTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
     </PreferenceCategory>
 

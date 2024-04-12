@@ -41,6 +41,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,10 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     SharedPreferences prefs;
 
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
+
     /**
      * Called when the activity is first created.
      */
@@ -110,6 +115,10 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         bReset.setOnClickListener(reset_click_listener);
         bReset.setEnabled(true);
 
+        Button closeButton = findViewById(R.id.functionConsistClose);
+        close_button_listener closeClickListener = new close_button_listener();
+        closeButton.setOnClickListener(closeClickListener);
+
         mainapp.set_default_function_labels(true);
 
         move_settings_to_view();            //copy settings array to view
@@ -130,14 +139,15 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             isSpecial = true;
         }
 
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
             try {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
-                mainapp.setToolbarTitle(toolbar,
+                mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                         getApplicationContext().getResources().getString(R.string.app_name),
                         getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
                         "");
@@ -383,7 +393,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                     aLbl.set(i, mainapp.function_labels_default.get(i));
                     aFnc.set(i, i);
                     aLocos.set(i, locosDefault);
-                    if (i<2) {
+                    if ((i<2) || (i>2)) { // make everything other than 'horn' latching by default
                         aLatching.set(i, latchingLightBellDefault);
                     } else {
                         aLatching.set(i, latchingDefault);
@@ -408,6 +418,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -489,4 +500,14 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
     }
 
+
+    public class close_button_listener implements View.OnClickListener {
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            move_view_to_settings();        //sync settings array to view
+            if (!settingsCurrent)
+                saveSettings();         //save function settings to the file
+            finish();
+        }
+    }
 }

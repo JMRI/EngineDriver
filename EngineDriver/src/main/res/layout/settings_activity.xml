@@ -7,7 +7,9 @@
     android:focusable="true"
     android:focusableInTouchMode="true" >
 
+    <include layout="@layout/screen_name_line" />
     <include layout="@layout/toolbar" />
+    <include layout="@layout/status_line" />
 
     <FrameLayout
         android:id="@+id/settings_preferences_frame"

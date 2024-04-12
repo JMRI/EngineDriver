@@ -114,4 +114,6 @@
     <bool name="prefHideInstructionalToastsDefaultValue">false</bool>
     <bool name="prefRosterOwnersFilterShowOptionDefaultValue">true</bool>
 
+    <bool name="prefDoubleBackButtonToExitDefaultValue">false</bool>
+
 </resources>

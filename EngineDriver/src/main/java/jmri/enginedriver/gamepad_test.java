@@ -132,6 +132,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private TextToSpeech myTts;
 
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
+
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event) {
 //        return myGesture.onTouchEvent(event);
@@ -691,7 +695,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         //put pointer to this activity's handler in main app's shared variable
         mainapp.gamepad_test_msg_handler = new gamepad_test_handler(Looper.getMainLooper());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -819,6 +825,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             //return true;
 //            super.onBackPressed();
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

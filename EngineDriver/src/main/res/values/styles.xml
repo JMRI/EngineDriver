@@ -347,6 +347,10 @@
     <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
   </style>
 
+  <style name="OverflowMenuButton" parent="Widget.AppCompat.ActionButton.Overflow">
+    <item name="android:tint">@color/solidWhite</item>
+  </style>
+
   <style name="windowTitleBackground_black">
     <item name="android:background">@color/solidBlack</item>
     <item name="android:textColor">@color/solidWhite</item>
@@ -1149,6 +1153,9 @@
     <item name="android:width">46dp</item>
   </style>
 
+  <style name="OverflowMenuButton_colorful" parent="Widget.AppCompat.ActionButton.Overflow">
+    <item name="android:tint">@color/solidWhite</item>
+  </style>
   <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">
     <item name="android:popupBackground">@color/windowBackground_colorful</item>
   </style>

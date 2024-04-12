@@ -3,6 +3,11 @@
  * bug fixes for the 'keyboard' gamepad type
  * bug fix for the close button in function_defaults
  * bug fix for Consist Light Editing
+ * Bug fix for DCC-EX default latching for non-roster locos
+ * UI improvements for the DCC-EX and function defaults pages
+ * New preference to allow for double back button presses to exit the app
+ * bug fix for initial Auto-Web preference change
+ * Toolbar/Action Bar UI improvements
 **Version 2.36.177
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID
