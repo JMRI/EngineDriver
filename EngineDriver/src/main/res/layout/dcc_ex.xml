@@ -6,7 +6,9 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor" >
 
+    <include layout="@layout/screen_name_line" />
     <include layout="@layout/toolbar" />
+    <include layout="@layout/status_line" />
 
     <TextView
         android:id="@+id/dccex_HeadingLabel"
@@ -52,13 +54,13 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120px"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="5dp"
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -80,13 +82,13 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120px"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerPoM"
                         android:layout_gravity="center"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
 
@@ -109,16 +111,45 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120px"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonTrackManager"
                         android:layout_gravity="center"
-                        android:textSize="12sp" />
+                        android:textSize="10sp" />
                 </LinearLayout>
-            </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/dccex_default_functions_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0sp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dccex_default_functions_button"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:background="?attr/ed_dccex_button_function_defaults" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="120px"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="0dp"
+                        android:text="@string/DCCEXbuttonDefaultFunctions"
+                        android:layout_gravity="center"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"

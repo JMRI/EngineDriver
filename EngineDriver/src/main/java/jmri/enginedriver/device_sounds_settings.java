@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.LinkAddress;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -46,6 +47,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +84,10 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private SharedPreferences prefs;
 
     protected InPhoneLocoSoundsLoader iplsLoader;
+
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
 
 //    @Override
 //    public boolean onTouchEvent(MotionEvent event) {
@@ -386,7 +392,9 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             dss_throttle1_label.setAlpha(0.5f);
         }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -523,6 +531,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

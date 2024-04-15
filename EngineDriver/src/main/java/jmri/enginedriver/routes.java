@@ -88,7 +88,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 //    private GestureDetector myGesture;
     private Menu RMenu;
 
+    private LinearLayout screenNameLine;
     private Toolbar toolbar;
+    private LinearLayout statusLine;
     private int toolbarHeight;
 
     ListView routes_lv;
@@ -462,7 +464,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         //update route list
         refresh_route_view();
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -494,6 +498,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             this.finish();
             return;
         }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.routes_list);
@@ -569,6 +574,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -618,7 +624,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             mainapp.webMenuSelected = true;
             return true;
         } else if (item.getItemId() == R.id.exit_mnu) {
-            mainapp.checkExit(this);
+            mainapp.checkAskExit(this);
             return true;
         } else if (item.getItemId() == R.id.power_control_mnu) {
             in = new Intent().setClass(this, power_control.class);
@@ -686,12 +692,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.getFastClockFormat() > 0)
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_routes_short),
                     mainapp.getFastClockTime());
         else
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_routes),
                     "");
@@ -723,7 +729,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
-        toolbarHeight = toolbar.getHeight();
+        toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;

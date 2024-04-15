@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,7 +107,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         //put pointer to this activity's handler in main app's shared variable
         mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
 
+        LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        LinearLayout statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -115,7 +118,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
             String name = prefs.getString("throttle_name_preference", "");
 
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name) + " | " + name,
                     getApplicationContext().getResources().getString(R.string.app_name_log_viewer),
                     "");

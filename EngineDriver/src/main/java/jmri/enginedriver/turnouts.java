@@ -138,7 +138,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     String turnoutUserName = "";
     int turnoutSource = 0;
 
+    private LinearLayout screenNameLine;
     private Toolbar toolbar;
+    private LinearLayout statusLine;
     private int toolbarHeight;
 
     protected View turnoutsView;
@@ -743,7 +745,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         refresh_turnout_view();
         refreshTurnoutViewStates();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -789,6 +793,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             this.finish();
             return;
         }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.turnouts_list);
@@ -844,6 +849,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -889,7 +895,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.webMenuSelected = true;
                 return true;
             case R.id.exit_mnu:
-                mainapp.checkExit(this);
+                mainapp.checkAskExit(this);
                 return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
@@ -1272,12 +1278,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.getFastClockFormat() > 0)
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_turnouts_short),
                     mainapp.getFastClockTime());
         else
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_turnouts),
                     "");
@@ -1338,7 +1344,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
-        toolbarHeight = toolbar.getHeight();
+        toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;

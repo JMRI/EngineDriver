@@ -5,7 +5,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <include layout="@layout/screen_name_line" />
     <include layout="@layout/toolbar" />
+    <include layout="@layout/status_line" />
 
     <LinearLayout
         android:id="@+id/logviewer_screen"

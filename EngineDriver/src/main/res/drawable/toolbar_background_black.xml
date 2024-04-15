@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
-        <shape android:shape="rectangle"  >
-            <stroke android:width="@dimen/buttonStopSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
+<!--    <item>-->
+<!--        <shape android:shape="rectangle"  >-->
+<!--            <stroke android:width="@dimen/buttonStopSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />-->
+<!--            <solid android:color="@color/transparent" />-->
+<!--        </shape>-->
+<!--    </item>-->
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle">
 
-            <stroke android:width="2px" android:color="@color/solidBlack" />
+<!--            <stroke android:width="2px" android:color="@color/solidBlack" />-->
             <!-- <solid android:color="@color/buttonFill_ultra" /> -->
             <gradient
                 android:angle="225"

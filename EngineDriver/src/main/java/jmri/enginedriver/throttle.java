@@ -666,7 +666,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
     private static final String PREF_IMPORT_ALL_RESET = "-";
 
+    protected LinearLayout screenNameLine;
     protected Toolbar toolbar;
+    protected LinearLayout statusLine;
     private int toolbarHeight;
 
     private enum EsuMc2Led {
@@ -899,7 +901,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         bSels[throttleIndex].setEnabled(true);
                         enable_disable_buttons(throttleIndex, false);
                     }
-                    mainapp.setToolbarTitle(toolbar,
+                    mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                             getApplicationContext().getResources().getString(R.string.app_name),
                             getApplicationContext().getResources().getString(R.string.app_name_throttle),
                             "");
@@ -922,7 +924,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         bSels[throttleIndex].setEnabled(false);
                         if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                     }
-                    mainapp.setToolbarTitle(toolbar,
+                    mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                             getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled),
                             getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                             "");
@@ -950,7 +952,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
                 prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_ENDED).commit();  //reset the preference
-                mainapp.setToolbarTitle(toolbar,
+                mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                         getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_ended),
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
@@ -960,7 +962,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
-                mainapp.setToolbarTitle(toolbar,
+                mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                         getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)),
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
@@ -1353,7 +1355,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 );
             }
             if (prefThrottleViewImmersiveModeHideToolbar) {
+                screenNameLine.setVisibility(View.GONE);
                 toolbar.setVisibility(View.GONE);
+                statusLine.setVisibility(View.GONE);
             }
             webView.invalidate();
         }
@@ -1367,7 +1371,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
             }
+            screenNameLine.setVisibility(View.VISIBLE);
             toolbar.setVisibility(View.VISIBLE);
+            statusLine.setVisibility(View.VISIBLE);
             webView.invalidate();
         }
     }
@@ -4481,6 +4487,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void onClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if (IS_ESU_MCII && isEsuMc2Stopped) {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT).show();
             } else if (isSelectLocoAllowed(whichThrottle)) {
@@ -4495,6 +4502,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public boolean onLongClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             start_consist_lights_edit(whichThrottle);
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             mainapp.buttonVibration();
@@ -4507,6 +4515,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             int[] pos = new int[2];
             v.getLocationOnScreen(pos);
 
@@ -4531,6 +4540,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 limitSpeed(whichThrottle);
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -4570,6 +4580,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public boolean onLongClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if (arrowDirection.equals("right")) {
                 mAutoIncrement[whichThrottle] = true;
             } else {
@@ -4584,6 +4595,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void onClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if (arrowDirection.equals("right")) {
                 mAutoIncrement[whichThrottle] = false;
                 incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
@@ -4598,6 +4610,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
                     && mAutoIncrement[whichThrottle]) {
                 mAutoIncrement[whichThrottle] = false;
@@ -4623,6 +4636,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         private void doButtonPress() {
+            mainapp.exitDoubleBackButtonInitiated = 0;
 
             switch (this.function) {
                 case direction_button.LEFT:
@@ -4670,6 +4684,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(final View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 isDirectionButtonLongPress = true;
@@ -5223,6 +5238,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         protected function_button_touch_listener(int new_function, int new_whichThrottle, String funcLabel) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
             lab = funcLabel.toUpperCase().trim();
@@ -5239,6 +5255,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             // Log.d("Engine_Driver", "onTouch func " + function + " action " +
 
             // make the click sound once
@@ -5337,6 +5354,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
 //             Log.d("Engine_Driver", "throttle_listener: onTouch: Throttle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
@@ -5515,12 +5533,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.getFastClockFormat() > 0)
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_throttle_short),
                     mainapp.getFastClockTime());
         else
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_throttle),
                     "");
@@ -6113,7 +6131,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.getServerNameFromWebServer();
         }
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -6131,6 +6151,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             overridePendingTransition(0, 0);
             return;
         }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+
+        mainapp.exitDoubleBackButtonInitiated = 0;
+
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
 
         // format the screen area
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -6736,11 +6763,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                }
 //            }
             doVolumeButtonAction(event.getAction(), key, repeatCnt);
+            mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
         } else if ( (key == KEYCODE_VOLUME_MUTE) || (key == KEYCODE_HEADSETHOOK) ) {
             doMuteButtonAction(event.getAction(), key, 0);
+            mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event)); // continue with normal key
         // processing
     }
@@ -6863,7 +6893,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.webMenuSelected = true;
                 return true;
             case R.id.exit_mnu:
-                mainapp.checkExit(this);
+                mainapp.checkAskExit(this);
                 return true;
             case R.id.power_control_mnu:
                 in = new Intent().setClass(this, power_control.class);
@@ -7224,7 +7254,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
-        toolbarHeight = toolbar.getHeight();
+        toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
 
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("hide_slider_preference", false)) {
@@ -7420,6 +7450,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
             public void onClick(DialogInterface dialog, int id) {
+                mainapp.exitDoubleBackButtonInitiated = 0;
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
                 stealPromptActive = false;
                 mainapp.buttonVibration();
@@ -7427,6 +7458,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         });
         b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() { //if no pressed do nothing
             public void onClick(DialogInterface dialog, int id) {
+                mainapp.exitDoubleBackButtonInitiated = 0;
                 stealPromptActive = false;
                 mainapp.buttonVibration();
             }
@@ -7462,6 +7494,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int whichButton) {
+                mainapp.exitDoubleBackButtonInitiated = 0;
                 passwordText = input.getText().toString();
                 Log.d("", "Password Value : " + passwordText);
 
@@ -7484,6 +7517,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        mainapp.exitDoubleBackButtonInitiated = 0;
                         mainapp.hideSoftKeyboardAfterDialog();
                         mainapp.buttonVibration();
 //                        return;
@@ -7635,6 +7669,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             //@Override
             @SuppressLint("ApplySharedPref")
             public void onClick(DialogInterface dialog, int which) {
+                mainapp.exitDoubleBackButtonInitiated = 0;
 
 //                String deviceId = Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                 String deviceId = mainapp.getDeviceId();

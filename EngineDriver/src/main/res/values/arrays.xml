@@ -1751,6 +1751,7 @@
     <string-array name="advancedPreferences" translatable="false">
         <!-- Device Preferences -->
         <item>prefLocale</item>
+        <item>prefDoubleBackButtonToExit</item>
 
         <!-- Throttle Screen Appearance Preferences -->
         <item>prefDecreaseLocoNumberHeight</item>

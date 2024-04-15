@@ -5,7 +5,9 @@
     android:keepScreenOn="true"
     android:orientation="vertical" >
 
+    <include layout="@layout/screen_name_line" />
     <include layout="@layout/toolbar" />
+    <include layout="@layout/status_line" />
 
     <TextView
         android:id="@+id/about_info"
