@@ -1256,12 +1256,12 @@ public class select_loco extends AppCompatActivity {
     // Handle pressing of the back button to simply return to caller
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
             overrideThrottleName = "";
             end_this_activity();
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

@@ -97,19 +97,19 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private boolean prefGamepadTestEnforceTestingSimple = true;
     private boolean prefTtsGamepadTestKeys = false;
 
-    private boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
+    private final boolean[] gamepadButtonsChecked = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
     // Gamepad Button preferences
-    private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
+    private final String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
             "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger","Left Thumb","Right Thumb","","","","","",""};
 
     //                               0         1    2           3          4          5          6          7          8          9          10        11 12 13 14 15 16 17 18 19 20
     //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static int[] BUTTON_ACTION_NUMBERS ={
+    private final int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private static final int[] BUTTON_ACTION_NUMBERS ={
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
-    private static int GAMEPAD_KEYS_LENGTH = 21;
+    private static final int GAMEPAD_KEYS_LENGTH = 21;
 
     private ToneGenerator tg;
 
@@ -123,10 +123,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private String allKeyCodes = "";
 
-    private static String GAMEPAD_TEST_PASS = "1";
-    private static String GAMEPAD_TEST_FAIL = "2";
-    private static String GAMEPAD_TEST_SKIPPED = "3";
-    private static String GAMEPAD_TEST_RESET = "9";
+    private static final String GAMEPAD_TEST_PASS = "1";
+    private static final String GAMEPAD_TEST_FAIL = "2";
+    private static final String GAMEPAD_TEST_SKIPPED = "3";
+    private static final String GAMEPAD_TEST_RESET = "9";
 
     private int decreaseButtonCount = 0;
 
@@ -366,8 +366,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         if ( (myTts != null) && (action==ACTION_DOWN) && (prefTtsGamepadTestKeys) ) {
             String text = keyCodeString;
-            if ( (keyCodeString.length()<4) || (!keyCodeString.substring(0,4).equals("DPad")) ) {
-                text = "Button "+String.valueOf(btn.getText());
+            if ( (keyCodeString.length()<4) || (!keyCodeString.startsWith("DPad")) ) {
+                text = "Button "+ btn.getText();
             }
             myTts.speak(text+","+fn, TextToSpeech.QUEUE_ADD, null);
         }
@@ -814,6 +814,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     //Always go to throttle if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
@@ -825,7 +826,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             //return true;
 //            super.onBackPressed();
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

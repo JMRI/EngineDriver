@@ -247,7 +247,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
-            Log.d("Engine_Driver", "Logging started to: " + logFile.toString());
+            Log.d("Engine_Driver", "Logging started to: " + logFile);
             Log.d("Engine_Driver", mainapp.getAboutInfo());
         } catch ( IOException e ) {
             e.printStackTrace();
@@ -299,7 +299,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
 
     private class LogStringAdaptor extends ArrayAdapter<String> {
-        private List<String> objects;
+        private final List<String> objects;
 
         public LogStringAdaptor(Context context, int textviewid, List<String> objects) {
             super(context, textviewid, objects);

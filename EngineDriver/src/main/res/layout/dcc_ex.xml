@@ -6,14 +6,15 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor" >
 
-    <include layout="@layout/screen_name_line" />
+    <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/status_line" />
+    <include layout="@layout/toolbar_status_line" />
 
     <TextView
         android:id="@+id/dccex_HeadingLabel"
         style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/app_name_dcc_ex" />
+        android:text="@string/app_name_dcc_ex"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="fill_parent"

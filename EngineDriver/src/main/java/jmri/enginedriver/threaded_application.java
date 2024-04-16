@@ -113,7 +113,7 @@ import jmri.jmrit.roster.RosterLoader;
 public class threaded_application extends Application {
     public static String INTRO_VERSION = "9";  // set this to a different string to force the intro to run on next startup.
 
-    private threaded_application mainapp = this;
+    private final threaded_application mainapp = this;
     public comm_thread commThread;
     public volatile String host_ip = null; //The IP address of the WiThrottle server.
     public volatile String logged_host_ip = null;
@@ -247,8 +247,8 @@ public class threaded_application extends Application {
     public boolean routeStatesReceivedDCCEX = false;
 
     // only used to track the state of the numeric keys of an attached keyboard for DCCEX (0-9)
-    public int numericKeyIsPressed[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-    public int numericKeyFunctionStateAtTimePressed[] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+    public int[] numericKeyIsPressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+    public int[] numericKeyFunctionStateAtTimePressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
     //For communication to the comm_thread.
     public comm_handler comm_msg_handler = null;
@@ -1072,7 +1072,7 @@ public class threaded_application extends Application {
 
         prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
-        mainapp.isDCCEX = (prefUseDccexProtocol.equals("Yes")) ? true: mainapp.isDCCEX;   // force it if the preference is set
+        mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
         DccexVersion = "";
         DCCEXlistsRequested = -1;
@@ -1321,11 +1321,7 @@ public class threaded_application extends Application {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
                 //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
-                if (item.getItemId() == R.id.timer_mnu) {
-                    item.setVisible(true);
-                } else {
-                    item.setVisible(false);
-                }
+                item.setVisible(item.getItemId() == R.id.timer_mnu);
             }
         } else {
             menu.findItem(R.id.settings_mnu).setVisible(true);
@@ -1642,12 +1638,12 @@ public class threaded_application extends Application {
             }
         } else {
             switch (prefTheme) {
-                case "Colorful":
-//                    return R.style.app_theme_colorful_preferences;
                 case "Black":
                 case "Outline":
                 case "Ultra":
                     return R.style.app_theme_black_preferences;
+                case "Colorful":
+//                    return R.style.app_theme_colorful_preferences;
                 default:
                     return R.style.app_theme_preferences;
             }
@@ -2511,8 +2507,10 @@ public class threaded_application extends Application {
             TextView tvIconHelp = statusLine.findViewById(R.id.toolbar_icon_help);
             if (!prefFullScreenSwipeArea) {
                 tvIconHelp.setText("");
+                tvIconHelp.setVisibility(View.GONE);
             } else {
-                tvIconHelp.setText("  ◄ ►");
+                tvIconHelp.setText("◄ ►");
+                tvIconHelp.setVisibility(View.VISIBLE);
             }
 
             TextView tvToolbarServerDesc;
@@ -2744,12 +2742,12 @@ public class threaded_application extends Application {
             }
 
             sendMsg(comm_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION,
-                    Integer.toString(action) + ":"
-                            + Integer.toString(whichGamePadIsEventFrom) + ":"
-                            + Float.toString(xAxis) + ":"
-                            + Float.toString(yAxis) + ":"
-                            + Float.toString(xAxis2) + ":"
-                            + Float.toString(yAxis2));
+                    action + ":"
+                            + whichGamePadIsEventFrom + ":"
+                            + xAxis + ":"
+                            + yAxis + ":"
+                            + xAxis2 + ":"
+                            + yAxis2);
 
             return (true); // stop processing this key
         }
@@ -2775,6 +2773,7 @@ public class threaded_application extends Application {
             for (int i = 0; i < gamePadDeviceNames.length; i++) {
                 if (eventDeviceName.equals(gamePadDeviceNames[i])) {
                     isExternal = true;
+                    break;
                 }
             }
         }
@@ -2800,11 +2799,11 @@ public class threaded_application extends Application {
 
                 if (acceptEvent) {
                     sendMsg(comm_msg_handler, message_type.GAMEPAD_ACTION,
-                            Integer.toString(action) + ":"
-                                    + Integer.toString(keyCode) + ":"
+                            action + ":"
+                                    + keyCode + ":"
                                     + ((isShiftPressed) ? "1" : "0") + ":"
-                                    + Integer.toString(repeatCnt) + ":"
-                                    + Integer.toString(whichGamePadIsEventFrom));
+                                    + repeatCnt + ":"
+                                    + whichGamePadIsEventFrom);
 
                     return (true); // stop processing this key
                 }

@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor">
 
-    <include layout="@layout/screen_name_line" />
+    <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/status_line" />
+    <include layout="@layout/toolbar_status_line" />
 
     <LinearLayout
         android:id="@+id/logviewer_screen"
@@ -279,12 +279,11 @@
 
         <Button
             android:id="@+id/device_sounds_settings_button_close"
-            style="?attr/ed_normal_button_style"
+            style="?attr/ed_small_button_style"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_gravity="center_horizontal"
             android:text="@string/logviewerClose" />
-
 
     </LinearLayout>
 

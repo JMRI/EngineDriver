@@ -523,6 +523,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         saveNumberEntries();
+        mainapp.exitDoubleBackButtonInitiated = 0;
 
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
@@ -531,7 +532,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

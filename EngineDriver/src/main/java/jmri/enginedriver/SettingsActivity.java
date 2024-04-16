@@ -104,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String IMPORT_EXPORT_OPTION_RESET = "Reset";
 //    private static final String IMPORT_EXPORT_OPTION_IMPORT_URL = "URL";
 
-    private static String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
+    private static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
 
     private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
     private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
@@ -117,8 +117,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //    private ProgressDialog pDialog;
 //    public static final int PROGRESS_BAR_TYPE = 0;
 
-    private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
-    private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
+    private static final String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
+    private static final String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
 //    private static final String PREF_IMPORT_ALL_FULL = "Yes";
 //    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
@@ -694,13 +694,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if ((key == KeyEvent.KEYCODE_BACK) && (!isInSubScreen) ) {
             setResult(result);
             finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         isInSubScreen = false;
         return (super.onKeyDown(key, event));
     }
@@ -963,10 +963,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         }
 
-        boolean thisEnabled = true;
-        if (prefGamePadType.equals("None")) {
-            thisEnabled = false;
-        }
+        boolean thisEnabled = !prefGamePadType.equals("None");
         Preference thisPref;
 
         enableDisablePreference(prefScreen, "prefGamePadFeedbackVolume", thisEnabled);
@@ -1011,10 +1008,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefPauseAlternateButton", enable);
     }
     private void showHideBackgroundImagePreferences(PreferenceScreen prefScreen) {
-        boolean enable = true;
-        if (prefBackgroundImage) {
-            enable = false;
-        }
+        boolean enable = !prefBackgroundImage;
         enableDisablePreference(prefScreen, "prefBackgroundImageFileNameImagePicker", !enable);
         enableDisablePreference(prefScreen, "prefBackgroundImagePosition", !enable);
     }
@@ -1044,19 +1038,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
-        boolean enable = false;
-        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
-            enable = true;
-        }
+        boolean enable = prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL);
 
         enableDisablePreference(prefScreen, "SelectiveLeadSound", enable);
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF1", enable);
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF2", enable);
-
-        enable = false;
-        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
-            enable = true;
-        }
+        enable = prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX);
 
         enableDisablePreference(prefScreen, "prefConsistFollowDefaultAction", enable);
         enableDisablePreference(prefScreen, "prefConsistFollowString1", enable);
@@ -1521,10 +1508,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         private void showHideSimpleThrottleLayoutShowFunctionButtonCountPreference() {
-            boolean enable = true;
-            if (parentActivity.prefThrottleSwitchButtonDisplay) {
-                enable = false;
-            }
+            boolean enable = !parentActivity.prefThrottleSwitchButtonDisplay;
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSimpleThrottleLayoutShowFunctionButtonCount", !enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleSwitchOption2", !enable);
         }
@@ -1550,15 +1534,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         private void showHideThrottleTypePreferences() {
             Log.d("Engine_Driver", "Settings: showHideThrottleTypePreferences()");
-            boolean enable = true;
-            if ((parentActivity.prefThrottleScreenType.equals("Simple")) || (parentActivity.prefThrottleScreenType.equals("Vertical"))
-                    || (parentActivity.prefThrottleScreenType.equals("Vertical Left"))  || (parentActivity.prefThrottleScreenType.equals("Vertical Right"))
-                    || (parentActivity.prefThrottleScreenType.equals("Switching"))
-                    || (parentActivity.prefThrottleScreenType.equals("Tablet Switching Left"))
-                    || (parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left"))
-                    || (parentActivity.prefThrottleScreenType.equals("Switching Left"))  || (parentActivity.prefThrottleScreenType.equals("Switching Right"))) {
-                enable = false;
-            }
+            boolean enable = (!parentActivity.prefThrottleScreenType.equals("Simple")) && (!parentActivity.prefThrottleScreenType.equals("Vertical"))
+                    && (!parentActivity.prefThrottleScreenType.equals("Vertical Left")) && (!parentActivity.prefThrottleScreenType.equals("Vertical Right"))
+                    && (!parentActivity.prefThrottleScreenType.equals("Switching"))
+                    && (!parentActivity.prefThrottleScreenType.equals("Tablet Switching Left"))
+                    && (!parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left"))
+                    && (!parentActivity.prefThrottleScreenType.equals("Switching Left")) && (!parentActivity.prefThrottleScreenType.equals("Switching Right"));
             parentActivity.enableDisablePreference(getPreferenceScreen(), "increase_slider_height_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "left_slider_margin", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHideSliderAndSpeedButtons", enable);

@@ -409,6 +409,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
 
         if (key == KeyEvent.KEYCODE_BACK) {
             move_view_to_settings();        //sync settings array to view
@@ -418,7 +419,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

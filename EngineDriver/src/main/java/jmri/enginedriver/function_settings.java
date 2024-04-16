@@ -69,13 +69,13 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     //set up label, dcc function, toggle setting for each button
     private static boolean settingsCurrent = false;
-    private static ArrayList<String> aLbl = new ArrayList<>();
-    private static ArrayList<Integer> aFnc = new ArrayList<>();
+    private static final ArrayList<String> aLbl = new ArrayList<>();
+    private static final ArrayList<Integer> aFnc = new ArrayList<>();
     private Menu FMenu;
     private EditText et;
     private EditText etForRoster;
-    private String prefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
-    private String originalPrefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
+    private String prefNumberOfDefaultFunctionLabels = threaded_application.MAX_FUNCTIONS_TEXT;
+    private String originalPrefNumberOfDefaultFunctionLabels = threaded_application.MAX_FUNCTIONS_TEXT;
     private String prefNumberOfDefaultFunctionLabelsForRoster = "4";
     private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
 //    private boolean prefAlwaysUseDefaultFunctionLabels = false;
@@ -443,7 +443,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             }
 
             mainapp.prefAlwaysUseDefaultFunctionLabels = false;
-            prefNumberOfDefaultFunctionLabels = mainapp.MAX_FUNCTIONS_TEXT;
+            prefNumberOfDefaultFunctionLabels = threaded_application.MAX_FUNCTIONS_TEXT;
             prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
             mainapp.buttonVibration();
@@ -453,7 +453,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     //Handle pressing of the back button to save settings
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, mainapp.MAX_FUNCTIONS_TEXT);
+        mainapp.exitDoubleBackButtonInitiated = 0;
+        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
         prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
 
         if (key == KeyEvent.KEYCODE_BACK) {
@@ -466,7 +467,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -616,7 +616,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                     || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
                 saveSettings();         //save function labels to file
 
-            prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, mainapp.MAX_FUNCTIONS_TEXT);
+            prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
             prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
 
             finish();

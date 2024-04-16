@@ -478,7 +478,7 @@ public ArrayList<Integer> recent_loco_source_list;
                             recent_loco_address_list.add(addr);
                             recent_loco_address_size_list.add(size);
                             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
-                            String engineAddressString = String.format("%s(%s)", addr.toString(), addressLengthString);
+                            String engineAddressString = String.format("%s(%s)", addr, addressLengthString);
                             if ((locoName.length()==0  || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
                                 locoName = engineAddressString;
                             }

@@ -51,9 +51,9 @@ public class power_control extends AppCompatActivity {
     private Menu PMenu;
 
     static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX"};
-    private Button[] dccExTrackPowerButton = {null, null, null, null, null, null, null, null};
-    private LinearLayout[] dccExTrackTypeLayout = {null, null, null, null, null, null, null, null};
-    private TextView[] dccExTrackType = {null, null, null, null, null, null, null, null};
+    private final Button[] dccExTrackPowerButton = {null, null, null, null, null, null, null, null};
+    private final LinearLayout[] dccExTrackTypeLayout = {null, null, null, null, null, null, null, null};
+    private final TextView[] dccExTrackType = {null, null, null, null, null, null, null, null};
 
     float vn = 4; // DCC-EC Version number
 
@@ -374,12 +374,12 @@ public class power_control extends AppCompatActivity {
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
             this.finish();  //end this activity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

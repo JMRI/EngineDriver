@@ -62,7 +62,7 @@ public class comm_handler extends Handler {
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
-               mainapp.isDCCEX = ((mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES)) || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))) ? true : false;
+               mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES)) || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO));
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
@@ -432,9 +432,20 @@ public class comm_handler extends Handler {
          case message_type.CONNECTION_COMPLETED_CHECK:
             //if not successfully connected to a 2.0+ server by this time, kill connection
             if (mainapp.withrottle_version < 2.0) {
-               mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TOAST_MESSAGE,
-                       "timeout waiting for VN message for "
-                               + mainapp.host_ip + ":" + mainapp.port + ", disconnecting");
+//               mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TOAST_MESSAGE,
+//                       "timeout waiting for VN message for "
+//                               + mainapp.host_ip + ":" + mainapp.port + ", disconnecting");
+
+               if (!mainapp.isDCCEX) {
+                  threaded_application.safeToast(
+                          threaded_application.context.getResources().getString(R.string.toastWaitingForConnection, mainapp.host_ip, Integer.toString(mainapp.port)),
+                          Toast.LENGTH_SHORT);
+               } else {
+                  threaded_application.safeToast(
+                          threaded_application.context.getResources().getString(R.string.toastWaitingForConnectionDccEx, mainapp.host_ip, Integer.toString(mainapp.port)),
+                          Toast.LENGTH_SHORT);
+               }
+
                if (comm_thread.socketWiT != null) {
                   comm_thread.socketWiT.disconnect(true, true);     //just close the socket
                }

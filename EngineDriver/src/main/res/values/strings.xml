@@ -826,6 +826,10 @@
     <string name="prefGamepadOnlyOneGamepadTitle">Only one Gamepad?</string>
     <string name="prefGamepadOnlyOneGamepadSummary">If enabled Engine Driver will not check for multiple gamepads.</string>
 
+    <!--    Toast messages for Comms -->
+    <string name="toastWaitingForConnection">Timeout waiting for VN message for %1$s:%2$s disconnecting</string>
+    <string name="toastWaitingForConnectionDccEx">Timeout waiting for &lt;iDCCEX...&lt; message for %1$s:%2$s disconnecting</string>
+
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creating withrottle zeroconf listener: IOException:\n%1$s</string>

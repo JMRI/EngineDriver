@@ -152,7 +152,7 @@ public class ImageDownloader {
     Bitmap downloadBitmap(String url) {
 
         // AndroidHttpClient is not allowed to be used from the main thread
-        final HttpClient client = (mode == Mode.NO_ASYNC_TASK) ? new DefaultHttpClient() : new DefaultHttpClient(); //.newInstance("Android");
+        final HttpClient client = new DefaultHttpClient(); //.newInstance("Android");
         final HttpGet getRequest = new HttpGet(url);
 
         try {

@@ -507,15 +507,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected MediaPlayer _mediaPlayer;
 
     // Gamepad Button preferences
-    private String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
+    private final String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
                                             "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger","Left Thumb","Right Thumb","","","","","",""};
 
     //                               0         1    2           3          4          5          6          7          8          9          10        11 12 13 14 15 16 17 18 19 20
     //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
-    private int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static final int GAMEPAD_KEYS_LENGTH = 21;
-    private static int[] BUTTON_ACTION_NUMBERS ={
+    private static final int[] BUTTON_ACTION_NUMBERS ={
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
     // For TTS
@@ -577,7 +577,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected boolean prefSwapForwardReverseButtons = false;
     protected boolean prefSwapForwardReverseButtonsLongPress = false;
-    private boolean[] currentSwapForwardReverseButtons = {false,false,false,false,false,false};
+    private final boolean[] currentSwapForwardReverseButtons = {false,false,false,false,false,false};
 
     protected boolean prefGamepadSwapForwardReverseWithScreenButtons = false;
     protected boolean prefGamepadTestEnforceTesting = true;
@@ -640,8 +640,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean isEsuMc2AllStopped = false; // for tracking if all throttles stopped
     private ThrottleFragment esuThrottleFragment;
     private StopButtonFragment esuStopButtonFragment;
-    private EsuMc2LedControl esuMc2Led = new EsuMc2LedControl();
-    private Handler esuButtonRepeatUpdateHandler = new Handler();
+    private final EsuMc2LedControl esuMc2Led = new EsuMc2LedControl();
+    private final Handler esuButtonRepeatUpdateHandler = new Handler();
     private boolean esuButtonAutoIncrement = false;
     private boolean esuButtonAutoDecrement = false;
     private boolean prefEsuMc2EndStopDirectionChange = true;
@@ -649,7 +649,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean isEsuMc2KnobEnabled = true;
 
     // Create default ESU MCII ThrottleScale for each throttle
-    private ThrottleScale[] esuThrottleScales
+    private final ThrottleScale[] esuThrottleScales
             = {new ThrottleScale(10, 127),
             new ThrottleScale(10, 127),
             new ThrottleScale(10, 127),
@@ -675,7 +675,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         RED (MobileControl2.LED_RED),
         GREEN (MobileControl2.LED_GREEN);
 
-        private int value;
+        private final int value;
 
         EsuMc2Led(int value) {
             this.value = value;
@@ -738,8 +738,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         FN30 ("Function 30", 30),
         FN31 ("Function 31", 31);
 
-        private String action;
-        private int function;
+        private final String action;
+        private final int function;
 
         private static final Map<String,EsuMc2ButtonAction> ENUM_MAP;
 
@@ -1379,21 +1379,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private boolean directionButtonsAreCurrentlyReversed(int throttleIndexNo) {
-        boolean isOk = false;
-        if ( ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
-                || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons[throttleIndexNo]))) ) {
-            isOk= true;
-        }
+        boolean isOk = ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
+                || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons[throttleIndexNo])));
         return isOk;
     }
 
     private boolean gamepadDirectionButtonsAreCurrentlyReversed(int throttleIndexNo) {
-        boolean isOk = false;
-        if ((prefGamepadSwapForwardReverseWithScreenButtons)
+        boolean isOk = (prefGamepadSwapForwardReverseWithScreenButtons)
                 && (((currentSwapForwardReverseButtons[throttleIndexNo]) && (!prefSwapForwardReverseButtons))
-                    ||((!currentSwapForwardReverseButtons[throttleIndexNo]) && (prefSwapForwardReverseButtons)))) {
-            isOk= true;
-        }
+                || ((!currentSwapForwardReverseButtons[throttleIndexNo]) && (prefSwapForwardReverseButtons)));
         return isOk;
     }
 
@@ -2460,10 +2454,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private boolean isSelectLocoAllowed(int whichThrottle) {
         // check whether loco change is permitted
-        boolean isAllowed = false;
-        if (!getConsist(whichThrottle).isActive() || locoSelectWhileMoving || (getSpeed(whichThrottle) == 0)) {
-            isAllowed = true;
-        }
+        boolean isAllowed = !getConsist(whichThrottle).isActive() || locoSelectWhileMoving || (getSpeed(whichThrottle) == 0);
         return isAllowed;
     }
 
@@ -2688,21 +2679,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if ((isVolume) && (((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_BOTH)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_VOLUME))))) { // note: 'Volume' option is no longer available
                     if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled the preferences
                         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                            if (whichThrottle == throttleIndex) {
-                                bSels[throttleIndex].setActivated(true);
-                            } else {
-                                bSels[throttleIndex].setActivated(false);
-                            }
+                            bSels[throttleIndex].setActivated(whichThrottle == throttleIndex);
                         }
                     }
                 }
                 if ((!isVolume) && (((prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_BOTH)) || (prefSelectedLocoIndicator.equals(SELECTED_LOCO_INDICATOR_GAMEPAD))))) {
                     for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-                        if (whichThrottle == throttleIndex) {
-                            bSels[throttleIndex].setHovered(true);
-                        } else {
-                            bSels[throttleIndex].setHovered(false);
-                        }
+                        bSels[throttleIndex].setHovered(whichThrottle == throttleIndex);
                     }
                 }
             }
@@ -3328,7 +3311,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             }
-        } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].substring(0,9).equals(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
+        } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].startsWith(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
         } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED)) {
@@ -4111,7 +4094,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // Callback for ESU MCII throttle knob events
-    private ThrottleFragment.OnThrottleListener esuOnThrottleListener = new ThrottleFragment.OnThrottleListener() {
+    private final ThrottleFragment.OnThrottleListener esuOnThrottleListener = new ThrottleFragment.OnThrottleListener() {
 
         @Override
         public void onButtonDown() {
@@ -4161,7 +4144,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     };
 
     // Callback for ESU MCII stop button
-    private StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {
+    private final StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {
         private int origSpeed;
         private long timePressed;
         private boolean wasLongPress = false;
@@ -4469,11 +4452,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
      * @param menu     the menu upon which the entry/button should be updated
      */
     public void toggleEsuMc2Knob(Activity activity, Menu menu) {
-        if (isEsuMc2KnobEnabled) {
-            isEsuMc2KnobEnabled = false;
-        } else {
-            isEsuMc2KnobEnabled = true;
-        }
+        isEsuMc2KnobEnabled = !isEsuMc2KnobEnabled;
         setEsuMc2KnobButton(menu);
     }
 
@@ -4792,15 +4771,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             List<Integer> functionList = new ArrayList<>();
             for (Consist.ConLoco l : con.getLocos()) {
-                boolean processThisLoco = true;
-                if ((l.getAddress().equals(con.getLeadAddr()))
-                        && (!tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                        && (!tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                        && (!tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))
-                        && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
-                ) {  // for complex ignore the lead as we have already set it
-                    processThisLoco = false;
-                }
+                boolean processThisLoco = (!l.getAddress().equals(con.getLeadAddr()))
+                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))
+                        || (mainapp.prefAlwaysUseDefaultFunctionLabels);
+                // for complex ignore the lead as we have already set it
 
                 if (processThisLoco) {
                     functionList = l.getMatchingFunctions(function, lab,
@@ -4895,10 +4871,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end doLocoSound()
 
     void soundQueueNextLocoSound(int whichThrottle, int mSound) {
-        boolean wasDirectionChange = false;
-        if (mainapp.soundsLocoLastDirection[whichThrottle] != dirs[whichThrottle]) {
-            wasDirectionChange =true;
-        }
+        boolean wasDirectionChange = mainapp.soundsLocoLastDirection[whichThrottle] != dirs[whichThrottle];
 
         if ( (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == mSound) && (mainapp.soundsLocoQueue[whichThrottle].queueCount() == 0) && (!wasDirectionChange)) {
             return; // sound is already playing and nothing is queued
@@ -5468,7 +5441,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected class PacingDelay {
         private boolean delayInProg;
         protected Runnable delayTimer;
-        private int delay;
+        private final int delay;
 
         protected PacingDelay(int delay) {
             this.delay = delay;
@@ -5503,7 +5476,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // sends speed value once the pacing delay expires to ensure WiT gets final setpoint
     protected class SpeedPacingDelay extends PacingDelay {
         private int speed;
-        private int whichThrottle;
+        private final int whichThrottle;
         private volatile boolean sendDelayedSpeed;
         protected SpeedPacingDelay(int delay, int whichThrottle) {
             super(delay);
@@ -6346,13 +6319,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
 
-            boolean isSpecial = false;
-            if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                    && ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                        || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                        || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))   ) ) {
-                isSpecial = true;
-            }
+            boolean isSpecial = (mainapp.prefAlwaysUseDefaultFunctionLabels)
+                    && ((mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY)));
             TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
             if ((!isSpecial) && (mainapp.isDCCEX)) {
                 TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
@@ -7405,7 +7375,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // elapse between onGesture events (i.e. press without movement).
     //
     @SuppressLint("Recycle")
-    private Runnable gestureStopped = new Runnable() {
+    private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
 //            Log.d("Engine_Driver", "gestureStopped");
@@ -7801,7 +7771,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
-        forceRestartApp(mainapp.FORCED_RESTART_REASON_THROTTLE_SWITCH);
+        forceRestartApp(threaded_application.FORCED_RESTART_REASON_THROTTLE_SWITCH);
     }
 
     //listeners for the Pause Speed Button
@@ -8006,10 +7976,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d("Engine_Driver", "handleDeviceButtonAction: handleAction - action: " + action);
 
         if ( (buttonType==SOUNDS_BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary) ) {
-            boolean rslt = false;
-            if (!mainapp.soundsDeviceButtonStates[whichThrottle][buttonType]) {
-                rslt = true;
-            }
+            boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][buttonType];
             doDeviceButtonSound(whichThrottle, soundType);
             setSoundButtonState(bSoundsExtras[buttonType][whichThrottle], rslt);
             mainapp.soundsDeviceButtonStates[whichThrottle][buttonType] = rslt;

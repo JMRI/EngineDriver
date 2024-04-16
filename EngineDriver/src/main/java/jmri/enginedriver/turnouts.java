@@ -335,10 +335,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 butThrow.setEnabled(true);
                 butClose.setEnabled(true);
                 butTog.setEnabled(true);
-                if (Character.isDigit(turnout.charAt(0))) //show hardware system prefix if numeric entry
-                    trnPrefix.setEnabled(true);
-                else
-                    trnPrefix.setEnabled(false);
+                //show hardware system prefix if numeric entry
+                trnPrefix.setEnabled(Character.isDigit(turnout.charAt(0)));
             } else {
                 butThrow.setEnabled(false);
                 butClose.setEnabled(false);
@@ -1061,7 +1059,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
 
     public class RecentTurnoutsSimpleAdapter extends SimpleAdapter {
-        private Context cont;
+        private final Context cont;
 
         RecentTurnoutsSimpleAdapter(Context context,
                                     List<? extends Map<String, ?>> data, int resource,
@@ -1421,7 +1419,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // elapse between onGesture events (i.e. press without movement).
     //
     @SuppressLint("Recycle")
-    private Runnable gestureStopped = new Runnable() {
+    private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
             if (gestureInProgress) {

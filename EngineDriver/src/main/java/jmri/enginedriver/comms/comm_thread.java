@@ -1516,12 +1516,12 @@ public class comm_thread extends Thread {
                         Log.d("Engine_Driver", "processDCCEXlocos(): process functions" );
                         // Process the functions
                         int fnState;
-                        for (int i = 0; i < mainapp.MAX_FUNCTIONS; i++) {
+                        for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
                             try {
                                 fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
                                 if (i==0) Log.d("Engine_Driver", "processDCCEXlocos(): function:" + i + " state: " + fnState);
                                 processFunctionState(whichThrottle, i, (fnState != 0));
-                                responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + "" + (i);
+                                responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + (i);
                                 mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
                             } catch (NumberFormatException e) {
                                 Log.w("Engine_Driver", "unable to parseInt: '" + e.getMessage() + "'");
@@ -2460,7 +2460,7 @@ public class comm_thread extends Thread {
                 mainapp.comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
             } else {
                 Log.d("Engine_Driver", "comm_thread.InboundTimeout: WiT inbound timeout " +
-                        Integer.toString(inboundTimeoutRetryCount) + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
+                        inboundTimeoutRetryCount + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
                 // heartbeat should trigger a WiT reply so force that now
                 inboundTimeoutRecovery = true;
                 mainapp.comm_msg_handler.post(heart.outboundHeartbeatTimer);

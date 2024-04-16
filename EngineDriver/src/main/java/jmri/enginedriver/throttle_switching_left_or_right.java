@@ -54,11 +54,11 @@ public class throttle_switching_left_or_right extends throttle {
 //    private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
-    private int[] throttleMidPointZero = {0,0,0,0,0,0};
-    private int[] throttleSwitchingMax = {0,0,0,0,0,0};
+    private final int[] throttleMidPointZero = {0,0,0,0,0,0};
+    private final int[] throttleSwitchingMax = {0,0,0,0,0,0};
 
-    private int[] throttleMidPointDeadZoneUpper = {0,0,0,0,0,0};
-    private int[] throttleMidPointDeadZoneLower = {0,0,0,0,0,0};
+    private final int[] throttleMidPointDeadZoneUpper = {0,0,0,0,0,0};
+    private final int[] throttleMidPointDeadZoneLower = {0,0,0,0,0,0};
 
     private int prefSwitchingThrottleSliderDeadZone = 10;
 

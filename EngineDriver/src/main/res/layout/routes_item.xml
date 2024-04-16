@@ -34,7 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="testing string"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

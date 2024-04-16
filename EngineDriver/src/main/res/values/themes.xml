@@ -75,8 +75,8 @@
         <item name="ed_thumb">@drawable/thumb</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb</item>
 
-        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
-        <item name="ed_throttle_button">@drawable/throttle</item>
+        <item name="ed_throttle_switch_button">@drawable/toolbar_button_throttle_switch_button</item>
+        <item name="ed_throttle_button">@drawable/toolbar_button_throttle</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -84,19 +84,19 @@
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-        <item name="ed_estop_button">@drawable/estop</item>
-        <item name="ed_timer_button">@drawable/timer</item>
+        <item name="ed_estop_button">@drawable/toolbar_button_estop</item>
+        <item name="ed_timer_button">@drawable/toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_green_red_button">@drawable/power_green_red</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
         <item name="ed_power_red_button">@drawable/power_red</item>
 
-        <item name="ed_folder_icon">@drawable/folder_outline</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
-        <item name="ed_clock_icon">@drawable/fast_clock</item>
-        <item name="ed_web_view_button">@drawable/web_view</item>
-        <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
-        <item name="ed_dcc_ex_button">@drawable/dcc_ex_button_icon</item>
+        <item name="ed_folder_icon">@drawable/folder</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex</item>
+        <item name="ed_clock_icon">@drawable/toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/toolbar_button_web_view</item>
+        <item name="ed_in_device_sounds_button">@drawable/toolbar_button_in_device_sounds</item>
+        <item name="ed_dcc_ex_button">@drawable/toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/background_highlight_black</item>
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
@@ -166,8 +166,8 @@
         <item name="ed_thumb">@drawable/thumb_round</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round</item>
 
-        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
-        <item name="ed_throttle_button">@drawable/throttle_outline</item>
+        <item name="ed_throttle_switch_button">@drawable/toolbar_button_throttle_switch_button_outline</item>
+        <item name="ed_throttle_button">@drawable/toolbar_button_throttle_outline</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -175,8 +175,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-        <item name="ed_estop_button">@drawable/estop_outline</item>
-        <item name="ed_timer_button">@drawable/timer_outline</item>
+        <item name="ed_estop_button">@drawable/toolbar_button_estop_outline</item>
+        <item name="ed_timer_button">@drawable/toolbar_button_timer_outline</item>
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_green_red_button">@drawable/power_green_red_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
@@ -184,10 +184,10 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
-        <item name="ed_clock_icon">@drawable/fast_clock</item>
-        <item name="ed_web_view_button">@drawable/web_view_outline</item>
-        <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
-        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
+        <item name="ed_clock_icon">@drawable/toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/toolbar_button_web_view_outline</item>
+        <item name="ed_in_device_sounds_button">@drawable/toolbar_button_in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/toolbar_button_dcc_ex_outline</item>
         <item name="ed_background_highlight">@drawable/background_highlight_black</item>
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
@@ -253,8 +253,8 @@
         <item name="ed_thumb">@drawable/thumb_round_outline</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_round_outline</item>
 
-        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
-        <item name="ed_throttle_button">@drawable/throttle_outline</item>
+        <item name="ed_throttle_switch_button">@drawable/toolbar_button_throttle_switch_button_outline</item>
+        <item name="ed_throttle_button">@drawable/toolbar_button_throttle_outline</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -262,7 +262,7 @@
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-        <item name="ed_estop_button">@drawable/estop_outline</item>
+        <item name="ed_estop_button">@drawable/toolbar_button_estop_outline</item>
         <item name="ed_power_green_button">@drawable/power_green_outline</item>
         <item name="ed_power_green_red_button">@drawable/power_green_red_outline</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
@@ -270,10 +270,10 @@
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
-        <item name="ed_clock_icon">@drawable/fast_clock</item>
-        <item name="ed_web_view_button">@drawable/web_view_outline</item>
-        <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
-        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
+        <item name="ed_clock_icon">@drawable/toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/toolbar_button_web_view_outline</item>
+        <item name="ed_in_device_sounds_button">@drawable/toolbar_button_in_device_sounds_outline</item>
+        <item name="ed_dcc_ex_button">@drawable/toolbar_button_dcc_ex_outline</item>
         <item name="ed_background_highlight">@drawable/background_highlight_black</item>
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
@@ -342,41 +342,42 @@
         <item name="ed_thumb">@drawable/thumb_ultra</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_ultra</item>
 
-        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button_outline</item>
-        <item name="ed_throttle_button">@drawable/throttle_outline</item>
+        <item name="ed_throttle_switch_button">@drawable/toolbar_button_throttle_switch_button_ultra</item>
+        <item name="ed_throttle_button">@drawable/toolbar_button_throttle_ultra</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
 
-        <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
-        <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
-        <item name="ed_estop_button">@drawable/estop_outline</item>
-        <item name="ed_timer_button">@drawable/timer_outline</item>
-        <item name="ed_power_green_button">@drawable/power_green_outline</item>
-        <item name="ed_power_green_red_button">@drawable/power_green_red_outline</item>
-        <item name="ed_power_yellow_button">@drawable/power_yellow_outline</item>
-        <item name="ed_power_red_button">@drawable/power_red_outline</item>
+        <item name="ed_flashlight_on_button">@drawable/flashlight_on_ultra</item>
+        <item name="ed_flashlight_off_button">@drawable/flashlight_off_ultra</item>
+        <item name="ed_estop_button">@drawable/toolbar_button_estop_ultra</item>
+        <item name="ed_timer_button">@drawable/toolbar_button_timer_ultra</item>
+        <item name="ed_power_green_button">@drawable/power_green_ultra</item>
+        <item name="ed_power_green_red_button">@drawable/power_green_red_ultra</item>
+        <item name="ed_power_yellow_button">@drawable/power_yellow_ultra</item>
+        <item name="ed_power_red_button">@drawable/power_red_ultra</item>
 
         <item name="ed_folder_icon">@drawable/folder_outline</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex_outline</item>
-        <item name="ed_clock_icon">@drawable/fast_clock</item>
-        <item name="ed_web_view_button">@drawable/web_view_outline</item>
-        <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
-        <item name="ed_dcc_ex_button">@drawable/dcc_ex_outline</item>
+        <item name="ed_clock_icon">@drawable/toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/toolbar_button_web_view_ultra</item>
+        <item name="ed_in_device_sounds_button">@drawable/toolbar_button_in_device_sounds_ultra</item>
+        <item name="ed_dcc_ex_button">@drawable/toolbar_button_dcc_ex_ultra</item>
         <item name="ed_background_highlight">@drawable/background_highlight_black</item>
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
         <item name="ed_icon">@drawable/ic_launcher_outline</item>
 
-        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
-        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
-        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
-        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults_outline</item>
+        <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_ultra</item>
+        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_ultra</item>
+        <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_ultra</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults_ultra</item>
     </style>
 
     <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="preferenceTheme">@style/app_theme_preferences</item>
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
 
         <item name="android:windowBackground">@color/windowBackground_colorful</item>
@@ -440,8 +441,8 @@
         <item name="ed_thumb">@drawable/thumb_colorful</item>
         <item name="ed_vertical_thumb">@drawable/vertical_thumb_colorful</item>
 
-        <item name="ed_throttle_switch_button">@drawable/throttle_switch_button</item>
-        <item name="ed_throttle_button">@drawable/throttle</item>
+        <item name="ed_throttle_switch_button">@drawable/toolbar_button_throttle_switch_button</item>
+        <item name="ed_throttle_button">@drawable/toolbar_button_throttle</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -449,8 +450,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
-        <item name="ed_estop_button">@drawable/estop</item>
-        <item name="ed_timer_button">@drawable/timer</item>
+        <item name="ed_estop_button">@drawable/toolbar_button_estop</item>
+        <item name="ed_timer_button">@drawable/toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/power_green</item>
         <item name="ed_power_green_red_button">@drawable/power_green_red</item>
         <item name="ed_power_yellow_button">@drawable/power_yellow</item>
@@ -458,10 +459,10 @@
 
         <item name="ed_folder_icon">@drawable/folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/folder_dcc_ex</item>
-        <item name="ed_clock_icon">@drawable/fast_clock_black</item>
-        <item name="ed_web_view_button">@drawable/web_view</item>
-        <item name="ed_in_device_sounds_button">@drawable/in_device_sounds_outline</item>
-        <item name="ed_dcc_ex_button">@drawable/dcc_ex_button_icon</item>
+        <item name="ed_clock_icon">@drawable/toolbar_button_fast_clock_black</item>
+        <item name="ed_web_view_button">@drawable/toolbar_button_web_view</item>
+        <item name="ed_in_device_sounds_button">@drawable/toolbar_button_in_device_sounds</item>
+        <item name="ed_dcc_ex_button">@drawable/toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/background_highlight_colorful</item>
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_colorful</item>
 
@@ -503,6 +504,7 @@
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
+        <item name="preferenceCategoryBackgroundColor">@color/solidWhite</item>
     </style>
 
     <style name="app_theme_black_preferences" parent="@style/app_theme_black">
@@ -517,18 +519,17 @@
 
         <item name="colorBackgroundFloating">@color/darkGrey</item>
         <!--        <item name="android:colorBackgroundFloating" tools:targetApi="23">@color/darkGrey</item>-->
+        <item name="preferenceCategoryBackgroundColor">@color/solidWhite</item>
     </style>
 
 
-<!--    <style name="app_theme_colorful_preferences" parent="@style/app_theme_colorful">-->
+<!--    <style name="app_theme_colorful_preferences"  parent="@style/app_theme">-->
 <!--        <item name="android:background">@color/windowBackground_colorful</item>-->
 
 <!--        <item name="android:divider">@drawable/divider_colorful</item>-->
 <!--        <item name="android:listDivider">@drawable/divider_colorful</item>-->
 
-<!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
-<!--        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>-->
-
+<!--        <item name="preferenceCategoryBackgroundColor">@color/heading_colorful</item>-->
 <!--    </style>-->
 
 </resources>

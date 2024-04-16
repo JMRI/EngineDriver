@@ -8,6 +8,8 @@
  * New preference to allow for double back button presses to exit the app
  * bug fix for initial Auto-Web preference change
  * Toolbar/Action Bar UI improvements
+ * Change all toolbar/Action Bar icons to vectors for better scaling and reduce maintenance effort
+ * Change the original button styling to vectors - not identical to the original but close
 **Version 2.36.177
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID
@@ -751,6 +753,8 @@
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ *   TODO: lint removal
+ *   TODO: remove deprecated code
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -767,7 +771,6 @@
  *   TODO: pref to sort by system name vs. user name
  *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
- *   TODO: change "waiting for VN message.." when in DCC-EX mode
  *   TODO: provide for adding/editing names of recent connections
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
@@ -812,6 +815,7 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
+ *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

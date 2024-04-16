@@ -7,9 +7,9 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-    <include layout="@layout/screen_name_line" />
+    <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/status_line" />
+    <include layout="@layout/toolbar_status_line" />
 
     <ListView
         android:id="@+id/consist_lights_list"

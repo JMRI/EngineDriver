@@ -244,11 +244,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             routeEntry.setEnabled(true);
             routeButton.setText(getString(R.string.set));
             // don't allow Set button if nothing entered
-            if (txtLen > 0) {
-                routeButton.setEnabled(true);
-            } else {
-                routeButton.setEnabled(false);
-            }
+            routeButton.setEnabled(txtLen > 0);
         } else {
             routeEntry.setEnabled(false);
             routeButton.setEnabled(false);
@@ -807,7 +803,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     // elapse between onGesture events (i.e. press without movement).
     //
     @SuppressLint("Recycle")
-    private Runnable gestureStopped = new Runnable() {
+    private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
 //            Log.d("Engine_Driver", "routes: Runnable");
