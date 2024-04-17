@@ -8,7 +8,6 @@
  * New preference to allow for double back button presses to exit the app
  * bug fix for initial Auto-Web preference change
  * Toolbar/Action Bar UI improvements
- * Bug fix for DCC-EX default latching for non-roster locos
 **Version 2.36.177
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID
