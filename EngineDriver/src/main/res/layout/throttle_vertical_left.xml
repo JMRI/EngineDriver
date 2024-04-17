@@ -98,7 +98,8 @@
                                         android:id="@+id/button_select_loco_0"
                                         style="?attr/ed_loco_select_button_style"
                                         android:layout_width="fill_parent"
-                                        android:text="@string/none" />
+                                        android:text="@string/none"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/loco_label_0"
@@ -587,7 +588,8 @@
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="0dp"
                                             android:layout_weight="5"
-                                            android:text="@string/functionButton21DefaultValue" />
+                                            android:text="@string/functionButton21DefaultValue"
+                                            tools:ignore="TooManyViews" />
                                     </TableRow>
 
                                     <TableRow

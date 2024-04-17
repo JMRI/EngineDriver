@@ -120,7 +120,6 @@
 <!--    <string name="off">Apagado</string>-->
     <string name="set">Establece</string>
     <string name="disabled">Deshabilitado</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="exit_text">¿Salir del Engine Driver?</string>

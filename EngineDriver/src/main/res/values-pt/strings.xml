@@ -124,7 +124,6 @@
 <!--    <string name="off">Desligado</string>-->
     <string name="set">Definir</string>
     <string name="disabled">Desabilitado</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="cancel">Cancelar</string>

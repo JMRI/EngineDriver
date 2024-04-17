@@ -8,7 +8,8 @@
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/toolbar_status_line" />
+    <include layout="@layout/toolbar_status_line"
+        tools:ignore="DuplicateIncludedIds" />
 
     <TextView
         android:id="@+id/dccex_HeadingLabel"
@@ -861,7 +862,8 @@
                                 android:layout_height="28dp"
                                 android:layout_gravity="center"
                                 android:padding="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
+                                android:src="?attr/ed_power_yellow_button"
+                                tools:ignore="TooManyViews" />
 
                             <Spinner
                                 android:id="@+id/dexc_track_type_7_list"

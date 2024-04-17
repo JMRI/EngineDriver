@@ -491,6 +491,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         }
 
         public void handleMessage(Message msg) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();

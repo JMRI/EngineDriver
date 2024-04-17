@@ -7507,6 +7507,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
+            //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
 //                    Log.d("Engine_Driver", "Got permission for READ_SERVER_AUTO_PREFERENCES");

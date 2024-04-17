@@ -107,7 +107,7 @@
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults</item>
 
-        <item name="ed_icon">@drawable/ic_launcher</item>
+        <item name="ed_icon">@drawable/icon_vector</item>
     </style>
 
     <!-- appears as 'high contrast' theme' -->
@@ -192,7 +192,7 @@
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
-        <item name="ed_icon">@drawable/ic_launcher_outline</item>
+        <item name="ed_icon">@drawable/icon_vector_outline</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
@@ -278,7 +278,7 @@
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
-        <item name="ed_icon">@drawable/ic_launcher_outline</item>
+        <item name="ed_icon">@drawable/icon_vector_outline</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
@@ -368,7 +368,7 @@
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_black</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences</item>
-        <item name="ed_icon">@drawable/ic_launcher_outline</item>
+        <item name="ed_icon">@drawable/icon_vector_ultra</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_ultra</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_ultra</item>
@@ -467,7 +467,7 @@
         <item name="ed_background_highlight_secondary">@drawable/background_highlight_secondary_colorful</item>
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_black</item>
-        <item name="ed_icon">@drawable/ic_launcher</item>
+        <item name="ed_icon">@drawable/icon_vector</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track</item>

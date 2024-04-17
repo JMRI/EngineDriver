@@ -333,7 +333,7 @@
 
   <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar">
     <item name="android:background">#00000000</item>
-    <item name="android:icon">@drawable/ic_launcher_outline</item>
+    <item name="android:icon">@drawable/icon_outline</item>
     <item name="android:titleTextStyle">@style/actionBarStyle_black.TitleTextStyle</item>
     <item name="android:layout_marginLeft">0dp</item>
     <item name="android:layout_marginRight">0dp</item>
@@ -1133,7 +1133,7 @@
 
   <style name="actionBarStyle_colorful" parent="@android:style/Widget.Holo.Light.ActionBar">
     <item name="android:background">@color/windowBackground_colorful</item>
-    <item name="android:icon">@drawable/ic_launcher</item>
+    <item name="android:icon">@drawable/icon</item>
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
     <item name="android:colorBackground">@color/windowBackground_colorful</item>
     <item name="android:titleTextStyle">@style/actionBarStyle_colorful.TitleTextStyle</item>

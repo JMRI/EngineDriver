@@ -432,10 +432,6 @@ public class comm_handler extends Handler {
          case message_type.CONNECTION_COMPLETED_CHECK:
             //if not successfully connected to a 2.0+ server by this time, kill connection
             if (mainapp.withrottle_version < 2.0) {
-//               mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TOAST_MESSAGE,
-//                       "timeout waiting for VN message for "
-//                               + mainapp.host_ip + ":" + mainapp.port + ", disconnecting");
-
                if (!mainapp.isDCCEX) {
                   threaded_application.safeToast(
                           threaded_application.context.getResources().getString(R.string.toastWaitingForConnection, mainapp.host_ip, Integer.toString(mainapp.port)),

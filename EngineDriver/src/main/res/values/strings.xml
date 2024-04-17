@@ -827,8 +827,8 @@
     <string name="prefGamepadOnlyOneGamepadSummary">If enabled Engine Driver will not check for multiple gamepads.</string>
 
     <!--    Toast messages for Comms -->
-    <string name="toastWaitingForConnection">Timeout waiting for VN message for %1$s:%2$s disconnecting</string>
-    <string name="toastWaitingForConnectionDccEx">Timeout waiting for &lt;iDCCEX...&lt; message for %1$s:%2$s disconnecting</string>
+    <string name="toastWaitingForConnection">Timeout waiting for WiThrottle \'VN\' message from %1$s:%2$s. Disconnecting</string>
+    <string name="toastWaitingForConnectionDccEx">Timeout waiting for DCC-EX \'iDCCEX...\' message from %1$s:%2$s. Disconnecting</string>
 
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>

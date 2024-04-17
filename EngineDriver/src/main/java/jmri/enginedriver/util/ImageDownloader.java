@@ -87,6 +87,7 @@ public class ImageDownloader {
             return;
         }
 
+        BitmapDownloaderTask task;
         if (cancelPotentialDownload(url, imageView)) {
             switch (mode) {
                 case NO_ASYNC_TASK:
@@ -97,7 +98,7 @@ public class ImageDownloader {
 
                 case NO_DOWNLOADED_DRAWABLE:
                     imageView.setMinimumHeight(156);
-                    BitmapDownloaderTask task = new BitmapDownloaderTask(imageView);
+                    task = new BitmapDownloaderTask(imageView);
                     task.execute(url);
                     break;
 

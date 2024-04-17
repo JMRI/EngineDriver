@@ -10,6 +10,8 @@
  * Toolbar/Action Bar UI improvements
  * Change all toolbar/Action Bar icons to vectors for better scaling and reduce maintenance effort
  * Change the original button styling to vectors - not identical to the original but close
+ * removal of duplicate icons
+ * lint removal
 **Version 2.36.177
 **Version 2.36.176
  * Remove use of Settings.Secure.ANDROID_ID

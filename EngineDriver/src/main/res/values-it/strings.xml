@@ -125,7 +125,6 @@
 <!--    <string name="off">Spento</string>-->
     <string name="set">Impostare</string>
     <string name="disabled">Disabilitato</string>
-    <string name="volume_indicator">v</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="cancel">Cancellare</string>

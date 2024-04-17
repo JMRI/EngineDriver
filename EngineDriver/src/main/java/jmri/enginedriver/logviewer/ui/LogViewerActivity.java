@@ -213,6 +213,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
 
         public void handleMessage(Message msg) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();

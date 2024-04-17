@@ -91,6 +91,7 @@ public class throttle_switching_horizontal extends throttle {
         mainapp.currentScreenSupportsWebView = true;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        //noinspection SwitchStatementWithTooFewBranches
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching Horizontal":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;

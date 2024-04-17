@@ -183,7 +183,8 @@
                                         android:id="@+id/loco_cell_0"
                                         android:layout_width="fill_parent"
                                         android:layout_height="40dp"
-                                        android:layout_weight=".73">
+                                        android:layout_weight=".73"
+                                        tools:ignore="TooDeepLayout">
 
                                         <Button
                                             android:id="@+id/button_select_loco_0"
@@ -611,7 +612,8 @@
                                                     style="?attr/ed_fn_button_style"
                                                     android:layout_width="0dp"
                                                     android:layout_weight="5"
-                                                    android:text="@string/functionButton18DefaultValue" />
+                                                    android:text="@string/functionButton18DefaultValue"
+                                                    tools:ignore="TooManyViews" />
 
                                                 <Button
                                                     style="?attr/ed_fn_button_style"

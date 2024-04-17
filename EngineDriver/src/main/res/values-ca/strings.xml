@@ -511,7 +511,7 @@
     <string name="toastImportExportImportSucceeded">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha tingut èxit</string>
     <string name="toastImportExportExportFailed">L\'exportació de preferències a  \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha fallat!</string>
     <string name="toastImportExportImportFailed">L\'importació de preferències des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' ha fallat!</string>
-    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host</string>
+    <string name="toastImportExportServerImportFailed">Preferències no importades des de \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'.  Es possible que encara no hagis desat les preferències per a aquest host</string>
     <string name="toastImportExportCannotImport">No s\'ha pogut importar les preferències. No s\'ha connectat al host</string>
 <!--    <string name="toastImportExportCannotExport">No s\'ha pogut exportar les preferències. No s\'ha connectat al host</string>-->
 <!--    <string name="toastSelectLocoConfirmClear">Confirma que vols eliminar totes les Locomotores recents prement la tecla \'Netejar llista\' DE NOU</string>-->

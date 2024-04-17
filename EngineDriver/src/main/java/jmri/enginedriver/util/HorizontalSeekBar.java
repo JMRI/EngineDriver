@@ -169,6 +169,7 @@ public class HorizontalSeekBar extends SeekBar {
         super.onDraw(c);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public final boolean onTouchEvent(final MotionEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
