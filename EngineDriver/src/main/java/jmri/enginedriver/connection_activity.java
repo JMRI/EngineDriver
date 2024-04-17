@@ -140,7 +140,9 @@ public class connection_activity extends AppCompatActivity implements Permission
     Spinner dccexConnectionOptionSpinner;
     String [] dccexConnectionOptionEntriesArray;
 
+    private LinearLayout screenNameLine;
     private Toolbar toolbar;
+    private LinearLayout statusLine;
 
     static {
         try {
@@ -213,6 +215,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //When an item is clicked, connect to the given IP address and port.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             if (connectionsListSwipeDetector.swipeDetected()) { // check for swipe
                 if (connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
                     clearConnectionsListItem(v, position, id);
@@ -242,6 +245,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private class HostNumericListener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             EditText entry = findViewById(R.id.host_ip);
             entry.setInputType(InputType.TYPE_CLASS_NUMBER);
             entry.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
@@ -254,6 +258,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private class HostTextListener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             EditText entry = findViewById(R.id.host_ip);
             entry.setInputType(InputType.TYPE_CLASS_TEXT);
             entry.requestFocus();
@@ -274,6 +279,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private class button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
             EditText entry = findViewById(R.id.host_ip);
             connected_hostip = entry.getText().toString();
             if (connected_hostip.trim().length() > 0) {
@@ -607,15 +613,14 @@ public class connection_activity extends AppCompatActivity implements Permission
         setConnectionProtocolOption();
 
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
-//                setToolbarTitle(getApplicationContext().getResources().getString(R.string.app_name_connect)
-//                + "\n" + getApplicationContext().getResources().getString(R.string.app_name)
-//                        , "");
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_connect),
                     "");
@@ -631,6 +636,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
 //        if (this.runIntro) {        //if going to run the intro, expedite it
         if (mainapp.introIsRunning) {        //if going to run the intro, expedite it
             return;
@@ -715,7 +721,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //sets the tile to include throttle name.
         if (toolbar != null) {
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_connect),
                     "");
@@ -833,10 +839,12 @@ public class connection_activity extends AppCompatActivity implements Permission
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
+
         // Handle all of the possible menu actions.
         Intent in;
         if (item.getItemId() == R.id.exit_mnu) {
-            mainapp.checkExit(this);
+            mainapp.checkAskExit(this);
             return true;
         } else if (item.getItemId() == R.id.settings_mnu) {
             in = new Intent().setClass(this, SettingsActivity.class);
@@ -884,6 +892,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.checkExit(this);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -907,13 +916,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
 
     private void clearConnectionsList() {
-//            navigateToHandler(PermissionsHelper.CLEAR_CONNECTION_LIST);
-//        clearConnectionsListImpl();
-//        ;
-//    }
-//
-//    //Clears recent connection list.
-//    private void clearConnectionsListImpl() {
+        //Clears recent connection list.
+
+        mainapp.exitDoubleBackButtonInitiated = 0;
+
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
@@ -1139,6 +1145,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         @SuppressLint("ApplySharedPref")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
 
             Spinner spinner = findViewById(R.id.cons_DccexConnectionOption);
             int spinnerPosition = spinner.getSelectedItemPosition();

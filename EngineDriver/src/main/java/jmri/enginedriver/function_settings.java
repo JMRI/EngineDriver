@@ -46,6 +46,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,6 +82,10 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private Spinner spinner;
 
     SharedPreferences prefs;
+
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
 
     /**
      * Called when the activity is first created.
@@ -166,11 +171,13 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         //put pointer to this activity's handler in main app's shared variable
         mainapp.function_settings_msg_handler = new function_settings_handler(Looper.getMainLooper());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_functions),
                     "");
@@ -459,6 +466,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

@@ -52,6 +52,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
 
@@ -82,7 +83,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
     private VelocityTracker mVelocityTracker;
 
+    private LinearLayout screenNameLine;
     private Toolbar toolbar;
+    private LinearLayout statusLine;
     private int toolbarHeight;
 
 //    Button closeButton;
@@ -114,7 +117,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         gestureStartY = event.getY();
 //        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
 
-        toolbarHeight = toolbar.getHeight();
+        toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
@@ -270,12 +273,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     //	set the title, optionally adding the current time.
     private void setActivityTitle() {
         if (mainapp.getFastClockFormat() > 0)
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     "",
                     getApplicationContext().getResources().getString(R.string.app_name_web_short),
                     mainapp.getFastClockTime());
         else
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_web),
                     "");
@@ -410,7 +413,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         //put pointer to this activity's handler in main app's shared variable
 //        mainapp.web_msg_handler = new web_handler();
 
+        screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -575,6 +580,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             navigateAway(true, null); // don't really finish the activity here
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -617,7 +623,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 navigateAway(true, routes.class);
                 return true;
             case R.id.exit_mnu:
-                mainapp.checkExit(this);
+                mainapp.checkAskExit(this);
                 return true;
             case R.id.power_control_mnu:
                 navigateAway(false, power_control.class);

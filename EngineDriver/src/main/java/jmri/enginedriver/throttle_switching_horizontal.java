@@ -347,7 +347,7 @@ public class throttle_switching_horizontal extends throttle {
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
-            titleBar = toolbar.getHeight();
+            titleBar = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
             if (screenHeight!=0) {
                 screenHeight = screenHeight - titleBar;
             }

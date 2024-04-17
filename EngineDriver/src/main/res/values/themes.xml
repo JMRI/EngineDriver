@@ -105,6 +105,7 @@
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults</item>
 
         <item name="ed_icon">@drawable/ic_launcher</item>
     </style>
@@ -124,6 +125,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+
+        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -194,6 +197,7 @@
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults_outline</item>
     </style>
 
     <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
@@ -208,6 +212,8 @@
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+
+        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -277,6 +283,7 @@
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults_outline</item>
     </style>
 
     <!-- appears as 'dark' theme -->
@@ -294,6 +301,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+
+        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
@@ -364,6 +373,7 @@
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom_outline</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track_outline</item>
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager_outline</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults_outline</item>
     </style>
 
     <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
@@ -381,6 +391,8 @@
         <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
+
+        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton_colorful</item>
 
         <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>
         <item name="android:itemTextAppearance">@style/ItemTextAppearance_colorful</item>
@@ -459,6 +471,7 @@
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/dccex_button_track_manager</item>
+        <item name="ed_dccex_button_function_defaults">@drawable/dccex_button_function_defaults</item>
     </style>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

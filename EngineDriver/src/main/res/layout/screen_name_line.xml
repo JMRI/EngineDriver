@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/screen_name_line"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:keepScreenOn="true"
+    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
+    android:background="?attr/ed_toolbar_background" >
+
+    <TextView
+        android:id="@+id/toolbar_icon_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text=""
+        android:textColor="#fff"
+        android:textSize="8sp"
+        tools:ignore="RtlHardcoded,SmallSp" />
+
+    <TextView
+        android:id="@+id/toolbar_icon_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:text="Engine Driver"
+        android:textColor="#fff"
+        android:textSize="8sp"
+        android:textStyle="italic"
+        tools:ignore="HardcodedText,RtlHardcoded,SmallSp" />
+
+</LinearLayout>

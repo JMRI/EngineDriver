@@ -166,6 +166,10 @@ public class dcc_ex extends AppCompatActivity {
 
     float vn = 4; // DCC-EC Version number
 
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
+
     //**************************************
 
 
@@ -834,6 +838,10 @@ public class dcc_ex extends AppCompatActivity {
         navigation_button_listener = new dccex_navigation_button_listener(2);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
+        LinearLayout default_functions_button = findViewById(R.id.dccex_default_functions_layout);
+        dccex_default_functions_button_listener default_functions_button_listener = new dccex_default_functions_button_listener(this);
+        default_functions_button.setOnClickListener(default_functions_button_listener);
+
         dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);
         dexcProgrammingAddressLayout = findViewById(R.id.dexc_programmingAddressLayout);
         dexcProgrammingCvLayout = findViewById(R.id.dexc_programmingCvLayout);
@@ -927,11 +935,13 @@ public class dcc_ex extends AppCompatActivity {
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_dcc_ex),
                     "");
@@ -1003,6 +1013,7 @@ public class dcc_ex extends AppCompatActivity {
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
@@ -1290,6 +1301,21 @@ public class dcc_ex extends AppCompatActivity {
             mainapp.buttonVibration();
             dcc_action_type_spinner.setSelection(myIndex);
             mainapp.hideSoftKeyboard(v);
+        }
+    }
+
+    public class dccex_default_functions_button_listener implements View.OnClickListener {
+        Context myContext;
+
+        dccex_default_functions_button_listener(Context context) {
+            myContext = context;
+        }
+
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            mainapp.hideSoftKeyboard(v);
+            Intent in = new Intent().setClass(myContext, function_consist_settings.class);
+            startActivity(in);
         }
     }
 }

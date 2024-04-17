@@ -199,6 +199,7 @@ public class VerticalSeekBar extends SeekBar {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public final boolean onTouchEvent(final MotionEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if (!isEnabled()) {
             return false;
         }

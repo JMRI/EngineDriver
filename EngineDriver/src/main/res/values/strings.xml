@@ -356,6 +356,9 @@
     <string name="prefNumOfThrottlesSummary">How many throttles to display on the Throttle Screen.\n(Limited by the selected Throttle Screen Layout.)</string>
 <!--    <string name="prefNumOfThrottlesDefault" translatable="false">Two</string>-->
 
+    <string name="prefDoubleBackButtonToExitTitle">Double Back button to Exit?</string>
+    <string name="prefDoubleBackButtonToExitSummary">Pressing the Android \'Back\' button twice within 3 seconds on the \'Throttle\' or \'Connection\' screen will exit Engine Driver</string>
+
     <string name="prefThrottleScreenTypeTitle">Throttle Screen Layout</string>
     <string name="prefThrottleScreenTypeSummary">Select a Throttle Screen Layout.\n(The number in brackets after the name is the number of throttles the layout can support.)</string>
     <string name="prefThrottleScreenTypeDefault" translatable="false">Default</string>
@@ -476,7 +479,7 @@
     <string name="prefSocketTimeoutMsSummary">Set socket read timeout in milliseconds</string>
     <string name="prefSocketTimeoutMsDefaultValue" translatable="false">500</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefHeartbeatResponseFactorTitle">Heartbeat Response Factor</string>
-    <string name="prefHeartbeatResponseFactorSummary">Percentage of the heartbeat period for when to sent the heartbeat (50%-90%).\nWill take effect on next connection.</string>
+    <string name="prefHeartbeatResponseFactorSummary">Percentage of the heartbeat period for when to send the heartbeat (50%-90%).\nWill take effect on next connection.</string>
     <string name="prefHeartbeatResponseFactorDefaultValue" translatable="false">80</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
@@ -837,6 +840,7 @@
     <string name="statusThreadedAppNotConnected">Not connected to a network.  Check WiFi settings.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">No response from server %1$s:%2$s for %3$dms. Check that the WiThrottle Server is running.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.  Retrying</string>
+    <string name="toastDoubleBackButtonToExit">Press \'Back\' again to exit Engine Driver</string>
 
     <!--    Toast messages for the Throttle page-->
     <string name="toastUnableToSetBrightness">Unable to set the Auto Brightness/ Adaptive Brightness.</string>
@@ -1335,9 +1339,10 @@
     <string name="DccexSucceeded">Action Succeeded</string>
     <string name="DccexFailed">Action Failed</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs (PROG)</string>
-    <string name="DCCEXbuttonCvProgrammerPoM">CVs (PoM)</string>
+    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs PROG</string>
+    <string name="DCCEXbuttonCvProgrammerPoM">CVs PoM</string>
     <string name="DCCEXbuttonTrackManager">Track Mgr</string>
+    <string name="DCCEXbuttonDefaultFunctions">Default Fns</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
     <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
     <string name="DCCEXheadingTrackManager">DCC-EX - Track/District Manager</string>

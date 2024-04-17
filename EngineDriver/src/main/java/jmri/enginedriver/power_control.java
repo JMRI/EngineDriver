@@ -57,6 +57,10 @@ public class power_control extends AppCompatActivity {
 
     float vn = 4; // DCC-EC Version number
 
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
+
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
     class power_control_handler extends Handler {
@@ -283,11 +287,13 @@ public class power_control extends AppCompatActivity {
             dccExTrackPowerButton[i].setOnClickListener(buttonListener);
         }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            mainapp.setToolbarTitle(toolbar,
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_power_control),
                     "");
@@ -373,6 +379,7 @@ public class power_control extends AppCompatActivity {
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
+        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
