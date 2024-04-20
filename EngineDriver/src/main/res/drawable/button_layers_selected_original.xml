@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle">
+
+            <corners android:radius="3dp" />
+            <stroke android:width="2px" android:color="#878787" />
+            <!-- <solid android:color="@color/buttonFill_ultra" /> -->
+            <gradient
+                android:angle="326"
+                android:centerX="35%"
+                android:centerColor="#D7D7D7"
+                android:startColor="#E4E4E4"
+                android:endColor="#B9B9B9"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <item
+        android:top="20px" android:left="8px" android:right="8px" android:bottom="5px">
+        <shape android:shape="rectangle">
+        <corners
+            android:radius="1dp" />
+        <gradient
+            android:angle="326"
+            android:centerX="35%"
+            android:startColor="#f6f628"
+            android:centerColor="#f6f628"
+            android:endColor="#e8e86b"
+            android:type="linear" />
+        <padding
+            android:left="0dp"
+            android:top="0dp"
+            android:right="0dp"
+            android:bottom="0dp" />
+        <size
+            android:width="30dp"
+            android:height="1dp" />
+        <stroke
+            android:width="0dp"
+            android:color="#878787" />
+        </shape>
+    </item>
+
+</layer-list>

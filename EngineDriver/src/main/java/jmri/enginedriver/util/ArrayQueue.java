@@ -6,8 +6,11 @@ package jmri.enginedriver.util;
 import android.util.Log;
 
 public final class ArrayQueue {
-    private int front, rear, capacity, lastValueAdded;
-    private int[] queue;
+    private int front;
+    private int rear;
+    private final int capacity;
+    private int lastValueAdded;
+    private final int[] queue;
 
     public ArrayQueue(int Capacity) {
         front = rear = 0;

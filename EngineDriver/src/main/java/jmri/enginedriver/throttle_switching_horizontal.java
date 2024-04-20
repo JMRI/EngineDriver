@@ -53,11 +53,11 @@ public class throttle_switching_horizontal extends throttle {
 //    private static final int TICK_TYPE_0_100 = 0;
     private static final int TICK_TYPE_0_100_0 = 1;
 
-    private int[] throttleMidPointZero = {0,0,0};
-    private int[] throttleSwitchingMax = {0,0,0};
+    private final int[] throttleMidPointZero = {0,0,0};
+    private final int[] throttleSwitchingMax = {0,0,0};
 
-    private int[] throttleMidPointDeadZoneUpper = {0,0,0};
-    private int[] throttleMidPointDeadZoneLower = {0,0,0};
+    private final int[] throttleMidPointDeadZoneUpper = {0,0,0};
+    private final int[] throttleMidPointDeadZoneLower = {0,0,0};
 
     private int prefSwitchingThrottleSliderDeadZone = 10;
 
@@ -91,6 +91,7 @@ public class throttle_switching_horizontal extends throttle {
         mainapp.currentScreenSupportsWebView = true;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        //noinspection SwitchStatementWithTooFewBranches
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching Horizontal":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;

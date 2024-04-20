@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor">
 
-    <include layout="@layout/screen_name_line" />
+    <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/status_line" />
+    <include layout="@layout/toolbar_status_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -174,11 +174,15 @@
 
                     <TextView
                         android:layout_weight="7"
-                        android:text="@string/fb_column_label"/>
+                        android:text="@string/fb_column_label"
+                        android:textStyle="bold"
+                        style="?android:attr/listSeparatorTextViewStyle" />
 
                     <TextView
                         android:layout_weight="3"
-                        android:text="@string/fb_column_function" />
+                        android:text="@string/fb_column_function"
+                        android:textStyle="bold"
+                        style="?android:attr/listSeparatorTextViewStyle"  />
                 </TableRow>
 
                 <TableRow>

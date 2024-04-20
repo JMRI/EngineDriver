@@ -40,9 +40,9 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <include layout="@layout/screen_name_line" />
+            <include layout="@layout/toolbar_screen_name_line" />
             <include layout="@layout/toolbar" />
-            <include layout="@layout/status_line" />
+            <include layout="@layout/toolbar_status_line" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -220,7 +220,8 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:enabled="false"
-                                        android:text="@string/forward" />
+                                        android:text="@string/forward"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/loco_left_direction_indication_0"
@@ -511,7 +512,8 @@
 
                                         <Button
                                             style="?attr/ed_fn_button_style"
-                                            android:text="@string/functionButton27DefaultValue" />
+                                            android:text="@string/functionButton27DefaultValue"
+                                            tools:ignore="TooManyViews" />
                                     </TableRow>
 
                                     <TableRow android:baselineAligned="false">

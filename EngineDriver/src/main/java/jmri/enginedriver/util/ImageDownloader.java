@@ -87,6 +87,7 @@ public class ImageDownloader {
             return;
         }
 
+        BitmapDownloaderTask task;
         if (cancelPotentialDownload(url, imageView)) {
             switch (mode) {
                 case NO_ASYNC_TASK:
@@ -97,7 +98,7 @@ public class ImageDownloader {
 
                 case NO_DOWNLOADED_DRAWABLE:
                     imageView.setMinimumHeight(156);
-                    BitmapDownloaderTask task = new BitmapDownloaderTask(imageView);
+                    task = new BitmapDownloaderTask(imageView);
                     task.execute(url);
                     break;
 
@@ -152,7 +153,7 @@ public class ImageDownloader {
     Bitmap downloadBitmap(String url) {
 
         // AndroidHttpClient is not allowed to be used from the main thread
-        final HttpClient client = (mode == Mode.NO_ASYNC_TASK) ? new DefaultHttpClient() : new DefaultHttpClient(); //.newInstance("Android");
+        final HttpClient client = new DefaultHttpClient(); //.newInstance("Android");
         final HttpGet getRequest = new HttpGet(url);
 
         try {

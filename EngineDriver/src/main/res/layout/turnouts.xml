@@ -22,9 +22,9 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <include layout="@layout/screen_name_line" />
+            <include layout="@layout/toolbar_screen_name_line" />
             <include layout="@layout/toolbar" />
-            <include layout="@layout/status_line" />
+            <include layout="@layout/toolbar_status_line" />
 
             <TextView
                 android:id="@+id/turnouts_selection_type_heading"

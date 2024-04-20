@@ -42,7 +42,36 @@
     <color name="seekBarTickColor">#AFAEAE</color>
     <color name="hoverButtonBackgroundBlue">#1E3AEC</color>
 
+    <!-- Original Theme -->
+
+    <color name="buttonCommonFillGradiantLight_original">#FFFFFF</color>
+    <color name="buttonCommonFillGradiantCenter_original">#C3C3C3</color>
+    <color name="buttonCommonFillGradiantDark_original">#B1B1B1</color>
+    <color name="buttonCommonSelectedStrokeLight_original">#D3D1D1</color>
+    <color name="buttonCommonSelectedStrokeDark_original">#3C3C3C</color>
+    <color name="buttonCommonOutlineStroke_original">#878787</color>
+
+    <color name="buttonCommonDisabledStroke_original">#48878787</color>
+    <color name="buttonCommonDisabledFill_original">#48878787</color>
+
+    <color name="buttonStopSelectedStrokeLight_original">#AEAEAE</color>
+    <color name="buttonStopSelectedStrokeDark_original">#3C3C3C</color>
+    <color name="buttonStopDisabledStroke_original">#E3AEB0</color>
+    <color name="buttonStopDisabledFill_original">#E3AEB0</color>
+    <color name="buttonStopSelectedFill_original">#ff0000</color>
+    <color name="buttonStopSelectedOutlineStroke_original">#FA3F3F</color>
+
+    <color name="buttonStopSelectedFillGradiantLight_original">#FF5959</color>
+    <color name="buttonStopSelectedFillGradiantCenter_original">#ff0000</color>
+    <color name="buttonStopSelectedFillGradiantDark_original">#FB3F3F</color>
+
+    <color name="buttonStopFillGradiantLight_original">#E3AEB0</color>
+    <color name="buttonStopFillGradiantCenter_original">#BD9193</color>
+    <color name="buttonStopFillGradiantDark_original">#876364</color>
+
+
     <!-- Black Theme -->
+
     <color name="divider_black">#4bd6d6d6</color>
 
     <color name="primary_black">@color/solidWhite</color>
@@ -69,6 +98,7 @@
     <color name="buttonStopSelectedFill_black">#ffff0000</color>
     <color name="buttonStopSelectedStroke_black">#d50000</color>
     <color name="buttonStopInsideStroke_black">#ff000000</color>
+
 
     <!-- Outline Theme -->
 
@@ -99,6 +129,7 @@
     <color name="buttonFnSelectedStroke_outline">#ff00b2e1</color>
     <color name="buttonFnSelectedInsideStroke_outline">#ff00b2e1</color>
 
+
     <!-- Ultra (Dark) Theme -->
 
     <color name="buttonCommonFillGradiantLight_ultra">#FF303030</color>
@@ -128,7 +159,9 @@
     <color name="buttonFnSelectedFill_ultra">#FF262626</color>
     <color name="buttonFnSelectedInsideStroke_ultra">#7f0074b3</color>
 
+
     <!-- Colorful Theme -->
+
     <color name="divider_colorful">#ffad02</color>
 
     <color name="primary_colorful">@color/solidBlack</color>

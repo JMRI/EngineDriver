@@ -27,7 +27,7 @@ import jmri.enginedriver.threaded_application;
 
 public class ImportExportConnectionList {
     public ArrayList<HashMap<String, String>> connections_list;
-    private SharedPreferences prefs;
+    private final SharedPreferences prefs;
     private boolean prefHideDemoServer = false;
     public boolean foundDemoHost = false;
 
@@ -137,11 +137,11 @@ public class ImportExportConnectionList {
 
         public threaded_application mainapp;  // hold pointer to mainapp
 
-        private String connected_hostip;
-        private String connected_hostname;
-        private Integer connected_port;
-        private String webServerName;  //name from the webServer
-        private String connected_ssid;
+        private final String connected_hostip;
+        private final String connected_hostname;
+        private final Integer connected_port;
+        private final String webServerName;  //name from the webServer
+        private final String connected_ssid;
 
         public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName) {
             mainapp = myApp;
@@ -198,10 +198,8 @@ public class ImportExportConnectionList {
                     Integer lp = Integer.valueOf(t.get("port"));
                     String ssid = t.get("ssid");
 
-                    boolean doWrite = true;
-                    if (connected_hostip.equals(li) && (connected_port.intValue() == lp.intValue())){  //dont write it out if same as selected
-                        doWrite = false;
-                    }
+                    boolean doWrite = !connected_hostip.equals(li) || (connected_port.intValue() != lp.intValue());
+                    //dont write it out if same as selected
                     if ( li.equals(demo_host) && lp.toString().equals(demo_port) && (foundDemoHost) ) {
                         doWrite = false;
                     }

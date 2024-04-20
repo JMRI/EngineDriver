@@ -7,9 +7,9 @@
     android:orientation="vertical"
     tools:ignore="RtlHardcoded,Autofill,LabelFor">
 
-    <include layout="@layout/screen_name_line" />
+    <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/status_line" />
+    <include layout="@layout/toolbar_status_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,21 +79,24 @@
                         android:layout_weight=".33"
                         android:minWidth="60sp"
                         android:text="@string/functionConsistColumnLabel"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        style="?android:attr/listSeparatorTextViewStyle" />
 
                     <TextView
                         android:id="@+id/function_consist_LocosHeader"
                         android:layout_width="wrap_content"
                         android:layout_weight=".33"
                         android:text="@string/functionConsistColumnLocos"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        style="?android:attr/listSeparatorTextViewStyle"  />
 
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_weight=".33"
                         android:text="@string/functionConsistColumnLatching"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        style="?android:attr/listSeparatorTextViewStyle"  />
 
 
                 </TableRow>

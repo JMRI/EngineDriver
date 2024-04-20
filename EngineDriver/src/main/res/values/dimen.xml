@@ -5,6 +5,25 @@
     <dimen name="buttonStroke_hover">1dip</dimen>
     <dimen name="buttonCornerRadius_hover">15dip</dimen>
 
+    <!-- original theme -->
+
+    <dimen name="buttonDisabledStroke_original">1dip</dimen>
+    <dimen name="buttonSelectedStroke_original">1dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_original">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_original">1dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_original">1dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_original">3dip</dimen>
+    <dimen name="buttonStroke_original">2dip</dimen>
+    <dimen name="buttonCornerRadius_original">3dip</dimen>
+    <dimen name="buttonOutlineStroke_original">1px</dimen>
+
+    <dimen name="buttonStopDisabledStroke_original">3dip</dimen>
+    <dimen name="buttonStopSelectedStroke_original">3dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_original">2dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_original">1dip</dimen>
+    <dimen name="buttonStopStroke_original">2dip</dimen>
+    <dimen name="buttonStopCornerRadius_original">5dip</dimen>
+
 
     <!-- Black theme -->
 
@@ -23,6 +42,7 @@
     <dimen name="buttonStopSelectedInsideStrokePadding_black">1dip</dimen>
     <dimen name="buttonStopStroke_black">2dip</dimen>
     <dimen name="buttonStopCornerRadius_black">5dip</dimen>
+
 
     <!-- Outline theme -->
 
@@ -48,6 +68,7 @@
     <dimen name="buttonStopSelectedInsideStrokePadding_outline">3dip</dimen>
     <dimen name="buttonStopStroke_outline">1dip</dimen>
     <dimen name="buttonStopCornerRadius_outline">5dip</dimen>
+
 
     <!-- Ultra Black theme -->
 

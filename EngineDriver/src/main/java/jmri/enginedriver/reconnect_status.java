@@ -115,7 +115,7 @@ public class reconnect_status extends AppCompatActivity {
     }
 
     @SuppressLint("Recycle")
-    private Runnable delayCloseScreen = new Runnable() {
+    private final Runnable delayCloseScreen = new Runnable() {
         @Override
         public void run() {
             closeScreen();

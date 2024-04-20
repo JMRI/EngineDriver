@@ -41,9 +41,9 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <include layout="@layout/screen_name_line" />
+            <include layout="@layout/toolbar_screen_name_line" />
             <include layout="@layout/toolbar" />
-            <include layout="@layout/status_line" />
+            <include layout="@layout/toolbar_status_line" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -98,7 +98,8 @@
                                         android:id="@+id/button_select_loco_0"
                                         style="?attr/ed_loco_select_button_style"
                                         android:layout_width="fill_parent"
-                                        android:text="@string/none" />
+                                        android:text="@string/none"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/loco_label_0"
@@ -363,14 +364,6 @@
                                             android:drawableLeft="@drawable/in_device_sounds_button_icon"
                                             android:text="@string/functionButton02DefaultValue" />
 
-                                        <Button
-                                            android:id="@+id/device_sounds_horn_short_0"
-                                            style="?attr/ed_fn_button_style"
-                                            android:layout_width="fill_parent"
-                                            android:layout_marginLeft="5dp"
-                                            android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                                            android:text="@string/soundsButtonHornShortDefaultValue" />
-
                                         <TableLayout
                                             android:id="@+id/function_buttons_table_0"
                                             android:layout_width="fill_parent"
@@ -384,6 +377,14 @@
                                                 <Button
                                                     style="?attr/ed_fn_button_style"
                                                     android:text="@string/functionButton00DefaultValue" />
+
+                                                <Button
+                                                    android:id="@+id/device_sounds_horn_short_0"
+                                                    style="?attr/ed_fn_button_style"
+                                                    android:layout_width="fill_parent"
+                                                    android:layout_marginLeft="5dp"
+                                                    android:drawableLeft="@drawable/in_device_sounds_button_icon"
+                                                    android:text="@string/soundsButtonHornShortDefaultValue" />
                                             </TableRow>
 
                                             <TableRow>
@@ -498,7 +499,7 @@
                                                     android:text="@string/functionButton16DefaultValue" />
                                             </TableRow>
 
-                                            <TableRow>
+                                            <TableRow tools:ignore="TooManyViews">
 
                                                 <Button
                                                     style="?attr/ed_fn_button_style"

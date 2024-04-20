@@ -409,6 +409,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     //Always go to throttle if back button pressed
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
@@ -417,7 +418,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 

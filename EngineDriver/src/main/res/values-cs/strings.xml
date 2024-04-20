@@ -653,8 +653,6 @@
     <string name="gamepadTestCancelNonForced">"Uzavřít"</string>
     <string name="gamepadTestSkip">"Přeskočit"</string>
 
-    <string name="gamepadTestKeyCodesUpAction">"\u2191"</string>
-    <string name="gamepadTestKeyCodesDownAction">"\u2193"</string>
 
     <string name="gamepadTestKeyCodesUpCode">"Up"</string>
     <string name="gamepadTestKeyCodesDownCode">"Dn"</string>

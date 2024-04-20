@@ -41,9 +41,9 @@
             android:layout_height="fill_parent"
             android:orientation="vertical" >
 
-            <include layout="@layout/screen_name_line" />
+            <include layout="@layout/toolbar_screen_name_line" />
             <include layout="@layout/toolbar" />
-            <include layout="@layout/status_line" />
+            <include layout="@layout/toolbar_status_line" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -99,7 +99,8 @@
                                         style="?attr/ed_loco_select_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_marginBottom="5dp"
-                                        android:text="@string/none" />
+                                        android:text="@string/none"
+                                        tools:ignore="TooDeepLayout" />
 
                                     <TextView
                                         android:id="@+id/loco_label_0"
@@ -536,7 +537,8 @@
                                             <Button
                                                 style="?attr/ed_fn_button_style"
                                                 android:layout_height="60dp"
-                                                android:text="@string/functionButton17DefaultValue" />
+                                                android:text="@string/functionButton17DefaultValue"
+                                                tools:ignore="TooManyViews" />
                                         </TableRow>
 
                                         <TableRow>

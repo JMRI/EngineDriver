@@ -9,6 +9,7 @@
     <attr name="list_extras_style" format="reference" />
     <attr name="EDListView" format="reference" />
     <attr name="listSeparatorTextViewStyle" format="reference" />
+    <attr name="preferenceCategoryBackgroundColor" format="reference" />
 
     <attr name="ed_large_button_style" format="reference" />
     <attr name="ed_normal_button_style" format="reference" />

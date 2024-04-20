@@ -98,7 +98,7 @@ public class HorizontalSeekBar extends SeekBar {
         if (!tickMarksChecked) {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
-            prefDisplaySpeedUnits = mainapp.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
             steps = prefDisplaySpeedUnits;
             if (steps >= 100) {
@@ -169,6 +169,7 @@ public class HorizontalSeekBar extends SeekBar {
         super.onDraw(c);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public final boolean onTouchEvent(final MotionEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;

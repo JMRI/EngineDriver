@@ -1084,6 +1084,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
+            //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
 //                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");

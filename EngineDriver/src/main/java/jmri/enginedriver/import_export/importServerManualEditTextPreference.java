@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import jmri.enginedriver.R;
 
 public class importServerManualEditTextPreference extends EditTextPreference {
-    private Context context;
+    private final Context context;
 
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";

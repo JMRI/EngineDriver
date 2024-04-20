@@ -43,7 +43,7 @@ public class ShakeDetector implements SensorEventListener {
     private long mShakeTimestamp;
     private int mShakeCount;
 
-    private Context mContext;
+    private final Context mContext;
 
     public ShakeDetector(Context context) {
         mContext = context;

@@ -33,7 +33,7 @@
         android:paddingStart="50dp"
         android:paddingRight="0dp"
         android:text=""
-        tools:ignore="HardcodedText,RtlHardcoded" />
+        tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded" />
 
     <TextView
         android:id="@+id/roster_name_label"

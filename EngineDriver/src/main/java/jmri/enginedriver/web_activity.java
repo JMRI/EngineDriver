@@ -195,7 +195,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     // elapse between onGesture events (i.e. press without movement).
     //
     @SuppressLint("Recycle")
-    private Runnable gestureStopped = new Runnable() {
+    private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
             if (gestureInProgress) {

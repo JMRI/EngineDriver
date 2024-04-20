@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle">
+
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <stroke android:width="@dimen/buttonStroke_original" android:color="@color/buttonCommonDisabledStroke_original" />
+            <solid
+                android:color="@color/buttonCommonDisabledFill_original"
+                />
+        </shape>
+    </item>
+
+</layer-list>

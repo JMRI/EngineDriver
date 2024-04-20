@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector
-   xmlns:android="http://schemas.android.com/apk/res/android"
->
+   xmlns:android="http://schemas.android.com/apk/res/android" >
    
-   <item
-      android:state_enabled="false"
-      android:drawable="@drawable/btn_disabled" />
-   <item
-      android:state_pressed="true"
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_pressed" />
-   <item
-      android:state_focused="true"
-      android:drawable="@drawable/btn_not_pressed" />
+<!--   <item-->
+<!--      android:state_enabled="false"-->
+<!--      android:drawable="@drawable/btn_disabled" />-->
+    <!--   <item-->
+    <!--      android:state_pressed="true"-->
+    <!--      android:state_enabled="true"-->
+    <!--      android:drawable="@drawable/btn_pressed" />-->
+    <!--   <item-->
+    <!--      android:state_focused="true"-->
+    <!--      android:drawable="@drawable/btn_not_pressed" />-->
+    <!--    <item-->
+    <!--      android:state_enabled="true"-->
+    <!--      android:drawable="@drawable/btn_not_pressed" />-->
+
     <item
-      android:state_enabled="true"
-      android:drawable="@drawable/btn_not_pressed" />
+      android:state_enabled="false"
+      android:drawable="@drawable/button_layers_disabled_original" />
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_activated_original">
+    </item>
+    <item
+        android:state_focused="true"
+        android:drawable="@drawable/button_layers_enabled_original" />
+    <item
+        android:state_enabled="true"
+        android:drawable="@drawable/button_layers_enabled_original" />
 </selector>

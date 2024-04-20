@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="171.33333mm"
+   height="171.33333mm"
+   viewBox="0 0 607.0866 607.08659"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="flashlight_on_ultra.svg"
+   inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-hdpi\flashlight_on.png"
+   inkscape:export-xdpi="10.8"
+   inkscape:export-ydpi="10.8"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4155"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4157" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4149">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4151" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4139"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#2b2200;stop-opacity:1;"
+         offset="0"
+         id="stop4141" />
+      <stop
+         style="stop-color:#2b2200;stop-opacity:0;"
+         offset="1"
+         id="stop4143" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient895"
+       id="linearGradient897"
+       x1="325.63055"
+       y1="93.059601"
+       x2="925.63055"
+       y2="93.059601"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0321199,0,0,1.0321199,-20.0952,-2.9890669)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient895">
+      <stop
+         style="stop-color:#181818;stop-opacity:1;"
+         offset="0"
+         id="stop891" />
+      <stop
+         style="stop-color:#303030;stop-opacity:1;"
+         offset="1"
+         id="stop893" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8256"
+       id="linearGradient8258"
+       x1="324.38055"
+       y1="93.059616"
+       x2="926.88055"
+       y2="93.059616"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8256">
+      <stop
+         style="stop-color:#808080;stop-opacity:1;"
+         offset="0"
+         id="stop8254" />
+      <stop
+         style="stop-color:#404040;stop-opacity:1;"
+         offset="1"
+         id="stop8252" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="110.5"
+     inkscape:cy="340"
+     inkscape:document-units="px"
+     inkscape:current-layer="g4165"
+     showgrid="false"
+     fit-margin-top="1"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     units="mm"
+     inkscape:window-width="2400"
+     inkscape:window-height="1244"
+     inkscape:window-x="2869"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-65.224067,-173.70181)">
+    <g
+       id="g4165"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-256.86318,384.18552)">
+      <rect
+         style="fill:url(#linearGradient897);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:3.87045;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5645"
+         width="598.62958"
+         height="598.62958"
+         x="326.31577"
+         y="-206.25517"
+         transform="rotate(45)"
+         ry="98.051392"
+         rx="98.051392"
+         inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <rect
+         ry="13"
+         y="462.36221"
+         x="79"
+         height="86"
+         width="379"
+         id="rect3336"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <rect
+         ry="5.5"
+         y="451.36221"
+         x="295"
+         height="11"
+         width="38"
+         id="rect3338"
+         style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <path
+         d="m -431.38547,-463.14479 a 72,73 0 0 1 -72.04723,71.14476 72,73 0 0 1 -71.9097,-71.28765 L -503.36221,-465 Z"
+         sodipodi:end="3.1181341"
+         sodipodi:start="0.02541664"
+         sodipodi:ry="73"
+         sodipodi:rx="72"
+         sodipodi:cy="-465"
+         sodipodi:cx="-503.36221"
+         sodipodi:type="arc"
+         transform="matrix(0,-1,-1,0,0,0)"
+         id="path3344"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <path
+         id="path2"
+         d="m 621.00651,486.0009 -107.46969,-0.51586 c -9.4442,-0.0453 -10.47057,7.58005 -10.4824,10.04369 l -0.0438,9.12796 c -0.0118,2.46365 0.94288,9.76709 10.38707,9.81242 l 107.4697,0.51585 c 9.44417,0.0453 10.33306,-7.24925 10.34489,-9.7129 l 0.0438,-9.12795 c 0.0118,-2.46365 -0.8054,-10.0979 -10.24958,-10.14321 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;stroke-width:4.36530113"
+         sodipodi:nodetypes="sssssssss"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <path
+         id="path2-8"
+         d="m 613.99449,559.19432 -102.5862,-32.03235 c -9.01506,-2.8149 -12.23405,4.17348 -12.96837,6.52517 l -2.72066,8.71318 c -0.73429,2.35171 -1.96498,9.61374 7.05005,12.42867 l 102.58622,32.03234 c 9.01504,2.81489 12.00551,-3.89761 12.73984,-6.2493 l 2.72066,-8.71318 c 0.73429,-2.3517 2.1935,-9.88963 -6.82154,-12.70453 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;stroke-width:4.36530113"
+         sodipodi:nodetypes="sssssssss"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4"
+         inkscape:transform-center-x="-43.343572"
+         inkscape:transform-center-y="-23.012529" />
+      <path
+         id="path2-8-3"
+         d="m 590.50621,621.56824 -89.52993,-59.45073 c -7.86771,-5.22437 -12.9131,0.58453 -14.27596,2.63692 l -5.04945,7.60425 c -1.36284,2.05241 -4.57586,8.68024 3.29182,13.90464 l 89.52996,59.45073 c 7.86769,5.22436 12.61651,-0.38361 13.97938,-2.43599 l 5.04945,-7.60425 c 1.36283,-2.0524 4.87242,-8.88121 -2.99527,-14.10557 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;stroke-width:4.36530113"
+         sodipodi:nodetypes="sssssssss"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4"
+         inkscape:transform-center-x="-48.019863"
+         inkscape:transform-center-y="-9.992283" />
+      <path
+         id="path2-8-1"
+         d="m 609.45244,419.22234 -102.52197,32.23729 c -9.00939,2.83298 -7.6648,10.40869 -6.9258,12.75891 l 2.7381,8.70772 c 0.73903,2.35022 3.87256,9.01601 12.88194,6.18308 l 102.522,-32.23731 c 9.00937,-2.83298 7.63455,-10.05173 6.89556,-12.40196 l -2.73809,-8.70772 c -0.73904,-2.35021 -3.84236,-9.37297 -12.85174,-6.54001 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;stroke-width:4.36530113"
+         sodipodi:nodetypes="sssssssss"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4"
+         inkscape:transform-center-x="-22.454876"
+         inkscape:transform-center-y="-43.569635" />
+      <path
+         id="path2-8-1-5"
+         d="m 578.35623,356.01472 -88.38163,61.1448 c -7.76675,5.3733 -4.23958,12.2113 -2.83789,14.23737 l 5.19336,7.5067 c 1.4017,2.02606 6.36823,7.46531 14.13499,2.09205 l 88.38166,-61.14482 c 7.76674,-5.37329 4.31636,-11.86139 2.91469,-13.88747 l -5.19335,-7.50671 c -1.40171,-2.02604 -6.44507,-7.8152 -14.21183,-2.44192 z"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff;stroke-width:4.36530113"
+         sodipodi:nodetypes="sssssssss"
+         inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\flashlight_on_outline.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4"
+         inkscape:transform-center-x="-8.5126094"
+         inkscape:transform-center-y="-48.24995" />
+    </g>
+  </g>
+</svg>

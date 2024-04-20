@@ -54,7 +54,7 @@ public class throttle_vertical_left_or_right extends throttle {
         set_function_labels_and_listeners_for_view(whichThrottle);
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
