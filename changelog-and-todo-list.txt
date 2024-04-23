@@ -11,6 +11,7 @@
  * Change all toolbar/Action Bar icons to vectors for better scaling and reduce maintenance effort
  * Change the original button styling to vectors - not identical to the original but close
  * removal of duplicate icons
+ * Fix: @mipmap/icon not found (needs revisiting)
  * lint removal
 **Version 2.36.177
 **Version 2.36.176
