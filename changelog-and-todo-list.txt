@@ -1,3 +1,4 @@
+**Version 2.37.180
 **Version 2.37.178
  * Support for 32 Functions
  * bug fixes for the 'keyboard' gamepad type
@@ -11,6 +12,7 @@
  * Change all toolbar/Action Bar icons to vectors for better scaling and reduce maintenance effort
  * Change the original button styling to vectors - not identical to the original but close
  * removal of duplicate icons
+ * Fix: @mipmap/icon not found (needs revisiting)
  * lint removal
 **Version 2.36.177
 **Version 2.36.176
@@ -763,14 +765,15 @@
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: allow zoom out more than the page width
  * routes
+ *   TODO: pref to sort by system name vs. user name vs. server sequence
  *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
  * turnouts
+ *   TODO: pref to sort by system name vs. user name vs. server sequence
  *   TODO: add pref to always show Close/Throw buttons instead of collapsing to state
  *   TODO: add state-based color (maybe just for colorful theme?)
  *   TODO: support client entry/edit of username for servers without usernames
  *   TODO: combine loco control and turnout control in one page
- *   TODO: pref to sort by system name vs. user name
  *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
  *   TODO: provide for adding/editing names of recent connections
@@ -791,7 +794,7 @@
  *   TODO: dynamically shrink the "other" throttle when not in use to maximize # of funcs shown
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: option to show the turnout view instead of the webview, including option for Recents
- *   TODO: option to use 'f' function commands
+ *   TODO: option to use 'f' function commands for WiThrottle
  *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
@@ -808,7 +811,7 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
- *   TODO: add "Owner" field to filter
+ *   TODO: add sort by address vs. name vs. server sequence
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
