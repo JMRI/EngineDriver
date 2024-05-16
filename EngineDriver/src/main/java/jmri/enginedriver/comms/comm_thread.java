@@ -1197,7 +1197,25 @@ public class comm_thread extends Thread {
                             String old_vn = mainapp.DccexVersion;
                             String [] vn1 = args[1].split("-");
                             String [] vn2 = vn1[1].split("\\.");
-                            @SuppressLint("DefaultLocale") String vn = String.format("%02d.%03d",Integer.parseInt(vn2[0]),Integer.parseInt(vn2[1]));
+                            String vn = "4.";
+                            try {
+                                vn = String.format("%02d.", Integer.parseInt(vn2[0]), Integer.parseInt(vn2[1]));
+                            } catch (Exception e) {
+                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: Invalid Version " + mainapp.DccexVersion + ", ignoring");
+                            }
+                            if (vn.length()>=2) {
+                                try { vn = vn +String.format("%02d",Integer.parseInt(vn2[2]));
+                                } catch (Exception ignored) {
+                                    // try to pull a partial number
+                                    String pn = "0";
+                                    for (int j=0; j<vn2[1].length(); j++ ) {
+                                        if ( (vn2[1].charAt(j)>='0') && (vn2[1].charAt(j)<='9') ) {
+                                            pn = pn + vn2[1].charAt(j);
+                                        } else { break; }
+                                    }
+                                    vn = vn +String.format("%03d", Integer.parseInt(pn));
+                                }
+                            }
                             if (vn.length()>=3) {
                                 try { vn = vn +String.format("%03d",Integer.parseInt(vn2[2]));
                                 } catch (Exception ignored) {
@@ -1271,8 +1289,10 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'H': //Turnout change
-                            responseStr = "PTA" + (((args[2].equals("T")) || (args[2].equals("1"))) ? 4 : 2) + args[1];
-                            processTurnoutChange(responseStr);
+                            if (args.length==3) {
+                                responseStr = "PTA" + (((args[2].equals("T")) || (args[2].equals("1"))) ? 4 : 2) + args[1];
+                                processTurnoutChange(responseStr);
+                            }
                             break;
 
                         case 'v': // response from a request a CV value
