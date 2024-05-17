@@ -3,7 +3,7 @@
  * reinstate mipmap icon
  * change the owner filter preference to false
 **Version 2.37.178
- * Support for 32 Functions
+ * Support for 32 Function Roster entries
  * bug fixes for the 'keyboard' gamepad type
  * bug fix for the close button in function_defaults
  * bug fix for Consist Light Editing
