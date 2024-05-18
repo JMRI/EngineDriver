@@ -847,8 +847,11 @@ public class dcc_ex extends AppCompatActivity {
         navigation_button_listener = new dccex_navigation_button_listener(2);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        LinearLayout default_functions_button = findViewById(R.id.dccex_default_functions_layout);
+        LinearLayout default_functions_layout = findViewById(R.id.dccex_default_functions_layout);
         dccex_default_functions_button_listener default_functions_button_listener = new dccex_default_functions_button_listener(this);
+        default_functions_layout.setOnClickListener(default_functions_button_listener);
+        Button default_functions_button = findViewById(R.id.dccex_default_functions_button);
+        default_functions_button_listener = new dccex_default_functions_button_listener(this);
         default_functions_button.setOnClickListener(default_functions_button_listener);
 
         dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);
