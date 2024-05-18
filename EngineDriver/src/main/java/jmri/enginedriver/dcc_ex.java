@@ -826,15 +826,24 @@ public class dcc_ex extends AppCompatActivity {
         dcc_action_type_spinner.setOnItemSelectedListener(new action_type_spinner_listener());
         dcc_action_type_spinner.setSelection(mainapp.dccExActionTypeIndex);
 
-        LinearLayout cv_programmer_button = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
+        LinearLayout cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
         dccex_navigation_button_listener navigation_button_listener = new dccex_navigation_button_listener(0);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        Button cv_programmer_button = findViewById(R.id.dccex_cv_programmer_prog_track_button);
+        navigation_button_listener = new dccex_navigation_button_listener(0);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        cv_programmer_button = findViewById(R.id.dccex_cv_programmer_pom_layout);
+        cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_pom_layout);
+        navigation_button_listener = new dccex_navigation_button_listener(1);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        cv_programmer_button = findViewById(R.id.dccex_cv_programmer_pom_button);
         navigation_button_listener = new dccex_navigation_button_listener(1);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        cv_programmer_button = findViewById(R.id.dccex_track_manager_layout);
+        cv_programmer_layout = findViewById(R.id.dccex_track_manager_layout);
+        navigation_button_listener = new dccex_navigation_button_listener(2);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        cv_programmer_button = findViewById(R.id.dccex_track_manager_button);
         navigation_button_listener = new dccex_navigation_button_listener(2);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 

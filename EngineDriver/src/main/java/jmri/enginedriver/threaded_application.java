@@ -111,7 +111,7 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
-    public static String INTRO_VERSION = "9";  // set this to a different string to force the intro to run on next startup.
+    public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;

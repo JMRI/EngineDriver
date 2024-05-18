@@ -214,6 +214,8 @@ public class intro_activity extends AppIntro2 {
         addSlide(fragment2);
         Fragment fragment3 = new intro_buttons();
         addSlide(fragment3);
+        Fragment fragment4 = new intro_dccex();
+        addSlide(fragment4);
 
         Fragment fragment99 = new intro_finish();
         addSlide(fragment99);
