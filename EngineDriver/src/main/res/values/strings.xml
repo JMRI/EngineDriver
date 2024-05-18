@@ -35,7 +35,7 @@
     <string name="functionConsistHeader">Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
-    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, MRC or DigiTrax WiThrottle server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
+    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, DCC-EX, MRC or DigiTrax WiThrottle server, or DCC-EX native server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
     <string name="app_name_intro">Introduction</string>
     <string name="app_name_connect">Connect to Server</string>
     <string name="app_name_throttle">Throttle</string>
@@ -1147,8 +1147,10 @@
     <!-- Introduction / Setup Wizard -->
 
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
-    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC, DigiTrax, WifiTrax, IoTT Stick or DCC-EX WiThrottle server to control your DCC locos and devices.
-        The following pages will guide you through initial setup.</string>
+    <string name="introWelcomeSummary">This app can connect to a JMRI, MRC, DigiTrax, WifiTrax, IoTT Stick or DCC-EX WiThrottle server, or DCC-EX native server, to control your DCC locos and devices.
+        It can also read/write CVs and control DC locos on an DCC-EX EX-CommandStation.
+        \nThe following pages will guide you through initial setup.</string>
+
 <!--    <string name="introAndroid11Title">Android 11 Changes</string>-->
 <!--    <string name="introAndroid11Summary">Due to changes enforced by Google for Android 11, the location where the-->
 <!--        Engine Driver files are stored needs to be moved from the \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\' folder.-->
@@ -1174,6 +1176,11 @@
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
+
+    <string name="introDccexTitle">EX-CommandStation Options</string>
+    <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming, if you are using a DCC-EX EX-CommandStation directly. (Not via JMRI)\n\nIf you respond \'Yes\' below, Engine Driver will default to using DCC-EX Native commands instead of WiThrottle if the server name contains \'DCC-EX\' or \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Yes, I will be using an EX-CommandStation</string>
+    <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
     <string name="edit_consist_menu">\≡ Edit Consist</string>

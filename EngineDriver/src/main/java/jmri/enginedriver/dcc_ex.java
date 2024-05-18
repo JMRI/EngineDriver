@@ -826,20 +826,32 @@ public class dcc_ex extends AppCompatActivity {
         dcc_action_type_spinner.setOnItemSelectedListener(new action_type_spinner_listener());
         dcc_action_type_spinner.setSelection(mainapp.dccExActionTypeIndex);
 
-        LinearLayout cv_programmer_button = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
+        LinearLayout cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
         dccex_navigation_button_listener navigation_button_listener = new dccex_navigation_button_listener(0);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        Button cv_programmer_button = findViewById(R.id.dccex_cv_programmer_prog_track_button);
+        navigation_button_listener = new dccex_navigation_button_listener(0);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        cv_programmer_button = findViewById(R.id.dccex_cv_programmer_pom_layout);
+        cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_pom_layout);
+        navigation_button_listener = new dccex_navigation_button_listener(1);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        cv_programmer_button = findViewById(R.id.dccex_cv_programmer_pom_button);
         navigation_button_listener = new dccex_navigation_button_listener(1);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        cv_programmer_button = findViewById(R.id.dccex_track_manager_layout);
+        cv_programmer_layout = findViewById(R.id.dccex_track_manager_layout);
+        navigation_button_listener = new dccex_navigation_button_listener(2);
+        cv_programmer_layout.setOnClickListener(navigation_button_listener);
+        cv_programmer_button = findViewById(R.id.dccex_track_manager_button);
         navigation_button_listener = new dccex_navigation_button_listener(2);
         cv_programmer_button.setOnClickListener(navigation_button_listener);
 
-        LinearLayout default_functions_button = findViewById(R.id.dccex_default_functions_layout);
+        LinearLayout default_functions_layout = findViewById(R.id.dccex_default_functions_layout);
         dccex_default_functions_button_listener default_functions_button_listener = new dccex_default_functions_button_listener(this);
+        default_functions_layout.setOnClickListener(default_functions_button_listener);
+        Button default_functions_button = findViewById(R.id.dccex_default_functions_button);
+        default_functions_button_listener = new dccex_default_functions_button_listener(this);
         default_functions_button.setOnClickListener(default_functions_button_listener);
 
         dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);

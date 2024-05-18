@@ -1,8 +1,9 @@
 **Version 2.37.182
+ * add intro/setup wizard page for DCC-EX
 **Version 2.37.180
  * fastclock fix
  * reinstate mipmap icon
- * change the owner filter preference to false
+ * change the owner filter preference default to false
 **Version 2.37.178
  * Support for 32 Function Roster entries
  * bug fixes for the 'keyboard' gamepad type
