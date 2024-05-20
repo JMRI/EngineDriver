@@ -45,7 +45,7 @@
                     android:layout_weight=".15"
                     android:layout_marginLeft="2sp"
                     android:paddingTop="1sp"
-                    android:text="@string/witHeadingCvProgrammerProgTrack"
+                    android:text="@string/witHeadingCvProgrammerPoM"
                     android:textSize="12sp" />
 
             </LinearLayout>

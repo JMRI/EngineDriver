@@ -1380,7 +1380,7 @@
     <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>
 
 
-    <string name="witHeadingCvProgrammerProgTrack">WiThrottle - Programming Track (Service mode)</string>
+    <string name="witHeadingCvProgrammerPoM">WiThrottle - Programming on Main (Operation mode)</string>
 
 </resources>
 
