@@ -914,9 +914,9 @@ public class comm_thread extends Thread {
         if (!mainapp.isDCCEX) { // WiThrottle only
             String msgTxt = "";
             if (args.length==5) {
-                msgTxt = String.format("D1%s %s %s %s %s", args[0], args[1], args[2], args[3], args[4] );
+                msgTxt = String.format("D2%s %s %s %s %s", args[0], args[1], args[2], args[3], args[4] );
             } else if (args.length==6) {
-                msgTxt = String.format("D1%s %s %s %s %s %s", args[0], args[1], args[2], args[3], args[4], args[5] );
+                msgTxt = String.format("D2%s %s %s %s %s %s", args[0], args[1], args[2], args[3], args[4], args[5] );
             }
             wifiSend(msgTxt);
             mainapp.alert_activities(message_type.WRITE_DIRECT_DCC_COMMAND_ECHO, msgTxt);
