@@ -304,6 +304,14 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.WRITE_DIRECT_DCC_COMMAND: { // WiThrottle only
+            int addr = msg.arg1;
+            String [] args = msg.obj.toString().split(" ");
+            String rslt = "";
+            comm_thread.sendWriteDirectDccCommand(args);
+            break;
+         }
+
          case message_type.RECEIVED_CV: {
             if (!mainapp.doFinish) {
                mainapp.alert_activities(message_type.RECEIVED_CV, msg.obj.toString());

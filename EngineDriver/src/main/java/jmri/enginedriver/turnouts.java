@@ -915,6 +915,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+            case R.id.withrottle_cv_programmer_mnu:
+                in = new Intent().setClass(this, withrottle_cv_programmer.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                return true;
             case R.id.logviewer_menu:
                 Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
                 startActivity(logviewer);

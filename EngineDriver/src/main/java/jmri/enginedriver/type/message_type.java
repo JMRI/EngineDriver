@@ -93,4 +93,6 @@ public interface message_type {
     int WRITE_TRACK = 71;
     int WRITE_TRACK_POWER = 72;
     int REQUEST_REFRESH_THROTTLE = 73;
+    int WRITE_DIRECT_DCC_COMMAND = 74;
+    int WRITE_DIRECT_DCC_COMMAND_ECHO = 75;
 }
