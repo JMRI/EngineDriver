@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.text.InputType.TYPE_TEXT_FLAG_AUTO_CORRECT;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +36,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -52,9 +49,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.type.message_type;
@@ -203,7 +198,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                         noSegments++;
                         directCmd = directCmd + bits  + " ";
                     }
-                    String cvBits = num2binStr(cv,10);
+                    String cvBits = num2binStr(cv - 1,10);
 
                     bits = "111011" + cvBits.substring(0,2);
                     segments[noSegments] = str2Bin(bits);
