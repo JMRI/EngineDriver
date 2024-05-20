@@ -265,28 +265,28 @@
                 android:orientation="vertical"
                 android:weightSum="1">
 
-                <ScrollView
-                    android:id="@+id/wit_WitResponsesScrollView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".7">
+<!--                <ScrollView-->
+<!--                    android:id="@+id/wit_WitResponsesScrollView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_weight=".7">-->
 
-                    <TextView
-                        android:id="@+id/wit_WitResponsesLabel"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8sp"
-                        android:text=""
-                        android:textSize="12sp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/wit_WitResponsesLabel"-->
+<!--                        style="?attr/floating_text_style"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="8sp"-->
+<!--                        android:text=""-->
+<!--                        android:textSize="12sp" />-->
 
-                </ScrollView>
+<!--                </ScrollView>-->
 
                 <ScrollView
                     android:id="@+id/wit_WitSendsScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight=".3">
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/wit_WitSendsLabel"

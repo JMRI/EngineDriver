@@ -919,6 +919,7 @@ public class comm_thread extends Thread {
                 msgTxt = String.format("D1%s %s %s %s %s %s", args[0], args[1], args[2], args[3], args[4], args[5] );
             }
             wifiSend(msgTxt);
+            mainapp.alert_activities(message_type.WRITE_DIRECT_DCC_COMMAND_ECHO, msgTxt);
         }
     }
 

@@ -82,11 +82,11 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private LinearLayout witWriteInfoLayout;
     private TextView witWriteInfoLabel;
 
-    private TextView witResponsesLabel;
+//    private TextView witResponsesLabel;
     private TextView witSendsLabel;
     private String witResponsesStr = "";
     private String witSendsStr = "";
-    private ScrollView witResponsesScrollView;
+//    private ScrollView witResponsesScrollView;
     private ScrollView witSendsScrollView;
 
     ArrayList<String> witResponsesListHtml = new ArrayList<>();
@@ -133,6 +133,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         public void handleMessage(Message msg) {
             switch (msg.what) {
+                case message_type.WRITE_DIRECT_DCC_COMMAND_ECHO:  // informational response
+                    displayCommands(msg.obj.toString(), false);
+                    refreshWitCommandsView();
+                    break;
 
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
@@ -320,7 +324,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     public void refreshWitCommandsView() {
-        witResponsesLabel.setText(Html.fromHtml(witResponsesStr));
+//        witResponsesLabel.setText(Html.fromHtml(witResponsesStr));
         witSendsLabel.setText(Html.fromHtml(witSendsStr));
     }
 
@@ -405,8 +409,8 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witWriteInfoLabel = findViewById(R.id.witWriteInfoLabel);
         witWriteInfoLabel.setText("");
 
-        witResponsesLabel = findViewById(R.id.wit_WitResponsesLabel);
-        witResponsesLabel.setText("");
+//        witResponsesLabel = findViewById(R.id.wit_WitResponsesLabel);
+//        witResponsesLabel.setText("");
         witSendsLabel = findViewById(R.id.wit_WitSendsLabel);
         witSendsLabel.setText("");
 
@@ -437,7 +441,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witProgrammingCvLayout = findViewById(R.id.wit_programmingCvLayout);
 
 
-        witResponsesScrollView = findViewById(R.id.wit_WitResponsesScrollView);
+//        witResponsesScrollView = findViewById(R.id.wit_WitResponsesScrollView);
         witSendsScrollView = findViewById(R.id.wit_WitSendsScrollView);
 
         clearCommandsButton = findViewById(R.id.wit_WitClearCommandsButton);
