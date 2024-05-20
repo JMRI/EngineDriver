@@ -43,6 +43,7 @@
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
     <string name="app_name_dcc_ex" translatable="false">DCC-EX</string>
+    <string name="app_name_withrottle_cv_programmer" translatable="false">PoM</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
@@ -1342,6 +1343,9 @@
 <!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
+    <string name="witActionTypeLabel">Action</string>
+    <string name="witWriteAddressLabel">DCC Address</string>
+
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
 
@@ -1358,6 +1362,8 @@
     <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
     <string name="DCCEXheadingTrackManager">DCC-EX - Track/District Manager</string>
 
+    <string name="witButtonCvProgrammerPoM">CVs PoM</string>
+
     <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
 
 
@@ -1372,6 +1378,9 @@
     <string name="cv29SpeedTableNo">Speed Table: Not used (uses CV 2,5 &amp; 6)</string>
     <string name="cv29SpeedTableYes">Speed Table: In use</string>
     <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>
+
+
+    <string name="witHeadingCvProgrammerProgTrack">WiThrottle - Programming Track (Service mode)</string>
 
 </resources>
 

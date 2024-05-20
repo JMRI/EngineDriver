@@ -209,6 +209,7 @@ public class threaded_application extends Application {
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public boolean dccexScreenIsOpen = false;
+    public boolean witScreenIsOpen = false;
 
     public int dccExActionTypeIndex = 0;
     public int [] DccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
@@ -263,6 +264,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler dcc_ex_msg_handler;
+    public volatile Handler withrottle_cv_programmer_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
 //    public volatile Handler preferences_msg_handler;
     public volatile Handler settings_msg_handler;
@@ -1077,6 +1079,7 @@ public class threaded_application extends Application {
         DccexVersion = "";
         DCCEXlistsRequested = -1;
         dccexScreenIsOpen = false;
+        witScreenIsOpen = false;
 
         rosterStringDCCEX = "";
         turnoutStringDCCEX = "";
@@ -1293,6 +1296,15 @@ public class threaded_application extends Application {
         }
     }
 
+    public void setWithrottleCvProgrammerMenuOption(Menu menu) {
+        if (menu != null) {
+            MenuItem item = menu.findItem(R.id.withrottle_cv_programmer_mnu);
+            if (item != null) {
+                item.setVisible(!isDCCEX);
+            }
+        }
+    }
+
     /**
      * for menu passed in, hide or show the routes menu
      *
@@ -1490,6 +1502,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(dcc_ex_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(withrottle_cv_programmer_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {

@@ -239,5 +239,13 @@
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/app_theme_black" >
         </activity>
+        <activity
+            android:name=".withrottle_cv_programmer"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:label="@string/app_name_withrottle_cv_programmer"
+            android:windowSoftInputMode="adjustNothing"
+            android:theme="@style/app_theme_black" >
+        </activity>
     </application>
 </manifest>
