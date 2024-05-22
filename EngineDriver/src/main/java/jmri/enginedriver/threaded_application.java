@@ -1339,6 +1339,7 @@ public class threaded_application extends Application {
             menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
             mainapp.setDCCEXMenuOption(menu);
+            mainapp.setWithrottleCvProgrammerMenuOption(menu);
             setWebMenuOption(menu);
             setRoutesMenuOption(menu);
             setTurnoutsMenuOption(menu);

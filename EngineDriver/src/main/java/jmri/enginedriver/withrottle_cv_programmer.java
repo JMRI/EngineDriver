@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu menu;
+    protected SharedPreferences prefs;
 
     private String witCv = "";
     private String witCvValue = "";
@@ -114,6 +117,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
+
+
+    private String default_address_length;
+    private int maxAddr = 9999;
 
     //**************************************
 
@@ -181,7 +188,11 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     int noSegments = 0;
                     String directCmd = "";
                     String bits = "";
-                    if (addr<=127) {
+
+                    Spinner spinner = findViewById(R.id.wit_addressLength);
+                    int addressSize = spinner.getSelectedItemPosition();
+
+                    if (addressSize==0) {  // short
                         bits = "0" + num2binStr(addr,7);
                         segments[noSegments] = str2Bin(bits);
                         noSegments++;
@@ -282,6 +293,38 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         switch (which) {
             case WHICH_ADDRESS:
                 witAddress = etWitWriteAddressValue.getText().toString();
+
+                String txt = witAddress.trim();
+                int txtLen = txt.length();
+                int addr = -1;
+                if (txtLen > 0) {
+                    try {
+                        addr = Integer.parseInt(txt);
+                    } catch (NumberFormatException e) {
+                        etWitWriteAddressValue.setText(""); //clear the bad entry
+                    }
+
+                    if (addr>maxAddr) {
+                        addr = -1;
+                        Toast.makeText(getApplicationContext(),
+                                getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr))
+                                , Toast.LENGTH_LONG).show();
+                        etWitWriteAddressValue.setText(""); //clear the bad entry
+                    }
+                }
+
+
+                default_address_length = prefs.getString("default_address_length", this
+                        .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
+                // set address length
+                Spinner witAddressLength = findViewById(R.id.wit_addressLength);
+                if (default_address_length.equals("Long") ||
+                        (default_address_length.equals("Auto") && (addr > 127))) {
+                    witAddressLength.setSelection(1);
+                } else {
+                    witAddressLength.setSelection(0);
+                }
+
                 break;
             case WHICH_CV:
                 witCv = etWitCv.getText().toString();
@@ -300,7 +343,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witProgrammingCvLayout.setVisibility(View.VISIBLE);
         witWriteInfoLayout.setVisibility(View.VISIBLE);
 
-        writeCvButton.setEnabled(((witCv.length() != 0) && (witCvValue.length() != 0) && (witAddress.length() != 0)));
+        boolean rslt = ((witCv.length() != 0) && (witCvValue.length() != 0) && (witAddress.length() != 0));
+        if ( (witCv.equals("1")) || (witCv.equals("17")) || (witCv.equals("18")) )  rslt = false;
+        if ( (witCv.equals("29")) && (!checkCv29addressUnchanged()) ) rslt = false;
+        writeCvButton.setEnabled(rslt);
     }
 
     public void refreshWitView() {
@@ -361,6 +407,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
@@ -380,6 +427,14 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
+        // Set the options for the address length.
+        Spinner address_spinner = findViewById(R.id.wit_addressLength);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this,
+                R.array.address_size, android.R.layout.simple_spinner_item);
+        spinner_adapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        address_spinner.setAdapter(spinner_adapter);
+
         writeCvButton = findViewById(R.id.wit_WitWriteCvButton);
         write_cv_button_listener writeCvClickListener = new write_cv_button_listener();
         writeCvButton.setOnClickListener(writeCvClickListener);
@@ -387,7 +442,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         etWitCv = findViewById(R.id.wit_WitCv);
         etWitCv.setText("");
         etWitCv.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { readTextField(WHICH_CV); showHideButtons(); }
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV); checkCv29(witCv, witCvValue); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
@@ -395,7 +450,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         etWitCvValue = findViewById(R.id.wit_WitCvValue);
         etWitCvValue.setText("");
         etWitCvValue.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); checkCv29(witCv, witCvValue); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
@@ -420,7 +475,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         dccCvsIndex = 0;
         witCommonCvsSpinner = findViewById(R.id.wit_dccCvList);
-        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccCvsEntries, android.R.layout.simple_spinner_item);
+        spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccCvsEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         witCommonCvsSpinner.setAdapter(spinner_adapter);
         witCommonCvsSpinner.setOnItemSelectedListener(new spinner_listener());
@@ -622,7 +677,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     void checkCv29(String cv, String cvValueStr) {
-        if (cv.equals("29")) {
+        if (cv.equals("29") && cvValueStr.length()>0) {
             try {
                 String rslt = "";
                 int cvValue = Integer.parseInt(cvValueStr);
@@ -663,17 +718,38 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 }
                 rslt = rslt + cv29AddressSize;
 
-                witResponsesStr = "<p>" + rslt + "</p>" + witResponsesStr;
+                witSendsStr = "<p>" + rslt + "</p>" + witSendsStr;
 
-                witResponsesStr = "<p>"
-                        + String.format(getApplicationContext().getResources().getString(R.string.cv29SpeedToggleDirection),
-                        mainapp.toggleBit(cvValue, 1))
-                        + "</p>" + witResponsesStr;
+                witSendsStr = "<p>CV 29 value: " + cvValueStr + " = </p>" + witSendsStr;
+
+//                witSendsStr = "<p>"
+//                        + String.format(getApplicationContext().getResources().getString(R.string.cv29SpeedToggleDirection),
+//                        mainapp.toggleBit(cvValue, 1))
+//                        + "</p>" + witSendsStr;
+
+                refreshWitCommandsView();
 
             } catch (Exception e) {
-                Log.e("EX_Toolbox", "Error processign cv29: " + e.getMessage());
+                Log.e("EX_Toolbox", "Error processing cv29: " + e.getMessage());
             }
         }
+    }
+
+    boolean checkCv29addressUnchanged() {
+        boolean rslt = true;
+        if (witCv.equals("29") && witCvValue.length()>0) {
+            int cvValue = Integer.parseInt(witCvValue);
+
+            Spinner spinner = findViewById(R.id.wit_addressLength);
+            int addressSize = spinner.getSelectedItemPosition();
+
+            if (mainapp.bitExtracted(cvValue, 1, 6) == 0) {  // short
+                if (addressSize == 1) rslt = false; // long selected
+            } else { // long
+                if (addressSize == 0) rslt = false; // short selected
+            }
+        }
+        return rslt;
     }
 
     void setPowerbutton(Button btn, int powerState) {

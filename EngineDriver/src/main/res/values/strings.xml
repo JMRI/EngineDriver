@@ -43,7 +43,7 @@
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
     <string name="app_name_dcc_ex" translatable="false">DCC-EX</string>
-    <string name="app_name_withrottle_cv_programmer" translatable="false">PoM</string>
+    <string name="app_name_withrottle_cv_programmer" translatable="false">CV Prog on MAIN</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
@@ -1345,6 +1345,10 @@
 
     <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>
+    <string name="witPomWarning">Notes:
+        \nMany DCC systems do not support the method used by this page.
+        \nDo not alter the loco DCC address - CVs 1, 17 &amp; 18 and bit 5 of CV 29.
+        \n\nUse with Caution.</string>
 
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
