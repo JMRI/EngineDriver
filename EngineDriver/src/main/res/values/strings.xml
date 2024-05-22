@@ -43,7 +43,7 @@
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
     <string name="app_name_dcc_ex" translatable="false">DCC-EX</string>
-    <string name="app_name_withrottle_cv_programmer" translatable="false">PoM</string>
+    <string name="app_name_withrottle_cv_programmer" translatable="false">CV Prog on MAIN</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>

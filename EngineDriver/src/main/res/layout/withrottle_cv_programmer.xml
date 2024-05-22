@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".15"
-                    android:layout_marginLeft="2sp"
+                    android:layout_marginLeft="4sp"
                     android:paddingTop="1sp"
                     android:text="@string/witHeadingCvProgrammerPoM"
                     android:textSize="12sp" />
@@ -86,6 +86,7 @@
                     android:layout_weight=".2"
                     android:inputType="number"
                     android:maxLength="5"
+                    android:digits="0123456789"
                     android:nextFocusRight="@id/wit_WitCv"
                     android:nextFocusDown="@id/wit_WitCv"
                     android:paddingRight="8sp"
@@ -96,6 +97,17 @@
                     android:singleLine="true"
                     android:text=""
                     tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                <Spinner
+                    android:id="@+id/wit_addressLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/select_loco_label"
+                    android:layout_alignBottom="@id/loco_address"
+                    android:layout_toRightOf="@id/loco_address"
+                    tools:ignore="RtlHardcoded"
+                    android:ellipsize = "none"
+                    android:text="@string/prefDefaultAddressLengthDefaultValue" />
 
             </LinearLayout>
 
@@ -128,6 +140,7 @@
                     android:layout_weight=".2"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:digits="0123456789"
                     android:nextFocusRight="@id/wit_WitCvValue"
                     android:nextFocusDown="@id/wit_WitCvValue"
                     android:shadowColor="#FFFFFFFF"
@@ -158,6 +171,7 @@
                     android:layout_weight=".2"
                     android:inputType="number"
                     android:maxLength="4"
+                    android:digits="0123456789"
                     android:paddingRight="8sp"
                     android:shadowColor="#FFFFFFFF"
                     android:shadowDx="1"
