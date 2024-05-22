@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4sp"
-                    android:paddingTop="1sp"
+                    android:paddingTop="3sp"
+                    android:paddingBottom="3sp"
                     android:text="@string/witHeadingCvProgrammerPoM"
                     android:textSize="12sp" />
 

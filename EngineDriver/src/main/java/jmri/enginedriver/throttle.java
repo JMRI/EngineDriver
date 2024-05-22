@@ -6648,6 +6648,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayPowerStateMenuButton(TMenu);
             mainapp.setPowerMenuOption(TMenu);
             mainapp.setDCCEXMenuOption(TMenu);
+            mainapp.setWithrottleCvProgrammerMenuOption(TMenu);
             showHideConsistMenus();
             mainapp.setWebMenuOption(TMenu);
             mainapp.setRoutesMenuOption(TMenu);
@@ -6821,6 +6822,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayTimerMenuButton(menu, kidsTimerRunning);
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
+        mainapp.setWithrottleCvProgrammerMenuOption(menu);
         showHideConsistMenus();
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.setPowerStateButton(menu);
