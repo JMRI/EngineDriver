@@ -35,14 +35,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0sp"
                 android:background="?attr/ed_background_highlight"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:orientation="horizontal">
 
                 <TextView
                     style="?attr/floating_text_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".15"
                     android:layout_marginLeft="4sp"
                     android:paddingTop="1sp"
                     android:text="@string/witHeadingCvProgrammerPoM"
@@ -50,12 +48,20 @@
 
             </LinearLayout>
 
+            <TextView
+                style="?attr/floating_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4sp"
+                android:text="@string/witPomWarning" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="8sp"
                 android:background="#888888"
                 android:orientation="vertical" />
+
 
             <LinearLayout
                 android:id="@+id/wit_programmingAddressLayout"

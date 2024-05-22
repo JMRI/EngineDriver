@@ -343,7 +343,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witProgrammingCvLayout.setVisibility(View.VISIBLE);
         witWriteInfoLayout.setVisibility(View.VISIBLE);
 
-        writeCvButton.setEnabled(((witCv.length() != 0) && (witCvValue.length() != 0) && (witAddress.length() != 0)));
+        boolean rslt = ((witCv.length() != 0) && (witCvValue.length() != 0) && (witAddress.length() != 0));
+        if ( (witCv.equals("1")) || (witCv.equals("17")) || (witCv.equals("18")) )  rslt = false;
+        if ( (witCv.equals("29")) && (!checkCv29addressUnchanged()) ) rslt = false;
+        writeCvButton.setEnabled(rslt);
     }
 
     public void refreshWitView() {
@@ -439,7 +442,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         etWitCv = findViewById(R.id.wit_WitCv);
         etWitCv.setText("");
         etWitCv.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { readTextField(WHICH_CV); showHideButtons(); }
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV); checkCv29(witCv, witCvValue); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
@@ -447,7 +450,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         etWitCvValue = findViewById(R.id.wit_WitCvValue);
         etWitCvValue.setText("");
         etWitCvValue.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
+            public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); checkCv29(witCv, witCvValue); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
@@ -674,7 +677,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     void checkCv29(String cv, String cvValueStr) {
-        if (cv.equals("29")) {
+        if (cv.equals("29") && cvValueStr.length()>0) {
             try {
                 String rslt = "";
                 int cvValue = Integer.parseInt(cvValueStr);
@@ -715,17 +718,38 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 }
                 rslt = rslt + cv29AddressSize;
 
-                witResponsesStr = "<p>" + rslt + "</p>" + witResponsesStr;
+                witSendsStr = "<p>" + rslt + "</p>" + witSendsStr;
 
-                witResponsesStr = "<p>"
-                        + String.format(getApplicationContext().getResources().getString(R.string.cv29SpeedToggleDirection),
-                        mainapp.toggleBit(cvValue, 1))
-                        + "</p>" + witResponsesStr;
+                witSendsStr = "<p>CV 29 value: " + cvValueStr + " = </p>" + witSendsStr;
+
+//                witSendsStr = "<p>"
+//                        + String.format(getApplicationContext().getResources().getString(R.string.cv29SpeedToggleDirection),
+//                        mainapp.toggleBit(cvValue, 1))
+//                        + "</p>" + witSendsStr;
+
+                refreshWitCommandsView();
 
             } catch (Exception e) {
-                Log.e("EX_Toolbox", "Error processign cv29: " + e.getMessage());
+                Log.e("EX_Toolbox", "Error processing cv29: " + e.getMessage());
             }
         }
+    }
+
+    boolean checkCv29addressUnchanged() {
+        boolean rslt = true;
+        if (witCv.equals("29") && witCvValue.length()>0) {
+            int cvValue = Integer.parseInt(witCvValue);
+
+            Spinner spinner = findViewById(R.id.wit_addressLength);
+            int addressSize = spinner.getSelectedItemPosition();
+
+            if (mainapp.bitExtracted(cvValue, 1, 6) == 0) {  // short
+                if (addressSize == 1) rslt = false; // long selected
+            } else { // long
+                if (addressSize == 0) rslt = false; // short selected
+            }
+        }
+        return rslt;
     }
 
     void setPowerbutton(Button btn, int powerState) {

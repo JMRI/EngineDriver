@@ -1345,6 +1345,10 @@
 
     <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>
+    <string name="witPomWarning">Notes:
+        \nMany DCC systems do not support the method used by this page.
+        \nDo not alter the loco DCC address - CVs 1, 17 &amp; 18 and bit 5 of CV 29.
+        \n\nUse with Caution.</string>
 
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
     <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>

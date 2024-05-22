@@ -1280,7 +1280,7 @@ public class dcc_ex extends AppCompatActivity {
                         + "</p>" + DccexResponsesStr;
 
             } catch (Exception e) {
-                Log.e("EX_Toolbox", "Error processign cv29: " + e.getMessage());
+                Log.e("EX_Toolbox", "Error processing cv29: " + e.getMessage());
             }
         }
     }
