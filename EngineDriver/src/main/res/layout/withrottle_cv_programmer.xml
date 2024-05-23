@@ -177,7 +177,7 @@
                     android:layout_marginRight="8sp"
                     android:layout_weight=".2"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="3"
                     android:digits="0123456789"
                     android:paddingRight="8sp"
                     android:shadowColor="#FFFFFFFF"

@@ -68,6 +68,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -490,6 +491,10 @@ public class threaded_application extends Application {
     public static final String DCCEX_PROTOCOL_OPTION_YES = "Yes";
     public static final String DCCEX_PROTOCOL_OPTION_NO = "No";
     public static final String DCCEX_PROTOCOL_OPTION_AUTO = "Auto";
+
+    public String witCv = "";
+    public String witCvValue = "";
+    public String witAddress = "";
 
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
