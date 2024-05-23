@@ -1305,7 +1305,8 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.withrottle_cv_programmer_mnu);
             if (item != null) {
-                item.setVisible(!isDCCEX);
+                item.setVisible((!isDCCEX)
+                        && (prefs.getBoolean("prefShowWitPom",  getResources().getBoolean(R.bool.prefShowWitPomDefaultValue)) ));
             }
         }
     }

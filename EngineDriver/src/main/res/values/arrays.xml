@@ -1829,6 +1829,7 @@
         <item>prefUseDccexProtocol</item>
         <item>prefDCCEXConnectionOption</item>
         <item>prefHeartbeatResponseFactor</item>
+        <item>prefShowWitPom</item>
 
         <!-- Web Preferences -->
         <item>WebOrientation</item>
