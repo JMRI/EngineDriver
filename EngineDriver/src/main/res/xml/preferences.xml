@@ -1823,6 +1823,13 @@
             android:title="@string/prefFeedbackWhenGoingToBackgroundTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefShowWitPomDefaultValue"
+            android:key="prefShowWitPom"
+            android:summary="@string/prefShowWitPomSummary"
+            android:title="@string/prefShowWitPomTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_dcc_ex_icon"
             android:key="prefDccExPreferences"
