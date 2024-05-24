@@ -1,6 +1,7 @@
 **Version 2.37.182
  * add intro/setup wizard page for DCC-EX
- * Experimental WiThrottle CV PoM page
+ * new WiThrottle CV PoM page
+ * bug fix for <p 0|1>  (space after p)  - only seen in the JMRI DCC++ simulator
 **Version 2.37.180
  * fastclock fix
  * reinstate mipmap icon

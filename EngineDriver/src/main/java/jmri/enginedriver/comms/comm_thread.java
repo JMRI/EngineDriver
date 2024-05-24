@@ -1257,7 +1257,7 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             mainapp.heartbeatInterval = 20000; // force a heartbeat period
                             heart.startHeartbeat(mainapp.heartbeatInterval);
-                            mainapp.power_state = "2"; // unknown
+//                            mainapp.power_state = "2"; // unknown
                             break;
 
                         case 'l':
@@ -1350,39 +1350,56 @@ public class comm_thread extends Thread {
     private static  void processDCCEXpowerResponse ( String [] args) { // <p0|1 [A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
         String oldState = mainapp.power_state;
         String responseStr;
-        if (args.length==1) {  // <p0|1>
-            mainapp.power_state = args[0].substring(1, 2);
+        if ( (args.length==1)   // <p0|1>
+        || ((args.length==2) && (args[0].length()==1) && (args[1].charAt(0)<='2')) ) {  // <p 0|1>
+            char power;
+            if ( (args[0].length() == 1) && (args[1].charAt(0) <= '2') ) {  // <p 0|1 A...
+                power = args[1].charAt(0);
+            } else { // <p0|1 A...
+                power = args[0].charAt(1);
+            }
+
+            mainapp.power_state = "" + power;
             if (!mainapp.power_state.equals(oldState)) {
-                responseStr = "PPA" + args[0].charAt(1);
+                responseStr = "PPA" + power;
                 mainapp.alert_activities(message_type.RESPONSE, responseStr);
-                if (args[0].charAt(1)!='2') {
+                if (power != '2') {
                     for (int i = 0; i < mainapp.DccexTrackType.length; i++) {
-                        mainapp.DccexTrackPower[i] = args[0].charAt(1) - '0';
-                        responseStr = "PXX" + ((char) (i + '0')) + args[0].charAt(1);
+                        mainapp.DccexTrackPower[i] = power - '0';
+                        responseStr = "PXX" + ((char) (i + '0')) + power;
                         mainapp.alert_activities(message_type.RESPONSE, responseStr);
                     }
                 }
             }
 
-        } else { // <p0|1 A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX>
+        } else { // <p0|1 A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX>  or  <p 0|1 A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX>
+            int trackOffset = 0;
+            char power;
+            if ( (args[0].length() == 1) && (args[1].charAt(0) <= '2') ) {  // <p 0|1 A...
+                trackOffset = 1;
+                power = args[1].charAt(0);
+            } else { // <p0|1 A...
+                power = args[0].charAt(1);
+            }
+
             if (args[1].length()==1) {  // <p0|1 A|B|C|D|E|F|G|H|>
-                int trackNo = args[1].charAt(0) - 'A';
-                mainapp.DccexTrackPower[trackNo] = args[0].charAt(1) - '0';
-                responseStr = "PXX" + ((char) (trackNo + '0')) + args[0].charAt(1);
+                int trackNo = args[1+trackOffset].charAt(0) - 'A';
+                mainapp.DccexTrackPower[trackNo] = power - '0';
+                responseStr = "PXX" + ((char) (trackNo + '0')) + power;
                 mainapp.alert_activities(message_type.RESPONSE, responseStr);
 
             } else { // <p0|1 MAIN|PROG|DC|DCX>
                 int trackType = 0;
                 for (int i=0; i<TRACK_TYPES.length; i++) {
-                    if (args[1].equals(TRACK_TYPES[i])) {
+                    if (args[1+trackOffset].equals(TRACK_TYPES[i])) {
                         trackType = i;
                         break;
                     }
                 }
                 for (int i=0; i<mainapp.DccexTrackType.length; i++) {
                     if (mainapp.DccexTrackType[i] == trackType) {
-                        mainapp.DccexTrackPower[i] = args[0].charAt(1) - '0';
-                        responseStr = "PXX" + ((char) (i + '0')) + args[0].charAt(1);
+                        mainapp.DccexTrackPower[i] = power - '0';
+                        responseStr = "PXX" + ((char) (i + '0')) + power;
                         mainapp.alert_activities(message_type.RESPONSE, responseStr);
                     }
                 }
