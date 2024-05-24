@@ -1257,7 +1257,7 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             mainapp.heartbeatInterval = 20000; // force a heartbeat period
                             heart.startHeartbeat(mainapp.heartbeatInterval);
-                            mainapp.power_state = "2"; // unknown
+//                            mainapp.power_state = "2"; // unknown
                             break;
 
                         case 'l':
