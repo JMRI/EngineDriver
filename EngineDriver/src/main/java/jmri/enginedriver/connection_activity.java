@@ -236,7 +236,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         connected_ssid = mainapp.client_ssid;
                         break;
                 }
-                checkIfDccexServerName(connected_hostname);
+                checkIfDccexServerName(connected_hostname, connected_port);
                 connect();
                 mainapp.buttonVibration();
             }
@@ -293,7 +293,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 }
                 connected_hostname = connected_hostip; //copy ip to name
                 connected_ssid = mainapp.client_ssid;
-                checkIfDccexServerName(connected_hostname);
+                checkIfDccexServerName(connected_hostname, connected_port);
                 connect();
             } else {
                 if (!mainapp.prefHideInstructionalToasts) {
@@ -367,7 +367,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     }
                     connected_hostname = tm.get("host_name"); //copy ip to name
                     connected_ssid = mainapp.client_ssid;
-                    checkIfDccexServerName(connected_hostname);
+                    checkIfDccexServerName(connected_hostname, connected_port);
                     connect();
                     Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
                 } else {
@@ -1105,7 +1105,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 case PermissionsHelper.CONNECT_TO_SERVER:
                     Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
 //                    connectImpl();
-                    checkIfDccexServerName(connected_hostname);
+                    checkIfDccexServerName(connected_hostname, connected_port);
                     connect();
                     break;
                 default:
@@ -1192,8 +1192,13 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    void checkIfDccexServerName(String serverName) {
-        mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
-                && (serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) );
+    void checkIfDccexServerName(String serverName, int serverPort) {
+        mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
+        mainapp.prefDccexIncludePort2560 = prefs.getBoolean("prefDccexIncludePort2560", mainapp.getResources().getBoolean(R.bool.prefDccexIncludePort2560DefaultValue));
+
+        mainapp.isDCCEX = ( ((mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+                                && (serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")))
+                || ((mainapp.prefDccexIncludePort2560) && (serverPort==2560))
+                );
     }
 }
