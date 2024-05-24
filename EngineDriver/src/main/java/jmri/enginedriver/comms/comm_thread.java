@@ -99,6 +99,7 @@ public class comm_thread extends Thread {
         prefs = myPrefs;
 
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
+        mainapp.prefDccexIncludePort2560 = prefs.getBoolean("prefDccexIncludePort2560", mainapp.getResources().getBoolean(R.bool.prefDccexIncludePort2560DefaultValue));
         mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
         LATCHING_DEFAULT_ENGLISH = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language

@@ -205,6 +205,7 @@ public class threaded_application extends Application {
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public String prefUseDccexProtocol = "Auto";
+    public boolean prefDccexIncludePort2560 = false;
     public boolean prefAlwaysUseFunctionsFromServer = false;
     public String DccexVersion = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
