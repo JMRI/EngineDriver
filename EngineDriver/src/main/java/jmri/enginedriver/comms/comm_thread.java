@@ -99,7 +99,6 @@ public class comm_thread extends Thread {
         prefs = myPrefs;
 
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
-        mainapp.prefDccexIncludePort2560 = prefs.getBoolean("prefDccexIncludePort2560", mainapp.getResources().getBoolean(R.bool.prefDccexIncludePort2560DefaultValue));
         mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         LATCHING_DEFAULT = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue); // can change with language
         LATCHING_DEFAULT_ENGLISH = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
@@ -136,7 +135,10 @@ public class comm_thread extends Thread {
 
             String serverType = event.getInfo().getPropertyString("jmri") == null ? "" : "JMRI";
 
-            String host_name = event.getInfo().getName(); //
+            String host_name = event.getInfo().getName();
+            if (event.getInfo().getType().toString().equals(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP)) {
+                host_name = host_name + " [DCC-EX]";
+            }
             Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
             String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
@@ -146,8 +148,10 @@ public class comm_thread extends Thread {
             hm.put("port", ((Integer) port).toString());
             hm.put("host_name", host_name);
             hm.put("ssid", mainapp.client_ssid);
+            hm.put("service_type", event.getInfo().getType().toString());
 
-            mainapp.knownDCCEXserverIps.put(ip_address, serverType);
+            String key = ""+ip_address+":"+port;
+            mainapp.knownDCCEXserverIps.put(key, serverType);
 
             Message service_message = Message.obtain();
             service_message.what = message_type.SERVICE_RESOLVED;
@@ -201,7 +205,8 @@ public class comm_thread extends Thread {
             public void run() {
                 try {
                     Log.d("Engine_Driver", "comm_thread.endJmdns: removing jmdns listener");
-                    jmdns.removeServiceListener("_withrottle._tcp.local.", listener);
+                    jmdns.removeServiceListener(mainapp.JMDNS_SERVICE_WITHROTTLE, listener);
+                    jmdns.removeServiceListener(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, listener);
 
                     multicast_lock.release();
                 } catch (Exception e) {
@@ -249,8 +254,11 @@ public class comm_thread extends Thread {
         hm.put("port", entryPort);
         hm.put("host_name", entryName);
         hm.put("ssid", mainapp.client_ssid);
+        hm.put("service_type",(serverType.equals("DCC-EX") ? mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP : mainapp.JMDNS_SERVICE_WITHROTTLE) );
 
-        mainapp.knownDCCEXserverIps.put(server_addr, serverType);
+//        mainapp.knownDCCEXserverIps.put(server_addr, serverType);
+        String key = ""+server_addr+":"+entryPort;
+        mainapp.knownDCCEXserverIps.put(key, serverType);
 
         Message service_message = Message.obtain();
         service_message.what = message_type.SERVICE_RESOLVED;

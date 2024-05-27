@@ -2,7 +2,8 @@
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
  * Bug fix for <p 0|1>  (space after p)  - only seen in the JMRI DCC++ simulator
- * New preference to optional include any server with port 2560 as a DCC-EX server when connection preference set to 'Auto'
+ * Include any server with port 2560 as a DCC-EX server when connection preference set to 'Auto'
+ * Support for JMRI DCCppOverTCP Server. Now also checks for the mDNS service "_dccppovertcpserver._tcp.local."
 **Version 2.37.180
  * fastclock fix
  * reinstate mipmap icon

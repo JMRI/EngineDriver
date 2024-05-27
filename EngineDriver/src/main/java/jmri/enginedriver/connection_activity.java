@@ -395,13 +395,18 @@ public class connection_activity extends AppCompatActivity implements Permission
                 case message_type.SERVICE_RESOLVED:
                     HashMap<String, String> hm = (HashMap<String, String>) msg.obj;  //payload is already a hashmap
                     String found_host_name = hm.get("host_name");
+                    String found_ip_address = hm.get("ip_address");
+                    String found_port = hm.get("port");
+                    String found_service_type = hm.get("service_type");
                     boolean entryExists = false;
 
                     //stop if new address is already in the list
                     HashMap<String, String> tm;
                     for (int index = 0; index < discovery_list.size(); index++) {
                         tm = discovery_list.get(index);
-                        if (tm.get("host_name").equals(found_host_name)) {
+//                        if (tm.get("host_name").equals(found_host_name)) {
+                        if ( (tm.get("ip_address").equals(found_ip_address))
+                        && (tm.get("port").equals(found_port)) ) {
                             entryExists = true;
                             break;
                         }
@@ -999,7 +1004,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     /*	private void withrottle_list() {
 		try {
 			JmDNS jmdns = JmDNS.create();
-			ServiceInfo[] infos = jmdns.list("_withrottle._tcp.local.");
+			ServiceInfo[] infos = jmdns.list(mainapp.JMDNS_SERVICE_WITHROTTLE);
 			String fh = "";
 			for (ServiceInfo info : infos) {
 				fh +=  info.getURL() + "\n";
@@ -1194,11 +1199,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     void checkIfDccexServerName(String serverName, int serverPort) {
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
-        mainapp.prefDccexIncludePort2560 = prefs.getBoolean("prefDccexIncludePort2560", mainapp.getResources().getBoolean(R.bool.prefDccexIncludePort2560DefaultValue));
 
         mainapp.isDCCEX = ( ((mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
                                 && (serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")))
-                || ((mainapp.prefDccexIncludePort2560) && (serverPort==2560))
+                || (serverPort==2560)
                 );
     }
 }

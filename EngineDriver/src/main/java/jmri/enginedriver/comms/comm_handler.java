@@ -85,7 +85,8 @@ public class comm_handler extends Handler {
                            //log message, but keep going if this fails
                            Log.d("Engine_Driver", "comm_handler.handleMessage: multicast_lock.acquire() failed");
                         }
-                        commThread.jmdns.addServiceListener("_withrottle._tcp.local.", commThread.listener);
+                        commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
+                        commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
                         Log.d("Engine_Driver", "comm_handler.handleMessage: jmdns listener added");
                      } else {
                         Log.d("Engine_Driver", "comm_handler.handleMessage: jmdns not running, didn't start listener");
