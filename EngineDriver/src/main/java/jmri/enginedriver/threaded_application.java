@@ -116,6 +116,10 @@ public class threaded_application extends Application {
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;
+
+    public String JMDNS_SERVICE_WITHROTTLE = "_withrottle._tcp.local.";
+    public String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
+
     public volatile String host_ip = null; //The IP address of the WiThrottle server.
     public volatile String logged_host_ip = null;
     public volatile int port = 0; //The TCP port that the WiThrottle server is running on
@@ -205,7 +209,6 @@ public class threaded_application extends Application {
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public String prefUseDccexProtocol = "Auto";
-    public boolean prefDccexIncludePort2560 = false;
     public boolean prefAlwaysUseFunctionsFromServer = false;
     public String DccexVersion = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received

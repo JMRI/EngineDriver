@@ -1859,13 +1859,6 @@
                     android:title="@string/prefDccexConnectionOptionTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefDccexIncludePort2560DefaultValue"
-                    android:key="prefDccexIncludePort2560"
-                    android:summary="@string/prefDccexIncludePort2560Summary"
-                    android:title="@string/prefDccexIncludePort2560Title"
-                    android:layout="@layout/checkbox_no_icon" />
-
             </PreferenceCategory>
 
         </PreferenceScreen>

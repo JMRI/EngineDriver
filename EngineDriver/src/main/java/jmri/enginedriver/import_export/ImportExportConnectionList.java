@@ -63,7 +63,8 @@ public class ImportExportConnectionList {
                     String host_name;
                     String port_str;
                     Integer port = 0;
-                    String ssid_str;
+                    String ssid_str = "";
+                    String service_type = "";
                     List<String> parts = Arrays.asList(line.split(":", 4)); //split record from file, max of 4 parts
                     if (parts.size() > 1) {  //skip if not split
                         if (parts.size() == 2) {  //old style, use part 1 for ip and host
@@ -76,11 +77,17 @@ public class ImportExportConnectionList {
                             ip_address = parts.get(1);
                             port_str = parts.get(2);
                             ssid_str = "";
-                        } else { //new new style, get all 4 parts
+                        } else if (parts.size() == 4) { //new new style, get all 4 parts
                             host_name = parts.get(0);
                             ip_address = parts.get(1);
                             port_str = parts.get(2);
                             ssid_str = parts.get(3);
+                        } else { // additional service type format get all 5 parts
+                            host_name = parts.get(0);
+                            ip_address = parts.get(1);
+                            port_str = parts.get(2);
+                            ssid_str = parts.get(3);
+                            service_type = parts.get(4);
                         }
                         try {  //attempt to convert port to integer
                             port = Integer.decode(port_str);
@@ -95,6 +102,7 @@ public class ImportExportConnectionList {
                                     hm.put("host_name", host_name);
                                     hm.put("port", port.toString());
                                     hm.put("ssid", ssid_str);
+                                    hm.put("service_type", service_type);
                                     if (!connections_list.contains(hm)) {    // suppress dups
                                         connections_list.add(hm);
                                     }
@@ -124,6 +132,7 @@ public class ImportExportConnectionList {
             hm.put("host_name", demo_host);
             hm.put("port", demo_port);
             hm.put("ssid", "");
+            hm.put("service_type", "_withrottle._tcp.local.");
             connections_list.add(hm);
         }
 //        connection_list_adapter.notifyDataSetChanged();

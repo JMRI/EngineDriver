@@ -1282,15 +1282,13 @@
     <string name="prefUseDccexProtocolDefaultValue">Auto</string>
 
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
-    <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\"\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
-    <string name="prefDccexIncludePort2560Title">Include Port 2560 for Auto</string>
-    <string name="prefDccexIncludePort2560Summary">Include Port 2560 when determining to use DCC-EX &lt;&gt; commands instead of WiThrottle when set to \'Auto\'.</string>
+    <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
     <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)"</string>
-    <string name="useProtocolDCCEXplusAutoHint">Use native DCC-EX commands. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\"</string>
+    <string name="useProtocolDCCEXplusAutoHint">Use native DCC-EX? For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>

@@ -96,7 +96,6 @@
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
     <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
-    <bool name="prefDccexIncludePort2560DefaultValue">false</bool>
     <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
 
     <bool name="prefKidsTimerEnableReverseDefaultValue">false</bool>
