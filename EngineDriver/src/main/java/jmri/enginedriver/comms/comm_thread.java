@@ -254,7 +254,7 @@ public class comm_thread extends Thread {
         hm.put("port", entryPort);
         hm.put("host_name", entryName);
         hm.put("ssid", mainapp.client_ssid);
-        hm.put("service_type",mainapp.JMDNS_SERVICE_WITHROTTLE);
+        hm.put("service_type",(serverType.equals("DCC-EX") ? mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP : mainapp.JMDNS_SERVICE_WITHROTTLE) );
 
 //        mainapp.knownDCCEXserverIps.put(server_addr, serverType);
         String key = ""+server_addr+":"+entryPort;
