@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".3"
             android:ellipsize="none"
-            android:entries="@array/prefYesNoAutoEntries"
+            android:entries="@array/prefDccexConnectionOptionsEntries"
             android:entryValues="@array/prefYesNoAutoEntryValues"
             android:padding="0dp"
             android:paddingLeft="20dp"
