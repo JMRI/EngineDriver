@@ -311,6 +311,7 @@ public class threaded_application extends Application {
     }
     public int connectedPort = 0;
     public String connectedSsid = "";
+    public String connectedServiceType = "";
 
     public String languageCountry = "en";
 
@@ -2412,7 +2413,7 @@ public class threaded_application extends Application {
         importExportConnectionList.connections_list.clear();
         importExportConnectionList.getConnectionsList("", "");
         importExportConnectionList.saveConnectionsListExecute(
-                this, connectedHostip, connectedHostName, connectedPort, retrievedServerName, connectedSsid);
+                this, connectedHostip, connectedHostName, connectedPort, retrievedServerName, connectedSsid, connectedServiceType);
         connectedHostName = retrievedServerName;
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();

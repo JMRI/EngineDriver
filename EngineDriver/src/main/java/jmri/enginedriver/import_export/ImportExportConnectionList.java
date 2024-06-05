@@ -65,7 +65,7 @@ public class ImportExportConnectionList {
                     Integer port = 0;
                     String ssid_str = "";
                     String service_type = "";
-                    List<String> parts = Arrays.asList(line.split(":", 4)); //split record from file, max of 4 parts
+                    List<String> parts = Arrays.asList(line.split(":", 5)); //split record from file, max of 4 parts
                     if (parts.size() > 1) {  //skip if not split
                         if (parts.size() == 2) {  //old style, use part 1 for ip and host
                             host_name = parts.get(0);
@@ -138,8 +138,8 @@ public class ImportExportConnectionList {
 //        connection_list_adapter.notifyDataSetChanged();
     }
 
-    public void saveConnectionsListExecute(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName) {
-        new saveConnectionsList(myApp, ip, name, port, wsName, ssidName).execute();
+    public void saveConnectionsListExecute(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName, String serviceType) {
+        new saveConnectionsList(myApp, ip, name, port, wsName, ssidName, serviceType).execute();
     }
 
     class saveConnectionsList extends AsyncTask<Void, Void, String> {
@@ -151,14 +151,16 @@ public class ImportExportConnectionList {
         private final Integer connected_port;
         private final String webServerName;  //name from the webServer
         private final String connected_ssid;
+        private final String serviceType;
 
-        public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName) {
+        public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName, String sserviceType) {
             mainapp = myApp;
             connected_hostip = ip;
             connected_hostname = name;
             connected_port = port;
             connected_ssid = ssidName;
             webServerName = wsName;
+            serviceType = sserviceType;
         }
 
         @Override
@@ -181,9 +183,9 @@ public class ImportExportConnectionList {
                     //Write selected connection to file, then write all others (skipping selected if found)
                     if ( ((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                         || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) ) {
-                        list_output.format("%s:%s:%d:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid);
+                        list_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType);
                     } else {
-                        list_output.format("%s:%s:%d:%s\n", webServerName, connected_hostip, connected_port, connected_ssid);
+                        list_output.format("%s:%s:%d:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType);
                     }
                 }
                 if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
@@ -206,6 +208,7 @@ public class ImportExportConnectionList {
                     String lh = t.get("host_name");
                     Integer lp = Integer.valueOf(t.get("port"));
                     String ssid = t.get("ssid");
+                    String sType = t.get("service_type");
 
                     boolean doWrite = !connected_hostip.equals(li) || (connected_port.intValue() != lp.intValue());
                     //dont write it out if same as selected
@@ -213,7 +216,7 @@ public class ImportExportConnectionList {
                         doWrite = false;
                     }
                     if (doWrite) {
-                        list_output.format("%s:%s:%d:%s\n", lh, li, lp, ssid);
+                        list_output.format("%s:%s:%d:%s:%s\n", lh, li, lp, ssid, sType);
                     }
                 }
                 list_output.flush();
@@ -236,9 +239,9 @@ public class ImportExportConnectionList {
 
                     if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
                             || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {
-                        log_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
                     } else {
-                        log_output.format("%s:%s:%d:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, currentDateAndTime);
+                        log_output.format("%s:%s:%d:%s:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
                     }
 
                     log_output.flush();
