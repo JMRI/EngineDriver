@@ -1269,7 +1269,7 @@
     -->
 
     <string name="prefShowWitPomTitle">Show WiThrottle PoM Page</string>
-    <string name="prefShowWitPomSummary">Choose if the WiThrottle CV Programing on MAIN (Operation Mode) menu and page should be available.</string>
+    <string name="prefShowWitPomSummary">Choose if the WiThrottle CV Programming on MAIN (Operations Mode) menu and page should be available.</string>
 
     <string name="prefFeedbackOnDisconnectTitle">Feedback on Disconnect</string>
     <string name="prefFeedbackOnDisconnectSummary">Play sound and vibrate on unexpected disconnect</string>
@@ -1287,8 +1287,8 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
-    <string name="useProtocolDCCEX">Use native DCC-EX commands (not WiThrottle)"</string>
-    <string name="useProtocolDCCEXplusAutoHint">Use native DCC-EX? For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560</string>
+    <string name="useProtocolDCCEX">Use WiThrottle or DCC-EX protocol?"</string>
+    <string name="useProtocolDCCEXplusAutoHint">WiThrottle or DCC-EX protocol? (\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>

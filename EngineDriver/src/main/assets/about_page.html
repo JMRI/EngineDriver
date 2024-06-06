@@ -19,9 +19,9 @@
 <p><b>Changes for this version include:</b></p>
 <ul>
     <li>Support for 32 Function Roster Entries</li>
-    <li>New WiThrottle CV Progaming on Main page. (note: not supported on all Command Stations)</li>
+    <li>New WiThrottle "CV Programming on Main" page. (note: not supported on all Command Stations)</li>
     <li>New preference to allow for double back button presses to exit the app</li>
-    <li>Support for JMRI DCCppOverTCP Server.</li>
+    <li>Discovery of JMRI DCCppOverTCP Server.</li>
     <li>Include any server with port 2560 as a DCC-EX server when connection preference set to 'Auto'</li>
     <li>Change the owner filter pref default to false</li>
     <li>UI improvements for the DCC-EX and Function Defaults pages</li>
@@ -65,7 +65,7 @@
 <h3>Prerequisites (for JMRI):</h3>
 <p>Verify your Android device can connect to your network via WiFi and obtain an IP address.<br/>Make
     sure you are running one of the latest versions of <a href="http://jmri.org/" target="_blank">JMRI</a>
-    (3.8 works, 4.20+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI
+    (3.8 works, 5.8+ works much better) on your PC, connected to your layout.&nbsp; Start up JMRI
     and verify you can use the included "Throttle" window to control a loco on your layout.</p>
 <p>Start the <a
         href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml"
@@ -83,12 +83,10 @@
 <h3>Prerequisites (for DCC-EX EX-CommandStation):</h3>
 <p>Engine Driver can connect directly to DCC-EX EX-CommandStations, that are in Station Mode or
     Access Point Mode, using either the WiThrottle protocol or the native DCC-EX command protocol.
-    Engine Driver will use WiThrottle by default.  If you wish to use native DCC-EX commands
-    you must change the Engine Driver preference. <br />
-    If you use the native DCC-EX commands an additional menu item (DCC-EX) will be available for
-    programming CVs and other functions. <br />
-    Note: If you connect the EX-CommandStation via JMRI, you must use WiThrottle, and therefor the
-    additional features will not be available.</p>
+    <br />
+    If you use the native DCC-EX commands additional DCC-EX menu items will be available for
+    programming CVs and other functions.
+    </p>
 <h3>Operation:</h3>
 <p>On your phone, start the Engine Driver app and wait for your server's address to show up in
     "Discovered Services".</p>
