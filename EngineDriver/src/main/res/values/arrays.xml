@@ -1572,6 +1572,12 @@
         <item>Auto</item>
     </string-array>
 
+    <string-array name="prefDccexConnectionOptionsEntries">  <!-- display version -->
+        <item>DCC-EX</item>
+        <item>WiThrottle</item>
+        <item>Auto</item>
+    </string-array>
+
     <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>en_US</item>

@@ -116,6 +116,6 @@
 
     <bool name="prefDoubleBackButtonToExitDefaultValue">false</bool>
 
-    <bool name="prefShowWitPomDefaultValue">true</bool>
+    <bool name="prefShowWitPomDefaultValue">false</bool>
 
 </resources>
