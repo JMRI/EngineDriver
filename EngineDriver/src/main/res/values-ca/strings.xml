@@ -1001,4 +1001,5 @@
     <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée sur manette verrouillée</string>
     <string name="prefHapticFeedbackButtonsSummary">Retour haptique sur touches (vibration)</string>
     <string name="prefHapticFeedbackButtonsTitle">Retour haptique sur touches</string>
+    <string name="order">Ordena</string>
 </resources>

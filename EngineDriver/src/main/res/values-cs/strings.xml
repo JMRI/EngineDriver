@@ -1188,5 +1188,6 @@
     <string name="prefDccexPreferencesSummary">Možnosti použití EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
+    <string name="order">Seřadit</string>
 
 </resources>

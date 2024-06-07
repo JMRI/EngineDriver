@@ -990,4 +990,5 @@
     <string name="prefDccexPreferencesSummary">Opciones para usar un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Use siempre etiquetas de funciones desde el servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Cuando esté deshabilitado, use etiquetas predeterminadas de EnginedRiver para locos seleccionados por dirección (no en la lista), ignorando las etiquetas predeterminadas del servidor.</string>
+    <string name="order">Clasificar</string>
 </resources>

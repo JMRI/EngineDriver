@@ -942,5 +942,6 @@
     <string name="prefDccexPreferencesSummary">Opções para usar um EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Sempre use rótulos de função do servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quando desativado, use os rótulos padrão do EnginEnRiver para locos selecionados por endereço (não lista), ignorando os rótulos padrão do servidor.</string>
+    <string name="order">Organizar</string>
 
 </resources>

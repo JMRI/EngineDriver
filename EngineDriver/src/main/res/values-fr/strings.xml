@@ -1039,5 +1039,6 @@
     <string name="cv29SpeedTableNo">Pas de courbe de vitesse, utilisation CV2, 5 et 6</string>
     <string name="cv29SpeedTableYes">Courbe de vitesse 28 points</string>
     <string name="cv29SpeedToggleDirection">Ecrit valeur %d dans CV29 pour changer sens de marche</string>
+    <string name="order">Trier</string>
 
 </resources>

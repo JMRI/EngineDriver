@@ -81,10 +81,36 @@
                         android:singleLine="true" />
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/routes_list_label"
-                    style="?android:attr/listSeparatorTextViewStyle"
-                    android:text="@string/routes_list_label" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="4dp" >
+
+                    <TextView
+                        android:id="@+id/routes_list_label"
+                        style="?android:attr/listSeparatorTextViewStyle"
+                        android:layout_height="24sp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/routes_sort"
+                        android:paddingLeft="2dp"
+                        android:layout_marginRight="4dp"
+                        android:paddingTop="2dp"
+                        android:text="@string/routes_list_label" />
+
+                    <Button
+                        android:id="@+id/routes_sort"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="22sp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="2sp"
+                        android:text="@string/order" />
+
+                </RelativeLayout>
 
                 <ListView
                     android:id="@+id/routes_list"

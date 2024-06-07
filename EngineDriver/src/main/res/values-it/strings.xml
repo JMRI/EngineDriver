@@ -938,5 +938,6 @@
     <string name="prefDccexPreferencesSummary">Opzioni per l\'utilizzo di un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Usa sempre le etichette delle funzioni dal server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Se disabilitato, utilizzare ENGINEDRIVER Etichette predefinite per LOCOS selezionati per indirizzo (non elenco), ignorando le etichette predefinite del server.</string>
+    <string name="order">Ordinare</string>
 
 </resources>

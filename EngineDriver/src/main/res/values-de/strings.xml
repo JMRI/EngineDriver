@@ -1004,5 +1004,6 @@
     <string name="prefDccexPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
+    <string name="order">Sortieren</string>
 
 </resources>
