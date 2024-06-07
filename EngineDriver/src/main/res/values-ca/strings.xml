@@ -17,6 +17,7 @@
     <string name="exit">Sortir</string>
     <string name="settings">Funcions per defecte</string>
 <!--    <string name="fb_label">Etiquetes de funcions</string>-->
+    <string name="dccExFunctionSettings">Configuració de la funció DCC-EX</string>
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
 <!--    <string name="function_buttons">botons_de_funcions</string>-->
@@ -746,6 +747,10 @@
     <string name="introButtonsSliderAndButtons">Control lliscant i tecles\n(no és possible amb \'Botons grans\')</string>
     <string name="introButtonsNoSlider">Només tecles de velocitat</string>
 
+    <string name="introDccexTitle">Opcions de l\\\'EX-CommandStation</string>
+    <string name="introDccexSummary">El controlador del motor pot proporcionar funcionalitats addicionals, inclosa la programació de CV, si utilitzeu directament una DCC-EX EX-CommandStation. (No mitjançant JMRI)\n\nSi responeu \'Sí\' a continuació, el controlador del motor utilitzarà per defecte les ordres natives de DCC-EX en comptes de WiThrottle si el nom del servidor conté \'DCC-EX\' o \'DCCEX\' .</string>
+    <string name="introDccexQuestionYes">Sí, faré servir una EX-CommandStation</string>
+    <string name="introDccexQuestionNo">No, NO faré servir una EX-CommandStation</string>
     <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Engine Driver per completar el procés d\'inici</string>
 
     <string name="edit_consist_throttle_1">Editar el Regulador de TM 1</string>

@@ -19,6 +19,7 @@
     <string name="exit">Konec</string>
     <string name="settings">Nastavení funkcí</string>
 <!--    <string name="fb_label">Funkce štítek</string>-->
+    <string name="dccExFunctionSettings">Nastavení funkcí DCC-EX</string>
     <string name="fb_column_label">Štítek</string>
     <string name="fb_column_function">Fn#</string>
 <!--    <string name="function_buttons">Funkce tlačítko</string>-->
@@ -956,6 +957,10 @@
     <string name="introButtonsSliderAndButtons">Posuvník + Tlačítka\n(není možné s \'Velká tlačítka\'.)</string>
     <string name="introButtonsNoSlider">Pouze tlačítka rychlosti</string>
 
+    <string name="introDccexTitle">Možnosti EX-CommandStation</string>
+    <string name="introDccexSummary">Engine Driver může poskytovat další funkce, včetně programování CV, pokud přímo používáte DCC-EX EX-CommandStation. (Ne přes JMRI)\n\nPokud níže odpovíte \'Ano\', Engine Driver použije výchozí příkazy DCC-EX Native namísto WiThrottle, pokud název serveru obsahuje \'DCC-EX\' nebo \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Ano, budu používat EX-CommandStation</string>
+    <string name="introDccexQuestionNo">Ne, EX-CommandStation NEBUDU používat</string>
     <string name="introbackButtonPress">Prosím restartujte aplikaci Engine Driver pro dokončení úvodního nastavení.</string>
     <string name="edit_consist_menu">\≡ Upravit soupravu</string>
     <string name="edit_consist_throttle_1">Upravit soupravu ovladače 1</string>

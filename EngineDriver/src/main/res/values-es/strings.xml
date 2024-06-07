@@ -17,6 +17,7 @@
     <string name="exit">Salir</string>
     <string name="settings">Funciones por defecto</string>
 <!--    <string name="fb_label">Etiquetas de funciones</string>-->
+    <string name="dccExFunctionSettings">Configuración de funciones DCC-EX</string>
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
 <!--    <string name="function_buttons">botones_de_funciones</string>-->
@@ -737,6 +738,10 @@
     <string name="introButtonsSliderAndButtons">Control deslizante y teclas\n(no es posible con \'Teclas grandes\'.)</string>
     <string name="introButtonsNoSlider">Teclas de velocidad solamente</string>
 
+    <string name="introDccexTitle">Opciones de EX-CommandStation</string>
+    <string name="introDccexSummary">Engine Driver puede proporcionar funciones adicionales, incluida la programación de CV, si utiliza directamente una EX-CommandStation DCC-EX. (No a través de JMRI)\n\nSi responde \'Sí\' a continuación, Engine Driver utilizará de forma predeterminada los comandos nativos DCC-EX en lugar de WiThrottle si el nombre del servidor contiene \'DCC-EX\' o \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Sí, usaré una EX-CommandStation</string>
+    <string name="introDccexQuestionNo">No, NO usaré una EX-CommandStation</string>
     <string name="introbackButtonPress">Reinicie la aplicación Engine Driver para completar el proceso de inicio</string>
 
     <string name="edit_consist_throttle_1">Edita el controlador de TM 1</string>

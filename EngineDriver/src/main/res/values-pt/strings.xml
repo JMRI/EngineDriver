@@ -678,6 +678,7 @@
     <string name="introButtonsNoSlider">Botões de velocidade apenas</string>
 
     <string name="consist_trail_label">Locomotiva chumbo</string>
+    <string name="dccExFunctionSettings">Configurações de função DCC-EX</string>
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
     <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
@@ -761,6 +762,10 @@
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
+    <string name="introDccexTitle">Opções EX-CommandStation</string>
+    <string name="introDccexSummary">O Engine Driver pode fornecer funcionalidades adicionais, incluindo programação CV, se você estiver usando um DCC-EX EX-CommandStation diretamente. (Não via JMRI)\n\nSe você responder \'Sim\' abaixo, o Engine Driver usará como padrão comandos DCC-EX Native em vez de WiThrottle se o nome do servidor contiver \'DCC-EX\' ou \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Sim, usarei uma EX-CommandStation</string>
+    <string name="introDccexQuestionNo">Não, NÃO usarei um EX-CommandStation</string>
     <string name="edit_consist_menu">\≡ Editar Consistem</string>
     <string name="gamepad_test_menu">\≡ Teste Gamepad</string>
     <string name="prefSwipeDownOptionSummary">O que deve acontecer quando você deslizar para baixo na visão do acelerador.</string>
