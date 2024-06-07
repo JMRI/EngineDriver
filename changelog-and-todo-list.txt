@@ -1,4 +1,8 @@
 **Version 2.37.184
+ * option to have the Throttle WebView on the top of the page
+ * fix bug where the keyboard would not show in throttle WebView
+ * Button to sort Turnouts/Points by Name or ID
+ * Button to sort Routes by Name or ID
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page

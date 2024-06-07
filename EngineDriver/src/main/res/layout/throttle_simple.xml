@@ -27,6 +27,13 @@
     android:keepScreenOn="true"
     android:orientation="horizontal">
 
+    <WebView
+        android:id="@+id/throttle_webview_top"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:visibility="gone" />
+        <!-- the WebView exists here for consistency in the code, but cannot be enabled for this throttle layout   -->
+
     <android.gesture.GestureOverlayView
         android:id="@+id/throttle_overlay"
         android:layout_width="fill_parent"
@@ -3250,11 +3257,14 @@
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
-
         </LinearLayout>
     </android.gesture.GestureOverlayView>
+
     <WebView
         android:id="@+id/throttle_webview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+    <!-- the WebView exists here for consistency in the code, but cannot be enabled for this throttle layout   -->
+
 </LinearLayout>

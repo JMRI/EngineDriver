@@ -53,9 +53,9 @@
     <string name="app_name_turnouts_long">Engine Driver - Turnouts</string>
     <string name="app_name_turnouts_short">Turnouts</string>
     <string name="app_name_about">About</string>
-    <string name="app_name_web">Web</string>
-    <string name="app_name_web_long">Engine Driver - Web</string>
-    <string name="app_name_web_short">Web</string>
+    <string name="app_name_web" translatable="false">Web</string>
+    <string name="app_name_web_long" translatable="false">Engine Driver - Web</string>
+    <string name="app_name_web_short" translatable="false">Web</string>
     <string name="app_name_functions">Default Function Settings</string>
     <string name="app_name_consist_functions">Consist Function Settings</string>
     <string name="app_name_preferences">Preferences</string>
@@ -295,7 +295,7 @@
     <string name="prefGamePadButtonRightThumbDefaultValue" translatable="false">Function 08</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefGamePadDoublePressStopTitle">Double press Stop action</string>
-    <string name="prefGamePadDoublePressStopSummary">Choose the action when you press any button that as configured as \\\'Stop\\\'</string>
+    <string name="prefGamePadDoublePressStopSummary">Choose the action when you press any button that as configured as \'Stop\'</string>
     <string name="prefGamePadDoublePressStopDefaultValue" translatable="false">Forward/Reverse Toggle</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefGamePadIgnoreJoystickTitle">Ignore joystick actions</string>
@@ -1362,15 +1362,15 @@
     <string name="DccexSucceeded">Action Succeeded</string>
     <string name="DccexFailed">Action Failed</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs PROG</string>
-    <string name="DCCEXbuttonCvProgrammerPoM">CVs PoM</string>
+    <string name="DCCEXbuttonCvProgrammerProgTrack" translatable="false">CVs PROG</string>
+    <string name="DCCEXbuttonCvProgrammerPoM" translatable="false">CVs PoM</string>
     <string name="DCCEXbuttonTrackManager">Track Mgr</string>
     <string name="DCCEXbuttonDefaultFunctions">Default Fns</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
     <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
     <string name="DCCEXheadingTrackManager">DCC-EX - Track/District Manager</string>
 
-    <string name="witButtonCvProgrammerPoM">CVs PoM</string>
+    <string name="witButtonCvProgrammerPoM" translatable="false">CVs PoM</string>
 
     <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
 
@@ -1389,6 +1389,8 @@
 
 
     <string name="witHeadingCvProgrammerPoM">WiThrottle - Programming on Main (Operation mode)</string>
+
+    <string name="order">Sort</string>
 
 </resources>
 

@@ -81,6 +81,7 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.type.sort_type;
 
 //public class turnouts extends AppCompatActivity implements OnGestureListener {
 public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -157,14 +158,23 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //    private TextView trnStatic;
 
     public void refresh_turnout_view() {
-        //specify logic for sort comparison (by username)
+        //specify logic for sort comparison (by username/id)
         Comparator<HashMap<String, String>> turnout_comparator = new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
 //                return arg0.get("to_user_name").compareTo(arg1.get("to_user_name"));    //*** was compareToIgnoreCase()
-                String a = formatNumberInName(arg0.get("to_user_name"));
-                String b = formatNumberInName(arg1.get("to_user_name"));
-                return a.compareTo(b);    //*** was compareToIgnoreCase()
+                int rslt;
+                String a;
+                String b;
+                if (mainapp.turnoutsOrder == sort_type.NAME) {
+                    a = threaded_application.formatNumberInName(arg0.get("to_user_name"));
+                    b = threaded_application.formatNumberInName(arg1.get("to_user_name"));
+                } else {
+                    a = threaded_application.formatNumberInName(arg0.get("to_system_name"));
+                    b = threaded_application.formatNumberInName(arg1.get("to_system_name"));
+                }
+                rslt = a.compareTo(b);
+                return rslt;    //*** was compareToIgnoreCase()
             }
         };
 
@@ -221,47 +231,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         locationSpinner.setSelection(locationListAdapter.getPosition(location));
 
         filterTurnoutView();
-    }
-
-    @SuppressLint("DefaultLocale")
-    String formatNumberInName (String name) {
-        String tempName = name;
-        String tempNo = "";
-        int tempVal = 0;
-        char tempChar;
-        boolean haveNo = false;
-        boolean hasNumber = false;
-//        hasNumber= tempName.matches("[\\D]?[\\d]+[\\D]?");
-        for (int i=0; i<name.length();i++) {
-            tempChar = name.charAt(i);
-            if ((tempChar >= '0') && (tempChar <= '9')) {  // numeric
-                hasNumber = true;
-                break;
-            }
-        }
-        if (hasNumber) {
-            tempName = "";
-            for (int i=0; i<name.length();i++) {
-                tempChar = name.charAt(i);
-                if ((tempChar>='0') && (tempChar<='9')) {  // numeric
-                   haveNo = true;
-                   tempNo = tempNo + name.charAt(i);
-                } else {
-                    if (haveNo) {
-                        tempVal = Integer.parseInt(tempNo);
-                        tempName = tempName + String.format("%6d",tempVal);
-                        haveNo = false;
-                        tempNo = "";
-                    }
-                    tempName = tempName + name.charAt(i);
-                }
-            }
-            if (haveNo) {
-                tempVal = Integer.parseInt(tempNo);
-                tempName = tempName + String.format("%6d",tempVal);
-            }
-        }
-        return tempName;
     }
 
     public void refreshTurnoutViewStates() {
@@ -471,6 +440,21 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 }
                 mainapp.buttonVibration();
             }
+        }
+    }
+
+    public class SortButtonListener implements View.OnClickListener {
+
+        SortButtonListener() {}
+
+        public void onClick(View v) {
+            if (mainapp.turnoutsOrder==sort_type.NAME) {
+                mainapp.turnoutsOrder=sort_type.ID;
+            } else {
+                mainapp.turnoutsOrder=sort_type.NAME;
+            }
+            refresh_turnout_view();
+            mainapp.buttonVibration();
         }
     }
 
@@ -759,6 +743,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
+
+        // setup the sort button
+        b = findViewById(R.id.turnouts_sort);
+        SortButtonListener sortButtonListener = new SortButtonListener();
+        b.setOnClickListener(sortButtonListener);
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));

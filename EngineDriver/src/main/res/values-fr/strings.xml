@@ -694,6 +694,10 @@
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Touches de vitesse seulement</string>
+    <string name="introDccexTitle">Options de l\'EX-CommandStation</string>
+    <string name="introDccexSummary">Engine Driver peut fournir des fonctionnalités supplémentaires, notamment la programmation CV, si vous utilisez directement une EX-CommandStation DCC-EX. (Pas via JMRI)\n\nSi vous répondez \'Oui\' ci-dessous, Engine Driver utilisera par défaut les commandes DCC-EX Native au lieu de WiThrottle si le nom du serveur contient \'DCC-EX\' ou \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Oui, j\'utiliserai une EX-CommandStation</string>
+    <string name="introDccexQuestionNo">Non, je n\'utiliserai PAS d\'EX-CommandStation</string>
     <string name="introbackButtonPress">Merci de redémarrer Engine Driver pour terminer cette introduction.</string>
     <string name="functionButtonLookForWhistle">SIFFLET</string>
     <string name="functionButtonLookForHorn">KLAXON</string>
@@ -1035,5 +1039,6 @@
     <string name="cv29SpeedTableNo">Pas de courbe de vitesse, utilisation CV2, 5 et 6</string>
     <string name="cv29SpeedTableYes">Courbe de vitesse 28 points</string>
     <string name="cv29SpeedToggleDirection">Ecrit valeur %d dans CV29 pour changer sens de marche</string>
+    <string name="order">Trier</string>
 
 </resources>

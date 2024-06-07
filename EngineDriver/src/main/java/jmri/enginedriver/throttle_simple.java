@@ -256,6 +256,7 @@ public class throttle_simple extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
             titleBar = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
             if (screenHeight!=0) {
@@ -267,6 +268,9 @@ public class throttle_simple extends throttle {
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
+
+        // always hide the webview for this layout
+        webView.setVisibility(View.GONE);
 
         int speedButtonHeight = (int) (50 * denScale);
 

@@ -673,8 +673,13 @@
     <string name="introButtonsSliderAndButtons">Slider e pulsanti\n(non possibile con \'Grandi pulsanti\'.)</string>
     <string name="introButtonsNoSlider">Solo i pulsanti di velocità</string>
 
+    <string name="introDccexTitle">Opzioni EX-CommandStation</string>
+    <string name="introDccexSummary">Engine Driver può fornire funzionalità aggiuntive, inclusa la programmazione CV, se si utilizza direttamente una DCC-EX EX-CommandStation. (Non tramite JMRI)\n\nSe rispondi \'Sì\' di seguito, Engine Driver utilizzerà per impostazione predefinita i comandi nativi DCC-EX invece di WiThrottle se il nome del server contiene \'DCC-EX\' o \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Sì, utilizzerò una EX-CommandStation</string>
+    <string name="introDccexQuestionNo">No, NON utilizzerò una EX-CommandStation</string>
     <string name="introbackButtonPress">Please Riavvia l\'app Engine Driver per completare l\'introduzione.</string>
     <string name="consist_trail_label">Locomotiva di piombo</string>
+    <string name="dccExFunctionSettings">Impostazioni della funzione DCC-EX</string>
     <string name="fb_column_label">Etichetta</string>
     <string name="fb_column_function">funz #</string>
     <string name="rosterEmpty">Impossibile trovare nessuna enties nel roster JMRI. Utilizzare il \'DCC Indirizzo\' o opzione \'recente\', invece.</string>
@@ -933,5 +938,6 @@
     <string name="prefDccexPreferencesSummary">Opzioni per l\'utilizzo di un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Usa sempre le etichette delle funzioni dal server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Se disabilitato, utilizzare ENGINEDRIVER Etichette predefinite per LOCOS selezionati per indirizzo (non elenco), ignorando le etichette predefinite del server.</string>
+    <string name="order">Ordinare</string>
 
 </resources>

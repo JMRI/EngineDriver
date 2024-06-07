@@ -104,6 +104,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.import_export.ImportExportConnectionList;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.type.sort_type;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
@@ -144,8 +145,10 @@ public class threaded_application extends Application {
 //    public String[] to_states;
     private HashMap<String, String> turnout_states; //includes manual and system
     public HashMap<String, String> to_state_names;
+    public int turnoutsOrder = sort_type.NAME;
     public String[] routeSystemNames;
     public String[] rt_user_names;
+    public int routesOrder = sort_type.NAME;
     public String[] routeStates;
     public String[] routeDccexLabels; // only used by the DCC-EX protocol
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
@@ -2932,4 +2935,46 @@ public class threaded_application extends Application {
         }
         return mainapp.deviceId;
     }
+
+    @SuppressLint("DefaultLocale")
+    static public String formatNumberInName (String name) {
+        String tempName = name;
+        String tempNo = "";
+        int tempVal = 0;
+        char tempChar;
+        boolean haveNo = false;
+        boolean hasNumber = false;
+//        hasNumber= tempName.matches("[\\D]?[\\d]+[\\D]?");
+        for (int i=0; i<name.length();i++) {
+            tempChar = name.charAt(i);
+            if ((tempChar >= '0') && (tempChar <= '9')) {  // numeric
+                hasNumber = true;
+                break;
+            }
+        }
+        if (hasNumber) {
+            tempName = "";
+            for (int i=0; i<name.length();i++) {
+                tempChar = name.charAt(i);
+                if ((tempChar>='0') && (tempChar<='9')) {  // numeric
+                    haveNo = true;
+                    tempNo = tempNo + name.charAt(i);
+                } else {
+                    if (haveNo) {
+                        tempVal = Integer.parseInt(tempNo);
+                        tempName = tempName + String.format("%6d",tempVal);
+                        haveNo = false;
+                        tempNo = "";
+                    }
+                    tempName = tempName + name.charAt(i);
+                }
+            }
+            if (haveNo) {
+                tempVal = Integer.parseInt(tempNo);
+                tempName = tempName + String.format("%6d",tempVal);
+            }
+        }
+        return tempName;
+    }
+
 }

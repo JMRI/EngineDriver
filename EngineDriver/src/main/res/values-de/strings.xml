@@ -19,6 +19,7 @@
     <string name="exit">Beenden</string>
     <string name="settings">Funktionsvorgaben</string>
 <!--    <string name="fb_label">Funktionsbezeichnung</string>-->
+    <string name="dccExFunctionSettings">DCC-EX-Funktionseinstellungen</string>
     <string name="fb_column_label">Bezeichn.</string>
     <string name="fb_column_function">F-Nr.</string>
 <!--    <string name="function_buttons">Funktionstasten</string>-->
@@ -721,6 +722,10 @@
     <string name="introButtonsSliderAndButtons">Schieberegler und Tasten\n(nicht möglich mit \'Big Buttons\'.)</string>
     <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
 
+    <string name="introDccexTitle">EX-CommandStation-Optionen</string>
+    <string name="introDccexSummary">Engine Driver kann zusätzliche Funktionen bereitstellen, einschließlich CV-Programmierung, wenn Sie eine DCC-EX EX-CommandStation direkt verwenden. (Nicht über JMRI)\n\nWenn Sie unten mit „Ja“ antworten, verwendet Engine Driver standardmäßig native DCC-EX-Befehle anstelle von WiThrottle, wenn der Servername „DCC-EX“ oder „DCCEX“ enthält.</string>
+    <string name="introDccexQuestionYes">Ja, ich werde eine EX-CommandStation verwenden</string>
+    <string name="introDccexQuestionNo">Nein, ich werde KEINE EX-CommandStation verwenden</string>
     <string name="introbackButtonPress">Starten Sie die Engine Driver app erneut, um die Einführung abzuschließen.</string>
     <string name="consist_trail_label">Leitlokomotive</string>
     <string name="prefGamepadTestEnforceTestingSimpleTitle">Verwenden einfacher Test</string>
@@ -999,5 +1004,6 @@
     <string name="prefDccexPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
+    <string name="order">Sortieren</string>
 
 </resources>

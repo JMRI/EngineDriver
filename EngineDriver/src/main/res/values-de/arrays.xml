@@ -32,9 +32,10 @@
         <item>28 Stufen</item>
         <item>128 Stufen</item>
     </string-array>
-    <string-array name="WebViewLocationEntries">
-        <item>Unten</item>
+    <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>kein</item>
+        <item>Spitze</item>
+        <item>Unten</item>
     </string-array>
     <string-array name="OrientationEntries">
         <item>Hochformat</item>

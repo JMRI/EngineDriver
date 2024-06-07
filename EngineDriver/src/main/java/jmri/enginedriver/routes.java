@@ -70,6 +70,7 @@ import java.util.HashMap;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.type.sort_type;
 
 public class routes extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
 
@@ -110,11 +111,23 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
 
-        //specify logic for sort comparison (by username)
+        //specify logic for sort comparison (by username/in)
         Comparator<HashMap<String, String>> route_comparator = new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-                return arg0.get("rt_user_name").compareTo(arg1.get("rt_user_name"));    //*** was compareToIgnoreCase
+//                return arg0.get("rt_user_name").compareTo(arg1.get("rt_user_name"));    //*** was compareToIgnoreCase
+                int rslt;
+                String a;
+                String b;
+                if (mainapp.routesOrder == sort_type.NAME) {
+                    a = threaded_application.formatNumberInName(arg0.get("rt_user_name"));
+                    b = threaded_application.formatNumberInName(arg1.get("rt_user_name"));
+                } else {
+                    a = threaded_application.formatNumberInName(arg0.get("rt_system_name"));
+                    b = threaded_application.formatNumberInName(arg1.get("rt_system_name"));
+                }
+                rslt = a.compareTo(b);
+                return rslt;    //*** was compareToIgnoreCase()
             }
         };
 
@@ -332,6 +345,21 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
     }
 
+    public class SortButtonListener implements View.OnClickListener {
+
+        SortButtonListener() {}
+
+        public void onClick(View v) {
+            if (mainapp.routesOrder==sort_type.NAME) {
+                mainapp.routesOrder=sort_type.ID;
+            } else {
+                mainapp.routesOrder=sort_type.NAME;
+            }
+            refresh_route_view();
+            mainapp.buttonVibration();
+        }
+    }
+
     //handle click for each route's state toggle button
     public class route_state_button_listener implements View.OnClickListener {
 
@@ -476,6 +504,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
+
+        // setup the sort button
+        b = findViewById(R.id.routes_sort);
+        SortButtonListener sortButtonListener = new SortButtonListener();
+        b.setOnClickListener(sortButtonListener);
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
