@@ -1,9 +1,10 @@
+**Version 2.37.184
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
  * Bug fix for <p 0|1>  (space after p)  - only seen in the JMRI DCC++ simulator
  * Include any server with port 2560 as a DCC-EX server when connection preference set to 'Auto'
- * Support for JMRI DCCppOverTCP Server. Now also checks for the mDNS service "_dccppovertcpserver._tcp.local."
+ * Discovery for JMRI DCCppOverTCP Server, checks for the mDNS service "_dccppovertcpserver._tcp.local."
 **Version 2.37.180
  * fastclock fix
  * reinstate mipmap icon
@@ -766,8 +767,6 @@
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
- *   TODO: lint removal
- *   TODO: remove deprecated code
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -790,6 +789,7 @@
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add option to choose which server to automatically connect to
+ *   TODO: Add DCC-EX to "Auto-connect to first server?"
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
