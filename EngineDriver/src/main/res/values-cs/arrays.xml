@@ -43,8 +43,9 @@
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->
-        <item>Dolů</item>
         <item>nic</item>
+        <item>Horní</item>
+        <item>Dolů</item>
     </string-array>
     <string-array name="OrientationEntries">  <!-- display version -->
         <item>Na výšku</item>

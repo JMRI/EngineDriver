@@ -52,12 +52,14 @@
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->
-        <item>Bottom</item>
         <item>none</item>
+        <item>Top</item>
+        <item>Bottom</item>
     </string-array>
     <string-array name="WebViewLocationEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item>Bottom</item>
         <item>none</item>
+        <item>Top</item>
+        <item>Bottom</item>
     </string-array>
 
     <string-array name="OrientationEntries">  <!-- display version -->

@@ -1766,8 +1766,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!(keepWebViewLocation.equals(WEB_VIEW_LOCATION_NONE))) { // show/hide the web view if the preference is set
             if (!webViewIsOn) {
                 webViewLocation = keepWebViewLocation;
+                webView.setVisibility(View.VISIBLE);
             } else {
                 webViewLocation = WEB_VIEW_LOCATION_NONE;
+                webView.setVisibility(View.GONE);
                 if (!toastMsg.equals(""))
                     Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             }
@@ -2947,8 +2949,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefGamePadButtons[14] = prefs.getString("prefGamePadButtonLeftThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonLeftThumbDefaultValue));
         prefGamePadButtons[15] = prefs.getString("prefGamePadButtonRightThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightThumbDefaultValue));
 
-        if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) {
-            // make sure the Softkeyboard is hidden
+        if ( (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE))
+        && (webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) ) {
+            // make sure the Soft keyboard is hidden
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                     WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
@@ -4457,7 +4460,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
 // Listeners for the Select Loco buttons
-    protected class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+//    protected class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+    protected class select_function_button_touch_listener implements View.OnClickListener, View.OnLongClickListener {
     int whichThrottle;
 
     protected select_function_button_touch_listener(int new_whichThrottle) {
@@ -4489,23 +4493,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
 
-    //TODO: This onTouch may be redundant now that the gesture overlay is working better
-
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            mainapp.exitDoubleBackButtonInitiated = 0;
-            int[] pos = new int[2];
-            v.getLocationOnScreen(pos);
-
-            // if gesture in progress, we may need to skip button processing
-            if (gestureInProgress) {
-                // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
-                //check to see if we have a substantial vertical movement
-                return Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance);
-            }
-            return false;
-        }
+//    //TODO: This onTouch may be redundant now that the gesture overlay is working better
+//
+//        @SuppressLint("ClickableViewAccessibility")
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            mainapp.exitDoubleBackButtonInitiated = 0;
+//            int[] pos = new int[2];
+//            v.getLocationOnScreen(pos);
+//
+//            // if gesture in progress, we may need to skip button processing
+//            if (gestureInProgress) {
+//                // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
+//                //check to see if we have a substantial vertical movement
+//                return Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance);
+//            }
+//            return false;
+//        }
     }
 
     //listeners for the Limit Speed Button
@@ -5627,7 +5631,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             bSels[i].setClickable(true);
             sfbt = new select_function_button_touch_listener(i);
             bSels[i].setOnClickListener(sfbt);
-            bSels[i].setOnTouchListener(sfbt);
+//            bSels[i].setOnTouchListener(sfbt);
             bSels[i].setOnLongClickListener(sfbt);  // Consist Light Edit
             tvLeftDirInds[i] = tvLeft;
             tvRightDirInds[i] = tvRight;
@@ -5956,7 +5960,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         setActiveThrottle(0); // set the throttle the volume keys control depending on the preference to the default 0
 
-        webView = findViewById(R.id.throttle_webview);
+        if (prefs.getString("WebViewLocation", WEB_VIEW_LOCATION_NONE).equals(WEB_VIEW_LOCATION_TOP)) {
+            webView = findViewById(R.id.throttle_webview_top);
+        } else {
+            webView = findViewById(R.id.throttle_webview);
+        }
+        webView.setVisibility(View.VISIBLE);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);

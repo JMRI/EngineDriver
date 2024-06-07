@@ -33,9 +33,10 @@
         <item>28 passi</item>
         <item>128 passi</item>
     </string-array>
-    <string-array name="WebViewLocationEntries">
-        <item>Fondo</item>
+    <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>niente</item>
+        <item>Superiore</item>
+        <item>Fondo</item>
     </string-array>
     <string-array name="OrientationEntries">
         <item>Ritratto</item>

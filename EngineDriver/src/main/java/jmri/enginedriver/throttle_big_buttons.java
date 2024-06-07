@@ -233,6 +233,7 @@ public class throttle_big_buttons extends throttle {
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
             titleBar = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
             if (screenHeight!=0) {
@@ -255,19 +256,15 @@ public class throttle_big_buttons extends throttle {
         }
 
         // save part the screen for webview
-        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
-                // save half the screen
-                screenHeight *= 0.5;
+                screenHeight *= 0.5; // save half the screen
             } else {
-                // save 60% of the screen
-                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
-                    screenHeight *= 0.40;
-                } else {
-                    screenHeight *= 0.60;
-                }
+                screenHeight *= 0.4; // save 60% of the screen for web view
             }
+            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
+            webView.setLayoutParams(webViewParams);
         }
 
         int speedButtonHeight = (int) (50 * denScale);

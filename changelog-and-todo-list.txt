@@ -1,4 +1,6 @@
 **Version 2.37.184
+ * option to have the Throttle WebView on the top of the page
+ * fix bug where the keyboard would not show in throttle WebView
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page

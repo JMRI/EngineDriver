@@ -32,9 +32,10 @@
         <item>28 passos</item>
         <item>128 passos</item>
     </string-array>
-    <string-array name="WebViewLocationEntries">
-        <item>Fundo</item>
+    <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>nada</item>
+        <item>Principal</item>
+        <item>Fundo</item>
     </string-array>
     <string-array name="OrientationEntries">
         <item>Retrato</item>

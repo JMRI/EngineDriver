@@ -424,20 +424,18 @@ public class throttle_switching_left_or_right extends throttle {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
-//        int sep = (int) (denScale * 12); // separator
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-//        int throttleWidth = (screenWidth - (sep * (mainapp.numThrottles-1)))/ mainapp.numThrottles;
         int throttleWidth = screenWidth / mainapp.numThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
-//            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
             lSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
             titleBar = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
             if (screenHeight!=0) {
@@ -456,19 +454,15 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         // save part the screen for webview
-        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
-                // save half the screen
-                screenHeight *= 0.5;
+                screenHeight *= 0.5; // save half the screen
             } else {
-                // save 60% of the screen
-                if (webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
-                    screenHeight *= 0.40;
-                } else {
-                    screenHeight *= 0.60;
-                }
+                screenHeight *= 0.4; // save 60% of the screen for web view
             }
+            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
+            webView.setLayoutParams(webViewParams);
         }
 
         ImageView myImage = findViewById(R.id.backgroundImgView);

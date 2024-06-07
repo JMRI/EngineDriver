@@ -1885,6 +1885,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "WebViewLocation":
                         parentActivity.mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = threaded_application.FORCED_RESTART_REASON_THROTTLE_SWITCH;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
                     case "InitialThrotWebPage":
                         parentActivity.mainapp.alert_activities(message_type.INITIAL_THR_WEBPAGE, "");
