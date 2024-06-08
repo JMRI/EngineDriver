@@ -51,9 +51,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.consist_function_rule_style_type;
+
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
-import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 @SuppressLint("ApplySharedPref")
@@ -75,11 +77,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     private static final String[] LATCHING = {"latching", "none"};
 
     boolean isSpecial = false;
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     SharedPreferences prefs;
 
@@ -133,9 +130,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler(Looper.getMainLooper());
 
         if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY)) ) ) {
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY)) ) ) {
             isSpecial = true;
         }
 

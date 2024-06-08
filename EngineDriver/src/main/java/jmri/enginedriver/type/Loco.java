@@ -53,12 +53,6 @@ public class Loco {
     private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
     private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL = "f trail";
 
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
-
     public Loco(String address) {
         if (address != null)
             this.addr = address;
@@ -221,7 +215,7 @@ public class Loco {
         List<Integer> functionList = new ArrayList<>();
         Integer matchingRule = -1;
 
-        if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) {
+        if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX)) {
             // work out if/which rule the activated function matches
             for (int i = 0; i < prefConsistFollowStrings.size(); i++) {
 //            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
@@ -322,12 +316,12 @@ public class Loco {
 
                         if (processThis) {
                             String fl = functionLabels.get(i).toLowerCase().trim();
-                            if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT)) {
+                            if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT)) {
                                 if (fl.equals(sl)) {
                                     functionList.add(i);
                                 }
                             } else {
-                                if (prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)) {
+                                if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL)) {
                                     if ((fl.contains(sl)) || (sl.contains(fl))) {
                                         functionList.add(i);
                                     }

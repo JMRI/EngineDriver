@@ -45,17 +45,14 @@ import java.util.Collection;
 import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.restart_reason_type;
+
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
 public class ImportExportPreferences {
 
     public boolean currentlyImporting = false;
-
-    //private String exportedPreferencesFileName =  "exported_preferences.ed";
-    public static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT = "Connect Disconnect";
-    public static final String AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY = "Connect Only";
-
 
     public static final String RECENT_TURNOUTS_FILENAME = "recent_turnouts_list.txt";
     private static final String RECENT_CONSISTS_FILENAME = "recent_consist_list.txt";
@@ -89,8 +86,6 @@ public ArrayList<Integer> recent_loco_source_list;
     private static final int LIGHT_FOLLOW = 1;
       private static final int LIGHT_UNKNOWN = 2;
 //    public static final int LIGHT_ON = 3;
-
-    private static final int FORCED_RESTART_REASON_NONE = 0;
 
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
@@ -247,7 +242,7 @@ public ArrayList<Integer> recent_loco_source_list;
             String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
             String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
-            int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", FORCED_RESTART_REASON_NONE);
+            int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
             String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
 

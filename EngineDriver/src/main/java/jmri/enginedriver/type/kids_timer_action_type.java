@@ -17,8 +17,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface sort_type {
-    int NAME = 0;
-    int ID = 1;
-    int LAST_USED = 2;
+public interface kids_timer_action_type {
+    int DISABLED = 0;
+    int STARTED = 1;
+    int ENABLED = 2;
+    int RUNNNING = 3;
+    int ENDED = 999;
 }

@@ -80,6 +80,7 @@ import java.util.regex.Pattern;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
@@ -174,7 +175,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     b = threaded_application.formatNumberInName(arg1.get("to_system_name"));
                 }
                 rslt = a.compareTo(b);
-                return rslt;    //*** was compareToIgnoreCase()
+                return rslt;
             }
         };
 
@@ -1389,7 +1390,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
-                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_TURNOUTS, deltaX);
+                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.TURNOUTS, deltaX);
                 startACoreActivity(this, nextScreenIntent, true, deltaX);
             } else {
                 // gesture was not long enough

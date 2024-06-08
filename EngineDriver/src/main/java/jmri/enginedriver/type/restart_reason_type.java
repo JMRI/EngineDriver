@@ -17,8 +17,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface sort_type {
-    int NAME = 0;
-    int ID = 1;
-    int LAST_USED = 2;
+public interface restart_reason_type {
+    int NONE = 0;
+    int RESET = 1;
+    int IMPORT = 2;
+    int IMPORT_SERVER_MANUAL = 3;
+    int THEME = 4;
+    int THROTTLE_PAGE = 5;
+    int LOCALE = 6;
+    int IMPORT_SERVER_AUTO = 7;
+    int AUTO_IMPORT = 8; // for local server files
+    int BACKGROUND = 9;
+    int THROTTLE_SWITCH = 10;
+    int FORCE_WIFI = 11;
+    int IMMERSIVE_MODE = 12;
+    int DEAD_ZONE = 13;
+    int SHAKE_THRESHOLD = 14;
+    int GAMEPAD_RESET = 15;
 }

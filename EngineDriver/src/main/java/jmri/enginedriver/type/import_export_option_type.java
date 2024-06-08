@@ -17,8 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface sort_type {
-    int NAME = 0;
-    int ID = 1;
-    int LAST_USED = 2;
+public interface import_export_option_type {
+    String NONE = "None";
+    String EXPORT = "Export";
+    String IMPORT = "Import";
+    String RESET = "Reset";
 }

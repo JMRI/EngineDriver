@@ -38,6 +38,7 @@ import android.widget.SeekBar;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 
 public class throttle_switching_horizontal extends throttle {
@@ -810,7 +811,7 @@ public class throttle_switching_horizontal extends throttle {
 //            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
             setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
-            kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+            kidsTimerActions(kids_timer_action_type.STARTED,0);
         }
     }
 

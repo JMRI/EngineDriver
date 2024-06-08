@@ -17,8 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface sort_type {
-    int NAME = 0;
-    int ID = 1;
-    int LAST_USED = 2;
+public interface auto_import_export_option_type {
+    String CONNECT_AND_DISCONNECT = "Connect Disconnect";
+    String CONNECT_ONLY = "Connect Only";
 }
