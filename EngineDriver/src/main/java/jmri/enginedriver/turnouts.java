@@ -175,7 +175,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     b = threaded_application.formatNumberInName(arg1.get("to_system_name"));
                 }
                 rslt = a.compareTo(b);
-                return rslt;    //*** was compareToIgnoreCase()
+                return rslt;
             }
         };
 

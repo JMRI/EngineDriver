@@ -160,6 +160,9 @@ public class threaded_application extends Application {
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
+    public int rosterOrder = sort_type.NAME;
+    public int recentLocosOrder = sort_type.LAST_USED;
+    public int recentConsistsOrder = sort_type.LAST_USED;
     public Map<String, String> consist_entries;
     public static DownloadRosterTask dlRosterTask = null;
 //    private static DownloadMetaTask dlMetadataTask = null;

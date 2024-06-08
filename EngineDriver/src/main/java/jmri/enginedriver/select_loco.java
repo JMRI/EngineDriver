@@ -94,6 +94,7 @@ import java.util.Map;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.Loco;
+import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
@@ -304,9 +305,18 @@ public class select_loco extends AppCompatActivity {
             Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
                 @Override
                 public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
-                    String s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
-                    String s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
-                    return s0.compareTo(s1);
+                    int rslt;
+                    String s0;
+                    String s1;
+                    if (mainapp.rosterOrder == sort_type.NAME) {
+                        s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
+                        s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
+                    } else {
+                        s0 = threaded_application.formatNumberInName(arg0.get("roster_address"));
+                        s1 = threaded_application.formatNumberInName(arg1.get("roster_address"));
+                    }
+                    rslt = s0.compareTo(s1);
+                    return rslt;
                 }
             };
             Collections.sort(roster_list, comparator);
@@ -792,12 +802,44 @@ public class select_loco extends AppCompatActivity {
                         importExportPreferences.recent_loco_address_list.get(i),
                         importExportPreferences.recent_loco_address_size_list.get(i),
                         importExportPreferences.recent_loco_source_list.get(i)));   // the small loco address field at the top of the row
+                hm.put("engine_address", Integer.toString(importExportPreferences.recent_loco_address_list.get(i)));
+                hm.put("last_used", Integer.toString(i));
                 recent_engine_list.add(hm);
             }
 
             if (importExportPreferences.recent_loco_address_list.size() == 0) {  // if the list is empty, hide the radio button
                 rbRecent.setVisibility(GONE);
             } else {
+
+                Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
+                    @Override
+                    public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+                        int rslt;
+                        String s0;
+                        String s1;
+                        switch (mainapp.recentLocosOrder) {
+                            case sort_type.NAME: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("engine").replaceAll("_", " ").toLowerCase());
+                                s1 = threaded_application.formatNumberInName(arg1.get("engine").replaceAll("_", " ").toLowerCase());
+                                break;
+                            }
+                            case sort_type.ID: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("engine_address"));
+                                s1 = threaded_application.formatNumberInName(arg1.get("engine_address"));
+                                break;
+                            }
+                            case sort_type.LAST_USED:
+                            default: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                            }
+                        }
+                        rslt = s0.compareTo(s1);
+                        return rslt;
+                    }
+                };
+                Collections.sort(recent_engine_list, comparator);
+
                 rbRecent.setVisibility(View.VISIBLE);
             }
 
@@ -827,11 +869,41 @@ public class select_loco extends AppCompatActivity {
                 hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i),
                         false));
                 hm.put("consist", mainapp.locoAndConsistNamesCleanupHtml(importExportPreferences.consistNameList.get(i)));
+                hm.put("last_used", Integer.toString(i));
                 recent_consists_list.add(hm);
             }
             if (importExportPreferences.consistEngineAddressList.size() == 0) {
                 myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
             } else {
+                Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
+                    @Override
+                    public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+                        int rslt;
+                        String s0;
+                        String s1;
+                        switch (mainapp.recentConsistsOrder) {
+                            case sort_type.NAME: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("consist").replaceAll("_", " ").toLowerCase());
+                                s1 = threaded_application.formatNumberInName(arg1.get("consist").replaceAll("_", " ").toLowerCase());
+                                break;
+                            }
+                            case sort_type.ID: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("consist_name"));
+                                s1 = threaded_application.formatNumberInName(arg1.get("consist_name"));
+                                break;
+                            }
+                            case sort_type.LAST_USED:
+                            default: {
+                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                            }
+                        }
+                        rslt = s0.compareTo(s1);
+                        return rslt;
+                    }
+                };
+                Collections.sort(recent_consists_list, comparator);
+
                 myRadioButton.setVisibility(View.VISIBLE);
             }
 
@@ -1029,6 +1101,60 @@ public class select_loco extends AppCompatActivity {
             hideSoftKeyboard(v);
             startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+            mainapp.buttonVibration();
+        }
+    }
+
+    public class SortRosterButtonListener implements View.OnClickListener {
+        SortRosterButtonListener() {}
+
+        public void onClick(View v) {
+            if (mainapp.rosterOrder==sort_type.NAME) {
+                mainapp.rosterOrder=sort_type.ID;
+            } else {
+                mainapp.rosterOrder=sort_type.NAME;
+            }
+            refresh_roster_list();
+            mainapp.buttonVibration();
+        }
+    }
+
+    public class SortRecentLocosButtonListener implements View.OnClickListener {
+        SortRecentLocosButtonListener() {}
+
+        public void onClick(View v) {
+            switch (mainapp.recentLocosOrder) {
+                case sort_type.NAME:
+                    mainapp.recentLocosOrder=sort_type.ID;
+                    break;
+                case sort_type.ID:
+                    mainapp.recentLocosOrder=sort_type.LAST_USED;
+                    break;
+                case sort_type.LAST_USED:
+                default:
+                    mainapp.recentLocosOrder=sort_type.NAME;
+            }
+            loadRecentLocosList(true);
+            mainapp.buttonVibration();
+        }
+    }
+
+    public class SortRecentConsistsButtonListener implements View.OnClickListener {
+        SortRecentConsistsButtonListener() {}
+
+        public void onClick(View v) {
+            switch (mainapp.recentConsistsOrder) {
+                case sort_type.NAME:
+                    mainapp.recentConsistsOrder=sort_type.ID;
+                    break;
+                case sort_type.ID:
+                    mainapp.recentConsistsOrder=sort_type.LAST_USED;
+                    break;
+                case sort_type.LAST_USED:
+                default:
+                    mainapp.recentConsistsOrder=sort_type.NAME;
+            }
+            loadRecentConsistsList(true);
             mainapp.buttonVibration();
         }
     }
@@ -1505,6 +1631,19 @@ public class select_loco extends AppCompatActivity {
 
         set_labels();
         overrideThrottleName = "";
+
+        // setup the sort buttons
+        Button b = findViewById(R.id.roster_sort);
+        SortRosterButtonListener sortRosterButtonListener = new SortRosterButtonListener();
+        b.setOnClickListener(sortRosterButtonListener);
+
+        b = findViewById(R.id.recent_engines_sort);
+        SortRecentLocosButtonListener sortRecentLocosButtonListener = new SortRecentLocosButtonListener();
+        b.setOnClickListener(sortRecentLocosButtonListener);
+
+        b = findViewById(R.id.recent_consists_sort);
+        SortRecentConsistsButtonListener sortRecentConsistsButtonListener = new SortRecentConsistsButtonListener();
+        b.setOnClickListener(sortRecentConsistsButtonListener);
 
         Handler handler = new Handler();
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay

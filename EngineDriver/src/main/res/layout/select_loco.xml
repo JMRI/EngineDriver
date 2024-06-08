@@ -330,18 +330,32 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/filter_roster_text"
+            android:paddingLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:paddingTop="2dp"
+            android:layout_toLeftOf="@+id/roster_sort"
             android:text="@string/roster_list"
             tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/roster_sort"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/filter_roster_text"
+            android:padding="2sp"
+            android:text="@string/order" />
 
         <EditText
             android:id="@+id/filter_roster_text"
             style="?attr/edit_label_style"
-            android:layout_width="80sp"
+            android:layout_width="70sp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:paddingTop="2dp"
             android:hint="@string/FilterRosterListHint"
             android:imeOptions="actionDone"
             android:inputType="text"
@@ -422,18 +436,30 @@
             android:id="@+id/recent_engines_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
-
             android:layout_alignTop="@+id/clear_Loco_List_button"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/clear_Loco_List_button"
+            android:paddingLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:paddingTop="2dp"
+            android:layout_toLeftOf="@+id/recent_engines_sort"
             android:text="@string/recent_engines"
             tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/recent_engines_sort"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/clear_Loco_List_button"
+            android:padding="2sp"
+            android:text="@string/order" />
 
         <Button
             android:id="@+id/clear_Loco_List_button"
             style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -467,18 +493,30 @@
             android:id="@+id/recent_consists_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="wrap_content"
-
             android:layout_alignTop="@+id/clear_consists_list_button"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/clear_consists_list_button"
+            android:paddingLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:paddingTop="2dp"
+            android:layout_toLeftOf="@+id/recent_consists_sort"
             android:text="@string/recent_consists"
             tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/recent_consists_sort"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/clear_consists_list_button"
+            android:padding="2sp"
+            android:text="@string/order" />
 
         <Button
             android:id="@+id/clear_consists_list_button"
             style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
