@@ -60,6 +60,8 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.consist_function_rule_style_type;
+
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
@@ -2153,8 +2155,8 @@ public class comm_thread extends Thread {
     static void processFunctionState(int whichThrottle, Integer fn, boolean fState) {
 
         boolean skip = (fn > 2) && (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ((mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL)));
+                && ((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL)));
 
         if (!skip) {
             try {

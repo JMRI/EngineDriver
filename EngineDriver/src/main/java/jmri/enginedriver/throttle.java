@@ -144,19 +144,23 @@ import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.consist_function_rule_style_type;
+import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.restart_reason_type;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.direction_button;
+import jmri.enginedriver.type.function_button;
+
+import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.util.VerticalSeekBar;
-
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.ShakeDetector;
-import jmri.enginedriver.type.message_type;
-import jmri.enginedriver.import_export.ImportExportPreferences;
-import jmri.enginedriver.type.direction_button;
-import jmri.enginedriver.type.function_button;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.import_export.ImportExportPreferences;
 
 public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
@@ -302,12 +306,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
     private static final int BUTTON_PRESS_MESSAGE_UP = 0;
     private static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
-
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
-//    private static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
 //    private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
 //    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
@@ -658,7 +656,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             new ThrottleScale(10, 127)};
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-    private static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
     private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
     private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
@@ -891,11 +888,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint("ApplySharedPref")
     protected void kidsTimerActions(int action, int arg) {
         switch (action) {
-            case threaded_application.KIDS_TIMER_DISABLED:
+            case kids_timer_action_type.DISABLED:
                 if (arg == 0) { // not onResume
 //                    speedUpdateAndNotify(0);
                     if (kidsTimer!=null) kidsTimer.cancel();
-                    kidsTimerRunning = threaded_application.KIDS_TIMER_DISABLED;
+                    kidsTimerRunning = kids_timer_action_type.DISABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(true);
@@ -912,13 +909,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 break;
 
-            case threaded_application.KIDS_TIMER_ENABLED:
-                if (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING) {  // reset the timer if it is already running
+            case kids_timer_action_type.ENABLED:
+                if (kidsTimerRunning == kids_timer_action_type.RUNNNING) {  // reset the timer if it is already running
                     speedUpdateAndNotify(0);
                     if (kidsTimer!=null) kidsTimer.cancel();
                 }
 //                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
-                    kidsTimerRunning = threaded_application.KIDS_TIMER_ENABLED;
+                    kidsTimerRunning = kids_timer_action_type.ENABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(false);
@@ -935,16 +932,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 break;
 
-            case threaded_application.KIDS_TIMER_STARTED:
-                if ((prefKidsTime>0) && (kidsTimerRunning != threaded_application.KIDS_TIMER_RUNNNING)) {
-                    kidsTimerRunning = threaded_application.KIDS_TIMER_RUNNNING;
+            case kids_timer_action_type.STARTED:
+                if ((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNNING)) {
+                    kidsTimerRunning = kids_timer_action_type.RUNNNING;
                     kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
                     kidsTimer.start();
                 }
                 break;
-            case threaded_application.KIDS_TIMER_ENDED:
+            case kids_timer_action_type.ENDED:
                 speedUpdateAndNotify(0);
-                kidsTimerRunning = threaded_application.KIDS_TIMER_ENDED;
+                kidsTimerRunning = kids_timer_action_type.ENDED;
                 if (kidsTimer!=null) kidsTimer.cancel();
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     enable_disable_buttons(throttleIndex, true);
@@ -957,7 +954,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
                 break;
-            case threaded_application.KIDS_TIMER_RUNNNING:
+            case kids_timer_action_type.RUNNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
@@ -1076,7 +1073,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
-                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL))
+                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL))
                                                     || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
                                                 set_function_state(whichThrottle, function);
                                             }
@@ -1189,16 +1186,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     promptForSteal( msg.obj.toString(), msg.arg1);
                     break;
                 case message_type.KIDS_TIMER_ENABLE:
-                    kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED,0);
+                    kidsTimerActions(kids_timer_action_type.ENABLED,0);
                     break;
                 case message_type.KIDS_TIMER_START:
-                    kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+                    kidsTimerActions(kids_timer_action_type.STARTED,0);
                     break;
                 case message_type.KIDS_TIMER_TICK:
-                    kidsTimerActions(threaded_application.KIDS_TIMER_RUNNNING,msg.arg1);
+                    kidsTimerActions(kids_timer_action_type.RUNNNING,msg.arg1);
                     break;
                 case message_type.KIDS_TIMER_END:
-                    kidsTimerActions(threaded_application.KIDS_TIMER_ENDED,0);
+                    kidsTimerActions(kids_timer_action_type.ENDED,0);
                     break;
                 case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
                     Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
@@ -2092,7 +2089,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             sbs[whichThrottle].setProgress(getSpeedFromCurrentSliderPosition(whichThrottle,false));
         }
 
-        kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+        kidsTimerActions(kids_timer_action_type.STARTED,0);
         doLocoSound(whichThrottle);
 
     } // end incrementSpeed
@@ -2416,9 +2413,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Consist con = mainapp.consists[whichThrottle];
 
         if ( ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))  ) )
+                && ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))  ) )
                 || (mainapp.isDCCEX)
         ) {
             int doPress = -1;
@@ -2534,7 +2531,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
             boolean locoChangeAllowed = tIsEnabled && isSelectLocoAllowed(whichThrottle);
 
-            if (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING) {
+            if (kidsTimerRunning == kids_timer_action_type.RUNNNING) {
                 locoChangeAllowed = false;
                 if (!prefKidsTimerEnableReverse) {
                     dirChangeAllowed = false;
@@ -2587,7 +2584,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( (bPauses!=null) && (bPauses[whichThrottle]!=null) ) {
             bPauses[whichThrottle].setEnabled(newEnabledState);
         }
-        if ( (kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
+        if ( (kidsTimerRunning == kids_timer_action_type.RUNNNING)
             && (!prefKidsTimerEnableReverse)) {
             bRevs[whichThrottle].setEnabled(false);
         } else {
@@ -4694,7 +4691,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean trail = false;
         boolean followLeadFunction = false;
 
-        if (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
             if (!lab.equals("")) {
                 lead = (prefSelectiveLeadSound &&
                         (lab.contains(FUNCTION_BUTTON_LOOK_FOR_WHISTLE) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_HORN) || lab.contains(FUNCTION_BUTTON_LOOK_FOR_BELL))
@@ -4725,17 +4722,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         con = mainapp.consists[whichThrottle];
 
         String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
-        if ( ( (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
-                || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))  )
+        if ( ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
+                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
+                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))  )
             && (con.size()==1)
             && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
         ) {
-                tempPrefConsistFollowRuleStyle = threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL;
+                tempPrefConsistFollowRuleStyle = consist_function_rule_style_type.ORIGINAL;
         }
 
-        if (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_ORIGINAL)) {
+        if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
 
             String addr = "";
             if (leadOnly)
@@ -4763,7 +4760,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         } else {  //Complex or SpecialExact or SpecialPartial
 
-            if (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX)) { // if Complex, always activate the lead loco
+            if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX)) { // if Complex, always activate the lead loco
                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
                 } else {
@@ -4776,9 +4773,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             List<Integer> functionList = new ArrayList<>();
             for (Consist.ConLoco l : con.getLocos()) {
                 boolean processThisLoco = (!l.getAddress().equals(con.getLeadAddr()))
-                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                        || (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY))
+                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
+                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))
                         || (mainapp.prefAlwaysUseDefaultFunctionLabels);
                 // for complex ignore the lead as we have already set it
 
@@ -4790,7 +4787,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mainapp);
                     if (functionList.size()>0) {
                         for (int i = 0; i < functionList.size(); i++) {
-                            if ( (tempPrefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_COMPLEX))
+                            if ( (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
                                 || (isLatching == FUNCTION_CONSIST_LATCHING_NA) ) {
                                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i));
@@ -5419,7 +5416,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void onStopTrackingTouch(SeekBar sb) {
             limitedJump[whichThrottle] = false;
             setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
-            kidsTimerActions(threaded_application.KIDS_TIMER_STARTED,0);
+            kidsTimerActions(kids_timer_action_type.STARTED,0);
         }
     }
 
@@ -6201,15 +6198,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        if (((prefKidsTime>0) && (kidsTimerRunning != threaded_application.KIDS_TIMER_RUNNNING))) {
+        if (((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNNING))) {
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
         } else {
-            if (kidsTimerRunning == threaded_application.KIDS_TIMER_ENDED) {
+            if (kidsTimerRunning == kids_timer_action_type.ENDED) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             }
 
             if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,1);
+                kidsTimerActions(kids_timer_action_type.DISABLED,1);
             }
         }
 
@@ -6220,7 +6217,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
-            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
@@ -6329,9 +6326,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
 
             boolean isSpecial = (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                    && ((mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(threaded_application.CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY)));
+                    && ((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
+                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY)));
             TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
             if ((!isSpecial) && (mainapp.isDCCEX)) {
                 TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
@@ -7011,7 +7008,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
                 prefKidsTimer = prefKidsTimerButtonDefault;
                 prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
-                kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED, 0);
+                kidsTimerActions(kids_timer_action_type.ENABLED, 0);
                 return true;
 
             case R.id.flashlight_button:
@@ -7101,7 +7098,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                 getKidsTimerPrefs();
                 if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
-                    kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED,0);
+                    kidsTimerActions(kids_timer_action_type.DISABLED,0);
                 }
 
                 redrawVerticalSliders();
@@ -7329,7 +7326,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                         // swipe left/right
                         if (!isScreenLocked) {
-                            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_THROTTLE, deltaX);
+                            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.THROTTLE, deltaX);
                             startACoreActivity(this, nextScreenIntent, true, deltaX);
                         }
                     }
@@ -7486,14 +7483,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 Log.d("", "Password Value : " + passwordText);
 
                 if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
-                    kidsTimerActions(threaded_application.KIDS_TIMER_ENDED, 0);
-                    kidsTimerActions(threaded_application.KIDS_TIMER_DISABLED, 0);
+                    kidsTimerActions(kids_timer_action_type.ENDED, 0);
+                    kidsTimerActions(kids_timer_action_type.DISABLED, 0);
                     prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
                     getKidsTimerPrefs();
                 }
 
                 if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
-                    kidsTimerActions(threaded_application.KIDS_TIMER_ENABLED, 0);
+                    kidsTimerActions(kids_timer_action_type.ENABLED, 0);
                 }
 
                 mainapp.hideSoftKeyboardAfterDialog();
@@ -7665,12 +7662,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
-                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
+                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, restart_reason_type.IMPORT_SERVER_AUTO);
 
                         break;
                     case DialogInterface.BUTTON_NEUTRAL:
                         prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
-                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, FORCED_RESTART_REASON_IMPORT_SERVER_AUTO);
+                        loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, restart_reason_type.IMPORT_SERVER_AUTO);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -7789,7 +7786,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
-        forceRestartApp(threaded_application.FORCED_RESTART_REASON_THROTTLE_SWITCH);
+        forceRestartApp(restart_reason_type.THROTTLE_SWITCH);
     }
 
     //listeners for the Pause Speed Button

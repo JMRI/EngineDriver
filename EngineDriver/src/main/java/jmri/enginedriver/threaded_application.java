@@ -91,20 +91,26 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.restart_reason_type;
+import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.sort_type;
+import jmri.enginedriver.type.consist_function_rule_style_type;
+import jmri.enginedriver.type.message_type;
+
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
+import jmri.enginedriver.util.ImageDownloader;
+import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.comms.comm_handler;
 import jmri.enginedriver.comms.comm_thread;
-import jmri.enginedriver.util.ImageDownloader;
-import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.import_export.ImportExportConnectionList;
-import jmri.enginedriver.util.LocaleHelper;
-import jmri.enginedriver.type.sort_type;
 
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterLoader;
@@ -336,23 +342,6 @@ public class threaded_application extends Application {
 
     public long exitDoubleBackButtonInitiated = 0;
 
-    public static final int FORCED_RESTART_REASON_NONE = 0;
-    public static final int FORCED_RESTART_REASON_RESET = 1;
-    public static final int FORCED_RESTART_REASON_IMPORT = 2;
-    public static final int FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL = 3;
-    public static final int FORCED_RESTART_REASON_THEME = 4;
-    public static final int FORCED_RESTART_REASON_THROTTLE_PAGE = 5;
-    public static final int FORCED_RESTART_REASON_LOCALE = 6;
-    public static final int FORCED_RESTART_REASON_IMPORT_SERVER_AUTO = 7;
-    public static final int FORCED_RESTART_REASON_AUTO_IMPORT = 8; // for local server files
-    public static final int FORCED_RESTART_REASON_BACKGROUND = 9;
-    public static final int FORCED_RESTART_REASON_THROTTLE_SWITCH = 10;
-    public static final int FORCED_RESTART_REASON_FORCE_WIFI = 11;
-    public static final int FORCED_RESTART_REASON_IMMERSIVE_MODE = 12;
-    public static final int FORCED_RESTART_REASON_DEAD_ZONE = 13;
-    public static final int FORCED_RESTART_REASON_SHAKE_THRESHOLD = 14;
-//    public static final int FORCED_RESTART_REASON_GAMEPAD_RESET = 15;
-
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
     public int actionBarIconCountTurnouts = 0;
@@ -367,11 +356,6 @@ public class threaded_application extends Application {
 
     public boolean prefAlwaysUseDefaultFunctionLabels = false;
     public String prefConsistFollowRuleStyle = "original";
-    public static final String CONSIST_FUNCTION_RULE_STYLE_ORIGINAL = "original";
-    public static final String CONSIST_FUNCTION_RULE_STYLE_COMPLEX = "complex";
-    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_EXACT = "specialExact";
-    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL = "specialPartial";
-    public static final String CONSIST_FUNCTION_RULE_STYLE_SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
 
     public boolean prefShowTimeOnLogEntry = false;
     public String logSaveFilename = "";
@@ -381,12 +365,6 @@ public class threaded_application extends Application {
     //    public int prefHapticFeedbackSteps = 10;
     public int prefHapticFeedbackDuration = 250;
     public boolean prefHapticFeedbackButtons = false;
-
-    /// swipe right sequence
-    public static final int SCREEN_SWIPE_INDEX_THROTTLE = 0;
-    public static final int SCREEN_SWIPE_INDEX_ROUTES = 1;
-    public static final int SCREEN_SWIPE_INDEX_WEB = 2;
-    public static final int SCREEN_SWIPE_INDEX_TURNOUTS = 3;
 
     public boolean prefHideInstructionalToasts = false;
 
@@ -402,22 +380,7 @@ public class threaded_application extends Application {
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
 
-    public static final int KIDS_TIMER_DISABLED = 0;
-    public static final int KIDS_TIMER_STARTED = 1;
-    public static final int KIDS_TIMER_ENABLED = 2;
-    public static final int KIDS_TIMER_RUNNNING = 3;
-    public static final int KIDS_TIMER_ENDED = 999;
-
     public SoundPool soundPool;
-
-//    private static final int SOUNDS_TYPE_LOCO = 0;
-//    private static final int SOUNDS_TYPE_BELL = 1;
-//    private static final int SOUNDS_TYPE_HORN = 2;
-//    private static final int SOUNDS_TYPE_HORN_SHORT = 3;
-//
-//    private static final int SOUNDS_BELL_HORN_START = 0;
-//    private static final int SOUNDS_BELL_HORN_LOOP = 1;
-//    private static final int SOUNDS_BELL_HORN_END = 2;
 
     public boolean prefDeviceSoundsButton = false;
     public boolean prefDeviceSoundsBellIsMomentary = false;
@@ -1899,7 +1862,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if ((prefs.getBoolean("prefKidsTimerButton", false))
-                && !((kidsTimerRunning == KIDS_TIMER_RUNNNING) || (kidsTimerRunning == KIDS_TIMER_ENABLED))) {
+                && !((kidsTimerRunning == kids_timer_action_type.RUNNNING) || (kidsTimerRunning == kids_timer_action_type.ENABLED))) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -2195,35 +2158,35 @@ public class threaded_application extends Application {
         int nextScreen;
         if (deltaX <= 0.0) {
             nextScreen = currentScreen + 1;
-            if ((nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+            if ((nextScreen == screen_swipe_index_type.ROUTES)
                     && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes))) {
                 nextScreen++;
             }
-            if ((nextScreen == SCREEN_SWIPE_INDEX_WEB)
+            if ((nextScreen == screen_swipe_index_type.WEB)
                     && ((!isWebAllowed()) || (!prefSwipeThoughWeb))) {
                 nextScreen++;
             }
-            if ((nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+            if ((nextScreen == screen_swipe_index_type.TURNOUTS)
                     && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts))) {
                 nextScreen++;
             }
-            if (nextScreen > SCREEN_SWIPE_INDEX_TURNOUTS) {
-                nextScreen = SCREEN_SWIPE_INDEX_THROTTLE;
+            if (nextScreen > screen_swipe_index_type.TURNOUTS) {
+                nextScreen = screen_swipe_index_type.THROTTLE;
             }
         } else {
             nextScreen = currentScreen - 1;
-            if (nextScreen < SCREEN_SWIPE_INDEX_THROTTLE) {
-                nextScreen = SCREEN_SWIPE_INDEX_TURNOUTS;
+            if (nextScreen < screen_swipe_index_type.THROTTLE) {
+                nextScreen = screen_swipe_index_type.TURNOUTS;
             }
-            if ((nextScreen == SCREEN_SWIPE_INDEX_TURNOUTS)
+            if ((nextScreen == screen_swipe_index_type.TURNOUTS)
                     && ((!isTurnoutControlAllowed()) || (!prefSwipeThoughTurnouts))) {
                 nextScreen--;
             }
-            if ((nextScreen == SCREEN_SWIPE_INDEX_WEB)
+            if ((nextScreen == screen_swipe_index_type.WEB)
                     && ((!isWebAllowed()) || (!prefSwipeThoughWeb))) {
                 nextScreen--;
             }
-            if ((nextScreen == SCREEN_SWIPE_INDEX_ROUTES)
+            if ((nextScreen == screen_swipe_index_type.ROUTES)
                     && ((!isRouteControlAllowed()) || (!prefSwipeThoughRoutes))) {
                 nextScreen--;
             }
@@ -2231,16 +2194,16 @@ public class threaded_application extends Application {
 
         Intent nextIntent;
         switch (nextScreen) {
-            case SCREEN_SWIPE_INDEX_ROUTES:
+            case screen_swipe_index_type.ROUTES:
                 nextIntent = new Intent().setClass(this, routes.class);
                 break;
-            case SCREEN_SWIPE_INDEX_TURNOUTS:
+            case screen_swipe_index_type.TURNOUTS:
                 nextIntent = new Intent().setClass(this, turnouts.class);
                 break;
-            case SCREEN_SWIPE_INDEX_WEB:
+            case screen_swipe_index_type.WEB:
                 nextIntent = new Intent().setClass(this, web_activity.class);
                 break;
-            case SCREEN_SWIPE_INDEX_THROTTLE:
+            case screen_swipe_index_type.THROTTLE:
             default:
                 nextIntent = getThrottleIntent();
                 break;
@@ -2256,43 +2219,43 @@ public class threaded_application extends Application {
      */
     public boolean prefsForcedRestart(int prefForcedRestartReason) {
         switch (prefForcedRestartReason) {
-            case FORCED_RESTART_REASON_AUTO_IMPORT:
-            case FORCED_RESTART_REASON_IMPORT: {
+            case restart_reason_type.AUTO_IMPORT:
+            case restart_reason_type.IMPORT: {
                 break;
             }
-            case FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL: {
+            case restart_reason_type.IMPORT_SERVER_MANUAL: {
                 Toast.makeText(context,
                         context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_RESET: {
+            case restart_reason_type.RESET: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_THEME: {
+            case restart_reason_type.THEME: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_BACKGROUND: {
+            case restart_reason_type.BACKGROUND: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_THROTTLE_PAGE:
-            case FORCED_RESTART_REASON_THROTTLE_SWITCH: {
+            case restart_reason_type.THROTTLE_PAGE:
+            case restart_reason_type.THROTTLE_SWITCH: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_LOCALE: {
+            case restart_reason_type.LOCALE: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_IMPORT_SERVER_AUTO: {
+            case restart_reason_type.IMPORT_SERVER_AUTO: {
                 Toast.makeText(context,
                         context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName", "")),
                         Toast.LENGTH_LONG).show();
                 break;
             }
-            case FORCED_RESTART_REASON_FORCE_WIFI: {
+            case restart_reason_type.FORCE_WIFI: {
                 Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesChangedForceWiFi),
                         Toast.LENGTH_LONG).show();
                 break;
@@ -2300,15 +2263,15 @@ public class threaded_application extends Application {
         }
 
         // include in this list if the Settings Activity should NOT be launched
-        return ((prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_AUTO)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_BACKGROUND)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_THROTTLE_SWITCH)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_IMPORT_SERVER_MANUAL)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_RESET)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_AUTO_IMPORT)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_FORCE_WIFI)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_DEAD_ZONE)
-                && (prefForcedRestartReason != FORCED_RESTART_REASON_SHAKE_THRESHOLD));
+        return ((prefForcedRestartReason != restart_reason_type.IMPORT_SERVER_AUTO)
+                && (prefForcedRestartReason != restart_reason_type.BACKGROUND)
+                && (prefForcedRestartReason != restart_reason_type.THROTTLE_SWITCH)
+                && (prefForcedRestartReason != restart_reason_type.IMPORT_SERVER_MANUAL)
+                && (prefForcedRestartReason != restart_reason_type.RESET)
+                && (prefForcedRestartReason != restart_reason_type.AUTO_IMPORT)
+                && (prefForcedRestartReason != restart_reason_type.FORCE_WIFI)
+                && (prefForcedRestartReason != restart_reason_type.DEAD_ZONE)
+                && (prefForcedRestartReason != restart_reason_type.SHAKE_THRESHOLD));
     }
 
     // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
@@ -2324,7 +2287,7 @@ public class threaded_application extends Application {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
-        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+        if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
             if (this.connectedHostName != null) {
                 String exportedPreferencesFileName = this.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
@@ -2423,10 +2386,10 @@ public class threaded_application extends Application {
 
         String deviceId = mainapp.getDeviceId();
         prefs.edit().putString("prefAndroidId", deviceId).commit();
-        prefs.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
+        prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.AUTO_IMPORT).commit();
 
-        if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
-                || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+        if ((prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT))
+                || (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
             if (connectedHostName != null) {
                 String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 ImportExportPreferences importExportPreferences = new ImportExportPreferences();
@@ -2434,7 +2397,7 @@ public class threaded_application extends Application {
 
                 Message msg = Message.obtain();
                 msg.what = message_type.RESTART_APP;
-                msg.arg1 = threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT;
+                msg.arg1 = restart_reason_type.AUTO_IMPORT;
                 Log.d("Engine_Driver", "updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                 comm_msg_handler.sendMessage(msg);
             } else {

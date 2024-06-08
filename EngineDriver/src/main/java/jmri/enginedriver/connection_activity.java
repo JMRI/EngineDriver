@@ -80,15 +80,18 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import jmri.enginedriver.intro.intro_activity;
-import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.restart_reason_type;
+
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
-import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.intro.intro_activity;
+import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.import_export.ImportExportConnectionList;
-import jmri.enginedriver.util.LocaleHelper;
 
 public class connection_activity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     //    private ArrayList<HashMap<String, String>> connections_list;
@@ -587,7 +590,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
-            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_NONE);
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
@@ -1036,7 +1039,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
-        if (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT)) {
+        if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
             if (mainapp.connectedHostName != null) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
@@ -1066,10 +1069,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         String deviceId = mainapp.getDeviceId();
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
-        sharedPreferences.edit().putInt("prefForcedRestartReason", threaded_application.FORCED_RESTART_REASON_AUTO_IMPORT).commit();
+        sharedPreferences.edit().putInt("prefForcedRestartReason", restart_reason_type.AUTO_IMPORT).commit();
 
-        if ((prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_AND_DISCONNECT))
-                || (prefAutoImportExport.equals(ImportExportPreferences.AUTO_IMPORT_EXPORT_OPTION_CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
+        if ((prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT))
+                || (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
             if (mainapp.connectedHostName != null) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);

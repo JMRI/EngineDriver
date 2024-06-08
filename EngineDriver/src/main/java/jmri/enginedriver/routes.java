@@ -69,6 +69,7 @@ import java.util.HashMap;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
@@ -812,7 +813,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
                 event.setAction(MotionEvent.ACTION_CANCEL);
                 // process swipe in the direction with the largest change
-                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(threaded_application.SCREEN_SWIPE_INDEX_ROUTES, deltaX);
+                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.ROUTES, deltaX);
                 startACoreActivity(this, nextScreenIntent, true, deltaX);
             } else {
                 // gesture was not long enough
