@@ -454,7 +454,7 @@
     <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
-    <string name="prefMaximumRecentLocosDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefMaximumRecentLocosDefaultValue" translatable="false">20</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumRecentLocosSummary">Maximum Recent Locos to show in list</string>
     <string name="prefDefaultAddressLengthTitle">Default Address Length</string>
     <string name="prefDefaultAddressLengthDefaultValue" translatable="false">Auto</string>  <!-- DO NOT TRANSLATE -->

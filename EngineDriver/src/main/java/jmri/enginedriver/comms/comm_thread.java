@@ -1860,7 +1860,9 @@ public class comm_thread extends Thread {
                             if (mainapp.routeLabelsDCCEX[i]!=null) {
                                 mainapp.routeDccexLabels[i] = mainapp.routeLabelsDCCEX[i];
                             } else {
-                                mainapp.routeDccexLabels[i] = mainapp.getResources().getString(R.string.DCCEXrouteSet);
+                                mainapp.routeDccexLabels[i] =  mainapp.routeTypesDCCEX[i].equals("R")
+                                        ? mainapp.getResources().getString(R.string.DCCEXrouteSet)
+                                        : mainapp.getResources().getString(R.string.DCCEXrouteHandoff);
                             }
                         }
                     }

@@ -221,6 +221,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     button.setSelected(true);
                     break;
                 case "2":
+                case "4":
                     button.setEnabled(false);
                     button.setSelected(false);
                     break;
