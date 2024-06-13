@@ -840,7 +840,9 @@
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
  * preferences:
+ *   TODO: simplify accessing exported preferences file. Link?
  * log_viewer:
+ *   TODO: simplify accessing log file. Link?
  *
  * These require changes to WiThrottle Server
  *   add Light control page
