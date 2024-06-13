@@ -1852,12 +1852,17 @@ public class comm_thread extends Thread {
 
                     if (mainapp.routeStatesReceivedDCCEX) { // we received some DCC-EX route states before the list was complete
                         for (int i=0; i<mainapp.routeIDsDCCEX.length;i++) {
-                            if (mainapp.routeStatesDCCEX[i]!=null) { mainapp.routeDccexStates[i] = Integer.parseInt(mainapp.routeStatesDCCEX[i]);
-                            } else { mainapp.routeDccexStates[i] = 0;
+                            if (mainapp.routeStatesDCCEX[i]!=null) {
+                                mainapp.routeDccexStates[i] = Integer.parseInt(mainapp.routeStatesDCCEX[i]);
+                            } else {
+                                mainapp.routeDccexStates[i] = 0;
                             }
                             if (mainapp.routeLabelsDCCEX[i]!=null) {
                                 mainapp.routeDccexLabels[i] = mainapp.routeLabelsDCCEX[i];
-                            } else { mainapp.routeDccexLabels[i] = mainapp.getResources().getString(R.string.DCCEXrouteSet);
+                            } else {
+                                mainapp.routeDccexLabels[i] =  mainapp.routeTypesDCCEX[i].equals("R")
+                                        ? mainapp.getResources().getString(R.string.DCCEXrouteSet)
+                                        : mainapp.getResources().getString(R.string.DCCEXrouteHandoff);
                             }
                         }
                     }
@@ -2125,7 +2130,9 @@ public class comm_thread extends Thread {
                     mainapp.routeDccexLabels[i - 1] = "";
                     mainapp.routeDccexStates[i - 1] = -1;
                 } else {
-                    mainapp.routeDccexLabels[i - 1] = mainapp.getResources().getString(R.string.DCCEXrouteSet);
+                    mainapp.routeDccexLabels[i - 1] = tv[2].equals("4")
+                            ? mainapp.getResources().getString(R.string.DCCEXrouteHandoff)    // automation
+                            : mainapp.getResources().getString(R.string.DCCEXrouteSet); // assume "2" = Route
                     mainapp.routeDccexStates[i - 1] = 0;
                 }
             }  //end if i>0

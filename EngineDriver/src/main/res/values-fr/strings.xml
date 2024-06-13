@@ -481,7 +481,10 @@
         \nIf \'simple\' test est choisi, un seul appui sur la touche \'Reduire vitesse\' sautera le test.
         \n
         \nUtilisez les options du menu \'Gamepad Test n\' pour revenir sur cette page.</string>
-        <string name="gamepadTestHelpNonForced">Si vous ne pouvez pas activer toutes les touches, changer le mode du Gamepad (voir notice) ou essayer un autre type de Gamepad (voir ci dessus).
+    <string name="gamepadTestKeyboardHelp">"Sons via téléphone: \nB Cloche \nH Klaxon \nShift H Klaxon court \nM Coupe son
+        \n\nT0....Tx specifie manette x pour prochaine commande.
+        \n\nLes autres codes sont ignorés. "</string>
+    <string name="gamepadTestHelpNonForced">Si vous ne pouvez pas activer toutes les touches, changer le mode du Gamepad (voir notice) ou essayer un autre type de Gamepad (voir ci dessus).
         \n Vous serez peut etre ammener à tester à nouveau le Gamepad à la première utilisation via l écran du régulateur.</string>
     <string name="gamepadTestIncomplete">"Test incomplet"</string>
     <string name="gamepadTestComplete">"Test complet"</string>
@@ -685,7 +688,9 @@
     <string name="introThrottleTypeSummary">Choisissez  un écran pour le régulateur principal.</string>
     <string name="introThrottleTypeSummary2">Fonction du type choisi, vous serez limiter dans le nombre de régulateurs (manettes) individuels sur écran</string>
     <string name="introFinishTitle">Prêt à être utilisé</string>
-    <string name="introFinishSummary">Engine Driver est prêt pour se connecter.</string>
+    <string name="introFinishSummary">Engine Driver permet des focnstionnalités supplémentaires, par exemple la programmation directe de
+        CV sur une centrale DCC-EX (et pas via JMRI)\n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives
+        DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
 <!--    <string name="introFinishSummary1">Enfin, terminer cette introduction et choisissez votre Serveur WiThrottle si découvert, ou bien entrez son adresse IP et son n° de port.</string> -->
     <string name="introFinishSummary2">Pour plus de détail, regarder la page \'A Propos\'depuis le menu, ou visitez la page de référence Engine Driver sur: \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">Vous pouvez faire  plusieurs autres modifications tant coté aspect que comportement de cette application à partir du menu \'Préférences\'</string>
@@ -694,10 +699,12 @@
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Touches de vitesse seulement</string>
-    <string name="introDccexTitle">Options de l\'EX-CommandStation</string>
-    <string name="introDccexSummary">Engine Driver peut fournir des fonctionnalités supplémentaires, notamment la programmation CV, si vous utilisez directement une EX-CommandStation DCC-EX. (Pas via JMRI)\n\nSi vous répondez \'Oui\' ci-dessous, Engine Driver utilisera par défaut les commandes DCC-EX Native au lieu de WiThrottle si le nom du serveur contient \'DCC-EX\' ou \'DCCEX\'.</string>
-    <string name="introDccexQuestionYes">Oui, j\'utiliserai une EX-CommandStation</string>
-    <string name="introDccexQuestionNo">Non, je n\'utiliserai PAS d\'EX-CommandStation</string>
+    <string name="introDccexTitle">Options pour station de commande EX</string>
+    <string name="introDccexSummary">Engine Driver peut fournir des fonctionnalités supplémentaires, notamment la programmation CV,
+        si vous utilisez directement une EX-CommandStation DCC-EX. (Pas via JMRI)\n\nSi vous répondez \'Oui\' ci-dessous, Engine Driver
+        utilisera par défaut les commandes DCC-EX Native au lieu de WiThrottle si le nom du serveur contient \'DCC-EX\' ou \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Oui, j\'utiliserai une centrale EX-</string>
+    <string name="introDccexQuestionNo">Non, je n\\\'utiliserai pas une centrale EX-</string>
     <string name="introbackButtonPress">Merci de redémarrer Engine Driver pour terminer cette introduction.</string>
     <string name="functionButtonLookForWhistle">SIFFLET</string>
     <string name="functionButtonLookForHorn">KLAXON</string>
@@ -950,7 +957,7 @@
     <string name="toastInitialisingSounds">Initialise les sons de la loco dans le telephone.</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Bouton Cloche temporaire (sinon verrouillé)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Verrouillage de bouton de cloche / momentané</string>
-<!--    <string name="permissionsReadLegacyFiles">Le pilote de moteur a besoin d\'autorisations de stockage pour charger les paramètres hérités (anciens emplacement).</string>-->
+<!--    <string name="permissionsReadLegacyFiles">Engine Driver nécessite accès au STOCKAGE pour charger les anciens paramètres..</string>-->
     <string name="permissionsReadPhoneState">Engine Driver nécessite accès au TELEPHONE pour se mettre en pause si appel telephoniques.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Préférences supplémentaires</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Préférences supplémentaires pour les sons via le telephone.</string>
@@ -997,7 +1004,7 @@
     <string name="DccexReadAddressButtonLabel">Lire</string>
     <string name="DCCEXrouteHandoff">Passer</string>
     <string name="DCCEXrouteSet">Poser</string>
-    <string name="DccexSendCommandButtonLabel">Envoyer</string>
+    <string name="DccexSendCommandButtonLabel">Send</string>
     <string name="DCCEXcommonCvsLabel">CVs NMRA</string>
     <string name="DCCEXsetTrackButtonLabel">Poser</string>
     <string name="DccexSucceeded">Action effectuée!</string>
@@ -1011,7 +1018,7 @@
     <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions du joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">A selectionner en cas de probleme si le DPAD cree des codes cles et des evenements Joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessite la permission d acces aux IMAGES pour charger celles-ci en arriere plan.</string>
-<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver a besoin de permissions à proximité_wifi_devices pour récupérer le WiFi SSID actuel.</string>-->
+<!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessite la permission d acces aux reseaux WiFi proches pour detecter le SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>
     <string name="prefDccexPreferencesTitle">Preferences DCC-EX - EX-CommandStation</string>
     <string name="prefDccexPreferencesSummary">Option pour utiliser EX-CommandStation</string>

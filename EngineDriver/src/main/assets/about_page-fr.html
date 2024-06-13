@@ -18,27 +18,28 @@
 <p><b>Les dernières modifications de cette versions sont:</b></p>
 <ul>
     <li>Supprimer controle des ficheirs personnels</li>
-    <li>Nouvelle page WiThrottle «Programmation CV sur l'écran principal». (remarque: non pris en charge sur toutes les stations de commande)</li>
-    <li>Nouvelle préférence permettant d'appuyer deux fois sur le bouton Retour pour quitter l'application</li>
-    <li>Option pour avoir le Throttle WebView en haut de la page</li>
-    <li>Découverte du serveur JMRI DCCppOverTCP.</li>
-    <li>Inclut n'importe quel serveur doté du port 2560 en tant que serveur DCC-EX lorsque la préférence de connexion est définie sur «Auto»</li>
-    <li>Changez la préférence par défaut du filtre propriétaire sur false</li>
-    <li>Améliorations de l'interface utilisateur pour les pages DCC-EX et Fonctions par défaut</li>
-    <li>Ajout d'une page d'assistant d'introduction/configuration pour DCC-EX</li>
-    <li>Améliorations de l'interface utilisateur de la barre d'action</li>
-    <li>Remplacez toutes les icônes de la barre d'outils/barre d'action par des vecteurs pour une meilleure mise à l'échelle et réduire les efforts de maintenance.</li>
-    <li>Refonte du thème 'Original'. Boutons remplacés par des vecteurs</li>
-    <li>Suppression des icônes en double</li>
-    <li>Corrections de bugs pour le type de manette de jeu «clavier»</li>
-    <li>Correction d'un bug pour le bouton de fermeture dans function_defaults</li>
-    <li>Correction d'un bug pour l'édition Consist Light</li>
-    <li>Correction d'un bug pour le verrouillage par défaut DCC-EX pour les locomotives hors liste</li>
-    <li>Correction d'un bug pour le changement initial des préférences Auto-Web</li>
-    <li>Correction d'un bug pour fastclock</li>
-    <li>élimination des peluches</li>
-    <li>Nouveau bouton pour trier les aiguillages/points par nom ou ID</li>
-    <li>Bouton pour trier les itinéraires par nom ou ID</li>
+    <li>Nouvelle page WiThrottle "programmation sur voie principale" (note: pas supporté sur toutes les centrales)</li>
+    <li>Nouvelle preference permettant d appuyer deux fois sur retour arriere pour quitter l appli</li>
+    <li>Option pour avoir la vue Web en haut de page</li>
+    <li>Decouverte du serveur JMRI DCCppOverTCP.</li>
+    <li>Inclu tout serveur avec port 2560 comme serveur DCC-EX si les preferences de connexion sont 'Auto'</li>
+    <li>Change la préférence utilisateur defaut à faux</li>
+    <li>Améliorations pour centrale DCC-EX et page des fonctions par defaut</li>
+    <li>Ajout de la page du wizard intro/setup pour DCC-EX</li>
+    <li>amélioration aspect de la barre d'actions</li>
+    <li>Remplacement des icones de la barre d action par des vecteurs pour meilleur affichage et maintenance</li>
+    <li>Refonte du theme initial, boutons remplacés par des vecteurs</li>
+    <li>Suppression des icones dupliquees</li>
+    <li>Correction de bugs du clavier type Gamepad</li>
+    <li>Correction de bugs du bouton fermer des fonctions par defaut</li>
+    <li>Corrections de bugs sur gestion eclairage en UM</li>
+    <li>correction de bugs pour locos hors inventaire pour centrale DCC-EX</li>
+    <li>correction de bug pour modification des preferences initiales Auto-We</li>
+    <li>Correction de bug Horloge rapide</li>
+    <li>suppression de 'lint'</li>
+    <li>Nouveau bouton pour trier les aiguilles par nom ou ID</li>
+    <li>Nouveau bouton pour trier les itineraires par nom ou ID</li>
+    <li>Traductions françaises supplémentaires par Alain Carasso</li>
 </ul>
 <p><em><a
         href="https://raw.githubusercontent.com/JMRI/EngineDriver/master/changelog-and-todo-list.txt"
@@ -72,15 +73,11 @@
 <p>Brancher le module WiFi MRC, et vérifier que votre terminal se connecte sur son réseau WiFi et obtient une adresse IP.</p>
 <h3>Prérequis (pourLnWi Digitrax):</h3>
 <p>Brancher le LnWi, et vérifier que votre terminal se connecte sur son réseau LnWi et obtiend une adresse IP.</p>
-<h3>Prérequis (pour DCC-EX EX-CommandStation):</h3>
-<p>Le conducteur du moteur peut se connecter directement aux ex-commandes DCC-EX, qui sont en mode station ou
-    Mode de point d'accès, en utilisant le protocole Withrottle ou le protocole de commande DCC-EX natif.
-    Le pilote du moteur utilisera Withottle par défaut. Si vous souhaitez utiliser les commandes DCC-EX natives
-    Vous devez modifier la préférence du conducteur du moteur. <br />
-    Si vous utilisez les commandes DCC-EX natives, un élément de menu supplémentaire (DCC-EX) sera disponible pour
-    Programmation CVS et autres fonctions. <br />
-    Remarque: Si vous connectez l'ex-commandite via JMRI, vous devez utiliser avec withrottle, et donc le
-    Des fonctionnalités supplémentaires ne seront pas disponibles.</p>
+<h3>Prerequis pour centrale DCC-EX:</h3>
+<p>Engine Driver peut se connecter directement a  centrale DCC-EX en mode Station ou point d'accès en utilisant les protocoles
+    WiThrottle ou les commandes natives DCC-EX. protocole WiThrottle par defaut. Si choix du protocole DCC-EX
+    (reglage dans les preferences), un menu additionel est disponible.  Note: Si la centrale EX- est connectée
+    via JMRI, il faudra utiliser la WiThrottle et vous perdrez les fonctions supplémentaires DCC-EX.</p>
 <h3>Opérations:</h3>
 <p>Sur votre téléphone, démarrer l application Engine Driver et attendre de voir apparaitre l adresse de votre serveur dans les "Services Découverts".</p>
 <p>Clicker sur l adresse correspondant à votre réseau, ou bien entrer adresse IP et n° de port de votre serveur WiThrottle

@@ -120,12 +120,23 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 int rslt;
                 String a;
                 String b;
-                if (mainapp.routesOrder == sort_type.NAME) {
+                switch (mainapp.routesOrder) {
+                    case sort_type.NAME: {
                     a = threaded_application.formatNumberInName(arg0.get("rt_user_name"));
                     b = threaded_application.formatNumberInName(arg1.get("rt_user_name"));
-                } else {
+                        break;
+                    }
+                    case sort_type.ID: {
                     a = threaded_application.formatNumberInName(arg0.get("rt_system_name"));
                     b = threaded_application.formatNumberInName(arg1.get("rt_system_name"));
+                        break;
+                    }
+                    case sort_type.POSITION:
+                    default: {
+                        a = threaded_application.formatNumberInName(arg0.get("rt_pos"));
+                        b = threaded_application.formatNumberInName(arg1.get("rt_pos"));
+                        break;
+                    }
                 }
                 rslt = a.compareTo(b);
                 return rslt;    //*** was compareToIgnoreCase()
@@ -171,6 +182,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                             }
                             hm.put("rt_current_state_desc", currentstatedesc);
                             hm.put("rt_current_dccex_state", currentDCCEXstate);
+                            hm.put("rt_pos", Integer.toString(pos));
                             routesFullList.add(hm);
 
                             //if location is new, add to list
@@ -221,6 +233,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     button.setSelected(true);
                     break;
                 case "2":
+                case "4":
                     button.setEnabled(false);
                     button.setSelected(false);
                     break;
@@ -351,10 +364,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         SortButtonListener() {}
 
         public void onClick(View v) {
-            if (mainapp.routesOrder==sort_type.NAME) {
-                mainapp.routesOrder=sort_type.ID;
-            } else {
-                mainapp.routesOrder=sort_type.NAME;
+            switch (mainapp.routesOrder) {
+                case sort_type.NAME:
+                    mainapp.routesOrder=sort_type.ID;
+                    break;
+                case sort_type.ID:
+                    mainapp.routesOrder=sort_type.POSITION;
+                    break;
+                case sort_type.POSITION:
+                default:
+                    mainapp.routesOrder=sort_type.NAME;
             }
             refresh_route_view();
             mainapp.buttonVibration();
