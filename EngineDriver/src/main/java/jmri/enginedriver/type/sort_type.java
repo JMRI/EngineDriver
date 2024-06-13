@@ -21,4 +21,5 @@ public interface sort_type {
     int NAME = 0;
     int ID = 1;
     int LAST_USED = 2;
+    int POSITION = 3;
 }

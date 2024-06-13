@@ -167,12 +167,23 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 int rslt;
                 String a;
                 String b;
-                if (mainapp.turnoutsOrder == sort_type.NAME) {
-                    a = threaded_application.formatNumberInName(arg0.get("to_user_name"));
-                    b = threaded_application.formatNumberInName(arg1.get("to_user_name"));
-                } else {
-                    a = threaded_application.formatNumberInName(arg0.get("to_system_name"));
-                    b = threaded_application.formatNumberInName(arg1.get("to_system_name"));
+                switch (mainapp.turnoutsOrder) {
+                    case sort_type.NAME: {
+                        a = threaded_application.formatNumberInName(arg0.get("to_user_name"));
+                        b = threaded_application.formatNumberInName(arg1.get("to_user_name"));
+                        break;
+                    }
+                    case sort_type.ID: {
+                        a = threaded_application.formatNumberInName(arg0.get("to_system_name"));
+                        b = threaded_application.formatNumberInName(arg1.get("to_system_name"));
+                        break;
+                    }
+                    case sort_type.POSITION:
+                    default: {
+                        a = threaded_application.formatNumberInName(arg0.get("to_pos"));
+                        b = threaded_application.formatNumberInName(arg1.get("to_pos"));
+                        break;
+                    }
                 }
                 rslt = a.compareTo(b);
                 return rslt;
@@ -203,6 +214,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                             hm.put("to_user_name", systemName);
                         hm.put("to_system_name", systemName);
                         hm.put("to_current_state_desc", currentStateDesc);
+                        hm.put("to_pos", Integer.toString(pos));
                         turnoutsFullList.add(hm);
 
                         //if location is new, add to list
@@ -449,10 +461,16 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         SortButtonListener() {}
 
         public void onClick(View v) {
-            if (mainapp.turnoutsOrder==sort_type.NAME) {
-                mainapp.turnoutsOrder=sort_type.ID;
-            } else {
-                mainapp.turnoutsOrder=sort_type.NAME;
+            switch (mainapp.turnoutsOrder) {
+                case sort_type.NAME:
+                    mainapp.turnoutsOrder=sort_type.ID;
+                    break;
+                case sort_type.ID:
+                    mainapp.turnoutsOrder=sort_type.POSITION;
+                    break;
+                case sort_type.POSITION:
+                default:
+                    mainapp.turnoutsOrder=sort_type.NAME;
             }
             refresh_turnout_view();
             mainapp.buttonVibration();
