@@ -62,7 +62,8 @@
                         android:paddingLeft="5dp"
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,7 +91,8 @@
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerPoM"
                         android:layout_gravity="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
 
                 </LinearLayout>
 
@@ -119,7 +121,8 @@
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonTrackManager"
                         android:layout_gravity="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
 
 
@@ -148,7 +151,8 @@
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonDefaultFunctions"
                         android:layout_gravity="center"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -1086,13 +1090,15 @@
                 android:layout_weight=".4"
                 android:background="#00000000"
                 android:orientation="vertical"
-                android:weightSum="1">
+                android:weightSum="1"
+                tools:ignore="NestedWeights">
 
                 <ScrollView
                     android:id="@+id/dexc_DccexResponsesScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight=".7">
+                    android:layout_weight=".7"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:id="@+id/dexc_DccexResponsesLabel"
@@ -1125,50 +1131,41 @@
 
         </LinearLayout>
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/dcc_ex_bottom_button_layout"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="3dp"
+            android:layout_margin="0sp"
             android:layout_weight=".06"
             android:paddingLeft="6dp"
-            android:paddingRight="6dp">
+            android:paddingRight="6dp" >
 
-            <RelativeLayout
-                android:id="@+id/dcc_ex_bottom_button_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0sp"
-                android:orientation="horizontal">
+            <Button
+                android:id="@+id/dcc_ex_button_close"
+                style="?attr/ed_small_button_style"
+                android:layout_gravity="left"
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
 
-                <Button
-                    android:id="@+id/dcc_ex_button_close"
-                    style="?attr/ed_small_button_style"
-                    android:layout_gravity="left"
-                    android:text="@string/logviewerClose"
-                    tools:ignore="RtlHardcoded" />
+            <Button
+                android:id="@+id/dexc_DCCEXclearCommandsButton"
+                style="?attr/ed_small_button_style"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="left"
+                android:text="@string/DCCEXclearCommands"
+                tools:ignore="RtlHardcoded" />
 
-                <Button
-                    android:id="@+id/dexc_DCCEXclearCommandsButton"
-                    style="?attr/ed_small_button_style"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="left"
-                    android:text="@string/DCCEXclearCommands"
-                    tools:ignore="RtlHardcoded" />
+            <!--            <Button-->
+            <!--                android:id="@+id/dexc_DccexHideSendsButton"-->
+            <!--                style="?attr/ed_normal_button_style"-->
+            <!--                android:layout_gravity="left"-->
+            <!--                android:text="@string/DccexHideSends"-->
+            <!--                tools:ignore="RtlHardcoded"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_alignParentRight="true" />-->
 
-                <!--            <Button-->
-                <!--                android:id="@+id/dexc_DccexHideSendsButton"-->
-                <!--                style="?attr/ed_normal_button_style"-->
-                <!--                android:layout_gravity="left"-->
-                <!--                android:text="@string/DccexHideSends"-->
-                <!--                tools:ignore="RtlHardcoded"-->
-                <!--                android:layout_alignParentEnd="true"-->
-                <!--                android:layout_alignParentRight="true" />-->
-
-            </RelativeLayout>
-
-        </TableLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

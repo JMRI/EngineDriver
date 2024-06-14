@@ -2891,6 +2891,7 @@ public class threaded_application extends Application {
         }
     }
 
+    @SuppressLint("ApplySharedPref")
     public String getDeviceId() {
 //        return Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);  // no longer permitted
         mainapp.deviceId = prefs.getString("prefAndroidId", "");

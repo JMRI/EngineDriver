@@ -40,6 +40,6 @@
         style="?attr/list_extras_style"
         android:textSize="8sp"
         android:textStyle="italic"
-        tools:ignore="RtlHardcoded,SmallSp" />
+        tools:ignore="RtlHardcoded,RtlSymmetry,SmallSp" />
 
 </LinearLayout>

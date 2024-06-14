@@ -234,7 +234,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"
@@ -610,7 +611,8 @@
                                             <TableRow
                                                 android:layout_width="match_parent"
                                                 android:baselineAligned="false"
-                                                android:weightSum="10">
+                                                android:weightSum="10"
+                                                tools:ignore="TooManyViews">
 
                                                 <Button
                                                     style="?attr/ed_fn_button_style"
@@ -983,7 +985,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_1"
@@ -1731,7 +1734,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_2"
@@ -2451,7 +2455,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_3"
@@ -3171,7 +3176,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_4"
@@ -3891,7 +3897,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_5"

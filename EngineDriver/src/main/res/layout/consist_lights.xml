@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="9"
             android:text="@string/consistLights_help"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:ignore="NestedWeights" />
 
         <Button
             android:id="@+id/consist_lights_edit_button_close"

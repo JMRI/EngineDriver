@@ -109,9 +109,6 @@
                     android:id="@+id/wit_addressLength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/select_loco_label"
-                    android:layout_alignBottom="@id/loco_address"
-                    android:layout_toRightOf="@id/loco_address"
                     tools:ignore="RtlHardcoded"
                     android:ellipsize = "none"
                     android:text="@string/prefDefaultAddressLengthDefaultValue" />
@@ -284,7 +281,8 @@
                 android:layout_weight=".4"
                 android:background="#00000000"
                 android:orientation="vertical"
-                android:weightSum="1">
+                android:weightSum="1"
+                tools:ignore="NestedWeights">
 
 <!--                <ScrollView-->
 <!--                    android:id="@+id/wit_WitResponsesScrollView"-->
@@ -307,7 +305,8 @@
                     android:id="@+id/wit_WitSendsScrollView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                     <TextView
                         android:id="@+id/wit_WitSendsLabel"

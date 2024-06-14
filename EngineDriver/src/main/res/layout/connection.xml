@@ -149,7 +149,8 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:padding="8sp"
-            android:text="@string/useProtocolDCCEX" />
+            android:text="@string/useProtocolDCCEX"
+            tools:ignore="NestedWeights" />
 
         <Spinner
             android:id="@+id/cons_DccexConnectionOption"

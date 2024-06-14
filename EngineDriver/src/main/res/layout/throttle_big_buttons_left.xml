@@ -256,7 +256,7 @@
                         <LinearLayout
                             android:id="@+id/loco_lower_0"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight="10"
                             android:baselineAligned="false"
                             android:layoutDirection="rtl"
@@ -497,7 +497,7 @@
                                                 android:text="@string/functionButton19DefaultValue" />
                                         </TableRow>
 
-                                        <TableRow>
+                                        <TableRow tools:ignore="TooManyViews">
 
                                             <Button
                                                 style="?attr/ed_fn_button_style"
@@ -604,7 +604,8 @@
                                 android:layout_height="fill_parent"
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="7"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                tools:ignore="NestedWeights">
 
                                 <Button
                                     android:id="@+id/right_speed_button_0"
@@ -615,7 +616,8 @@
                                     android:layout_marginBottom="7dp"
                                     android:layout_weight=".4"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"

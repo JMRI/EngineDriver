@@ -23,7 +23,8 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
-            android:layout_weight=".3">
+            android:layout_weight=".3"
+            tools:ignore="NestedWeights">
 
             <TextView
                 android:id="@+id/gamepad_test_mode_label"
@@ -87,7 +88,8 @@
                                         style="?attr/ed_normal_button_style"
                                         android:layout_height="25dip"
                                         android:text="@string/gamepadTestButtonLabelDpadLeft"
-                                        android:textSize="12sp" />
+                                        android:textSize="12sp"
+                                        tools:ignore="TooDeepLayout" />
                                 </LinearLayout>
 
                                 <LinearLayout

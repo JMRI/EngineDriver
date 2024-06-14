@@ -315,7 +315,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -509,7 +509,8 @@
 
                                             <Button
                                                 style="?attr/ed_fn_button_style"
-                                                android:text="@string/functionButton16DefaultValue" />
+                                                android:text="@string/functionButton16DefaultValue"
+                                                tools:ignore="TooManyViews" />
                                         </TableRow>
 
                                         <TableRow tools:ignore="TooManyViews">
@@ -871,7 +872,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1423,7 +1424,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1943,7 +1944,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2463,7 +2464,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -2983,7 +2984,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="fill_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">

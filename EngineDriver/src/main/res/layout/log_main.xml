@@ -64,7 +64,7 @@
                     android:visibility="gone"
                     style="?attr/list_extras_style"
                     android:textSize="10sp"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="HardcodedText,RtlHardcoded,SmallSp" />
 
             </TableRow>
 

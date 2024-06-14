@@ -72,7 +72,7 @@
 
                     <LinearLayout
                         android:id="@+id/throttle_0"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_weight="0.5"
                         android:orientation="vertical"
@@ -257,12 +257,13 @@
                         <LinearLayout
                             android:id="@+id/loco_lower_0"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_weight="10"
                             android:baselineAligned="false"
                             android:layoutDirection="rtl"
                             android:orientation="horizontal"
-                            tools:targetApi="jelly_bean_mr1">
+                            tools:targetApi="jelly_bean_mr1"
+                            tools:ignore="NestedWeights">
 
                             <LinearLayout
                                 android:id="@+id/throttle_0_SetSpeed"
@@ -270,7 +271,8 @@
                                 android:layout_height="fill_parent"
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="7"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                tools:ignore="NestedWeights">
 
                                 <Button
                                     android:id="@+id/right_speed_button_0"
@@ -281,7 +283,8 @@
                                     android:layout_marginBottom="7dp"
                                     android:layout_weight=".4"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"
@@ -538,7 +541,7 @@
                                                 android:text="@string/functionButton16DefaultValue" />
                                         </TableRow>
 
-                                        <TableRow>
+                                        <TableRow tools:ignore="TooManyViews">
 
                                             <Button
                                                 style="?attr/ed_fn_button_style"

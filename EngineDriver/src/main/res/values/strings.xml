@@ -829,7 +829,7 @@
 
     <!--    Toast messages for Comms -->
     <string name="toastWaitingForConnection">Timeout waiting for WiThrottle \'VN\' message from %1$s:%2$s. Disconnecting</string>
-    <string name="toastWaitingForConnectionDccEx">Timeout waiting for DCC-EX \'iDCCEX...\' message from %1$s:%2$s. Disconnecting</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Timeout waiting for DCC-EX \'iDCCEX...\' message from %1$s:%2$s. Disconnecting</string>
 
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastThreadedAppNoLocalIp">No local IP Address found.\nCheck your WiFi connection.</string>
@@ -1160,16 +1160,20 @@
 <!--    <string name="introAndroid11Summary2">Note: if you uninstall the app, ALL the files in this new folder (including any exported preferences) will be automatically deleted. So it is important to copy the files elsewhere BEFORE deleting the app.</string>-->
 
     <string name="introThrottleNameSummary">Set a name for this device</string>
-    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window. It can help when resolving problems with multiple devices.  It must be unique.</string>
+    <string name="introThrottleNameSummary1">The name you choose will appear in the WiThrottle Server window.
+        It can help when resolving problems with multiple devices.  It must be unique.</string>
 
     <string name="introThemeSummary">Choose the colors and appearance of the whole app</string>
     <string name="introThrottleTypeSummary">Choose the layout of the main throttle screen</string>
-    <string name="introThrottleTypeSummary2">Depending on the chosen layout, you will be limited on the number of individual throttles (1 to 6) on the screen</string>
+    <string name="introThrottleTypeSummary2">Depending on the chosen layout, you will be limited on the number
+        of individual throttles (1 to 6) on the screen</string>
 
     <string name="introFinishTitle">Ready to use</string>
     <string name="introFinishSummary">Engine Driver is now ready to connect.</string>
-<!--    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server if \'discovered\', or manually enter the ip address and port.</string> -->
-    <string name="introFinishSummary2">For detailed instructions, see the \'About\' page from the menu or visit the Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
+<!--    <string name="introFinishSummary1">Then, complete this introduction and select your WiThrottle server
+if \'discovered\', or manually enter the ip address and port.</string> -->
+    <string name="introFinishSummary2">For detailed instructions, see the \'About\' page from the menu or visit the
+        Engine Driver Home page at \n\'https://enginedriver.mstevetodd.com\'.</string>
     <string name="introFinishSummary3">You can make additional changes to the appearance and behaviour of the app from the \'Preferences\' menu.</string>
 
     <string name="introButtonsTitle">Speed Sliders and Buttons</string>
@@ -1179,7 +1183,10 @@
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
 
     <string name="introDccexTitle">EX-CommandStation Options</string>
-    <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming, if you are using a DCC-EX EX-CommandStation directly. (Not via JMRI)\n\nIf you respond \'Yes\' below, Engine Driver will default to using DCC-EX Native commands instead of WiThrottle if the server name contains \'DCC-EX\' or \'DCCEX\'.</string>
+    <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming,
+        if you are using a DCC-EX EX-CommandStation directly. (Not via JMRI)\n\nIf you respond \'Yes\' below,
+        Engine Driver will default to using DCC-EX Native commands instead of WiThrottle if the server name contains
+        \'DCC-EX\' or \'DCCEX\' or uses port \'2560\'.</string>
     <string name="introDccexQuestionYes">Yes, I will be using an EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
 

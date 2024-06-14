@@ -73,24 +73,13 @@ public class intro_activity extends AppIntro2 {
 
         int slideNumber = 1;  // how many preceding slides
 
-//        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_LEGACY_FILES)) {
-//            SliderPage sliderPage2 = new SliderPage();
-//            sliderPage2.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-//            sliderPage2.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadLegacyFiles));
-//            sliderPage2.setImageDrawable(R.drawable.icon_xl);
-//            sliderPage2.setBgColor(getResources().getColor(R.color.intro_background));
-//            addSlide(AppIntroFragment.newInstance(sliderPage2));
-//            slideNumber = slideNumber + 1;
-//            askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber);
-//        }
-
 //<!-- needed for API 33 -->
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.POST_NOTIFICATIONS)) {
                 SliderPage sliderPage = new SliderPage();
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsPOST_NOTIFICATIONS));
-                sliderPage.setImageDrawable(R.drawable.icon_xl);
+                sliderPage.setImageDrawable(R.drawable.icon_vector);
                 sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
@@ -106,7 +95,7 @@ public class intro_activity extends AppIntro2 {
                 SliderPage sliderPage = new SliderPage();
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
-                sliderPage.setImageDrawable(R.drawable.icon_xl);
+                sliderPage.setImageDrawable(R.drawable.icon_vector);
                 sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
@@ -118,7 +107,7 @@ public class intro_activity extends AppIntro2 {
                 SliderPage sliderPage = new SliderPage();
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
-                sliderPage.setImageDrawable(R.drawable.icon_xl);
+                sliderPage.setImageDrawable(R.drawable.icon_vector);
                 sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
@@ -131,7 +120,7 @@ public class intro_activity extends AppIntro2 {
             SliderPage sliderPage = new SliderPage();
             sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
             sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
-            sliderPage.setImageDrawable(R.drawable.icon_xl);
+            sliderPage.setImageDrawable(R.drawable.icon_vector);
             sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
             addSlide(AppIntroFragment.newInstance(sliderPage));
             slideNumber = slideNumber + 1;
@@ -145,7 +134,7 @@ public class intro_activity extends AppIntro2 {
                 SliderPage sliderPage = new SliderPage();
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsACCESS_FINE_LOCATION));
-                sliderPage.setImageDrawable(R.drawable.icon_xl);
+                sliderPage.setImageDrawable(R.drawable.icon_vector);
                 sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
@@ -157,7 +146,7 @@ public class intro_activity extends AppIntro2 {
 //                SliderPage sliderPage = new SliderPage();
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES));
-//                sliderPage.setImageDrawable(R.drawable.icon_xl);
+//                sliderPage.setImageDrawable(R.drawable.icon_vector);
 //                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
@@ -170,7 +159,7 @@ public class intro_activity extends AppIntro2 {
 //            SliderPage sliderPage5 = new SliderPage();
 //            sliderPage5.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //            sliderPage5.setDescription(getApplicationContext().getResources().getString(R.string.permissionsVIBRATE));
-//            sliderPage5.setImageDrawable(R.drawable.icon_xl);
+//            sliderPage5.setImageDrawable(R.drawable.icon_vector);
 //            sliderPage5.setBgColor(getResources().getColor(R.color.intro_background));
 //            addSlide(AppIntroFragment.newInstance(sliderPage5));
 //            slideNumber = slideNumber + 1;
@@ -182,29 +171,8 @@ public class intro_activity extends AppIntro2 {
             if (android.os.Build.VERSION.SDK_INT >= 23) {
                 Fragment fragment3 = new intro_write_settings();
                 addSlide(fragment3);
-//            } else {
-//                SliderPage sliderPage3 = new SliderPage();
-//                sliderPage3.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-//                sliderPage3.setDescription(getApplicationContext().getResources().getString(R.string.permissionsWriteSettings));
-//                sliderPage3.setImageDrawable(R.drawable.icon_xl);
-//                sliderPage3.setBgColor(getResources().getColor(R.color.intro_background));
-//                addSlide(AppIntroFragment.newInstance(sliderPage3));
-//                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.WRITE_SETTINGS}, slideNumber);
             }
         }
-
-//        // only show this slide if there is no connections_list in the Scoped Storage area
-//        try {
-////            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File connection_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
-//            if (!connection_file.exists()) {
-//                Fragment fragment98 = new intro_alert();
-//                addSlide(fragment98);
-//            }
-//        } catch (Exception e) {
-//            Log.d("Engine_Driver", "intro_activity: check for legacy files failed");
-//        }
 
         Fragment fragment0 = new intro_throttle_name();
         addSlide(fragment0);
@@ -223,7 +191,7 @@ public class intro_activity extends AppIntro2 {
 //        SliderPage sliderPage99 = new SliderPage();
 //        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));
 //        sliderPage99.setDescription(getApplicationContext().getResources().getString(R.string.introFinishSummary));
-//        sliderPage99.setImageDrawable(R.drawable.icon_xl);
+//        sliderPage99.setImageDrawable(R.drawable.icon_vector);
 //        sliderPage99.setBgColor(getResources().getColor(R.color.intro_background));
 //        addSlide(AppIntroFragment.newInstance(sliderPage99));
 

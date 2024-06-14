@@ -152,7 +152,8 @@
                     android:id="@+id/turnouts_location_label"
                     style="?android:attr/listSeparatorTextViewStyle"
                     android:paddingLeft="2dp"
-                    android:text="@string/turnouts_location_label" />
+                    android:text="@string/turnouts_location_label"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -182,7 +183,8 @@
                         android:paddingLeft="2dp"
                         android:layout_marginRight="4dp"
                         android:paddingTop="2dp"
-                        android:text="@string/turnouts_list_label" />
+                        android:text="@string/turnouts_list_label"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                     <Button
                         android:id="@+id/turnouts_sort"
