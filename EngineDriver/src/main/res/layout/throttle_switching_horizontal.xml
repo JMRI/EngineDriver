@@ -514,7 +514,8 @@
 
                                         <Button
                                             style="?attr/ed_fn_button_style"
-                                            android:text="@string/functionButton26DefaultValue" />
+                                            android:text="@string/functionButton26DefaultValue"
+                                            tools:ignore="TooManyViews" />
 
                                         <Button
                                             style="?attr/ed_fn_button_style"

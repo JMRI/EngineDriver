@@ -153,7 +153,7 @@
                             android:text="@string/editConsistButtonLabel"
                             android:textAlignment="center"
                             android:textSize="10sp"
-                            tools:ignore="SmallSp" />
+                            tools:ignore="NestedWeights,SmallSp" />
 
                         <Button
                             android:id="@+id/Sl_edit_consist_lights"
@@ -335,7 +335,7 @@
             android:paddingTop="2dp"
             android:layout_toLeftOf="@+id/roster_sort"
             android:text="@string/roster_list"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Button
             android:id="@+id/roster_sort"
@@ -345,7 +345,8 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/filter_roster_text"
             android:padding="2sp"
-            android:text="@string/order" />
+            android:text="@string/order"
+            tools:ignore="RtlHardcoded" />
 
         <EditText
             android:id="@+id/filter_roster_text"
@@ -443,7 +444,7 @@
             android:paddingTop="2dp"
             android:layout_toLeftOf="@+id/recent_engines_sort"
             android:text="@string/recent_engines"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Button
             android:id="@+id/recent_engines_sort"
@@ -453,7 +454,8 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/clear_Loco_List_button"
             android:padding="2sp"
-            android:text="@string/order" />
+            android:text="@string/order"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/clear_Loco_List_button"
@@ -500,7 +502,7 @@
             android:paddingTop="2dp"
             android:layout_toLeftOf="@+id/recent_consists_sort"
             android:text="@string/recent_consists"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <Button
             android:id="@+id/recent_consists_sort"
@@ -510,7 +512,8 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/clear_consists_list_button"
             android:padding="2sp"
-            android:text="@string/order" />
+            android:text="@string/order"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/clear_consists_list_button"

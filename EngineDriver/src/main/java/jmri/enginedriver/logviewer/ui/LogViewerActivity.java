@@ -15,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -350,7 +351,26 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         msg = data.substring(msgStart + 3);
                     }
                 }
-                textview.setText(msg);
+                msg = msg.replaceAll("&", "&amp;");
+                msg = msg.replaceAll("<", "&lt;");
+                msg = msg.replaceAll(">", "&gt;");
+                if (msg.indexOf("About: ") < 0) {
+                    if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
+                        msg = "<span style=\"color: #404040\">" + msg;
+                    } else {
+                        msg = "<span style=\"color: #CCCCCC\">" + msg;
+                    }
+                } else {
+                    msg = "<br/><span>" + msg;
+                }
+                if (msg.indexOf("--&gt;") > 0) {
+                    msg = msg.replace("--&gt;", "</span><br/><b>--&gt;") + "</b>";
+                } else if (msg.indexOf("&lt;--") > 0) {
+                    msg = msg.replace("&lt;--", "</span><br/><b>&lt;--") + "</b>";
+                } else {
+                    msg = msg + "</span>";
+                }
+                textview.setText(Html.fromHtml(msg));
                 return view;
             }
             return null;

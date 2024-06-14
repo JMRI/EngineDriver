@@ -21,54 +21,55 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="9"
+            android:layout_weight="9.2"
             android:stackFromBottom="true"
             android:transcriptMode="normal" />
 
-        <TableLayout
+        <RelativeLayout
+            android:id="@+id/dcc_ex_bottom_button_layout"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
+            android:layout_margin="0sp"
+            android:layout_weight=".8"
             android:paddingLeft="6dp"
-            android:paddingRight="6dp">
-
-            <TableRow android:gravity="center_horizontal">
+            android:paddingRight="6dp" >
 
 <!--                <Button
-                    android:id="@+id/logviewer_button_reset"
-                    style="?attr/ed_normal_button_style"
-                    android:text="@string/logviewerReset" />
+                android:id="@+id/logviewer_button_reset"
+                style="?attr/ed_normal_button_style"
+                android:text="@string/logviewerReset" />
 -->
-                <Button
-                    android:id="@+id/logviewer_button_close"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_gravity="left"
-                    android:text="@string/logviewerClose"
-                    tools:ignore="RtlHardcoded" />
+            <Button
+                android:id="@+id/logviewer_button_close"
+                style="?attr/ed_normal_button_style"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:text="@string/logviewerClose"
+                tools:ignore="RtlHardcoded" />
 
-                <Button
-                    android:id="@+id/logviewer_button_save"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_gravity="right"
-                    android:text="@string/logviewerSave"
-                    tools:ignore="RtlHardcoded" />
+            <Button
+                android:id="@+id/logviewer_button_save"
+                style="?attr/ed_normal_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:text="@string/logviewerSave"
+                tools:ignore="RelativeOverlap,RtlHardcoded" />
 
-                <TextView
-                    android:id="@+id/logviewer_info"
-                    android:layout_width="220dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="right"
-                    android:text=""
-                    android:visibility="gone"
-                    style="?attr/list_extras_style"
-                    android:textSize="10sp"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+            <TextView
+                android:id="@+id/logviewer_info"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="right"
+                android:text=""
+                android:visibility="gone"
+                style="?attr/list_extras_style"
+                android:textSize="10sp"
+                tools:ignore="HardcodedText,RtlHardcoded,SmallSp" />
 
-            </TableRow>
-
-        </TableLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

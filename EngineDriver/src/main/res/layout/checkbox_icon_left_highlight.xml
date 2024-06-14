@@ -25,21 +25,17 @@
     tools:ignore="RtlSymmetry"
     android:baselineAligned="false">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dip"
         android:layout_marginEnd="6dip"
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
+        android:orientation="vertical"
         android:layout_weight="1"
         android:layout_marginLeft="8dip"
         android:layout_marginRight="6dip">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@android:id/title"
@@ -74,16 +70,14 @@
                 <TextView android:id="@android:id/summary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@android:id/title"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="?android:attr/textColorSecondary"
                     android:maxLines="30"
                     android:layout_marginLeft="16dip"
                     tools:ignore="RtlHardcoded" />
 
-            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
     <!-- Preference should place its actual preference widget here. -->
     <LinearLayout android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"

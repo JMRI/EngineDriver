@@ -1041,8 +1041,8 @@
     <string name="cv29AnalogueConversionOff">Conversion analogique OFF</string>
     <string name="cv29DirectionForward">Sens direction normal (AV)</string>
     <string name="cv29DirectionReverse">Sens direction inversé (AR)</string>
-    <string name="cv29AddressSize2bit">Adresse courte (0-127)</string>
-    <string name="cv29AddressSize4bit">Adresse longue (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Adresse courte (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Adresse longue (1-10239)</string>
     <string name="cv29SpeedTableNo">Pas de courbe de vitesse, utilisation CV2, 5 et 6</string>
     <string name="cv29SpeedTableYes">Courbe de vitesse 28 points</string>
     <string name="cv29SpeedToggleDirection">Ecrit valeur %d dans CV29 pour changer sens de marche</string>

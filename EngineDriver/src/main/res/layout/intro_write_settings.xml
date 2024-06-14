@@ -42,12 +42,12 @@
 
             <ImageView
                 android:id="@+id/intro_write_settings_image"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                app:srcCompat="@drawable/icon_xl"
+                app:srcCompat="@drawable/icon_vector"
                 tools:ignore="ContentDescription" />
 
 

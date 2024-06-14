@@ -274,7 +274,8 @@
                                     android:layout_weight="0"
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
-                                    android:textSize="30sp" />
+                                    android:textSize="30sp"
+                                    tools:ignore="NestedWeights" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_0"
@@ -588,7 +589,8 @@
                                             style="?attr/ed_fn_button_style"
                                             android:layout_width="0dp"
                                             android:layout_weight="5"
-                                            android:text="@string/functionButton20DefaultValue" />
+                                            android:text="@string/functionButton20DefaultValue"
+                                            tools:ignore="TooManyViews" />
 
                                         <Button
                                             style="?attr/ed_fn_button_style"
