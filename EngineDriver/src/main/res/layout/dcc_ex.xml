@@ -56,7 +56,7 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="120px"
+                        android:layout_width="47dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="5dp"
@@ -85,7 +85,7 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="120px"
+                        android:layout_width="47dp"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="10dp"
@@ -115,7 +115,7 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="120px"
+                        android:layout_width="47dp"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="0dp"
@@ -145,7 +145,7 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="120px"
+                        android:layout_width="47dp"
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:paddingRight="0dp"
@@ -1152,7 +1152,7 @@
                 style="?attr/ed_small_button_style"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="left"
+                android:layout_gravity="right"
                 android:text="@string/DCCEXclearCommands"
                 tools:ignore="RtlHardcoded" />
 

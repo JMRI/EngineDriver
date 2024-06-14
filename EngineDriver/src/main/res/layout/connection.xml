@@ -14,20 +14,23 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" >
 
         <TextView
             android:id="@+id/ip_label"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="@string/host_ip"
             android:paddingLeft="2dp"
-            android:paddingRight="2dp" />
+            android:layout_marginRight="4dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <EditText
             android:id="@+id/host_ip"
             android:layout_width="160dp"
+            android:layout_marginRight="4dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/ip_label"
             android:hint="@string/server_address"
@@ -36,11 +39,13 @@
             android:digits="0123456789."
             android:maxLength="60"
             android:singleLine="true"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill,RtlHardcoded" />
 
         <EditText
             android:id="@+id/port"
             android:layout_width="80dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/host_ip"
             android:layout_toRightOf="@id/host_ip"
@@ -55,21 +60,25 @@
         <TextView
             android:id="@+id/port_title"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_above="@id/port"
-            android:layout_alignLeft="@id/port"
+            android:layout_toRightOf="@id/host_ip"
+            android:paddingLeft="2dp"
             android:layout_marginLeft="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginRight="8dp"
             android:text="@string/port"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
         <Button
             android:id="@+id/connect"
             style="?attr/ed_normal_button_style"
             android:layout_width="fill_parent"
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/connect_button"
             tools:ignore="RtlHardcoded" />
 
@@ -81,6 +90,7 @@
         android:layout_height="wrap_content"
         android:text="@string/discovered_services"
         android:paddingLeft="2dp"
+        android:layout_marginBottom="2dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout
@@ -106,6 +116,8 @@
         android:layout_height="wrap_content"
         android:text="@string/recent_connections"
         android:paddingLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout
@@ -131,6 +143,8 @@
         android:text="@string/DccexConnectionOptionTitle"
         android:visibility="gone"
         android:paddingLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout
@@ -169,6 +183,7 @@
     <TextView
         android:id="@+id/ca_footer"
         style="?attr/floating_text_style"
+        android:textColor="?android:attr/textColorSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/none" />

@@ -5,6 +5,8 @@
  * Button to sort Routes by Name, ID or server order
  * Added Loco Select lists sort buttons
  * Bug fix for the Automation button labels in DCC-EX
+ * Improvements to the log screen
+ * Cleanup of the connection screen
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
