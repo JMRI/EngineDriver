@@ -126,7 +126,7 @@
             android:title="@string/prefThrottleScreenTypeTitle"
             android:layout="@layout/checkbox_no_icon" />
         <ListPreference
-            android:defaultValue="@string/NumThrottleDefaulValue"
+            android:defaultValue="@string/NumThrottleDefaultValue"
             android:entries="@array/NumOfThrottlesEntries"
             android:entryValues="@array/NumOfThrottlesEntryValues"
             android:key="NumThrottle"

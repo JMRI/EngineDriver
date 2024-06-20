@@ -21,6 +21,6 @@ public interface kids_timer_action_type {
     int DISABLED = 0;
     int STARTED = 1;
     int ENABLED = 2;
-    int RUNNNING = 3;
+    int RUNNING = 3;
     int ENDED = 999;
 }

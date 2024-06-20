@@ -358,7 +358,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         if (saveConsistsFile == 'Y') {
             importExportPreferences.getRecentConsistsListFromFile();
-            int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
+            int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
             importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
         }
         if (mainapp.consist_edit_msg_handler != null) {

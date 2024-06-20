@@ -376,7 +376,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             }
 
             // stop page from continually reloading when loading errors occur
-            // (this can happen if the initial web page pref is set to a non-existant url)
+            // (this can happen if the initial web page pref is set to a non-existent url)
             private boolean handleLoadingErrorRetries() {
                 if (++loadRetryCnt >= 3) {   // if same page is reloading (due to errors)
                     clearHistory = false;       // stop trying to clear history

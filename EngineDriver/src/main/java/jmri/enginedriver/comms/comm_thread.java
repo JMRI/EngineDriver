@@ -1018,7 +1018,7 @@ public class comm_thread extends Thread {
 
                     } else if (com2 == 'L') { //list of function buttons
                         if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
-                        || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overidden by the preference
+                        || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
                             String lead;
                             lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
@@ -1095,7 +1095,7 @@ public class comm_thread extends Thread {
                     try {
                         mainapp.heartbeatInterval = Integer.parseInt(responseStr.substring(1)) * 1000;  //convert to milliseconds
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: invalid WiT hearbeat string");
+                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: invalid WiT heartbeat string");
                         mainapp.heartbeatInterval = 0;
                     }
                     heart.startHeartbeat(mainapp.heartbeatInterval);
@@ -1430,7 +1430,7 @@ public class comm_thread extends Thread {
 
             if (!globalPowerOn && !globalPowerOff) {
                 mainapp.power_state = "2";
-                mainapp.alert_activities(message_type.RESPONSE, "PPA2"); // inconsistant
+                mainapp.alert_activities(message_type.RESPONSE, "PPA2"); // inconsistent
             } else {
                 if (globalPowerOn) {
                     mainapp.power_state = "1";

@@ -558,7 +558,7 @@
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 <!--    <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
-    <string name="NumThrottleDefaulValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
+    <string name="NumThrottleDefaultValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
     <string name="server">Server</string>
     <string name="routes_route">Route System Name</string>

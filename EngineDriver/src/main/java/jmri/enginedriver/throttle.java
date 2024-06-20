@@ -910,11 +910,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
 
             case kids_timer_action_type.ENABLED:
-                if (kidsTimerRunning == kids_timer_action_type.RUNNNING) {  // reset the timer if it is already running
+                if (kidsTimerRunning == kids_timer_action_type.RUNNING) {  // reset the timer if it is already running
                     speedUpdateAndNotify(0);
                     if (kidsTimer!=null) kidsTimer.cancel();
                 }
-//                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNNING))) {
+//                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNING))) {
                     kidsTimerRunning = kids_timer_action_type.ENABLED;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                         enable_disable_buttons(throttleIndex, false);
@@ -933,8 +933,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
 
             case kids_timer_action_type.STARTED:
-                if ((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNNING)) {
-                    kidsTimerRunning = kids_timer_action_type.RUNNNING;
+                if ((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNING)) {
+                    kidsTimerRunning = kids_timer_action_type.RUNNING;
                     kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
                     kidsTimer.start();
                 }
@@ -954,7 +954,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
                 break;
-            case kids_timer_action_type.RUNNNING:
+            case kids_timer_action_type.RUNNING:
                 for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
@@ -1192,7 +1192,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimerActions(kids_timer_action_type.STARTED,0);
                     break;
                 case message_type.KIDS_TIMER_TICK:
-                    kidsTimerActions(kids_timer_action_type.RUNNNING,msg.arg1);
+                    kidsTimerActions(kids_timer_action_type.RUNNING,msg.arg1);
                     break;
                 case message_type.KIDS_TIMER_END:
                     kidsTimerActions(kids_timer_action_type.ENDED,0);
@@ -1605,7 +1605,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
 
-        mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         prefSelectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
@@ -2523,7 +2523,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         boolean tIsEnabled = lls[whichThrottle].isEnabled();
         int dir = dirs[whichThrottle];
 
-//        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNNING)
+//        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNING)
 //                && (!prefKidsTimerEnableReverse)) {
 //        }
 
@@ -2531,7 +2531,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
             boolean locoChangeAllowed = tIsEnabled && isSelectLocoAllowed(whichThrottle);
 
-            if (kidsTimerRunning == kids_timer_action_type.RUNNNING) {
+            if (kidsTimerRunning == kids_timer_action_type.RUNNING) {
                 locoChangeAllowed = false;
                 if (!prefKidsTimerEnableReverse) {
                     dirChangeAllowed = false;
@@ -2584,7 +2584,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( (bPauses!=null) && (bPauses[whichThrottle]!=null) ) {
             bPauses[whichThrottle].setEnabled(newEnabledState);
         }
-        if ( (kidsTimerRunning == kids_timer_action_type.RUNNNING)
+        if ( (kidsTimerRunning == kids_timer_action_type.RUNNING)
             && (!prefKidsTimerEnableReverse)) {
             bRevs[whichThrottle].setEnabled(false);
         } else {
@@ -4600,7 +4600,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     && mAutoDecrement[whichThrottle]) {
                 mAutoDecrement[whichThrottle] = false;
             }
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             return false;
         }
     }
@@ -4635,7 +4635,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
                 }
             }
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             mainapp.buttonVibration();
         }
 
@@ -4656,7 +4656,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         doButtonPress();
                     }
 
-                    setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+                    setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
                 }
             }
         };
@@ -4675,7 +4675,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
 
                 doButtonPress();
-                setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
                 mainapp.buttonVibration();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 isDirectionButtonLongPress = false;
@@ -5556,7 +5556,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         getCommonPrefs(true); // get all the common preferences
 
-        setThottleNumLimits();
+        setThrottleNumLimits();
 
         getDirectionButtonPrefs();
 
@@ -6150,7 +6150,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         getCommonPrefs(false);
         getDirectionButtonPrefs();
-        setThottleNumLimits();
+        setThrottleNumLimits();
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -6191,14 +6191,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         CookieSyncManager.getInstance().startSync();
 
         if (!prefAccelerometerShake.equals(ACCELERATOROMETER_SHAKE_NONE)) {
-            if (!accelerometerCurrent) { // perference has only just been changed to turn it on
+            if (!accelerometerCurrent) { // preference has only just been changed to turn it on
                 setupSensor();
             } else {
                 sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
             }
         }
 
-        if (((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNNING))) {
+        if (((prefKidsTime>0) && (kidsTimerRunning != kids_timer_action_type.RUNNING))) {
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
         } else {
             if (kidsTimerRunning == kids_timer_action_type.ENDED) {
@@ -7094,7 +7094,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     updateEsuMc2ZeroTrim();
                 }
                 // in case the preference has changed but the current screen does not support the number selected.
-                setThottleNumLimits();
+                setThrottleNumLimits();
 
                 getKidsTimerPrefs();
                 if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)){
@@ -7456,7 +7456,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    protected void setThottleNumLimits() {
+    protected void setThrottleNumLimits() {
         if (mainapp.numThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
             mainapp.numThrottles = mainapp.maxThrottlesCurrentScreen;
         }
@@ -7853,7 +7853,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     private void fixNumThrottles() {
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = -1;

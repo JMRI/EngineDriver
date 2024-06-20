@@ -303,8 +303,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private class LogStringAdaptor extends ArrayAdapter<String> {
         private final List<String> objects;
 
-        public LogStringAdaptor(Context context, int textviewid, List<String> objects) {
-            super(context, textviewid, objects);
+        public LogStringAdaptor(Context context, int textViewId, List<String> objects) {
+            super(context, textViewId, objects);
 
             this.objects = objects;
         }

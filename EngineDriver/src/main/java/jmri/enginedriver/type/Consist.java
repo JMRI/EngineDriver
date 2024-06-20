@@ -220,7 +220,7 @@ public final class Consist {
         boolean isServerSuppliedFunctionLabels = false;
         if (!isEmpty() && leadAddr != null) {
             ConLoco l = con.get(leadAddr);
-            if ((l != null) && (l.getIsServerSuppliedFunctionlabels()))
+            if ((l != null) && (l.getIsServerSuppliedFunctionLabels()))
                 isServerSuppliedFunctionLabels = true;
         }
         return isServerSuppliedFunctionLabels;

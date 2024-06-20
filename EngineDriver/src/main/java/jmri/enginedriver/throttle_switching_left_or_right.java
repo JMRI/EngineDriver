@@ -1044,6 +1044,6 @@ public class throttle_switching_left_or_right extends throttle {
 
         Log.d("Engine_Driver","limitSpeed -  speed: " + speed );
         speedChangeAndNotify(whichThrottle,0);
-        setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+        setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
     }
 }

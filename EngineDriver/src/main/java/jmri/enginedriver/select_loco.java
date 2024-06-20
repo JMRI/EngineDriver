@@ -197,7 +197,7 @@ public class select_loco extends AppCompatActivity {
 
     boolean prefRosterRecentLocoNames = true;
     boolean removingLocoOrForceReload = false; //flag used to indicate that the selected loco is being removed and not to save it.
-    boolean removingConsistOrForceRewite = false; //flag used to indicate that the selected consist is being removed and not to save it.
+    boolean removingConsistOrForceRewrite = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
     ListView roster_list_view;
 
@@ -932,7 +932,7 @@ public class select_loco extends AppCompatActivity {
         int whichEntryIsBeingUpdated = -1;
         boolean isBuilding = true;
 
-        if (!removingConsistOrForceRewite) {
+        if (!removingConsistOrForceRewrite) {
 
             int k = -1;
             for (ConLoco l : conLocos) {
@@ -1058,6 +1058,8 @@ public class select_loco extends AppCompatActivity {
         }
 
         public void onClick(View v) {
+            mainapp.buttonVibration();
+
             release_loco(_throttle);
             overrideThrottleName = "";
             hideSoftKeyboard(v);
@@ -1137,6 +1139,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+    @SuppressLint({"DefaultLocale", "ApplySharedPref"})
     void downloadRosterToRecents() {
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
         importExportPreferences.getRecentLocosListFromFile();
@@ -2279,7 +2282,7 @@ public class select_loco extends AppCompatActivity {
         importExportPreferences.consistLightList.remove(position);
         importExportPreferences.consistNameList.remove(position);
 
-        removingConsistOrForceRewite = true;
+        removingConsistOrForceRewrite = true;
 
         Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
         anim.setDuration(500);
@@ -2479,7 +2482,7 @@ public class select_loco extends AppCompatActivity {
                 String rslt = edt.getText().toString();
                 if (rslt.length() > 0) {
                     importExportPreferences.consistNameList.set(pos, rslt);
-                    removingConsistOrForceRewite = true;
+                    removingConsistOrForceRewrite = true;
                     updateRecentConsists(true);
                     loadRecentConsistsList(true);
                     consists_list_view.invalidateViews();

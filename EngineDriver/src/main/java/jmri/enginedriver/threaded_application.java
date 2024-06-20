@@ -558,7 +558,7 @@ public class threaded_application extends Application {
         registerActivityLifecycleCallbacks(lifecycleHandler);
         registerComponentCallbacks(lifecycleHandler);
 
-        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
         //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
         throttleLayoutViewId = R.layout.throttle;
 
@@ -1863,7 +1863,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if ((prefs.getBoolean("prefKidsTimerButton", false))
-                && !((kidsTimerRunning == kids_timer_action_type.RUNNNING) || (kidsTimerRunning == kids_timer_action_type.ENABLED))) {
+                && !((kidsTimerRunning == kids_timer_action_type.RUNNING) || (kidsTimerRunning == kids_timer_action_type.ENABLED))) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {

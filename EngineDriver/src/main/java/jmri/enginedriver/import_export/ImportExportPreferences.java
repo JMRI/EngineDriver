@@ -705,7 +705,7 @@ public ArrayList<Integer> recent_loco_source_list;
 
     }
 
-    public int addCurrentConistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
+    public int addCurrentConsistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
