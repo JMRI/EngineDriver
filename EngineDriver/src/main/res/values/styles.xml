@@ -199,6 +199,7 @@
       <item name="android:shadowDx">2</item>
       <item name="android:shadowDy">2</item>
       <item name="android:shadowRadius">4</item>
+      <item name="android:padding">2dp</item>
     </style>
   <style name="large_heading_style" parent="@android:style/Widget.TextView">
     <item name="fontFamily">sans-serif-condensed</item>
@@ -297,6 +298,7 @@
     <item name="android:shadowDx">0</item>
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
+    <item name="android:padding">2dp</item>
   </style>
 
   <style name="large_heading_style_black" parent="@android:style/Widget.TextView">

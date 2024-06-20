@@ -473,6 +473,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     mainapp.turnoutsOrder=sort_type.NAME;
             }
             refresh_turnout_view();
+            mainapp.toastSortType(mainapp.turnoutsOrder);
             mainapp.buttonVibration();
         }
     }
@@ -1158,7 +1159,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             lastTurnoutUsedName = turnoutSystemName;
 
             int numberOfRecentTurnoutsToWrite;
-            String smrl = prefs.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+            String smrl = prefs.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
             try {
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {

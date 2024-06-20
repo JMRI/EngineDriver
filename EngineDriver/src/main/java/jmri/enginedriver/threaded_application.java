@@ -68,7 +68,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,7 +97,6 @@ import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sort_type;
-import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.message_type;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
@@ -2942,6 +2940,25 @@ public class threaded_application extends Application {
             }
         }
         return tempName;
+    }
+
+    public void toastSortType(int sortType) {
+        if (!mainapp.prefHideInstructionalToasts) {
+            switch (sortType) {
+                case sort_type.NAME:
+                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByName), Toast.LENGTH_SHORT);
+                    break;
+                case sort_type.ID:
+                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedById), Toast.LENGTH_SHORT);
+                    break;
+                case sort_type.LAST_USED:
+                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByLastUsed), Toast.LENGTH_SHORT);
+                    break;
+                case sort_type.POSITION:
+                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByPosition), Toast.LENGTH_SHORT);
+                    break;
+            }
+        }
     }
 
 }

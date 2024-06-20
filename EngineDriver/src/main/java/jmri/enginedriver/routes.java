@@ -56,7 +56,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -376,6 +375,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     mainapp.routesOrder=sort_type.NAME;
             }
             refresh_route_view();
+            mainapp.toastSortType(mainapp.routesOrder);
             mainapp.buttonVibration();
         }
     }
