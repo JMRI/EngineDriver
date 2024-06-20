@@ -373,7 +373,7 @@
     <integer-array name="prefGamePadiCade" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD butons [0-3] use the down codes.  the other buttons us the up codes -->
+        <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD buttons [0-3] use the down codes.  the other buttons us the up codes -->
         <item>@integer/KeyCode_X</item> //key down   'Z' up
         <item>@integer/KeyCode_A</item> //key down   'Q' up
         <item>@integer/KeyCode_D</item> //key down   'C' up
@@ -1382,7 +1382,7 @@
         <item>0</item>  // =
         <item>1</item>  // /START
         <item>0</item>  // /KILL ALL
-        <item>0</item>  // delimeter
+        <item>0</item>  // delimiter
         <item>1</item>  // D ACK LIMIT
         <item>1</item>  // D ACK MIN
         <item>1</item>  // D ACK MAX

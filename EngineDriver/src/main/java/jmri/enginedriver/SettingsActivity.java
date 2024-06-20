@@ -96,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private Menu SAMenu;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
-    private boolean overwiteFile = false;
+    private boolean overwriteFile = false;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
@@ -346,7 +346,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
-                overwiteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
+                overwriteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
                 res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
@@ -356,7 +356,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         return res;
     }
 
-    public boolean overwiteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
+    public boolean overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
 //        boolean res = false;
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -367,11 +367,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case DialogInterface.BUTTON_POSITIVE:
 //                        res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                         importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
-                        overwiteFile = true;
+                        overwriteFile = true;
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        overwiteFile = false;
+                        overwriteFile = false;
                         break;
                 }
                 fixAndReloadImportExportPreference(sharedPreferences);
@@ -383,7 +383,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 .setPositiveButton(R.string.yes, dialogClickListener)
                 .setNegativeButton(R.string.cancel, dialogClickListener);
         ab.show();
-        return overwiteFile;
+        return overwriteFile;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -842,7 +842,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "Settings: limitNumThrottles()");
-        int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue)));
+        int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = getThrottleScreenTypeArrayIndex(sharedPreferences);

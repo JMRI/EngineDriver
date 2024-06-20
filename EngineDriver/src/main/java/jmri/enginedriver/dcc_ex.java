@@ -633,7 +633,7 @@ public class dcc_ex extends AppCompatActivity {
             dccExTrackTypeIdEditText[i].setText(mainapp.DccexTrackId[i]);
             dccExTrackTypeLayout[i].setVisibility(mainapp.DccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
             if (vn >= 5.002005) {
-                setPowerbutton(dccExTrackPowerButton[i], mainapp.DccexTrackPower[i]);
+                setPowerButton(dccExTrackPowerButton[i], mainapp.DccexTrackPower[i]);
             } else {
                 dccExTrackPowerButton[i].setVisibility(View.GONE);
             }
@@ -1285,7 +1285,7 @@ public class dcc_ex extends AppCompatActivity {
         }
     }
 
-    void setPowerbutton(Button btn, int powerState) {
+    void setPowerButton(Button btn, int powerState) {
         TypedValue outValue = new TypedValue();
         if (powerState == 1) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);

@@ -48,7 +48,7 @@ public class InPhoneLocoSoundsLoader {
    public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
    public String iplsHornShortSoundsFileName = "";
    public int iplsLocoSoundsCount = -1;
-   public String iplsName = "";   // name for the menues
+   public String iplsName = "";   // name for the menus
    public String iplsFileName = "";
 
    private int soundsCountOfSoundBeingLoaded = 0;
@@ -587,7 +587,7 @@ public class InPhoneLocoSoundsLoader {
       }
       iplsHornShortSoundsFileName = "";
       iplsLocoSoundsCount = -1;
-      iplsName = "";   // name for the menues
+      iplsName = "";   // name for the menus
       iplsFileName = "";
 
    } // end clearAllSounds

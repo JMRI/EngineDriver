@@ -7,6 +7,7 @@
  * Bug fix for the Automation button labels in DCC-EX
  * Improvements to the log screen
  * Cleanup of the connection screen
+ * New button to download the roster list to the Recents list
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
@@ -201,7 +202,7 @@
  * Option to adjust the stop button spacing on the vertical throttles
  * fix stop button not showing when slider is hidden
  * avoid NPEs reported to Play Store
- * removed commented-out code, reformatted and reindented
+ * removed commented-out code, reformatted and re-indented
 **Version 2.27.120
  * avoid NumberFormat and NPE crashes reported to Play Store
  * update Readme
@@ -770,7 +771,6 @@
  *   added html About page
  */
 /*
- *   TODO: handle gamepad input even outside of Throttle activity
  *   TODO: change config files to use db instead of .txt files, turn off sd card permission
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -828,7 +828,6 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
- *   TODO: add sort by address vs. name vs. server sequence
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device

@@ -211,7 +211,7 @@ public class ImportExportConnectionList {
                     String sType = t.get("service_type");
 
                     boolean doWrite = !connected_hostip.equals(li) || (connected_port.intValue() != lp.intValue());
-                    //dont write it out if same as selected
+                    //don't write it out if same as selected
                     if ( li.equals(demo_host) && lp.toString().equals(demo_port) && (foundDemoHost) ) {
                         doWrite = false;
                     }

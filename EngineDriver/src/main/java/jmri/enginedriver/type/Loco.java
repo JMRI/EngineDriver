@@ -134,7 +134,7 @@ public class Loco {
         this.isFromRoster = isFromRoster;
     }
 
-    public boolean getIsServerSuppliedFunctionlabels() {
+    public boolean getIsServerSuppliedFunctionLabels() {
         return this.isServerSuppliedFunctionLabels;
     }
     public void setIsServerSuppliedFunctionlabels(boolean isFromRoster) {

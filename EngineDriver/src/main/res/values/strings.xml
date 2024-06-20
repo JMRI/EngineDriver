@@ -441,10 +441,13 @@
     <string name="prefRosterFilterDefaultValue" translatable="false"> </string>
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
-    <string name="FilterRosterListFilterOwnerLabel">Filter by Owner</string>
+    <string name="FilterRosterListFilterOwnerLabel">👤</string>
+    <string name="FilterRosterListDownloadLabel">Download</string>
+    <string name="FilterRosterListFilterByLabel">🔎</string>
     <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
     <string name="prefRosterOwnersFilterShowOptionTitle">Filter by Roster Owner</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">All</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
     <string name="LocoSelectMethodAddress">DCC Address</string>
@@ -555,7 +558,7 @@
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 <!--    <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
-    <string name="NumThrottleDefaulValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
+    <string name="NumThrottleDefaultValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
     <string name="server">Server</string>
     <string name="routes_route">Route System Name</string>
@@ -923,6 +926,11 @@
     <string name="toastLocoAlreadySelected">Loco \'%1$s\' already selected</string>
     <string name="toastAddressExceedsMax">Address \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
+    <string name="toastSortedByName">Sorted by Name</string>
+    <string name="toastSortedById">Sorted by Address/Id</string>
+    <string name="toastSortedByLastUsed">Sorted by Last Time Used</string>
+    <string name="toastSortedByPosition">Sorted by Position</string>
+
     <!--    Toast messages for the Consist Edit Activity -->
     <string name="toastConsistEditHelp">Touch to change facing. Swipe Right to remove an entry.</string>
 
@@ -1218,10 +1226,12 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="turnoutsRecentHeading">Recent Turnouts</string>
 
     <string name="dialogConfirmClearTitle">Clear List</string>
-    <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want remove all the Recent Locomotives</string>
-    <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists</string>
-    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Turnouts</string>
-    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirm that you want remove all the Recent Connections</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirm that you want to remove all the Recent Locomotives</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want to remove all the Recent Consists</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want to remove all the Recent Turnouts</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirm that you want to remove all the Recent Connections</string>
+
+    <string name="dialogDownloadRosterConfirmQuestion">Confirm that you want to download all Roster Entries to the Recent Locomotives list</string>
 
     <string name="prefHideInstructionalToastsTitle">Hide Instructional Hints</string>
     <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>

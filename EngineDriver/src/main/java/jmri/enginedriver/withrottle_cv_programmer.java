@@ -829,7 +829,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         return rslt;
     }
 
-    void setPowerbutton(Button btn, int powerState) {
+    void setPowerButton(Button btn, int powerState) {
         TypedValue outValue = new TypedValue();
         if (powerState == 1) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);

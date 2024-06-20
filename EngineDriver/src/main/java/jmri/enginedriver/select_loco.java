@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
+import static jmri.enginedriver.threaded_application.getIntPrefValue;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -118,7 +119,7 @@ public class select_loco extends AppCompatActivity {
     ArrayList<HashMap<String, String>> recent_engine_list;
     ArrayList<HashMap<String, String>> roster_list;
     ArrayList<String> roster_owners_list;
-    String rosterOwnersFilter = "---";
+    String rosterOwnersFilter = "Owner";
     int rosterOwnersFilterIndex = 0;
     private RosterSimpleAdapter roster_list_adapter;
     private RecentSimpleAdapter recent_list_adapter;
@@ -178,7 +179,8 @@ public class select_loco extends AppCompatActivity {
 
     RelativeLayout rlAddress;
     RelativeLayout rlAddressHelp;
-    RelativeLayout rlRosterHeader;
+    TextView rlRosterHeading;
+    RelativeLayout rlRosterHeaderGroup;
     RelativeLayout rlRosterEmpty;
     LinearLayout llRoster;
     RelativeLayout rlRecentHeader;
@@ -195,7 +197,7 @@ public class select_loco extends AppCompatActivity {
 
     boolean prefRosterRecentLocoNames = true;
     boolean removingLocoOrForceReload = false; //flag used to indicate that the selected loco is being removed and not to save it.
-    boolean removingConsistOrForceRewite = false; //flag used to indicate that the selected consist is being removed and not to save it.
+    boolean removingConsistOrForceRewrite = false; //flag used to indicate that the selected consist is being removed and not to save it.
     ListView engine_list_view;
     ListView roster_list_view;
 
@@ -930,7 +932,7 @@ public class select_loco extends AppCompatActivity {
         int whichEntryIsBeingUpdated = -1;
         boolean isBuilding = true;
 
-        if (!removingConsistOrForceRewite) {
+        if (!removingConsistOrForceRewrite) {
 
             int k = -1;
             for (ConLoco l : conLocos) {
@@ -1056,6 +1058,8 @@ public class select_loco extends AppCompatActivity {
         }
 
         public void onClick(View v) {
+            mainapp.buttonVibration();
+
             release_loco(_throttle);
             overrideThrottleName = "";
             hideSoftKeyboard(v);
@@ -1105,6 +1109,109 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ApplySharedPref")
+    public class DownloadRosterButtonListener implements View.OnClickListener {
+        DownloadRosterButtonListener() {}
+
+        public void onClick(View v) {
+
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                //@Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            downloadRosterToRecents();
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                    mainapp.buttonVibration();
+                }
+            };
+
+            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+                    .setMessage(getApplicationContext().getResources().getString(R.string.dialogDownloadRosterConfirmQuestion))
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.cancel, dialogClickListener);
+            ab.show();
+
+        }
+    }
+
+    @SuppressLint({"DefaultLocale", "ApplySharedPref"})
+    void downloadRosterToRecents() {
+        ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+        importExportPreferences.getRecentLocosListFromFile();
+
+        ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
+        int rosterSize = rns.size();
+        int recentsSize = getIntPrefValue(prefs, "maximum_recent_locos_preference", getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
+        if (rosterSize>recentsSize) { // force the preference for the max recents to be as large as the roster
+            prefs.edit().putString("maximum_recent_locos_preference", String.format("%d",rosterSize)).commit();  //reset the preference
+        }
+
+        int j=0;
+        for (String rostername : rns) {
+            HashMap<String, String> hm = roster_list.get(j);
+            String rosterNameString = hm.get("roster_name");
+            String rosterAddressString = hm.get("roster_address");
+            String rosterEntryType = hm.get("roster_entry_type");
+
+            String locoName = "";
+            int address_size = 0;
+            int engine_address = 0;
+            int locoSource = 0;
+
+            // parse address and length from string, e.g. 2591(L)
+            String[] ras = threaded_application.splitByString(rosterAddressString, "(");
+            if (ras[0].length() > 0) {  //only process if address found
+                address_size = (ras[1].charAt(0) == 'L')
+                        ? address_type.LONG
+                        : address_type.SHORT;   // convert S/L to 0/1
+                try {
+                    engine_address = Integer.parseInt(ras[0]);   // convert address to int
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getApplicationContext(), "ERROR - could not parse address\n" + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                    return; //get out, don't try to acquire
+                }
+                if ("loco".equals(rosterEntryType)) {
+                    locoName = rosterNameString;
+                    sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist)
+                }
+                locoSource = WHICH_SOURCE_ROSTER;
+            }
+
+            // check if it is already in the list and remove it
+            for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+                Log.d("Engine_Driver", "DownloadRosterButtonListener: locoName='"+locoName+"', address="+engine_address);
+                if (engine_address == importExportPreferences.recent_loco_address_list.get(i)
+                        && address_size == importExportPreferences.recent_loco_address_size_list.get(i)
+                        && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                    importExportPreferences.recent_loco_address_list.remove(i);
+                    importExportPreferences.recent_loco_address_size_list.remove(i);
+                    importExportPreferences.recent_loco_name_list.remove(i);
+                    importExportPreferences.recent_loco_source_list.remove(i);
+                    Log.d("Engine_Driver", "DownloadRosterButtonListener: Loco '"+ locoName + "' removed from Recents");
+                    break;
+                }
+            }
+
+            // now append it to the beginning of the list
+            importExportPreferences.recent_loco_address_list.add(0, engine_address);
+            importExportPreferences.recent_loco_address_size_list.add(0, address_size);
+            importExportPreferences.recent_loco_name_list.add(0, locoName);
+            importExportPreferences.recent_loco_source_list.add(0, locoSource);
+            Log.d("Engine_Driver", "DownloadRosterButtonListener: Loco '"+ locoName + "' added to Recents");
+
+            j++;
+        }
+
+        importExportPreferences.writeRecentLocosListToFile(prefs);
+        recreate();
+    }
+
     public class SortRosterButtonListener implements View.OnClickListener {
         SortRosterButtonListener() {}
 
@@ -1115,6 +1222,7 @@ public class select_loco extends AppCompatActivity {
                 mainapp.rosterOrder=sort_type.NAME;
             }
             refresh_roster_list();
+            mainapp.toastSortType(mainapp.rosterOrder);
             mainapp.buttonVibration();
         }
     }
@@ -1135,6 +1243,7 @@ public class select_loco extends AppCompatActivity {
                     mainapp.recentLocosOrder=sort_type.NAME;
             }
             loadRecentLocosList(true);
+            mainapp.toastSortType(mainapp.recentLocosOrder);
             mainapp.buttonVibration();
         }
     }
@@ -1155,6 +1264,7 @@ public class select_loco extends AppCompatActivity {
                     mainapp.recentConsistsOrder=sort_type.NAME;
             }
             loadRecentConsistsList(true);
+            mainapp.toastSortType(mainapp.recentConsistsOrder);
             mainapp.buttonVibration();
         }
     }
@@ -1448,7 +1558,7 @@ public class select_loco extends AppCompatActivity {
 
         roster_list.clear();
         roster_owners_list.clear();
-        roster_owners_list.add("----");
+        roster_owners_list.add(this.getResources().getString(R.string.prefRosterOwnersFilterDefaultOwner));
 
         // Set the options for the owners
         Spinner rosterFilterOwners = findViewById(R.id.roster_filter_owner);
@@ -1456,7 +1566,7 @@ public class select_loco extends AppCompatActivity {
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rosterFilterOwners.setAdapter(spinner_adapter);
         rosterFilterOwners.setOnItemSelectedListener(new owners_filter_spinner_listener());
-        rosterOwnersFilter = prefs.getString("prefRosterOwnersFilterSelected", "---");
+        rosterOwnersFilter = prefs.getString("prefRosterOwnersFilterSelected", this.getResources().getString(R.string.prefRosterOwnersFilterDefaultOwner));
         rosterFilterOwners.setSelection(0);
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
@@ -1598,7 +1708,8 @@ public class select_loco extends AppCompatActivity {
 
         rlAddress = findViewById(R.id.enter_loco_group);
         rlAddressHelp = findViewById(R.id.enter_loco_group_help);
-        rlRosterHeader = findViewById(R.id.roster_list_header_group);
+        rlRosterHeading = findViewById(R.id.roster_list_heading);
+        rlRosterHeaderGroup = findViewById(R.id.roster_list_header_group);
         rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
         llRoster = findViewById(R.id.roster_list_group);
         rlRecentHeader = findViewById(R.id.engine_list_header_group);
@@ -1632,8 +1743,13 @@ public class select_loco extends AppCompatActivity {
         set_labels();
         overrideThrottleName = "";
 
+        // setup the download button
+        Button b = findViewById(R.id.roster_download);
+        DownloadRosterButtonListener downloadRosterButtonListener = new DownloadRosterButtonListener();
+        b.setOnClickListener(downloadRosterButtonListener);
+
         // setup the sort buttons
-        Button b = findViewById(R.id.roster_sort);
+        b = findViewById(R.id.roster_sort);
         SortRosterButtonListener sortRosterButtonListener = new SortRosterButtonListener();
         b.setOnClickListener(sortRosterButtonListener);
 
@@ -1678,7 +1794,8 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_ADDRESS: {
                 rlAddress.setVisibility(View.VISIBLE);
                 rlAddressHelp.setVisibility(View.VISIBLE);
-                rlRosterHeader.setVisibility(GONE);
+                rlRosterHeading.setVisibility(GONE);
+                rlRosterHeaderGroup.setVisibility(GONE);
                 llRoster.setVisibility(GONE);
                 rlRosterEmpty.setVisibility(GONE);
                 rlRecentHeader.setVisibility(GONE);
@@ -1705,7 +1822,8 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_ROSTER: {
                 rlAddress.setVisibility(GONE);
                 rlAddressHelp.setVisibility(GONE);
-                rlRosterHeader.setVisibility(View.VISIBLE);
+                rlRosterHeading.setVisibility(View.VISIBLE);
+                rlRosterHeaderGroup.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
                 rlRosterEmpty.setVisibility(View.VISIBLE);
                 rlRecentHeader.setVisibility(GONE);
@@ -1735,7 +1853,8 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_RECENT: {
                 rlAddress.setVisibility(GONE);
                 rlAddressHelp.setVisibility(GONE);
-                rlRosterHeader.setVisibility(GONE);
+                rlRosterHeading.setVisibility(GONE);
+                rlRosterHeaderGroup.setVisibility(GONE);
                 llRoster.setVisibility(GONE);
                 rlRosterEmpty.setVisibility(GONE);
                 rlRecentHeader.setVisibility(View.VISIBLE);
@@ -1765,7 +1884,8 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_CONSIST: {
                 rlAddress.setVisibility(GONE);
                 rlAddressHelp.setVisibility(GONE);
-                rlRosterHeader.setVisibility(GONE);
+                rlRosterHeading.setVisibility(GONE);
+                rlRosterHeaderGroup.setVisibility(GONE);
                 llRoster.setVisibility(GONE);
                 rlRosterEmpty.setVisibility(GONE);
                 rlRecentHeader.setVisibility(GONE);
@@ -1795,7 +1915,8 @@ public class select_loco extends AppCompatActivity {
             case WHICH_METHOD_IDNGO: {
                 rlAddress.setVisibility(GONE);
                 rlAddressHelp.setVisibility(GONE);
-                rlRosterHeader.setVisibility(GONE);
+                rlRosterHeading.setVisibility(GONE);
+                rlRosterHeaderGroup.setVisibility(GONE);
                 llRoster.setVisibility(GONE);
                 rlRosterEmpty.setVisibility(GONE);
                 rlRecentHeader.setVisibility(GONE);
@@ -2161,7 +2282,7 @@ public class select_loco extends AppCompatActivity {
         importExportPreferences.consistLightList.remove(position);
         importExportPreferences.consistNameList.remove(position);
 
-        removingConsistOrForceRewite = true;
+        removingConsistOrForceRewrite = true;
 
         Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
         anim.setDuration(500);
@@ -2361,7 +2482,7 @@ public class select_loco extends AppCompatActivity {
                 String rslt = edt.getText().toString();
                 if (rslt.length() > 0) {
                     importExportPreferences.consistNameList.set(pos, rslt);
-                    removingConsistOrForceRewite = true;
+                    removingConsistOrForceRewrite = true;
                     updateRecentConsists(true);
                     loadRecentConsistsList(true);
                     consists_list_view.invalidateViews();

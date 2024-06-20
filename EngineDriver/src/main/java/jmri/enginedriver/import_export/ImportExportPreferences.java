@@ -178,7 +178,7 @@ public ArrayList<Integer> recent_loco_source_list;
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
 
-        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
 
         int prefCount;
         if (prefImportExportLocoList) {  // now clean out the preference data
@@ -502,7 +502,7 @@ public ArrayList<Integer> recent_loco_source_list;
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
             int mrl = Integer.parseInt(smrl);
             list_output = new PrintWriter(engine_list_file);
@@ -705,7 +705,7 @@ public ArrayList<Integer> recent_loco_source_list;
 
     }
 
-    public int addCurrentConistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
+    public int addCurrentConsistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
         ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
         ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
@@ -782,7 +782,7 @@ public ArrayList<Integer> recent_loco_source_list;
 
         PrintWriter list_output;
 //        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
-        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", "10");
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
         try {
 //            int numberOfRecentLocosToWrite = Integer.parseInt(smrl);
             list_output = new PrintWriter(consist_list_file);
@@ -939,7 +939,7 @@ public ArrayList<Integer> recent_loco_source_list;
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
+        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
             int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
             numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recent_turnout_address_list.size());

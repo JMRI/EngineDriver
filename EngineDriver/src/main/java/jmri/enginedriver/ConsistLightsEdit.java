@@ -357,7 +357,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         super.onDestroy();
 
         importExportPreferences.getRecentConsistsListFromFile();
-        int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConistToBeginningOfList(consist);
+        int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
 
         if (mainapp.consist_lights_edit_msg_handler != null) {

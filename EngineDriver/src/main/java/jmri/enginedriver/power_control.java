@@ -136,7 +136,7 @@ public class power_control extends AppCompatActivity {
         }
     }
 
-    void setPowerbutton(Button btn, int powerState) {
+    void setPowerButton(Button btn, int powerState) {
         TypedValue outValue = new TypedValue();
         if (powerState == 1) {
             mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
@@ -158,7 +158,7 @@ public class power_control extends AppCompatActivity {
             if (vn >= 05.002005) {  /// need to remove the track power options
                 dccExTrackTypeLayout[i].setVisibility(mainapp.DccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
                 dccExTrackType[i].setText(TRACK_TYPES[mainapp.DccexTrackType[i]]);
-                setPowerbutton(dccExTrackPowerButton[i],mainapp.DccexTrackPower[i]);
+                setPowerButton(dccExTrackPowerButton[i],mainapp.DccexTrackPower[i]);
             } else {
                 dccExTrackTypeLayout[i].setVisibility(View.GONE);
             }

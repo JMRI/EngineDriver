@@ -569,7 +569,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
     }
 
-    // needed in case the langauge was changed from the default
+    // needed in case the language was changed from the default
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));

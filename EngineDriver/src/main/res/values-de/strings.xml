@@ -359,7 +359,7 @@
 <!--    <string name="prefGamePadTypeDefaultValue">Keine</string> -->
 <!--    <string name="prefSwipeUpOptionDefaultValue">Keine</string> -->
 <!--    <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string> -->
-<!--    <string name="NumThrottleDefaulValue">Zwei</string> -->
+<!--    <string name="NumThrottleDefaultValue">Zwei</string> -->
     <string name="server_address">Serveradresse</string>
     <string name="routes_route">Fahrstraßenname</string>
 

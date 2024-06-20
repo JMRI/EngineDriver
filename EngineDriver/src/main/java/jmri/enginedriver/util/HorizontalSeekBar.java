@@ -42,7 +42,7 @@ public class HorizontalSeekBar extends SeekBar {
     private static final int TICK_TYPE_0_100_0 = 1;
     int tickMarkType = 0;
 
-    // A change listener registrating start and stop of tracking. Need an own listener because the listener in SeekBar
+    // A change listener registration start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
     private OnSeekBarChangeListener mOnSeekBarChangeListener;
 

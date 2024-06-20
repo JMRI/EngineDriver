@@ -304,17 +304,17 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      */
     private void showAppSettingsDialog(final Context context, @RequestCodes final int requestCode) {
-        String postiveButtonLabel;
+        String positiveButtonLabel;
         if (requestCode != WRITE_SETTINGS) {
-            postiveButtonLabel = context.getResources().getString(R.string.permissionsAppSettingsButton);
+            positiveButtonLabel = context.getResources().getString(R.string.permissionsAppSettingsButton);
         } else {
-            postiveButtonLabel = context.getResources().getString(R.string.permissionsSystemSettingsButton);
+            positiveButtonLabel = context.getResources().getString(R.string.permissionsSystemSettingsButton);
         }
         isDialogOpen = true;
         new AlertDialog.Builder(context)
                 .setTitle(context.getResources().getString(R.string.permissionsRequestTitle))
                 .setMessage(getMessage(context, requestCode))
-                .setPositiveButton(postiveButtonLabel, new DialogInterface.OnClickListener() {
+                .setPositiveButton(positiveButtonLabel, new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent();
                         if (requestCode != WRITE_SETTINGS) {

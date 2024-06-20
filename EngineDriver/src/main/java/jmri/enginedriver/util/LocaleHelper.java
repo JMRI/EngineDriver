@@ -52,7 +52,7 @@ public class LocaleHelper {
     // called once from the mainapp activity
     public static Context onAttach(Context context, String defaultLanguage) {
         if (languageCountry.equals("")) {
-            languageCountry = defaultLanguage; // set the inital value
+            languageCountry = defaultLanguage; // set the initial value
         }
         String lang = getLanguagePreference(context);
         return setLocale(context, lang);
