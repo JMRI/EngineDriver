@@ -467,7 +467,7 @@
     <RelativeLayout
         android:id="@+id/engine_list_header_group"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="2dp">
 
@@ -525,7 +525,7 @@
     <RelativeLayout
         android:id="@+id/consists_list_header_group"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:paddingTop="2dp"
         android:paddingBottom="2dp">
 
