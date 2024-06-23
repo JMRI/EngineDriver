@@ -20,7 +20,6 @@ package jmri.enginedriver;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
-import static jmri.enginedriver.threaded_application.getIntPrefValue;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -93,7 +92,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import jmri.enginedriver.comms.comm_thread;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.Loco;
@@ -146,7 +144,7 @@ public class select_loco extends AppCompatActivity {
     ArrayList<HashMap<String, String>> recent_consists_list;
     private RecentConsistsSimpleAdapter recent_consists_list_adapter;
 
-    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+    public final ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
     ListView consists_list_view;
     SwipeDetector recentConsistsSwipeDetector;
@@ -156,7 +154,6 @@ public class select_loco extends AppCompatActivity {
     private int address_size;
     private String locoName = "";
     private int locoSource = 0;
-    private String functions = "";  // simple map of functions. Only used by 'Recent Locos' temporarily to retrieve the fucntions.
     private ImageView detailsRosterImageView;
     String detailsRosterNameString = "";
     boolean newRosterImageSelected = false;
@@ -176,7 +173,7 @@ public class select_loco extends AppCompatActivity {
     private String default_address_length;
     private Menu SMenu;
 
-    protected int layoutViewId = R.layout.select_loco;
+    protected final int layoutViewId = R.layout.select_loco;
 
     private String prefRosterFilter = "";
     EditText filter_roster_text;
@@ -209,19 +206,15 @@ public class select_loco extends AppCompatActivity {
 
     private int maxAddr = 9999;
 
-    private LinearLayout screenNameLine;
-    private Toolbar toolbar;
-    private LinearLayout statusLine;
-
     // populate the on-screen roster view from global hashmap
     public void refreshRosterList() {
         // clear and rebuild
         rosterList.clear();  // local list. For UI
         mainapp.rosterFullList.clear(); // full global list
         if (((mainapp.roster_entries != null)  // add roster and consist entries if any defined
-                && (mainapp.roster_entries.size() > 0))
+                && (!mainapp.roster_entries.isEmpty()))
                 || ((mainapp.consist_entries != null)
-                && (mainapp.consist_entries.size() > 0))) {
+                && (!mainapp.consist_entries.isEmpty()))) {
 
             //only show this warning once, it will be skipped for each entry below
             if (mainapp.rosterJmriWeb == null) {
@@ -231,7 +224,8 @@ public class select_loco extends AppCompatActivity {
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
-                for (String rostername : rns) {
+                for (String rostername : rns) //noinspection ExtractMethodRecommender
+                {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
                     hm.put("roster_name", rostername);
@@ -254,13 +248,13 @@ public class select_loco extends AppCompatActivity {
                     hm.put("roster_owner", owner);
 
                     boolean includeInList = false;
-                    if ((prefRosterFilter.length() == 0) && (rosterOwnersFilterIndex==0) ) {
+                    if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
                         includeInList = true;
-                    } else if ((prefRosterFilter.length() > 0) && (rosterOwnersFilterIndex==0)) {
+                    } else if ((!prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0)) {
                          if (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase())) {
                             includeInList = true;
                          }
-                    } else if ((prefRosterFilter.length() == 0) && (rosterOwnersFilterIndex > 0)) {
+                    } else if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex > 0)) {
                         if (owner.equals(rosterOwnersList.get(rosterOwnersFilterIndex))) {
                             includeInList = true;
                         }
@@ -360,12 +354,12 @@ public class select_loco extends AppCompatActivity {
             v.setVisibility(View.VISIBLE);
         } // if roster_entries not null
 
-        rosterDownloadButton.setEnabled((mainapp.rosterFullList.size()>0) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
+        rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
     }
 
     private String getLocoIconUrlFromRoster(String engineAddress, String engineName) {
         if (prefRosterRecentLocoNames) {
-            if ((mainapp.roster_entries != null) && (mainapp.roster_entries.size() > 0) && (mainapp.rosterJmriWeb != null)) {
+            if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (engineName.equals("")) {
                         if (mainapp.roster_entries.get(rostername).equals(engineAddress)) {
@@ -396,7 +390,7 @@ public class select_loco extends AppCompatActivity {
 
         refreshRosterList();
         if (prefSelectLocoMethod.equals(which_method.FIRST)) {
-            if ((mainapp.rosterJmriWeb != null) && (mainapp.rosterJmriWeb.size() > 0)) {
+            if ((mainapp.rosterJmriWeb != null) && (!mainapp.rosterJmriWeb.isEmpty())) {
                 prefSelectLocoMethod = which_method.ROSTER;
                 showMethod(which_method.ROSTER);
             } else {
@@ -489,7 +483,7 @@ public class select_loco extends AppCompatActivity {
                             mainapp.setPowerStateButton(SMenu);
                         }
                     }
-                    if (response_str.length() >= 1) {
+                    if (!response_str.isEmpty()) {
                         char com1 = response_str.charAt(0);
                         if (com1 == 'R') {                                  //refresh labels when any roster response is received
                             rosterListAdapter.notifyDataSetChanged();
@@ -574,11 +568,11 @@ public class select_loco extends AppCompatActivity {
         Consist consist = mainapp.consists[whichThrottle];
 
         // if we already have it show message and request it anyway
-        if (consist.size() >= 1) {
+        if (!consist.isEmpty()) {
             for (int i = 0; i <= consist.size(); i++) {
                 if (consist.getLoco(sAddr) != null) {
                     overrideThrottleName = "";
-                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);  // send the acquire message anyway
                     return;
                 }
@@ -654,7 +648,7 @@ public class select_loco extends AppCompatActivity {
 
     void processRosterFunctionString(String responseStr, int whichThrottle) {
         Log.d("Engine_Driver", "select_loco: processRosterFunctionString(): processing function labels for " + mainapp.throttleIntToString(whichThrottle));
-        LinkedHashMap<Integer, String> functionLabelsMap = mainapp.parseFunctionLabels(responseStr);
+        LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels(responseStr);
         mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
 
@@ -839,7 +833,7 @@ public class select_loco extends AppCompatActivity {
                 recentEngineList.add(hm);
             }
 
-            if (importExportPreferences.recent_loco_address_list.size() == 0) {  // if the list is empty, hide the radio button
+            if (importExportPreferences.recent_loco_address_list.isEmpty()) {  // if the list is empty, hide the radio button
                 rbRecent.setVisibility(GONE);
             } else {
 
@@ -903,7 +897,7 @@ public class select_loco extends AppCompatActivity {
                 hm.put("last_used", Integer.toString(i));
                 recent_consists_list.add(hm);
             }
-            if (importExportPreferences.consistEngineAddressList.size() == 0) {
+            if (importExportPreferences.consistEngineAddressList.isEmpty()) {
                 myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
             } else {
                 Comparator<HashMap<String, String>> comparator = new Comparator<HashMap<String, String>>() {
@@ -1003,7 +997,7 @@ public class select_loco extends AppCompatActivity {
             }
 
             // check to see if we are still building the consist
-            if ((importExportPreferences.consistEngineAddressList.size() > 0)
+            if ((!importExportPreferences.consistEngineAddressList.isEmpty())
                     && (importExportPreferences.consistEngineAddressList.get(0).size() == (tempConsistEngineAddressList_inner.size() - 1))) {
                 // check of the last added one is the same other then the last extra loco
                 for (int j = 0; j < tempConsistEngineAddressList_inner.size() - 1; j++) {
@@ -1050,7 +1044,7 @@ public class select_loco extends AppCompatActivity {
             try {
                 engine_address = Integer.parseInt(entry.getText().toString());
             } catch (NumberFormatException e) {
-                mainapp.safeToast("ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT);
+                threaded_application.safeToast("ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT);
                 return;
             }
             Spinner spinner = findViewById(R.id.address_length);
@@ -1079,7 +1073,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     public class ReleaseButtonListener implements View.OnClickListener {
-        int _throttle;
+        final int _throttle;
 
         ReleaseButtonListener(int throttle) {
             _throttle = throttle;
@@ -1097,8 +1091,8 @@ public class select_loco extends AppCompatActivity {
     }
 
     public class EditConsistButtonListener implements View.OnClickListener {
-        int _throttle;
-        Activity _selectLocoActivity;
+        final int _throttle;
+        final Activity _selectLocoActivity;
 
         EditConsistButtonListener(int throttle, Activity selectLocoActivity) {
             _throttle = throttle;
@@ -1118,8 +1112,8 @@ public class select_loco extends AppCompatActivity {
     }
 
     public class EditConsistLightsButtonListener implements View.OnClickListener {
-        int _throttle;
-        Activity _selectLocoActivity;
+        final int _throttle;
+        final Activity _selectLocoActivity;
 
         EditConsistLightsButtonListener(int throttle, Activity selectLocoActivity) {
             _throttle = throttle;
@@ -1229,7 +1223,7 @@ public class select_loco extends AppCompatActivity {
 
     // listener for the ID 'n' Go button, when clicked, send the id request and return to Throttle
     public class DeviceSoundsButtonListener implements View.OnClickListener {
-        Activity _selectLocoActivity;
+        final Activity _selectLocoActivity;
 
         DeviceSoundsButtonListener(Activity selectLocoActivity) {
             _selectLocoActivity = selectLocoActivity;
@@ -1259,20 +1253,21 @@ public class select_loco extends AppCompatActivity {
                 address_size = importExportPreferences.recent_loco_address_size_list.get(position);
                 locoSource = importExportPreferences.recent_loco_source_list.get(position);
                 locoName = importExportPreferences.recent_loco_name_list.get(position);
-                functions = importExportPreferences.recent_loco_functions_list.get(position);
+                // simple map of functions. Only used by 'Recent Locos' temporarily to retrieve the fucntions.
+                String functions = importExportPreferences.recent_loco_functions_list.get(position);
                 if (locoSource == source_type.UNKNOWN) {
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(engine_address, address_size, false), true);
                 }
 
                 sWhichThrottle += locoName;
                 acquireLoco(true, -1);
-                if (functions.length() > 0) {
+                if (!functions.isEmpty()) {
                     if ( (locoSource == source_type.ROSTER)
                     || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
                         String addrStr = ((address_size == 0) ? "S" : "L") + engine_address;
                         String lead = mainapp.consists[whichThrottle].getLeadAddr();
                         if (lead.equals(addrStr)) {                        //*** temp - only process if for lead engine in consist
-                            LinkedHashMap<Integer, String> functionLabelsMap = mainapp.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
+                            LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
                             mainapp.function_labels[whichThrottle] = functionLabelsMap;
                             mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                         }
@@ -1422,14 +1417,14 @@ public class select_loco extends AppCompatActivity {
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
-            if (ras[0].length() > 0) {  //only process if address found
+            if (!ras[0].isEmpty()) {  //only process if address found
                 address_size = (ras[1].charAt(0) == 'L')
                         ? address_type.LONG
                         : address_type.SHORT;   // convert S/L to 0/1
                 try {
                     engine_address = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
-                    mainapp.safeToast("ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT);
+                    threaded_application.safeToast("ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }
                 if ("loco".equals(rosterEntryType)) {
@@ -1668,8 +1663,8 @@ public class select_loco extends AppCompatActivity {
 
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", which_method.FIRST);
         // make sure the radio button will be pointing to something valid
-        if (((recent_consists_list.size() == 0) && (prefSelectLocoMethod.equals(which_method.RECENT_CONSISTS)))
-                | ((importExportPreferences.recent_loco_address_list.size() == 0) && (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)))
+        if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_CONSISTS)))
+                | ((importExportPreferences.recent_loco_address_list.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)))
                 | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(which_method.IDNGO))) {
             prefSelectLocoMethod = which_method.ADDRESS;
         }
@@ -1733,9 +1728,9 @@ public class select_loco extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
 
-        screenNameLine = findViewById(R.id.screen_name_line);
-        toolbar = findViewById(R.id.toolbar);
-        statusLine = findViewById(R.id.status_line);
+        LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -1791,7 +1786,7 @@ public class select_loco extends AppCompatActivity {
                 llRoster.setVisibility(View.VISIBLE);
                 rlRosterEmpty.setVisibility(View.VISIBLE);
                 rbRoster.setChecked(true);
-                rosterDownloadButton.setEnabled((mainapp.rosterFullList.size()>0) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
+                rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
 
                 if (!mainapp.shownToastRoster) { // only show it once
                     mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG);
@@ -1970,7 +1965,7 @@ public class select_loco extends AppCompatActivity {
 
             if (addr>maxAddr) {
                 addr = -1;
-                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
                 la.setText(""); //clear the bad entry
             }
         }
@@ -1994,7 +1989,7 @@ public class select_loco extends AppCompatActivity {
 
     }
 
-    // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
+    /** @noinspection SameReturnValue*/ // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
     protected boolean onLongRosterListItemClick(int position) {
         RosterEntry re = null;
         HashMap<String, String> hm = rosterList.get(position);
@@ -2087,7 +2082,7 @@ public class select_loco extends AppCompatActivity {
         dialog.show();
     }
 
-    // long click for the recent loco list items.
+    /** @noinspection SameReturnValue*/ // long click for the recent loco list items.
     protected boolean onLongRecentListItemClick(int position) {
         if (importExportPreferences.recent_loco_source_list.get(position) == source_type.ROSTER) {
             String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
@@ -2140,7 +2135,7 @@ public class select_loco extends AppCompatActivity {
         });
     }
 
-    // long click for the recent consists list items.  Clears the entry from the list
+    /** @noinspection SameReturnValue*/ // long click for the recent consists list items.  Clears the entry from the list
     protected boolean onLongRecentConsistsListItemClick(int position) {
         showEditRecentConsistsNameDialog(position);
         return true;
@@ -2186,6 +2181,7 @@ public class select_loco extends AppCompatActivity {
     public class RosterSimpleAdapter extends SimpleAdapter {
         private final Context cont;
 
+        /** @noinspection SameParameterValue*/
         RosterSimpleAdapter(Context context,
                             List<? extends Map<String, ?>> data, int resource,
                             String[] from, int[] to) {
@@ -2234,6 +2230,7 @@ public class select_loco extends AppCompatActivity {
     public class RecentSimpleAdapter extends SimpleAdapter {
         private final Context cont;
 
+        /** @noinspection SameParameterValue*/
         RecentSimpleAdapter(Context context,
                             List<? extends Map<String, ?>> data, int resource,
                             String[] from, int[] to) {
@@ -2287,7 +2284,7 @@ public class select_loco extends AppCompatActivity {
         }
         hasLocalRosterImage = foundSavedImage;
 
-        if ((iconURL != null) && (iconURL.length() > 0)) {
+        if ((iconURL != null) && (!iconURL.isEmpty())) {
             mainapp.imageDownloader.download(iconURL, imageView);
         } else {
             if (!foundSavedImage) {
@@ -2299,6 +2296,7 @@ public class select_loco extends AppCompatActivity {
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
         private final Context cont;
 
+        /** @noinspection SameParameterValue*/
         RecentConsistsSimpleAdapter(Context context,
                                     List<? extends Map<String, ?>> data, int resource,
                                     String[] from, int[] to) {
@@ -2352,7 +2350,7 @@ public class select_loco extends AppCompatActivity {
         dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
-                if (rslt.length() > 0) {
+                if (!rslt.isEmpty()) {
                     importExportPreferences.consistNameList.set(pos, rslt);
                     removingConsistOrForceRewrite = true;
                     updateRecentConsists(true);
@@ -2386,7 +2384,7 @@ public class select_loco extends AppCompatActivity {
         dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
-                if (rslt.length() > 0) {
+                if (!rslt.isEmpty()) {
                     importExportPreferences.recent_loco_name_list.set(pos, rslt);
                     removingLocoOrForceReload = true;
                     saveRecentLocosList(true);
@@ -2430,6 +2428,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+    /** @noinspection SameParameterValue*/
     private static Bitmap viewToBitmap(View view, int maxHeight)
     {
         int originalWidth = view.getWidth();
@@ -2450,6 +2449,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+    /** @noinspection UnusedReturnValue*/
     private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
@@ -2498,7 +2498,7 @@ public class select_loco extends AppCompatActivity {
 //        LocalRosterImageRemoved = false;
 //    }
 
-    // from http://www.java2s.com/example/android/android.graphics/read-bitmap-from-file-and-rotate.html
+    /** @noinspection CallToPrintStackTrace*/ // from http://www.java2s.com/example/android/android.graphics/read-bitmap-from-file-and-rotate.html
     static private int getRotateDegreeFromExif(String filePath) {
         int degree = 0;
         try {

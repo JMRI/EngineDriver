@@ -11,6 +11,7 @@
  * New button to download the roster list to the Recents list
  * Selecting a loco from Recent Loco that was originally selected from a roster will now attempt to reload the original function buttons, regardless to the server. Note with WiThrottle it cannot know the latching characteristics
  * UI and performance improvements to the Consist Functions Edit screen
+ * general cleanup and linting of the select_loco code
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
