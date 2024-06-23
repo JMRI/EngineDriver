@@ -75,10 +75,10 @@
             android:layout_width="fill_parent"
             android:layout_alignBottom="@id/port"
             android:layout_toRightOf="@id/port"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/connect_button"
             tools:ignore="RtlHardcoded" />
 
@@ -96,7 +96,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.33"
+        android:layout_weight="0.4"
         android:background="#00000000"
         android:orientation="vertical" >
 
@@ -109,21 +109,43 @@
             android:footerDividersEnabled="true" />
     </LinearLayout>
 
-    <TextView
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:id="@+id/recent_connections_heading"
+    <RelativeLayout
+        android:id="@+id/engine_list_header_group"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/recent_connections"
-        android:paddingLeft="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
+
+        <TextView
+            android:id="@+id/recent_connections_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recent_connections"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="2dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toLeftOf="@+id/clear_recent_connections_button"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/clear_recent_connections_button"
+            style="?attr/ed_small_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="22sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/clearLocoList" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.67"
+        android:layout_weight="0.6"
         android:background="#00000000"
         android:orientation="vertical" >
 

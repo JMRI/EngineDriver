@@ -129,7 +129,7 @@
     <string name="steal_title">Stehlen</string>
 <!--    <string name="prefTitle">Voreinstellungen</string>-->
     <string name="prefSummary">Voreinstellungen für Engine Driver</string>
-    <string name="preferences">Voreinstellungen</string>
+    <string name="preferences">⚙️ Voreinstellungen</string>
     <string name="prefSwipeUpDownTitle">Voreinstellungen für Wischen nach oben/unten</string>
     <string name="prefSwipeUpDownSummary">Optionen für Wischen nach oben/unten im Fahrregler.</string>
     <string name="prefThrottleNameTitle">Fahrreglername</string>

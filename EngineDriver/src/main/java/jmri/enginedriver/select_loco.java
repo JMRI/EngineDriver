@@ -1749,9 +1749,6 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
-        EditText la = findViewById(R.id.loco_address);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
         // hide everything by default then show only what is actually needed
         rlAddress.setVisibility(View.GONE);
         rlAddressHelp.setVisibility(View.GONE);
@@ -2498,7 +2495,8 @@ public class select_loco extends AppCompatActivity {
 //        LocalRosterImageRemoved = false;
 //    }
 
-    /** @noinspection CallToPrintStackTrace*/ // from http://www.java2s.com/example/android/android.graphics/read-bitmap-from-file-and-rotate.html
+    /** @noinspection CallToPrintStackTrace*/
+    // from http://www.java2s.com/example/android/android.graphics/read-bitmap-from-file-and-rotate.html
     static private int getRotateDegreeFromExif(String filePath) {
         int degree = 0;
         try {
