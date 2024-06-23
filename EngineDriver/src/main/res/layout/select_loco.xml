@@ -456,7 +456,8 @@
         android:layout_weight="0.44"
         android:orientation="vertical">
 
-        <jmri.enginedriver.util.TransparentListView
+<!--        <jmri.enginedriver.util.TransparentListView-->
+        <ListView
             android:id="@+id/roster_list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

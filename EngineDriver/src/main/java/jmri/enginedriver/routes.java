@@ -411,10 +411,11 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             return;
         }
 
-
         setContentView(R.layout.routes);
         //put pointer to this activity's handler in main app's shared variable
         mainapp.routes_msg_handler = new routes_handler(Looper.getMainLooper());
+
+        getDefaultSortOrderRoutes();
 
         routesFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of recent connections to the UI.
@@ -917,6 +918,22 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             }
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }
+
+    void getDefaultSortOrderRoutes() {
+        String prefSortOrderRoutes = prefs.getString("prefSortOrderTurnouts", this.getResources().getString(R.string.prefSortOrderRoutesDefaultValue));
+        switch (prefSortOrderRoutes) {
+            default:
+            case "name":
+                mainapp.routesOrder = sort_type.NAME;
+                break;
+            case "id":
+                mainapp.routesOrder = sort_type.ID;
+                break;
+            case "position":
+                mainapp.routesOrder = sort_type.POSITION;
+                break;
         }
     }
 }

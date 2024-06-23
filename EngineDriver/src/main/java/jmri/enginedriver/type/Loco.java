@@ -174,6 +174,10 @@ public class Loco {
         }  //end for
     }
 
+    public LinkedHashMap<Integer, String> getFunctionLabels() {
+        return functionLabels;
+    }
+
     public void setFunctionLabelDefaults(threaded_application mainapp, Integer whichThrottle) {
         if (mainapp.function_labels != null) {
             functionLabels = new LinkedHashMap<>(mainapp.function_labels_default);

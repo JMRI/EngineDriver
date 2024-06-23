@@ -17,7 +17,7 @@
         android:id="@+id/roster_address_label"
         style="?attr/list_id_style"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:paddingLeft="2dp"
         android:text="TestAddress"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />

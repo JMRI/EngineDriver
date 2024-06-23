@@ -1619,6 +1619,15 @@
             android:title="@string/prefRosterOwnersFilterShowOptionTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <ListPreference
+            android:defaultValue="@string/prefSortOrderRosterDefaultValue"
+            android:entries="@array/prefSortOrderEntries"
+            android:entryValues="@array/prefSortOrderEntryValues"
+            android:key="prefSortOrderRoster"
+            android:summary="@string/prefSortOrderRosterSummary"
+            android:title="@string/prefSortOrderRosterTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
             android:key="prefAlwaysUseFunctionsFromServer"
@@ -1928,6 +1937,24 @@
             android:key="HideIfNoUserNamePreference"
             android:summary="@string/prefHideIfNoUserNameSummary"
             android:title="@string/prefHideIfNoUserNameTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <ListPreference
+            android:defaultValue="@string/prefSortOrderTurnoutsDefaultValue"
+            android:entries="@array/prefSortOrderEntries"
+            android:entryValues="@array/prefSortOrderEntryValues"
+            android:key="prefSortOrderTurnouts"
+            android:summary="@string/prefSortOrderTurnoutsSummary"
+            android:title="@string/prefSortOrderTurnoutsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <ListPreference
+            android:defaultValue="@string/prefSortOrderRoutesDefaultValue"
+            android:entries="@array/prefSortOrderEntries"
+            android:entryValues="@array/prefSortOrderEntryValues"
+            android:key="prefSortOrderRoutes"
+            android:summary="@string/prefSortOrderRoutesSummary"
+            android:title="@string/prefSortOrderRoutesTitle"
             android:layout="@layout/checkbox_no_icon" />
 
     </PreferenceCategory>

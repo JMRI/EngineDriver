@@ -57,4 +57,7 @@
 
     <string name="prefPauseAlternateButtonSummary">Show alternate \'Pause\' button near the \'Stop\' button. (Vertical layouts only)</string>
 
+    <string name="prefSortOrderTurnoutsTitle">Points sort order</string>
+    <string name="prefSortOrderTurnoutsSummary">Order that the Points entries will appear, by default, each time you start Engine Driver</string>
+
 </resources>

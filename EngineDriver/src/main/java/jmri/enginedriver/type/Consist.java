@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.source_type;
 
 //
 //EngineDriver simple Consist
@@ -40,10 +41,6 @@ public final class Consist {
     public static final int LIGHT_UNKNOWN = 2;
     public static final int LIGHT_ON = 3;
 
-    private static final int WHICH_SOURCE_UNKNOWN = 0;
-    private static final int WHICH_SOURCE_ADDRESS = 1;
-    private static final int WHICH_SOURCE_ROSTER = 2;
-
     public static class ConLoco extends Loco {
         private boolean backward;                        //end of loco that faces the top of the consist
         private int lightOn;                             //state of the headlight
@@ -53,14 +50,14 @@ public final class Consist {
             super(address);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
-            source = WHICH_SOURCE_UNKNOWN;
+            source = source_type.UNKNOWN;
         }
 
         private ConLoco(Loco l) {
             super(l);
             backward = false;
             lightOn = LIGHT_UNKNOWN;
-            source = WHICH_SOURCE_UNKNOWN;
+            source = source_type.UNKNOWN;
         }
 
         public boolean isBackward() {

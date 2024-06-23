@@ -490,7 +490,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.roster_entries = null;
         mainapp.consist_entries = null;
-        mainapp.roster = null;
+        mainapp.rosterJmriWeb = null;
 
         connToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label

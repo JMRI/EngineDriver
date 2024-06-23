@@ -76,7 +76,7 @@
     <string name="port">Port</string>
 <!--    <string name="loco_address">Loco Address</string>-->
     <string name="connect_button">Connect</string>
-    <string name="recent_connections">Recent Servers</string>
+    <string name="recent_connections">Recent Servers (you have previously used) </string>
     <string name="select_loco_heading">Acquire Loco, Method - Throttle %1$s</string>
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="select_loco_address">Address</string>
@@ -1278,6 +1278,18 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log?</string>
     <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>
+
+    <string name="prefSortOrderRosterTitle">Roster sort order</string>
+    <string name="prefSortOrderRosterSummary">Order that the roster entries will appear, by default, each time you start Engine Driver</string>
+    <string name="prefSortOrderRosterDefaultValue" translatable="false">name</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSortOrderTurnoutsTitle">Turnouts Sort Order</string>
+    <string name="prefSortOrderTurnoutsSummary">Order that the Turnouts entries will appear, by default, each time you start Engine Driver</string>
+    <string name="prefSortOrderTurnoutsDefaultValue" translatable="false">name</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSortOrderRoutesTitle">Routes Sort Order</string>
+    <string name="prefSortOrderRoutesSummary">Order that the Routes entries will appear, by default, each time you start Engine Driver</string>
+    <string name="prefSortOrderRoutesDefaultValue" translatable="false">name</string>  <!-- DO NOT TRANSLATE -->
 
     <!--
     <string name="prefThrottleSwitchWebViewTitle">Show Web View on layouts</string>

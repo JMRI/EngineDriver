@@ -65,6 +65,7 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.source_type;
 
 public class comm_thread extends Thread {
     JmDNS jmdns = null;
@@ -84,12 +85,6 @@ public class comm_thread extends Thread {
     protected String LATCHING_DEFAULT_ENGLISH;
 
     private static int requestLocoIdForWhichThrottleDCCEX;
-
-//    static final int TRACK_TYPE_OFF_INDEX = 0;
-//    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
-//    static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
-//    static final int TRACK_TYPE_DC_INDEX = 3;
-//    static final int TRACK_TYPE_DCX_INDEX = 4;
 
     static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
     static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
@@ -376,27 +371,31 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             if (!address.equals("*")) {
-                msgTxt = String.format("<t %s>", address.substring(1));  //add requested loco to this throttle
+                if (whichThrottle<mainapp.maxThrottles) {
+                    msgTxt = String.format("<t %s>", address.substring(1));  //add requested loco to this throttle
 
-                Consist con = mainapp.consists[whichThrottle];
-                con.setConfirmed(address); // don't wait for confirmation
-                con.setWhichSource(address, 1); //entered by address, not roster
-                mainapp.addLocoToRecents(con.getLoco(address));
-                wifiSend(msgTxt);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
+                    Consist con = mainapp.consists[whichThrottle];
+                    con.setConfirmed(address); // don't wait for confirmation
+                    con.setWhichSource(address, con.getLoco(address).getIsFromRoster() ? source_type.ROSTER : source_type.ADDRESS);
+                    mainapp.addLocoToRecents(con.getLoco(address));
+                    wifiSend(msgTxt);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
 
-                String lead = mainapp.consists[whichThrottle].getLeadAddr();
-                if (lead.equals(address)) {
-                    sendRequestRosterLocoDetails(address); // get the CS to resend the Loco details so we can get the functions
+                    String lead = mainapp.consists[whichThrottle].getLeadAddr();
+                    if (lead.equals(address)) {
+                        sendRequestRosterLocoDetails(address); // get the CS to resend the Loco details so we can get the functions
+                    }
+
+                    if (heart.getInboundInterval() > 0 && mainapp.withrottle_version > 0.0 && !heart.isHeartbeatSent()) {
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
+                    }
+                    mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1000L, message_type.REFRESH_FUNCTIONS);
+
+                    mainapp.alert_activities(message_type.RESPONSE, "M" + whichThrottle + "A" + address + "<;>s1");
+
+                } else {  // not a valid throttle. related to the roster download
+                    sendRequestRosterLocoDetails(address);
                 }
-
-                if (heart.getInboundInterval() > 0 && mainapp.withrottle_version > 0.0 && !heart.isHeartbeatSent()) {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
-                }
-                mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1000L, message_type.REFRESH_FUNCTIONS);
-
-                mainapp.alert_activities(message_type.RESPONSE, "M" + whichThrottle + "A" + address +"<;>s1");
-
             } else { // requesting the loco id on the programming track.  Using the DCC-EX driveway feature
                 requestLocoIdForWhichThrottleDCCEX = whichThrottle;
                 wifiSend("<R>");
@@ -976,6 +975,7 @@ public class comm_thread extends Thread {
                     }
                     String sWhichThrottle = responseStr.substring(1, 2);
                     int whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
+
                     String[] ls = threaded_application.splitByString(responseStr, "<;>");    //drop off separator
                     String addr = ls[0].substring(3);
                     char com2 = responseStr.charAt(2);
@@ -1019,13 +1019,16 @@ public class comm_thread extends Thread {
                     } else if (com2 == 'L') { //list of function buttons
                         if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
                         || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
-                            String lead;
-                            lead = mainapp.consists[whichThrottle].getLeadAddr();
+                            String lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                                 processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
                                 mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                             }
-                            mainapp.consists[whichThrottle].setFunctionLabels(addr, "RF29}|{1234(L)" + ls[1], mainapp);
+                        }
+                        // save them in recents regardless
+                        if (mainapp.consists[whichThrottle].getLoco(addr) != null) {
+                            mainapp.addLocoToRecents(mainapp.consists[whichThrottle].getLoco(addr),
+                                    mainapp.parseFunctionLabels("RF29}|{1234(L)" + ls[1]));
                         }
 
                     } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
@@ -1272,21 +1275,21 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'l':
-                            processDCCEXlocos(args);
+                            processDccexLocos(args);
                             skipAlert = true;
                             break;
 
                         case 'r':
                             if (args.length<=2) { // response from a request for a loco id (the Drive away feature, and also the Address read)
-                                processDCCEXRequestLocoIdResponse(args);
+                                processDccexRequestLocoIdResponse(args);
                             } else { // response from a CV write
-                                processDCCEXRequestCvResponse(args);
+                                processDccexRequestCvResponse(args);
                             }
                             skipAlert = true;
                             break;
 
                         case 'p': // power response
-                            processDCCEXpowerResponse(args);
+                            processDccexPowerResponse(args);
                             skipAlert = true;
                             break;
 
@@ -1294,21 +1297,21 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             switch (responseStr.charAt(2)) {
                                 case 'T': // turnouts
-                                    processDCCEXturnouts(args);
+                                    processDccexTurnouts(args);
                                     break;
                                 case 'A': // automations/routes
-                                    processDCCEXroutes(args);
+                                    processDccexRoutes(args);
                                     break;
                                 case 'B': // automation/route update (Inactive, Active, Hidden, Caption)
-                                    processDCCEXrouteUpdate(args);
+                                    processDccexRouteUpdate(args);
                                     responseStr = "PRA";
                                     skipAlert = false;
                                     break;
                                 case 'R': // roster
-                                    skipAlert = processDCCEXroster(args);
+                                    skipAlert = processDccexRoster(args);
                                     break;
                                 case 'C': // fastclock
-                                    processDCCEXfastClock(args);
+                                    processDccexFastClock(args);
                                     return;
                             }
                             break;
@@ -1321,7 +1324,7 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'v': // response from a request a CV value
-                            processDCCEXRequestCvResponse(args);
+                            processDccexRequestCvResponse(args);
                             skipAlert = true;
                             break;
 
@@ -1358,7 +1361,7 @@ public class comm_thread extends Thread {
 
     /* ***********************************  *********************************** */
 
-    private static  void processDCCEXpowerResponse ( String [] args) { // <p0|1 [A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
+    private static  void processDccexPowerResponse ( String [] args) { // <p0|1 [A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
         String oldState = mainapp.power_state;
         String responseStr;
         if ( (args.length==1)   // <p0|1>
@@ -1443,7 +1446,7 @@ public class comm_thread extends Thread {
         }
     }
 
-    private static void processDCCEXRequestCvResponse (String [] args) {
+    private static void processDccexRequestCvResponse (String [] args) {
         String cv = "";
         String cvValue = "-1";
 
@@ -1487,7 +1490,7 @@ public class comm_thread extends Thread {
         }
     }
 
-    private static void processDCCEXRequestLocoIdResponse(String [] args) {
+    private static void processDccexRequestLocoIdResponse(String [] args) {
 //        String responseStr = "";
 
         if (requestLocoIdForWhichThrottleDCCEX!=-1) { // if -1, request came from the CV read/write screen
@@ -1531,7 +1534,7 @@ public class comm_thread extends Thread {
 
     }
 
-    private static void processDCCEXlocos(String [] args) {
+    private static void processDccexLocos(String [] args) {
         String responseStr;
         
         int dir = 0;
@@ -1575,13 +1578,13 @@ public class comm_thread extends Thread {
 
                     // only process the functions if it is the lead loco
                     if (con.getLeadAddr().equals(addr_str)) {
-                        Log.d("Engine_Driver", "processDCCEXlocos(): process functions" );
+                        Log.d("Engine_Driver", "processDccexLocos(): process functions" );
                         // Process the functions
                         int fnState;
                         for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
                             try {
                                 fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
-                                if (i==0) Log.d("Engine_Driver", "processDCCEXlocos(): function:" + i + " state: " + fnState);
+                                if (i==0) Log.d("Engine_Driver", "processDccexLocos(): function:" + i + " state: " + fnState);
                                 processFunctionState(whichThrottle, i, (fnState != 0));
                                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + (i);
                                 mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
@@ -1595,9 +1598,9 @@ public class comm_thread extends Thread {
                 throttleIndex = whichThrottle; // skip ahead
             }
         }
-    } // end processDCCEXlocos()
+    } // end processDccexLocos()
 
-    private static boolean processDCCEXroster(String [] args) {
+    private static boolean processDccexRoster(String [] args) {
         boolean skipAlert = true;
 
         if ( (args!=null) && (args.length>1)) {
@@ -1619,7 +1622,7 @@ public class comm_thread extends Thread {
                     if (mainapp.rosterIDsDCCEX != null) {
                         for (int i = 0; i < mainapp.rosterIDsDCCEX.length; i++) {
                             if (mainapp.rosterIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                                mainapp.rosterLocoNamesDCCEX[i] = args[2].substring(1, args[2].length() - 1);
+                                mainapp.rosterLocoNamesDCCEX[i] = args[2].substring(1, args[2].length() - 1);  // stip the quotes
                                 mainapp.rosterLocoFunctionsDCCEX[i] = args[3]; // ignore this
                                 mainapp.rosterDetailsReceivedDCCEX[i] = true;
                                 break;
@@ -1646,7 +1649,7 @@ public class comm_thread extends Thread {
                             mainapp.rosterStringDCCEX = "";
                             mainapp.DCCEXlistsRequested++;
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
-                            Log.d("Engine_Driver", "comm_thread.processDCCEXroster: Roster complete. Count: " + mainapp.rosterIDsDCCEX.length);
+                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.rosterIDsDCCEX.length);
                         }
                     }
 
@@ -1655,17 +1658,20 @@ public class comm_thread extends Thread {
                     String addr_str = args[1];
                     addr_str = ((Integer.parseInt(args[1]) <= 127) ? "S" : "L") + addr_str;
 
+                    boolean found = false;
                     for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {  //loco may be the lead on more that one throttle
+                        StringBuilder responseStrBuilder = new StringBuilder("");
 
                         int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                         if (whichThrottle >= 0) {
+                            found = true;
                             String lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
                                 if ( (mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // only process the functions if the lead engine from the roster or the override preference is set
                                     if (args[3].length() > 2) {
                                         String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
                                         mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                                        StringBuilder responseStrBuilder = new StringBuilder("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                        responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
                                         for (int i = 0; i < fnArgs.length; i++) {
                                             if (fnArgs[i].length() == 0) {
                                                 responseStrBuilder.append("]\\[");
@@ -1693,20 +1699,42 @@ public class comm_thread extends Thread {
                             Consist con = mainapp.consists[whichThrottle];
                             if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
                                 con.setConfirmed(addr_str);
-                                con.setWhichSource(addr_str, 1); //entered by address, not roster
-                                mainapp.addLocoToRecents(con.getLoco(addr_str));
+                                con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
+
+                                mainapp.addLocoToRecents(con.getLoco(addr_str),
+                                        mainapp.parseFunctionLabels(responseStrBuilder.toString()));
                             }
 
                             throttleIndex = whichThrottle; // skip ahead
+                        }
+                    }
+
+                    if (!found) {  // we got the request but it is not on a throttle
+                        if (args[3].length() > 2) {
+                            String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                            StringBuilder responseStrBuilder = new StringBuilder("");
+                            responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                            for (int i = 0; i < fnArgs.length; i++) {
+                                if (fnArgs[i].length() == 0) {
+                                    responseStrBuilder.append("]\\[");
+                                } else {
+                                    responseStrBuilder.append(fnArgs[i]).append("]\\[");
+                                }
+                            }
+                            // save them in recents regardless
+                            Consist.ConLoco conLoco = new Consist.ConLoco(addr_str);
+                            conLoco.setIsFromRoster(true);
+                            conLoco.setRosterName(args[2].substring(1, args[2].length() - 1)); // strip the quotes
+                            mainapp.addLocoToRecents(conLoco, mainapp.parseFunctionLabels(responseStrBuilder.toString()));
                         }
                     }
                 }
             }
         }
         return skipAlert;
-    } // end processDCCEXroster()
+    } // end processDccexRoster()
 
-    private static void processDCCEXfastClock(String [] args) {
+    private static void processDccexFastClock(String [] args) {
         if (args!=null)  {
             if (args.length == 3) { // <jC mmmm ss>
                 mainapp.fastClockSeconds = 0L;
@@ -1720,7 +1748,7 @@ public class comm_thread extends Thread {
         }
     }
 
-    private static void processDCCEXturnouts(String [] args) {
+    private static void processDccexTurnouts(String [] args) {
 
         if (args!=null)  {
             if ( (args.length == 1)  // no Turnouts <jT>
@@ -1773,13 +1801,13 @@ public class comm_thread extends Thread {
                     mainapp.DCCEXlistsRequested++;
 
                     int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts complete. Count: " + count);
+                    Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts complete. Count: " + count);
                     mainapp.turnoutsBeingProcessedDCCEX = false;
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
-                Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts list received.");
+                Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received.");
                 if (!mainapp.turnoutsBeingProcessedDCCEX) {
                     mainapp.turnoutsBeingProcessedDCCEX = true;
                     if (mainapp.turnoutStringDCCEX.equals("")) {
@@ -1795,15 +1823,14 @@ public class comm_thread extends Thread {
                         }
 
                         int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
-                        Log.d("Engine_Driver", "comm_thread.processDCCEXturnouts: Turnouts list received. Count: " + count);
+                        Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received. Count: " + count);
                     }
                 }
             }
         }
-    } // end processDCCEXturnouts()
+    } // end processDccexTurnouts()
 
-    private static void processDCCEXroutes(String [] args) {
-
+    private static void processDccexRoutes(String [] args) {
         if (args != null)  {
             if ( (args.length == 1)  // no Routes <jA>
                     || ((args.length == 3) && ((args[2].charAt(0) == 'R') || (args[2].charAt(0) == 'A') || (args[2].charAt(0) == 'X')) )  // <jA id type>  or <jA id X>
@@ -1868,13 +1895,13 @@ public class comm_thread extends Thread {
                     }
 
                     int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
-                    Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes complete. Count: " + count);
+                    Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes complete. Count: " + count);
                     mainapp.routesBeingProcessedDCCEX = false;
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
 
-                Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes list received.");
+                Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received.");
                 if (!mainapp.routesBeingProcessedDCCEX) {
                     mainapp.routesBeingProcessedDCCEX = true;
                     if (mainapp.routeStringDCCEX.equals("")) {
@@ -1892,14 +1919,14 @@ public class comm_thread extends Thread {
                         }
 
                         int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
-                        Log.d("Engine_Driver", "comm_thread.processDCCEXroutes: Routes list received. Count: " + count);
+                        Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received. Count: " + count);
                     }
                 }
             }
         }
-    } // end processDCCEXroutes()
+    } // end processDccexRoutes()
 
-    static void processDCCEXrouteUpdate(String [] args) {
+    static void processDccexRouteUpdate(String [] args) {
         if (args != null) {
             int pos = -1;
             boolean foundInMainList = false;
@@ -1934,34 +1961,17 @@ public class comm_thread extends Thread {
                 }
             }
         }
-    } // end processDCCEXrouteUpdate()
+    } // end processDccexRouteUpdate()
 
     /* ***********************************  *********************************** */
 
-    //parse roster functions list into appropriate app variable array
-    //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
     static void processRosterFunctionString(String responseStr, int whichThrottle) {
-
         Log.d("Engine_Driver", "comm_thread.processRosterFunctionString: processing function labels for " + mainapp.throttleIntToString(whichThrottle));
-        String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //split into list of labels
-
-        //populate a temp label array from RF command string
-        LinkedHashMap<Integer, String> function_labels_temp = new LinkedHashMap<>();
-        int i = 0;
-        for (String ts : ta) {
-            if (i > threaded_application.MAX_FUNCTION_NUMBER +1) break; //ignore unsupported functions
-            if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
-                function_labels_temp.put(i - 1, ts); //index is hashmap key, value is label string
-            }  //end if i>0
-            i++;
-        }  //end for
-
-        //set the appropriate global variable from the temp
-        mainapp.function_labels[whichThrottle] = function_labels_temp;
-
+        LinkedHashMap<Integer, String> functionLabelsMap = mainapp.parseFunctionLabels(responseStr);
+        mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
 
-    //parse roster list into appropriate app variable array
+    // parse roster list into appropriate app variable array
     //  RL2]\[NS2591}|{2591}|{L]\[NS4805}|{4805}|{L
     static void processRosterList(String responseStr) {
         //clear the global variable
@@ -1979,11 +1989,10 @@ public class comm_thread extends Thread {
                 } catch (Exception e) {
                     Log.d("Engine_Driver", "comm_thread.processRosterList caught Exception");  //ignore any bad stuff in roster entries
                 }
-            }  //end if i>0
+            }
             i++;
-        }  //end for
-
-    }
+        }
+    } // end processRosterList()
 
     //parse consist list into appropriate mainapp hashmap
     //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
@@ -2015,7 +2024,7 @@ public class comm_thread extends Thread {
         } else {
             Log.d("Engine_Driver", "comm_thread.processConsistList: skipping empty consist '" + consist_name + "'");
         }
-    }
+    } // end processConsistList()
 
     //clear out any stored consists
     static void clearConsistList() {

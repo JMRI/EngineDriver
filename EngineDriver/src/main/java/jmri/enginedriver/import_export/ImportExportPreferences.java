@@ -22,6 +22,7 @@ package jmri.enginedriver.import_export;
 
 import static java.lang.Math.min;
 import static jmri.enginedriver.threaded_application.context;
+import static jmri.enginedriver.threaded_application.getIntPrefValue;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -42,10 +43,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.address_type;
+import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
+import jmri.enginedriver.type.source_type;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -62,7 +67,8 @@ public class ImportExportPreferences {
     public ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
     public ArrayList<String> recent_loco_name_list;
 //    ArrayList<String> recent_loco_name_html_list;
-public ArrayList<Integer> recent_loco_source_list;
+    public ArrayList<Integer> recent_loco_source_list;
+    public ArrayList<String> recent_loco_functions_list;
 
     public ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
@@ -77,10 +83,6 @@ public ArrayList<Integer> recent_loco_source_list;
     public ArrayList<String> recent_turnout_name_list;
     public ArrayList<Integer> recent_turnout_source_list;
     public ArrayList<String> recent_turnout_server_list;
-
-    private static final int WHICH_SOURCE_UNKNOWN = 0;
-//    private static final int WHICH_SOURCE_ADDRESS = 1;
-//    private static final int WHICH_SOURCE_ROSTER = 2;
 
 //    private static final int LIGHT_OFF = 0;
     private static final int LIGHT_FOLLOW = 1;
@@ -148,11 +150,13 @@ public ArrayList<Integer> recent_loco_source_list;
             recent_loco_address_size_list = new ArrayList<>();
             recent_loco_name_list = new ArrayList<>();
             recent_loco_source_list = new ArrayList<>();
+            recent_loco_functions_list = new ArrayList<>();
             getRecentLocosListFromFile();
             saveIntListDataToPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences);
             saveIntListDataToPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences);
             saveStringListDataToPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences);
             saveIntListDataToPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences);
+            saveStringListDataToPreferences(recent_loco_functions_list, "prefRecentLocoFunction", sharedPreferences);
 
             getRecentConsistsListFromFile();
             saveStringListDataToPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
@@ -362,10 +366,12 @@ public ArrayList<Integer> recent_loco_source_list;
                     recent_loco_address_size_list = new ArrayList<>();
                     recent_loco_name_list = new ArrayList<>();
                     recent_loco_source_list = new ArrayList<>();
+                    recent_loco_functions_list = new ArrayList<>();
                     getIntListDataFromPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences,-1, 0);
                     getIntListDataFromPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences, recent_loco_address_list.size(), 0);
                     getStringListDataFromPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences, recent_loco_address_list.size(), "");
-                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences, recent_loco_address_list.size(), WHICH_SOURCE_UNKNOWN);
+                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences, recent_loco_address_list.size(), source_type.UNKNOWN);
+                    getStringListDataFromPreferences(recent_loco_functions_list, "prefRecentLocoFunctions", sharedPreferences, recent_loco_address_list.size(), "");
                     writeRecentLocosListToFile(sharedPreferences);
 
                     getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
@@ -380,7 +386,7 @@ public ArrayList<Integer> recent_loco_source_list;
                         getIntListDataFromPreferences(tempConsistEngineAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences, -1, 0);
                         getIntListDataFromPreferences(tempConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
                         getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
-                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), WHICH_SOURCE_UNKNOWN);
+                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), source_type.UNKNOWN);
                         getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), "");
                         getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), LIGHT_UNKNOWN);
 
@@ -399,7 +405,7 @@ public ArrayList<Integer> recent_loco_source_list;
 //                    recent_turnout_server_list = new ArrayList<>();
 //                    getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
 //                    getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
-//                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), WHICH_SOURCE_UNKNOWN);
+//                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), source_type.UNKNOWN);
 //                    getStringListDataFromPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences, recent_turnout_server_list.size(), "");
 //                    writeRecentTurnoutsListToFile(sharedPreferences);
 
@@ -433,6 +439,7 @@ public ArrayList<Integer> recent_loco_source_list;
             recent_loco_address_size_list = new ArrayList<>();
             recent_loco_name_list = new ArrayList<>();
             recent_loco_source_list = new ArrayList<>();
+            recent_loco_functions_list = new ArrayList<>();
         }
 
         try {
@@ -450,6 +457,7 @@ public ArrayList<Integer> recent_loco_source_list;
                     if (splitPos > 0) {
                         Integer addr, size, source = 0;
                         String locoName = "";
+                        String functions = "";
                         try {
                             addr = Integer.decode(line.substring(0, splitPos));
                             size = Integer.decode(line.substring(splitPos + 1, splitPos + 2));
@@ -458,8 +466,18 @@ public ArrayList<Integer> recent_loco_source_list;
                                     locoName = line.substring(splitPos + 3);
                                 }else {
                                     if (line.charAt(splitPos + 3) == '~') { // new format. Includes the source
-                                        source = Integer.decode(line.substring(splitPos + 2,splitPos + 3));
-                                        locoName = line.substring(splitPos + 4);
+                                        String [] args = threaded_application.splitByString(line.substring(splitPos + 4),"]\\[");
+                                        source = Integer.decode(line.substring(splitPos + 2, splitPos + 3));
+                                        if (args.length==1) { // only has the name
+                                            locoName = args[0];
+                                            functions = "";
+                                        } else { // has the function map as well
+                                            locoName = args[0];
+                                            functions = "";
+                                            for (int i = 1; i < args.length; i++) {
+                                                functions = functions + args[i] + "]\\[";
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -468,6 +486,7 @@ public ArrayList<Integer> recent_loco_source_list;
                             size = -1;
                             locoName = "";
                             source = -1;
+                            functions = "";
                         }
                         if ((addr >= 0) && (size >= 0)) {
                             recent_loco_address_list.add(addr);
@@ -479,6 +498,7 @@ public ArrayList<Integer> recent_loco_source_list;
                             }
                             recent_loco_name_list.add(locoName);
                             recent_loco_source_list.add(source);
+                            recent_loco_functions_list.add(functions);
 
                         }
                     }
@@ -508,11 +528,12 @@ public ArrayList<Integer> recent_loco_source_list;
             list_output = new PrintWriter(engine_list_file);
             if (mrl > 0) {
                 for (int i = 0; i < recent_loco_address_list.size() && i < mrl; i++) {
-                    list_output.format("%d:%d%d~%s\n",
+                    list_output.format("%d:%d%d~%s]\\[%s\n",
                             recent_loco_address_list.get(i),
                             recent_loco_address_size_list.get(i),
                             recent_loco_source_list.get(i),
-                            recent_loco_name_list.get(i));
+                            recent_loco_name_list.get(i),
+                            recent_loco_functions_list.get(i));
                 }
             }
             list_output.flush();
@@ -676,7 +697,7 @@ public ArrayList<Integer> recent_loco_source_list;
             Integer addr = Integer.decode(splitLine.substring(0, splitPos));
             int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
             int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
-            int source = WHICH_SOURCE_UNKNOWN; //default to unknown
+            int source = source_type.UNKNOWN; //default to unknown
             int light = LIGHT_UNKNOWN; //default to unknown
             if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
                 source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
@@ -730,7 +751,7 @@ public ArrayList<Integer> recent_loco_source_list;
             if (l.getRosterName() != null) {
                 rosterName = l.getRosterName();
             }
-//            tempConsistSourceList_inner.add(rosterName.equals("") ? WHICH_SOURCE_ADDRESS : WHICH_SOURCE_ROSTER);
+//            tempConsistSourceList_inner.add(rosterName.equals("") ? source_type.ADDRESS : source_type.ROSTER);
             tempConsistSourceList_inner.add(l.getWhichSource());
             tempConsistRosterNameList_inner.add(rosterName);
             tempConsistLightList_inner.add((consist.isLight(addr)));
@@ -1063,4 +1084,84 @@ public ArrayList<Integer> recent_loco_source_list;
         }
         return newVal;
     }
+
+    @SuppressLint({"DefaultLocale", "ApplySharedPref"})
+    public void downloadRosterToRecents(Context context, SharedPreferences sharedPreferences, threaded_application mainapp) {
+        getRecentLocosListFromFile();
+
+        ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
+        int recentsSize = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
+        int requiredRecentsSize = rns.size()+ 10;
+        if (requiredRecentsSize>recentsSize) { // force the preference for the max recents to larger than the roster
+            sharedPreferences.edit().putString("maximum_recent_locos_preference", String.format("%d",requiredRecentsSize)).commit();  //reset the preference
+        }
+
+        int j=0;
+        for (String rostername : rns) {
+            HashMap<String, String> hm = mainapp.rosterFullList.get(j);
+            String rosterNameString = hm.get("roster_name");
+            String rosterAddressString = hm.get("roster_address");
+            String rosterEntryType = hm.get("roster_entry_type");
+
+            String locoName = "";
+            int address_size = 0;
+            int engine_address = 0;
+
+            // parse address and length from string, e.g. 2591(L)
+            String[] ras = threaded_application.splitByString(rosterAddressString, "(");
+            if (ras[0].length() > 0) {  //only process if address found
+                address_size = (ras[1].charAt(0) == 'L') ? address_type.LONG : address_type.SHORT;   // convert S/L to 0/1
+                try {
+                    engine_address = Integer.parseInt(ras[0]);   // convert address to int
+                } catch (NumberFormatException e) {
+                    Toast.makeText(context, "ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    return; //get out, don't try to acquire
+                }
+                if ("loco".equals(rosterEntryType)) {
+                    locoName = rosterNameString;
+                }
+            }
+
+            // check if it is already in the list and remove it
+            String keepFunctions = "";
+            for (int i = 0; i < recent_loco_address_list.size(); i++) {
+                Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: locoName='"+locoName+"', address="+engine_address);
+                if (engine_address == recent_loco_address_list.get(i)
+                        && address_size == recent_loco_address_size_list.get(i)
+                        && locoName.equals(recent_loco_name_list.get(i))) {
+                    recent_loco_address_list.remove(i);
+                    recent_loco_address_size_list.remove(i);
+                    recent_loco_name_list.remove(i);
+                    recent_loco_source_list.remove(i);
+                    recent_loco_functions_list.remove(i);
+                    Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' removed from Recents");
+                    break;
+                }
+            }
+
+            // now append it to the end of the list
+            int endOfList = recent_loco_address_list.size();
+            recent_loco_address_list.add(endOfList, engine_address);
+            recent_loco_address_size_list.add(endOfList, address_size);
+            recent_loco_name_list.add(endOfList, locoName);
+            recent_loco_source_list.add(endOfList, source_type.ROSTER);
+            recent_loco_functions_list.add(endOfList, keepFunctions);  // blank for now
+
+            Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' added to Recents");
+
+            j++;
+        }
+
+        writeRecentLocosListToFile(sharedPreferences);
+
+        // now get all the function labels
+        j=0;
+        for (String rostername : rns) {
+            String sAddr = locoAddressToString(recent_loco_address_list.get(j),
+                    recent_loco_address_size_list.get(j), true);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, mainapp.maxThrottles);  // one past the actual number of allow throttles
+            j++;
+        }
+    }
+
 }
