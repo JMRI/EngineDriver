@@ -277,13 +277,26 @@
 
         </ScrollView>
 
-        <Button
-            android:id="@+id/device_sounds_settings_button_close"
-            style="?attr/ed_small_button_style"
+        <RelativeLayout
+            android:id="@+id/dcc_ex_bottom_button_layout"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
+            android:layout_margin="0sp"
             android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/logviewerClose" />
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp" >
+
+            <Button
+                android:id="@+id/device_sounds_settings_button_close"
+                style="?attr/ed_small_button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:text="@string/logviewerClose" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

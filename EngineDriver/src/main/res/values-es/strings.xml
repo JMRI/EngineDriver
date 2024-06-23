@@ -129,7 +129,7 @@
     <string name="steal_title">Coge</string>
 <!--    <string name="prefTitle">Ajustes</string>-->
     <string name="prefSummary">Ajustes para el Engine Driver </string>
-    <string name="preferences">⚙️ Ajustes</string>
+    <string name="preferences">Ajustes</string>
     <string name="prefSwipeUpDownTitle">Desplaza hacia arriba-abajo las preferencias</string>
     <string name="prefSwipeUpDownSummary">Opciones para deslizar el dedo arriba-abajo en la pantalla del Controlador</string>
     <string name="prefThrottleNameTitle">Nombre del Controlador</string>

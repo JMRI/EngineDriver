@@ -141,7 +141,7 @@
 
 <!--    <string name="prefTitle">Preferências</string>-->
     <string name="prefSummary">Preferências para Engine Driver</string>
-    <string name="preferences">⚙️ Preferências</string>
+    <string name="preferences">Preferências</string>
     <string name="prefSwipeUpDownTitle">Preferências Deslizar para cima-baixo</string>
     <string name="prefSwipeUpDownSummary">Opções deslizamento cima-baixo na tela Controlador</string>
     <string name="prefThrottleNameTitle">Nome Controlador</string>

@@ -130,7 +130,7 @@
     <string name="steal_title">Agafa</string>
 <!--    <string name="prefTitle">Preferències</string>-->
     <string name="prefSummary">Preferències del Engine Driver</string>
-    <string name="preferences">️️⚙️ Preferències</string>
+    <string name="preferences">️️Preferències</string>
     <string name="prefSwipeUpDownTitle">Desplaça cap amunt-avall les preferències</string>
     <string name="prefSwipeUpDownSummary">Opcions per fer lliscar el dit amunt-avall a la pantalla del Controlador</string>
     <string name="prefThrottleNameTitle">Nom del Controlador</string>

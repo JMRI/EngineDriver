@@ -189,7 +189,7 @@
 
 <!--    <string name="prefTitle">Preferences</string>-->
     <string name="prefSummary">Preferences for Engine Driver</string>
-    <string name="preferences">⚙️ Preferences</string>
+    <string name="preferences">Preferences</string>
     <string name="prefSwipeUpDownTitle">Swipe Up-Down Preferences</string>
     <string name="prefSwipeUpDownSummary">Options for swipe up or down on the Throttle screen</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>

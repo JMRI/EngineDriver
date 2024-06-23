@@ -159,7 +159,7 @@
 
 <!--    <string name="prefTitle">Předvolby</string>-->
     <string name="prefSummary">Předvolby pro Engine Driver</string>
-    <string name="preferences">⚙️ Předvolby</string>
+    <string name="preferences">Předvolby</string>
     <string name="prefSwipeUpDownTitle">Předvolby přetážení prstem</string>
     <string name="prefSwipeUpDownSummary">Volby pro tažení prstem na obrazovce ovladače.</string>
     <string name="prefThrottleNameTitle">Název ovladače</string>

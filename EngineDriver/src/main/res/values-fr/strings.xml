@@ -133,7 +133,7 @@
     <string name="steal_title">Abandon</string>
 <!--    <string name="prefTitle">Préférences</string>-->
     <string name="prefSummary">Préférences pour Engine Driver</string>
-    <string name="preferences">⚙️ Préférences</string>
+    <string name="preferences">Préférences</string>
     <string name="prefSwipeUpDownTitle">Faire glisser Haut vers Bas les préférences</string>
     <string name="prefSwipeUpDownSummary">Options du Glisser Haut vers Bas sur régulateur</string>
     <string name="prefThrottleNameTitle">Nom du régulateur</string>
