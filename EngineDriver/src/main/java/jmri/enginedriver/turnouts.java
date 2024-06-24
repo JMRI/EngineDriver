@@ -83,6 +83,7 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
+import jmri.enginedriver.type.source_type;
 
 //public class turnouts extends AppCompatActivity implements OnGestureListener {
 public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -100,9 +101,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
 //    private GestureDetector myGesture;
     private Menu TuMenu;
-
-    private static final int WHICH_SOURCE_ADDRESS = 1;
-    private static final int WHICH_SOURCE_ROSTER = 2;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -435,7 +433,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
                 turnoutSystemName = entrytext;
                 turnoutUserName = entrytext;
-                turnoutSource = WHICH_SOURCE_ADDRESS;
+                turnoutSource = source_type.ADDRESS;
 
                 boolean reloadRecents = false;
                 if (importExportPreferences.recent_turnout_address_list.size() > 0) {
@@ -493,7 +491,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
-            turnoutSource = WHICH_SOURCE_ROSTER;
+            turnoutSource = source_type.ROSTER;
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, _buttonType + turnoutSystemName);    // C=Close T=Throw 2=toggle
 
             saveRecentTurnoutsList(true);
@@ -556,6 +554,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        myGesture = new GestureDetector(this);
 
         // -------------------------------------------------------------------
+
+        getDefaultSortOrderTurnouts();
 
         turnoutsFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of defined turnouts to the UI.
@@ -1494,6 +1494,22 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+        }
+    }
+
+    void getDefaultSortOrderTurnouts() {
+        String prefSortOrderTurnouts = prefs.getString("prefSortOrderTurnouts", this.getResources().getString(R.string.prefSortOrderTurnoutsDefaultValue));
+        switch (prefSortOrderTurnouts) {
+            default:
+            case "name":
+                mainapp.turnoutsOrder = sort_type.NAME;
+                break;
+            case "id":
+                mainapp.turnoutsOrder = sort_type.ID;
+                break;
+            case "position":
+                mainapp.turnoutsOrder = sort_type.POSITION;
+                break;
         }
     }
 }

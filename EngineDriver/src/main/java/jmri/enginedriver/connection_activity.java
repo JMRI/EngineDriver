@@ -490,7 +490,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.roster_entries = null;
         mainapp.consist_entries = null;
-        mainapp.roster = null;
+        mainapp.rosterJmriWeb = null;
 
         connToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);    // save toast obj so it can be cancelled
         // setTitle(getApplicationContext().getResources().getString(R.string.app_name_connect));	//set title to long form of label
@@ -598,6 +598,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
+
+        button = findViewById(R.id.clear_recent_connections_button);
+        button.setOnClickListener(new ClearRecentConnectionsButtonListener());
 
         rootView = findViewById(R.id.connection_view);
         rootView.requestFocus();
@@ -869,10 +872,10 @@ public class connection_activity extends AppCompatActivity implements Permission
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
-        } else if (item.getItemId() == R.id.ClearconnList) {
-            clearConnectionsList();
-            getConnectionsList();
-            return true;
+//        } else if (item.getItemId() == R.id.ClearconnList) {
+//            clearConnectionsList();
+//            getConnectionsList();
+//            return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
             mainapp.toggleFlashlight(this, CMenu);
             mainapp.buttonVibration();
@@ -927,6 +930,11 @@ public class connection_activity extends AppCompatActivity implements Permission
      }
      ***/
 
+    public class ClearRecentConnectionsButtonListener implements AdapterView.OnClickListener {
+        public void onClick(View v) {
+            clearConnectionsList();
+        }
+    }
 
     private void clearConnectionsList() {
         //Clears recent connection list.

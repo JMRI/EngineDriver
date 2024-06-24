@@ -4,10 +4,14 @@
  * Button to sort Turnouts/Points by Name, ID or server order
  * Button to sort Routes by Name, ID or server order
  * Added Loco Select lists sort buttons
+ * Preferences for the default sort order for Roster, Turnouts/Points and Routes
  * Bug fix for the Automation button labels in DCC-EX
  * Improvements to the log screen
  * Cleanup of the connection screen
  * New button to download the roster list to the Recents list
+ * Selecting a loco from Recent Loco that was originally selected from a roster will now attempt to reload the original function buttons, regardless to the server. Note with WiThrottle it cannot know the latching characteristics
+ * UI and performance improvements to the Consist Functions Edit screen
+ * general cleanup and linting of the select_loco code
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page
@@ -781,11 +785,9 @@
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: allow zoom out more than the page width
  * routes
- *   TODO: pref to sort by system name vs. user name vs. server sequence
  *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
  * turnouts
- *   TODO: pref to sort by system name vs. user name vs. server sequence
  *   TODO: add pref to always show Close/Throw buttons instead of collapsing to state
  *   TODO: add state-based color (maybe just for colorful theme?)
  *   TODO: support client entry/edit of username for servers without usernames
@@ -829,7 +831,6 @@
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
  *   TODO: allow user to specify which loco to get labels from
- *   TODO: save roster entries for later selection (e.g. home vs. club layout)
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
@@ -837,6 +838,8 @@
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
+ *   TODO: allow downloading of filtered roster list
+ *   TODO: download the images when you download the full roster
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

@@ -1141,20 +1141,21 @@
             android:paddingRight="6dp" >
 
             <Button
-                android:id="@+id/dcc_ex_button_close"
+                android:id="@+id/dexc_DCCEXclearCommandsButton"
                 style="?attr/ed_small_button_style"
-                android:layout_gravity="left"
-                android:text="@string/logviewerClose"
+                android:layout_centerHorizontal="true"
+                android:text="@string/DCCEXclearCommands"
                 tools:ignore="RtlHardcoded" />
 
             <Button
-                android:id="@+id/dexc_DCCEXclearCommandsButton"
+                android:id="@+id/dcc_ex_button_close"
                 style="?attr/ed_small_button_style"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="right"
-                android:text="@string/DCCEXclearCommands"
+                android:text="@string/logviewerClose"
                 tools:ignore="RtlHardcoded" />
+
+
 
             <!--            <Button-->
             <!--                android:id="@+id/dexc_DccexHideSendsButton"-->

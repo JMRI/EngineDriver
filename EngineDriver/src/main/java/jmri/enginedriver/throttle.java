@@ -4489,24 +4489,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             return true;
         }
 
-
-//    //TODO: This onTouch may be redundant now that the gesture overlay is working better
-//
-//        @SuppressLint("ClickableViewAccessibility")
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            mainapp.exitDoubleBackButtonInitiated = 0;
-//            int[] pos = new int[2];
-//            v.getLocationOnScreen(pos);
-//
-//            // if gesture in progress, we may need to skip button processing
-//            if (gestureInProgress) {
-//                // Log.d("Engine_Driver", "onTouch " + "Gesture- currentY: " + (pos[1]+event.getY()) + " startY: " + gestureStartY);
-//                //check to see if we have a substantial vertical movement
-//                return Math.abs(pos[1] + event.getY() - gestureStartY) > (threaded_application.min_fling_distance);
-//            }
-//            return false;
-//        }
     }
 
     //listeners for the Limit Speed Button

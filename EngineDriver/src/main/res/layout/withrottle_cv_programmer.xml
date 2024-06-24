@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".94"
+            android:layout_weight=".92"
             android:orientation="vertical">
 
             <LinearLayout
@@ -327,7 +327,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="3dp"
-            android:layout_weight=".06"
+            android:layout_weight=".08"
             android:paddingLeft="6dp"
             android:paddingRight="6dp">
 
@@ -339,19 +339,22 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/withrottle_cv_programmer_button_close"
+                    android:id="@+id/wit_WitClearCommandsButton"
                     style="?attr/ed_small_button_style"
-                    android:layout_gravity="left"
-                    android:text="@string/logviewerClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/DCCEXclearCommands"
                     tools:ignore="RtlHardcoded" />
 
                 <Button
-                    android:id="@+id/wit_WitClearCommandsButton"
+                    android:id="@+id/withrottle_cv_programmer_button_close"
                     style="?attr/ed_small_button_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_gravity="left"
-                    android:text="@string/DCCEXclearCommands"
+                    android:text="@string/logviewerClose"
                     tools:ignore="RtlHardcoded" />
 
             </RelativeLayout>

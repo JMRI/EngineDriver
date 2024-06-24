@@ -286,6 +286,14 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     //take data from arrays and update the editing view
     void move_settings_to_view() {
 
+        if ((!isSpecial) && (mainapp.isDCCEX)) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
+            View v = findViewById(R.id.function_consist_instruction);
+            ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
+            Double newWidth = layoutParams.width * 1.6;
+            layoutParams.width =  newWidth.intValue();
+            v.setLayoutParams(layoutParams);
+        }
+
         ViewGroup t = findViewById(R.id.function_consist_table); //table
         //loop thru input rows, skipping first (headings)
         int ndx = 0;

@@ -1754,6 +1754,18 @@
         <item>Emergency Stop</item>
     </string-array>
 
+    <string-array name="prefSortOrderEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>name</item>
+        <item>id</item>
+        <item>position</item>
+    </string-array>
+
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>Name</item>
+        <item>ID</item>
+        <item>Position</item>
+    </string-array>
+
     <!-- always put any categories after the preferences in the category.  i.e. preferences and PreferenceScreens, then categories -->
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
     <string-array name="advancedPreferences" translatable="false">
@@ -1884,7 +1896,6 @@
         <item>prefShowTimeOnLogEntry</item>
 
         <item>prefHideInstructionalToasts</item>
-
 
     </string-array>
 

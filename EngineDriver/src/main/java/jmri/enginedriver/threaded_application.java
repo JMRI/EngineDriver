@@ -100,6 +100,7 @@ import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.message_type;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -158,13 +159,14 @@ public class threaded_application extends Application {
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
+    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster wich is populated using XML via the WebServer
     public int rosterOrder = sort_type.NAME;
     public int recentLocosOrder = sort_type.LAST_USED;
     public int recentConsistsOrder = sort_type.LAST_USED;
     public Map<String, String> consist_entries;
     public static DownloadRosterTask dlRosterTask = null;
 //    private static DownloadMetaTask dlMetadataTask = null;
-    HashMap<String, RosterEntry> roster;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
+    HashMap<String, RosterEntry> rosterJmriWeb;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
 //    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
     ImageDownloader imageDownloader = new ImageDownloader();
     public String power_state;
@@ -782,7 +784,7 @@ public class threaded_application extends Application {
                 }
                 rosterSize = rosterTemp.size();     //throws exception if still null
                 if (!dl.cancel)
-                    roster = (HashMap<String, RosterEntry>) rosterTemp.clone();
+                    rosterJmriWeb = (HashMap<String, RosterEntry>) rosterTemp.clone();
             } catch (Exception e) {
                 throw new IOException();
             }
@@ -2094,8 +2096,21 @@ public class threaded_application extends Application {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
 
+    // used for Instructional Toasts.  They can be blocked by preference
+    void safeToastInstructional(final String msg_txt, final int length) {
+        if (!prefHideInstructionalToasts) {
+            safeToast(msg_txt, length);
+        }
+    }
+    boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
+        if ((!prefHideInstructionalToasts) && (!shownBefore)) {
+            safeToast(msg_txt, length);
+        }
+        return true;
+    }
+
     public static void safeToast(final String msg_txt, final int length) {
-        Log.d("Engine_Driver", "t_a.show_toast_message: " + msg_txt);
+        Log.d("Engine_Driver", "t_a.safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
@@ -2325,8 +2340,12 @@ public class threaded_application extends Application {
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
 
-    /* add passed-in loco to Recent Locos list and store it */
     public void addLocoToRecents(ConLoco conLoco) {
+        addLocoToRecents(conLoco, null);
+    }
+
+    /* add passed-in loco to Recent Locos list and store it */
+    public void addLocoToRecents(ConLoco conLoco,  LinkedHashMap<Integer, String> functionLabelsMap) {
         // if we don't have external storage mounted, or permission to write it, just ignore, no prompt
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
@@ -2340,10 +2359,19 @@ public class threaded_application extends Application {
         Integer engine_address = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
-        if ((conLoco.getIsFromRoster()) && (conLoco.getRosterName() != null) && (!conLoco.getRosterName().equals(""))) {
-            loco_name = conLoco.getRosterName();
-        }
         Integer locoSource = conLoco.getWhichSource();
+        if (conLoco.getIsFromRoster()) {
+            if ( (conLoco.getRosterName() != null) && (conLoco.getRosterName().length() > 0)) {
+                loco_name = conLoco.getRosterName();
+            } else {
+                if (conLoco.getDesc().length() > 0) {
+                    loco_name = conLoco.getDesc();
+                }
+            }
+            locoSource = source_type.ROSTER;
+        }
+        String keepFunctions = "";
+        String functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
         for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
             if (engine_address.equals(importExportPreferences.recent_loco_address_list.get(i))
                     && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
@@ -2352,7 +2380,9 @@ public class threaded_application extends Application {
                 importExportPreferences.recent_loco_address_size_list.remove(i);
                 importExportPreferences.recent_loco_name_list.remove(i);
                 importExportPreferences.recent_loco_source_list.remove(i);
-                Log.d("Engine_Driver", "Loco '" + loco_name + "' removed from Recents");
+                keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
+                importExportPreferences.recent_loco_functions_list.remove(i);
+                Log.d("Engine_Driver", "ta: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
                 break;
             }
         }
@@ -2362,10 +2392,31 @@ public class threaded_application extends Application {
         importExportPreferences.recent_loco_address_size_list.add(0, address_size);
         importExportPreferences.recent_loco_name_list.add(0, loco_name);
         importExportPreferences.recent_loco_source_list.add(0, locoSource);
+        if (functionLabels.length()>0) {
+            keepFunctions =functionLabels;
+        }
+        importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);  // restore from the previous value
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
         Log.d("Engine_Driver", "Loco '" + loco_name + "' added to Recents");
 
+    }
+
+    public int findLocoInRecents(Integer address, Integer size, String name) {
+        int position = -1;
+        ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+        importExportPreferences.getRecentLocosListFromFile();
+
+        for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+            if (address.equals(importExportPreferences.recent_loco_address_list.get(i))
+                    && size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
+                    && name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                position = i;
+                Log.d("Engine_Driver", "ta: findLocoInRecents: Loco '" + name + "' found in Recents");
+                break;
+            }
+        }
+        return position;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -2959,6 +3010,34 @@ public class threaded_application extends Application {
                     break;
             }
         }
+    }
+
+    //parse roster functions list into appropriate app variable array
+    //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+    public static LinkedHashMap<Integer, String> parseFunctionLabels(String responseStr) {
+        String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //split into list of labels
+
+        //populate a temp label array from RF command string
+        LinkedHashMap<Integer, String> functionLabelsMap = new LinkedHashMap<>();
+        int i = 0;
+        for (String ts : ta) {
+            if (i > threaded_application.MAX_FUNCTION_NUMBER +1) break; //ignore unsupported functions
+            if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
+                functionLabelsMap.put(i - 1, ts); //index is hashmap key, value is label string
+            }
+            i++;
+        }
+        return functionLabelsMap;
+    }
+
+    public static String packFunctionLabels(LinkedHashMap<Integer, String> functionLabelsMap) {
+        String functionLabels = "";
+        if ( (functionLabelsMap!=null) && (!functionLabelsMap.isEmpty())) {
+            for (int i = 0; i < functionLabelsMap.size(); i++) {
+                functionLabels = functionLabels + (functionLabelsMap.get(i)!=null ? functionLabelsMap.get(i) : "") + "]\\[";
+            }
+        }
+        return functionLabels;
     }
 
 }

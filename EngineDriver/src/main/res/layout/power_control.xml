@@ -50,7 +50,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_weight="4">
+            android:layout_weight="5.2">
 
             <ScrollView
                 android:id="@+id/DccexTrackPowerScrollView"
@@ -385,23 +385,26 @@
 
         </LinearLayout>
 
-        <TableLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/dcc_ex_bottom_button_layout"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
             android:layout_margin="3dp"
-            android:layout_weight="1"
+            android:layout_weight=".8"
             android:paddingLeft="6dp"
-            android:paddingRight="6dp">
+            android:paddingRight="6dp" >
 
             <Button
                 android:id="@+id/power_button_close"
                 style="?attr/ed_normal_button_style"
-                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:text="@string/logviewerClose"
                 tools:ignore="RtlHardcoded" />
 
-        </TableLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>
