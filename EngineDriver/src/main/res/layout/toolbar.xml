@@ -15,6 +15,7 @@
     app:contentInsetStart="5dp"
     app:contentInsetStartWithNavigation="0dp"
     app:navigationContentDescription="Overflow Menu"
+    app:popupTheme="?attr/ed_toolbar_popup_theme"
     >
 
     <RelativeLayout

@@ -81,6 +81,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup</item>
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>
@@ -138,7 +139,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
         <item name="android:spinnerStyle">@style/spinner</item>
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
@@ -172,6 +173,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
@@ -225,7 +227,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
         <item name="android:spinnerStyle">@style/spinner</item>
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
@@ -259,6 +261,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@color/black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_ultra</item>
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_outline</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_outline</item>
@@ -314,7 +317,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
         <item name="android:spinnerStyle">@style/spinner</item>
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
@@ -348,6 +351,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/toolbar_background_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on_ultra</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off_ultra</item>
@@ -394,7 +398,6 @@
         <item name="android:itemBackground">@color/transparent</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton_colorful</item>
-
         <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>
         <item name="android:itemTextAppearance">@style/ItemTextAppearance_colorful</item>
 
@@ -447,6 +450,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/toolbar_background_colorful</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_colorful</item>
 
         <item name="ed_flashlight_on_button">@drawable/flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/flashlight_off</item>

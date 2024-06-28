@@ -32,7 +32,9 @@
                 <TextView
                     android:id="@+id/dss_heading"
                     style="?android:attr/listSeparatorTextViewStyle"
-                    android:text="@string/prefDeviceSoundsCategoryTitle" />
+                    android:text="@string/prefDeviceSoundsCategoryTitle"
+                    android:paddingLeft="4dp"
+                    tools:ignore="RtlSymmetry" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"

@@ -27,7 +27,9 @@
             <TextView
                 android:id="@+id/function_consist_heading"
                 style="?android:attr/listSeparatorTextViewStyle"
-                android:text="@string/functionConsistHeader" />
+                android:text="@string/functionConsistHeader"
+                android:paddingLeft="4dp"
+                tools:ignore="RtlSymmetry" />
 
             <ScrollView
                 android:id="@+id/function_consist_instruction_text_scroll_view"
@@ -92,6 +94,7 @@
                         style="?android:attr/listSeparatorTextViewStyle"
                         android:layout_width="50dp"
                         android:layout_marginRight="2dp"
+                        android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLabel"
                         android:textStyle="bold" />
 
@@ -99,6 +102,7 @@
                         android:id="@+id/function_consist_LocosHeader"
                         android:layout_width="100dp"
                         android:layout_marginRight="2dp"
+                        android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLocos"
                         android:textStyle="bold"
                         style="?android:attr/listSeparatorTextViewStyle"  />
@@ -107,6 +111,7 @@
                         android:id="@+id/textView"
                         android:layout_width="50dp"
                         android:layout_marginRight="2dp"
+                        android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLatching"
                         android:textStyle="bold"
                         style="?android:attr/listSeparatorTextViewStyle"  />

@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/spinner_background_colorful"/>
+    <stroke android:width="1px" android:color="@color/spinner_divider_colorful" />
+    <corners android:radius="@dimen/spinnerBackgroundCornerRadius_colorful" />
+</shape>

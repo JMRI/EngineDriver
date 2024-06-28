@@ -27,6 +27,7 @@
     <attr name="ed_fn_scrollview_style" format="reference" />
 
     <attr name="ed_toolbar_background" format="reference" />
+    <attr name="ed_toolbar_popup_theme" format="reference" />
 
     <attr name="ed_throttle_switch_button" format="reference" />
     <attr name="ed_throttle_button" format="reference" />
