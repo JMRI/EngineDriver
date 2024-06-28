@@ -23,7 +23,7 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="@string/host_ip"
-            android:paddingLeft="2dp"
+            android:paddingLeft="4dp"
             android:layout_marginRight="4dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/port"
             android:layout_toRightOf="@id/host_ip"
-            android:paddingLeft="2dp"
+            android:paddingLeft="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/port"
@@ -89,7 +89,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/discovered_services"
-        android:paddingLeft="2dp"
+        android:paddingLeft="4dp"
         android:layout_marginBottom="2dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="@string/recent_connections"
             android:layout_alignParentLeft="true"
-            android:paddingLeft="2dp"
+            android:paddingLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="2dp"
@@ -198,7 +198,8 @@
             android:entryValues="@array/prefYesNoAutoEntryValues"
             android:padding="0dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" />
+            android:paddingRight="20dp"
+            android:singleLine="true" />
 
     </LinearLayout>
 
