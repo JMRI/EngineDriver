@@ -91,7 +91,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
-import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -146,12 +145,15 @@ import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.pref_gamepad_button_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.direction_button;
 import jmri.enginedriver.type.function_button;
 
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.tts_msg_type;
+import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.util.VerticalSeekBar;
@@ -255,7 +257,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private boolean stealPromptActive = false; //true while steal dialog is open
     private int whichVolume = 0;
-    private int whichLastVolume = -1;
+//    private int whichLastVolume = -1;
     private int whichLastGamepad1 = -1;
     private int whichLastGamepadButtonPressed = -1;
     private String prefGamePadDoublePressStop = "";
@@ -475,21 +477,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected static final int DIRECTION_REVERSE = 0;
     // default to the iOS iCade mappings
 //    private String whichGamePadMode = WHICH_GAMEPAD_MODE_NONE;
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP = "All Stop";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_STOP = "Stop";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE = "Next Throttle";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_FORWARD = "Forward";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_REVERSE = "Reverse";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE = "Forward/Reverse Toggle";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_INCREASE_SPEED = "Increase Speed";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED = "Decrease Speed";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED = "Limit Speed";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_PAUSE = "Pause";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE = "Mute (IPLS)";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL = "Bell (IPLS)";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN = "Horn (IPLS)";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
-    private static final String PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED = "Speak Current Speed";
 
     private int externalGamepadAction;
 //    private int externalGamepadWhichThrottle;
@@ -517,35 +504,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int[] BUTTON_ACTION_NUMBERS ={
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
-    // For TTS
-//    private int MY_TTS_DATA_CHECK_CODE = 1234;
-    private static final String PREF_TTS_THROTTLE_RESPONSE_NONE = "None";
-//    private static final String PREF_TTS_THROTTLE_RESPONSE_THROTTLE = "Throttle";
-    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO = "Loco";
-    private static final String PREF_TTS_THROTTLE_RESPONSE_SPEED = "Speed";
-    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED = "LocoSpeed";
-
-    private TextToSpeech myTts;
-    private String lastTts = "none";
-    private String prefTtsWhen = "None";
-    private String prefTtsThrottleResponse = "Throttle";
-    private String prefTtsThrottleSpeed = "Zero + Max";
-    private boolean prefTtsGamepadTest = true;
-    private boolean prefTtsGamepadTestComplete = true;
-    private boolean prefTtsGamepadTestKeys = false;
-//    private Time lastTtsTime;
-    private long lastTtsTime;
-    private static final String PREF_TT_WHEN_NONE = "None";
-//    private static final String PREF_TT_WHEN_KEY = "Key";
-    private static final int TTS_MSG_VOLUME_THROTTLE = 1;
-    private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
-    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST = 3;
-    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
-    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
-    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET = 6;
-    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL = 7;
-    private static final int TTS_MSG_GAMEPAD_THROTTLE_SPEED = 8;
-
+    Tts tts;
+	
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
     private boolean mGamepadAutoIncrement = false;
@@ -1447,7 +1407,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             case ACCELERATOROMETER_SHAKE_NEXT_V:
                                 GamepadFeedbackSound(false);
                                 setNextActiveThrottle();
-                                speakWords(TTS_MSG_VOLUME_THROTTLE, whichVolume);
+                                tts.speakWords(tts_msg_type.VOLUME_THROTTLE, whichVolume,false
+                                        , getDisplaySpeedFromCurrentSliderPosition(whichVolume,true)
+                                        , 0
+                                        , 0
+                                        , getConsistAddressString(whichVolume));
                                 break;
                             case ACCELERATOROMETER_SHAKE_LOCK_DIM_SCREEN:
                                 GamepadFeedbackSound(false);
@@ -1590,15 +1554,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
 
-        prefTtsWhen = prefs.getString("prefTtsWhen", getResources().getString(R.string.prefTtsWhenDefaultValue));
-        prefTtsThrottleResponse = prefs.getString("prefTtsThrottleResponse", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
-        prefTtsThrottleSpeed = prefs.getString("prefTtsThrottleSpeed", getResources().getString(R.string.prefTtsThrottleSpeedDefaultValue));
-        prefTtsGamepadTest = prefs.getBoolean("prefTtsGamepadTest", getResources().getBoolean(R.bool.prefTtsGamepadTestDefaultValue));
-        prefTtsGamepadTestComplete = prefs.getBoolean("prefTtsGamepadTestComplete", getResources().getBoolean(R.bool.prefTtsGamepadTestCompleteDefaultValue));
-        prefTtsGamepadTestKeys = prefs.getBoolean("prefTtsGamepadTestKeys", getResources().getBoolean(R.bool.prefTtsGamepadTestKeysDefaultValue));
         mainapp.prefGamepadOnlyOneGamepad = prefs.getBoolean("prefGamepadOnlyOneGamepad", getResources().getBoolean(R.bool.prefGamepadOnlyOneGamepadDefaultValue));
 
-        prefGamePadDoublePressStop = prefs.getString("prefGamePadDoublePressStop", getResources().getString(R.string.prefTtsThrottleResponseDefaultValue));
+        prefGamePadDoublePressStop = prefs.getString("prefGamePadDoublePressStop", getResources().getString(R.string.prefGamePadDoublePressStopDefaultValue));
         mainapp.prefGamePadIgnoreJoystick = prefs.getBoolean("prefGamePadIgnoreJoystick", getResources().getBoolean(R.bool.prefGamePadIgnoreJoystickDefaultValue));
 
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
@@ -2022,7 +1980,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
-                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle, false
+                                ,getMaxSpeed(whichThrottle)
+                                ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                                ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                                ,"");
+				
                 break;
         }
         doLocoSound(whichThrottle);
@@ -2081,7 +2044,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             case SPEED_COMMAND_FROM_GAMEPAD:
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
-                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
+                                ,getMaxSpeed(whichThrottle)
+                                ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                                ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                                ,"");
                 break;
         }
         if ((vsbSwitchingSpeeds!=null) || (hsbSwitchingSpeeds!=null)) { // get around a problem with reporting for the switching layouts
@@ -2475,7 +2442,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             try {
                 Intent in = new Intent().setClass(this, gamepad_test.class);
                 in.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
-                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST,' ');
+                tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST);
                 startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
@@ -2689,137 +2656,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    // For TTS
-    private void speakWords(int msgNo, int whichThrottle) {
-        speakWords(msgNo, whichThrottle, false);
-    }
-
-    private void speakWords(int msgNo, int whichThrottle, boolean force) {
-        boolean result = false;
-        String speech = "";
-        if (!prefTtsWhen.equals(PREF_TT_WHEN_NONE)) {
-            if (myTts != null) {
-                switch (msgNo) {
-                    case TTS_MSG_VOLUME_THROTTLE:
-                        if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
-                            if (whichLastVolume != whichThrottle) {
-                                result = true;
-                                whichLastVolume = whichThrottle;
-                                speech = getApplicationContext().getResources().getString(R.string.TtsVolumeThrottle) + " " + (whichThrottle + 1);
-                            }
-                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
-                            }
-                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
-                            }
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_THROTTLE:
-                        if (!prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_NONE)) {
-                            if ((whichLastGamepad1 != whichThrottle) || (force)) {
-                                result = true;
-                                whichLastGamepad1 = whichThrottle;
-                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadThrottle) + " " + (whichThrottle + 1);
-                            }
-                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsLoco) + " " + (getConsistAddressString(whichThrottle));
-                            }
-                            if ((prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + getApplicationContext().getResources().getString(R.string.TtsSpeed) + " "
-                                        + (getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true));
-                            }
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST:
-                        if ((prefTtsGamepadTest)) {
-                            result = true;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTest);
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE:
-                        if ((prefTtsGamepadTestComplete)) {
-                            result = true;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestComplete);
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED:
-                        if ((prefTtsGamepadTestComplete)) {
-                            result = true;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSkipped);
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL:
-                        if ((prefTtsGamepadTestComplete)) {
-                            result = true;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestFail);
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET:
-                        if ((prefTtsGamepadTestComplete)) {
-                            result = true;
-                            speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestReset);
-                        }
-                        break;
-                    case TTS_MSG_GAMEPAD_THROTTLE_SPEED:
-                        if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
-                            int spd = getSpeedFromCurrentSliderPosition(whichThrottle,false);
-                            int maxSpd = getMaxSpeed(whichThrottle);
-                            if (spd == 0) {
-                                result = true;
-                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedZero);
-                            } else if (spd == maxSpd) {
-                                result = true;
-                                speech = getApplicationContext().getResources().getString(R.string.TtsGamepadTestSpeedMax);
-                                if ((prefTtsThrottleSpeed.equals("Zero + Max + speed"))) {
-                                    speech = speech + " " + getDisplaySpeedFromCurrentSliderPosition(whichThrottle, true);
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                if (result) {
-//                    Time currentTime = new Time();
-//                    currentTime.setToNow();
-//                    if (((currentTime.toMillis(true) >= (lastTtsTime.toMillis(true) + 1500)) || (!speech.equals(lastTts)))) {
-
-                    // //don't repeat what was last spoken withing 1.5 seconds
-                    if (((System.currentTimeMillis() >= (lastTtsTime + 1500)) || (!speech.equals(lastTts)))) {
-                        //myTts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-                        myTts.speak(speech, TextToSpeech.QUEUE_ADD, null);
-//                        lastTtsTime = currentTime;
-                        lastTtsTime = System.currentTimeMillis();
-                    }
-                    lastTts = speech;
-                }
-            }
-        }
-    }
-
-    // For TTS
-    private void setupTts() {
-        if (!prefTtsWhen.equals(getApplicationContext().getResources().getString(R.string.prefTtsWhenDefaultValue))) {
-            if (myTts == null) {
-//                lastTtsTime = new Time();
-//                lastTtsTime.setToNow();
-                lastTtsTime = System.currentTimeMillis();
-
-                myTts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status != TextToSpeech.ERROR) {
-                            myTts.setLanguage(Locale.getDefault());
-                        } else {
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }
-    }
-
     // Set the original volume indicator a small 'v' near the speed
     protected void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
@@ -2858,7 +2694,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             if (mainapp.gamePadThrottleAssignment[throttleIndex] == 1) {
                 setSelectedLocoAdditionalIndicator(throttleIndex, false);
-                speakWords(TTS_MSG_GAMEPAD_THROTTLE, throttleIndex);
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE, throttleIndex,false
+                        ,whichLastGamepad1
+                        ,getDisplaySpeedFromCurrentSliderPosition(throttleIndex,true)
+                        ,0
+                        ,getConsistAddressString(throttleIndex));
                 isSet = true;
             }
         }
@@ -3177,7 +3017,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // map the button pressed to the user selected action for that button on the gamepad or ESP32 DIY Gamepad (which thinks it is a Keyboard)
     private void performButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int whichGamePadIsEventFrom, int repeatCnt) {
 
-        if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {  // All Stop
+        if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.ALL_STOP)) {  // All Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -3187,7 +3027,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 speedUpdateAndNotify(0);         // update all throttles
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_STOP)) {  // Stop
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.STOP)) {  // Stop
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN)
@@ -3195,13 +3035,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     disablePauseSpeed(whichThrottle);
                 }
                 speedUpdateAndNotify(whichThrottle, 0);
-                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
+                        ,getMaxSpeed(whichThrottle)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                        ,"");
 
                 if ((whichLastGamepadButtonPressed==buttonNo)
                 && (System.currentTimeMillis() <= (gamePadDoublePressStopTime+1000) ) ){  // double press - within 1 second
-                    if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_ALL_STOP)) {
+                    if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.ALL_STOP)) {
                         speedUpdateAndNotify(0);         // update all throttles
-                    } else if (prefGamePadDoublePressStop.equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {
+                    } else if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {
                         boolean dirChangeFailed;
                         if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
                             dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
@@ -3216,7 +3060,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     gamePadDoublePressStopTime = System.currentTimeMillis();
                 }
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_NEXT_THROTTLE)) {  // Next Throttle
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 if ( mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
                     swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
@@ -3224,7 +3068,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     setNextActiveThrottle(true);
                 }
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD)) {  // Forward
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.FORWARD)) {  // Forward
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed;
                 if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
@@ -3234,7 +3078,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 GamepadFeedbackSound(dirChangeFailed);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_REVERSE)) {  // Reverse
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.REVERSE)) {  // Reverse
             boolean dirChangeFailed;
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
@@ -3244,7 +3088,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 GamepadFeedbackSound(dirChangeFailed);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed;
                 if ((getDirection(whichThrottle)==DIRECTION_FORWARD)) {
@@ -3254,34 +3098,34 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 GamepadFeedbackSound(dirChangeFailed);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_INCREASE_SPEED)) {  // Increase Speed
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.INCREASE_SPEED)) {  // Increase Speed
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
                     mGamepadAutoIncrement = true;
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 }
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_DECREASE_SPEED)) {  // Decrease Speed
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.DECREASE_SPEED)) {  // Decrease Speed
             if (isActive && (action == ACTION_DOWN)) {
                 if (repeatCnt == 0) {
                     mGamepadAutoDecrement = true;
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 }
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_MUTE)) {  // IPLS Sounds - Mute
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_MUTE)) {  // IPLS Sounds - Mute
             if (isActive && (action == ACTION_UP)) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
                 setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
                 soundsMuteUnmuteCurrentSounds(whichThrottle);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_BELL)) {  // IPLS Sounds - Bell
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_BELL)) {  // IPLS Sounds - Bell
             if (isActive && (action == ACTION_UP)) {
                 boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL - 1];
                 doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_BELL);
                 setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], rslt);
                 mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL -1] = rslt;
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN)) {  // IPLS Sounds - Horn
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_HORN)) {  // IPLS Sounds - Horn
             if (isActive) {
                 if (action == ACTION_UP) {
                     doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
@@ -3295,7 +3139,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SOUNDS_HORN_SHORT)) {  // IPLS Sounds - Horn Short
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_HORN_SHORT)) {  // IPLS Sounds - Horn Short
             if (isActive) {
                 if (action == ACTION_UP) {
                     doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
@@ -3312,7 +3156,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if ((prefGamePadButtons[buttonNo].length()>=11) && (prefGamePadButtons[buttonNo].startsWith(GAMEPAD_FUNCTION_PREFIX))) { // one of the Function Buttons
             int fKey = Integer.parseInt(prefGamePadButtons[buttonNo].substring(9,11));
             doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_LIMIT_SPEED)) {
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.LIMIT_SPEED)) {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isLimitSpeeds[whichThrottle]) {
                     gamepadBeep(1);
@@ -3321,7 +3165,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 limitSpeed(whichThrottle);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_PAUSE)) {
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.PAUSE)) {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 gamepadBeep(6);
                 if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE) {
@@ -3331,8 +3175,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 pauseSpeed(whichThrottle);
             }
-        } else if (prefGamePadButtons[buttonNo].equals(PREF_GAMEPAD_BUTTON_OPTION_SPEAK_CURRENT_SPEED)) {
-            speakWords(TTS_MSG_GAMEPAD_THROTTLE,whichThrottle, true);
+        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SPEAK_CURRENT_SPEED)) {
+            tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE,whichThrottle, true
+                            ,whichLastGamepad1
+                            ,getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
+                            ,0
+                            ,getConsistAddressString(whichThrottle));
         }
 
         whichLastGamepadButtonPressed = buttonNo;
@@ -3357,7 +3205,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 speedUpdateAndNotify(whichThrottle, 0);
-                speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
+                            ,getMaxSpeed(whichThrottle)
+                            ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                            ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                            ,"");
                 resetKeyboardString();
             }
         } else if (keyCode==KEYCODE_N) {  // Next Throttle
@@ -3946,13 +3798,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
         incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
-        speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+        tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
+                ,getMaxSpeed(whichThrottle)
+                ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                ,"");
     }
 
     void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
         decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
-        speakWords(TTS_MSG_GAMEPAD_THROTTLE_SPEED,whichThrottle);
+        tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
+                ,getMaxSpeed(whichThrottle)
+                ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                ,"");
     }
 
     void GamepadFeedbackSound(boolean invalidAction) {
@@ -6073,8 +5933,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         setupSensor(); // setup the support for shake actions.
 
-        setupTts();
-
+        tts = new Tts(prefs, mainapp);
+		
         if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
             autoImportFromURL();
         }
@@ -6189,7 +6049,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        setupTts();
+        tts.loadPrefs(); // recheck the tts prefs in case they have been changed
 
         setActivityTitle();
 
@@ -6958,7 +6818,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.gamepadFullReset();
             mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
             setGamepadIndicator();
-            speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+            tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
             return true;
         } else if ( item.getItemId() == R.id.gamepad_test_mnu1) {
             in = new Intent().setClass(this, gamepad_test.class);
@@ -7090,15 +6950,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         switch (result) {
                             case GAMEPAD_TEST_PASS:
                                 mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
-                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE,' ');
+                                tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_COMPLETE);
                                 break;
                             case GAMEPAD_TEST_SKIPPED:
                                 mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
-                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED, ' ');
+                                tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_SKIPPED);
                                 break;
                             case GAMEPAD_TEST_FAIL:
                                 mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_BAD;
-                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL, ' ');
+                                tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_FAIL);
                                 break;
                             case GAMEPAD_TEST_RESET:
                                 mainapp.gamepadCount = 0;
@@ -7109,7 +6969,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 mainapp.gamepadFullReset();
                                 mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
                                 setGamepadIndicator();
-                                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+                                tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
                                 break;
                             default:
                                 Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");

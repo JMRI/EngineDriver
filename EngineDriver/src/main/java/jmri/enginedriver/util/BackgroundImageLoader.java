@@ -30,14 +30,12 @@ public class BackgroundImageLoader {
 
     public void loadBackgroundImage() {
         if (prefBackgroundImage) {
-//<!-- needed for API 33 -->
             if ( ( (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
                     && (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) )
                     || ( (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                     && (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) ) ) {
                 loadBackgroundImageImpl();
             }
-//<!-- needed for API 33 -->
         }
     }
 

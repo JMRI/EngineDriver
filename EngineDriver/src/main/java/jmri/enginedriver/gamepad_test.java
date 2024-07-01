@@ -41,7 +41,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.speech.tts.TextToSpeech;
+//import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -72,7 +72,9 @@ import java.util.List;
 import java.util.Locale;
 
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.util.Tts;
 
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
@@ -130,16 +132,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private int decreaseButtonCount = 0;
 
-    private TextToSpeech myTts;
+    Tts tts;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return myGesture.onTouchEvent(event);
-//    }
 
     void GamepadFeedbackSound(boolean invalidAction) {
         if (invalidAction)
@@ -364,12 +361,12 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             setAllButtonsOff();
         }
 
-        if ( (myTts != null) && (action==ACTION_DOWN) && (prefTtsGamepadTestKeys) ) {
+        if (action==ACTION_DOWN)  {
             String text = keyCodeString;
             if ( (keyCodeString.length()<4) || (!keyCodeString.startsWith("DPad")) ) {
                 text = "Button "+ btn.getText();
             }
-            myTts.speak(text+","+fn, TextToSpeech.QUEUE_ADD, null);
+            tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_KEY_AND_PURPOSE, text+","+fn);
         }
 
         btn.setClickable(true);
@@ -703,7 +700,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        setupTts();
+        tts = new Tts(prefs,mainapp);
 
     } // end onCreate
 
@@ -721,6 +718,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        tts.loadPrefs(); // recheck the ttf prefs in case they have been changed
     }
 
     /**
@@ -865,25 +863,4 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
-
-    private void setupTts() {
-        prefTtsGamepadTestKeys = prefs.getBoolean("prefTtsGamepadTestKeys", getResources().getBoolean(R.bool.prefTtsGamepadTestKeysDefaultValue));
-
-        if (prefTtsGamepadTestKeys) {
-            if (myTts == null) {
-                myTts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int status) {
-                        if (status != TextToSpeech.ERROR) {
-                            myTts.setLanguage(Locale.getDefault());
-                        } else {
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-
 }
