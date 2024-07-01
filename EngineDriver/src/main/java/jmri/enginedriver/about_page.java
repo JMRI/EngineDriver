@@ -24,6 +24,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,7 +59,7 @@ public class about_page extends AppCompatActivity {
 
         // format and show version info
         TextView v = findViewById(R.id.about_info);
-        v.setText(mainapp.getAboutInfo());
+        v.setText(Html.fromHtml(mainapp.getAboutInfo()));
 
         // show ED webpage
         WebView webview = findViewById(R.id.about_webview);

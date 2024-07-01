@@ -439,7 +439,8 @@
                 <Button
                     android:id="@+id/gamepad_test_button_skip"
                     style="?attr/ed_normal_button_style"
-                    android:layout_gravity="right"                    android:text="@string/gamepadTestSkip" />
+                    android:layout_gravity="right"                    android:text="@string/gamepadTestSkip"
+                    tools:ignore="RtlHardcoded" />
 <!--            </TableRow>-->
 
 <!--        </TableLayout>-->

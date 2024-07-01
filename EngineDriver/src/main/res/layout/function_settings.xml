@@ -177,6 +177,7 @@
                         android:text="@string/fb_column_label"
                         android:textStyle="bold"
                         android:paddingLeft="4dp"
+                        android:layout_marginRight="6dp"
                         style="?android:attr/listSeparatorTextViewStyle"
                         tools:ignore="RtlSymmetry" />
 

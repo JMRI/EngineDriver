@@ -351,24 +351,26 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         msg = data.substring(msgStart + 3);
                     }
                 }
-                msg = msg.replaceAll("&", "&amp;");
-                msg = msg.replaceAll("<", "&lt;");
-                msg = msg.replaceAll(">", "&gt;");
-                if (msg.indexOf("About: ") < 0) {
-                    if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
-                        msg = "<span style=\"color: #404040\">" + msg;
+                if (!msg.substring(0,6).equals("<span>")) {
+                    msg = msg.replaceAll("&", "&amp;");
+                    msg = msg.replaceAll("<", "&lt;");
+                    msg = msg.replaceAll(">", "&gt;");
+                    if (msg.indexOf("About: ") < 0) {
+                        if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
+                            msg = "<span style=\"color: #404040\">" + msg;
+                        } else {
+                            msg = "<span style=\"color: #CCCCCC\">" + msg;
+                        }
                     } else {
-                        msg = "<span style=\"color: #CCCCCC\">" + msg;
+                        msg = "<br/><span>" + msg;
                     }
-                } else {
-                    msg = "<br/><span>" + msg;
-                }
-                if (msg.indexOf("--&gt;") > 0) {
-                    msg = msg.replace("--&gt;", "</span><br/><b>--&gt;") + "</b>";
-                } else if (msg.indexOf("&lt;--") > 0) {
-                    msg = msg.replace("&lt;--", "</span><br/><b>&lt;--") + "</b>";
-                } else {
-                    msg = msg + "</span>";
+                    if (msg.indexOf("--&gt;") > 0) {
+                        msg = msg.replace("--&gt;", "</span><br/><b>--&gt;") + "</b>";
+                    } else if (msg.indexOf("&lt;--") > 0) {
+                        msg = msg.replace("&lt;--", "</span><br/><b>&lt;--") + "</b>";
+                    } else {
+                        msg = msg + "</span>";
+                    }
                 }
                 textview.setText(Html.fromHtml(msg));
                 return view;

@@ -2,9 +2,13 @@
     <corners android:radius="@dimen/buttonCornerRadius_ultra" />
     <stroke android:width="0px" android:color="@color/black" />
     <gradient
-        android:startColor="@color/buttonCommonFillGradiantCenter_ultra"
-        android:endColor="@color/buttonCommonFillGradiantVeryLight_ultra"
+        android:centerX="60%"
+        android:startColor="@color/buttonCommonFillGradiantVeryLight_ultra"
+        android:centerColor="@color/buttonCommonFillGradiantLight_ultra"
+        android:endColor="@color/transparent"
         android:type="linear"
         />
     <corners android:radius="1dp" />
 </shape>
+
+<!--        android:endColor="@color/buttonCommonFillGradiantCenter_ultra"-->

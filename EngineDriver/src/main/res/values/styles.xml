@@ -15,7 +15,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -286,7 +286,10 @@
   </style>
 
   <style name="ActionBarPopup" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:background">@color/spinner_background_original</item>
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -389,7 +392,10 @@
   </style>
 
   <style name="ActionBarPopup_black" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:background">@color/spinner_background_ultra</item>
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background_ultra</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
   <style name="windowTitleBackground_black">
@@ -742,7 +748,10 @@
   </style>
 
   <style name="ActionBarPopup_outline" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:background">@color/spinner_background_ultra</item>
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background_ultra</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -756,10 +765,10 @@
     <item name="android:background">@drawable/small_heading_style_ultra</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
-    <item name="android:shadowColor">#00000000</item>
-    <item name="android:shadowDx">0</item>
-    <item name="android:shadowDy">0</item>
-    <item name="android:shadowRadius">0</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">3</item>
     <item name="android:padding">2dp</item>
   </style>
 
@@ -903,7 +912,10 @@
   </style>
 
   <style name="ActionBarPopup_ultra" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:background">@color/spinner_background_ultra</item>
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background_ultra</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -941,7 +953,8 @@
 
   <style name="small_heading_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
-    <item name="android:background">@color/heading_colorful</item>
+<!--    <item name="android:background">@color/heading_colorful</item>-->
+    <item name="android:background">@drawable/small_heading_style_colorful</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">@color/shadow_colorful</item>
@@ -1225,12 +1238,21 @@
   <style name="OverflowMenuButton_colorful" parent="Widget.AppCompat.ActionButton.Overflow">
     <item name="android:tint">@color/solidWhite</item>
   </style>
-  <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">
-    <item name="android:popupBackground">@color/windowBackground_colorful</item>
-  </style>
+<!--  <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">-->
+<!--    <item name="android:popupBackground">@color/windowBackground_colorful</item>-->
+<!--  </style>-->
   <style name="ActionBarPopup_colorful" parent="Widget.AppCompat.PopupMenu">
-<!--    <item name="android:background">@drawable/spinner_background_colorful</item>-->
-    <item name="android:background">@color/spinner_background_colorful</item>
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background_colorful</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
+  </style>
+
+  <style name="ActionBarPopup_colorful.MenuTextStyle">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:actionMenuTextColor">@color/solidWhite</item>
+    <item name="actionMenuTextColor">@color/solidWhite</item>
   </style>
   <style name="ItemTextAppearance_colorful">
     <item name="android:textColor">@color/primary_colorful</item>

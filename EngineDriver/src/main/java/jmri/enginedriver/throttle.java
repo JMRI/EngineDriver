@@ -152,6 +152,7 @@ import jmri.enginedriver.type.direction_button;
 import jmri.enginedriver.type.function_button;
 
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
@@ -565,9 +566,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected boolean prefShowAddressInsteadOfName = false;
     protected boolean prefIncreaseWebViewSize = false;
 
-    protected boolean prefBackgroundImage = false;
-    protected String prefBackgroundImageFileName = "";
-    protected String prefBackgroundImagePosition = "FIT_CENTER";
+//    protected boolean prefBackgroundImage = false;
+//    protected String prefBackgroundImageFileName = "";
+//    protected String prefBackgroundImagePosition = "FIT_CENTER";
 
     // preference to change the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -1376,16 +1377,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private boolean directionButtonsAreCurrentlyReversed(int throttleIndexNo) {
-        boolean isOk = ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
+        return ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
                 || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons[throttleIndexNo])));
-        return isOk;
     }
 
     private boolean gamepadDirectionButtonsAreCurrentlyReversed(int throttleIndexNo) {
-        boolean isOk = (prefGamepadSwapForwardReverseWithScreenButtons)
+        return (prefGamepadSwapForwardReverseWithScreenButtons)
                 && (((currentSwapForwardReverseButtons[throttleIndexNo]) && (!prefSwapForwardReverseButtons))
                 || ((!currentSwapForwardReverseButtons[throttleIndexNo]) && (prefSwapForwardReverseButtons)));
-        return isOk;
     }
 
     // set or restore the screen brightness when used for the Swipe Up or Shake
@@ -1612,9 +1611,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
         prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
 
-        prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
-        prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
-        prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
+//        prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
+//        prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
+//        prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
 
         prefHideSlider = prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
 
@@ -1895,7 +1894,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int speed = (int) Math.round(scaleSpeed / displayUnitScale);
 //        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
         if (lastScaleSpeed == scaleSpeed) {
-            speed += Math.signum(change);
+            speed += (int) Math.signum(change);
         }
         if (speed < 0)  //insure speed is inside bounds
             speed = 0;
@@ -2453,8 +2452,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private boolean isSelectLocoAllowed(int whichThrottle) {
         // check whether loco change is permitted
-        boolean isAllowed = !getConsist(whichThrottle).isActive() || locoSelectWhileMoving || (getSpeed(whichThrottle) == 0);
-        return isAllowed;
+        return !getConsist(whichThrottle).isActive() || locoSelectWhileMoving || (getSpeed(whichThrottle) == 0);
     }
 
     void start_select_loco_activity(int whichThrottle) {
@@ -3792,11 +3790,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         boolean isExternal = false;
         if (event!=null) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                InputDevice idev = getDevice(event.getDeviceId());
-                if (idev != null && idev.toString().contains("Location: external"))
+            InputDevice idev = getDevice(event.getDeviceId());
+            if (idev != null && idev.toString().contains("Location: external"))
                     isExternal = true;
-            }
         } else { // received from another activity (Turnouts or Routes)
             isExternal = true;
         }
@@ -5500,7 +5496,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     "");
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @SuppressLint({"Recycle", "SetJavaScriptEnabled","ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -6086,7 +6081,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         queryAllSpeedsAndDirectionsWiT();
 
-        loadBackgroundImage();
+//        loadBackgroundImage();
+        BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+        backgroundImageLoader.loadBackgroundImage();
 
         if (!mainapp.webServerNameHasBeenChecked) {
             mainapp.getServerNameFromWebServer();
@@ -6838,187 +6835,184 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // Handle all of the possible menu actions.
         Intent in;
-        switch (item.getItemId()) {
-            case R.id.turnouts_mnu:
-                in = new Intent().setClass(this, turnouts.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.routes_mnu:
-                in = new Intent().setClass(this, routes.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.web_mnu:
-                in = new Intent().setClass(this, web_activity.class);
-                startACoreActivity(this, in, false, 0);
-                mainapp.webMenuSelected = true;
-                return true;
-            case R.id.exit_mnu:
-                mainapp.checkAskExit(this);
-                return true;
-            case R.id.power_control_mnu:
-                in = new Intent().setClass(this, power_control.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        if ( item.getItemId() == R.id.turnouts_mnu ) {
+            in = new Intent().setClass(this, turnouts.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
+        } else if ( item.getItemId() == R.id.routes_mnu) {
+            in = new Intent().setClass(this, routes.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
+        } else if ( item.getItemId() == R.id.web_mnu ) {
+            in = new Intent().setClass(this, web_activity.class);
+            startACoreActivity(this, in, false, 0);
+            mainapp.webMenuSelected = true;
+            return true;
 
-            case R.id.dcc_ex_button:
-            case R.id.dcc_ex_mnu:
-                in = new Intent().setClass(this, dcc_ex.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkAskExit(this);
+            return true;
+        } else if ( item.getItemId() == R.id.power_control_mnu) {
+            in = new Intent().setClass(this, power_control.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.withrottle_cv_programmer_mnu:
-                in = new Intent().setClass(this, withrottle_cv_programmer.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
+            in = new Intent().setClass(this, dcc_ex.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.settings_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
+            in = new Intent().setClass(this, withrottle_cv_programmer.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.function_defaults_mnu:
-                in = new Intent().setClass(this, function_settings.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.function_consist_settings_mnu:
-                in = new Intent().setClass(this, function_consist_settings.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.settings_mnu) {
+            in = new Intent().setClass(this, SettingsActivity.class);
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.about_mnu:
-                in = new Intent().setClass(this, about_page.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.function_defaults_mnu) {
+            in = new Intent().setClass(this, function_settings.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.function_consist_settings_mnu) {
+            in = new Intent().setClass(this, function_consist_settings.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                speedUpdate(0);  // update all throttles
-                applySpeedRelatedOptions();  // update all three throttles
-                if (IS_ESU_MCII) {
-                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
-                    setEsuThrottleKnobPosition(whichVolume, 0);
-                }
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(TMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
+        } else if ( item.getItemId() == R.id.about_mnu) {
+            in = new Intent().setClass(this, about_page.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.logviewer_menu) {
+            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(logviewer);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.EditConsist0_menu:
-                Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-                consistEdit.putExtra("whichThrottle", '0');
-                startActivityForResult(consistEdit, ACTIVITY_CONSIST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EditConsist1_menu:
-                Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
-                consistEdit2.putExtra("whichThrottle", '1');
-                startActivityForResult(consistEdit2, ACTIVITY_CONSIST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EditConsist2_menu:
-                Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
-                consistEdit3.putExtra("whichThrottle", '2');
-                startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EditLightsConsist0_menu:
-                Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
-                consistLightsEdit.putExtra("whichThrottle", '0');
-                startActivityForResult(consistLightsEdit, ACTIVITY_CONSIST_LIGHTS);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EditLightsConsist1_menu:
-                Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
-                consistLightsEdit2.putExtra("whichThrottle", '1');
-                startActivityForResult(consistLightsEdit2, ACTIVITY_CONSIST_LIGHTS);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EditLightsConsist2_menu:
-                Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
-                consistLightsEdit3.putExtra("whichThrottle", '2');
-                startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            speedUpdate(0);  // update all throttles
+            applySpeedRelatedOptions();  // update all three throttles
+            if (IS_ESU_MCII) {
+                Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
+                setEsuThrottleKnobPosition(whichVolume, 0);
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else if ( item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(TMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
 
-            case R.id.gamepad_test_reset:
-                mainapp.gamepadFullReset();
-                mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
-                setGamepadIndicator();
-                speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
-                return true;
-            case R.id.gamepad_test_mnu1:
-                in = new Intent().setClass(this, gamepad_test.class);
-                in.putExtra("whichGamepadNo", "0");
-                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.gamepad_test_mnu2:
-                in = new Intent().setClass(this, gamepad_test.class);
-                in.putExtra("whichGamepadNo", "1");
-                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.gamepad_test_mnu3:
-                in = new Intent().setClass(this, gamepad_test.class);
-                in.putExtra("whichGamepadNo", "2");
-                startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.EditConsist0_menu) {
+            Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
+            consistEdit.putExtra("whichThrottle", '0');
+            startActivityForResult(consistEdit, ACTIVITY_CONSIST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.EditConsist1_menu) {
+            Intent consistEdit2 = new Intent().setClass(this, ConsistEdit.class);
+            consistEdit2.putExtra("whichThrottle", '1');
+            startActivityForResult(consistEdit2, ACTIVITY_CONSIST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.EditConsist2_menu) {
+            Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
+            consistEdit3.putExtra("whichThrottle", '2');
+            startActivityForResult(consistEdit3, ACTIVITY_CONSIST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.EditLightsConsist0_menu) {
+            Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
+            consistLightsEdit.putExtra("whichThrottle", '0');
+            startActivityForResult(consistLightsEdit, ACTIVITY_CONSIST_LIGHTS);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.EditLightsConsist1_menu) {
+            Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
+            consistLightsEdit2.putExtra("whichThrottle", '1');
+            startActivityForResult(consistLightsEdit2, ACTIVITY_CONSIST_LIGHTS);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.EditLightsConsist2_menu) {
+            Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
+            consistLightsEdit3.putExtra("whichThrottle", '2');
+            startActivityForResult(consistLightsEdit3, ACTIVITY_CONSIST_LIGHTS);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.timer_mnu:
-                showTimerPasswordDialog();
-                return true;
-            case R.id.timer_button:
-                prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
-                prefKidsTimer = prefKidsTimerButtonDefault;
-                prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
-                kidsTimerActions(kids_timer_action_type.ENABLED, 0);
-                return true;
+        } else if ( item.getItemId() == R.id.gamepad_test_reset) {
+            mainapp.gamepadFullReset();
+            mainapp.setGamepadTestMenuOption(TMenu,mainapp.gamepadCount);
+            setGamepadIndicator();
+            speakWords(TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET,' ');
+            return true;
+        } else if ( item.getItemId() == R.id.gamepad_test_mnu1) {
+            in = new Intent().setClass(this, gamepad_test.class);
+            in.putExtra("whichGamepadNo", "0");
+            startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.gamepad_test_mnu2) {
+            in = new Intent().setClass(this, gamepad_test.class);
+            in.putExtra("whichGamepadNo", "1");
+            startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( item.getItemId() == R.id.gamepad_test_mnu3) {
+            in = new Intent().setClass(this, gamepad_test.class);
+            in.putExtra("whichGamepadNo", "2");
+            startActivityForResult(in, ACTIVITY_GAMEPAD_TEST);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, TMenu);
-                mainapp.buttonVibration();
-                return true;
-            case R.id.throttle_switch_button:
-                switchThrottleScreenType();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.web_view_button:
-                showHideWebView("");
-                return true;
-            case R.id.EsuMc2Knob_button:
-                toggleEsuMc2Knob(this, TMenu);
-                return true;
+        } else if ( item.getItemId() == R.id.timer_mnu) {
+            showTimerPasswordDialog();
+            return true;
+        } else if ( item.getItemId() == R.id.timer_button) {
+            prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
+            prefKidsTimer = prefKidsTimerButtonDefault;
+            prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
+            kidsTimerActions(kids_timer_action_type.ENABLED, 0);
+            return true;
 
-            case R.id.device_sounds_button:
-                mainapp.buttonVibration();
-            case R.id.device_sounds_menu:
-                in = new Intent().setClass(this, device_sounds_settings.class);
-                startActivityForResult(in, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if ( item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, TMenu);
+            mainapp.buttonVibration();
+            return true;
+        } else if ( item.getItemId() == R.id.throttle_switch_button) {
+            switchThrottleScreenType();
+            mainapp.buttonVibration();
+            return true;
+        } else if ( item.getItemId() == R.id.web_view_button) {
+            showHideWebView("");
+            return true;
+        } else if ( item.getItemId() == R.id.EsuMc2Knob_button) {
+            toggleEsuMc2Knob(this, TMenu);
+            return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if ( (item.getItemId() == R.id.device_sounds_button) || ( item.getItemId() == R.id.device_sounds_menu) ) {
+            if (item.getItemId() == R.id.device_sounds_button) mainapp.buttonVibration();
+            in = new Intent().setClass(this, device_sounds_settings.class);
+            startActivityForResult(in, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+
         }
+        return super.onOptionsItemSelected(item);
     }
 
     // handle return from menu items
@@ -7704,51 +7698,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 vsbSwitchingSpeeds[throttleIndex].tickMarksChecked = false;
                 vsbSwitchingSpeeds[throttleIndex].invalidate();
             }
-        }
-    }
-
-    protected void loadBackgroundImage() {
-        if (prefBackgroundImage) {
-//            if (PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.READ_IMAGES)) {
-//                loadBackgroundImageImpl();
-//            }
-//<!-- needed for API 33 -->
-            if ( ( (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
-                    && (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_IMAGES)) )
-                    || ( (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    && (PermissionsHelper.getInstance().isPermissionGranted(this, PermissionsHelper.READ_MEDIA_IMAGES)) ) ) {
-                loadBackgroundImageImpl();
-            }
-//<!-- needed for API 33 -->
-        }
-    }
-
-    protected void loadBackgroundImageImpl() {
-        ImageView myImage = findViewById(R.id.backgroundImgView);
-        try {
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-            File image_file = new File(prefBackgroundImageFileName);
-//            File image_file = new File(getApplicationContext().getExternalFilesDir(null), prefBackgroundImageFileName);
-            myImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-            switch (prefBackgroundImagePosition){
-                case "FIT_CENTER":
-                    myImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                break;
-                case "CENTER_CROP":
-                    myImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                break;
-                case "CENTER":
-                    myImage.setScaleType(ImageView.ScaleType.CENTER);
-                break;
-                case "FIT_XY":
-                    myImage.setScaleType(ImageView.ScaleType.FIT_XY);
-                break;
-                case "CENTER_INSIDE":
-                    myImage.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                break;
-            }
-        } catch (Exception e) {
-            Log.d("Engine_Driver", "Throttle: failed loading background image");
         }
     }
 

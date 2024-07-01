@@ -539,7 +539,7 @@ public class threaded_application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Engine_Driver", "t_a.onCreate()");
+        Log.d("Engine_Driver", "t_a: onCreate()");
         try {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
@@ -989,24 +989,29 @@ public class threaded_application extends Application {
     }
     @SuppressLint("DefaultLocale")
     public String getAboutInfo() {
-        String s = "";
+        String s = "<span>";
         // device info
-        s += "About: " + String.format("OS:%s, SDK:%s ", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+        s += "About: " + String.format("<small>OS: </small><b>%s</b> <small>SDK: </small><b>%s</b>", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
         if (client_address_inet4 != null) {
-            s += ", " + String.format("IP:%s", client_address_inet4.toString().replaceAll("/", ""));
-            s += String.format(" SSID:%s Net:%s", client_ssid, client_type);
+            s += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", client_ssid, client_type);
         }
 
         // ED version info
-        s += ", EngineDriver: " + appVersion;
+        s += "<small>, EngineDriver: </small><b>" + appVersion + "</b>";
         if (getHostIp() != null) {
             // WiT info
             if (getWithrottleVersion() != 0.0) {
-                s += ", WiThrottle:v" + getWithrottleVersion();
-                s +=  String.format(", Heartbeat:%dms", heartbeatInterval);
+                s += "<small>, Protocol: </small>";
+                if (!isDCCEX) {
+                    s += "<b>WiThrottle</b> v</small><b>" + getWithrottleVersion() +"</b>";
+                    s += String.format("<small>, Heartbeat: </small><b>%dms</b>", heartbeatInterval);
+                } else {
+                    s += "<b>DCC-EX</b>";
+                }
             }
-            s += String.format(", Host:%s", getHostIp() );
-            s += String.format(", Port:%s", connectedPort);
+            s += String.format("<small>, Host: </small><b>%s</b>", getHostIp() );
+            s += String.format("<small> Port: </small><b>%s</b>", connectedPort);
             //show server type and description if set
             String sServer;
             if (getServerDescription().contains(getServerType())) {
@@ -1015,12 +1020,12 @@ public class threaded_application extends Application {
                 sServer = getServerType() + " " + getServerDescription();
             }
             if (!sServer.isEmpty()) {
-                s += ", Server:" + sServer;
+                s += "<small>, Server: </small><b>" + sServer + "</b>";
             }
+        } else {
+            s += "<small><br/>Not Connected</small>";
         }
-        if (isDCCEX) {
-            s += ", DCC-EX protocol";
-        }
+        s += "</span>";
         return s;
     }
 
@@ -1081,7 +1086,7 @@ public class threaded_application extends Application {
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
             roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         } catch (Exception e) {
-            Log.d("Engine_Driver", "initShared object create exception");
+            Log.d("Engine_Driver", "t_a: initShared object create exception");
         }
         doFinish = false;
         turnouts_list_position = 0;
@@ -2010,11 +2015,11 @@ public class threaded_application extends Application {
                 break;
             default:
                 val = 0;
-                Log.d("debug", "TA.throttleCharToInt: no match for argument " + cWhichThrottle);
+                Log.d("debug", "t_a: throttleCharToInt: no match for argument " + cWhichThrottle);
                 break;
         }
         if (val > maxThrottlesCurrentScreen)
-            Log.d("debug", "TA.throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
+            Log.d("debug", "t_a: throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
         return val;
     }
 
@@ -2110,7 +2115,7 @@ public class threaded_application extends Application {
     }
 
     public static void safeToast(final String msg_txt, final int length) {
-        Log.d("Engine_Driver", "t_a.safeToast: " + msg_txt);
+        Log.d("Engine_Driver", "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
@@ -2299,7 +2304,7 @@ public class threaded_application extends Application {
 //    }
 //
 //    private void saveSharedPreferencesToFileImpl() {
-        Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: start");
+        Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileImpl: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -2315,7 +2320,7 @@ public class threaded_application extends Application {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                     importExportPreferences.saveSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
                 }
-                Log.d("Engine_Driver", "TA: saveSharedPreferencesToFileImpl: done");
+                Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileImpl: done");
             } else {
                 safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
             }
@@ -2382,7 +2387,7 @@ public class threaded_application extends Application {
                 importExportPreferences.recent_loco_source_list.remove(i);
                 keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
                 importExportPreferences.recent_loco_functions_list.remove(i);
-                Log.d("Engine_Driver", "ta: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
+                Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
                 break;
             }
         }
@@ -2398,7 +2403,7 @@ public class threaded_application extends Application {
         importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);  // restore from the previous value
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
-        Log.d("Engine_Driver", "Loco '" + loco_name + "' added to Recents");
+        Log.d("Engine_Driver", "t_a: Loco '" + loco_name + "' added to Recents");
 
     }
 
@@ -2412,7 +2417,7 @@ public class threaded_application extends Application {
                     && size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
                     && name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
                 position = i;
-                Log.d("Engine_Driver", "ta: findLocoInRecents: Loco '" + name + "' found in Recents");
+                Log.d("Engine_Driver", "t_a: findLocoInRecents: Loco '" + name + "' found in Recents");
                 break;
             }
         }
@@ -2450,7 +2455,7 @@ public class threaded_application extends Application {
                 Message msg = Message.obtain();
                 msg.what = message_type.RESTART_APP;
                 msg.arg1 = restart_reason_type.AUTO_IMPORT;
-                Log.d("Engine_Driver", "updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                Log.d("Engine_Driver", "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                 comm_msg_handler.sendMessage(msg);
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
@@ -2481,7 +2486,7 @@ public class threaded_application extends Application {
             if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
                     || ((xSpeed == 0) && (xLastSpeed != 0))
                     || ((xSpeed == 126) && (xLastSpeed != 126))) {
-//                    Log.d("Engine_Driver", "ta: haptic_test: " + "beep");
+//                    Log.d("Engine_Driver", "t_a: haptic_test: " + "beep");
                 vibrate(prefHapticFeedbackDuration);
             }
         }
@@ -2610,7 +2615,7 @@ public class threaded_application extends Application {
     }
 
     public void stopAllSounds() {
-        Log.d("Engine_Driver", "ta - stopAllSounds (locoSounds)");
+        Log.d("Engine_Driver", "t_a: stopAllSounds (locoSounds)");
         if (soundPool != null) {
             for (int soundType = 0; soundType < 3; soundType++) {
                 for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {

@@ -66,10 +66,14 @@
                         android:text="@string/set"
                         android:textAppearance="?android:attr/textAppearanceLarge" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/routes_location_label"
                     style="?android:attr/listSeparatorTextViewStyle"
-                    android:text="@string/routes_location_label" />
+                    android:text="@string/routes_location_label"
+                    android:paddingLeft="4dp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -88,7 +92,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="4dp" >
+                    android:paddingRight="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="0dp"
+                    tools:ignore="RtlHardcoded">
 
                     <TextView
                         android:id="@+id/routes_list_label"
@@ -98,6 +106,7 @@
                         android:layout_toLeftOf="@+id/routes_sort"
                         android:paddingLeft="4dp"
                         android:layout_marginRight="4dp"
+                        android:layout_marginLeft="0dp"
                         android:paddingTop="2dp"
                         android:text="@string/routes_list_label"
                         tools:ignore="RtlHardcoded,RtlSymmetry" />
