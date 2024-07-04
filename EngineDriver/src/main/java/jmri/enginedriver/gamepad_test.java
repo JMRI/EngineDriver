@@ -499,10 +499,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchKeyEvent(KeyEvent event) {
 
         boolean isExternal = false;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            InputDevice idev = getDevice(event.getDeviceId());
-            if( idev.toString().contains("Location: external")) isExternal = true;
-        }
+        InputDevice idev = getDevice(event.getDeviceId());
+        if( idev.toString().contains("Location: external")) isExternal = true;
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
@@ -818,11 +816,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
             setResult(result, resultIntent);
             return true;
-
-            //this.finish();  //end this activity
-            //connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            //return true;
-//            super.onBackPressed();
         }
         return (super.onKeyDown(key, event));
     }

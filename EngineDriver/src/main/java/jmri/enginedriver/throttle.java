@@ -152,10 +152,11 @@ import jmri.enginedriver.type.direction_button;
 import jmri.enginedriver.type.function_button;
 
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.tts_msg_type;
-import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
+import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -327,26 +328,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int FUNCTION_CONSIST_LATCHING_NO = 1;
     private static final int FUNCTION_CONSIST_LATCHING_YES = 2;
 
-    private static final int SOUNDS_TYPE_LOCO = 0;
-    private static final int SOUNDS_TYPE_BELL = 1;
-    private static final int SOUNDS_TYPE_HORN = 2;
-    private static final int SOUNDS_TYPE_HORN_SHORT = 3;
-
-    private static final int SOUNDS_BUTTON_BELL = 0;
-    private static final int SOUNDS_BUTTON_HORN = 1;
-    private static final int SOUNDS_BUTTON_HORN_SHORT = 2;
-
-    private static final int SOUNDS_BELL_HORN_START = 0;
-    private static final int SOUNDS_BELL_HORN_LOOP = 1;
-//    private static final int SOUNDS_BELL_HORN_END = 2;
-
-    private static final int SOUNDS_REPEAT_INFINITE = -1;
-    private static final int SOUNDS_REPEAT_NONE = 0;
-
-    private static final int SOUNDS_NOTHING_CURRENTLY_PLAYING = -1;
-    private static final int SOUNDS_STARTUP_INDEX = 20;
-//    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
-
     protected InPhoneLocoSoundsLoader iplsLoader;
 
     // function number-to-button maps
@@ -505,7 +486,36 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
     Tts tts;
-	
+    //    // For TTS
+////    private int MY_TTS_DATA_CHECK_CODE = 1234;
+//    private static final String PREF_TTS_THROTTLE_RESPONSE_NONE = "None";
+////    private static final String PREF_TTS_THROTTLE_RESPONSE_THROTTLE = "Throttle";
+//    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO = "Loco";
+//    private static final String PREF_TTS_THROTTLE_RESPONSE_SPEED = "Speed";
+//    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED = "LocoSpeed";
+//
+//    private Tts tts;
+//    private String lastTts = "none";
+//    private String prefTtsWhen = "None";
+//    private String prefTtsThrottleResponse = "Throttle";
+//    private String prefTtsThrottleSpeed = "Zero + Max";
+//    private boolean prefTtsGamepadTest = true;
+//    private boolean prefTtsGamepadTestComplete = true;
+//    private boolean prefTtsGamepadTestKeys = false;
+////    private Time lastTtsTime;
+//    private long lastTtsTime;
+//    private static final String PREF_TT_WHEN_NONE = "None";
+////    private static final String PREF_TT_WHEN_KEY = "Key";
+//    private static final int TTS_MSG_VOLUME_THROTTLE = 1;
+//    private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
+//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST = 3;
+//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
+//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
+//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET = 6;
+//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL = 7;
+//    private static final int TTS_MSG_GAMEPAD_THROTTLE_SPEED = 8;
+
+
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
     private boolean mGamepadAutoIncrement = false;
@@ -930,9 +940,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // Handle messages from the communication thread TO this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
-    private class throttle_handler extends Handler {
+    private class ThrottleMessageHandler extends Handler {
 
-        public throttle_handler(Looper looper) {
+        public ThrottleMessageHandler(Looper looper) {
             super(looper);
         }
 
@@ -1044,16 +1054,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                                     && (!mainapp.prefDeviceSounds[whichThrottle].equals("none"))
                                                     && (mainapp.prefDeviceSoundsF1F2ActivateBellHorn) ) {
                                                 if (function==1) {
-                                                    if ((action==0) && ((!bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].isSelected()))) {
+                                                    if ((action==0) && ((!bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()))) {
                                                     } else {
-                                                        handleDeviceButtonAction(whichThrottle, SOUNDS_BUTTON_BELL, SOUNDS_TYPE_BELL,
+                                                        handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_BELL, sounds_type.BELL,
                                                                 (action == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
                                                     }
                                                 } else {
-                                                    if ((action==0) && ((!bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].isSelected()))) {
+                                                    if ((action==0) && ((!bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()))) {
                                                     } else {
-                                                    handleDeviceButtonAction(whichThrottle, SOUNDS_BUTTON_HORN, SOUNDS_TYPE_HORN,
-                                                            (action==0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
+                                                        handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_HORN, sounds_type.HORN,
+                                                                (action==0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
                                                     }
                                                 }
                                             }
@@ -1097,7 +1107,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.REQUEST_REFRESH_THROTTLE:
 //                    refreshMenu();
                     set_labels();
-                    Log.d("Engine_Driver", "throttle.throttle_handler: REQUEST_REFRESH_THROTTLE");
+                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: REQUEST_REFRESH_THROTTLE");
                     break;
                 case message_type.REFRESH_FUNCTIONS:
                     setAllFunctionLabelsAndListeners();
@@ -1159,7 +1169,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimerActions(kids_timer_action_type.ENDED,0);
                     break;
                 case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-                    Log.d("Engine_Driver", "throttle handleMessage AUTO_IMPORT_URL_AVAILABLE " + response_str );
+                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: AUTO_IMPORT_URL_AVAILABLE " + response_str );
                     autoImportUrlAskToImport();
                     break;
                 case message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START:
@@ -1168,7 +1178,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     break;
                 case message_type.GAMEPAD_ACTION:
-                    Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_ACTION " + response_str );
+                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: GAMEPAD_ACTION " + response_str );
                     if (response_str.length()>0) {
                         String[] splitString = response_str.split(":");
                         externalGamepadAction = Integer.parseInt(splitString[0]);
@@ -1359,7 +1369,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
         }
-
     }
 
     // set or restore the screen brightness and lock or unlock the sceen when used for the Swipe Up or Shake
@@ -1379,7 +1388,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (!prefThrottleViewImmersiveMode)
                 setImmersiveModeOn(webView, true);
         }
-
     }
 
     private void setupSensor () {
@@ -1431,7 +1439,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } else {
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastAccelerometerNotFound), Toast.LENGTH_LONG).show();
             }
-
         }
     }
 
@@ -1859,7 +1866,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (speed > MAX_SPEED_VAL_WIT)
             speed = MAX_SPEED_VAL_WIT;
 
-
         if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle] && (speed > limitSpeedMax[whichThrottle] )) {
             speed = limitSpeedMax[whichThrottle];
         }
@@ -1985,7 +1991,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
                                 ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
                                 ,"");
-				
                 break;
         }
         doLocoSound(whichThrottle);
@@ -3031,7 +3036,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action==ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_TO_RETURN)
-                   || ( ( getSpeed(whichThrottle) == 0) && (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ) ) {
+                        || ( ( getSpeed(whichThrottle) == 0) && (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ) ) {
                     disablePauseSpeed(whichThrottle);
                 }
                 speedUpdateAndNotify(whichThrottle, 0);
@@ -3042,7 +3047,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         ,"");
 
                 if ((whichLastGamepadButtonPressed==buttonNo)
-                && (System.currentTimeMillis() <= (gamePadDoublePressStopTime+1000) ) ){  // double press - within 1 second
+                        && (System.currentTimeMillis() <= (gamePadDoublePressStopTime+1000) ) ){  // double press - within 1 second
                     if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.ALL_STOP)) {
                         speedUpdateAndNotify(0);         // update all throttles
                     } else if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {
@@ -3120,36 +3125,36 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_BELL)) {  // IPLS Sounds - Bell
             if (isActive && (action == ACTION_UP)) {
-                boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL - 1];
-                doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_BELL);
-                setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], rslt);
-                mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL -1] = rslt;
+                boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BELL - 1];
+                doDeviceButtonSound(whichThrottle, sounds_type.BELL);
+                setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle], rslt);
+                mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BELL -1] = rslt;
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_HORN)) {  // IPLS Sounds - Horn
             if (isActive) {
                 if (action == ACTION_UP) {
-                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], false);
-                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = false;
+                    doDeviceButtonSound(whichThrottle, sounds_type.HORN);
+                    setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = false;
                 } else {
-                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1]) {
-                        doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], true);
-                        mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = true;
+                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1]) {
+                        doDeviceButtonSound(whichThrottle, sounds_type.HORN);
+                        setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], true);
+                        mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = true;
                     }
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_HORN_SHORT)) {  // IPLS Sounds - Horn Short
             if (isActive) {
                 if (action == ACTION_UP) {
-                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], false);
-                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = false;
+                    doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
+                    setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = false;
                 } else {
-                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1]) {
-                        doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], true);
-                        mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = true;
+                    if (!mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1]) {
+                        doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
+                        setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], true);
+                        mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = true;
                     }
                 }
             }
@@ -3177,10 +3182,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SPEAK_CURRENT_SPEED)) {
             tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE,whichThrottle, true
-                            ,whichLastGamepad1
-                            ,getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
-                            ,0
-                            ,getConsistAddressString(whichThrottle));
+                    ,whichLastGamepad1
+                    ,getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
+                    ,0
+                    ,getConsistAddressString(whichThrottle));
         }
 
         whichLastGamepadButtonPressed = buttonNo;
@@ -3206,10 +3211,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 GamepadFeedbackSound(false);
                 speedUpdateAndNotify(whichThrottle, 0);
                 tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
-                            ,getMaxSpeed(whichThrottle)
-                            ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
-                            ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
-                            ,"");
+                        ,getMaxSpeed(whichThrottle)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                        ,"");
                 resetKeyboardString();
             }
         } else if (keyCode==KEYCODE_N) {  // Next Throttle
@@ -3291,25 +3296,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (keyCode==KEYCODE_B) {  // IPLS Sounds - Bell
             if (isActive && (action == ACTION_UP) && (repeatCnt == 0)) {
-                boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL - 1];
-                doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_BELL);
-                setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], rslt);
-                mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_BELL -1] = rslt;
+                boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BELL - 1];
+                doDeviceButtonSound(whichThrottle, sounds_type.BELL);
+                setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle], rslt);
+                mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BELL -1] = rslt;
                 resetKeyboardString();
             }
         } else if ( (keyCode==KEYCODE_H) && (!isShiftPressed) ) {  // IPLS Sounds - Horn
             if (isActive) {
                 if (action == ACTION_UP) {
-                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], false);
-                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = false;
+                    doDeviceButtonSound(whichThrottle, sounds_type.HORN);
+                    setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = false;
                     resetKeyboardString();
                 } else {
                     if (repeatCnt == 0) {
-                        if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1]) {
-                            doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN);
-                            setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], true);
-                            mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN - 1] = true;
+                        if (!mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1]) {
+                            doDeviceButtonSound(whichThrottle, sounds_type.HORN);
+                            setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], true);
+                            mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = true;
                         }
                     }
                 }
@@ -3317,16 +3322,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if ( (keyCode==KEYCODE_H) && (isShiftPressed) ) {  // IPLS Sounds - Horn Short
             if (isActive) {
                 if (action == ACTION_UP) {
-                    doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                    setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], false);
-                    mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = false;
+                    doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
+                    setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], false);
+                    mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = false;
                     resetKeyboardString();
                 } else {
                     if (repeatCnt == 0) {
-                        if (!mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1]) {
-                            doDeviceButtonSound(whichThrottle, SOUNDS_TYPE_HORN_SHORT);
-                            setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], true);
-                            mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_TYPE_HORN_SHORT - 1] = true;
+                        if (!mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1]) {
+                            doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
+                            setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], true);
+                            mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = true;
                         }
                     }
                 }
@@ -3366,24 +3371,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 keyboardThrottle = -1;  //reset it
             }
         } else if ( ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9))
-                    || ( (keyCode>=KEYCODE_F1) && (keyCode<=KEYCODE_F10)) )
+                || ( (keyCode>=KEYCODE_F1) && (keyCode<=KEYCODE_F10)) )
         {  // Start of a Function, Speed, or Throttle command
-           String num;
-           if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
-               num = Integer.toString(keyCode - KEYCODE_0);
-           } else {
-               if (keyCode!=KEYCODE_F10) {
-                   num = Integer.toString(keyCode - KEYCODE_F1 + 1);
-               } else {
+            String num;
+            if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
+                num = Integer.toString(keyCode - KEYCODE_0);
+            } else {
+                if (keyCode!=KEYCODE_F10) {
+                    num = Integer.toString(keyCode - KEYCODE_F1 + 1);
+                } else {
                     num = "0";
-               }
-           }
+                }
+            }
 
-           if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'F')) {  // Function
-               if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-//                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
-                   keyboardString = keyboardString + num;
-               }
+            if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'F')) {  // Function
+                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
+                    keyboardString = keyboardString + num;
+                }
                 if (keyboardString.length() == 3) {  // have a two digit function number now
                     int fKey = Integer.parseInt(keyboardString.substring(1, 3));
                     if (action == ACTION_DOWN) {
@@ -3393,61 +3397,55 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         resetKeyboardString();
                     }
                 }
-           } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'S')) {  // speed
-               if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-//                   keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
-                   keyboardString = keyboardString + num;
-//               }
-//               if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-                 if (keyboardString.length() == 4) {  // have a three digit speed amount now
-                    int newSpeed = Math.min(Integer.parseInt(keyboardString.substring(1, 4)), 100);
-                    float vSpeed = 126 * ((float) newSpeed) / 100;
-                    newSpeed = (int) vSpeed;
-                    speedUpdateAndNotify(whichThrottle, newSpeed);
-//                        resetKeyboardString();
-                  }
-               }
-               if (action == ACTION_UP) {
-                   if (keyboardString.length() == 4) {  // have a three digit speed amount now
-                       resetKeyboardString();
-                   }
-               }
+            } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'S')) {  // speed
+                if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
+                    keyboardString = keyboardString + num;
+                    if (keyboardString.length() == 4) {  // have a three digit speed amount now
+                        int newSpeed = Math.min(Integer.parseInt(keyboardString.substring(1, 4)), 100);
+                        float vSpeed = 126 * ((float) newSpeed) / 100;
+                        newSpeed = (int) vSpeed;
+                        speedUpdateAndNotify(whichThrottle, newSpeed);
+                    }
+                }
+                if (action == ACTION_UP) {
+                    if (keyboardString.length() == 4) {  // have a three digit speed amount now
+                        resetKeyboardString();
+                    }
+                }
             } else if ((keyboardString.length() > 0) && (keyboardString.charAt(0) == 'T')) {    // specify Throttle number
                 if ( (action == ACTION_DOWN) && (repeatCnt == 0) ) {
-//                    keyboardString = keyboardString + Integer.toString(keyCode - KEYCODE_0);
                     keyboardString = keyboardString + num;
                 }
-               if (action == ACTION_DOWN) {
-                   if (keyboardString.length() == 2) {  // have a complete Throttle number
-                       keyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
-                       if (keyboardThrottle > MAX_SCREEN_THROTTLES) {
-                           keyboardThrottle = -1;
-                       }
-                   }
-               } else {
-                   keyboardString = "";
-               }
-           } else if (keyboardString.length() == 0) {  // direct function 0-9
-//                int fKey = keyCode - KEYCODE_0;
-               int fKey;
-               if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
-                  fKey = keyCode - KEYCODE_0;
-               } else {
-                  if (keyCode!=KEYCODE_F10) {
-                      fKey = keyCode - KEYCODE_F1 + 1;
-                  } else {
-                      fKey = 0;
-                  }
-               }
-               if (fKey<10) { // special case for attached keyboards keys 0-9
-                   mainapp.numericKeyIsPressed[fKey] = action;
-                   if (action == ACTION_DOWN) {
-                       mainapp.numericKeyFunctionStateAtTimePressed[fKey] = ((mainapp.function_states[whichThrottle][fKey]) ? 1 : 0);
-                   }
-               }
-               doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-               resetKeyboardString();
-           }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 2) {  // have a complete Throttle number
+                        keyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
+                        if (keyboardThrottle > MAX_SCREEN_THROTTLES) {
+                            keyboardThrottle = -1;
+                        }
+                    }
+                } else {
+                    keyboardString = "";
+                }
+            } else if (keyboardString.length() == 0) {  // direct function 0-9
+                int fKey;
+                if ((keyCode>=KEYCODE_0) && (keyCode<=KEYCODE_9)) {
+                    fKey = keyCode - KEYCODE_0;
+                } else {
+                    if (keyCode!=KEYCODE_F10) {
+                        fKey = keyCode - KEYCODE_F1 + 1;
+                    } else {
+                        fKey = 0;
+                    }
+                }
+                if (fKey<10) { // special case for attached keyboards keys 0-9
+                    mainapp.numericKeyIsPressed[fKey] = action;
+                    if (action == ACTION_DOWN) {
+                        mainapp.numericKeyFunctionStateAtTimePressed[fKey] = ((mainapp.function_states[whichThrottle][fKey]) ? 1 : 0);
+                    }
+                }
+                doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
+                resetKeyboardString();
+            }
         }
     }
 
@@ -3893,10 +3891,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // For volume speed buttons.
-    private class volumeKeysRptUpdater implements Runnable {
+    private class VolumeKeysRptUpdater implements Runnable {
         int whichThrottle;
 
-        private volumeKeysRptUpdater(int WhichThrottle) {
+        private VolumeKeysRptUpdater(int WhichThrottle) {
             whichThrottle = WhichThrottle;
 
             try {
@@ -3910,10 +3908,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void run() {
             if (mVolumeKeysAutoIncrement) {
                 incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
-                volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
+                volumeKeysRepeatUpdateHandler.postDelayed(new VolumeKeysRptUpdater(whichThrottle), REP_DELAY);
             } else if (mVolumeKeysAutoDecrement) {
                 decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
-                volumeKeysRepeatUpdateHandler.postDelayed(new volumeKeysRptUpdater(whichThrottle), REP_DELAY);
+                volumeKeysRepeatUpdateHandler.postDelayed(new VolumeKeysRptUpdater(whichThrottle), REP_DELAY);
             }
         }
     }
@@ -4313,13 +4311,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
 // Listeners for the Select Loco buttons
-//    protected class select_function_button_touch_listener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
-    protected class select_function_button_touch_listener implements View.OnClickListener, View.OnLongClickListener {
+//    protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
+protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnLongClickListener {
     int whichThrottle;
 
-    protected select_function_button_touch_listener(int new_whichThrottle) {
-            whichThrottle = new_whichThrottle;
-        }
+    protected SelectFunctionButtonTouchListener(int new_whichThrottle) {
+        whichThrottle = new_whichThrottle;
+    }
 
         @Override
         public void onClick(View v) {
@@ -4348,10 +4346,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //listeners for the Limit Speed Button
-    protected class limit_speed_button_touch_listener implements View.OnTouchListener {
+    protected class LimitSpeedButtonTouchListener implements View.OnTouchListener {
         int whichThrottle;
 
-        protected limit_speed_button_touch_listener(int new_whichThrottle) {
+        protected LimitSpeedButtonTouchListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
 
@@ -4387,11 +4385,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //listeners for the increase/decrease speed buttons (not the slider)
-    protected class arrow_speed_button_touch_listener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
+    protected class ArrowSpeedButtonTouchListener implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener {
         int whichThrottle;
         String arrowDirection;
 
-        protected arrow_speed_button_touch_listener(int new_whichThrottle, String new_arrowDirection) {
+        protected ArrowSpeedButtonTouchListener(int new_whichThrottle, String new_arrowDirection) {
             whichThrottle = new_whichThrottle;
             arrowDirection = new_arrowDirection;
         }
@@ -4444,11 +4442,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // Listeners for the direction buttons
-    private class direction_button_touch_listener implements View.OnTouchListener {
+    private class DirectionButtonTouchListener implements View.OnTouchListener {
         int function;
         int whichThrottle;
 
-        private direction_button_touch_listener(int new_function, int new_whichThrottle) {
+        private DirectionButtonTouchListener(int new_function, int new_whichThrottle) {
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
         }
@@ -4683,19 +4681,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                         Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                         if ((mSound >= 0)) {
-                            if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == SOUNDS_NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
+                            if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == sounds_type.NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
 //                                Log.d("Engine_Driver", "doLocoSound 2              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                 //see if there is a startup sound for this profile
-                                if (mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX] > 0) {
+                                if (mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX] > 0) {
 //                                    Log.d("Engine_Driver", "doLocoSound 3              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(SOUNDS_TYPE_LOCO, whichThrottle, SOUNDS_STARTUP_INDEX, SOUNDS_REPEAT_NONE);
-                                    soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][SOUNDS_STARTUP_INDEX]);
+                                    soundStart(sounds_type.LOCO, whichThrottle, sounds_type.STARTUP_INDEX, sounds_type.REPEAT_NONE);
+                                    soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX]);
                                     soundQueueNextLocoSound(whichThrottle, mSound);
                                 } else {
 //                                    Log.d("Engine_Driver", "doLocoSound 4              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(SOUNDS_TYPE_LOCO, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
+                                    soundStart(sounds_type.LOCO, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
                                     mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
                                 }
+
                             } else {
                                 soundQueueNextLocoSound(whichThrottle, mSound);
                             }
@@ -4733,13 +4732,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (forcedExpectedEndTime>0) {
             expectedEndTime = forcedExpectedEndTime;
         } else { // != -1
-            expectedEndTime = soundStop(SOUNDS_TYPE_LOCO, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], false);
+            expectedEndTime = soundStop(sounds_type.LOCO, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], false);
         }
         int nextSound = mainapp.soundsLocoQueue[whichThrottle].frontOfQueue();
 
         if (nextSound >= 0) {
             mainapp.throttle_msg_handler.postDelayed(
-                    new SoundScheduleNextSoundToPlay(SOUNDS_TYPE_LOCO, whichThrottle, nextSound),
+                    new SoundScheduleNextSoundToPlay(sounds_type.LOCO, whichThrottle, nextSound),
                     expectedEndTime-100);
 //            Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
         }
@@ -4785,9 +4784,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             default:
                 isPlaying = -1;
                 break;
-            case SOUNDS_TYPE_BELL: // bell
-            case SOUNDS_TYPE_HORN: // horn
-            case SOUNDS_TYPE_HORN_SHORT: // horn short
+            case sounds_type.BELL: // bell
+            case sounds_type.HORN: // horn
+            case sounds_type.HORN_SHORT: // horn short
                 isPlaying = mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle];
                 break;
         }
@@ -4799,12 +4798,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int soundTypeArrayIndex = soundType - 1;
 
         if (soundIsPlaying(soundType,whichThrottle) < 0) { // check if the loop sound is not currently playing
-            if (soundType != SOUNDS_TYPE_HORN_SHORT) {
-                soundStart(soundType, whichThrottle, SOUNDS_BELL_HORN_START, 0);
+            if (soundType != sounds_type.HORN_SHORT) {
+                soundStart(soundType, whichThrottle, sounds_type.BELL_HORN_START, 0);
                 // queue up the loop sound to be played when the start sound is finished
                 mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, SOUNDS_BELL_HORN_START),
-                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][SOUNDS_BELL_HORN_START]);
+                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_START),
+                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START]);
             } else {
                 soundStart(soundType, whichThrottle, 0, 0);   // mSound always 0 for the short horn (not really used)
             }
@@ -4815,19 +4814,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d("Engine_Driver", "stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
         int soundTypeArrayIndex = soundType - 1;
 
-        if (soundType != SOUNDS_TYPE_HORN_SHORT) {
+        if (soundType != sounds_type.HORN_SHORT) {
             if (soundIsPlaying(soundType, whichThrottle) == 0) {
                 // if the start sound is currently playing need to do something special
                 // as the loop is probably scheduled to run but has not started yet
                 mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleSoundToStop(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP),
-                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][SOUNDS_BELL_HORN_START] + 100);
+                        new SoundScheduleSoundToStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
+                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START] + 100);
 
             } else if (soundIsPlaying(soundType, whichThrottle) == 1) { // check if the loop sound is currently playing
-                int expectedEndTime = soundStop(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP, false);
+                int expectedEndTime = soundStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP, false);
                 // queue up the end sound
                 mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, SOUNDS_BELL_HORN_LOOP),
+                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
                         expectedEndTime);
             }
         } else { // for the short horn, stop immediately
@@ -4841,23 +4840,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         switch (soundType) {
             default:
-            case SOUNDS_TYPE_LOCO: // loco
+            case sounds_type.LOCO: // loco
 //                Log.d("Engine_Driver", "soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
                 if (mSound>=0) {
                     if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] != mSound) {
-                        if (mSound < SOUNDS_STARTUP_INDEX) {
+                        if (mSound < sounds_type.STARTUP_INDEX) {
                             mainapp.soundsLocoStreamId[whichThrottle][mSound]
                                     = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                    soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle),
-                                    0, SOUNDS_REPEAT_INFINITE, 1);
-                        } else if (mSound == SOUNDS_STARTUP_INDEX) {
+                                    soundsVolume(sounds_type.LOCO, whichThrottle), soundsVolume(sounds_type.LOCO, whichThrottle),
+                                    0, sounds_type.REPEAT_INFINITE, 1);
+                        } else if (mSound == sounds_type.STARTUP_INDEX) {
                             mainapp.soundsLocoStreamId[whichThrottle][mSound]
-                            = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                            soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle), soundsVolume(SOUNDS_TYPE_LOCO,whichThrottle),
-                            0, SOUNDS_REPEAT_NONE, 1);
+                                    = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
+                                    soundsVolume(sounds_type.LOCO,whichThrottle), soundsVolume(sounds_type.LOCO,whichThrottle),
+                                    0, sounds_type.REPEAT_NONE, 1);
 //                            Log.d("Engine_Driver", "soundStart SU            : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 
-//                        } else if (mSound == SOUNDS_SHUTDOWN_INDEX) {
+//                        } else if (mSound == sounds_type.SHUTDOWN_INDEX) {
                         }
                         mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = mSound;
                         mainapp.soundsLocoStartTime[whichThrottle][mSound] = System.currentTimeMillis();
@@ -4865,9 +4864,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 break;
 
-            case SOUNDS_TYPE_BELL: // bell
-            case SOUNDS_TYPE_HORN: // horn
-            case SOUNDS_TYPE_HORN_SHORT: // horn short
+            case sounds_type.BELL: // bell
+            case sounds_type.HORN: // horn
+            case sounds_type.HORN_SHORT: // horn short
                 if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] != mSound) { // nothing playing
                     mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]
                             = mainapp.soundPool.play(mainapp.soundsExtras[soundTypeArrayIndex][whichThrottle][mSound],
@@ -4888,10 +4887,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         switch (soundType) {
             default:
-            case SOUNDS_TYPE_LOCO: // loco
+            case sounds_type.LOCO: // loco
 //                Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " mSound: " + snd + " forceStop:" + forceStop);
                 if (mSound>=0) {
-                    if (mSound < SOUNDS_STARTUP_INDEX) {
+                    if (mSound < sounds_type.STARTUP_INDEX) {
                         if (!forceStop) {
                             double duration = mainapp.soundsLocoDuration[whichThrottle][mSound];
 
@@ -4926,7 +4925,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 //                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
                         }
-                    } else if (mSound == SOUNDS_STARTUP_INDEX) {
+                    } else if (mSound == sounds_type.STARTUP_INDEX) {
                         // this will only ever play once
                         if (!forceStop) {
                             expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + mainapp.soundsLocoDuration[whichThrottle][mSound] - System.currentTimeMillis();
@@ -4940,12 +4939,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 break;
 
-            case SOUNDS_TYPE_BELL: // bell
-            case SOUNDS_TYPE_HORN: // horn
+            case sounds_type.BELL: // bell
+            case sounds_type.HORN: // horn
                 if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] >=0) {
-                    if (mSound == SOUNDS_BELL_HORN_LOOP) { // assume it is looping
+                    if (mSound == sounds_type.BELL_HORN_LOOP) { // assume it is looping
                         mainapp.soundPool.pause(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]);
-                        mainapp.soundPool.setLoop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound], SOUNDS_REPEAT_NONE);  // don't really stop it, just let it finish
+                        mainapp.soundPool.setLoop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound], sounds_type.REPEAT_NONE);  // don't really stop it, just let it finish
                         mainapp.soundPool.resume(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]);
                         timesPlayed = (int) ((System.currentTimeMillis() - mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound])
                                 / mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][mSound]);
@@ -4959,7 +4958,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 break;
 
-            case SOUNDS_TYPE_HORN_SHORT: // horn short
+            case sounds_type.HORN_SHORT: // horn short
                 if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] >=0) {
                     mainapp.soundPool.stop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][0]);
                     mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] = -1;
@@ -4988,22 +4987,22 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             switch (soundType) {
                 default:
                     break;
-                case SOUNDS_TYPE_LOCO: // loco
+                case sounds_type.LOCO: // loco
                     // pull the next sound off the queue
 //                    Log.d("Engine_Driver", "SoundScheduleNextSoundToPlay.run: (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                     soundStop(soundType, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], true);
-                    soundStart(soundType, whichThrottle, mSound, SOUNDS_REPEAT_INFINITE);
+                    soundStart(soundType, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
                     mainapp.soundsLocoQueue[whichThrottle].dequeue();
                     if (mainapp.soundsLocoQueue[whichThrottle].queueCount()>0) {  // if there are more on the queue, start the process to stop the one you just started
                         soundScheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue(), -1);
                     }
                     break;
-                case SOUNDS_TYPE_BELL: // bell
-                case SOUNDS_TYPE_HORN: // horn
-                    int loop = (mSound==SOUNDS_BELL_HORN_START) ? SOUNDS_REPEAT_INFINITE : SOUNDS_REPEAT_NONE; // of 0 now, then we will be playig the lop sound next.
+                case sounds_type.BELL: // bell
+                case sounds_type.HORN: // horn
+                    int loop = (mSound==sounds_type.BELL_HORN_START) ? sounds_type.REPEAT_INFINITE : sounds_type.REPEAT_NONE; // of 0 now, then we will be playig the lop sound next.
                     soundStart(soundType, whichThrottle, mSound+1, loop);
                     break;
-//                case SOUNDS_TYPE_HORN_SHORT:
+//                case sounds_type.HORN_SHORT:
 //                    break;
             }
         }
@@ -5026,17 +5025,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             switch (soundType) {
                 default:
                     break;
-                case SOUNDS_TYPE_HORN: // horn
-                case SOUNDS_TYPE_BELL: // bell
+                case sounds_type.HORN: // horn
+                case sounds_type.BELL: // bell
                     soundStop(soundType, whichThrottle, mSound, false);
                     break;
-//                case SOUNDS_TYPE_HORN_SHORT:
+//                case sounds_type.HORN_SHORT:
 //                    break;
             }
         }
     } // end class SoundScheduleSoundToStop
 
-    protected class function_button_touch_listener implements View.OnTouchListener {
+    protected class FunctionButtonTouchListener implements View.OnTouchListener {
     int function;
     int whichThrottle;
     boolean leadOnly;       // function only applies to the lead loco
@@ -5045,11 +5044,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     String lab;
     Integer functionNumber = -1;
 
-        protected function_button_touch_listener(int new_function, int new_whichThrottle) {
+        protected FunctionButtonTouchListener(int new_function, int new_whichThrottle) {
             this(new_function, new_whichThrottle, "");
         }
 
-        protected function_button_touch_listener(int new_function, int new_whichThrottle, String funcLabel) {
+        protected FunctionButtonTouchListener(int new_function, int new_whichThrottle, String funcLabel) {
             mainapp.exitDoubleBackButtonInitiated = 0;
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
@@ -5152,12 +5151,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //Listeners for the throttle slider
-    protected class throttle_listener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
+    protected class ThrottleSeekBarListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
         int lastSpeed;
         int jumpSpeed;
 
-        protected throttle_listener(int new_whichThrottle) {
+        protected ThrottleSeekBarListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
             lastSpeed = 0;
             limitedJump[whichThrottle] = false;
@@ -5167,7 +5166,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-//             Log.d("Engine_Driver", "throttle_listener: onTouch: Throttle action " + event.getAction());
+//             Log.d("Engine_Driver", "throttle: ThrottleSeekBarListener: onTouch: Throttle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
@@ -5411,10 +5410,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         ov.addOnGestureListener(this);
         ov.setGestureVisible(false);
 
-        direction_button_touch_listener dbtl;
-        function_button_touch_listener fbtl;
-        select_function_button_touch_listener sfbt;
-        arrow_speed_button_touch_listener asbl;
+        DirectionButtonTouchListener directionButtonTouchListener;
+        FunctionButtonTouchListener functionButtonTouchListener;
+        SelectFunctionButtonTouchListener selectFunctionButtonTouchListener;
+        ArrowSpeedButtonTouchListener arrowSpeedButtonTouchListener;
 
         initialiseArrays();
 
@@ -5463,10 +5462,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             bSels[i] = bSel;
             tvbSelsLabels[i] = tvbSelsLabel;
             bSels[i].setClickable(true);
-            sfbt = new select_function_button_touch_listener(i);
-            bSels[i].setOnClickListener(sfbt);
+            selectFunctionButtonTouchListener = new SelectFunctionButtonTouchListener(i);
+            bSels[i].setOnClickListener(selectFunctionButtonTouchListener);
 //            bSels[i].setOnTouchListener(sfbt);
-            bSels[i].setOnLongClickListener(sfbt);  // Consist Light Edit
+            bSels[i].setOnLongClickListener(selectFunctionButtonTouchListener);  // Consist Light Edit
             tvLeftDirInds[i] = tvLeft;
             tvRightDirInds[i] = tvRight;
 
@@ -5499,17 +5498,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 bRSpds[i] = bRight;
                 bRSpds[i].setClickable(true);
-                asbl = new arrow_speed_button_touch_listener(i, "right");
-                bRSpds[i].setOnLongClickListener(asbl);
-                bRSpds[i].setOnTouchListener(asbl);
-                bRSpds[i].setOnClickListener(asbl);
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, "right");
+                bRSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
+                bRSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
+                bRSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
 
                 bLSpds[i] = bLeft;
                 bLSpds[i].setClickable(true);
-                asbl = new arrow_speed_button_touch_listener(i, "left");
-                bLSpds[i].setOnLongClickListener(asbl);
-                bLSpds[i].setOnTouchListener(asbl);
-                bLSpds[i].setOnClickListener(asbl);
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, "left");
+                bLSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
+                bLSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
+                bLSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
 
             } catch (Exception ex) {
                 Log.d("debug", "onCreate: " + ex.getMessage());
@@ -5556,19 +5555,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
 
             bFwds[i] = bFwd;
-            dbtl = new direction_button_touch_listener(direction_button.LEFT, i);
-            bFwds[i].setOnTouchListener(dbtl);
+            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.LEFT, i);
+            bFwds[i].setOnTouchListener(directionButtonTouchListener);
 
             bStops[i] = bStop;
-            fbtl = new function_button_touch_listener(function_button.STOP, i);
-            bStops[i].setOnTouchListener(fbtl);
+            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.STOP, i);
+            bStops[i].setOnTouchListener(functionButtonTouchListener);
 
             bRevs[i] = bRev;
-            dbtl = new direction_button_touch_listener(direction_button.RIGHT, i);
-            bRevs[i].setOnTouchListener(dbtl);
+            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.RIGHT, i);
+            bRevs[i].setOnTouchListener(directionButtonTouchListener);
 
-            fbtl = new function_button_touch_listener(function_button.SPEED_LABEL, i);
-            v.setOnTouchListener(fbtl);
+            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.SPEED_LABEL, i);
+            v.setOnTouchListener(functionButtonTouchListener);
 
             // set up listeners for all throttles
             SeekBar s = findViewById(R.id.speed_0);
@@ -5589,9 +5588,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     s = findViewById(R.id.speed_5);
                     break;
             }
-            throttle_listener thl;
+            ThrottleSeekBarListener thl;
             sbs[i] = s;
-            thl = new throttle_listener(i);
+            thl = new ThrottleSeekBarListener(i);
             sbs[i].setOnSeekBarChangeListener(thl);
             sbs[i].setOnTouchListener(thl);
 
@@ -5675,7 +5674,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         if ( (!prefThrottleScreenType.contains("Switch")) || (prefThrottleScreenType.equals("Switching Horizontal")) ) {
             // set listeners for the limit speed buttons for each throttle
-            limit_speed_button_touch_listener lstl;
+            LimitSpeedButtonTouchListener limitSpeedButtonTouchListener;
             Button bLimitSpeed = findViewById(R.id.limit_speed_0);
 
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -5701,8 +5700,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 bLimitSpeeds[throttleIndex] = bLimitSpeed;
                 limitSpeedSliderScalingFactors[throttleIndex] = 1;
-                lstl = new limit_speed_button_touch_listener(throttleIndex);
-                bLimitSpeeds[throttleIndex].setOnTouchListener(lstl);
+                limitSpeedButtonTouchListener = new LimitSpeedButtonTouchListener(throttleIndex);
+                bLimitSpeeds[throttleIndex].setOnTouchListener(limitSpeedButtonTouchListener);
                 isLimitSpeeds[throttleIndex] = false;
                 if (!prefLimitSpeedButton) {
                     bLimitSpeed.setVisibility(View.GONE);
@@ -5711,7 +5710,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         // set listeners for the pause buttons for each throttle
-        pause_speed_button_touch_listener psvtl;
+        PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener;
         Button bPauseSpeed = findViewById(R.id.pause_speed_0);
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -5736,8 +5735,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
             }
             bPauseSpeeds[throttleIndex] = bPauseSpeed;
-            psvtl = new pause_speed_button_touch_listener(throttleIndex);
-            bPauseSpeeds[throttleIndex].setOnTouchListener(psvtl);
+            pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
+            bPauseSpeeds[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
             isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
             if (!prefPauseSpeedButton) {
                 bPauseSpeed.setVisibility(View.GONE);
@@ -5745,7 +5744,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         //device sounds buttons
-        sound_device_mute_button_touch_listener muteTl;
+        SoundDeviceMuteButtonTouchListener muteTl;
         Button bMute = findViewById(R.id.device_sounds_mute_0);
         SoundDeviceExtrasButtonTouchListener soundsExtrasTl;
         Button bBell = findViewById(R.id.device_sounds_bell_0);
@@ -5769,20 +5768,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             if (bMute != null) { // some layouts only have one throttle or no mute buttons so this may be null
                 bMutes[throttleIndex] = bMute;
-                muteTl = new sound_device_mute_button_touch_listener(throttleIndex);
+                muteTl = new SoundDeviceMuteButtonTouchListener(throttleIndex);
                 bMutes[throttleIndex].setOnTouchListener(muteTl);
 
-                bSoundsExtras[SOUNDS_BUTTON_BELL][throttleIndex] = bBell;
-                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, SOUNDS_BUTTON_BELL, SOUNDS_TYPE_BELL);
-                bSoundsExtras[SOUNDS_BUTTON_BELL][throttleIndex].setOnTouchListener(soundsExtrasTl);
+                bSoundsExtras[sounds_type.BUTTON_BELL][throttleIndex] = bBell;
+                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, sounds_type.BUTTON_BELL, sounds_type.BELL);
+                bSoundsExtras[sounds_type.BUTTON_BELL][throttleIndex].setOnTouchListener(soundsExtrasTl);
 
-                bSoundsExtras[SOUNDS_BUTTON_HORN][throttleIndex] = bHorn;
-                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, SOUNDS_BUTTON_HORN, SOUNDS_TYPE_HORN);
-                bSoundsExtras[SOUNDS_BUTTON_HORN][throttleIndex].setOnTouchListener(soundsExtrasTl);
+                bSoundsExtras[sounds_type.BUTTON_HORN][throttleIndex] = bHorn;
+                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, sounds_type.BUTTON_HORN, sounds_type.HORN);
+                bSoundsExtras[sounds_type.BUTTON_HORN][throttleIndex].setOnTouchListener(soundsExtrasTl);
 
-                bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][throttleIndex] = bHornShort;
-                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, SOUNDS_BUTTON_HORN_SHORT, SOUNDS_TYPE_HORN_SHORT);
-                bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][throttleIndex].setOnTouchListener(soundsExtrasTl);
+                bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][throttleIndex] = bHornShort;
+                soundsExtrasTl = new SoundDeviceExtrasButtonTouchListener(throttleIndex, sounds_type.BUTTON_HORN_SHORT, sounds_type.HORN_SHORT);
+                bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][throttleIndex].setOnTouchListener(soundsExtrasTl);
 
                 soundsShowHideDeviceSoundsButton(throttleIndex);
             }
@@ -5934,7 +5933,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         setupSensor(); // setup the support for shake actions.
 
         tts = new Tts(prefs, mainapp);
-		
+
         if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
             autoImportFromURL();
         }
@@ -6000,6 +5999,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         applySpeedRelatedOptions();  // update all throttles
 
+        if (mainapp.soundsReloadSounds) loadSounds();
+
         set_labels(); // handle labels and update view
         pauseResumeWebView();
 
@@ -6049,7 +6050,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        tts.loadPrefs(); // recheck the tts prefs in case they have been changed
+        tts.loadPrefs();
 
         setActivityTitle();
 
@@ -6228,7 +6229,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d("Engine_Driver", "throttle.onStart() called");
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.throttle_msg_handler == null)
-            mainapp.throttle_msg_handler = new throttle_handler(Looper.getMainLooper());
+            mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
     }
 
     @Override
@@ -6360,7 +6361,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (fbs[0] != null) {
                 ViewGroup tv; // group
                 ViewGroup r; // row
-                function_button_touch_listener fbtl;
+                FunctionButtonTouchListener functionButtonTouchListener;
                 Button b; // button
                 int k = 0; // button count
                 LinkedHashMap<Integer, String> function_labels_temp;
@@ -6408,8 +6409,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 functionButtonMap.put(func, b); // save function to button
                                 // mapping
                                 String bt = function_labels_temp.get(func);
-                                fbtl = new function_button_touch_listener(func, whichThrottle, bt);
-                                b.setOnTouchListener(fbtl);
+                                functionButtonTouchListener = new FunctionButtonTouchListener(func, whichThrottle, bt);
+                                b.setOnTouchListener(functionButtonTouchListener);
                                 bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
                                 b.setText(bt.trim());
                                 b.setVisibility(View.VISIBLE);
@@ -6567,12 +6568,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                        if (key == KEYCODE_VOLUME_UP) {
 //                            if (repeatCnt == 0) {
 //                                mVolumeKeysAutoIncrement = true;
-//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
 //                            }
 //                        } else {
 //                            if (repeatCnt == 0) {
 //                                mVolumeKeysAutoDecrement = true;
-//                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+//                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
 //                            }
 //                        }
 //                    }
@@ -6619,12 +6620,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (key == KEYCODE_VOLUME_UP) {
                             if (repeatCnt == 0) {
                                 mVolumeKeysAutoIncrement = true;
-                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
                             }
                         } else {
                             if (repeatCnt == 0) {
                                 mVolumeKeysAutoDecrement = true;
-                                volumeKeysRepeatUpdateHandler.post(new volumeKeysRptUpdater(throttleIndex));
+                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
                             }
                         }
                     }
@@ -6881,7 +6882,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         switch (requestCode) {
             case ACTIVITY_SELECT_LOCO:
                 if (resultCode == select_loco.RESULT_LOCO_EDIT) {
-                    ActivityConsistUpdate(resultCode, data.getExtras());
+                    activityConsistUpdate(resultCode, data.getExtras());
                 }
                 try {
                     overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle",' '))] = data.getStringExtra("overrideThrottleName");
@@ -6906,7 +6907,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case ACTIVITY_CONSIST:         // edit loco or edit consist
                 if (resultCode == ConsistEdit.RESULT_CON_EDIT)
-                    ActivityConsistUpdate(resultCode, data.getExtras());
+                    activityConsistUpdate(resultCode, data.getExtras());
                 break;
             case ACTIVITY_CONSIST_LIGHTS:         // edit consist lights
                 break;   // nothing to do
@@ -6995,7 +6996,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         soundsShowHideAllMuteButtons();
     }
 
-    private void ActivityConsistUpdate(int resultCode, Bundle extras) {
+    private void activityConsistUpdate(int resultCode, Bundle extras) {
         if (extras != null) {
             int whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
             int dir;
@@ -7383,15 +7384,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void autoImportFromURL() {
-//        navigateToHandler(PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES);
-//        autoImportFromURLImpl();
-//    }
-//
-//    public void autoImportFromURLImpl() {
-        new autoImportFromURL().execute();
+        new AutoImportFromURL().execute();
     }
 
-    public class autoImportFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
+    public class AutoImportFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
 
         // Importing file in background thread
         @SuppressLint("ApplySharedPref")
@@ -7581,10 +7577,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //listeners for the Pause Speed Button
-    protected class pause_speed_button_touch_listener implements View.OnTouchListener {
+    protected class PauseSpeedButtonTouchListener implements View.OnTouchListener {
         int whichThrottle;
 
-        protected pause_speed_button_touch_listener(int new_whichThrottle) {
+        protected PauseSpeedButtonTouchListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
 
@@ -7711,10 +7707,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //listeners for the Mute Button
-    protected class sound_device_mute_button_touch_listener implements View.OnTouchListener {
+    protected class SoundDeviceMuteButtonTouchListener implements View.OnTouchListener {
         int whichThrottle;
 
-        protected sound_device_mute_button_touch_listener(int new_whichThrottle) {
+        protected SoundDeviceMuteButtonTouchListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle;
         }
 
@@ -7759,9 +7755,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 return (true);
             }
 
-            if ( ((buttonType==SOUNDS_BUTTON_BELL) && (mainapp.prefDeviceSoundsBellIsMomentary))
-            || (buttonType==SOUNDS_BUTTON_HORN)
-            || (buttonType==SOUNDS_BUTTON_HORN_SHORT)
+            if ( ((buttonType==sounds_type.BUTTON_BELL) && (mainapp.prefDeviceSoundsBellIsMomentary))
+                    || (buttonType==sounds_type.BUTTON_HORN)
+                    || (buttonType==sounds_type.BUTTON_HORN_SHORT)
             ) {
                 // if gesture just failed, insert one DOWN event on this control
                 if (gestureFailed) {
@@ -7781,7 +7777,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void handleDeviceButtonAction(int whichThrottle, int buttonType, int soundType, int action) {
         Log.d("Engine_Driver", "handleDeviceButtonAction: handleAction - action: " + action);
 
-        if ( (buttonType==SOUNDS_BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary) ) {
+        if ( (buttonType==sounds_type.BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary) ) {
             boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][buttonType];
             doDeviceButtonSound(whichThrottle, soundType);
             setSoundButtonState(bSoundsExtras[buttonType][whichThrottle], rslt);
@@ -7822,14 +7818,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         rslt = View.GONE;
                     }
                     bMutes[whichThrottle].setVisibility( (mainapp.prefDeviceSoundsHideMuteButton) ? View.GONE : rslt);
-                    bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setVisibility(rslt);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setVisibility(rslt);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setVisibility(rslt);
+                    bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].setVisibility(rslt);
+                    bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].setVisibility(rslt);
+                    bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle].setVisibility(rslt);
                     if (rslt == View.VISIBLE) {
                         setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
-                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_BELL]);
-                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_HORN]);
-                        setSoundButtonState(bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][SOUNDS_BUTTON_HORN_SHORT]);
+                        setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BUTTON_BELL]);
+                        setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BUTTON_HORN]);
+                        setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BUTTON_HORN_SHORT]);
                     }
                 }
             }
@@ -7840,12 +7836,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ( (whichThrottle<mainapp.maxThrottlesCurrentScreen) && (whichThrottle<threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) ) {
             if (bMutes!=null) {
                 if (bMutes[whichThrottle]!=null) {
-                    bMutes[whichThrottle].setEnabled(newEnabledState);
-                    bSoundsExtras[SOUNDS_BUTTON_BELL][whichThrottle].setEnabled(newEnabledState);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN][whichThrottle].setEnabled(newEnabledState);
-                    bSoundsExtras[SOUNDS_BUTTON_HORN_SHORT][whichThrottle].setEnabled(newEnabledState);
-                    if (newEnabledState) {
-                        setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
+                    if (bMutes[whichThrottle]!=null) {
+                        bMutes[whichThrottle].setEnabled(newEnabledState);
+                        bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].setEnabled(newEnabledState);
+                        bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].setEnabled(newEnabledState);
+                        bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle].setEnabled(newEnabledState);
+                        if (newEnabledState) {
+                            setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
+                        }
                     }
                 }
             }
@@ -7858,14 +7856,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (!soundsIsMuted[whichThrottle]) {
                 switch (soundType) {
                     default:
-                    case SOUNDS_TYPE_LOCO: // loco
+                    case sounds_type.LOCO: // loco
                         volume = mainapp.prefDeviceSoundsLocoVolume;
                         break;
-                    case SOUNDS_TYPE_BELL: // bell
+                    case sounds_type.BELL: // bell
                         volume = mainapp.prefDeviceSoundsBellVolume;
                         break;
-                    case SOUNDS_TYPE_HORN: // horn
-                    case SOUNDS_TYPE_HORN_SHORT: // horn
+                    case sounds_type.HORN: // horn
+                    case sounds_type.HORN_SHORT: // horn
                         volume = mainapp.prefDeviceSoundsHornVolume;
                         break;
                 }
@@ -7880,12 +7878,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 int mSound = mainapp.soundsLocoCurrentlyPlaying[whichThrottle];
                 if (mSound >= 0) {
                     mainapp.soundPool.setVolume(mainapp.soundsLocoStreamId[whichThrottle][mSound],
-                            soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle),
-                            soundsVolume(SOUNDS_TYPE_LOCO, whichThrottle));
+                            soundsVolume(sounds_type.LOCO, whichThrottle),
+                            soundsVolume(sounds_type.LOCO, whichThrottle));
                 }
                 for (int soundType = 0; soundType < 2; soundType++ ) {  // don't worry about the short horn
-                    if (mainapp.soundsExtrasCurrentlyPlaying[soundType][whichThrottle] == SOUNDS_BELL_HORN_LOOP) {
-                        mainapp.soundPool.setVolume(mainapp.soundsExtrasStreamId[soundType][whichThrottle][SOUNDS_BELL_HORN_LOOP],
+                    if (mainapp.soundsExtrasCurrentlyPlaying[soundType][whichThrottle] == sounds_type.BELL_HORN_LOOP) {
+                        mainapp.soundPool.setVolume(mainapp.soundsExtrasStreamId[soundType][whichThrottle][sounds_type.BELL_HORN_LOOP],
                                 soundsVolume(soundType+1, whichThrottle),
                                 soundsVolume(soundType+1, whichThrottle));
                     }

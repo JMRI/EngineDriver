@@ -130,7 +130,7 @@ public class throttle_simple extends throttle {
                     break;
             }
 
-            pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(throttleIndex);
+            PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(psvtl);
         }
 

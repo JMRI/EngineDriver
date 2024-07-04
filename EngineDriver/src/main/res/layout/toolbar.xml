@@ -31,19 +31,6 @@
             android:orientation="horizontal"
             tools:ignore="RtlHardcoded">
 
-<!--            <TextView-->
-<!--                android:id="@+id/toolbar_icon_title"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="left"-->
-<!--                android:layout_marginStart="4dp"-->
-<!--                android:layout_marginLeft="4dp"-->
-<!--                android:text="Engine Driver"-->
-<!--                android:textColor="#fff"-->
-<!--                android:textSize="8sp"-->
-<!--                android:textStyle="italic"-->
-<!--                tools:ignore="HardcodedText,RtlHardcoded" />-->
-
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"

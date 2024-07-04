@@ -18,24 +18,20 @@ import android.widget.ListView;
 public class TransparentListView extends ListView {
 
     private void makeTransparent() {
-        if (Build.VERSION.SDK_INT >= 9) {
+        try {
+            Method overscrollFooterMethod =
+                    TransparentListView.class.getMethod("setOverscrollFooter", Drawable.class);
+            Method overscrollHeaderMethod =
+                    TransparentListView.class.getMethod("setOverscrollHeader", Drawable.class);
+
             try {
-
-                Method overscrollFooterMethod =
-                        TransparentListView.class.getMethod("setOverscrollFooter", Drawable.class);
-                Method overscrollHeaderMethod =
-                        TransparentListView.class.getMethod("setOverscrollHeader", Drawable.class);
-
-
-                try {
-                    overscrollFooterMethod.invoke(this, new Object[]{null});
-                    overscrollHeaderMethod.invoke(this, new Object[]{null});
-                } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            } catch (SecurityException | NoSuchMethodException e) {
+                overscrollFooterMethod.invoke(this, new Object[]{null});
+                overscrollHeaderMethod.invoke(this, new Object[]{null});
+            } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
+        } catch (SecurityException | NoSuchMethodException e) {
+            e.printStackTrace();
         }
     }
 

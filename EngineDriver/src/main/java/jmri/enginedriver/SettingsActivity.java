@@ -1252,7 +1252,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDeviceSounds1":
                         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                         mainapp.soundsReloadSounds = true;
-                        iplsLoader.loadSounds();
+                        // the sounds will actually be relaoded in the throttle.onResume()
+//                        iplsLoader.loadSounds();
                         break;
                     case "maximum_throttle_preference":
                     case "prefDeviceSoundsLocoVolume":
