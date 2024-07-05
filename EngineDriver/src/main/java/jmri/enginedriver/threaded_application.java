@@ -992,6 +992,9 @@ public class threaded_application extends Application {
         String s = "<span>";
         // device info
         s += "About: " + String.format("<small>OS: </small><b>%s</b> <small>SDK: </small><b>%s</b>", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+
+        s += String.format("<small>, DeviceID: </small><b>%s</b>", getDeviceId());
+
         if (client_address_inet4 != null) {
             s += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
             s += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", client_ssid, client_type);
@@ -2945,11 +2948,15 @@ public class threaded_application extends Application {
         }
     }
 
-    @SuppressLint("ApplySharedPref")
     public String getDeviceId() {
+        return getDeviceId(false);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public String getDeviceId(boolean forceNewId) {
 //        return Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);  // no longer permitted
         mainapp.deviceId = prefs.getString("prefAndroidId", "");
-        if (mainapp.deviceId.equals("")) {
+        if ( (mainapp.deviceId.equals("")) || (forceNewId) ) {
             Random rand = new Random();
             mainapp.deviceId = String.valueOf(rand.nextInt(9999)); //use random string
             prefs.edit().putString("prefAndroidId", deviceId).commit();

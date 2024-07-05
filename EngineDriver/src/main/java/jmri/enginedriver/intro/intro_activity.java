@@ -62,6 +62,8 @@ public class intro_activity extends AppIntro2 {
         originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
         originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
+        mainapp.getDeviceId(true); // force getting a new ID
+
         // Note here that we DO NOT use setContentView();
 
         SliderPage sliderPage0 = new SliderPage();
