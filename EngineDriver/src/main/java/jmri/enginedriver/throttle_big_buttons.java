@@ -95,7 +95,7 @@ public class throttle_big_buttons extends throttle {
         svFnBtns[0] = findViewById(R.id.function_buttons_scroller_0);
         bPauses[0] = findViewById(R.id.button_pause_0);
 
-        pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(0);
+        PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(0);
         bPauses[0].setOnTouchListener(psvtl);
 
         setAllFunctionLabelsAndListeners();

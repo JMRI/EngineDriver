@@ -398,7 +398,7 @@
         <item name="android:itemBackground">@color/transparent</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton_colorful</item>
-        <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>
+<!--        <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>-->
         <item name="android:itemTextAppearance">@style/ItemTextAppearance_colorful</item>
 
         <!--        <item name="android:textColor">@color/solidBlack</item> -->

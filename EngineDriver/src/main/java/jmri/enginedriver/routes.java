@@ -69,6 +69,7 @@ import java.util.HashMap;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
@@ -511,7 +512,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -641,6 +642,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
+        mainapp.displayDccExButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
@@ -687,7 +689,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
-        } else if (item.getItemId() == R.id.dcc_ex_mnu) {
+        } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
             in = new Intent().setClass(this, dcc_ex.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

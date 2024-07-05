@@ -84,6 +84,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
@@ -642,7 +643,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     "");
         }
 
-        mainapp. gamepadFullReset();
+        mainapp.gamepadFullReset();
 
     } //end onCreate
 

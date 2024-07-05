@@ -96,19 +96,19 @@ public class ImportExportConnectionList {
                         if (!(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove))) {
                             if (port > 0) {  //skip if port not converted to integer
 
-                                if (!prefHideDemoServer || !(host_name.equals(demo_host) && port.toString().equals(demo_port))) {
-                                    HashMap<String, String> hm = new HashMap<>();
-                                    hm.put("ip_address", ip_address);
-                                    hm.put("host_name", host_name);
-                                    hm.put("port", port.toString());
-                                    hm.put("ssid", ssid_str);
-                                    hm.put("service_type", service_type);
-                                    if (!connections_list.contains(hm)) {    // suppress dups
-                                        connections_list.add(hm);
-                                    }
-                                }
                                 if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
                                     foundDemoHost = true;
+                                    if (!prefHideDemoServer) {
+                                        HashMap<String, String> hm = new HashMap<>();
+                                        hm.put("ip_address", ip_address);
+                                        hm.put("host_name", host_name);
+                                        hm.put("port", port.toString());
+                                        hm.put("ssid", ssid_str);
+                                        hm.put("service_type", service_type);
+                                        if (!connections_list.contains(hm)) {    // suppress dups
+                                            connections_list.add(hm);
+                                        }
+                                    }
                                 }
                             }
                         }

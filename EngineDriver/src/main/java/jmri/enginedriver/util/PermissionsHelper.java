@@ -1,6 +1,7 @@
 package jmri.enginedriver.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -252,7 +253,7 @@ public class PermissionsHelper {
                     break;
                 case WRITE_SETTINGS:
                     Log.d("Engine_Driver", "Requesting WRITE_SETTINGS permissions");
-                    if (android.os.Build.VERSION.SDK_INT < 23) {
+                    if (Build.VERSION.SDK_INT < 23) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.WRITE_SETTINGS},
                                 requestCode);
@@ -272,9 +273,11 @@ public class PermissionsHelper {
 //<!-- needed for API 33 -->
                 case READ_MEDIA_IMAGES:
                     Log.d("Engine_Driver", "Requesting READ_MEDIA_IMAGES permissions");
-                    activity.requestPermissions(new String[]{
-                                    Manifest.permission.READ_MEDIA_IMAGES},
-                            requestCode);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        activity.requestPermissions(new String[]{
+                                        Manifest.permission.READ_MEDIA_IMAGES},
+                                requestCode);
+                    }
                     break;
 //                case NEARBY_WIFI_DEVICES:
 //                    activity.requestPermissions(new String[]{
@@ -283,9 +286,11 @@ public class PermissionsHelper {
 //                    Log.d("Engine_Driver", "Requesting NEARBY_WIFI_DEVICES permissions");
 //                    break;
                 case POST_NOTIFICATIONS:
-                    activity.requestPermissions(new String[]{
-                                    Manifest.permission.POST_NOTIFICATIONS},
-                            requestCode);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        activity.requestPermissions(new String[]{
+                                        Manifest.permission.POST_NOTIFICATIONS},
+                                requestCode);
+                    }
                     Log.d("Engine_Driver", "Requesting POST_NOTIFICATIONS permissions");
                     break;
 //<!-- needed for API 33 -->
@@ -320,7 +325,9 @@ public class PermissionsHelper {
                         if (requestCode != WRITE_SETTINGS) {
                             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         } else {
-                            intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                            }
                         }
                         Uri uri = Uri.fromParts("package", context.getApplicationContext().getPackageName(), null);
                         intent.setData(uri);
@@ -381,9 +388,10 @@ public class PermissionsHelper {
      * @return true if permissions granted; false if not
      */
 //    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @SuppressLint("ObsoleteSdkInt")
     public boolean isPermissionGranted(final Context context, @RequestCodes final int requestCode) {
         //sdk 15 doesn't support some of the codes below, always return success
-        if (android.os.Build.VERSION.SDK_INT < 16) {
+        if (Build.VERSION.SDK_INT < 16) {
             return true;
         }
         // Determine which permissions to check based on request code
@@ -411,7 +419,7 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
             case WRITE_SETTINGS:
                 boolean result;
-                if (android.os.Build.VERSION.SDK_INT < 23) {
+                if (Build.VERSION.SDK_INT < 23) {
                     result = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
                 } else {
                     result = Settings.System.canWrite(context);
@@ -422,11 +430,15 @@ public class PermissionsHelper {
 
 //<!-- needed for API 33 -->
             case READ_MEDIA_IMAGES:
-                return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+                }
 //            case NEARBY_WIFI_DEVICES :
 //                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
-                return ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS ) == PackageManager.PERMISSION_GRANTED;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS ) == PackageManager.PERMISSION_GRANTED;
+                }
 //<!-- needed for API 33 -->
 
             default:
@@ -470,11 +482,15 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
 
             case READ_MEDIA_IMAGES:
-                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
+                }
 //            case NEARBY_WIFI_DEVICES:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
-                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS);
+                }
 
             default:
                 return false;

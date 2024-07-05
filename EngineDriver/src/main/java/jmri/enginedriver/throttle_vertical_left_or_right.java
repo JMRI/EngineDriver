@@ -178,8 +178,8 @@ public class throttle_vertical_left_or_right extends throttle {
                     break;
             }
 
-            pause_speed_button_touch_listener psvtl = new pause_speed_button_touch_listener(throttleIndex);
-            bPauses[throttleIndex].setOnTouchListener(psvtl);
+            PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
+            bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
         }
 
         sliderType = SLIDER_TYPE_VERTICAL;

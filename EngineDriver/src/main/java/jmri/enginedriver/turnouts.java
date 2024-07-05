@@ -871,6 +871,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
+        mainapp.displayDccExButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         mainapp.setPowerStateButton(menu);
         mainapp.setWebMenuOption(menu);
@@ -887,73 +888,70 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
-        switch (item.getItemId()) {
-            case R.id.throttle_button_mnu:
-            case R.id.throttle_mnu:
-                in = mainapp.getThrottleIntent();
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.routes_mnu:
-                in = new Intent().setClass(this, routes.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
-            case R.id.web_mnu:
-                in = new Intent().setClass(this, web_activity.class);
-                startACoreActivity(this, in, false, 0);
-                mainapp.webMenuSelected = true;
-                return true;
-            case R.id.exit_mnu:
-                mainapp.checkAskExit(this);
-                return true;
-            case R.id.power_control_mnu:
-                in = new Intent().setClass(this, power_control.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.settings_mnu:
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.about_mnu:
-                in = new Intent().setClass(this, about_page.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.dcc_ex_mnu:
-                in = new Intent().setClass(this, dcc_ex.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.withrottle_cv_programmer_mnu:
-                in = new Intent().setClass(this, withrottle_cv_programmer.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.logviewer_menu:
-                Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-                startActivity(logviewer);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
-            case R.id.power_layout_button:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(TuMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, TuMenu);
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if ( (item.getItemId() == R.id.throttle_button_mnu) || (item.getItemId() == R.id.throttle_mnu) ) {
+            in = mainapp.getThrottleIntent();
+            startACoreActivity(this, in, false, 0);
+            return true;
+        } else if (item.getItemId() == R.id.routes_mnu) {
+            in = new Intent().setClass(this, routes.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
+        } else if (item.getItemId() == R.id.web_mnu) {
+            in = new Intent().setClass(this, web_activity.class);
+            startACoreActivity(this, in, false, 0);
+            mainapp.webMenuSelected = true;
+            return true;
+        } else if (item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkAskExit(this);
+            return true;
+        } else if (item.getItemId() == R.id.power_control_mnu) {
+            in = new Intent().setClass(this, power_control.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.settings_mnu) {
+            in = new Intent().setClass(this, SettingsActivity.class);
+            startActivityForResult(in, 0);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.about_mnu) {
+            in = new Intent().setClass(this, about_page.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
+            in = new Intent().setClass(this, dcc_ex.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
+            in = new Intent().setClass(this, withrottle_cv_programmer.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.logviewer_menu) {
+            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(logviewer);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+        } else if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.power_layout_button) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(TuMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlight(this, TuMenu);
+            mainapp.buttonVibration();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     //handle return from menu items

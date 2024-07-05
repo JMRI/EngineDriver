@@ -49,7 +49,7 @@ public class comm_handler extends Handler {
       commThread = myCommThread;
    }
 
-   @SuppressLint({"DefaultLocale", "ApplySharedPref"})
+   @SuppressLint({"DefaultLocale", "ApplySharedPref", "WebViewApiAvailability"})
    public void handleMessage(Message msg) {
 //                Log.d("Engine_Driver", "comm_handler.handleMessage: message: " +msg.what);
       switch (msg.what) {
@@ -306,9 +306,9 @@ public class comm_handler extends Handler {
          }
 
          case message_type.WRITE_DIRECT_DCC_COMMAND: { // WiThrottle only
-            int addr = msg.arg1;
+//            int addr = msg.arg1;
             String [] args = msg.obj.toString().split(" ");
-            String rslt = "";
+//            String rslt = "";
             comm_thread.sendWriteDirectDccCommand(args);
             break;
          }

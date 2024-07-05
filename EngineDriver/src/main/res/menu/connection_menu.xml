@@ -10,8 +10,15 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:ignore="AppCompatResource" >
+<menu  xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/flashlight_button"
+        android:title="@string/flashlightAction"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction"  />
 
     <item android:id="@+id/intro_mnu" android:title="@string/introMenu" />
     <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
@@ -19,7 +26,4 @@
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />
     <item android:id="@+id/exit_mnu" android:title="@string/exit" />
     <item android:id="@+id/about_mnu" android:title="@string/about" />
-    <item android:id="@+id/flashlight_button"
-        android:title="@string/flashlightAction" android:visible="false"
-        android:showAsAction="always" />
 </menu>

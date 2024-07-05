@@ -12,7 +12,14 @@
  * New button to download the roster list to the Recents list
  * Selecting a loco from Recent Loco that was originally selected from a roster will now attempt to reload the original function buttons, regardless to the server. Note with WiThrottle it cannot know the latching characteristics
  * UI and performance improvements to the Consist Functions Edit screen
- * general cleanup and linting of the select_loco code
+ * General cleanup and linting of the select_loco code
+ * Added the DCC-EX toolbar button the the Routes and Turnouts/Points screens
+ * General cleanup and linting of the dcc_ex code
+ * Visual improvements to the 'about' message on the About screen and log
+ - split the TTS code and types into their own classes
+ - Added the DCC-EX toolbar button the the Routes and Turnouts/Points screens
+ - General cleanup and linting of the dcc_ex code
+ - Improve maintaining of unique IDs for devices (needed for WitThrottle) as a byproduct of not beong allowed to access the real Device IDs anymore
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
  * New WiThrottle CV PoM page

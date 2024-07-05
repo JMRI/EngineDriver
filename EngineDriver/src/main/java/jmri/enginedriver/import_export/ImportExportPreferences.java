@@ -249,6 +249,7 @@ public class ImportExportPreferences {
             int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
             String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
+            String prefAndroidId = sharedPreferences.getString("prefAndroidId", "");
 
             String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL);
             String prefTheme = "";
@@ -323,6 +324,7 @@ public class ImportExportPreferences {
                     prefEdit.putBoolean("prefForcedRestart", true);
                     prefEdit.putInt("prefForcedRestartReason", prefForcedRestartReason);
                     prefEdit.putString("prefPreferencesImportFileName", prefPreferencesImportFileName);  //reset the preference
+                    prefEdit.putString("prefAndroidId", prefAndroidId);  //reset the preference
 
                     if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional preferences for restoration
                         prefEdit.putString("prefTheme", prefTheme);

@@ -176,7 +176,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="4dp" >
+                    android:paddingRight="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="0dp"
+                    tools:ignore="RtlHardcoded">
 
                     <TextView
                         android:id="@+id/turnouts_list_label"
