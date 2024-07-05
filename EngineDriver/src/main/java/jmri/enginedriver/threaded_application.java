@@ -2958,7 +2958,7 @@ public class threaded_application extends Application {
         mainapp.deviceId = prefs.getString("prefAndroidId", "");
         if ( (mainapp.deviceId.equals("")) || (forceNewId) ) {
             Random rand = new Random();
-            mainapp.deviceId = String.valueOf(rand.nextInt(9999)); //use random string
+            mainapp.deviceId = String.valueOf(rand.nextInt(999999)); //use random string
             prefs.edit().putString("prefAndroidId", deviceId).commit();
         }
         return mainapp.deviceId;
