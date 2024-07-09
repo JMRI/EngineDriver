@@ -1,4 +1,5 @@
 **Version 2.37.186
+ * change targetSDK from 33 to 34 per Google requirement by 8/30/2024
 **Version 2.37.184
  * option to have the Throttle WebView on the top of the page
  * fix bug where the keyboard would not show in throttle WebView
