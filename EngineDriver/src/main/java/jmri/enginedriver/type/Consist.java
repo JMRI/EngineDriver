@@ -36,10 +36,6 @@ import jmri.enginedriver.type.source_type;
 //
 //
 public final class Consist {
-    public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_FOLLOW = 1;
-    public static final int LIGHT_UNKNOWN = 2;
-    public static final int LIGHT_ON = 3;
 
     public static class ConLoco extends Loco {
         private boolean backward;                        //end of loco that faces the top of the consist
@@ -49,14 +45,14 @@ public final class Consist {
         public ConLoco(String address) {
             super(address);
             backward = false;
-            lightOn = LIGHT_UNKNOWN;
+            lightOn = light_follow_type.UNKNOWN;
             source = source_type.UNKNOWN;
         }
 
         private ConLoco(Loco l) {
             super(l);
             backward = false;
-            lightOn = LIGHT_UNKNOWN;
+            lightOn = light_follow_type.UNKNOWN;
             source = source_type.UNKNOWN;
         }
 
@@ -190,7 +186,7 @@ public final class Consist {
     public int isLight(String address) {
         ConLoco l = con.get(address);
         if (l == null)
-            return LIGHT_UNKNOWN;
+            return light_follow_type.UNKNOWN;
         return l.lightOn;
     }
 

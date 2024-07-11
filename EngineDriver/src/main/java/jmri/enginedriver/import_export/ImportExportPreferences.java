@@ -22,7 +22,6 @@ package jmri.enginedriver.import_export;
 
 import static java.lang.Math.min;
 import static jmri.enginedriver.threaded_application.context;
-import static jmri.enginedriver.threaded_application.getIntPrefValue;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -48,6 +47,7 @@ import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.address_type;
+import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.source_type;
@@ -55,6 +55,7 @@ import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
+/** @noinspection CallToPrintStackTrace*/
 public class ImportExportPreferences {
 
     public boolean currentlyImporting = false;
@@ -83,11 +84,6 @@ public class ImportExportPreferences {
     public ArrayList<String> recent_turnout_name_list;
     public ArrayList<Integer> recent_turnout_source_list;
     public ArrayList<String> recent_turnout_server_list;
-
-//    private static final int LIGHT_OFF = 0;
-    private static final int LIGHT_FOLLOW = 1;
-      private static final int LIGHT_UNKNOWN = 2;
-//    public static final int LIGHT_ON = 3;
 
     private static final String PREF_IMPORT_ALL_FULL = "Yes";
     private static final String PREF_IMPORT_ALL_PARTIAL = "No";
@@ -390,7 +386,7 @@ public class ImportExportPreferences {
                         getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
                         getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), source_type.UNKNOWN);
                         getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), "");
-                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), LIGHT_UNKNOWN);
+                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), light_follow_type.UNKNOWN);
 
                         consistEngineAddressList.add(tempConsistEngineAddressList_inner);
                         consistAddressSizeList.add(tempConsistAddressSizeList_inner);
@@ -627,7 +623,7 @@ public class ImportExportPreferences {
                                     tempConsistAddressSizeList_inner.get(0),
                                     tempConsistDirectionList_inner.get(0),
                                     tempConsistSourceList_inner.get(0),
-                                    LIGHT_FOLLOW));
+                                    light_follow_type.FOLLOW));
 
                             boolean foundOne = true;
                             while (foundOne) {
@@ -700,7 +696,7 @@ public class ImportExportPreferences {
             int size = Integer.decode(splitLine.substring(splitPos + 1, splitPos + 2));
             int dir = Integer.decode(splitLine.substring(splitPos + 2, splitPos + 3));
             int source = source_type.UNKNOWN; //default to unknown
-            int light = LIGHT_UNKNOWN; //default to unknown
+            int light = light_follow_type.UNKNOWN; //default to unknown
             if (splitLine.length()>splitPos + 3) {  // if short, then this is the first format that did not include the source or light value
                 source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
                 light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
@@ -720,7 +716,7 @@ public class ImportExportPreferences {
         String rslt = "<span>" + addr.toString()
                 +"<small><small>("+ (size==0 ? "S":"L") +")"  + "</small></small>"
 //                + "<small><small>" + (dir==0 ? "▲":"▼") + "</small></small>"
-//                +  (light==LIGHT_OFF ? "○": (light==LIGHT_FOLLOW ? "●":"<small><small>?</small></small>"))
+//                +  (light==light_follow_type.OFF ? "○": (light==light_follow_type.FOLLOW ? "●":"<small><small>?</small></small>"))
 //                +  getSourceHtmlString(source)
                 + " &nbsp;</span>";
 
@@ -823,7 +819,7 @@ public class ImportExportPreferences {
                                     consistAddressSizeList.get(i).get(j),
                                     consistDirectionList.get(i).get(j),
                                     consistSourceList.get(i).get(j),
-                                    (j==0 ? LIGHT_FOLLOW :consistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
+                                    (j==0 ? light_follow_type.FOLLOW :consistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
                         }
                         list_output.format("<~>%s<~>", consistNameList.get(i));
                         for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
@@ -1106,15 +1102,15 @@ public class ImportExportPreferences {
             String rosterEntryType = hm.get("roster_entry_type");
 
             String locoName = "";
-            int address_size = 0;
-            int engine_address = 0;
+            int locoAddressSize = 0;
+            int locoAddress = 0;
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
             if (ras[0].length() > 0) {  //only process if address found
-                address_size = (ras[1].charAt(0) == 'L') ? address_type.LONG : address_type.SHORT;   // convert S/L to 0/1
+                locoAddressSize = (ras[1].charAt(0) == 'L') ? address_type.LONG : address_type.SHORT;   // convert S/L to 0/1
                 try {
-                    engine_address = Integer.parseInt(ras[0]);   // convert address to int
+                    locoAddress = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
                     Toast.makeText(context, "ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     return; //get out, don't try to acquire
@@ -1127,9 +1123,9 @@ public class ImportExportPreferences {
             // check if it is already in the list and remove it
             String keepFunctions = "";
             for (int i = 0; i < recent_loco_address_list.size(); i++) {
-                Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: locoName='"+locoName+"', address="+engine_address);
-                if (engine_address == recent_loco_address_list.get(i)
-                        && address_size == recent_loco_address_size_list.get(i)
+                Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: locoName='"+locoName+"', address=" + locoAddress);
+                if (locoAddress == recent_loco_address_list.get(i)
+                        && locoAddressSize == recent_loco_address_size_list.get(i)
                         && locoName.equals(recent_loco_name_list.get(i))) {
                     recent_loco_address_list.remove(i);
                     recent_loco_address_size_list.remove(i);
@@ -1143,8 +1139,8 @@ public class ImportExportPreferences {
 
             // now append it to the end of the list
             int endOfList = recent_loco_address_list.size();
-            recent_loco_address_list.add(endOfList, engine_address);
-            recent_loco_address_size_list.add(endOfList, address_size);
+            recent_loco_address_list.add(endOfList, locoAddress);
+            recent_loco_address_size_list.add(endOfList, locoAddressSize);
             recent_loco_name_list.add(endOfList, locoName);
             recent_loco_source_list.add(endOfList, source_type.ROSTER);
             recent_loco_functions_list.add(endOfList, keepFunctions);  // blank for now

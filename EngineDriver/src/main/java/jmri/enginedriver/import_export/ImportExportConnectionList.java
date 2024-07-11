@@ -28,17 +28,17 @@ import jmri.enginedriver.threaded_application;
 public class ImportExportConnectionList {
     public ArrayList<HashMap<String, String>> connections_list;
     private final SharedPreferences prefs;
-    private boolean prefHideDemoServer = false;
+    private boolean prefHideDemoServer;
     public boolean foundDemoHost = false;
 
     private static final String demo_host = "jmri.mstevetodd.com";
     private static final String demo_port = "44444";
-    private static final String DUMMY_HOST = "999";
+//    private static final String DUMMY_HOST = "999";
     private static final String DUMMY_ADDRESS = "999";
     private static final int DUMMY_PORT = 999;
-    private static final String DUMMY_SSID = "";
+//    private static final String DUMMY_SSID = "";
 
-    private static final int FAILURE_REASON_ERROR_READING = 1;
+//    private static final int FAILURE_REASON_ERROR_READING = 1;
     public String failureReason = "";
 
     public ImportExportConnectionList(SharedPreferences p) {
@@ -96,18 +96,20 @@ public class ImportExportConnectionList {
                         if (!(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove))) {
                             if (port > 0) {  //skip if port not converted to integer
 
+                                boolean includeThisHost = true;
                                 if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
                                     foundDemoHost = true;
-                                    if (!prefHideDemoServer) {
-                                        HashMap<String, String> hm = new HashMap<>();
-                                        hm.put("ip_address", ip_address);
-                                        hm.put("host_name", host_name);
-                                        hm.put("port", port.toString());
-                                        hm.put("ssid", ssid_str);
-                                        hm.put("service_type", service_type);
-                                        if (!connections_list.contains(hm)) {    // suppress dups
-                                            connections_list.add(hm);
-                                        }
+                                    if (prefHideDemoServer) includeThisHost = false;
+                                }
+                                if (includeThisHost) {
+                                    HashMap<String, String> hm = new HashMap<>();
+                                    hm.put("ip_address", ip_address);
+                                    hm.put("host_name", host_name);
+                                    hm.put("port", port.toString());
+                                    hm.put("ssid", ssid_str);
+                                    hm.put("service_type", service_type);
+                                    if (!connections_list.contains(hm)) {    // suppress dups
+                                        connections_list.add(hm);
                                     }
                                 }
                             }

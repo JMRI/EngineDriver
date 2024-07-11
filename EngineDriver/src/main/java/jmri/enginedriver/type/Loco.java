@@ -39,19 +39,34 @@ public class Loco {
     private LinkedHashMap<Integer, String> functionLabels;
     private int functionLabelsMaxKey = 0;          // highest function number that contains a string (not null)
 
-//    private static final String CONSIST_FUNCTION_ACTION_NONE = "none";
-    private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
-    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
-    private static final String CONSIST_FUNCTION_ACTION_ALL = "all";
-    private static final String CONSIST_FUNCTION_ACTION_TRAIL = "trail";
-    private static final String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
-    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
-    private static final String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
-    private static final String CONSIST_FUNCTION_ACTION_TRAIL_EXACT = "trail exact";
-    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD = "f lead";
-    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
-    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
-    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL = "f trail";
+////    private static final String CONSIST_FUNCTION_ACTION_NONE = "none";
+//    private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
+//    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
+//    private static final String CONSIST_FUNCTION_ACTION_ALL = "all";
+//    private static final String CONSIST_FUNCTION_ACTION_TRAIL = "trail";
+//    private static final String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
+//    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
+//    private static final String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
+//    private static final String CONSIST_FUNCTION_ACTION_TRAIL_EXACT = "trail exact";
+//    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD = "f lead";
+//    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
+//    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL = "f all";
+//    private static final String CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL = "f trail";
+
+    public interface consist_function_action {
+        String LEAD = "lead";
+        String LEAD_AND_TRAIL = "lead and trail";
+        String ALL = "all";
+        String TRAIL = "trail";
+        String LEAD_EXACT = "lead exact";
+        String LEAD_AND_TRAIL_EXACT = "lead and trail exact";
+        String ALL_EXACT = "all exact";
+        String TRAIL_EXACT = "trail exact";
+        String SAME_F_NUMBER_LEAD = "f lead";
+        String SAME_F_NUMBER_LEAD_AND_TRAIL = "f lead and trail";
+        String SAME_F_NUMBER_ALL = "f all";
+        String SAME_F_NUMBER_TRAIL = "f trail";
+    }
 
     public Loco(String address) {
         if (address != null)
@@ -231,12 +246,12 @@ public class Loco {
             if (matchingRule >= 0) {
                 // check if the loco matches the Action
                 String Rule = prefConsistFollowActions.get(matchingRule);
-                if (((Rule.equals(CONSIST_FUNCTION_ACTION_LEAD))
+                if (((Rule.equals(consist_function_action.LEAD))
                         && (isLead))
-                        || ((Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL))
+                        || ((Rule.equals(consist_function_action.LEAD_AND_TRAIL))
                         && ((isLead) || (isTrail)))
-                        || (Rule.equals(CONSIST_FUNCTION_ACTION_ALL))
-                        || ((Rule.equals(CONSIST_FUNCTION_ACTION_TRAIL))
+                        || (Rule.equals(consist_function_action.ALL))
+                        || ((Rule.equals(consist_function_action.TRAIL))
                         && (isTrail))) {
                     // cycle through this locos function labels to find the partly matching string
                     if (functionLabels != null) {
@@ -252,12 +267,12 @@ public class Loco {
                 }
 
                 // check the exact matching rules
-                if (((Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_EXACT))
+                if (((Rule.equals(consist_function_action.LEAD_EXACT))
                         && (isLead))
-                        || ((Rule.equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT))
+                        || ((Rule.equals(consist_function_action.LEAD_AND_TRAIL_EXACT))
                         && ((isLead) || (isTrail)))
-                        || (Rule.equals(CONSIST_FUNCTION_ACTION_ALL_EXACT))
-                        || ((Rule.equals(CONSIST_FUNCTION_ACTION_TRAIL_EXACT))
+                        || (Rule.equals(consist_function_action.ALL_EXACT))
+                        || ((Rule.equals(consist_function_action.TRAIL_EXACT))
                         && (isTrail))) {
                     // cycle through this locos function labels to find the exactly matching string
                     for (int i = 0; i <= functionLabelsMaxKey; i++) {
@@ -274,12 +289,12 @@ public class Loco {
 
             // if no matching rule was found, the default rule applies
             if (functionList.size() == 0) {
-                if (((prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD))
+                if (((prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_LEAD))
                         && (isLead))
-                        || ((prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_LEAD_AND_TRAIL))
+                        || ((prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_LEAD_AND_TRAIL))
                         && ((isLead) || (isTrail)))
-                        || (prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_ALL))
-                        || ((prefConsistFollowDefaultAction.equals(CONSIST_FUNCTION_ACTION_SAME_F_NUMBER_TRAIL))
+                        || (prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_ALL))
+                        || ((prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_TRAIL))
                         && (isTrail))) {
                     functionList.add(functionNumber);
 
@@ -296,22 +311,22 @@ public class Loco {
                         boolean processThis = false;
 
                         if (mainapp.prefAlwaysUseDefaultFunctionLabels) {
-                            if (mainapp.function_consist_locos.get(functionNumber).equals(CONSIST_FUNCTION_ACTION_LEAD)) {
+                            if (mainapp.function_consist_locos.get(functionNumber).equals(consist_function_action.LEAD)) {
                                 if (isLead) {
                                     processThis = true;
                                 }
                             }
-                            if (mainapp.function_consist_locos.get(functionNumber).equals(CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL)) {
+                            if (mainapp.function_consist_locos.get(functionNumber).equals(consist_function_action.LEAD_AND_TRAIL)) {
                                 if ((isLead) || (isTrail)) {
                                     processThis = true;
                                 }
                             }
-                            if (mainapp.function_consist_locos.get(functionNumber).equals(CONSIST_FUNCTION_ACTION_TRAIL)) {
+                            if (mainapp.function_consist_locos.get(functionNumber).equals(consist_function_action.TRAIL)) {
                                 if (isTrail) {
                                     processThis = true;
                                 }
                             }
-                            if (mainapp.function_consist_locos.get(functionNumber).equals(CONSIST_FUNCTION_ACTION_ALL)) {
+                            if (mainapp.function_consist_locos.get(functionNumber).equals(consist_function_action.ALL)) {
                                 processThis = true;
                             }
                         } else {

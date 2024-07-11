@@ -113,7 +113,7 @@
     <item name="android:layout_gravity" /> <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">1dp</item>
 
     <item name="android:background">@drawable/sticky_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -518,7 +518,7 @@
     <item name="android:layout_gravity" /> <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">1dp</item>
 
     <item name="android:background">@drawable/sticky_button_states_round</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -687,7 +687,7 @@
     <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">1dp</item>
 
     <item name="android:background">@drawable/fn_button_states_round_outline</item>
     <item name="android:layout_marginTop">1dp</item>

@@ -96,6 +96,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -145,6 +146,7 @@ import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.pref_gamepad_button_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
@@ -293,11 +295,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private List<Integer> prefConsistFollowHeadlights;
     private String prefConsistFollowDefaultAction = "none";
 
-    private static final int FUNCTION_IS_LEAD_ONLY = 1;
-    private static final int FUNCTION_IS_TRAIL_ONLY = 2;
-    private static final int FUNCTION_IS_LEAD_AND_FOLLOW = 3;
-    private static final int FUNCTION_IS_LEAD_AND_TRAIL = 4;
-    private static final int FUNCTION_IS_FOLLOW = 5;
+    public interface function_is {
+        int LEAD_ONLY = 1;
+        int TRAIL_ONLY = 2;
+        int LEAD_AND_FOLLOW = 3;
+        int LEAD_AND_TRAIL = 4;
+        int FOLLOW = 5;
+    }
 
 //    private static final int FUNCTION_ACTION_ON = 1;
 //    private static final int FUNCTION_ACTION_OFF = 2;
@@ -311,15 +315,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int BUTTON_PRESS_MESSAGE_UP = 0;
     private static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
 
-//    private static final String CONSIST_FUNCTION_ACTION_LEAD = "lead";
-//    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL = "lead and trail";
-//    private static final String CONSIST_FUNCTION_ACTION_ALL = "all";
-//    private static final String CONSIST_FUNCTION_ACTION_LEAD_EXACT = "lead exact";
-//    private static final String CONSIST_FUNCTION_ACTION_LEAD_AND_TRAIL_EXACT = "lead and trail exact";
-//    private static final String CONSIST_FUNCTION_ACTION_ALL_EXACT = "all exact";
-
-    private static final Integer CONSIST_FUNCTION_IS_HEADLIGHT = 1;
-    private static final Integer CONSIST_FUNCTION_IS_NOT_HEADLIGHT = 0;
+    public interface consist_function_is {
+        Integer HEADLIGHT = 1;
+        Integer NOT_HEADLIGHT = 0;
+    }
 
 //    private static final String FUNCTION_CONSIST_LATCHING = "latching";
     private static final String FUNCTION_CONSIST_NOT_LATCHING = "none";
@@ -542,7 +541,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // preference to change the consist's on long clicks
     boolean prefConsistLightsLongClick;
-    public static final int LIGHT_FOLLOW = 1;
 
     protected boolean prefSwapForwardReverseButtons = false;
     protected boolean prefSwapForwardReverseButtonsLongPress = false;
@@ -1491,23 +1489,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         String prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
         String prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction1", getApplicationContext().getResources().getString(R.string.prefConsistFollowString1DefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_HEADLIGHT);
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is.HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction2", getApplicationContext().getResources().getString(R.string.prefConsistFollowString2DefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is.NOT_HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction3", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is.NOT_HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString4", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction4", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is.NOT_HEADLIGHT);
 
         prefConsistFollowStringtemp = prefs.getString("prefConsistFollowString5", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
         prefConsistFollowActiontemp = prefs.getString("prefConsistFollowAction5", getApplicationContext().getResources().getString(R.string.prefConsistFollowStringOtherDefaultValue));
-        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, CONSIST_FUNCTION_IS_NOT_HEADLIGHT);
+        addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is.NOT_HEADLIGHT);
 
         // increase height of throttle slider (if requested in preferences)
         pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
@@ -3475,13 +3473,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             boolean followLeadFunction = false;
 
             int result = isFunctionLeadTrailFollow(whichThrottle, fKey, lab);
-            if ((result == FUNCTION_IS_LEAD_ONLY) || (result == FUNCTION_IS_LEAD_AND_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_TRAIL)) {
+            if ((result == function_is.LEAD_ONLY) || (result == function_is.LEAD_AND_FOLLOW) || (result == function_is.LEAD_AND_TRAIL)) {
                 leadOnly = true;
             }
-            if ((result == FUNCTION_IS_TRAIL_ONLY) || (result == FUNCTION_IS_LEAD_AND_TRAIL)) {
+            if ((result == function_is.TRAIL_ONLY) || (result == function_is.LEAD_AND_TRAIL)) {
                 trailOnly = true;
             }
-            if ((result == FUNCTION_IS_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_FOLLOW)) {
+            if ((result == function_is.FOLLOW) || (result == function_is.LEAD_AND_FOLLOW)) {
                 followLeadFunction = true;
             }
 
@@ -4544,11 +4542,11 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             }
         }
 
-        if ((lead) && (followLeadFunction)) { return FUNCTION_IS_LEAD_AND_FOLLOW;}
-        if ((lead) && (trail)) { return FUNCTION_IS_LEAD_AND_TRAIL;}
-        if (lead) { return FUNCTION_IS_LEAD_ONLY;}
-        if (trail) {return FUNCTION_IS_TRAIL_ONLY;}
-        if (followLeadFunction) {return FUNCTION_IS_FOLLOW;}
+        if ((lead) && (followLeadFunction)) { return function_is.LEAD_AND_FOLLOW;}
+        if ((lead) && (trail)) { return function_is.LEAD_AND_TRAIL;}
+        if (lead) { return function_is.LEAD_ONLY;}
+        if (trail) {return function_is.TRAIL_ONLY;}
+        if (followLeadFunction) {return function_is.FOLLOW;}
         return 0;
 
     }
@@ -4583,7 +4581,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             if (followLeadFunction) {
                 for (Consist.ConLoco l : con.getLocos()) {
                     if (!l.getAddress().equals(con.getLeadAddr())) {  // ignore the lead as we have already set it
-                        if (l.isLightOn() == LIGHT_FOLLOW) {
+                        if (l.isLightOn() == light_follow_type.FOLLOW) {
                             if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                                 mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), function);
                             } else {
@@ -5058,9 +5056,9 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             followLeadFunction = false;
 
             int result = isFunctionLeadTrailFollow(whichThrottle, function, lab);
-            if ((result == FUNCTION_IS_LEAD_ONLY) || (result == FUNCTION_IS_LEAD_AND_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_TRAIL)) {leadOnly = true;}
-            if (result == FUNCTION_IS_TRAIL_ONLY) {trailOnly = true;}
-            if ((result == FUNCTION_IS_FOLLOW) || (result == FUNCTION_IS_LEAD_AND_FOLLOW)) {followLeadFunction = true;}
+            if ((result == function_is.LEAD_ONLY) || (result == function_is.LEAD_AND_FOLLOW) || (result == function_is.LEAD_AND_TRAIL)) {leadOnly = true;}
+            if (result == function_is.TRAIL_ONLY) {trailOnly = true;}
+            if ((result == function_is.FOLLOW) || (result == function_is.LEAD_AND_FOLLOW)) {followLeadFunction = true;}
         }
 
         @SuppressLint("ClickableViewAccessibility")
@@ -6411,9 +6409,11 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                                 String bt = function_labels_temp.get(func);
                                 functionButtonTouchListener = new FunctionButtonTouchListener(func, whichThrottle, bt);
                                 b.setOnTouchListener(functionButtonTouchListener);
-                                bt = bt + "                      ";  // pad with spaces, and limit to 20 characters
-                                b.setText(bt.trim());
+                                bt = (bt + "                      ").trim();  // pad with spaces, and limit to 20 characters
+                                b.setText(bt);
                                 b.setVisibility(View.VISIBLE);
+                                // if there is a long first word or the total length is long, reduce the font size
+                                if ((bt.indexOf(" ")>8) || (bt.length()>16)) b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                                 b.setEnabled(false); // start out with everything disabled
                             } else {
                                 b.setVisibility(View.GONE);

@@ -2364,7 +2364,7 @@ public class threaded_application extends Application {
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
         importExportPreferences.getRecentLocosListFromFile();
 
-        Integer engine_address = conLoco.getIntAddress();
+        Integer locoAddress = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
         String loco_name = conLoco.getFormatAddress();
         Integer locoSource = conLoco.getWhichSource();
@@ -2381,7 +2381,7 @@ public class threaded_application extends Application {
         String keepFunctions = "";
         String functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
         for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
-            if (engine_address.equals(importExportPreferences.recent_loco_address_list.get(i))
+            if (locoAddress.equals(importExportPreferences.recent_loco_address_list.get(i))
                     && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
                     && loco_name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
                 importExportPreferences.recent_loco_address_list.remove(i);
@@ -2396,7 +2396,7 @@ public class threaded_application extends Application {
         }
 
         // now append it to the beginning of the list
-        importExportPreferences.recent_loco_address_list.add(0, engine_address);
+        importExportPreferences.recent_loco_address_list.add(0, locoAddress);
         importExportPreferences.recent_loco_address_size_list.add(0, address_size);
         importExportPreferences.recent_loco_name_list.add(0, loco_name);
         importExportPreferences.recent_loco_source_list.add(0, locoSource);
