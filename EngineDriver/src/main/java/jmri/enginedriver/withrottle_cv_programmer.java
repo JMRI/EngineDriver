@@ -122,7 +122,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private LinearLayout statusLine;
 
 
-    private String default_address_length;
+    private String defaultAddressLength;
     private int maxAddr = 10239;
     private int maxCv = 1024;
     private int maxCvValue = 255;
@@ -321,11 +321,11 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 }
 
 
-                default_address_length = prefs.getString("default_address_length", this
+                defaultAddressLength = prefs.getString("default_address_length", this
                         .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
                 // set address length
-                if (default_address_length.equals("Long") ||
-                        (default_address_length.equals("Auto") && (addr > 127))) {
+                if (defaultAddressLength.equals("Long") ||
+                        (defaultAddressLength.equals("Auto") && (addr > 127))) {
                     addressSpinner.setSelection(1);
                 } else {
                     addressSpinner.setSelection(0);

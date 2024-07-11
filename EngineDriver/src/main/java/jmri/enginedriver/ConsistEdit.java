@@ -55,17 +55,13 @@ import java.util.HashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistEdit extends AppCompatActivity implements OnGestureListener {
-    public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_FOLLOW = 1;
-//    public static final int LIGHT_UNKNOWN = 2;
-    public static final int LIGHT_ON = 3;
-
     public static final String LIGHT_TEXT_OFF = "Off";
     public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
@@ -136,11 +132,11 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
                     hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
-                    if (l.isLightOn() == LIGHT_OFF) {
+                    if (l.isLightOn() == light_follow_type.OFF) {
                         hm.put("loco_light", LIGHT_TEXT_OFF);
-                    } else if (l.isLightOn() == LIGHT_ON) {
+                    } else if (l.isLightOn() == light_follow_type.ON) {
                         hm.put("loco_light", LIGHT_TEXT_ON);
-                    } else if (l.isLightOn() == LIGHT_FOLLOW) {
+                    } else if (l.isLightOn() == light_follow_type.FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                     } else {
                         hm.put("loco_light", LIGHT_TEXT_UNKNOWN);

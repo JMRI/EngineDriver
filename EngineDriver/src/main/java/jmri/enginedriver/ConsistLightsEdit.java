@@ -53,16 +53,12 @@ import java.util.HashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
-    public static final int LIGHT_OFF = 0;
-    public static final int LIGHT_FOLLOW = 1;
-    public static final int LIGHT_UNKNOWN = 2;
-    public static final int LIGHT_ON = 3;
-
     public static String LIGHT_TEXT_OFF = "Off";
     public static String LIGHT_TEXT_ON = "On";
     public static String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
@@ -113,13 +109,13 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 if (consist.getLeadAddr().equals(l.getAddress())) { // lead loco is always 'follow'
                     hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
-                    if (l.isLightOn() == LIGHT_OFF) {
+                    if (l.isLightOn() == light_follow_type.OFF) {
                         hm.put("loco_light", LIGHT_TEXT_OFF);
                         mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, false);
-                    } else if (l.isLightOn() == LIGHT_ON) {
+                    } else if (l.isLightOn() == light_follow_type.ON) {
                         hm.put("loco_light", LIGHT_TEXT_ON);
                         mainapp.forceFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), 0, true);
-                    } else if (l.isLightOn() == LIGHT_FOLLOW) {
+                    } else if (l.isLightOn() == light_follow_type.FOLLOW) {
                         hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                     } else {
                         hm.put("loco_light", LIGHT_TEXT_UNKNOWN);
@@ -245,14 +241,14 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
                 int light;
                 if (consist.getLeadAddr().equals(address)) { // lead loco is always 'follow'
-                    light = LIGHT_FOLLOW;
+                    light = light_follow_type.FOLLOW;
                 } else {
-                    if ((consist.isLight(address) == LIGHT_UNKNOWN) || (consist.isLight(address) == LIGHT_FOLLOW)) {
-                        light = LIGHT_OFF;
-                    } else if (consist.isLight(address) == LIGHT_OFF) {
-                        light = LIGHT_ON;
+                    if ((consist.isLight(address) == light_follow_type.UNKNOWN) || (consist.isLight(address) == light_follow_type.FOLLOW)) {
+                        light = light_follow_type.OFF;
+                    } else if (consist.isLight(address) == light_follow_type.OFF) {
+                        light = light_follow_type.ON;
                     } else {
-                        light = LIGHT_FOLLOW;
+                        light = light_follow_type.FOLLOW;
                     }
                 }
                 try {
@@ -274,12 +270,12 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 String address = addrv.getText().toString();
 
                 int light;
-                if ((consist.isLight(address) == LIGHT_UNKNOWN) | (consist.isLight(address) == LIGHT_FOLLOW)) {
-                    light = LIGHT_OFF;
-                } else if (consist.isLight(address) == LIGHT_OFF) {
-                    light = LIGHT_ON;
+                if ((consist.isLight(address) == light_follow_type.UNKNOWN) | (consist.isLight(address) == light_follow_type.FOLLOW)) {
+                    light = light_follow_type.OFF;
+                } else if (consist.isLight(address) == light_follow_type.OFF) {
+                    light = light_follow_type.ON;
                 } else {
-                    light = LIGHT_FOLLOW;
+                    light = light_follow_type.FOLLOW;
                 }
                 try {
                     consist.setLight(address, light);
@@ -313,7 +309,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);

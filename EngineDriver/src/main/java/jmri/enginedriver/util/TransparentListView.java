@@ -15,6 +15,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+/** @noinspection CallToPrintStackTrace*/
 public class TransparentListView extends ListView {
 
     private void makeTransparent() {

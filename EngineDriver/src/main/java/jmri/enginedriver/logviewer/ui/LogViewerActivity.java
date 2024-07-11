@@ -46,6 +46,7 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 //import jmri.enginedriver.logviewer.R;
 
+/** @noinspection CallToPrintStackTrace*/
 public class LogViewerActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private ArrayAdapter adaptor = null;
     private LogReaderTask logReaderTask = null;
@@ -380,6 +381,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
     }
 
+    /** @noinspection CallToPrintStackTrace*/
     private class LogReaderTask extends AsyncTask<Void, String, Void> {
         private final String[] LOGCAT_CMD = new String[]{"logcat", "Engine_Driver:D", "*:S"};
         //		private final int BUFFER_SIZE = 1024;

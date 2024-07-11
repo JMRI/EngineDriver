@@ -373,6 +373,7 @@
                                     android:layout_height="fill_parent"
                                     android:paddingLeft="5dp"
                                     android:paddingTop="5dp"
+                                    android:paddingRight="2dp"
                                     android:paddingBottom="10dp">
 
                                     <LinearLayout
@@ -853,7 +854,7 @@
                                         android:id="@+id/button_select_loco_1"
                                         style="?attr/ed_loco_select_button_style"
                                         android:layout_width="fill_parent"
-                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginLeft="2dp"
                                         android:layout_marginRight="5dp"
                                         android:text="@string/none" />
 
@@ -1044,7 +1045,7 @@
                                     style="?attr/ed_fn_scrollview_style"
                                     android:layout_width="match_parent"
                                     android:layout_height="fill_parent"
-                                    android:paddingLeft="5dp"
+                                    android:paddingLeft="2dp"
                                     android:paddingTop="5dp"
                                     android:paddingRight="5dp"
                                     android:paddingBottom="10dp">
