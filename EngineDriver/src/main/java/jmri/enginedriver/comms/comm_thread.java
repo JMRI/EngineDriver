@@ -1583,7 +1583,8 @@ public class comm_thread extends Thread {
                         int fnState;
                         for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
                             try {
-                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+//                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
+                                fnState = mainapp.bitExtracted(Long.parseLong(args[4]), 1, i + 1);
                                 if (i==0) Log.d("Engine_Driver", "processDccexLocos(): function:" + i + " state: " + fnState);
                                 processFunctionState(whichThrottle, i, (fnState != 0));
                                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addr_str + "<;>F" + fnState + (i);
