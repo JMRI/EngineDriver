@@ -31,7 +31,7 @@
 
     <color name="primary_text">#ffffffff</color>
     <color name="secondary_text">#D8D8D8</color>
-    <color name="tertiary_text">#ffffffff</color>
+    <color name="tertiary_text">#A0A0A0</color>
     <color name="hint_text">#747474</color>
     <color name="primaryDisabled">#ff888888</color>
     <color name="secondaryDisabled">#ff888888</color>
