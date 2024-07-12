@@ -2930,7 +2930,7 @@ public class threaded_application extends Application {
         return (((1 << k) - 1) & (number >> (p - 1)));
     }
     public int bitExtracted(long number, int k, int p) {
-        final long rightShifted = number >>> p;
+        final long rightShifted = number >>> (p-1);
         final long mask = (1L << k) - 1L;
         return Math.toIntExact(rightShifted & mask);
     }
