@@ -987,6 +987,7 @@ public class threaded_application extends Application {
     public void setServerDescription(String serverDescription) {
         this.serverDescription = serverDescription;
     }
+
     @SuppressLint("DefaultLocale")
     public String getAboutInfo() {
         String s = "<span>";

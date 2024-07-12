@@ -6413,14 +6413,19 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                                 b.setText(bt);
                                 b.setVisibility(View.VISIBLE);
                                 // if there is a long first word or the total length is long, reduce the font size
-                                if ((bt.indexOf(" ")>8) || (bt.length()>16)) {
-                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                                    if ((bt.indexOf(" ")>10) || (bt.length()>20)) {
-                                        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                                        if ((bt.indexOf(" ")>12) || (bt.length()>24)) {
-                                            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                                if (((bt + " ").indexOf(" ")>8) || (bt.length()>15)) {
+                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                                    if (((bt + " ").indexOf(" ")>10) || (bt.length()>18)) {
+                                        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                                        if (((bt + " ").indexOf(" ")>12) || (bt.length()>21)) {
+                                            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                                            if (((bt + " ").indexOf(" ")>14) || (bt.length()>24)) {
+                                                b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                                            }
                                         }
                                     }
+                                } else {
+                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                                 }
                                 b.setEnabled(false); // start out with everything disabled
                             } else {
