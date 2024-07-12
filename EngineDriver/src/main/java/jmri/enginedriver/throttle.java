@@ -6409,11 +6409,19 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                                 String bt = function_labels_temp.get(func);
                                 functionButtonTouchListener = new FunctionButtonTouchListener(func, whichThrottle, bt);
                                 b.setOnTouchListener(functionButtonTouchListener);
-                                bt = (bt + "                      ").trim();  // pad with spaces, and limit to 20 characters
+//                                bt = (bt + "                      ").trim();  // pad with spaces, and limit to 20 characters
                                 b.setText(bt);
                                 b.setVisibility(View.VISIBLE);
                                 // if there is a long first word or the total length is long, reduce the font size
-                                if ((bt.indexOf(" ")>8) || (bt.length()>16)) b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                                if ((bt.indexOf(" ")>8) || (bt.length()>16)) {
+                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                                    if ((bt.indexOf(" ")>10) || (bt.length()>20)) {
+                                        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                                        if ((bt.indexOf(" ")>12) || (bt.length()>24)) {
+                                            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                                        }
+                                    }
+                                }
                                 b.setEnabled(false); // start out with everything disabled
                             } else {
                                 b.setVisibility(View.GONE);

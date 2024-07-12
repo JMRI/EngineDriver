@@ -2926,9 +2926,13 @@ public class threaded_application extends Application {
 
     // Function to extract k bits from p position and returns the extracted value as integer
     // from: https://www.geeksforgeeks.org/extract-k-bits-given-position-number/
-    public int bitExtracted(int number, int k, int p)
-    {
+    public int bitExtracted(int number, int k, int p) {
         return (((1 << k) - 1) & (number >> (p - 1)));
+    }
+    public int bitExtracted(long number, int k, int p) {
+        final long rightShifted = number >>> (p-1);
+        final long mask = (1L << k) - 1L;
+        return Math.toIntExact(rightShifted & mask);
     }
 
     public int toggleBit(int n, int k) {
