@@ -1,5 +1,8 @@
+**Version 2.37.188
 **Version 2.37.186
  * change targetSDK from 33 to 34 per Google requirement by 8/30/2024
+ * deal with longInt being sent by the devel versions of DCC-EX
+ * Automatically reduce the font size of buttons if the first word is long or the total text length is long
 **Version 2.37.184
  * option to have the Throttle WebView on the top of the page
  * fix bug where the keyboard would not show in throttle WebView
