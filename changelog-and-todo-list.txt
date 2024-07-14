@@ -827,7 +827,6 @@
  *   TODO: respect "Max Throttle %" from roster entry
  *   TODO: option to show the turnout view instead of the webview, including option for Recents
  *   TODO: option to use 'f' function commands for WiThrottle
- *   TODO: option to save and re-request selected locos, (6-throttle layout with the same locos)
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
@@ -853,10 +852,13 @@
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
- *   TODO: add preference for automatically loading locos on connection into multiple throttles
+ *   TODO: a) option to save and re-request selected locos, (6-throttle layout with the same locos)
+ *   TODO: b) add preference for automatically loading locos on connection into multiple throttles
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
+ * DCC-EX screen
+ *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  * preferences:
  *   TODO: simplify accessing exported preferences file. Link?
  * log_viewer:
