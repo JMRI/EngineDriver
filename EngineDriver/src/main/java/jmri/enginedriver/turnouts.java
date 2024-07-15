@@ -109,6 +109,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     String prefSelectTurnoutsMethod = "0";
     String currentSelectTurnoutMethod = "0";
     String lastTurnoutUsedName = "XYZZY";
+    boolean prefTurnoutsShowThrowCloseButtons = false;
 
     private static final String TURNOUT_TOGGLE = "2";
     private static final String TURNOUT_THROW = "T";
@@ -556,6 +557,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         // -------------------------------------------------------------------
 
         getDefaultSortOrderTurnouts();
+        prefTurnoutsShowThrowCloseButtons = prefs.getBoolean("prefTurnoutsShowThrowCloseButtons", getResources().getBoolean(R.bool.prefTurnoutsShowThrowCloseButtonsDefaultValue));
 
         turnoutsFullList = new ArrayList<>();
         //Set up a list adapter to allow adding the list of defined turnouts to the UI.
@@ -801,6 +803,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+
+        prefTurnoutsShowThrowCloseButtons = prefs.getBoolean("prefTurnoutsShowThrowCloseButtons", getResources().getBoolean(R.bool.prefTurnoutsShowThrowCloseButtonsDefaultValue));
 
         //restore view to last known scroll position
         ListView lv = findViewById(R.id.turnouts_list);
@@ -1316,15 +1320,21 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void showHideTurnoutButtons(String currentStateDesc, Button bToggle, Button bThrow, Button bClose) {
-        if ((currentStateDesc.equals(TURNOUT_STATE_UNKNOWN_LABEL)) ||
-                (currentStateDesc.equals(getApplicationContext().getResources().getString(R.string.toggle_button)))) {
+        if (!prefTurnoutsShowThrowCloseButtons) {
+            if ((currentStateDesc.equals(TURNOUT_STATE_UNKNOWN_LABEL)) ||
+                    (currentStateDesc.equals(getApplicationContext().getResources().getString(R.string.toggle_button)))) {
+                bToggle.setVisibility(View.GONE);
+                bThrow.setVisibility(View.VISIBLE);
+                bClose.setVisibility(View.VISIBLE);
+            } else {
+                bToggle.setVisibility(View.VISIBLE);
+                bThrow.setVisibility(View.GONE);
+                bClose.setVisibility(View.GONE);
+            }
+        } else {
             bToggle.setVisibility(View.GONE);
             bThrow.setVisibility(View.VISIBLE);
             bClose.setVisibility(View.VISIBLE);
-        } else {
-            bToggle.setVisibility(View.VISIBLE);
-            bThrow.setVisibility(View.GONE);
-            bClose.setVisibility(View.GONE);
         }
         bToggle.setText(currentStateDesc);
     }

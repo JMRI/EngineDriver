@@ -362,9 +362,13 @@
 
 <!--    <string name="FilterRosterList">Filtr</string>-->
     <string name="FilterRosterListHint">Obsahuje…</string>
+    <string name="FilterRosterListDownloadLabel">Stažení</string>
     <string name="rosterEmpty">Nemohu najít žádné záznamy v evidenci JMRI. Místo toho použijte volbu \'DCC adresa\' nebo \'Nedávné\'.</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Metoda: </string>-->
+    <string name="prefRosterOwnersFilterShowOptionTitle">Filtr podle vlastníka seznamu</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">Zobrazit možnost filtrovat seznam podle vlastníka</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">Všechno</string>
     <string name="LocoSelectMethodAddress">DCC adresa</string>
     <string name="LocoSelectMethodRoster">Evidence serveru</string>
     <string name="LocoSelectMethodRecent">Nedávné Lokomotivy</string>
@@ -681,6 +685,7 @@
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
 
     <!--    Toast messages for the Throttle page-->
+    <string name="toastDoubleBackButtonToExit">Dalším stisknutím tlačítka \'Zpět\' opustíte Engine Driver</string>
     <string name="toastUnableToSetBrightness">Nemohu nastavit automatický jas / adaptivní jas.</string>
     <string name="toastAccelerometerNotFound">Akcelerometr nenalezen nebo je zakázán</string>
     <string name="toastLocoChangeNotAllowed">Změna není dovolena: \'Změna směru během jízdy\' je zakázána v předvolbách</string>
@@ -752,6 +757,10 @@
     <string name="toastLocoAlreadySelected">Lokomotiva \'%1$s\' je již vybrána</string>
 
     <!--    Toast messages for the Consist Edit Activity -->
+    <string name="toastSortedByName">Seřazeno podle jména</string>
+    <string name="toastSortedById">Seřazeno podle adresy/ID</string>
+    <string name="toastSortedByLastUsed">Seřazeno podle posledního použití</string>
+    <string name="toastSortedByPosition">Seřazeno podle pozice</string>
     <string name="toastConsistEditHelp">Dotykem změníte směr. Přetažením doprava odeberete položku.</string>
 
     <string name="toastRecentCleared">Lokomotiva odstraněna ze seznamu.</string>
@@ -993,6 +1002,9 @@
     <string name="dialogRecentConsistsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny nedávné soupravy</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny nedávné výhybky</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Potvrďte, že chcete stáhnout všechny záznamy rozpisu do seznamu Nedávné lokomotivy</string>
+    <string name="prefHideInstructionalToastsTitle">Skrýt instruktážní rady</string>
+    <string name="prefHideInstructionalToastsSummary">Skryjte vyskakovací nápovědu/rady instruktážního „toastu“.</string>
     <string name="dialogConfirmResetPreferencesTitle">Resetovat předvolby</string>
     <string name="dialogResetPreferencesQuestion">Potvrďte, že chcete resetovat všechny předvolby.\nVšechny aktuální preference budou ztraceny.</string>
 
@@ -1068,6 +1080,14 @@
 <!--    <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
+    <string name="prefSortOrderRosterTitle">Pořadí řazení seznamu</string>
+    <string name="prefSortOrderRosterSummary">Nařiďte, aby se položky rozpisu ve výchozím nastavení objevily při každém spuštění ovladače motoru</string>
+    <string name="prefSortOrderTurnoutsTitle">Pořadí řazení výhybek</string>
+    <string name="prefSortOrderTurnoutsSummary">Nastavte, aby se položky Výhybky ve výchozím nastavení objevily při každém spuštění ovladače motoru</string>
+    <string name="prefSortOrderRoutesTitle">Pořadí řazení tras</string>
+    <string name="prefSortOrderRoutesSummary">Nastavte, aby se položky Routes (trasy) ve výchozím nastavení objevily při každém spuštění ovladače motoru</string>
+    <string name="prefShowWitPomTitle">Zobrazit stránku WiThrottle PoM</string>
+    <string name="prefShowWitPomSummary">Zvolte, zda má být k dispozici WiThrottle CV Programming v nabídce a stránce MAIN (Provozní režim).</string>
     <string name="prefFeedbackOnDisconnectTitle">Zpětná vazba na Odpojit</string>
     <string name="prefFeedbackOnDisconnectSummary">Přehrát zvuk a vibrovat na nečekaném odpojení.</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alert pozadí</string>
@@ -1189,5 +1209,7 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
     <string name="order">Seřadit</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Vždy zobrazovat Hodit/Zavřít?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">U výhybek vždy zobrazujte tlačítka Hod i Zavřít, nikdy ne tlačítko Přepnout.</string>
 
 </resources>

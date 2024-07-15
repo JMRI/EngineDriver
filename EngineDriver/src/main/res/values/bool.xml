@@ -117,5 +117,6 @@
     <bool name="prefDoubleBackButtonToExitDefaultValue">false</bool>
 
     <bool name="prefShowWitPomDefaultValue">false</bool>
+    <bool name="prefTurnoutsShowThrowCloseButtonsDefaultValue">false</bool>
 
 </resources>

@@ -490,6 +490,8 @@
 <!--    <string name="prefHardwareSystemTitle">Turnout Hardware System</string>-->
 <!--    <string name="prefHardwareSystemDefaultValue" translatable="false">L</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
 <!--    <string name="prefHardwareSystemSummary">Select hardware system to use for direct entry turnout commands</string>-->
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Always show Throw/Close?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Always show both the Throw and Close buttons for Turnouts, never the Toggle button.</string>
     <string name="prefHideSystemRouteNamesTitle">Hide Sys Route Names?</string>
     <string name="prefHideSystemRouteNamesSummary">Hide system names for Routes, used to save space on Route list</string>
     <string name="prefDelimiterTitle">Location Delimiter</string>
@@ -1308,7 +1310,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferences</string>
     <string name="prefDccexPreferencesSummary">Options for using a EX-CommandStation</string>
-    <string name="prefUseDccexProtocolDefaultValue">Auto</string>
+    <string name="prefUseDccexProtocolDefaultValue" translatable="false">Auto</string>
 
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
     <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>

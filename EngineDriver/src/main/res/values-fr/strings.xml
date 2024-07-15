@@ -516,6 +516,7 @@
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
+    <string name="toastDoubleBackButtonToExit">Appuyez à nouveau sur « Retour » pour quitter Engine Driver.</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>
     <string name="toastAccelerometerNotFound">Accéléromètre pas trouvé ou désactivé.</string>
     <string name="toastLocoChangeNotAllowed">Changement de sens interdit: \'Le changement de sens en marche\' est desactivé dans les préférences.</string>
@@ -639,6 +640,9 @@
 <!--    <string name="FilterRosterList">Filtre</string>-->
     <string name="FilterRosterListHint">Contenant…</string>
 
+    <string name="prefRosterOwnersFilterShowOptionTitle">Filtrer par propriétaire de liste</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">Afficher une option pour filtrer la liste par propriétaire</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">Tous</string>
     <string name="LocoSelectMethodAddress">Adresse DCC</string>
     <string name="LocoSelectMethodRoster">Catalogue (roster) JMRI</string>
     <string name="LocoSelectMethodRecent">Récent</string>
@@ -779,6 +783,7 @@
     <string name="toastPreferencesImportServerManualFailed">import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import des préférences depuis serveur REUSSI (%1$s)</string>
     <string name="introMenu">Intro/Assistant Setup</string>
+    <string name="FilterRosterListDownloadLabel">Télécharger</string>
     <string name="rosterEmpty">Aucune entrée correspondante dans catalogue JMRI, utiliser l\'option adresse DCC ou récent.</string>
 
     <string name="edit_consist_throttle_1">Modif UM régulateur 1</string>
@@ -814,6 +819,10 @@
     <string name="editConsistButtonLabel">Modif Ordre et Direction</string>
     <string name="editConsistLightsButtonLabel">Modif Eclairage</string>
     <string name="toastConnectionsListHelp">Appuyer pour sélectionner. Glisser Gauche vers Droite pour supprimer l entrée</string>
+    <string name="toastSortedByName">Trié par nom</string>
+    <string name="toastSortedById">Trié par adresse/identifiant</string>
+    <string name="toastSortedByLastUsed">Trié par dernière utilisation</string>
+    <string name="toastSortedByPosition">Trié par poste</string>
     <string name="toastConsistEditHelp">Appuyer pour changer de sens. Glisser Gauche vers Droite pour supprimer l entrée</string>
     <string name="consistLocoFacingFront">Avant</string>
     <string name="consistLocoFacingRear">Arrière</string>
@@ -833,6 +842,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmer la suppression des dernières locomotives utilisées</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression des dernières aiguilles utilisées</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Confirmez que vous souhaitez télécharger toutes les entrées de liste dans la liste des locomotives récentes.</string>
+    <string name="prefHideInstructionalToastsTitle">Masquer les conseils pédagogiques</string>
+    <string name="prefHideInstructionalToastsSummary">Masquer l\'aide/les conseils contextuels du « toast » pédagogique</string>
     <string name="dialogConfirmResetPreferencesTitle">Réinitialiser les préférences</string>
     <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES PREFERENCES REINITIALISEES</string>
     <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
@@ -903,6 +915,14 @@
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver nécessite l accès au STOCKAGE pour lire et sauver vos préférences</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver nécessite l autorisaton d accès aux parametres TELEPHONE pour activer ou désactiver les données mobiles</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
+    <string name="prefSortOrderRosterTitle">Ordre de tri de la liste</string>
+    <string name="prefSortOrderRosterSummary">Ordonnez que les entrées de la liste apparaissent, par défaut, à chaque démarrage d\'Engine Driver</string>
+    <string name="prefSortOrderTurnoutsTitle">Ordre de tri des aiguillages</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordonnez que les entrées Turnouts apparaissent, par défaut, à chaque démarrage de Engine Driver.</string>
+    <string name="prefSortOrderRoutesTitle">Ordre de tri des itinéraires</string>
+    <string name="prefSortOrderRoutesSummary">Ordonnez que les entrées Routes apparaissent, par défaut, à chaque démarrage d\'Engine Driver</string>
+    <string name="prefShowWitPomTitle">Afficher la page PoM WiThrottle</string>
+    <string name="prefShowWitPomSummary">Choisissez si le menu et la page Programmation CV WiThrottle sur MAIN (Mode Opérations) doivent être disponibles.\tWählen Sie, ob die WiThrottle CV-Programmierung im Hauptmenü (Betriebsmodus) und auf der Seite verfügbar sein soll.</string>
     <string name="prefFeedbackOnDisconnectTitle">Envoi Feedback à déconnexion</string>
     <string name="prefFeedbackOnDisconnectSummary">Vibreur si déconnexion inattendue</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerte si arrière plan</string>
@@ -1047,5 +1067,7 @@
     <string name="cv29SpeedTableYes">Courbe de vitesse 28 points</string>
     <string name="cv29SpeedToggleDirection">Ecrit valeur %d dans CV29 pour changer sens de marche</string>
     <string name="order">Trier</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Toujours afficher Lancer/Fermer ?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Affichez toujours les boutons Lancer et Fermer pour les aiguillages, jamais le bouton Basculer.</string>
 
 </resources>

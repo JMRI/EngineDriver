@@ -489,6 +489,7 @@
     <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$dms. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
     <string name="statusThreadedAppUnableToConnect">Kann nicht mit Server unter %1$s:%2$s von %3$s verbinden.\n\nVersuche erneut</string>
 
+    <string name="toastDoubleBackButtonToExit">Drücken Sie erneut „Zurück“, um Engine Driver zu verlassen</string>
     <string name="toastUnableToSetBrightness">Auto Helligkeit/ Adaptive Helligkeit kann nicht gesetzt werden</string>
     <string name="toastAccelerometerNotFound">Beschleunigungsmesser nicht gefunden oder ausgeschaltet.</string>
     <string name="toastLocoChangeNotAllowed">Lokwechsel nicht erlaubt: \'Richtungswechsel während Fahrt\' ist in den Voreinstellungen ausgeschaltet.</string>
@@ -616,6 +617,9 @@
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Enthält&#8230;</string>
 
+    <string name="prefRosterOwnersFilterShowOptionTitle">Filtern Sie nach Dienstplanbesitzer</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">Zeigen Sie eine Option zum Filtern des Dienstplans nach Besitzer an</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">Alle</string>
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
     <string name="LocoSelectMethodRoster">JMRI Lokverzeichnis</string>
     <string name="LocoSelectMethodRecent">Kürzlich verwendete</string>
@@ -745,6 +749,7 @@
     <string name="prefEsuMc2KnobButtonTitle">Zeigen Sie disable Knob-Taste</string>
     <string name="prefEsuMc2KnobButtonSummary">Lassen Sie den Steuerknopf werden, indem eine Aktionstaste auf dem Bildschirm Drossel deaktiviert.</string>
     <string name="EsuMc2KnobAction">Aktivieren / Deaktivieren Knob</string>
+    <string name="FilterRosterListDownloadLabel">Herunterladen</string>
     <string name="rosterEmpty">Kann keine enties im JMRI Roster finden. Verwenden Sie entweder die ‚DCC-Adresse‘ oder ‚Neue‘ Option statt.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
@@ -790,6 +795,10 @@
     <string name="editConsistButtonLabel">Bearbeiten Reihenfolge und Richtung</string>
     <string name="editConsistLightsButtonLabel">Bearbeiten Lichter</string>
     <string name="toastConnectionsListHelp">Tippen auswählen.\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
+    <string name="toastSortedByName">Nach Namen sortiert</string>
+    <string name="toastSortedById">Sortiert nach Adresse/ID</string>
+    <string name="toastSortedByLastUsed">Sortiert nach der letzten Verwendung</string>
+    <string name="toastSortedByPosition">Sortiert nach Position</string>
     <string name="toastConsistEditHelp">Berühren Sie, um die Richtung ändern.\nSwipe links nach rechts um einen Eintrag zu entfernen.</string>
     <string name="consistLocoFacingFront">Vorderseite</string>
     <string name="consistLocoFacingRear">Rückseite</string>
@@ -809,6 +818,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Bestätigen Sie, dass Sie die letzten Lokomotiven wollen entfernen</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Bestätigen Sie, dass Sie alle Neue Weichen wollen entfernen</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Bestätigen Sie, dass Sie alle Dienstplaneinträge in die Liste „Letzte Lokomotiven“ herunterladen möchten</string>
+    <string name="prefHideInstructionalToastsTitle">Anleitungshinweise ausblenden</string>
+    <string name="prefHideInstructionalToastsSummary">Anleitungs-Popup-Hilfe/Hinweise zum „Toast“ ausblenden</string>
     <string name="dialogConfirmResetPreferencesTitle">Einstellungen zurücksetzen</string>
     <string name="dialogResetPreferencesQuestion">Bestätigen Sie, dass Sie alle Präferenzen wollen zurückgesetzt. \n Alle aktuellen Einstellungen gehen verloren.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importeinstellungen</string>
@@ -880,6 +892,14 @@
     <string name="permissionsSystemSettingsButton">Systemeinstellungen</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Drosselklappenschalter-Knopf Voreinstellungen</string>
     <string name="prefCategoryDevicePageTitle">Geräteeinstellungen</string>
+    <string name="prefSortOrderRosterTitle">Sortierreihenfolge des Dienstplans</string>
+    <string name="prefSortOrderRosterSummary">Ordnen Sie an, dass die Dienstplaneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
+    <string name="prefSortOrderTurnoutsTitle">Sortierreihenfolge der Weichen</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordnen Sie an, dass die Weicheneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
+    <string name="prefSortOrderRoutesTitle">Sortierreihenfolge der Routen</string>
+    <string name="prefSortOrderRoutesSummary">Ordnen Sie an, dass die Routeneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
+    <string name="prefShowWitPomTitle">WiThrottle PoM-Seite anzeigen</string>
+    <string name="prefShowWitPomSummary">Wählen Sie, ob die WiThrottle CV-Programmierung im Hauptmenü (Betriebsmodus) und auf der Seite verfügbar sein soll.</string>
     <string name="prefFeedbackOnDisconnectTitle">Feedback zu trennen</string>
     <string name="prefFeedbackOnDisconnectSummary">Wiedergabe starten und Vibrieren auf unerwartete trennen.</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Hintergrund Alarm</string>
@@ -1005,5 +1025,7 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
     <string name="order">Sortieren</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Immer Wurf/Schließen anzeigen?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Zeigen Sie für Weichen immer die Schaltflächen „Werfen“ und „Schließen“ an, niemals die Schaltfläche „Umschalten“.</string>
 
 </resources>

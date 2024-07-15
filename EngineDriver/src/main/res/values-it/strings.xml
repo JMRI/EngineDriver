@@ -494,6 +494,7 @@
     <string name="gamepadTestKeyCodesRightCode">"Des"</string>
     <string name="prefGamepadTestNowTitle">Test impostazioni Gamepad Adesso!</string>
     <string name="prefGamepadTestNowSummary">Permette la conferma chele impostazioni scelte funzionano correttamente.\nLa pagina di Test sará lanciata IMMEDIATAMENTE dopo la selezione.</string>
+    <string name="toastDoubleBackButtonToExit">Premere di nuovo \"Indietro\" per uscire da Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossibile regolare Auto Brillantezza/ Brillantezza Adattativa.</string>
     <string name="toastAccelerometerNotFound">Accelerometro non trovato o disabilitato</string>
     <string name="toastLocoChangeNotAllowed">Cambio di locomotiva non permesso:\'Cambio di Direzione in Movimento\' è disabilitato nelle preferenze.</string>
@@ -682,6 +683,7 @@
     <string name="dccExFunctionSettings">Impostazioni della funzione DCC-EX</string>
     <string name="fb_column_label">Etichetta</string>
     <string name="fb_column_function">funz #</string>
+    <string name="FilterRosterListDownloadLabel">Scaricamento</string>
     <string name="rosterEmpty">Impossibile trovare nessuna enties nel roster JMRI. Utilizzare il \'DCC Indirizzo\' o opzione \'recente\', invece.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Tutte le partite Fail Azione</string>
@@ -720,6 +722,10 @@
     <string name="editConsistButtonLabel">Modifica ordine e la direzione</string>
     <string name="editConsistLightsButtonLabel">Modifica Luci</string>
     <string name="toastConnectionsListHelp">Toccare per selezionare.\nSwipe sinistra a destra per rimuovere una voce.</string>
+    <string name="toastSortedByName">Ordinati per nome</string>
+    <string name="toastSortedById">Ordinati per indirizzo/ID</string>
+    <string name="toastSortedByLastUsed">Ordinati per ultimo utilizzo</string>
+    <string name="toastSortedByPosition">Ordinati per posizione</string>
     <string name="toastConsistEditHelp">Toccare per cambiare direzione.\nSwipe sinistra a destra per rimuovere una voce.</string>
     <string name="consistLocoFacingFront">Davanti</string>
     <string name="consistLocoFacingRear">Posteriore</string>
@@ -739,6 +745,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confermare che si desidera rimuovere tutte le locomotive recenti</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confermare che si desidera rimuovere tutti i deviatoi recenti</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Conferma di voler scaricare tutte le voci del roster nell\'elenco delle locomotive recenti</string>
+    <string name="prefHideInstructionalToastsTitle">Nascondi suggerimenti didattici</string>
+    <string name="prefHideInstructionalToastsSummary">Nascondi aiuto/suggerimenti popup didattici \"toast\".</string>
     <string name="dialogConfirmResetPreferencesTitle">Resetta le preferenze</string>
     <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
@@ -811,6 +820,14 @@
     <string name="permissionsWriteSettings">Engine Driver ha bisogno Scrivere i settings autorizzazioni per modificare la luminosità dello schermo.</string>
     <string name="permissionsSystemSettingsButton">Impostazioni di sistema</string>
     <string name="prefCategoryDevicePageTitle">preferenze dei dispositivi</string>
+    <string name="prefSortOrderRosterTitle">Ordinamento degli elenchi</string>
+    <string name="prefSortOrderRosterSummary">Ordina che le voci dell\'elenco vengano visualizzate, per impostazione predefinita, ogni volta che avvii Engine Driver</string>
+    <string name="prefSortOrderTurnoutsTitle">Ordinamento degli afflussi</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordinare che le voci Scambi vengano visualizzate, per impostazione predefinita, ogni volta che si avvia Engine Driver</string>
+    <string name="prefSortOrderRoutesTitle">Ordinamento dei percorsi</string>
+    <string name="prefSortOrderRoutesSummary">Ordina che le voci Routes vengano visualizzate, per impostazione predefinita, ogni volta che avvii Engine Driver</string>
+    <string name="prefShowWitPomTitle">Mostra la pagina PoM con acceleratore</string>
+    <string name="prefShowWitPomSummary">Scegliere se la programmazione WiThrottle CV nel menu e nella pagina PRINCIPALE (modalità operativa) deve essere disponibile.</string>
     <string name="prefFeedbackOnDisconnectTitle">Feedback su Disconnect</string>
     <string name="prefFeedbackOnDisconnectSummary">Riproduci suono e vibrazione sulla disconnessione inaspettata.</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">sfondo Alert</string>
@@ -939,5 +956,7 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Usa sempre le etichette delle funzioni dal server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Se disabilitato, utilizzare ENGINEDRIVER Etichette predefinite per LOCOS selezionati per indirizzo (non elenco), ignorando le etichette predefinite del server.</string>
     <string name="order">Ordinare</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Mostra sempre Lancia/Chiudi?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Mostra sempre entrambi i pulsanti Lancia e Chiudi per gli scambi, mai il pulsante Attiva/disattiva.</string>
 
 </resources>

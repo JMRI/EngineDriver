@@ -1860,6 +1860,7 @@
         <item>hide_system_route_names_preference</item>
         <item>DelimiterPreference</item>
         <item>HideIfNoUserNamePreference</item>
+        <item>prefTurnoutsShowThrowCloseButtons</item>
         <item>prefCategoryTurnouts</item> <!-- Category -->
 
         <!-- Children's Timer Preferences -->
