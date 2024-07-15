@@ -1957,6 +1957,13 @@
             android:title="@string/prefSortOrderRoutesTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefTurnoutsShowThrowCloseButtonsDefaultValue"
+            android:key="prefTurnoutsShowThrowCloseButtons"
+            android:summary="@string/prefTurnoutsShowThrowCloseButtonsSummary"
+            android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

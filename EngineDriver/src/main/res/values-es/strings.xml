@@ -459,6 +459,7 @@
     <string name="gamepadTestKeyCodesRightCode">"Dr"</string>
     <string name="prefGamepadTestNowTitle">¡Prueba de configuración del gamepad ahora!</string>
     <string name="prefGamepadTestNowSummary">Permite confirmar que la configuración seleccionada funciona correctamente.\nLa página de prueba se iniciará INMEDIATAMENTE al seleccionarla</string>
+    <string name="toastDoubleBackButtonToExit">Presione \'Atrás\' nuevamente para salir de Engine Driver</string>
     <string name="toastUnableToSetBrightness">No se ha podido establecer el brillo automático/adaptativo</string>
     <string name="toastAccelerometerNotFound">Acelerómetro no encontrado o deshabilitado</string>
     <string name="toastLocoChangeNotAllowed">Cambio de Locomotora no permitido:\'El cambio de dirección mientras hay movimiento\' está deshabilitado en las preferencias</string>
@@ -776,6 +777,10 @@
     <string name="editConsistButtonLabel">Edita el orden y el frontal</string>
     <string name="editConsistLightsButtonLabel">Edita luces</string>
     <string name="toastConnectionsListHelp">Toque para seleccionar.\nDeslice hacia la derecha para eliminar una entrada</string>
+    <string name="toastSortedByName">Ordenado por nombre</string>
+    <string name="toastSortedById">Ordenado por dirección/ID</string>
+    <string name="toastSortedByLastUsed">Ordenado por última vez utilizado</string>
+    <string name="toastSortedByPosition">Ordenado por posición</string>
     <string name="toastConsistEditHelp">Toque para cambiar de dirección.\nDeslice hscia la derecha para eliminar una entrada</string>
     <string name="consistLocoFacingFront">Frontal anterior</string>
     <string name="consistLocoFacingRear">Frontal posterior</string>
@@ -795,6 +800,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirme que desea eliminar todas las Locomotoras recientes</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirme que desea eliminar todos los desvíos recientes</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Confirme que desea descargar todas las entradas de la lista a la lista de locomotoras recientes</string>
+    <string name="prefHideInstructionalToastsTitle">Ocultar sugerencias instructivas</string>
+    <string name="prefHideInstructionalToastsSummary">Ocultar ayuda/sugerencias emergentes instructivas</string>
     <string name="dialogConfirmResetPreferencesTitle">Reiniciar preferencias</string>
     <string name="dialogResetPreferencesQuestion">Confirme que desea restablecer todas las preferencias.\nPerderá todas sus preferencias actuales</string>
     <string name="dialogConfirmImportPreferencesTitle">Importar las preferencias</string>
@@ -865,6 +873,14 @@
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver necesita permisos para activar o desactivar los datos móviles.</string>-->
     <string name="permissionsSystemSettingsButton">Ajustes del sistema</string>
     <string name="prefCategoryDevicePageTitle">Preferencias del Dispositivo</string>
+    <string name="prefSortOrderRosterTitle">Orden de clasificación de la lista</string>
+    <string name="prefSortOrderRosterSummary">Ordene que las entradas de la lista aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
+    <string name="prefSortOrderTurnoutsTitle">Orden de clasificación de desvíos</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordene que las entradas de Desvíos aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
+    <string name="prefSortOrderRoutesTitle">Orden de clasificación de rutas</string>
+    <string name="prefSortOrderRoutesSummary">Ordene que las entradas de Rutas aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
+    <string name="prefShowWitPomTitle">Mostrar página WiThrottle PoM</string>
+    <string name="prefShowWitPomSummary">Elija si la página y el menú Programación CV WiThrottle en PRINCIPAL (Modo de operaciones) deben estar disponibles.</string>
     <string name="prefFeedbackOnDisconnectTitle">Retroalimentación sobre la Desconexión</string>
     <string name="prefFeedbackOnDisconnectSummary">Reproducir sonido y vibración en desconexiones inesperadas</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de segundo plano</string>
@@ -944,6 +960,7 @@
     <string name="prefTtsGamepadTestKeysTitle">En la tecla de prueba de GamePad, presione</string>
     <string name="prefTtsThrottleSpeedSummary">Cuando la velocidad alcanza ciertas velocidades cuando se usa un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">En velocidades de gamepad</string>
+    <string name="FilterRosterListDownloadLabel">Descargar</string>
     <string name="rosterEmpty">Incapaz de encontrar entidades en la lista de JMRI. Use la opción \'Dirección DCC\' o \'reciente\' en su lugar.</string>
     <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
@@ -991,4 +1008,6 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Use siempre etiquetas de funciones desde el servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Cuando esté deshabilitado, use etiquetas predeterminadas de EnginedRiver para locos seleccionados por dirección (no en la lista), ignorando las etiquetas predeterminadas del servidor.</string>
     <string name="order">Clasificar</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">¿Mostrar siempre Lanzar/Cerrar?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Muestre siempre los botones Lanzar y Cerrar para Desvíos, nunca el botón Alternar.</string>
 </resources>

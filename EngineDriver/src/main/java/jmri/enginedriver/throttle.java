@@ -6421,11 +6421,13 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                                             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                                             if (((bt + " ").indexOf(" ")>14) || (bt.length()>24)) {
                                                 b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                                                b.setMaxLines(3);
                                             }
                                         }
                                     }
                                 } else {
                                     b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                                    b.setMaxLines(2);
                                 }
                                 b.setEnabled(false); // start out with everything disabled
                             } else {

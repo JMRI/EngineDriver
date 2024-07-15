@@ -464,6 +464,7 @@
     <string name="prefGamepadTestNowTitle">Prova de configuració del gamepad ara!</string>
     <string name="prefGamepadTestNowSummary">Permet confirmar que la configuració seleccionada funciona correctament.\nLa pàgina de prova s\'iniciarà IMMEDIATAMENT en seleccionar-la</string>
 
+    <string name="toastDoubleBackButtonToExit">Premeu \"Enrere\" de nou per sortir del controlador del motor</string>
     <string name="toastUnableToSetBrightness">No es pot establir el brillo atomàtic/adaptable</string>
     <string name="toastAccelerometerNotFound">Acceleròmetre no trobat o deshabilitat</string>
     <string name="toastLocoChangeNotAllowed">Canvi de la Locomotora no perms:\'El canvi de direcció mentre hi ha moviment\' està deshabilitat en les preferències</string>
@@ -597,6 +598,9 @@
 <!--    <string name="FilterRosterList">Filtre</string>-->
     <string name="FilterRosterListHint">Conté&#8230;</string>
 
+    <string name="prefRosterOwnersFilterShowOptionTitle">Filtra per propietari de la llista</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">Mostra una opció per filtrar la llista per propietari</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">Tots</string>
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
     <string name="LocoSelectMethodRoster">JMRI flota</string>
     <string name="LocoSelectMethodRecent">Recent</string>
@@ -784,6 +788,10 @@
     <string name="editConsistButtonLabel">Edita l\'ordre i el frontal</string>
     <string name="editConsistLightsButtonLabel">Edita llums</string>
     <string name="toastConnectionsListHelp">Toca per seleccionar.\nLlisca cap a la dreta per eliminar una entrada</string>
+    <string name="toastSortedByName">Ordenat per Nom</string>
+    <string name="toastSortedById">Ordenat per Adreça/Id</string>
+    <string name="toastSortedByLastUsed">Ordenat per darrera vegada utilitzat</string>
+    <string name="toastSortedByPosition">Ordenat per posició</string>
     <string name="toastConsistEditHelp">Toca per canviar de direcció.\nLlisca cap a la dreta per eliminar una entrada</string>
     <string name="consistLocoFacingFront">Frontal anterior</string>
     <string name="consistLocoFacingRear">Frontal posterior</string>
@@ -803,6 +811,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmeu que voleu eliminar totes les Locomotores recents</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmeu que voleu eliminar totes les agulles recents</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Confirmeu que voleu descarregar totes les entrades de la llista a la llista de locomotores recents</string>
+    <string name="prefHideInstructionalToastsTitle">Amaga les pistes instructives</string>
+    <string name="prefHideInstructionalToastsSummary">Amaga l\'ajuda i els consells emergents \"brindis\" d\'instruccions</string>
     <string name="dialogConfirmResetPreferencesTitle">Restablir les preferències</string>
     <string name="dialogResetPreferencesQuestion">Confirmeu que voleu restablir totes les preferències.\nPerdreu totes les preferències actuals</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa les preferències</string>
@@ -867,6 +878,14 @@
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per carregar i llegfir les preferències.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver Engine necesita permisos per activar o desactivar les dades mòbils.</string>-->
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
+    <string name="prefSortOrderRosterTitle">Ordre d\'ordenació de la llista</string>
+    <string name="prefSortOrderRosterSummary">Ordeneu que les entrades de la llista apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
+    <string name="prefSortOrderTurnoutsTitle">Ordre d\'ordenació de les sortides</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordeneu que les entrades de desviacions apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
+    <string name="prefSortOrderRoutesTitle">Ordre d\'ordenació de rutes</string>
+    <string name="prefSortOrderRoutesSummary">Ordeneu que les entrades de Rutes apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
+    <string name="prefShowWitPomTitle">Mostra la pàgina PoM de WiThrottle</string>
+    <string name="prefShowWitPomSummary">Trieu si el menú i la pàgina WiThrottle CV Programming al MAIN (mode d\'operacions) han d\'estar disponibles.</string>
     <string name="prefFeedbackOnDisconnectTitle">Retroalimentació sobre la Desconnexió</string>
     <string name="prefFeedbackOnDisconnectSummary">Reproduir so i vibració en desconnexións inesperades</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta de segon terme</string>
@@ -949,6 +968,7 @@
     <string name="prefTtsThrottleSpeedTitle">A velocitats de gamepad</string>
     <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí? (vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
+    <string name="FilterRosterListDownloadLabel">descarregar</string>
     <string name="rosterEmpty">No es pot trobar cap ingrés a la llista de JMRI. Utilitzeu l\'opció \'Adreça DCC\' o \'recent\'.</string>
     <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \n\nReintentant</string>
     <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
@@ -1002,4 +1022,6 @@
     <string name="prefHapticFeedbackButtonsSummary">Retour haptique sur touches (vibration)</string>
     <string name="prefHapticFeedbackButtonsTitle">Retour haptique sur touches</string>
     <string name="order">Ordena</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Mostrar sempre Llançar/Tancar?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Mostra sempre els botons Llançar i Tancar per als desviaments, mai el botó Commuta.</string>
 </resources>

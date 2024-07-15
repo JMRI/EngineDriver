@@ -498,6 +498,7 @@
     <string name="gamepadTestKeyCodesRightCode">"Dir"</string>
     <string name="prefGamepadTestNowTitle">Testando Configuração Gamepad Agora!</string>
     <string name="prefGamepadTestNowSummary">Permite confirmar que a configuração escolhida funciona corretamente.\nA Página de Teste será rodada IMEDIATAMENTE após a seleção.</string>
+    <string name="toastDoubleBackButtonToExit">Pressione \'Voltar\' novamente para sair do Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossível regular o Auto Brilho/ Brilho Adaptativo.</string>
     <string name="toastAccelerometerNotFound">Acelerômetro não encontrado ou desabilitado</string>
     <string name="toastLocoChangeNotAllowed">Troca de locomotiva não permitida:\'Mudança de Direção em Movimento\' está desabilitado nas preferências.</string>
@@ -681,6 +682,7 @@
     <string name="dccExFunctionSettings">Configurações de função DCC-EX</string>
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
+    <string name="FilterRosterListDownloadLabel">Download</string>
     <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
@@ -719,6 +721,10 @@
     <string name="editConsistButtonLabel">Editar ordem e direção</string>
     <string name="editConsistLightsButtonLabel">Editar Luzes</string>
     <string name="toastConnectionsListHelp">Toque para selecionar.\nSwipe esquerda para a direita para remover uma entrada.</string>
+    <string name="toastSortedByName">Ordenado por nome</string>
+    <string name="toastSortedById">Ordenado por endereço/ID</string>
+    <string name="toastSortedByLastUsed">Ordenado pela última vez usada</string>
+    <string name="toastSortedByPosition">Ordenado por posição</string>
     <string name="toastConsistEditHelp">Toque para mudar de direção.\nSwipe esquerda para a direita para remover uma entrada.</string>
     <string name="consistLocoFacingFront">Frente</string>
     <string name="consistLocoFacingRear">traseiro</string>
@@ -738,6 +744,9 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirme que deseja remover todas as locomotivas recentes</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirme que deseja remover todas as Agulhas recentes</string>
 
+    <string name="dialogDownloadRosterConfirmQuestion">Confirme que deseja baixar todas as entradas da lista para a lista de locomotivas recentes</string>
+    <string name="prefHideInstructionalToastsTitle">Ocultar dicas instrucionais</string>
+    <string name="prefHideInstructionalToastsSummary">Ocultar ajuda/dicas pop-up instrucionais de \'brinde\'</string>
     <string name="dialogConfirmResetPreferencesTitle">Reiniciar preferências</string>
     <string name="dialogResetPreferencesQuestion">Confirme que deseja redefinir todas as preferências. \nTodas as preferências atuais serão perdidos.</string>
     <string name="dialogConfirmImportPreferencesTitle">Preferências de importação</string>
@@ -814,6 +823,14 @@
     <string name="permissionsWriteSettings">Engine Driver precisa de definições de permissões WRITE para mudar o brilho da tela.</string>
     <string name="permissionsSystemSettingsButton">Configurações do sistema</string>
     <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
+    <string name="prefSortOrderRosterTitle">Ordem de classificação da lista</string>
+    <string name="prefSortOrderRosterSummary">Ordene que as entradas da lista apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
+    <string name="prefSortOrderTurnoutsTitle">Ordem de classificação de comparecimentos</string>
+    <string name="prefSortOrderTurnoutsSummary">Ordene que as entradas dos Turnouts apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
+    <string name="prefSortOrderRoutesTitle">Ordem de classificação de rotas</string>
+    <string name="prefSortOrderRoutesSummary">Ordene que as entradas de Rotas apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
+    <string name="prefShowWitPomTitle">Mostrar página WiThrottle PoM</string>
+    <string name="prefShowWitPomSummary">Escolha se o menu e a página WiThrottle CV Programming no MAIN (Modo de Operações) devem estar disponíveis.</string>
     <string name="prefFeedbackOnDisconnectTitle">Comentários sobre Disconnect</string>
     <string name="prefFeedbackOnDisconnectSummary">Reproduzir som e vibrar em desconexão inesperada.</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerta fundo</string>
@@ -943,5 +960,7 @@
     <string name="prefAlwaysUseFunctionsFromServerTitle">Sempre use rótulos de função do servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quando desativado, use os rótulos padrão do EnginEnRiver para locos selecionados por endereço (não lista), ignorando os rótulos padrão do servidor.</string>
     <string name="order">Organizar</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Sempre mostrar Lançar/Fechar?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Sempre mostre os botões Lançar e Fechar para Turnouts, nunca o botão Alternar.</string>
 
 </resources>

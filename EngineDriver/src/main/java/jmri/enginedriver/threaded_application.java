@@ -2380,7 +2380,12 @@ public class threaded_application extends Application {
             locoSource = source_type.ROSTER;
         }
         String keepFunctions = "";
-        String functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
+        String functionLabels;
+        if (locoSource == source_type.ROSTER) {
+            functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
+        } else {
+            functionLabels = mainapp.packFunctionLabels(mainapp.function_labels_default);
+        }
         for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
             if (locoAddress.equals(importExportPreferences.recent_loco_address_list.get(i))
                     && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
@@ -2402,7 +2407,7 @@ public class threaded_application extends Application {
         importExportPreferences.recent_loco_name_list.add(0, loco_name);
         importExportPreferences.recent_loco_source_list.add(0, locoSource);
         if (functionLabels.length()>0) {
-            keepFunctions =functionLabels;
+            keepFunctions = functionLabels;
         }
         importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);  // restore from the previous value
 

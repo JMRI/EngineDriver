@@ -59,5 +59,5 @@
 
     <string name="prefSortOrderTurnoutsTitle">Points sort order</string>
     <string name="prefSortOrderTurnoutsSummary">Order that the Points entries will appear, by default, each time you start Engine Driver</string>
-
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Always show both the Throw and Close buttons for Points, never the Toggle button.</string>
 </resources>
