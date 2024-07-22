@@ -516,7 +516,7 @@
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
-    <string name="toastDoubleBackButtonToExit">Appuyez à nouveau sur « Retour » pour quitter Engine Driver.</string>
+    <string name="toastDoubleBackButtonToExit">Appuyer a nouveau sur \'Retour\' pour quitter Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>
     <string name="toastAccelerometerNotFound">Accéléromètre pas trouvé ou désactivé.</string>
     <string name="toastLocoChangeNotAllowed">Changement de sens interdit: \'Le changement de sens en marche\' est desactivé dans les préférences.</string>
@@ -704,9 +704,8 @@
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Touches de vitesse seulement</string>
     <string name="introDccexTitle">Options pour station de commande EX</string>
-    <string name="introDccexSummary">Engine Driver peut fournir des fonctionnalités supplémentaires, notamment la programmation CV,
-        si vous utilisez directement une EX-CommandStation DCC-EX. (Pas via JMRI)\n\nSi vous répondez \'Oui\' ci-dessous, Engine Driver
-        utilisera par défaut les commandes DCC-EX Native au lieu de WiThrottle si le nom du serveur contient \'DCC-EX\' ou \'DCCEX\'.</string>
+    <string name="introDccexSummary">Engine Driver permet des foncstionnalités supplémentaires, par exemple la programmation directe de CV sur une centrale DCC-EX (et pas via JMRI)
+        \n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Oui, j\'utiliserai une centrale EX-</string>
     <string name="introDccexQuestionNo">Non, je n\\\'utiliserai pas une centrale EX-</string>
     <string name="introbackButtonPress">Merci de redémarrer Engine Driver pour terminer cette introduction.</string>
@@ -819,17 +818,18 @@
     <string name="editConsistButtonLabel">Modif Ordre et Direction</string>
     <string name="editConsistLightsButtonLabel">Modif Eclairage</string>
     <string name="toastConnectionsListHelp">Appuyer pour sélectionner. Glisser Gauche vers Droite pour supprimer l entrée</string>
+    <string name="toastAddressExceedsMax">L adresse \'%1$s\' dépasse le maximum possible (\'%2$s\')</string>
     <string name="toastSortedByName">Trié par nom</string>
-    <string name="toastSortedById">Trié par adresse/identifiant</string>
+    <string name="toastSortedById">trié par adresse/identifiant</string>
     <string name="toastSortedByLastUsed">Trié par dernière utilisation</string>
-    <string name="toastSortedByPosition">Trié par poste</string>
+    <string name="toastSortedByPosition">Trié par position</string>
     <string name="toastConsistEditHelp">Appuyer pour changer de sens. Glisser Gauche vers Droite pour supprimer l entrée</string>
     <string name="consistLocoFacingFront">Avant</string>
     <string name="consistLocoFacingRear">Arrière</string>
     <string name="editConsistLocoFacingLabel">Orienté vers</string>
     <string name="toastLocoAlreadySelected">Loco \'%1$s\' déjà supprimée</string>
     <string name="turnoutsRecentHeading">Aiguilles récentes</string>
-    <string name="turnoutsSelectionTypeRoster">%1$s Définie</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Définie</string>
     <string name="turnoutsSelectionTypeAddress">Adresse / Récente</string>
     <string name="turnoutsSelectionTypeHeading">Méthode de sélection des aiguilles</string>
 <!--    <string name="toastRecentTurnoutCleared">Aiguille supprimée de la liste</string>-->
@@ -915,14 +915,14 @@
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver nécessite l accès au STOCKAGE pour lire et sauver vos préférences</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver nécessite l autorisaton d accès aux parametres TELEPHONE pour activer ou désactiver les données mobiles</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
-    <string name="prefSortOrderRosterTitle">Ordre de tri de la liste</string>
-    <string name="prefSortOrderRosterSummary">Ordonnez que les entrées de la liste apparaissent, par défaut, à chaque démarrage d\'Engine Driver</string>
-    <string name="prefSortOrderTurnoutsTitle">Ordre de tri des aiguillages</string>
-    <string name="prefSortOrderTurnoutsSummary">Ordonnez que les entrées Turnouts apparaissent, par défaut, à chaque démarrage de Engine Driver.</string>
-    <string name="prefSortOrderRoutesTitle">Ordre de tri des itinéraires</string>
-    <string name="prefSortOrderRoutesSummary">Ordonnez que les entrées Routes apparaissent, par défaut, à chaque démarrage d\'Engine Driver</string>
-    <string name="prefShowWitPomTitle">Afficher la page PoM WiThrottle</string>
-    <string name="prefShowWitPomSummary">Choisissez si le menu et la page Programmation CV WiThrottle sur MAIN (Mode Opérations) doivent être disponibles.\tWählen Sie, ob die WiThrottle CV-Programmierung im Hauptmenü (Betriebsmodus) und auf der Seite verfügbar sein soll.</string>
+    <string name="prefSortOrderRosterTitle">Sens de tri de la liste de locos</string>
+    <string name="prefSortOrderRosterSummary">Sens de tri préférentiel pour les locos à l ouverture d Engine Driver</string>
+    <string name="prefSortOrderTurnoutsTitle">Sens de tri des aiguillages</string>
+    <string name="prefSortOrderTurnoutsSummary">Sens de tri préférentiel des aiguillages à l ouverture d Engine Driver</string>
+    <string name="prefSortOrderRoutesTitle">Sens de tri des itinéraires</string>
+    <string name="prefSortOrderRoutesSummary">Sens de tri préférentiel des itinéraires à l ouverture d Engine Driver</string>
+    <string name="prefShowWitPomTitle">Afficher la page PoM de la WiThrottle</string>
+    <string name="prefShowWitPomSummary">Choisir si programmation sur voie Principale (PoM) dans le menu WiThrottle apparait et devient disponible</string>
     <string name="prefFeedbackOnDisconnectTitle">Envoi Feedback à déconnexion</string>
     <string name="prefFeedbackOnDisconnectSummary">Vibreur si déconnexion inattendue</string>
     <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerte si arrière plan</string>
@@ -1067,7 +1067,7 @@
     <string name="cv29SpeedTableYes">Courbe de vitesse 28 points</string>
     <string name="cv29SpeedToggleDirection">Ecrit valeur %d dans CV29 pour changer sens de marche</string>
     <string name="order">Trier</string>
-    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Toujours afficher Lancer/Fermer ?</string>
-    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Affichez toujours les boutons Lancer et Fermer pour les aiguillages, jamais le bouton Basculer.</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Toujours afficher les boutons dévié/non dévié ?</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Toujours afficher les boutons dévié/non dévié pour les aiguillages et pas basculer</string>
 
 </resources>

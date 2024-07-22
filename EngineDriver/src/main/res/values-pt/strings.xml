@@ -673,7 +673,7 @@
     <string name="introFinishSummary3">Você pode fazer alterações adicionais na aparência e no comportamento do aplicativo no menu \'Preferências\'.</string>
 
     <string name="introButtonsTitle">Sliders e botões de velocidade</string>
-    <string name="introButtonsSummary"> Escolha como controlar a velocidade de seus trens.</string>
+    <string name="introButtonsSummary">Escolha como controlar a velocidade de seus trens.</string>
     <string name="introButtonsSlider">Slider Only\n(não é possível com \'Botões Grandes\')</string>
     <string name="introButtonsSliderAndButtons">Slider and Buttons \n(não é possível com \'Botões Grandes\'.)</string>
     <string name="introButtonsNoSlider">Botões de velocidade apenas</string>
@@ -733,7 +733,7 @@
     <string name="turnoutsRecentHeading">Agulhas recentes</string>
     <string name="turnoutsSelectionTypeAddress">Endereço / recentes</string>
     <string name="turnoutsSelectionTypeHeading">O comparecimento às urnas Método de Selecção</string>
-    <string name="turnoutsSelectionTypeRoster">%1$s Definiram</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s Definiram</string>
 <!--    <string name="toastRecentTurnoutCleared">A afluência removido da lista</string>-->
 <!--    <string name="toastRecentTurnoutsConfirmClear">onfirm que deseja remover todas as Agulhas recentes, pressionando o botão \'Limpar Lista\' NOVAMENTE.</string>-->
 <!--    <string name="toastTurnoutsRecentsHelp">Longo pressionar para remover uma entrada.</string>-->

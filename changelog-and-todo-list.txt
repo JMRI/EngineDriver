@@ -1,6 +1,7 @@
 **Version 2.38.188
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents
+ * Additional French Translations by Alain Carasso
  * additional Google Translations
 **Version 2.37.186
  * change targetSDK from 33 to 34 per Google requirement by 8/30/2024
