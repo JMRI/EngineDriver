@@ -512,6 +512,7 @@ public class threaded_application extends Application {
             manager.createNotificationChannel(mChannel);
             manager.notify(ED_NOTIFICATION_ID, builder.build());
         } else {
+            //noinspection deprecation
             @SuppressLint("IconColors") NotificationCompat.Builder builder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.icon)
@@ -2156,6 +2157,9 @@ public class threaded_application extends Application {
             case "Big Right":
                 throttle = new Intent().setClass(this, throttle_big_buttons.class);
                 break;
+            case "Semi Realistic Left":
+                throttle = new Intent().setClass(this, throttle_semi_realistic.class);
+                break;
             case "Default":
             default:
                 throttle = new Intent().setClass(this, throttle_full.class);
@@ -2390,11 +2394,14 @@ public class threaded_application extends Application {
             if (locoAddress.equals(importExportPreferences.recent_loco_address_list.get(i))
                     && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
                     && loco_name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+
+                keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
+                if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
+
                 importExportPreferences.recent_loco_address_list.remove(i);
                 importExportPreferences.recent_loco_address_size_list.remove(i);
                 importExportPreferences.recent_loco_name_list.remove(i);
                 importExportPreferences.recent_loco_source_list.remove(i);
-                keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
                 importExportPreferences.recent_loco_functions_list.remove(i);
                 Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
                 break;
@@ -2406,7 +2413,7 @@ public class threaded_application extends Application {
         importExportPreferences.recent_loco_address_size_list.add(0, address_size);
         importExportPreferences.recent_loco_name_list.add(0, loco_name);
         importExportPreferences.recent_loco_source_list.add(0, locoSource);
-        if (functionLabels.length()>0) {
+        if ( (!functionLabels.isEmpty()) && (!functionLabels.equals("]\\[")) ) {
             keepFunctions = functionLabels;
         }
         importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);  // restore from the previous value
@@ -2588,7 +2595,7 @@ public class threaded_application extends Application {
                 tvToolbarServerDesc.setVisibility(View.GONE);
             }
 
-            TextView mClock = (TextView) toolbar.findViewById(R.id.toolbar_clock);
+            TextView mClock = toolbar.findViewById(R.id.toolbar_clock);
             mClock.setText(clockText);
 
             String prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
@@ -3053,13 +3060,13 @@ public class threaded_application extends Application {
     }
 
     public static String packFunctionLabels(LinkedHashMap<Integer, String> functionLabelsMap) {
-        String functionLabels = "";
+        StringBuilder functionLabels = new StringBuilder();
         if ( (functionLabelsMap!=null) && (!functionLabelsMap.isEmpty())) {
-            for (int i = 0; i < functionLabelsMap.size(); i++) {
-                functionLabels = functionLabels + (functionLabelsMap.get(i)!=null ? functionLabelsMap.get(i) : "") + "]\\[";
+            for (int i = 0; i < MAX_FUNCTIONS; i++) {
+                functionLabels.append( (functionLabelsMap.get(i)!=null ? functionLabelsMap.get(i) : "") + "]\\[" );
             }
         }
-        return functionLabels;
+        return functionLabels.toString();
     }
 
 }

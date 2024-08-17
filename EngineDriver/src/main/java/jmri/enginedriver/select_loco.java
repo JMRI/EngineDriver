@@ -653,7 +653,7 @@ public class select_loco extends AppCompatActivity {
         switch (requestCode) {
             case throttle.ACTIVITY_CONSIST: // edit consist
                 if (newEngine) {
-                    saveRecentLocosList(saveUpdateList);
+//                    saveRecentLocosList(saveUpdateList);
                     updateRecentConsists(saveUpdateList);
                 }
                 result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
@@ -767,10 +767,15 @@ public class select_loco extends AppCompatActivity {
                 if (locoAddress == importExportPreferences.recent_loco_address_list.get(i)
                         && locoAddressSize == importExportPreferences.recent_loco_address_size_list.get(i)
                         && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+
+                    keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
+                    if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
+
                     importExportPreferences.recent_loco_address_list.remove(i);
                     importExportPreferences.recent_loco_address_size_list.remove(i);
                     importExportPreferences.recent_loco_name_list.remove(i);
                     importExportPreferences.recent_loco_source_list.remove(i);
+                    importExportPreferences.recent_loco_functions_list.remove(i);
                     Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
@@ -2102,6 +2107,7 @@ public class select_loco extends AppCompatActivity {
         importExportPreferences.recent_loco_address_size_list.remove(position);
         importExportPreferences.recent_loco_name_list.remove(position);
         importExportPreferences.recent_loco_source_list.remove(position);
+        importExportPreferences.recent_loco_functions_list.remove(position);
 
         removingLocoOrForceReload = true;
 

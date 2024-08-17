@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
 
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -37,9 +38,6 @@ public class HorizontalSeekBar extends SeekBar {
     protected float r;
     protected float j;
 
-
-    private static final int TICK_TYPE_0_100 = 0;
-    private static final int TICK_TYPE_0_100_0 = 1;
     int tickMarkType = 0;
 
     // A change listener registration start and stop of tracking. Need an own listener because the listener in SeekBar
@@ -124,7 +122,7 @@ public class HorizontalSeekBar extends SeekBar {
 
             switch (tickMarkType) {
                 default:
-                case TICK_TYPE_0_100:
+                case tick_type.TICK_0_100:
 
                     tickSpacing = (width - (getPaddingLeft()*2) ) / (steps - 1);
                     sizeIncrease = (gridMiddle - getPaddingTop() - additionalPadding) / (steps * steps);
@@ -138,7 +136,7 @@ public class HorizontalSeekBar extends SeekBar {
 
                     break;
 
-                case TICK_TYPE_0_100_0:
+                case tick_type.TICK_0_100_0:
 
                     int tempSteps = steps/2;
                     gridBottom = height/2 - getPaddingLeft();

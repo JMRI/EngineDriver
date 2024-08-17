@@ -95,4 +95,5 @@ public interface message_type {
     int REQUEST_REFRESH_THROTTLE = 73;
     int WRITE_DIRECT_DCC_COMMAND = 74;
     int WRITE_DIRECT_DCC_COMMAND_ECHO = 75;
+    int FORCE_THROTTLE_RELOAD = 76;
 }

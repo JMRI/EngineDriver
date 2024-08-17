@@ -913,6 +913,13 @@
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
+                    android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
+                    android:key="prefAlwaysUseDefaultFunctionLabels"
+                    android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary2"
+                    android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
                     android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
                     android:key="SelectiveLeadSound"
                     android:summary="@string/prefSelectiveLeadSoundSummary"

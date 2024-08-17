@@ -27,6 +27,7 @@ import jmri.enginedriver.threaded_application;
 // EngineDriver Loco
 //
 public class Loco {
+    private static final int MAX_FUNCTIONS = 32;
     private final String addr;                  //L2531 form
     private final String formatAddr;            //2531(L) form
     private final String formatAddrHtml;            //2531(L) form with formatting
@@ -174,7 +175,7 @@ public class Loco {
         return this.addr.substring(1) + "<small><small>(" + this.addr.charAt(0) + ")</small></small>";  //reformat from L2591 to 2591(L)
     }
 
-    public void setFunctionLabels(String functionLabelsString, threaded_application mainapp) {
+    public void setFunctionLabels(String functionLabelsString) {
         String[] ta = threaded_application.splitByString(functionLabelsString, "]\\[");  //split into list of labels
 
         //populate a temp label array from RF command string
@@ -187,6 +188,20 @@ public class Loco {
             }  //end if i>0
             i++;
         }  //end for
+    }
+
+    public void setFunctionLabels(LinkedHashMap<Integer, String> newFunctionLabels) {
+        functionLabels = newFunctionLabels;
+        if (functionLabels == null) {
+            functionLabelsMaxKey = 0;
+        } else {
+            for(int i = MAX_FUNCTIONS; i >=0 ; i--) {
+                if (functionLabels.get(i) != null) {
+                    functionLabelsMaxKey = i;
+                    break;
+                }
+            }
+        }
     }
 
     public LinkedHashMap<Integer, String> getFunctionLabels() {
@@ -236,11 +251,13 @@ public class Loco {
 
         if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX)) {
             // work out if/which rule the activated function matches
+            // this is not searching the loco's labels
             for (int i = 0; i < prefConsistFollowStrings.size(); i++) {
 //            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
                 if (prefConsistFollowStrings.get(i).toLowerCase().contains(searchLabel.toLowerCase())) {
                     matchingRule = i;
                     i = 999;
+                    break;
                 }
             }
             if (matchingRule >= 0) {

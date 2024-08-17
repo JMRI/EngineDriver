@@ -92,6 +92,9 @@
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
+    <string name="neutral">Neutral</string>
+    <string name="brake">Brake</string>
+    <string name="load">Load</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
@@ -350,6 +353,8 @@
     <string name="prefDefaultFunctionsSummary">When and how the default Function Labels are displayed</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default Function Labels instead of labels from roster entries</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries.
+                                                              \nThis MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
 
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>
@@ -638,6 +643,8 @@
     <string name="prefLeftDirectionButtonsShortTitle">Short Left Direction button Label</string>
     <string name="prefLeftDirectionButtonsShortSummary">Short Labels for all LEFT direction buttons. Enter \'Fwd\' or blank for normal behaviour.</string>
     <string name="prefLeftDirectionButtonsShortDefaultValue">Fwd</string>
+
+    <string name="prefCenterDirectionButtonsShortDefaultValue">Neu</string>
 
     <string name="prefRightDirectionButtonsShortTitle">Short Right Direction button Label</string>
     <string name="prefRightDirectionButtonsShortSummary">Labels for all Short RIGHT direction buttons. Enter \'Rev\' or blank for normal behaviour.</string>
@@ -1037,7 +1044,10 @@
     <string name="ConsistEditLabelTrail">TRAIL</string>
 
     <string name="prefConsistFollowRuleStyleTitle">Consist &amp; Default Functions - Follow Rule Style</string>
-    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">Which style of rules to follow when function buttons are pressed in either a) a consist , b) when enforcing the Default Function labels.\nNote: If \'Use Default function labels\' is enabled, \'Special...\' will also apply to the lead (or only) loco.</string>
+    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">Which style of rules to follow when function buttons are pressed in either a) a consist , b) when enforcing the \'Default Function labels\'.
+        \nNOTE: \'Special\' rules will only apply if:
+        \n- \'Use Default function labels\' preference is enabled.
+        \n- The locos in a consist (or a single loco) are selected from the roster.</string>
     <string name="prefConsistFollowRuleStyleDefaultValue" translatable="false">original</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefConsistFollowTitle">Consist Function Follow Preferences</string>
@@ -1051,32 +1061,32 @@
     <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
 
     <string name="prefConsistFollowDefaultActionTitle">If All matches Fail Action</string>
-    <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet.</string>
+    <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet. (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowDefaultActionDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
 
 
     <string name="prefConsistFollowString1Title">Headlight specific String 1</string>
-    <string name="prefConsistFollowString1Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise the \'Headlight\' function (normally F0).</string>
+    <string name="prefConsistFollowString1Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise the \'Headlight\' function (normally F0). (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowAction1Title">Headlight specific Action 1</string>
     <string name="prefConsistFollowAction1Summary">Which locos in the consist should react to the found headlight functions.</string>
 
     <string name="prefConsistFollowString2Title">String 2</string>
-    <string name="prefConsistFollowString2Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
+    <string name="prefConsistFollowString2Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function. (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowAction2Title">Action for String 2</string>
     <string name="prefConsistFollowAction2Summary">Which locos in the consist should react to the found functions.</string>
 
     <string name="prefConsistFollowString3Title">String 3</string>
-    <string name="prefConsistFollowString3Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
+    <string name="prefConsistFollowString3Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function. (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowAction3Title">Action for String 3</string>
     <string name="prefConsistFollowAction3Summary">Which locos in the consist should react to the found functions.</string>
 
     <string name="prefConsistFollowString4Title">String 4</string>
-    <string name="prefConsistFollowString4Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
+    <string name="prefConsistFollowString4Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function. (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowAction4Title">Action for String 4</string>
     <string name="prefConsistFollowAction4Summary">Which locos in the consist should react to the found functions.</string>
 
     <string name="prefConsistFollowString5Title">String 5</string>
-    <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function.</string>
+    <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist to recognise a similar function. (\'Complex\' matching rule only)</string>
     <string name="prefConsistFollowAction5Title">Action for String 5</string>
     <string name="prefConsistFollowAction5Summary">Which locos in the consist should react to the found functions.</string>
 

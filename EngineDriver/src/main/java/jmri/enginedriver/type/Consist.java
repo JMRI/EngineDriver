@@ -360,10 +360,17 @@ public final class Consist {
         return formatCon.toString();
     }
 
-    public void setFunctionLabels(String address, String functionLabelsString, threaded_application mainapp) {
+    public void setFunctionLabels(String address, String functionLabelsString) {
         ConLoco l = con.get(address);
         if (l != null)
-            l.setFunctionLabels(functionLabelsString, mainapp);
+            l.setFunctionLabels(functionLabelsString);
+
+    }
+
+    public void setFunctionLabels(String address, LinkedHashMap<Integer, String> newFunctionLabels) {
+        ConLoco l = con.get(address);
+        if (l != null)
+            l.setFunctionLabels(newFunctionLabels);
 
     }
 }

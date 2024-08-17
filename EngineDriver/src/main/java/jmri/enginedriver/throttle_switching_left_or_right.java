@@ -38,6 +38,7 @@ import android.widget.SeekBar;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_switching_left_or_right extends throttle {
@@ -51,9 +52,6 @@ public class throttle_switching_left_or_right extends throttle {
     private LinearLayout[] lLowers;
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
-
-//    private static final int TICK_TYPE_0_100 = 0;
-    private static final int TICK_TYPE_0_100_0 = 1;
 
     private final int[] throttleMidPointZero = {0,0,0,0,0,0};
     private final int[] throttleSwitchingMax = {0,0,0,0,0,0};
@@ -235,7 +233,7 @@ public class throttle_switching_left_or_right extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
                     break;
             }
-            vsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+            vsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    vsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
             vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
             vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -541,10 +539,7 @@ public class throttle_switching_left_or_right extends throttle {
 
 //            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
-
         }
-
-
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {

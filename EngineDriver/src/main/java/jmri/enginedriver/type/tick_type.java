@@ -17,11 +17,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface consist_function_rule_style_type {
-    String ORIGINAL = "original";
-    String COMPLEX = "complex";
-    String SPECIAL_EXACT = "specialExact";
-    String SPECIAL_PARTIAL = "specialPartial";
-    String SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
-    String SPECIAL = "special";  // only used for partial matching. not for exact matching
+public interface tick_type {
+    int TICK_0_100_0 = 0;
+    int TICK_0_3 = 3;
+    int TICK_0_5 = 5;
+    int TICK_0_6 = 6;
+    int TICK_0_7 = 7;
+    int TICK_0_100 = 100;
 }

@@ -130,15 +130,13 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler(Looper.getMainLooper());
 
         if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY)) ) ) {
+                && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)) ) {
             isSpecial = true;
         }
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
@@ -305,7 +303,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 //                sLocos.setSelection(getSpinnerIndex(sLocos, aLocos.get(ndx)));
 
                 sLocos.setSelection(getArrayIndex(LOCOS, aLocos.get(ndx)));
-                if ((!isSpecial) && (mainapp.isDCCEX)) { // if it is for DCC-EX only, don't show the lead/trail etc options
+                if ((!isSpecial) && (mainapp.isDCCEX)
+                    && (!mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL))
+                ) { // if it is for DCC-EX only, don't show the lead/trail etc options
                     sLocos.setVisibility(View.GONE);
                     findViewById(R.id.function_consist_LocosHeader).setVisibility(View.GONE);
                 }

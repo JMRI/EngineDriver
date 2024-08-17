@@ -134,6 +134,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected boolean prefHideSlider = false;
 
     private String prefConsistFollowRuleStyle = "original";
+    private String priorPrefConsistFollowRuleStyle = "original";
 
     private boolean ignoreThisThrottleNumChange = false;
 
@@ -249,6 +250,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     "");
             Log.d("Engine_Driver", "Settings: Set toolbar");
         }
+
+        // save some values
+        prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+        priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
     }
 
 //    @Override
@@ -944,7 +949,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
         for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
-            Preference thisPref = (Preference) prefScreen.findPreference(gamePadPrefButtonReferences[i]);
+            Preference thisPref = prefScreen.findPreference(gamePadPrefButtonReferences[i]);
             if (thisPref != null) {
                 thisPref.setTitle(gamePadPrefLabels[i]);
                 if ((gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL)) || (gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_USABLE_LABEL))) {
@@ -1029,14 +1034,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     }
 
+    @SuppressLint("ApplySharedPref")
     private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
         boolean enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL);
-
         enableDisablePreference(prefScreen, "SelectiveLeadSound", enable);
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF1", enable);
         enableDisablePreference(prefScreen, "SelectiveLeadSoundF2", enable);
-        enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX);
 
+        enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX);
         enableDisablePreference(prefScreen, "prefConsistFollowDefaultAction", enable);
         enableDisablePreference(prefScreen, "prefConsistFollowString1", enable);
         enableDisablePreference(prefScreen, "prefConsistFollowAction1", enable);
@@ -1049,6 +1054,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefConsistFollowString5", enable);
         enableDisablePreference(prefScreen, "prefConsistFollowAction5", enable);
 
+        enable = prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL);
+
+        if ( (enable) && (!prefConsistFollowRuleStyle.equals(priorPrefConsistFollowRuleStyle)) ) {
+            enableDisablePreference(prefScreen, "prefAlwaysUseDefaultFunctionLabels", false);
+            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", true).commit();
+            reload();
+        }
+        priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
     }
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
@@ -1705,6 +1718,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
 
+            parentActivity.prefConsistFollowRuleStyle = parentActivity.prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+            parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
+            parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
         }
 
         @Override

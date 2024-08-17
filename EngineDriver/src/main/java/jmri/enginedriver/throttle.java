@@ -228,6 +228,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected Button[] bRSpds;
     protected Button[] bLSpds;
 
+    protected Button[] bTargetFwds;
+    protected Button[] bTargetRevs;
+    protected Button[] bTargetNeutrals;
+    protected Button[] bTargetRSpds;
+    protected Button[] bTargetLSpds;
+    protected Button[] bTargetStops;
+
     protected TextView[] tvSpdLabs; // labels
     protected TextView[] tvSpdVals;
 
@@ -249,6 +256,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected VerticalSeekBar[] vsbSwitchingSpeeds;
     protected HorizontalSeekBar[] hsbSwitchingSpeeds;
 
+    protected VerticalSeekBar[] vsbSemiRealisticSpeeds;
+    protected VerticalSeekBar[] vsbBrakes;
+    protected VerticalSeekBar[] vsbLoads;
+
+    protected static int[] targetSpeeds = {0,0,0,0,0,0 };
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIds;
@@ -272,7 +284,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected int[] sliderTopLeftY = {0,0,0,0,0,0};
     protected int[] sliderBottomRightX = {0,0,0,0,0,0};
     protected int[] sliderBottomRightY = {0,0,0,0,0,0};
-    protected GestureOverlayView ov;
+    protected GestureOverlayView ov;    // screen coordinates for brake sliders, so we can ignore swipe on them
+    protected int[] brakeSliderTopLeftX = {0,0,0,0,0,0};
+    protected int[] brakeSliderTopLeftY = {0,0,0,0,0,0};
+    protected int[] brakeSliderBottomRightX = {0,0,0,0,0,0};
+    protected int[] brakeSliderBottomRightY = {0,0,0,0,0,0};
+    protected int[] loadSliderTopLeftX = {0,0,0,0,0,0};
+    protected int[] loadSliderTopLeftY = {0,0,0,0,0,0};
+    protected int[] loadSliderBottomRightX = {0,0,0,0,0,0};
+    protected int[] loadSliderBottomRightY = {0,0,0,0,0,0};
+
 
     // these are used for gesture tracking
     private float gestureStartX = 0;
@@ -972,7 +993,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             } catch (Exception e) {
                                 addr = "";
                             }
-                            if ((whichThrottle>=0) && (whichThrottle<mainapp.numThrottles)) {
+                            if ((whichThrottle >= 0) && (whichThrottle < mainapp.numThrottles)) {
                                 if (com2 == '+' || com2 == 'L') { // if loco added or function labels updated
                                     if (com2 == ('+')) {
                                         enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
@@ -1023,7 +1044,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                                 if (locoDir != dir) {// if loco has wrong direction then correct it
                                                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
                                                 }
-                                            } catch (Exception e) {     // isReverseOfLead returns null if addr is not in con
+                                            } catch (
+                                                    Exception e) {     // isReverseOfLead returns null if addr is not in con
                                                 // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
                                                 Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
                                             }
@@ -1037,31 +1059,31 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     } else if (com3 == 'F') { // function key
                                         try {
                                             int function = Integer.parseInt(ls[1].substring(2));
-                                            int action = Integer.parseInt(ls[1].substring(1,2));
+                                            int action = Integer.parseInt(ls[1].substring(1, 2));
 //                                            doFunctionSound(whichThrottle, function);
 
                                             String loco = ls[0].substring(3);
                                             Consist con = mainapp.consists[whichThrottle];
-                                            if ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL))
-                                                    || (loco.equals(con.getLeadAddr())) ) { //if using the 'complex' follow function rules, only send it to the lead loco
+                                            if ((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL))
+                                                    || (loco.equals(con.getLeadAddr()))) { //if using the 'complex' follow function rules, only send it to the lead loco
                                                 set_function_state(whichThrottle, function);
                                             }
 
                                             //ipls equivalents
-                                            if ( ((function>=1) && function<=2)
+                                            if (((function >= 1) && function <= 2)
                                                     && (!mainapp.prefDeviceSounds[whichThrottle].equals("none"))
-                                                    && (mainapp.prefDeviceSoundsF1F2ActivateBellHorn) ) {
-                                                if (function==1) {
-                                                    if ((action==0) && ((!bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()))) {
+                                                    && (mainapp.prefDeviceSoundsF1F2ActivateBellHorn)) {
+                                                if (function == 1) {
+                                                    if ((action == 0) && ((!bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()))) {
                                                     } else {
                                                         handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_BELL, sounds_type.BELL,
                                                                 (action == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
                                                     }
                                                 } else {
-                                                    if ((action==0) && ((!bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()))) {
+                                                    if ((action == 0) && ((!bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()))) {
                                                     } else {
                                                         handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_HORN, sounds_type.HORN,
-                                                                (action==0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
+                                                                (action == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
                                                     }
                                                 }
                                             }
@@ -1091,8 +1113,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if (com1 == 'W') { // PW - web server port info
                                 initWeb();
                                 set_labels();
-                            }
-                            else if (com1 == 'P') { // PP - power state change
+                            } else if (com1 == 'P') { // PP - power state change
                                 set_labels();
                             }
                             break;
@@ -1125,6 +1146,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
+                    break;
+                case message_type.FORCE_THROTTLE_RELOAD:
+                    try {
+                        int whichThrottle = Integer.parseInt(response_str);
+//                        lls[whichThrottle].invalidate();
+//                        lls[whichThrottle].requestLayout();
+//                        set_labels();
+                        removeLoco(whichThrottle);
+                        setAllFunctionLabelsAndListeners();
+                        set_all_function_states(whichThrottle);
+                        enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
+                        showHideConsistMenus();
+                    } catch (Exception e) {
+                        // do nothing
+                    }
                     break;
                 case message_type.RESTART_APP:
                     startNewThrottleActivity();
@@ -1344,7 +1380,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    private boolean directionButtonsAreCurrentlyReversed(int throttleIndexNo) {
+    protected boolean directionButtonsAreCurrentlyReversed(int throttleIndexNo) {
         return ((!prefSwapForwardReverseButtons) && (currentSwapForwardReverseButtons[throttleIndexNo]))
                 || (((prefSwapForwardReverseButtons) && (!currentSwapForwardReverseButtons[throttleIndexNo])));
     }
@@ -2278,7 +2314,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // get the consist for the specified throttle
     private static final Consist emptyConsist = new Consist();
-    private Consist getConsist(int whichThrottle) {
+    protected Consist getConsist(int whichThrottle) {
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length || mainapp.consists[whichThrottle] == null)
             return emptyConsist;
         return mainapp.consists[whichThrottle];
@@ -2382,9 +2418,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Consist con = mainapp.consists[whichThrottle];
 
         if ( ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))  ) )
+                && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)) )
                 || (mainapp.isDCCEX)
         ) {
             int doPress = -1;
@@ -4556,14 +4590,13 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         con = mainapp.consists[whichThrottle];
 
         String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
+        // if there is only one loco and we are not forcing the use f the Defult Functions, then revert back to the ORIGINAL style
         if ( ( (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
-                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
-                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
-                || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))  )
+                || (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)) )
             && (con.size()==1)
-            && (!mainapp.prefAlwaysUseDefaultFunctionLabels)
-        ) {
-                tempPrefConsistFollowRuleStyle = consist_function_rule_style_type.ORIGINAL;
+            && (!mainapp.prefAlwaysUseDefaultFunctionLabels) ) {
+
+            tempPrefConsistFollowRuleStyle = consist_function_rule_style_type.ORIGINAL;
         }
 
         if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
@@ -4594,11 +4627,18 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
 
         } else {  //Complex or SpecialExact or SpecialPartial
 
+            boolean fnState = mainapp.function_states[whichThrottle][function];
+            int newFnState = -1;
             if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX)) { // if Complex, always activate the lead loco
                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function);
                 } else {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
+                    if (!mainapp.isDCCEX) {
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
+                    } else {
+                        newFnState = fnState ? 0 : 1;
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, newFnState);
+                    }
                 }
             }
 
@@ -4606,12 +4646,11 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
 
             List<Integer> functionList = new ArrayList<>();
             for (Consist.ConLoco l : con.getLocos()) {
-                boolean processThisLoco = (!l.getAddress().equals(con.getLeadAddr()))
-                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
-                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
-                        || (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY))
-                        || (mainapp.prefAlwaysUseDefaultFunctionLabels);
+
                 // for complex ignore the lead as we have already set it
+                boolean processThisLoco = (!l.getAddress().equals(con.getLeadAddr()))
+                        || (tempPrefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL))
+                        || (mainapp.prefAlwaysUseDefaultFunctionLabels);
 
                 if (processThisLoco) {
                     functionList = l.getMatchingFunctions(function, lab,
@@ -4626,12 +4665,20 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                                 if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                                     mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i));
                                 } else {
-                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), buttonPressMessageType);
+                                    if (!mainapp.isDCCEX) {
+                                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), buttonPressMessageType);
+                                    } else {
+                                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), newFnState);
+                                    }
                                 }
                             } else {
                                 if ((isLatching == FUNCTION_CONSIST_LATCHING_YES) && (buttonPressMessageType == BUTTON_PRESS_MESSAGE_UP)) {
-                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_DOWN);
-                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_UP);
+                                    if (!mainapp.isDCCEX) {
+                                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_DOWN);
+                                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), BUTTON_PRESS_MESSAGE_UP);
+                                    } else {
+                                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), newFnState);
+                                    }
                                 } else if (isLatching == FUNCTION_CONSIST_LATCHING_NO) {
                                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + l.getAddress(), functionList.get(i), buttonPressMessageType);
                                 }
@@ -6164,9 +6211,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
 
             boolean isSpecial = (mainapp.prefAlwaysUseDefaultFunctionLabels)
-                    && ((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL))
-                    || (mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_PARTIAL_CONTAINS_ONLY)));
+                    && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL));
             TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
             if ((!isSpecial) && (mainapp.isDCCEX)) {
                 TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
@@ -7097,10 +7142,23 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
             for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                 if ((sbs[throttleIndex].isEnabled())
-                        && (gestureStartX >= sliderTopLeftX[throttleIndex])
+                    && (
+                        ( (gestureStartX >= sliderTopLeftX[throttleIndex])
                         && (gestureStartX <= sliderBottomRightX[throttleIndex])
                         && (gestureStartY >= sliderTopLeftY[throttleIndex])
                         && (gestureStartY <= sliderBottomRightY[throttleIndex])
+                        ) || (
+                        (gestureStartX >= brakeSliderTopLeftX[throttleIndex])
+                        && (gestureStartX <= brakeSliderBottomRightX[throttleIndex])
+                        && (gestureStartY >= brakeSliderTopLeftY[throttleIndex])
+                        && (gestureStartY <= brakeSliderBottomRightY[throttleIndex])
+                        ) || (
+                        (gestureStartX >= loadSliderTopLeftX[throttleIndex])
+                        && (gestureStartX <= loadSliderBottomRightX[throttleIndex])
+                        && (gestureStartY >= loadSliderTopLeftY[throttleIndex])
+                        && (gestureStartY <= loadSliderBottomRightY[throttleIndex])
+                        )
+                    )
                 ) {
 //                    Log.d("Engine_Driver","exiting gestureStart on slider: " + gestureStartX + ", " + gestureStartY);
                     return;

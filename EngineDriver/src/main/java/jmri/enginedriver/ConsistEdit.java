@@ -128,7 +128,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         ? this.getResources().getString(R.string.consistLocoFacingRear)
                         : this.getResources().getString(R.string.consistLocoFacingFront));
 
-                // the following is ignored if the 'complex' prefConsistFollowRuleStyle is chosen in the preferences
+                // the following is ignored if the 'complex' or 'special...' prefConsistFollowRuleStyle is chosen in the preferences
                 if (consist.getLeadAddr().equals(l.getAddress())) { // first one is always 'follow'
                     hm.put("loco_light", LIGHT_TEXT_FOLLOW);
                 } else {
@@ -311,7 +311,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);

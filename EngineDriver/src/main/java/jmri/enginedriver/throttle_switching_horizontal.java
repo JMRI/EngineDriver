@@ -39,6 +39,7 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 
 public class throttle_switching_horizontal extends throttle {
@@ -50,9 +51,6 @@ public class throttle_switching_horizontal extends throttle {
 //    private LinearLayout[] lLowers;
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
-
-//    private static final int TICK_TYPE_0_100 = 0;
-    private static final int TICK_TYPE_0_100_0 = 1;
 
     private final int[] throttleMidPointZero = {0,0,0};
     private final int[] throttleSwitchingMax = {0,0,0};
@@ -150,7 +148,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -163,7 +161,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_1);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -176,7 +174,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_2);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);

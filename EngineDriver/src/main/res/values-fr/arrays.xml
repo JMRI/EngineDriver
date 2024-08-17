@@ -75,6 +75,7 @@
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
+<!--        <item >Semi-Realistic Left Left (1)</item>-->
     </string-array>
 
     <string-array name="DisplayClockEntries">

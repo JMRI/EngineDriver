@@ -472,9 +472,14 @@ public class ImportExportPreferences {
                                         } else { // has the function map as well
                                             locoName = args[0];
                                             functions = "";
+                                            StringBuilder tempFunctions = new StringBuilder();
                                             for (int i = 1; i < args.length; i++) {
-                                                functions = functions + args[i] + "]\\[";
+                                                tempFunctions.append(args[i]);
+                                                if (i < args.length-1) {
+                                                    tempFunctions.append("]\\[");
+                                                }
                                             }
+                                            functions = tempFunctions.toString();
                                         }
                                     }
                                 }
@@ -1127,10 +1132,12 @@ public class ImportExportPreferences {
                 if (locoAddress == recent_loco_address_list.get(i)
                         && locoAddressSize == recent_loco_address_size_list.get(i)
                         && locoName.equals(recent_loco_name_list.get(i))) {
+
                     recent_loco_address_list.remove(i);
                     recent_loco_address_size_list.remove(i);
                     recent_loco_name_list.remove(i);
                     recent_loco_source_list.remove(i);
+                    keepFunctions = recent_loco_functions_list.get(i);
                     recent_loco_functions_list.remove(i);
                     Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' removed from Recents");
                     break;

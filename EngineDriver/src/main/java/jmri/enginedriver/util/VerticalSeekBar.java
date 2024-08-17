@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
 
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -30,6 +31,10 @@ public class VerticalSeekBar extends SeekBar {
     public boolean tickMarksChecked = false;
 
     Paint tickPaint;
+    Paint textPaint;
+
+    int sliderPurpose = 0;  // 0=Throttle
+    String title = "";
 
     protected int steps;
     protected int height;
@@ -56,8 +61,9 @@ public class VerticalSeekBar extends SeekBar {
     // is private.
     private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
-    private static final int TICK_TYPE_0_100 = 0;
-    private static final int TICK_TYPE_0_100_0 = 1;
+    private static final int SLIDER_PURPOSE_THROTTLE = 0;
+    private static final int SLIDER_PURPOSE_OTHER = 1;
+
     int tickMarkType = 0;
 
     public boolean touchFromUser = false;
@@ -78,6 +84,10 @@ public class VerticalSeekBar extends SeekBar {
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        textPaint.setTextSize(12);
     }
 
     public VerticalSeekBar(final Context context, final AttributeSet attrs) {
@@ -88,6 +98,10 @@ public class VerticalSeekBar extends SeekBar {
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        textPaint.setTextSize(32);
     }
 
 
@@ -106,6 +120,14 @@ public class VerticalSeekBar extends SeekBar {
         tickMarkType = requestedTickMarkType;
     }
 
+    public void setSliderPurpose(int requestedSliderPurpose) {
+        sliderPurpose = requestedSliderPurpose;
+    }
+
+    public void setTitle(String requestedTitle) {
+        title = requestedTitle;
+    }
+
     @Override
     protected final void onDraw(final Canvas c) {
         c.rotate(ROTATION_ANGLE);
@@ -114,16 +136,21 @@ public class VerticalSeekBar extends SeekBar {
         if (!tickMarksChecked) {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
-            prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
-            steps = prefDisplaySpeedUnits;
-            if (steps >= 100) {
-                steps = steps / 3;
-            } else {
-                if (steps < 28) {
-                    steps = steps * 3;
+            if (sliderPurpose == SLIDER_PURPOSE_THROTTLE) {
+                prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+                steps = prefDisplaySpeedUnits;
+                if (steps >= 100) {
+                    steps = steps / 3;
+                } else {
+                    if (steps < 28) {
+                        steps = steps * 3;
+                    }
                 }
+            } else {
+                steps = tickMarkType;  // take the steps from the type
             }
+
         }
 
         paddingLeft = getPaddingLeft();
@@ -147,7 +174,7 @@ public class VerticalSeekBar extends SeekBar {
 
             switch (tickMarkType) {
                 default:
-                case TICK_TYPE_0_100:
+                case tick_type.TICK_0_100:
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
                     sizeIncrease = endSize / (steps * steps);
@@ -160,7 +187,33 @@ public class VerticalSeekBar extends SeekBar {
                         c.drawLine(d, l, d, r, tickPaint);
                     }
                     break;
-                case TICK_TYPE_0_100_0:
+
+                case tick_type.TICK_0_3:
+                case tick_type.TICK_0_5:
+                case tick_type.TICK_0_6:
+                case tick_type.TICK_0_7:
+                    gridBottom = height - paddingLeft;
+                    tickSpacing = (paddingRight - gridBottom) / (tickMarkType - 1);
+                    sizeIncrease = endSize / (tickMarkType * tickMarkType);
+
+                    for (int i = -1; i < tickMarkType; i++) {
+                        j = (tickMarkType - i);
+                        d = gridBottom + i * tickSpacing;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
+                        c.drawLine(d, l, d, r, tickPaint);
+                        c.rotate(90, d-10, r+20);
+                        c.drawText(Integer.toString(steps-i-1),  d-10,r+20, textPaint);
+                        c.rotate(-90, d-10, r+20);
+                    }
+
+                    c.rotate(90, height - paddingLeft + 10, gridMiddle);
+                    c.drawText(title,  height - paddingLeft + 10,gridMiddle, textPaint);
+                    c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+
+                    break;
+
+                case tick_type.TICK_0_100_0:
                     int tempSteps = steps/2;
                     gridBottom = height/2 - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);

@@ -106,6 +106,7 @@ public class reconnect_status extends AppCompatActivity {
             TextView tv = findViewById(R.id.reconnect_help);
             tv.setText(getString(R.string.reconnect_success));
             if (mainapp.reconnect_status_msg_handler != null) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
                 mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen, 500L);
             } else {
                 Log.d("Engine_Driver", "Reconnect: handler already null");
@@ -168,7 +169,7 @@ public class reconnect_status extends AppCompatActivity {
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
