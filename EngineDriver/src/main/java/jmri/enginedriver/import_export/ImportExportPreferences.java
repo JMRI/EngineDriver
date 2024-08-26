@@ -249,12 +249,12 @@ public class ImportExportPreferences {
 
             String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL);
             String prefTheme = "";
-            String prefThrottleScreenType = "";
+            String prefThrottleScreenType = "Default";
             boolean prefDisplaySpeedButtons = false;
             boolean prefHideSlider = false;
             if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional prefereneces for restoration
                 prefTheme = sharedPreferences.getString("prefTheme", "");
-                prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "");
+                prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "Default");
                 prefDisplaySpeedButtons = sharedPreferences.getBoolean("prefDisplaySpeedButtons", false);
                 prefHideSlider = sharedPreferences.getBoolean("prefHideSlider", false);
             }

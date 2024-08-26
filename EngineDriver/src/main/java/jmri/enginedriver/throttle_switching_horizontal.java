@@ -38,6 +38,7 @@ import android.widget.SeekBar;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -84,6 +85,7 @@ public class throttle_switching_horizontal extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_switching_horizontal: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
 
@@ -205,6 +207,7 @@ public class throttle_switching_horizontal extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle_switching_horizontal: onResume(): called");
         super.onResume();
 
         if (mainapp.appIsFinishing) { return;}
@@ -698,9 +701,9 @@ public class throttle_switching_horizontal extends throttle {
                         doLocoSound(whichThrottle);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                         } else { // going up
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                         }
 
                         if ((lastSliderPosition < throttleMidPointZero[whichThrottle]) && (newSliderPosition > throttleMidPointZero[whichThrottle])) { // passing from reverse to forward
@@ -787,7 +790,7 @@ public class throttle_switching_horizontal extends throttle {
                         } else {
                             Log.d("Engine_Driver", "onProgressChanged !!-- LimitedJump hit jump speed.");
                             limitedJump[whichThrottle] = false;
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
                             doLocoSound(whichThrottle);
                             speedUpdate(whichThrottle, getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
@@ -808,7 +811,7 @@ public class throttle_switching_horizontal extends throttle {
         public void onStopTrackingTouch(SeekBar sb) {
 //            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
-            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
             kidsTimerActions(kids_timer_action_type.STARTED,0);
         }
     }

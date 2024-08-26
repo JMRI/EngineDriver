@@ -486,7 +486,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("Engine_Driver", "throttle.onStart() called");
+        Log.d("Engine_Driver", "we_activity.onStart() called");
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.web_msg_handler == null)
             mainapp.web_msg_handler = new web_handler(Looper.getMainLooper());

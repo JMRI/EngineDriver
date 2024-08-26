@@ -45,30 +45,31 @@
             android:id="@+id/throttle_screen"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <include layout="@layout/toolbar_screen_name_line" />
+
             <include layout="@layout/toolbar" />
+
             <include layout="@layout/toolbar_status_line" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    tools:ignore="ContentDescription" >
-                </ImageView>
+                    tools:ignore="ContentDescription"></ImageView>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal"
-                    android:weightSum="1.0"
-                    android:baselineAligned="false">
+                    android:weightSum="1.0">
 
                     <LinearLayout
                         android:id="@+id/throttle_0"
@@ -98,7 +99,7 @@
                                     android:id="@+id/loco_cell_0"
                                     android:layout_width="0dp"
                                     android:layout_height="40dp"
-                                    android:layout_weight=".6">
+                                    android:layout_weight=".65">
 
                                     <Button
                                         android:id="@+id/button_select_loco_0"
@@ -122,7 +123,7 @@
                                     android:id="@+id/speed_cell_0"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="0.25">
+                                    android:layout_weight="0.05">
 
                                     <TextView
                                         android:id="@+id/speed_label_0"
@@ -138,22 +139,11 @@
                                         tools:ignore="RelativeOverlap" />
 
                                     <TextView
-                                        android:id="@+id/speed_value_label_0"
-                                        style="?attr/floating_text_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:enabled="false"
-                                        android:text="126"
-                                        android:textSize="36sp"
-                                        tools:ignore="HardcodedText" />
-
-                                    <TextView
                                         android:id="@+id/volume_indicator_0"
                                         style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignBottom="@id/speed_value_label_0"
+                                        android:layout_below="@id/speed_label_0"
                                         android:layout_alignParentLeft="true"
                                         android:enabled="false"
                                         android:paddingLeft="2dp"
@@ -168,8 +158,8 @@
                                         style="?attr/floating_text_style"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignBottom="@id/volume_indicator_0"
-                                        android:layout_alignParentLeft="true"
+                                        android:layout_below="@id/speed_label_0"
+                                        android:layout_toRightOf="@id/volume_indicator_0"
                                         android:enabled="false"
                                         android:paddingLeft="10dp"
                                         android:paddingRight="0dp"
@@ -179,11 +169,23 @@
                                         tools:ignore="RelativeOverlap" />
                                 </RelativeLayout>
 
+                                <TextView
+                                    android:id="@+id/speed_value_label_0"
+                                    style="?attr/floating_text_style"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="5dp"
+                                    android:layout_weight="0.2"
+                                    android:enabled="false"
+                                    android:text="126"
+                                    android:textSize="36sp"
+                                    tools:ignore="HardcodedText" />
+
                                 <RelativeLayout
                                     android:id="@+id/target_speed_cell_0"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="0.15">
+                                    android:layout_weight="0.09">
 
                                     <TextView
                                         android:id="@+id/target_speed_value_label_0"
@@ -192,10 +194,21 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
-                                        android:text="126"
+                                        android:text="0"
                                         android:textSize="16sp"
                                         tools:ignore="HardcodedText" />
 
+                                    <TextView
+                                        android:id="@+id/target_acceleration_value_label_0"
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@id/target_speed_value_label_0"
+                                        android:layout_alignParentRight="true"
+                                        android:enabled="false"
+                                        android:text="0"
+                                        android:textSize="16sp"
+                                        tools:ignore="HardcodedText" />
                                 </RelativeLayout>
 
                             </LinearLayout>
@@ -204,35 +217,35 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="50dp"
                                 android:baselineAligned="false"
-                                android:weightSum="1.0"
-                                android:visibility="gone">
+                                android:visibility="gone"
+                                android:weightSum="1.0">
 
-                                    <RelativeLayout
-                                        android:id="@+id/direction_left_cell_0"
-                                        android:layout_width="0dp"
+                                <RelativeLayout
+                                    android:id="@+id/direction_left_cell_0"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight=".33">
+
+                                    <Button
+                                        android:id="@+id/button_fwd_0"
+                                        style="?attr/ed_normal_button_style"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight=".33">
+                                        android:enabled="false"
+                                        android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
-                                        <Button
-                                            android:id="@+id/button_fwd_0"
-                                            style="?attr/ed_normal_button_style"
-                                            android:layout_width="fill_parent"
-                                            android:layout_height="match_parent"
-                                            android:enabled="false"
-                                            android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
-
-                                        <TextView
-                                            android:id="@+id/loco_left_direction_indication_0"
-                                            style="?attr/ed_loco_label_style"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignRight="@+id/button_fwd_0"
-                                            android:layout_alignParentRight="true"
-                                            android:paddingLeft="0dp"
-                                            android:paddingTop="2dp"
-                                            android:paddingRight="6dp"
-                                            android:text="@string/none" />
-                                    </RelativeLayout>
+                                    <TextView
+                                        android:id="@+id/loco_left_direction_indication_0"
+                                        style="?attr/ed_loco_label_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignRight="@+id/button_fwd_0"
+                                        android:layout_alignParentRight="true"
+                                        android:paddingLeft="0dp"
+                                        android:paddingTop="2dp"
+                                        android:paddingRight="6dp"
+                                        android:text="@string/none" />
+                                </RelativeLayout>
 
                                 <RelativeLayout
                                     android:id="@+id/direction_right_cell_0"
@@ -284,8 +297,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight=".33"
-                                            android:enabled="false"
-                                            android:text="@string/prefCenterDirectionButtonsShortDefaultValue" />
+                                    android:enabled="false"
+                                    android:text="@string/prefCenterDirectionButtonsShortDefaultValue" />
 
                                 <Button
                                     android:id="@+id/button_target_rev_0"
@@ -327,8 +340,8 @@
                                     android:padding="0dp"
                                     android:text="@string/UpButton"
                                     android:textSize="30sp"
-                                    tools:ignore="NestedWeights"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    tools:ignore="NestedWeights" />
 
                                 <Button
                                     android:id="@+id/right_target_speed_button_0"
@@ -345,13 +358,13 @@
                                     android:id="@+id/speed_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="3dp"
                                     android:layout_weight="1"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginBottom="3dp"
                                     android:thumb="?attr/ed_vertical_thumb"
                                     android:visibility="gone" />
 
@@ -359,13 +372,13 @@
                                     android:id="@+id/semi_realistic_speed_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="3dp"
                                     android:layout_weight="1"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginBottom="3dp"
                                     android:thumb="?attr/ed_vertical_thumb" />
 
                                 <Button
@@ -395,7 +408,7 @@
                                     android:layout_marginTop="10dp"
                                     android:enabled="false"
                                     android:text="@string/pauseSpeedButtonLabel"
-                                    android:visibility="gone"/>
+                                    android:visibility="gone" />
 
                                 <Button
                                     android:id="@+id/button_stop_0"
@@ -404,7 +417,7 @@
                                     android:layout_height="wrap_content"
                                     android:enabled="false"
                                     android:text="@string/stop"
-                                    android:visibility="gone"  />
+                                    android:visibility="gone" />
 
                                 <Button
                                     android:id="@+id/button_target_stop_0"
@@ -428,19 +441,12 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical">
 
-                                    <Button
-                                        android:id="@+id/limit_speed_0"
-                                        style="?attr/ed_normal_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_marginLeft="5dp"
-                                        android:text="@string/limitSpeedButtonLabel" />
-
-                                    <Button
-                                        android:id="@+id/pause_speed_0"
-                                        style="?attr/ed_normal_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_marginLeft="5dp"
-                                        android:text="@string/pauseSpeedButtonLabel" />
+                                    <!--                                    <Button-->
+                                    <!--                                        android:id="@+id/limit_speed_0"-->
+                                    <!--                                        style="?attr/ed_normal_button_style"-->
+                                    <!--                                        android:layout_width="fill_parent"-->
+                                    <!--                                        android:layout_marginLeft="5dp"-->
+                                    <!--                                        android:text="@string/limitSpeedButtonLabel" />-->
 
                                     <Button
                                         android:id="@+id/device_sounds_mute_0"
@@ -716,24 +722,24 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
-                                android:weightSum="1.0"
                                 android:layout_weight="3"
                                 android:orientation="vertical"
                                 android:paddingTop="10dp"
                                 android:paddingRight="10dp"
-                                android:paddingBottom="5dp">
+                                android:paddingBottom="5dp"
+                                android:weightSum="1.0">
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/brake_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="0dp"
+                                    android:layout_marginTop="3dp"
+                                    android:layout_marginBottom="3dp"
                                     android:layout_weight=".65"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:layout_marginTop="3dp"
-                                    android:layout_marginBottom="3dp"
                                     android:thumb="?attr/ed_vertical_thumb"
                                     tools:ignore="NestedWeights" />
 
@@ -741,14 +747,14 @@
                                     android:id="@+id/load_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="0dp"
+                                    android:layout_marginTop="40dp"
+                                    android:layout_marginBottom="30dp"
                                     android:layout_weight=".3"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:layout_marginTop="40dp"
-                                    android:layout_marginBottom="30dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb" />
 
                             </LinearLayout>
 

@@ -17,15 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface tick_type {
-    int TICK_0_100_0 = 0;
-    int TICK_0_2 = 2;
-//    int TICK_0_3 = 3;
-    int TICK_0_5 = 5;
-//    int TICK_0_6 = 6;
-//    int TICK_0_7 = 7;
-    int TICK_0_8 = 8;
-//    int TICK_0_9 = 9;
-    int TICK_0_28 = 28;
-    int TICK_0_100 = 100;
+public interface auto_increment_or_decrement_type {
+    int OFF = 0;
+    int INCREMENT = 1;
+    int DECREMENT = 2;
+    int INVERT = 3;
 }

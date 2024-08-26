@@ -590,6 +590,62 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="semi_realistic_throttle_preferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefSemiRealisticThrottleSummary"
+            android:title="@string/prefSemiRealisticThrottleTitle">
+
+            <PreferenceCategory
+                android:title="@string/prefSemiRealisticThrottleTitle"
+                android:layout="@layout/category_icon_left"
+                android:icon="@drawable/category_semi_realistic_throttle_black" >
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleRepeatDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleRepeatTitle"
+                    android:key="prefSemiRealisticThrottleRepeat"
+                    android:maxLength="4"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefSemiRealisticThrottleRepeatSummary"
+                    android:title="@string/prefSemiRealisticThrottleRepeatTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleSpeedStepDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleSpeedStepTitle"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:key="prefSemiRealisticThrottleSpeedStep"
+                    android:maxLength="2"
+                    android:summary="@string/prefSemiRealisticThrottleSpeedStepSummary"
+                    android:title="@string/prefSemiRealisticThrottleSpeedStepTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefMaximumThrottleDefaultValue"
+                    android:dialogTitle="@string/prefMaximumThrottleTitle"
+                    android:key="maximum_throttle_preference"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:summary="@string/prefMaximumThrottleSummary"
+                    android:title="@string/prefMaximumThrottleTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <ListPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleNotchesDefaultValue"
+                    android:entries="@array/prefDisplaySemiRealisticThrottleNotchesEntries"
+                    android:entryValues="@array/prefDisplaySemiRealisticThrottleNotchesEntryValues"
+                    android:key="prefDisplaySemiRealisticThrottleNotches"
+                    android:summary="@string/prefSemiRealisticThrottleNotchesSummary"
+                    android:title="@string/prefSemiRealisticThrottleNotchesTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+            </PreferenceCategory>
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory

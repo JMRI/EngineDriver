@@ -144,6 +144,7 @@ import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.light_follow_type;
@@ -155,6 +156,8 @@ import jmri.enginedriver.type.function_button;
 
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
+import jmri.enginedriver.type.speed_button_type;
+import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -228,13 +231,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected Button[] bRSpds;
     protected Button[] bLSpds;
 
-    protected Button[] bTargetFwds;
-    protected Button[] bTargetRevs;
-    protected Button[] bTargetNeutrals;
-    protected Button[] bTargetRSpds;
-    protected Button[] bTargetLSpds;
-    protected Button[] bTargetStops;
-
     protected TextView[] tvSpdLabs; // labels
     protected TextView[] tvSpdVals;
 
@@ -256,11 +252,32 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected VerticalSeekBar[] vsbSwitchingSpeeds;
     protected HorizontalSeekBar[] hsbSwitchingSpeeds;
 
-    protected VerticalSeekBar[] vsbSemiRealisticSpeeds;
+    // Semi-realistic Throttle
+    protected VerticalSeekBar[] vsbSemiRealisticThrottles;
     protected VerticalSeekBar[] vsbBrakes;
     protected VerticalSeekBar[] vsbLoads;
+    protected TextView[] tvTargetSpdVals;
+    protected TextView[] tvTargetAccelerationVals;
 
-    protected static int[] targetSpeeds = {0,0,0,0,0,0 };
+    protected Button[] bTargetFwds;
+    protected Button[] bTargetRevs;
+    protected Button[] bTargetNeutrals;
+
+    protected Button[] bTargetRSpds;
+    protected Button[] bTargetLSpds;
+    protected Button[] bTargetStops;
+
+    protected static int[] targetSpeeds = {0,0,0,0,0,0};
+    protected static int[] prevTargetSpeeds = {0,0,0,0,0,0};
+    protected static int[] targetDirections = {1,1,1,1,1,1};
+    protected static double[] targetAccelerations = {0,0,0,0,0,0};  /// -4=full brake  +1=normal acceleration  0=at target speed
+
+    protected Handler[] semiRealisticTargetSpeedUpdateHandlers = {null, null, null, null, null, null};
+    protected Handler[] semiRealisticSpeedButtonUpdateHandlers = {null, null, null, null, null, null};
+//    protected Handler semiRealisticRepeatUpdateHandler = new Handler();
+    protected int[] mSemiRealisticAutoIncrementOrDecrement = {0,0,0,0,0,0};  //off
+    protected int[] mSemiRealisticSpeedButtonsAutoIncrementOrDecrement = {0,0,0,0,0,0};  //off
+    protected boolean semiRealisticSpeedButtonLongPressActive = false;
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIds;
@@ -324,10 +341,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int FOLLOW = 5;
     }
 
-//    private static final int FUNCTION_ACTION_ON = 1;
-//    private static final int FUNCTION_ACTION_OFF = 2;
-//    private static final int FUNCTION_ACTION_TOGGLE = 3;
-
     private boolean prefSelectiveLeadSound = false;
     private boolean prefSelectiveLeadSoundF1 = false;
     private boolean prefSelectiveLeadSoundF2 = false;
@@ -371,10 +384,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static String currentUrl = null;
     private Menu TMenu;
     static int REP_DELAY = 25;
-    private int prefSpeedButtonsSpeedStep = 4;
-    private int prefVolumeSpeedButtonsSpeedStep = 1;
-    private int prefGamePadSpeedButtonsSpeedStep = 4;
-    private boolean prefSpeedButtonsSpeedStepDecrement = false;
+    protected int prefSpeedButtonsSpeedStep = 4;
+    protected int prefVolumeSpeedButtonsSpeedStep = 1;
+    protected int prefGamePadSpeedButtonsSpeedStep = 4;
+    protected boolean prefSpeedButtonsSpeedStepDecrement = false;
 
     protected static final int SPEED_COMMAND_FROM_BUTTONS = 0;
     protected static final int SPEED_COMMAND_FROM_VOLUME = 1;
@@ -426,11 +439,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected boolean[] mAutoIncrement = {false,false,false,false,false,false};
     protected boolean[] mAutoDecrement = {false,false,false,false,false,false};
 
-    protected final static int AUTO_INCREMENT_DECREMENT_OFF = 0;
-    protected final static int AUTO_INCREMENT_DECREMENT_INCREMENT = 1;
-    protected final static int AUTO_INCREMENT_DECREMENT_DECREMENT = 2;
-    protected final static int AUTO_INCREMENT_DECREMENT_INVERT = 3;
-
     // implement delay for briefly ignoring WiT speed reports after sending a throttle speed update
     // this prevents use of speed reports sent by WiT just prior to WiT processing the speed update
     private static final int changeDelay = 1000;            // msec
@@ -476,6 +484,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //    private static final String WHICH_GAMEPAD_MODE_NONE = "None";
     protected static final int DIRECTION_FORWARD = 1;
     protected static final int DIRECTION_REVERSE = 0;
+    protected static final int DIRECTION_NEUTRAL = -1;  // Semi-Realistic Throttle only
+
     // default to the iOS iCade mappings
 //    private String whichGamePadMode = WHICH_GAMEPAD_MODE_NONE;
 
@@ -506,35 +516,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                      -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
 
     Tts tts;
-    //    // For TTS
-////    private int MY_TTS_DATA_CHECK_CODE = 1234;
-//    private static final String PREF_TTS_THROTTLE_RESPONSE_NONE = "None";
-////    private static final String PREF_TTS_THROTTLE_RESPONSE_THROTTLE = "Throttle";
-//    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO = "Loco";
-//    private static final String PREF_TTS_THROTTLE_RESPONSE_SPEED = "Speed";
-//    private static final String PREF_TTS_THROTTLE_RESPONSE_LOCO_SPEED = "LocoSpeed";
-//
-//    private Tts tts;
-//    private String lastTts = "none";
-//    private String prefTtsWhen = "None";
-//    private String prefTtsThrottleResponse = "Throttle";
-//    private String prefTtsThrottleSpeed = "Zero + Max";
-//    private boolean prefTtsGamepadTest = true;
-//    private boolean prefTtsGamepadTestComplete = true;
-//    private boolean prefTtsGamepadTestKeys = false;
-////    private Time lastTtsTime;
-//    private long lastTtsTime;
-//    private static final String PREF_TT_WHEN_NONE = "None";
-////    private static final String PREF_TT_WHEN_KEY = "Key";
-//    private static final int TTS_MSG_VOLUME_THROTTLE = 1;
-//    private static final int TTS_MSG_GAMEPAD_THROTTLE = 2;
-//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST = 3;
-//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
-//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
-//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_RESET = 6;
-//    private static final int TTS_MSG_GAMEPAD_GAMEPAD_TEST_FAIL = 7;
-//    private static final int TTS_MSG_GAMEPAD_THROTTLE_SPEED = 8;
-
 
     private ToneGenerator tg;
     private Handler gamepadRepeatUpdateHandler = new Handler();
@@ -555,10 +536,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected boolean pref_increase_slider_height_preference = false;
     protected boolean prefShowAddressInsteadOfName = false;
     protected boolean prefIncreaseWebViewSize = false;
-
-//    protected boolean prefBackgroundImage = false;
-//    protected String prefBackgroundImageFileName = "";
-//    protected String prefBackgroundImagePosition = "FIT_CENTER";
 
     // preference to change the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -854,7 +831,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
     }
-
 
     private class MyCountDownTimer extends CountDownTimer {
 
@@ -1924,25 +1900,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     } else {
                         if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
                             isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
-                            setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_DECREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                             if (vsbSwitchingSpeeds!=null) {
                                 if ((pauseDir[whichThrottle]==DIRECTION_FORWARD) && (getDirection(whichThrottle)==DIRECTION_REVERSE)) {
-                                    setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
+                                    setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                                 }
                             }
                         } else {
                             isPauseSpeeds[whichThrottle] = PAUSE_SPEED_TO_RETURN;
-                            setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_INCREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle,auto_increment_or_decrement_type.INCREMENT);
                             if (vsbSwitchingSpeeds!=null) {
                                 if ( ((pauseDir[whichThrottle]==DIRECTION_REVERSE) && (getDirection(whichThrottle)==DIRECTION_FORWARD))
                                   || ((pauseDir[whichThrottle]==DIRECTION_FORWARD) && (getDirection(whichThrottle)==DIRECTION_REVERSE)) ) {
-                                    setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
+                                    setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                                 }
                             }
 
                             if ( (getSpeed(whichThrottle) > pauseSpeed[whichThrottle])
                                 && (pauseDir[whichThrottle] == getDirection(whichThrottle)) ) {
-                                    setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INVERT);
+                                setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INVERT);
                             }
                         }
                         repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
@@ -1962,11 +1938,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     public void decrementSpeed(int whichThrottle, int from, int stepMultiplier) {
+        decrementSpeed(whichThrottle, from, stepMultiplier, prefSpeedButtonsSpeedStep);
+    }
+
+    public void decrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
                 if ( (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_INACTIVE)
                         || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_ZERO) ){
-                    speedChangeAndNotify(whichThrottle, -prefSpeedButtonsSpeedStep);
+                    speedChangeAndNotify(whichThrottle, -stepSize);
                     mainapp.whichThrottleLastTouch = whichThrottle;
                 } else {
                     int targetSpeed = 0;
@@ -1988,7 +1968,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             && ((currentSpeed - prefPauseSpeedStep) <= 0)
                             && (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_TO_RETURN) ) {  // need a direction change
                         speedUpdateAndNotify(whichThrottle, 0);
-                        setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_INVERT);
+                        setAutoIncrementOrDecrement(whichThrottle,auto_increment_or_decrement_type.INVERT);
                         setEngineDirection(whichThrottle, (currentDir==DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD),false);
                         speedUpdateAndNotify(whichThrottle, prefPauseSpeedStep);
                         return;
@@ -2001,7 +1981,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!atTarget) {
                         speedUpdateAndNotify(whichThrottle, currentSpeed-prefPauseSpeedStep);
                     } else {
-                        setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+                        setAutoIncrementOrDecrement(whichThrottle,auto_increment_or_decrement_type.OFF);
                         if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_TO_ZERO) {
                             isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO;
                             speedUpdateAndNotify(whichThrottle, 0);
@@ -2035,11 +2015,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     public void incrementSpeed(int whichThrottle, int from, int stepMultiplier) {
+        incrementSpeed(whichThrottle, from, stepMultiplier, prefSpeedButtonsSpeedStep);
+    }
+
+    public void incrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
         switch (from) {
             case SPEED_COMMAND_FROM_BUTTONS:
                 if ( (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE)
                         || (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_ZERO) ){
-                    speedChangeAndNotify(whichThrottle, prefSpeedButtonsSpeedStep);
+                    speedChangeAndNotify(whichThrottle, stepSize);
                     mainapp.whichThrottleLastTouch = whichThrottle;
                 } else {
                     int targetSpeed = 0;
@@ -2065,7 +2049,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!atTarget) {
                         speedUpdateAndNotify(whichThrottle, currentSpeed+prefPauseSpeedStep);
                     } else {
-                        setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+                        setAutoIncrementOrDecrement(whichThrottle,auto_increment_or_decrement_type.OFF);
                         if (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_TO_ZERO) {
                             isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO;
                             speedUpdateAndNotify(whichThrottle, 0);
@@ -2099,21 +2083,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     } // end incrementSpeed
 
-    protected void setAutoIncrementDecrement(int whichThrottle, int dir) {
+    protected void setAutoIncrementOrDecrement(int whichThrottle, int dir) {
         switch (dir) {
-            case AUTO_INCREMENT_DECREMENT_OFF:
+            case auto_increment_or_decrement_type.OFF:
                  mAutoIncrement[whichThrottle] = false;
                  mAutoDecrement[whichThrottle] = false;
                  break;
-            case AUTO_INCREMENT_DECREMENT_INCREMENT:
+            case auto_increment_or_decrement_type.INCREMENT:
                  mAutoIncrement[whichThrottle] = true;
                  mAutoDecrement[whichThrottle] = false;
                  break;
-            case AUTO_INCREMENT_DECREMENT_DECREMENT:
+            case auto_increment_or_decrement_type.DECREMENT:
                  mAutoIncrement[whichThrottle] = false;
                  mAutoDecrement[whichThrottle] = true;
                 break;
-            case AUTO_INCREMENT_DECREMENT_INVERT:
+            case auto_increment_or_decrement_type.INVERT:
                 mAutoIncrement[whichThrottle] = !mAutoIncrement[whichThrottle];
                 mAutoDecrement[whichThrottle] = !mAutoDecrement[whichThrottle];
                  break;
@@ -2301,7 +2285,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    private String getConsistAddressString(int whichThrottle) {
+    protected String getConsistAddressString(int whichThrottle) {
         String result;
         if (!prefShowAddressInsteadOfName) {
             result = mainapp.consists[whichThrottle].toString();
@@ -2605,10 +2589,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         sbs[whichThrottle].setEnabled(newEnabledState);
 
-        if ((bLimitSpeeds!=null) && (bLimitSpeeds[whichThrottle]!=null)) {
-            bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
-            bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
-        }
+        if (bLimitSpeeds[whichThrottle] != null) bLimitSpeeds[whichThrottle].setEnabled(newEnabledState);
+        if (bPauseSpeeds[whichThrottle] != null) bPauseSpeeds[whichThrottle].setEnabled(newEnabledState);
 
         soundsEnableDisableDeviceSoundsButton(whichThrottle,newEnabledState);
 
@@ -4429,7 +4411,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         @Override
         public boolean onLongClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-            if (arrowDirection.equals("right")) {
+            if (arrowDirection.equals(speed_button_type.RIGHT)) {
                 mAutoIncrement[whichThrottle] = true;
             } else {
                 mAutoDecrement[whichThrottle] = true;
@@ -4444,7 +4426,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         @Override
         public void onClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-            if (arrowDirection.equals("right")) {
+            if (arrowDirection.equals(speed_button_type.RIGHT)) {
                 mAutoIncrement[whichThrottle] = false;
                 incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
             } else {
@@ -4551,7 +4533,6 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
             }
             return true;
         }
-
     }
 
     private int isFunctionLeadTrailFollow(int whichThrottle, int fKey, String lab) {
@@ -5142,7 +5123,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
                         case function_button.STOP:
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
 
                             set_stop_button(whichThrottle, true);
 
@@ -5242,9 +5223,9 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                         // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
 
                         if (speed < lastSpeed) { // going down
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                         } else { // going up
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                         }
                         jumpSpeed = speed;      // save ultimate target value
                         limitedJump[whichThrottle] = true;
@@ -5275,7 +5256,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                     && (sliderType!=SLIDER_TYPE_SWITCHING) ) {
                     if (((mAutoIncrement[whichThrottle]) && (speed >= jumpSpeed))
                         || ((mAutoDecrement[whichThrottle]) && (speed <= jumpSpeed))) {
-                        setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+                        setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                         limitedJump[whichThrottle] = false;
                         throttle.setProgress(jumpSpeed);
                         doLocoSound(whichThrottle);
@@ -5297,7 +5278,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         @Override
         public void onStopTrackingTouch(SeekBar sb) {
             limitedJump[whichThrottle] = false;
-            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
             kidsTimerActions(kids_timer_action_type.STARTED,0);
         }
     }
@@ -5403,6 +5384,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
     @SuppressLint({"Recycle", "SetJavaScriptEnabled","ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle: onCreate(): called");
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.applyTheme(this);
@@ -5543,14 +5525,14 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                 }
                 bRSpds[i] = bRight;
                 bRSpds[i].setClickable(true);
-                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, "right");
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, speed_button_type.RIGHT);
                 bRSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
                 bRSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
                 bRSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
 
                 bLSpds[i] = bLeft;
                 bLSpds[i].setClickable(true);
-                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, "left");
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, speed_button_type.LEFT);
                 bLSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
                 bLSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
                 bLSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
@@ -5717,7 +5699,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         setAllFunctionLabelsAndListeners();
 
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        if ( (!prefThrottleScreenType.contains("Switch")) || (prefThrottleScreenType.equals("Switching Horizontal")) ) {
+        if ( (!prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SWITCHING)) || (prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)) ) {
             // set listeners for the limit speed buttons for each throttle
             LimitSpeedButtonTouchListener limitSpeedButtonTouchListener;
             Button bLimitSpeed = findViewById(R.id.limit_speed_0);
@@ -5743,13 +5725,15 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                         bLimitSpeed = findViewById(R.id.limit_speed_5);
                         break;
                 }
-                bLimitSpeeds[throttleIndex] = bLimitSpeed;
-                limitSpeedSliderScalingFactors[throttleIndex] = 1;
-                limitSpeedButtonTouchListener = new LimitSpeedButtonTouchListener(throttleIndex);
-                bLimitSpeeds[throttleIndex].setOnTouchListener(limitSpeedButtonTouchListener);
-                isLimitSpeeds[throttleIndex] = false;
-                if (!prefLimitSpeedButton) {
-                    bLimitSpeed.setVisibility(View.GONE);
+                if (bLimitSpeed != null) {
+                    bLimitSpeeds[throttleIndex] = bLimitSpeed;
+                    limitSpeedSliderScalingFactors[throttleIndex] = 1;
+                    limitSpeedButtonTouchListener = new LimitSpeedButtonTouchListener(throttleIndex);
+                    bLimitSpeeds[throttleIndex].setOnTouchListener(limitSpeedButtonTouchListener);
+                    isLimitSpeeds[throttleIndex] = false;
+                    if (!prefLimitSpeedButton) {
+                        bLimitSpeed.setVisibility(View.GONE);
+                    }
                 }
             }
         }
@@ -5779,12 +5763,14 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
                     bPauseSpeed = findViewById(R.id.pause_speed_5);
                     break;
             }
-            bPauseSpeeds[throttleIndex] = bPauseSpeed;
-            pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
-            bPauseSpeeds[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
-            isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
-            if (!prefPauseSpeedButton) {
-                bPauseSpeed.setVisibility(View.GONE);
+            if (bPauseSpeed != null) {
+                    bPauseSpeeds[throttleIndex] = bPauseSpeed;
+                pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
+                bPauseSpeeds[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
+                isPauseSpeeds[throttleIndex] = PAUSE_SPEED_INACTIVE;
+                if (!prefPauseSpeedButton) {
+                    bPauseSpeed.setVisibility(View.GONE);
+                }
             }
         }
 
@@ -6006,6 +5992,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle: onResume(): called");
         super.onResume();
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
@@ -6149,6 +6136,10 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
         llLocoIds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llLocoDirs = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
+        // Semi-Realistic throttle
+        tvTargetSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
+        tvTargetAccelerationVals = new TextView[mainapp.maxThrottlesCurrentScreen];
+
         fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
 
         functionMaps = ( LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?,?>[mainapp.maxThrottlesCurrentScreen];
@@ -6268,8 +6259,8 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
 
     @Override
     public void onStart() {
+        Log.d("Engine_Driver", "throttle: onStart(): called");
         super.onStart();
-        Log.d("Engine_Driver", "throttle.onStart() called");
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.throttle_msg_handler == null)
             mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
@@ -6289,6 +6280,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
 
     @Override
     public void onDestroy() {
+        Log.d("Engine_Driver", "throttle: onDestroy(): called");
         super.onDestroy();
         Log.d("Engine_Driver", "throttle.onDestroy() called");
         if (!isRestarting) {
@@ -6396,7 +6388,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
     // set label and dcc functions (based on settings) or hide if no label
     @SuppressLint("ClickableViewAccessibility")
     void set_function_labels_and_listeners_for_view(int whichThrottle) {
-        Log.d("Engine_Driver","starting set_function_labels_and_listeners_for_view (debugging comm_thread)");
+        Log.d("Engine_Driver","throttle: set_function_labels_and_listeners_for_view() called");
 
 //        // implemented in derived class, but called from this class
 
@@ -7704,7 +7696,7 @@ protected class SelectFunctionButtonTouchListener implements View.OnClickListene
     }
 
     void disablePauseSpeed(int whichThrottle) {
-        setAutoIncrementDecrement(whichThrottle,AUTO_INCREMENT_DECREMENT_OFF);
+        setAutoIncrementOrDecrement(whichThrottle,auto_increment_or_decrement_type.OFF);
         bPauseSpeeds[whichThrottle].setSelected(false);
         if (bPauses[whichThrottle]!=null) bPauses[whichThrottle].setSelected(false);
         isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE;

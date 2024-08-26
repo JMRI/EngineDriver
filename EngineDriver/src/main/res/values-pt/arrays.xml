@@ -71,7 +71,7 @@
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Esquerda (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Esquerda (1-6)</item>
-<!--        <item >Semi-Realistic Left Left (1)</item>-->
+        <item >Semi-Realistic Left (1)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">

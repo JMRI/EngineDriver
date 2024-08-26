@@ -70,7 +70,7 @@
         <item>Simple &#8211; tablet recomendado (1&#8211;6)</item>
         <item>Tablet Switching Left (1&#8211;6)</item>
         <item>Tablet Vertical Left (1&#8211;6)</item>
-<!--        <item >Semi-Realistic Left Left (1)</item>-->
+        <item >Semi-Realistic Left (1)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Ninguno</item>

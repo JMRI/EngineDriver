@@ -51,6 +51,19 @@
         <item>126</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
+        <item>Percentage</item>
+        <item>8 steps</item>
+        <item>28 steps</item>
+        <item>128 steps</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>100</item>
+        <item>8</item>
+        <item>28</item>
+        <item>126</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>none</item>
         <item>Top</item>
@@ -138,7 +151,7 @@
         <item tools:ignore="TypographyDashes">Simple (1-6) (Tablet Recommended)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Left (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
-<!--        <item >Semi-Realistic Left Left (1)</item>-->
+        <item >Semi-Realistic Left (1)</item>
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -155,7 +168,7 @@
         <item >Simple</item>
         <item >Tablet Switching Left</item>
         <item >Tablet Vertical Left</item>
-<!--        <item >Semi Realistic Left</item>-->
+        <item >Semi Realistic Left</item>
     </string-array>
 
     <integer-array name="prefThrottleScreenTypeMaxThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -172,12 +185,12 @@
         <item >6</item>  <!-- Simple -->
         <item >6</item>  <!-- Tablet Switching Left -->
         <item >6</item>  <!-- Tablet Vertical Left -->
-<!--        <item >1</item>  &lt;!&ndash; Semi Realistic Left &ndash;&gt;-->
+        <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
     <integer-array name="prefThrottleScreenTypeFixedThrottleNumber" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >0</item>  <!-- Default -->
-        <item >1</item>  <!-- Vertical -->
+        <item >1</item>  <!-- Vertical -->  <!-- "1" = fixed -->
         <item >1</item>  <!-- Big Left -->
         <item >1</item>  <!-- Big Right -->
         <item >1</item>  <!-- Vertical Left -->
@@ -189,7 +202,7 @@
         <item >0</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
         <item >0</item>  <!-- Tablet Vertical Left -->
-<!--        <item >1</item>  &lt;!&ndash; Semi Realistic Left &ndash;&gt;-->
+        <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
     <integer-array name="prefThrottleScreenTypeSupportsWebView" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -206,7 +219,7 @@
         <item >1</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
         <item >1</item>  <!-- Tablet Vertical Left -->
-<!--        <item >0</item>  &lt;!&ndash; Semi Realistic Left &ndash;&gt;-->
+        <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
     <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->

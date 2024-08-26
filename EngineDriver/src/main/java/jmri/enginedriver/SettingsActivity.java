@@ -75,6 +75,7 @@ import jmri.enginedriver.type.import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
 
+import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -129,6 +130,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private String prefThrottleScreenType = "Default";
     private String prefThrottleScreenTypeOriginal = "Default";
+    private int prefDisplaySemiRealisticThrottleNotches = 100;
+    private int prefDisplaySemiRealisticThrottleNotchesOriginal = 100;
     protected boolean prefBackgroundImage = false;
     boolean prefThrottleSwitchButtonDisplay = false;
     protected boolean prefHideSlider = false;
@@ -836,7 +839,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         Log.d("Engine_Driver", "Settings: checkThrottleScreenType()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        if (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal)) {
+        if (prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC)) {
+            sharedPreferences.edit().putString("DisplaySpeedUnits", "100").commit();
+            prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
+            if( prefDisplaySemiRealisticThrottleNotches < 100) {
+                sharedPreferences.edit().putString("speed_arrows_throttle_speed_step", "1").commit();
+            }
+        }
+        if ((!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal))
+        || (prefDisplaySemiRealisticThrottleNotchesOriginal != prefDisplaySemiRealisticThrottleNotches) ) {
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
             forceRestartAppOnPreferencesClose = true;
@@ -999,8 +1010,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefPauseSpeedStep", prefPauseSpeedButton);
 
         boolean enable =
-                !prefThrottleScreenType.equals("Default")
-                && !prefThrottleScreenType.equals("Switching Horizontal")
+                !prefThrottleScreenType.equals(throttle_screen_type.DEFAULT)
+                && !prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
                 && prefPauseSpeedButton;
         enableDisablePreference(prefScreen, "prefPauseAlternateButton", enable);
     }
@@ -1068,9 +1079,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         Log.d("Engine_Driver", "Settings: showHideThrottleSwitchPreferences()");
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType",
                 getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        boolean enable = prefThrottleScreenType.equals("Simple");
-
+        boolean enable = prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
         enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
+
+        enable = !prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC);
+        enableDisablePreference(prefScreen, "semi_realistic_throttle_preferences", !enable);
+        enableDisablePreference(prefScreen, "DisplaySpeedUnits", enable);
+//        enableDisablePreference(prefScreen, "maximum_throttle_preference", enable);
+        enableDisablePreference(prefScreen, "maximum_throttle_change_preference", enable);
+        enableDisablePreference(prefScreen, "speed_arrows_throttle_repeat_delay", enable);
+        enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
+        enableDisablePreference(prefScreen, "DirChangeWhileMovingPreference", enable);
+        enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
     }
 
     public void loadSharedPreferences(){
@@ -1308,7 +1328,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.checkThrottleScreenType(sharedPreferences);
                         parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
                         showHideThrottleWebViewPreferences(sharedPreferences);
-                        if ( (parentActivity.prefThrottleScreenType.equals("Simple"))
+                        if ( (parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE))
                            && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
                            && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
                               || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
@@ -1453,9 +1473,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
                 parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
 
+                parentActivity.prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", parentActivity.getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
+                parentActivity.prefDisplaySemiRealisticThrottleNotchesOriginal = parentActivity.prefDisplaySemiRealisticThrottleNotches;
+
                 showHideThrottleTypePreferences();
                 showHideThrottleNumberPreference(prefs);
                 showHideThrottleWebViewPreferences(prefs);
+                parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
@@ -1540,44 +1564,44 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         private void showHideThrottleTypePreferences() {
             Log.d("Engine_Driver", "Settings: showHideThrottleTypePreferences()");
-            boolean enable = (!parentActivity.prefThrottleScreenType.equals("Simple")) && (!parentActivity.prefThrottleScreenType.equals("Vertical"))
-                    && (!parentActivity.prefThrottleScreenType.equals("Vertical Left")) && (!parentActivity.prefThrottleScreenType.equals("Vertical Right"))
-                    && (!parentActivity.prefThrottleScreenType.equals("Switching"))
-                    && (!parentActivity.prefThrottleScreenType.equals("Tablet Switching Left"))
-                    && (!parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left"))
-                    && (!parentActivity.prefThrottleScreenType.equals("Switching Left")) && (!parentActivity.prefThrottleScreenType.equals("Switching Right"));
+            boolean enable = (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_RIGHT));
             parentActivity.enableDisablePreference(getPreferenceScreen(), "increase_slider_height_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "left_slider_margin", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHideSliderAndSpeedButtons", enable);
 
-            enable = !parentActivity.prefThrottleScreenType.equals("Simple");
+            enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAlwaysUseDefaultFunctionLabels", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumberOfDefaultFunctionLabels", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumberOfDefaultFunctionLabelsForRoster", enable);
 
-            enable = parentActivity.prefThrottleScreenType.equals("Default")
-                    || parentActivity.prefThrottleScreenType.equals("Vertical")
-                    || parentActivity.prefThrottleScreenType.equals("Vertical Left")
-                    || parentActivity.prefThrottleScreenType.equals("Vertical Right")
-                    || parentActivity.prefThrottleScreenType.equals("Switching")
-                    || parentActivity.prefThrottleScreenType.equals("Switching Left")
-                    || parentActivity.prefThrottleScreenType.equals("Switching Right")
-                    || parentActivity.prefThrottleScreenType.equals("Switching Horizontal")
-                    || parentActivity.prefThrottleScreenType.equals("Tablet Switching Left")
-                    || parentActivity.prefThrottleScreenType.equals("Tablet Vertical Left")
-                    || parentActivity.prefThrottleScreenType.equals("Simple");
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_RIGHT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "WebViewLocation", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseWebViewSize", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "InitialThrotWebPage", enable);
 
-            enable = !parentActivity.prefThrottleScreenType.equals("Default");
+            enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTickMarksOnSliders", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefVerticalStopButtonMargin", enable);
 
-            enable = parentActivity.prefThrottleScreenType.equals("Default");
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefDecreaseLocoNumberHeight", enable);
 
-            enable = parentActivity.prefThrottleScreenType.equals("Simple");
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
         }
 
@@ -1932,6 +1956,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
+                    case "prefDisplaySemiRealisticThrottleNotches":
+                        parentActivity.checkThrottleScreenType(sharedPreferences);
+                        break;
+
+                    case "maximum_throttle_preference":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
                 }
             }
         }

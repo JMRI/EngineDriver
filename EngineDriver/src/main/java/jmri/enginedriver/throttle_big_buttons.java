@@ -24,6 +24,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class throttle_big_buttons extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_big_buttons: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -105,6 +107,7 @@ public class throttle_big_buttons extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle_big_buttons: onResume(): called");
         super.onResume();
 
         if (mainapp.appIsFinishing) { return;}

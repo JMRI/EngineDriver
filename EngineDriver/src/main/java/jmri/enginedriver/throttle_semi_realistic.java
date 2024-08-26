@@ -19,9 +19,13 @@ Original version of the simple throttle is by radsolutions.
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.ACTION_UP;
+import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
+
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,10 +38,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.auto_increment_or_decrement_type;
+import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.tick_type;
+import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_semi_realistic extends throttle {
@@ -52,19 +61,22 @@ public class throttle_semi_realistic extends throttle {
 
     private static final int SLIDER_PURPOSE_THROTTLE = 0;
     private static final int SLIDER_PURPOSE_OTHER = 1;
+    private static final int SLIDER_PURPOSE_SEMI_REALISTIC_THROTTLE = 2;
 
-    private final int[] throttleMidPointZero = {0, 0, 0, 0, 0, 0};
     private final int[] throttleSwitchingMax = {0, 0, 0, 0, 0, 0};
 
-    private final int[] throttleMidPointDeadZoneUpper = {0, 0, 0, 0, 0, 0};
-    private final int[] throttleMidPointDeadZoneLower = {0, 0, 0, 0, 0, 0};
-
-    private int prefSwitchingThrottleSliderDeadZone = 10;
+    private static final int GESTURE_NOT_STARTED = 0;
+    private static final int GESTURE_STARTED     = 1;
+    private static final int GESTURE_IN_PROGRESS = 2;
+    private static final int GESTURE_FINISHED    = 3;
+    int semiRealisticThrottleGestureState = 0; //0=not in progress, 1=in progress 2=finished
 
     int maxThrottlePcnt = 100;
     int maxThrottle = 126;
 
-    boolean mChangeDirectionAtZero = false; // needed for the mAutoincrement and mAutoDecrement
+    int prefSemiRealisticThrottleSpeedStep = 1;
+    int prefDisplaySemiRealisticThrottleNotches = 100;
+    boolean useNotches = false;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -77,18 +89,21 @@ public class throttle_semi_realistic extends throttle {
 
         maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
-
-        prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
-
+        prefSemiRealisticThrottleSpeedStep = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleSpeedStep", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleSpeedStepDefaultValue));
+        prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
+        useNotches = (prefDisplaySemiRealisticThrottleNotches!=100);
+        prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
+        REP_DELAY = threaded_application.getIntPrefValue(prefs,"speed_arrows_throttle_repeat_delay", "100");
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "srmt: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
 
-        mainapp.currentScreenSupportsWebView = true;
+        mainapp.currentScreenSupportsWebView = false;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -96,9 +111,7 @@ public class throttle_semi_realistic extends throttle {
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) {
-            return;
-        }
+        if (mainapp.appIsFinishing) { return; }
 
         bTargetFwds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetRevs = new Button[mainapp.maxThrottlesCurrentScreen];
@@ -113,26 +126,35 @@ public class throttle_semi_realistic extends throttle {
             fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
             tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
             tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
+            tvTargetSpdVals[throttleIndex] = findViewById(R.id.target_speed_value_label_0);
+            tvTargetAccelerationVals[throttleIndex] = findViewById(R.id.target_acceleration_value_label_0);
             bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
+
             bTargetFwds[throttleIndex] = findViewById(R.id.button_target_fwd_0);
             bTargetRevs[throttleIndex] = findViewById(R.id.button_target_rev_0);
             bTargetNeutrals[throttleIndex] = findViewById(R.id.button_target_neutral_0);
+
             bTargetRSpds[throttleIndex] = findViewById(R.id.right_target_speed_button_0);
             bTargetLSpds[throttleIndex] = findViewById(R.id.left_target_speed_button_0);
             bTargetStops[throttleIndex] = findViewById(R.id.button_target_stop_0);
 
-
             bTargetRSpds[throttleIndex].setClickable(true);
-            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, "right");
+            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.RIGHT);
             bTargetRSpds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
             bTargetRSpds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
             bTargetRSpds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
 
             bTargetLSpds[throttleIndex].setClickable(true);
-            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, "left");
+            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.LEFT);
             bTargetLSpds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
             bTargetLSpds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
             bTargetLSpds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
+
+            bTargetStops[throttleIndex].setClickable(true);
+            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, "stop");
+            bTargetStops[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
+            bTargetStops[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
+            bTargetStops[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
 
             PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(psvtl);
@@ -142,7 +164,7 @@ public class throttle_semi_realistic extends throttle {
         lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
-        vsbSemiRealisticSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
+        vsbSemiRealisticThrottles = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbBrakes = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbLoads = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -154,21 +176,40 @@ public class throttle_semi_realistic extends throttle {
             lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
             lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
 
+            SemiRealisticDirectionButtonTouchListener directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_FORWARD, throttleIndex);
+            bTargetFwds[throttleIndex].setOnTouchListener(directionButtonTouchListener);
+            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_REVERSE, throttleIndex);
+            bTargetRevs[throttleIndex].setOnTouchListener(directionButtonTouchListener);
+            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_NEUTRAL, throttleIndex);
+            bTargetNeutrals[throttleIndex].setOnTouchListener(directionButtonTouchListener);
+
             vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
-            vsbSemiRealisticSpeeds[throttleIndex] = findViewById(R.id.semi_realistic_speed_0);
+
+            vsbSemiRealisticThrottles[throttleIndex] = findViewById(R.id.semi_realistic_speed_0);
+
             vsbBrakes[throttleIndex] = findViewById(R.id.brake_0);
+            vsbBrakes[throttleIndex].setMax(5);
+
             vsbLoads[throttleIndex] = findViewById(R.id.load_0);
+            vsbLoads[throttleIndex].setMax(2);
+
             svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
 
-            vsbSemiRealisticSpeeds[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_THROTTLE);
-            vsbSemiRealisticSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+//            vsbSemiRealisticThrottles[throttleIndex].setMax(Math.round(maxThrottle));
+            vsbSemiRealisticThrottles[throttleIndex].setMax(prefDisplaySemiRealisticThrottleNotches);
+            vsbSemiRealisticThrottles[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_SEMI_REALISTIC_THROTTLE);
+            if (!useNotches) {
+                vsbSemiRealisticThrottles[throttleIndex].setTickType(tick_type.TICK_0_100);
+            } else {
+                vsbSemiRealisticThrottles[throttleIndex].setTickType(prefDisplaySemiRealisticThrottleNotches);
+            }
 
             vsbBrakes[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-            vsbBrakes[throttleIndex].setTickType(tick_type.TICK_0_6);
+            vsbBrakes[throttleIndex].setTickType(tick_type.TICK_0_5);
             vsbBrakes[throttleIndex].setTitle(getResources().getString(R.string.brake));
 
             vsbLoads[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-            vsbLoads[throttleIndex].setTickType(tick_type.TICK_0_3);
+            vsbLoads[throttleIndex].setTickType(tick_type.TICK_0_2);
             vsbLoads[throttleIndex].setTitle(getResources().getString(R.string.load));
         }
 
@@ -182,8 +223,8 @@ public class throttle_semi_realistic extends throttle {
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             // set up listeners for all throttles
             srtsl = new SemiRealisticThrottleSliderListener(i);
-            vsbSemiRealisticSpeeds[i].setOnSeekBarChangeListener(srtsl);
-            vsbSemiRealisticSpeeds[i].setOnTouchListener(srtsl);
+            vsbSemiRealisticThrottles[i].setOnSeekBarChangeListener(srtsl);
+            vsbSemiRealisticThrottles[i].setOnTouchListener(srtsl);
 
             bsl = new BrakeSliderListener(i);
             vsbBrakes[i].setOnSeekBarChangeListener(bsl);
@@ -194,21 +235,27 @@ public class throttle_semi_realistic extends throttle {
             vsbLoads[i].setOnTouchListener(lsl);
         }
 
-        // set listeners for the limit speed buttons for each throttle
-        LimitSpeedButtonSemiRealisticTouchListener lsstl;
-        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+//        // set listeners for the limit speed buttons for each throttle
+//        LimitSpeedButtonSemiRealisticTouchListener lsstl;
+//        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+//
+//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+//            bLimitSpeed = findViewById(R.id.limit_speed_0);
+//
+//            bLimitSpeeds[throttleIndex] = bLimitSpeed;
+//            limitSpeedSliderScalingFactors[throttleIndex] = 1;
+//            lsstl = new LimitSpeedButtonSemiRealisticTouchListener(throttleIndex);
+//            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
+//            isLimitSpeeds[throttleIndex] = false;
+//            if (!prefLimitSpeedButton) {
+//                bLimitSpeed.setVisibility(View.GONE);
+//            }
+//        }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            bLimitSpeed = findViewById(R.id.limit_speed_0);
-
-            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-            lsstl = new LimitSpeedButtonSemiRealisticTouchListener(throttleIndex);
-            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
-            isLimitSpeeds[throttleIndex] = false;
-            if (!prefLimitSpeedButton) {
-                bLimitSpeed.setVisibility(View.GONE);
-            }
+        // setup the handlers for the semi-realistic throttle updates
+        for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
+            semiRealisticTargetSpeedUpdateHandlers[i] = new Handler();
+            semiRealisticSpeedButtonUpdateHandlers[i] = new Handler();
         }
 
         sliderType = SLIDER_TYPE_VERTICAL;
@@ -216,11 +263,10 @@ public class throttle_semi_realistic extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "srmt: onResume(): called");
         super.onResume();
 
-        if (mainapp.appIsFinishing) {
-            return;
-        }
+        if (mainapp.appIsFinishing) { return; }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             if (throttleIndex < mainapp.numThrottles) {
@@ -241,16 +287,13 @@ public class throttle_semi_realistic extends throttle {
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
 
-
     protected void set_labels() {
+        Log.d("Engine_Driver", "srmt: set_labels(): called");
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
 
-        if (mainapp.appIsFinishing) {
-            return;
-        }
+        if (mainapp.appIsFinishing) { return; }
 
-        // avoid NPE by not letting this run too early (reported to Play Store)
+        // avoid NPE by not letting this run too early
         if (tvVols[0] == null) return;
 
         final int conNomTextSize = 24;
@@ -303,10 +346,10 @@ public class throttle_semi_realistic extends throttle {
             }
             int textSize = (int) (conNomTextSize * textScale * 0.95);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-//            b.setText(bLabel);
             b.setText(Html.fromHtml(bLabel));
             b.setSelected(false);
             b.setPressed(false);
+
         }
 
         if (webView != null) {
@@ -322,24 +365,18 @@ public class throttle_semi_realistic extends throttle {
             }
 
             vsbSpeeds[throttleIndex].setVisibility(View.GONE); //always hide the real slider
-//            vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE);
 
-            vsbSemiRealisticSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            vsbSemiRealisticThrottles[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
             if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-                vsbSemiRealisticSpeeds[throttleIndex].setVisibility(View.GONE);
+                vsbSemiRealisticThrottles[throttleIndex].setVisibility(View.GONE);
             }
-
         }
 
-        // update the direction indicators
-        showDirectionIndications();
-
-        // update the target sliders if necessary
+        // update the target sliders if necessary  // update the direction indicators
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            speedUpdate(throttleIndex,
-                    getSpeedFromCurrentSliderPosition(throttleIndex, false));
+            showTargetDirectionIndication(throttleIndex);
+            speedUpdate(throttleIndex, getSpeedFromCurrentSliderPosition(throttleIndex, false));
         }
-
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
@@ -362,11 +399,9 @@ public class throttle_semi_realistic extends throttle {
                 screenHeight = screenHeight - titleBar;
             }
         }
-//        int keepHeight = screenHeight;  // default height
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         if (webView != null) {
@@ -398,7 +433,6 @@ public class throttle_semi_realistic extends throttle {
         stopButtonParams.height = speedButtonHeight;
 
         if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-//            speedButtonHeight = (int) ((screenHeight - (200 * denScale)) / 2);
             speedButtonHeight = (int) ((screenHeight
                     - stopButtonParams.topMargin
                     - stopButtonParams.bottomMargin
@@ -435,12 +469,6 @@ public class throttle_semi_realistic extends throttle {
         int lowerButtonsHeight = findViewById(R.id.loco_buttons_group_0).getHeight();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            // set height of each function button area
-//            if (mainapp.maxThrottlesCurrentScreen == 1) {
-//                svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lowerButtonsHeight - lUppers[throttleIndex].getHeight();
-//            } else {
-//                svFnBtns[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
-//            }
             svFnBtns[throttleIndex].requestLayout();
             lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             lLowers[throttleIndex].requestLayout();
@@ -453,14 +481,14 @@ public class throttle_semi_realistic extends throttle {
             int ovy = location[1];
 
             location = new int[2];
-            vsbSemiRealisticSpeeds[throttleIndex].getLocationOnScreen(location);
+            vsbSemiRealisticThrottles[throttleIndex].getLocationOnScreen(location);
             int x = location[0];
             int y = location[1];
 
             sliderTopLeftX[throttleIndex] = x - ovx;
             sliderTopLeftY[throttleIndex] = y - ovy;
-            sliderBottomRightX[throttleIndex] = x + vsbSemiRealisticSpeeds[throttleIndex].getWidth() - ovx;
-            sliderBottomRightY[throttleIndex] = y + vsbSemiRealisticSpeeds[throttleIndex].getHeight() - ovy;
+            sliderBottomRightX[throttleIndex] = x + vsbSemiRealisticThrottles[throttleIndex].getWidth() - ovx;
+            sliderBottomRightY[throttleIndex] = y + vsbSemiRealisticThrottles[throttleIndex].getHeight() - ovy;
 
             vsbBrakes[throttleIndex].getLocationOnScreen(location);
             x = location[0];
@@ -477,20 +505,12 @@ public class throttle_semi_realistic extends throttle {
             loadSliderTopLeftY[throttleIndex] = y - ovy;
             loadSliderBottomRightX[throttleIndex] = x + vsbLoads[throttleIndex].getWidth() - ovx;
             loadSliderBottomRightY[throttleIndex] = y + vsbLoads[throttleIndex].getHeight() -ovy;
-
-//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
-//                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
-
         }
-
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             set_all_function_states(throttleIndex);
         }
-
-        // Log.d("Engine_Driver","ending set_labels");
-
     }
 
     @Override
@@ -508,10 +528,10 @@ public class throttle_semi_realistic extends throttle {
         super.enable_disable_buttons(whichThrottle, forceDisable);
 
         //avoid npe
-        if (vsbSemiRealisticSpeeds == null) return;
+        if (vsbSemiRealisticThrottles == null) return;
 
         if (!newEnabledState) { // set sliders to 0 if disabled
-            vsbSemiRealisticSpeeds[whichThrottle].setProgress(0);
+            vsbSemiRealisticThrottles[whichThrottle].setProgress(0);
             vsbBrakes[whichThrottle].setProgress(0);
             vsbLoads[whichThrottle].setProgress(0);
         }
@@ -520,7 +540,7 @@ public class throttle_semi_realistic extends throttle {
         bTargetRSpds[whichThrottle].setEnabled(newEnabledState);
         bTargetStops[whichThrottle].setEnabled(newEnabledState);
 
-        vsbSemiRealisticSpeeds[whichThrottle].setEnabled(newEnabledState);
+        vsbSemiRealisticThrottles[whichThrottle].setEnabled(newEnabledState);
         vsbBrakes[whichThrottle].setEnabled(newEnabledState);
         vsbLoads[whichThrottle].setEnabled(newEnabledState);
     } // end of enable_disable_buttons
@@ -528,8 +548,6 @@ public class throttle_semi_realistic extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
-        // newEnabledState);
 
         if (vg == null) {
             return;
@@ -552,7 +570,7 @@ public class throttle_semi_realistic extends throttle {
     // update the appearance of all function buttons
     @Override
     void set_all_function_states(int whichThrottle) {
-        // Log.d("Engine_Driver","set_function_states");
+        // Log.d("Engine_Driver","srmt: set_function_states");
 
         if (mainapp.appIsFinishing) {
             return;
@@ -570,8 +588,6 @@ public class throttle_semi_realistic extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d("Engine_Driver","starting set_function_request");
-
         Button b;
         boolean[] fs;   // copy of this throttle's function state array
         b = functionMaps[whichThrottle].get(function);
@@ -586,137 +602,86 @@ public class throttle_semi_realistic extends throttle {
                 b.setPressed(false);
             }
         }
-
     }
 
     //Listeners for the throttle slider
     protected class SemiRealisticThrottleSliderListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
-        int lastSliderPosition;
-//        int lastDir;
-//        boolean limitedJump;
-        int jumpSpeed;
+        public int lastSliderPosition;
+        int finalSliderPosition;
 
         protected SemiRealisticThrottleSliderListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
-            lastSliderPosition = throttleMidPointZero[whichThrottle];
-            limitedJump[whichThrottle] = false;
+            lastSliderPosition = 0;
+            semiRealisticThrottleGestureState = GESTURE_NOT_STARTED;
         }
 
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // Log.d("Engine_Driver", "onTouchThrottle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
+            semiRealisticThrottleGestureState = GESTURE_NOT_STARTED;
             return (gestureInProgress);
         }
 
         @Override
-        public void onProgressChanged(SeekBar sbThrottle, int newSliderPosition, boolean fromUser) {
-            int semiRealisticSpeed;
-            semiRealisticSpeed = getSemiRealisticSpeedFromSliderPosition(newSliderPosition, whichThrottle, false);
-
+        public void onProgressChanged(SeekBar sbSemiRealisticThrottle, int newSliderPosition, boolean fromUser) {
+             Log.d("Engine_Driver","srmt: SemiRealisticThrottleSliderListener: onProgressChanged()");
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
-            if ((fromUser) || (vsbSemiRealisticSpeeds[whichThrottle].touchFromUser)) {
-                if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
-
-                    if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
-                        jumpSpeed = getSemiRealisticSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(), whichThrottle, false);      // save ultimate target value
-                        limitedJump[whichThrottle] = true;
-                        sbThrottle.setProgress(lastSliderPosition);  // put the slider back to the original position
-//                        doLocoSound(whichThrottle);
-
-//                        if (newSliderPosition < lastSliderPosition) { // going down
-//                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
-//                        } else { // going up
-//                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
-//                        }
-
-//                        repeatUpdateHandler.post(new RptUpdater(whichThrottle, prefPauseSpeedRate));
-
-                        return;
-                    }
-
-//                    Log.d("Engine_Driver", "onProgressChanged -- no throttling");
-
-//                    speedUpdate(whichThrottle,
-//                            getSpeedFromSliderPosition(vsbSemiRealisticSpeeds[whichThrottle].getProgress(), whichThrottle, false));
-//                    sendSpeedMsg(whichThrottle, speed);
-//                    setDisplayedSpeed(whichThrottle, speed);
-
-                } else { // got a touch while processing limitJump
-//                    Log.d("Engine_Driver", "onProgressChanged -- touch while processing limited jump");
-                    newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
-                    sbThrottle.setProgress(lastSliderPosition);
-//                    doLocoSound(whichThrottle);
-
-//                    Log.d("Engine_Driver", "onProgressChange: fromUser: " + fromUser + " vsbSwitchingSpeeds[wt].touchFromUser: " +vsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
+            if ((fromUser) || (vsbSemiRealisticThrottles[whichThrottle].touchFromUser)) {
+                if (semiRealisticThrottleGestureState == GESTURE_STARTED) {
+                    semiRealisticThrottleGestureState = GESTURE_IN_PROGRESS;
+                    lastSliderPosition = newSliderPosition;
                 }
-
-                // Now update ESU MCII Knob position
-//                if (IS_ESU_MCII) {
-//                    setEsuThrottleKnobPosition(whichThrottle, targetSpeed);
-//                }
-
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
-
             } else {
-//                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed);
-                if (limitedJump[whichThrottle]) {
-
-                    int tempJumpSpeed = jumpSpeed;
-                    if (mChangeDirectionAtZero) {
-                        tempJumpSpeed = 0;
-                    }  // we will need to change directions.  for now just get to zero
-
-//                    Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump[whichThrottle] + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement[whichThrottle] + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed + " tjs: " + tempJumpSpeed);
-
-                    // check if we have hit the jumpSpeed or tempJumpSpeed (zero)
-                    boolean hitJumpSpeed = false;
-                    if (semiRealisticSpeed <= 0) {
-                        if (jumpSpeed == 0) {
-                            hitJumpSpeed = true;
-                        }
-                    } else // speed > 0
-//                        if (dir == DIRECTION_FORWARD) {
-                            if (((mAutoIncrement[whichThrottle]) && (semiRealisticSpeed >= tempJumpSpeed))
-                                    || ((mAutoDecrement[whichThrottle]) && (semiRealisticSpeed <= tempJumpSpeed))) {
-                                hitJumpSpeed = true;
-                            }
-//                        } else if (dir == DIRECTION_REVERSE) {
-                            if (((mAutoDecrement[whichThrottle]) && (semiRealisticSpeed >= tempJumpSpeed))
-                                    || ((mAutoIncrement[whichThrottle]) && (semiRealisticSpeed <= tempJumpSpeed))) {
-                                hitJumpSpeed = true;
-                            }
-//                        }
-
-                    if (hitJumpSpeed) {   // stop when we reach the target
-                        Log.d("Engine_Driver", "onProgressChanged !!-- LimitedJump hit jump speed.");
-                        limitedJump[whichThrottle] = false;
-//                        setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
-                        sbThrottle.setProgress(getNewSliderPositionFromSemiRealisticSpeed(jumpSpeed, whichThrottle, false));
-//                        speedUpdate(whichThrottle, getTargetSpeedFromSliderPosition(vsbSemiRealisticSpeeds[whichThrottle].getProgress(), whichThrottle, false));
-                    }
-                }
+                setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
+                setTargetSpeed(whichThrottle, true);
+                lastSliderPosition = newSliderPosition;
             }
-            lastSliderPosition = newSliderPosition;
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar sbThrottle) {
-//            Log.d("Engine_Driver", "onStartTrackingTouch() onProgressChanged");
+            Log.d("Engine_Driver","srmt: SemiRealisticThrottleSliderListener: onStartTrackingTouch()");
+            semiRealisticThrottleGestureState = GESTURE_STARTED;
             gestureInProgress = false;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar sbThrottle) {
-//            limitedJump[whichThrottle] = false;
-//            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+            Log.d("Engine_Driver","srmt: SemiRealisticThrottleSliderListener: onStopTrackingTouch()");
+            finalSliderPosition = getSemiRealisticThrottleSlider(whichThrottle).getProgress();
+            semiRealisticThrottleGestureState = GESTURE_FINISHED;
+            autoIncrementDecrement();
+        }
+
+        public void autoIncrementDecrement() {
+            Log.d("Engine_Driver","srmt: SemiRealisticThrottleSliderListener: autoIncrementDecrement()");
+            if (lastSliderPosition == finalSliderPosition) {
+                int targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
+                if (getSpeed(whichThrottle) < targetSpeed) {
+                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
+                } else if (getSpeed(whichThrottle) > targetSpeed) {
+                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
+                } else {
+                    return;
+                }
+            } else {
+                if (lastSliderPosition > finalSliderPosition) { // going down
+                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
+                } else { // going up
+                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
+                }
+            }
+
+            setTargetSpeed(whichThrottle,true);
+            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
         }
     }
 
     VerticalSeekBar getSemiRealisticThrottleSlider(int whichThrottle) {
-        return vsbSemiRealisticSpeeds[whichThrottle];
+        return vsbSemiRealisticThrottles[whichThrottle];
     }
 
     //Listeners for the brake slider
@@ -737,6 +702,8 @@ public class throttle_semi_realistic extends throttle {
 
         @Override
         public void onProgressChanged(SeekBar sbBrake, int newSliderPosition, boolean fromUser) {
+            mainapp.buttonVibration();
+            setTargetSpeed(whichThrottle, true);
         }
 
         @Override
@@ -746,9 +713,7 @@ public class throttle_semi_realistic extends throttle {
 
         @Override
         public void onStopTrackingTouch(SeekBar sbBrake) {
-            double brake = sbBrake.getProgress();
-            brake = Math.round(brake/20) * (20); // 20 = 100%/5steps
-            sbBrake.setProgress( (int) brake);
+            setTargetSpeed(whichThrottle, true);
         }
     }
 
@@ -764,13 +729,14 @@ public class throttle_semi_realistic extends throttle {
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // Log.d("Engine_Driver", "onTouchThrottle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
 
         @Override
         public void onProgressChanged(SeekBar sbLoad, int newSliderPosition, boolean fromUser) {
+            mainapp.buttonVibration();
+            setTargetSpeed(whichThrottle, true);
         }
 
         @Override
@@ -780,9 +746,7 @@ public class throttle_semi_realistic extends throttle {
 
         @Override
         public void onStopTrackingTouch(SeekBar sbLoad) {
-            double brake = sbLoad.getProgress();
-            brake = Math.round(brake/50) * (50); // 50 = 100%/2steps
-            sbLoad.setProgress( (int) brake);
+            setTargetSpeed(whichThrottle, true);
         }
     }
 
@@ -798,285 +762,367 @@ public class throttle_semi_realistic extends throttle {
 
         @Override
         public boolean onLongClick(View v) {
-//            mainapp.exitDoubleBackButtonInitiated = 0;
-//            if (arrowDirection.equals("right")) {
-//                mAutoIncrement[whichThrottle] = true;
-//            } else {
-//                mAutoDecrement[whichThrottle] = true;
-//            }
-//            repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
-//
-//            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-//            mainapp.buttonVibration();
+            Log.d("Engine_Driver","srmt: TargetArrowSpeedButtonTouchListener: onLongClick()");
+            mainapp.exitDoubleBackButtonInitiated = 0;
+            if (arrowDirection.equals(speed_button_type.RIGHT)) {
+                mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.INCREMENT;
+            } else if (arrowDirection.equals(speed_button_type.LEFT)) {
+                mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
+            } else { // stop
+                mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
+                mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
+                setTargetSpeed(whichThrottle, 0);
+            }
+            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
+
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            mainapp.buttonVibration();
             return false;
         }
 
         @Override
         public void onClick(View v) {
-//            mainapp.exitDoubleBackButtonInitiated = 0;
-//            if (arrowDirection.equals("right")) {
-//                mAutoIncrement[whichThrottle] = false;
-//                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
-//            } else {
-//                mAutoDecrement[whichThrottle] = false;
-//                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
-//            }
-//            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
-//            mainapp.buttonVibration();
+            Log.d("Engine_Driver","srmt: TargetArrowSpeedButtonTouchListener: onClick()");
+            mainapp.exitDoubleBackButtonInitiated = 0;
+            if (arrowDirection.equals(speed_button_type.RIGHT)) {
+                stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
+                if (!semiRealisticSpeedButtonLongPressActive)
+                    incrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                setTargetSpeed(whichThrottle, true);
+            } else if (arrowDirection.equals(speed_button_type.LEFT)) {
+                stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
+                if (!semiRealisticSpeedButtonLongPressActive)
+                    decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                setTargetSpeed(whichThrottle, true);
+            } else { // stop
+//                semiRealisticSpeedButtonLongPressActive = false;
+                semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
+                stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
+                mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
+            }
+            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            mainapp.buttonVibration();
         }
 
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-//            mainapp.exitDoubleBackButtonInitiated = 0;
-//            if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
-//                    && mAutoIncrement[whichThrottle]) {
-//                mAutoIncrement[whichThrottle] = false;
-//            }
-//
-//            if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
-//                    && mAutoDecrement[whichThrottle]) {
-//                mAutoDecrement[whichThrottle] = false;
-//            }
-//            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+            Log.d("Engine_Driver","srmt: TargetArrowSpeedButtonTouchListener: onTouch(): event: " + event.getAction());
+            mainapp.exitDoubleBackButtonInitiated = 0;
+            if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                    && mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
+                stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
+//                semiRealisticSpeedButtonLongPressActive = false;
+            }
+            if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                    && mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.DECREMENT) {
+                stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
+//                semiRealisticSpeedButtonLongPressActive = false;
+            }
+
+            if ( (event.getAction() == MotionEvent.ACTION_DOWN)
+            && (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] != auto_increment_or_decrement_type.INCREMENT)
+            && (arrowDirection.equals(speed_button_type.RIGHT)) ) {
+//                semiRealisticSpeedButtonLongPressActive = true;
+                restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.INCREMENT, REP_DELAY);
+            }
+            if ((event.getAction() == MotionEvent.ACTION_DOWN)
+            && (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] != auto_increment_or_decrement_type.DECREMENT)
+            && (arrowDirection.equals(speed_button_type.LEFT)) ) {
+//                semiRealisticSpeedButtonLongPressActive = true;
+                restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.DECREMENT, REP_DELAY);
+            }
+
+            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             return false;
         }
     }
 
-    // change speed slider by scaled display unit value
-    int semiRealisticSpeedChange(int whichThrottle, int change) {
-
-        VerticalSeekBar targetThrottleSlider = getSemiRealisticThrottleSlider(whichThrottle);
-        int lastSliderPosition = targetThrottleSlider.getProgress();
-        int lastScaleSpeed;
-        int scaleSpeed;
-        int speed;
-//        int lastSpeed;
-
-        if (getDirection(whichThrottle) == DIRECTION_REVERSE) {  // treat negative as positive
-            change = change * -1;
-        }
-
-        lastScaleSpeed = getSemiRealisticSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
-        scaleSpeed = lastScaleSpeed + change;
-//        lastSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
-
-        if ((lastScaleSpeed > 0) && (scaleSpeed < 0)) {   // force a zero speed at least once when changing directions
-            scaleSpeed = 0;
-        }
-
-//        Log.d("Engine_Driver", "throttle_semi_realistic - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-        if (scaleSpeed < 0) {
-            int dir = getDirection(whichThrottle) == DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD;
-            dirs[whichThrottle] = dir;
-            setEngineDirection(whichThrottle, dir, false);
-            showDirectionIndication(whichThrottle, dir);
-        }
-//        Log.d("Engine_Driver", "throttle_semi_realistic - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-//        Log.d("Engine_Driver","throttle_semi_realistic - speedChange - change: " + change);
-
-        scaleSpeed = Math.abs(scaleSpeed);
-
-        int newSliderPosition = getNewSliderPositionFromSemiRealisticSpeed(scaleSpeed, whichThrottle, true);
-
-        if (lastScaleSpeed == scaleSpeed) {
-            newSliderPosition += Math.signum(change);
-        }
-
-        if (newSliderPosition < 0)  //insure speed is inside bounds
-            newSliderPosition = 0;
-
-        if (newSliderPosition > throttleSwitchingMax[whichThrottle])
-            newSliderPosition = throttleSwitchingMax[whichThrottle];
-
-//        Log.d("Engine_Driver", "throttle_semi_realistic - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
-//        Log.d("Engine_Driver","throttle_semi_realistic - speedChange - change: " + change);
-
-        targetThrottleSlider.setProgress(newSliderPosition);
-        speed = Math.abs(getSemiRealisticSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
-        setDisplayedSpeed(whichThrottle, speed);
-        doLocoSound(whichThrottle);
-
-//        speedUpdateAndNotify(whichThrottle, speed);
-        return speed;
-
-    } // end speedChange
-
-
     @Override
-    void speedUpdate(int whichThrottle, int speed) {
-        super.speedUpdate(whichThrottle, speed);
-
-        int sliderPosition = getNewSliderPositionFromSemiRealisticSpeed(speed, whichThrottle, false);
-
-        if (sliderPosition < 0)  //insure speed is inside bounds
-            sliderPosition = 0;
-
-        if (sliderPosition > throttleSwitchingMax[whichThrottle])
-            sliderPosition = throttleSwitchingMax[whichThrottle];
-
-        getSemiRealisticThrottleSlider(whichThrottle).setProgress(sliderPosition);
-        setDisplayedSpeed(whichThrottle, speed);
-        doLocoSound(whichThrottle);
-    }
-
-    // process WiT speed report
-    // update speed slider if didn't just send a speed update to WiT
-    @Override
-    void speedUpdateWiT(int whichThrottle, int speedWiT) {
-        super.speedUpdateWiT(whichThrottle, speedWiT);
-
-        if (speedWiT < 0)
-            speedWiT = 0;
-
-        int sliderPosition;
-        if (!changeTimers[whichThrottle].isDelayInProgress()) {
-            sliderPosition = getNewSliderPositionFromSemiRealisticSpeed(speedWiT, whichThrottle, false);
-            vsbSemiRealisticSpeeds[whichThrottle].setProgress(sliderPosition);
-        }
-        doLocoSound(whichThrottle);
-    }
-
-
-    @Override
-    boolean changeDirectionIfAllowed(int whichThrottle, int direction) {
-        if (getDirection(whichThrottle) != direction) {
-
-            showDirectionRequest(whichThrottle, direction);        // update requested direction indication
-            setEngineDirection(whichThrottle, direction, false);   // update direction for each engine on this throttle
-
-            int lastSliderPosition = vsbSemiRealisticSpeeds[whichThrottle].getProgress();
-            int lastScaleTargetSpeed;
-
-            lastScaleTargetSpeed = getSemiRealisticSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
-
-            speedUpdate(whichThrottle, lastScaleTargetSpeed);
-        }
-        return (getDirection(whichThrottle) == direction);
-    }
-
-    int getDisplaySemiRealisticSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
-        return getSemiRealisticSpeedFromCurrentSliderPosition(whichThrottle, useScale);
-    }
-
-    int getSemiRealisticSpeedFromCurrentSliderPosition(int whichThrottle, boolean useScale) {
-        int semiRealisticSpeed = 0;
-        if (vsbSemiRealisticSpeeds[whichThrottle].isEnabled()) {
-            semiRealisticSpeed = getSemiRealisticSpeedFromSliderPosition(vsbSemiRealisticSpeeds[whichThrottle].getProgress(), whichThrottle, useScale);
-        }
-        return semiRealisticSpeed;
-    }
-
-    int getSemiRealisticSpeedFromSliderPosition(int sliderPosition, int whichThrottle, boolean useScale) {
-        int semiRealisticSpeed;
-
-        double scale = 1;
-        if (useScale) {
-            scale = getDisplayUnitScale(whichThrottle);
-        }
-        semiRealisticSpeed = (int) Math.round(sliderPosition * scale);
-//        Log.d("Engine_Driver","throttle_semi_realistic - getSemiRealisticSpeedFromSliderPosition -  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
-        return semiRealisticSpeed;
-    }
-
-    int getNewSliderPositionFromSemiRealisticSpeed(int semiRealisticSpeed, int whichThrottle, boolean useScale) {
-        int newSliderPosition;
-        double scale = getDisplayUnitScale(whichThrottle);
-        if (!useScale) {
-            scale = 1;
-        }
-
-        if (semiRealisticSpeed == 0) {
-            newSliderPosition = throttleMidPointZero[whichThrottle];
+    void doVolumeButtonAction(int action, int key, int repeatCnt) {
+        Log.d("Engine_Driver", "srmt: doVolumeButtonAction(): action: " + action);
+        if (action == ACTION_UP) {
         } else {
-            if (getDirection(whichThrottle) == DIRECTION_FORWARD) {
-                newSliderPosition = throttleMidPointDeadZoneUpper[whichThrottle] + (int) Math.round(semiRealisticSpeed / scale);
-            } else {
-                newSliderPosition = throttleMidPointDeadZoneLower[whichThrottle] - (int) Math.round(semiRealisticSpeed / scale);
-            }
+            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastVolumeButtonsNotSupported), Toast.LENGTH_SHORT);
         }
-//        Log.d("Engine_Driver","throttle_semi_realistic - getNewSliderPositionFromSpeed -  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
+    }
 
+    void semiRealisticThrottleSliderPositionUpdate(int whichThrottle, int newSpeed) {
+        Log.d("Engine_Driver","srmt: semiRealisticThrottleSliderPositionUpdate(): newSpeed " + newSpeed);
+        if (newSpeed < 0)
+            newSpeed = 0;
+
+//        int sliderPosition = getNewSemiRealisticThrottleSliderPositionFromSpeed(newSpeed, whichThrottle, false);
+        int sliderPosition = getNewSemiRealisticThrottleSliderPositionFromSpeed(newSpeed, whichThrottle);
+        setTargetSpeed(whichThrottle,newSpeed);
+        vsbSemiRealisticThrottles[whichThrottle].setProgress(sliderPosition);
+    }
+
+    protected void setSemiRealisticAutoIncrementDecrement(int whichThrottle, int direction) {
+        Log.d("Engine_Driver","srmt: setSemiRealisticAutoIncrementDecrement(): direction " + direction);
+        switch (direction) {
+            case auto_increment_or_decrement_type.OFF:
+            case auto_increment_or_decrement_type.INCREMENT:
+            case auto_increment_or_decrement_type.DECREMENT:
+                mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = direction;
+                break;
+            case auto_increment_or_decrement_type.INVERT:
+                if (mSemiRealisticAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
+                    mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
+                } else if (mSemiRealisticAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.DECREMENT) {
+                    mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.INCREMENT;
+                }
+                break;
+        }
+    }
+
+    public void decrementSemiRealisticThrottlePosition(int whichThrottle, int from) {
+        Log.d("Engine_Driver","srmt: decrementSemiRealisticThrottlePosition(): from: " + from);
+        decrementSemiRealisticThrottlePosition(whichThrottle, from, 1);
+    }
+    public void decrementSemiRealisticThrottlePosition(int whichThrottle, int from, int stepMultiplier) {
+        switch (from) {
+            case SPEED_COMMAND_FROM_BUTTONS:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                break;
+            case SPEED_COMMAND_FROM_VOLUME:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                break;
+            case SPEED_COMMAND_FROM_GAMEPAD:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle, false
+                        ,getMaxSpeed(whichThrottle)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                        ,"");
+                break;
+        }
+        mainapp.buttonVibration();
+    }
+
+    public void incrementSemiRealisticThrottlePosition(int whichThrottle, int from) {
+        incrementSemiRealisticThrottlePosition(whichThrottle, from, 1);
+    }
+    public void incrementSemiRealisticThrottlePosition(int whichThrottle, int from, int stepMultiplier) {
+        Log.d("Engine_Driver","srmt: incrementSemiRealisticThrottlePosition(): from: " + from);
+        switch (from) {
+            case SPEED_COMMAND_FROM_BUTTONS:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                break;
+            case SPEED_COMMAND_FROM_VOLUME:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                break;
+            case SPEED_COMMAND_FROM_GAMEPAD:
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
+                mainapp.whichThrottleLastTouch = whichThrottle;
+                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
+                        ,getMaxSpeed(whichThrottle)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
+                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                        ,"");
+                break;
+        }
+        mainapp.buttonVibration();
+    }
+
+    boolean changeTargetDirectionIfAllowed(int whichThrottle, int direction) {
+        int speed = getSpeed(whichThrottle);
+        int currentDirection = getDirection(whichThrottle);
+        boolean result = false;
+
+        if (direction == DIRECTION_NEUTRAL) {
+            targetDirections[whichThrottle] = direction;
+            result = true;
+        } else if ( (speed == 0) || (currentDirection == direction) ) {
+            targetDirections[whichThrottle] = direction;
+            setEngineDirection(whichThrottle,direction,false);
+            result = true;
+        }
+        return result;
+    }
+
+    // *******************************************************************************************************************************************
+    // *******************************************************************************************************************************************
+    // *******************************************************************************************************************************************
+
+    void setTargetSpeed(int whichThrottle, int newSpeed) {
+        targetSpeeds[whichThrottle] = newSpeed;
+        setTargetSpeed(whichThrottle, false);
+    }
+
+    void setTargetSpeed(int whichThrottle, boolean fromSlider) {
+        Log.d("Engine_Driver","srmt: setTargetSpeed(): fromSlider: " + fromSlider);
+        int targetSpeed;
+        if (fromSlider) {
+//            targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle, false);
+            targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
+        } else {
+            targetSpeed = targetSpeeds[whichThrottle];
+        }
+        int targetDirection = getTargetDirection(whichThrottle);
+        double targetAccelleration = 1; //default
+        double brakeSliderPosition = (double) getBrakeSliderPosition(whichThrottle);
+        double loadSliderPosition = (double) getLoadSliderPosition(whichThrottle);
+        int speed = getSpeed(whichThrottle);
+
+        if (targetDirection == DIRECTION_NEUTRAL) {
+            targetSpeed = 0;
+            targetAccelleration = -1;
+        }
+        if (brakeSliderPosition > 0) {
+            targetSpeed = 0;
+            targetAccelleration = -1 * 1/(brakeSliderPosition+1)/0.52;
+        }
+        if  (loadSliderPosition > 0) {
+            targetAccelleration = targetAccelleration * (loadSliderPosition+1) ;
+        }
+        if (targetSpeed < 0) targetSpeed = 0;
+//        if (targetSpeed > MAX_SPEED_VAL_WIT) targetSpeed = MAX_SPEED_VAL_WIT;
+        if (targetSpeed > maxThrottle) targetSpeed = maxThrottle;
+
+        if ((targetSpeed < speed) && (targetAccelleration > 0)) targetAccelleration = targetAccelleration * -1;
+        if ((targetSpeed > speed) && (targetAccelleration < 0)) targetAccelleration = targetAccelleration * -1;
+
+        targetAccelerations[whichThrottle] = targetAccelleration;
+        displayTargetAcceleration((whichThrottle));
+
+        targetSpeeds[whichThrottle] = targetSpeed;
+
+        // take brake, reverser and load into account here...
+
+        displayTargetScaleSpeed(whichThrottle);
+
+        // now change the speed if necessary
+        if ( (targetSpeed != speed)
+        && (targetSpeed != prevTargetSpeeds[whichThrottle])
+        && (!semiRealisticSpeedButtonLongPressActive)) {
+            semiRealisticTargetSpeedUpdateHandlers[whichThrottle].removeCallbacksAndMessages(null);
+            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
+        }
+
+        showTargetDirectionIndication(whichThrottle);
+        prevTargetSpeeds[whichThrottle] = targetSpeeds[whichThrottle];
+    }
+
+    // *******************************************************************************************************************************************
+    // *******************************************************************************************************************************************
+    // *******************************************************************************************************************************************
+
+    @Override
+    protected void setDisplayedSpeed(int whichThrottle, int speed) {
+        super.setDisplayedSpeed(whichThrottle, speed);
+        showTargetDirectionIndication(whichThrottle);
+    }
+
+    @Override
+    protected void setDisplayedSpeedWithDirection(int whichThrottle, int speed) {
+        super.setDisplayedSpeedWithDirection(whichThrottle, speed);
+        showTargetDirectionIndication(whichThrottle);
+    }
+
+    void updateSemiRealisticThrottleSliderAndTargetSpeed(int whichThrottle, int delta) {
+        Log.d("Engine_Driver","srmt: updateSemiRealisticThrottleSliderAndTargetSpeed(): delta: " + delta);
+        int currentPosition = getSemiRealisticThrottleSlider(whichThrottle).getProgress();
+        int newPosition = currentPosition+delta;
+        getSemiRealisticThrottleSlider(whichThrottle).setProgress(newPosition);
+        setTargetSpeed(whichThrottle, true);
+    }
+
+    protected void displayTargetScaleSpeed(int whichThrottle) {
+        Log.d("Engine_Driver","srmt: displayTargetScaleSpeed():");
+        int targetSpeed = targetSpeeds[whichThrottle];
+        int targetDirection = targetDirections[whichThrottle];
+
+        TextView target_speed_label;
+        double speedScale = getDisplayUnitScale(whichThrottle);
+        target_speed_label = tvTargetSpdVals[whichThrottle];
+        String result;
+        if (targetSpeed < 0) {
+            targetSpeed = 0;
+        }
+        int prevScaleSpeed = (int) Math.round(prevTargetSpeeds[whichThrottle] * speedScale);
+        int scaleSpeed = (int) Math.round(targetSpeed * speedScale);
+        try {
+            switch (targetDirection) {
+                case DIRECTION_FORWARD:
+                    result = Integer.toString(scaleSpeed) + " ↑";
+                    break;
+                case DIRECTION_REVERSE:
+                    result = Integer.toString(scaleSpeed) + " ↓";
+                    break;
+                case DIRECTION_NEUTRAL:
+                default:
+                    result = Integer.toString(scaleSpeed);
+                    break;
+            }
+            target_speed_label.setText(result);
+            mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
+        } catch (NumberFormatException | ClassCastException e) {
+            Log.e("Engine_Driver", "srmt: problem showing Target speed: " + e.getMessage());
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    protected void displayTargetAcceleration(int whichThrottle) {
+        TextView targetAccelerationView = tvTargetAccelerationVals[whichThrottle];
+        targetAccelerationView.setText(String.format("%.2f", getTargetAccelleration(whichThrottle)));
+    }
+
+    int getSpeedFromSemiRealisticThrottleCurrentSliderPosition(int whichThrottle) {
+        Log.d("Engine_Driver", "srmt: getSpeedFromSemiRealisticThrottleCurrentSliderPosition()");
+        int semiRealisticThrottleSpeed = 0;
+        if (vsbSemiRealisticThrottles[whichThrottle].isEnabled()) {
+            semiRealisticThrottleSpeed = getSpeedFromSemiRealisticThrottleNewSliderPosition(vsbSemiRealisticThrottles[whichThrottle].getProgress(), whichThrottle);
+        }
+//        Log.d("Engine_Driver", "srmt: getSpeedFromSemiRealisticThrottleCurrentSliderPosition(): " + semiRealisticThrottleSpeed);
+        return semiRealisticThrottleSpeed;
+    }
+
+    int getSpeedFromSemiRealisticThrottleNewSliderPosition(int sliderPosition, int whichThrottle) {
+        Log.d("Engine_Driver", "srmt: getSpeedFromSemiRealisticThrottleNewSliderPosition()");
+        double scale = 1;
+        if (useNotches)  scale = 100 / ((double) prefDisplaySemiRealisticThrottleNotches);
+        double max = ((double) maxThrottle) / 100;
+
+//        int semiRealisticThrottleSpeed = (int) Math.round( ((double) sliderPosition) * scale * 1.26);
+        int semiRealisticThrottleSpeed = (int) Math.round( ((double) sliderPosition) * scale * max);
+        Log.d("Engine_Driver", "srmt: getSpeedFromSemiRealisticThrottleNewSliderPosition(): pref: " + prefDisplaySemiRealisticThrottleNotches + " position: " + sliderPosition + " scale: " + scale + " speed: " + semiRealisticThrottleSpeed);
+        return semiRealisticThrottleSpeed;
+    }
+
+    int getNewSemiRealisticThrottleSliderPositionFromSpeed(int newSpeed, int whichThrottle) {
+        Log.d("Engine_Driver", "srmt: getNewSemiRealisticThrottleSliderPositionFromSpeed()");
+        double scale = 1;
+        if (useNotches)  scale = 100 / ((double) prefDisplaySemiRealisticThrottleNotches);
+        double max = ((double) maxThrottle) / 126;
+
+//        int newSliderPosition = (int) Math.round(newSpeed / scale);
+        int newSliderPosition = (int) Math.round(newSpeed / scale * max);
+        Log.d("Engine_Driver", "srmt: getNewSemiRealisticThrottleSliderPositionFromSpeed(): pref: " + prefDisplaySemiRealisticThrottleNotches + " new speed: " + newSpeed + " scale: " + scale  + " new pos: " + newSliderPosition);
         return newSliderPosition;
     }
 
-    int getTargetSpeed(int whichThrottle) {
-        // TODO:: need to take into account the load, brake and reverser
-        return getSemiRealisticSpeedFromSliderPosition(vsbSemiRealisticSpeeds[whichThrottle].getProgress(), whichThrottle, false);
+    int getBrakeSliderPosition(int whichThrottle) {
+        return vsbBrakes[whichThrottle].getProgress();
     }
 
-    // set the displayed numeric speed value
-    @Override
-    protected void setDisplayedSpeed(int whichThrottle, int speed) {
-        setDisplayedSpeedWithDirection(whichThrottle, speed);
-    }
-
-    //listeners for the Limit Speed Button
-    protected class LimitSpeedButtonSemiRealisticTouchListener implements View.OnTouchListener {
-        int whichThrottle;
-
-        protected LimitSpeedButtonSemiRealisticTouchListener(int new_whichThrottle) {
-            whichThrottle = new_whichThrottle;
-        }
-
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                vsbSemiRealisticSpeeds[whichThrottle].touchFromUser = false;
-                limitSpeed(whichThrottle);
-            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                mainapp.buttonVibration();
-            }
-            return false;
-        }
-    }
-
-    protected void limitSpeed(int whichThrottle) {
-        int dir = getDirection(whichThrottle);
-        int speed = getSemiRealisticSpeedFromSliderPosition(vsbSemiRealisticSpeeds[whichThrottle].getProgress(), whichThrottle, false);
-//                Log.d("Engine_Driver","limit_speed_button_switching_touch_listener -  speed: " + speed );
-
-        isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
-        if (isLimitSpeeds[whichThrottle]) {
-            bLimitSpeeds[whichThrottle].setSelected(true);
-            limitSpeedSliderScalingFactors[whichThrottle] = 100 / ((float) prefLimitSpeedPercent);
-            sbs[whichThrottle].setMax(Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
-
-            throttleMidPointZero[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone);
-            throttleSwitchingMax[whichThrottle] = (Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]) + prefSwitchingThrottleSliderDeadZone) * 2;
-            vsbSemiRealisticSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
-
-        } else {
-            bLimitSpeeds[whichThrottle].setSelected(false);
-            sbs[whichThrottle].setMax(maxThrottle);
-
-//                    throttleMidPointZero = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone);
-//                    throttleSwitchingMax = (MAX_SPEED_VAL_WIT + prefSwitchingThrottleSliderDeadZone) * 2;
-            throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
-            throttleSwitchingMax[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
-            vsbSemiRealisticSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
-        }
-        throttleMidPointDeadZoneUpper[whichThrottle] = throttleMidPointZero[whichThrottle] + prefSwitchingThrottleSliderDeadZone;
-        throttleMidPointDeadZoneLower[whichThrottle] = throttleMidPointZero[whichThrottle] - prefSwitchingThrottleSliderDeadZone;
-
-        speedUpdate(whichThrottle, speed);
-        setEngineDirection(whichThrottle, dir, false);
-
-        Log.d("Engine_Driver", "limitSpeed -  speed: " + speed);
-        speedChangeAndNotify(whichThrottle, 0);
-        setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+    int getLoadSliderPosition(int whichThrottle) {
+        return vsbLoads[whichThrottle].getProgress();
     }
 
     // indicate direction using the button pressed state
-    void showDirectionIndication(int whichThrottle, int direction) {
-        super.showDirectionIndication(whichThrottle, direction);
-        boolean setLeftDirectionButtonEnabled;
-
-        if (direction == 0) {  //0=reverse 1=forward
-            setLeftDirectionButtonEnabled = directionButtonsAreCurrentlyReversed(whichThrottle);
-        } else {
-            setLeftDirectionButtonEnabled = !directionButtonsAreCurrentlyReversed(whichThrottle);
+    void showTargetDirectionIndication(int whichThrottle) {
+        Button bFwd = bTargetFwds[whichThrottle];
+        Button bRev = bTargetRevs[whichThrottle];
+        Button bNeutral = bTargetNeutrals[whichThrottle];
+        if (directionButtonsAreCurrentlyReversed(whichThrottle)) {
+            bRev = bTargetFwds[whichThrottle];
+            bFwd = bTargetRevs[whichThrottle];
         }
 
         if (!getConsist(whichThrottle).isActive()) {
@@ -1084,28 +1130,220 @@ public class throttle_semi_realistic extends throttle {
             bTargetRevs[whichThrottle].setSelected(false);
             bTargetNeutrals[whichThrottle].setSelected(false);
         } else {
-            if (!setLeftDirectionButtonEnabled) {
-                bTargetFwds[whichThrottle].setSelected(false);
-                bTargetRevs[whichThrottle].setSelected(true);
-                bTargetFwds[whichThrottle].setTypeface(null, Typeface.NORMAL);
-                bTargetRevs[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                if ((getSpeed(whichThrottle) > 0) && (!dirChangeWhileMoving)) {
-                    bTargetFwds[whichThrottle].setEnabled(false);
-                }
-                bTargetRevs[whichThrottle].setEnabled(true);
+            int speed = getSpeed(whichThrottle);
 
-                bTargetNeutrals[whichThrottle].setEnabled(true);
-            } else {
-                bTargetFwds[whichThrottle].setSelected(true);
-                bTargetRevs[whichThrottle].setSelected(false);
-                bTargetFwds[whichThrottle].setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                bTargetRevs[whichThrottle].setTypeface(null, Typeface.NORMAL);
-                bTargetFwds[whichThrottle].setEnabled(true);
-                if ((getSpeed(whichThrottle) > 0) && (!dirChangeWhileMoving)) {
-                    bTargetRevs[whichThrottle].setEnabled(false);
+            bRev.setSelected(false);
+            bRev.setTypeface(null, Typeface.NORMAL);
+            bRev.setEnabled(false);
+
+            bFwd.setSelected(false);
+            bFwd.setTypeface(null, Typeface.NORMAL);
+            bFwd.setEnabled(false);
+
+            bNeutral.setSelected(false);
+            bNeutral.setTypeface(null, Typeface.NORMAL);
+
+            if (targetDirections[whichThrottle] == DIRECTION_FORWARD) {
+                bFwd.setSelected(true);
+                bFwd.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bFwd.setEnabled(true);
+
+            } else if (targetDirections[whichThrottle] == DIRECTION_REVERSE) {
+                bRev.setSelected(true);
+                bRev.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bRev.setEnabled(true);
+            } else if (targetDirections[whichThrottle] == DIRECTION_NEUTRAL) {
+                bNeutral.setSelected(true);
+                bNeutral.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bNeutral.setEnabled(true);
+
+
+                int currentDirection = getDirection(whichThrottle);
+                if ( (speed == 0) || (currentDirection == DIRECTION_FORWARD) ) {
+                    bFwd.setEnabled(true);
                 }
-                bTargetNeutrals[whichThrottle].setEnabled(true);
+                if ( (speed == 0) || (currentDirection == DIRECTION_REVERSE) ) {
+                    bRev.setEnabled(true);
+                }
+            }
+            if (speed == 0) {
+                bFwd.setEnabled(true);
+                bRev.setEnabled(true);
+            }
+            bTargetNeutrals[whichThrottle].setEnabled(true);
+        }
+    }
+
+    int getTargetDirection(int whichThrottle) {
+        return targetDirections[whichThrottle];
+    }
+
+    double getTargetAccelleration(int whichThrottle) {
+        return targetAccelerations[whichThrottle];
+    }
+
+    // Listeners for the direction buttons
+    private class SemiRealisticDirectionButtonTouchListener implements View.OnTouchListener {
+        int direction;
+        int whichThrottle;
+
+        private SemiRealisticDirectionButtonTouchListener(int myDirection, int myWhichThrottle) {
+            direction = myDirection;    // store these values for this button
+            whichThrottle = myWhichThrottle;
+        }
+
+        private void doButtonPress() {
+            Log.d("Engine_Driver", "srmt: SemiRealisticDirectionButtonTouchListener: doButtonPress()");
+            boolean result = false;
+            mainapp.exitDoubleBackButtonInitiated = 0;
+
+            switch (this.direction) {
+                case DIRECTION_FORWARD:
+                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                    break;
+                case DIRECTION_REVERSE:
+                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                    break;
+                case DIRECTION_NEUTRAL: {
+                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_NEUTRAL);
+                        break;
+                }
+            }
+
+            if (result) {
+                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+                showTargetDirectionIndication(whichThrottle);
+                setTargetSpeed(whichThrottle, true);
+            }
+            mainapp.buttonVibration();
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(final View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                doButtonPress();
+            }
+            return true;
+        }
+    }
+
+    // For Semi Realistic Speed Button updater
+    protected class SemiRealisticSpeedButtonRptUpdater implements Runnable {
+        int whichThrottle;
+        int buttonRepeatDelay;
+
+        protected SemiRealisticSpeedButtonRptUpdater(int myWhichThrottle, int myButtonRepeatDelay) {
+            whichThrottle = myWhichThrottle;
+            buttonRepeatDelay = myButtonRepeatDelay;
+        }
+
+        @Override
+        public void run() {
+            Log.d("Engine_Driver","srmt: SemiRealisticSpeedButtonRptUpdater: run()");
+
+            if (mainapp.appIsFinishing) { return;}
+
+            if (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
+                incrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.INCREMENT, buttonRepeatDelay);
+
+            } else if (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.DECREMENT) {
+                decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.DECREMENT, buttonRepeatDelay);
+            }
+            mainapp.buttonVibration();
+        }
+    }
+
+    // For Semi Realistic Target Speed updater
+    protected class SemiRealisticTargetSpeedRptUpdater implements Runnable {
+        int whichThrottle;
+        int delayMillis;
+
+        protected SemiRealisticTargetSpeedRptUpdater(int myWhichThrottle, int myRepeatDelay) {
+            whichThrottle = myWhichThrottle;
+            int repeatDelay = getRepeatDelay(myRepeatDelay);
+            double delay = getSemiRealisticTargetSpeedRptDelay(whichThrottle, repeatDelay);
+            delayMillis = (int) Math.round(delay);
+        }
+
+        @Override
+        public void run() {
+            Log.d("Engine_Driver","srmt: SemiRealisticTargetSpeedRptUpdater: run()");
+            if (mainapp.appIsFinishing) { return;}
+
+            if (getSpeed(whichThrottle) == targetSpeeds[whichThrottle]) return;
+
+            if (delayMillis > 0) { // increment
+                if (getSpeed(whichThrottle) > targetSpeeds[whichThrottle]) {
+                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], SPEED_COMMAND_FROM_BUTTONS);
+                    showTargetDirectionIndication(whichThrottle);
+                    return;
+                }
+                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
+                restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, delayMillis);
+            } else {
+                if (getSpeed(whichThrottle) < targetSpeeds[whichThrottle]) {
+                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], SPEED_COMMAND_FROM_BUTTONS);
+                    showTargetDirectionIndication(whichThrottle);
+                    return;
+                }
+                delayMillis = delayMillis * -1;
+                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
+                restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, delayMillis);
+                showTargetDirectionIndication(whichThrottle);
             }
         }
     }
+
+    double getSemiRealisticTargetSpeedRptDelay(int whichThrottle, int repeatDelay) {
+        return repeatDelay * getTargetAccelleration(whichThrottle);
+    }
+
+    int getRepeatDelay() {
+        return getRepeatDelay(0);
+    }
+    int getRepeatDelay (int myRepeatDelay) {
+        int repeatDelay = myRepeatDelay;
+
+        if (repeatDelay==0) {
+            try {
+                repeatDelay = Integer.parseInt(prefs.getString("prefSemiRealisticThrottleRepeat", mainapp.getResources().getString(R.string.prefSemiRealisticThrottleRepeatDefaultValue)));
+            } catch (NumberFormatException ex) {
+                repeatDelay = Integer.parseInt(mainapp.getResources().getString(R.string.prefSemiRealisticThrottleRepeatDefaultValue));
+            }
+        }
+        return repeatDelay;
+    }
+
+    void restartSemiRealisticThrottleTargetSpeedRepeater(int whichThrottle, int delayMillis) {
+        Log.d("Engine_Driver","srmt: restartSemiRealisticThrottleTargetSpeedRepeater(): delayMillis: " + delayMillis);
+        if (delayMillis == 0) {
+            semiRealisticTargetSpeedUpdateHandlers[whichThrottle].post(new SemiRealisticTargetSpeedRptUpdater(whichThrottle, prefPauseSpeedRate));
+        } else {
+            semiRealisticTargetSpeedUpdateHandlers[whichThrottle].postDelayed(new SemiRealisticTargetSpeedRptUpdater(whichThrottle,getRepeatDelay()), delayMillis);
+        }
+    }
+
+    void restartSemiRealisticThrottleSpeedButtonRepeater(int whichThrottle, int direction, int delayMillis) {
+        Log.d("Engine_Driver","srmt: restartSemiRealisticThrottleSpeedButtonRepeater(): delayMillis: " + delayMillis);
+        semiRealisticSpeedButtonLongPressActive = true;
+        mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = direction;
+        if (delayMillis == 0) {
+            semiRealisticSpeedButtonUpdateHandlers[whichThrottle].post(new SemiRealisticSpeedButtonRptUpdater(whichThrottle, REP_DELAY));
+        } else {
+            semiRealisticSpeedButtonUpdateHandlers[whichThrottle].postDelayed(new SemiRealisticSpeedButtonRptUpdater(whichThrottle, REP_DELAY), delayMillis);
+        }
+    }
+
+    void stopSemiRealsticThrottleSpeedButtonRepeater(int whichThrottle) {
+        Log.d("Engine_Driver","srmt: stopSemiRealsticThrottleSpeedButtonRepeater()");
+        semiRealisticSpeedButtonLongPressActive = false;
+        prevTargetSpeeds[whichThrottle] = 999;
+        mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
+        semiRealisticSpeedButtonUpdateHandlers[whichThrottle].removeCallbacks(null);
+    }
 }
+

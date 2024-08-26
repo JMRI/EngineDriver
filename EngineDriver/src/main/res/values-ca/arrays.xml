@@ -70,7 +70,7 @@
         <item tools:ignore="TypographyDashes">Simple - tablet recomanat (1-6 controladors)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching esquerra (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical esquerra (1-6)</item>
-<!--        <item >Semi-Realistic Left Left (1)</item>-->
+        <item >Semi-Realistic Left (1)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Cap</item>
