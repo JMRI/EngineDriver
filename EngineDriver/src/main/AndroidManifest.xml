@@ -142,6 +142,15 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
+            android:name=".throttle_semi_realistic"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize"
+            android:windowSoftInputMode="adjustNothing"
+            android:label="@string/app_name_throttle_long"
+            android:theme="@style/app_theme_black" >
+        </activity>
+        <activity
             android:name=".function_settings"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"

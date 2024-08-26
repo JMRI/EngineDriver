@@ -21,4 +21,5 @@ public interface direction_button {
     //Constant values for the direction buttons:
     int LEFT = 990;
     int RIGHT = 992;
+    int NEUTRAL = 993;  // Semi-Realistic Throttle only
 }

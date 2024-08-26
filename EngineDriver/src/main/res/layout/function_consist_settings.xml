@@ -20,7 +20,7 @@
         <!--- Width of this column will be programatically changed if used for DCC-EX Functions-->
         <RelativeLayout
             android:id="@+id/function_consist_instruction"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -76,7 +76,7 @@
 
         <ScrollView
             android:id="@+id/ScrollView01"
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             tools:ignore="RtlSymmetry" >
@@ -92,7 +92,7 @@
 
                     <TextView
                         style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:layout_marginRight="2dp"
                         android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLabel"
@@ -100,7 +100,7 @@
 
                     <TextView
                         android:id="@+id/function_consist_LocosHeader"
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
                         android:layout_marginRight="2dp"
                         android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLocos"
@@ -109,7 +109,7 @@
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:layout_marginRight="2dp"
                         android:paddingLeft="4dp"
                         android:text="@string/functionConsistColumnLatching"
@@ -131,12 +131,13 @@
                         android:text="@string/functionButton00DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -154,12 +155,13 @@
                         android:text="@string/functionButton01DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -177,12 +179,13 @@
                         android:text="@string/functionButton02DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -201,12 +204,13 @@
                         android:text="@string/functionButton03DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -224,12 +228,13 @@
                         android:text="@string/functionButton04DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -247,12 +252,13 @@
                         android:text="@string/functionButton05DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -270,12 +276,13 @@
                         android:text="@string/functionButton06DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -293,12 +300,13 @@
                         android:text="@string/functionButton07DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -316,12 +324,13 @@
                         android:text="@string/functionButton08DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -339,12 +348,13 @@
                         android:text="@string/functionButton09DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -362,12 +372,13 @@
                         android:text="@string/functionButton10DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -385,12 +396,13 @@
                         android:text="@string/functionButton11DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -408,12 +420,13 @@
                         android:text="@string/functionButton12DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -431,12 +444,13 @@
                         android:text="@string/functionButton13DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -454,12 +468,13 @@
                         android:text="@string/functionButton14DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -477,12 +492,13 @@
                         android:text="@string/functionButton15DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -500,12 +516,13 @@
                         android:text="@string/functionButton16DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -523,12 +540,13 @@
                         android:text="@string/functionButton17DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -546,12 +564,13 @@
                         android:text="@string/functionButton18DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -569,12 +588,13 @@
                         android:text="@string/functionButton19DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -592,12 +612,13 @@
                         android:text="@string/functionButton20DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -615,7 +636,8 @@
                         android:text="@string/functionButton21DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
@@ -638,7 +660,8 @@
                         android:text="@string/functionButton22DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
@@ -661,7 +684,8 @@
                         android:text="@string/functionButton23DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
@@ -683,12 +707,13 @@
                         android:text="@string/functionButton24DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -706,7 +731,8 @@
                         android:text="@string/functionButton25DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
@@ -729,12 +755,13 @@
                         android:text="@string/functionButton26DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -752,12 +779,13 @@
                         android:text="@string/functionButton27DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -775,12 +803,13 @@
                         android:text="@string/functionButton28DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -798,12 +827,13 @@
                         android:text="@string/functionButton29DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -821,12 +851,13 @@
                         android:text="@string/functionButton30DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 
@@ -844,12 +875,13 @@
                         android:text="@string/functionButton31DefaultValue" />
 
                     <Spinner
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
                         android:entries="@array/prefFunctionConsistLocosEntries"
                         android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
 
                     <Spinner
-                        android:layout_width="50dp"
+                        android:layout_width="40dp"
                         android:entries="@array/prefFunctionConsistLatchingEntries"
                         android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
 

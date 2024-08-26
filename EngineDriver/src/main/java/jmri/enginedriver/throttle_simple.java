@@ -24,6 +24,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class throttle_simple extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_simple: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -142,6 +144,7 @@ public class throttle_simple extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle_simple: onResume(): called");
         super.onResume();
 
         if (mainapp.appIsFinishing) { return;}

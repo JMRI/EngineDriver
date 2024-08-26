@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_vertical_left_or_right extends throttle {
@@ -57,6 +60,7 @@ public class throttle_vertical_left_or_right extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_vertical_left_or_right: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -178,6 +182,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     break;
             }
 
+            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
             PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
         }
@@ -187,6 +192,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle_vertical_left_or_right: onResume(): called");
         super.onResume();
 
         if (mainapp.appIsFinishing) { return;}
@@ -274,7 +280,7 @@ public class throttle_vertical_left_or_right extends throttle {
                 }
             }
             int textSize = (int) (conNomTextSize * textScale * 0.95);
-            if (!prefThrottleScreenType.equals("Vertical")) {
+            if (!prefThrottleScreenType.equals(throttle_screen_type.VERTICAL)) {
                 textSize = (int) (conNomTextSize * textScale);
             }
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);

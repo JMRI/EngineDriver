@@ -62,7 +62,8 @@ public class comm_handler extends Handler {
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
-               mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES)) || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO));
+               mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES))
+                       || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO));
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
@@ -173,6 +174,11 @@ public class comm_handler extends Handler {
             final int whichThrottle = msg.arg1;
 //            commThread.wifiSend(String.format("M%sA*<;>X", mainapp.throttleIntToString(whichThrottle)));  //send eStop request
             commThread.sendEStop(whichThrottle);
+            break;
+         }
+
+         case message_type.FORCE_THROTTLE_RELOAD: {
+            mainapp.alert_activities(message_type.FORCE_THROTTLE_RELOAD, mainapp.throttleIntToString(msg.arg1));
             break;
          }
 

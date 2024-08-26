@@ -72,7 +72,8 @@
         <item >Semplice &#8211; Consigliato Tablet (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Shunting Sinistra (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Sinistra (1-6)</item>
-    </string-array>
+        <item >Semi-Realistic Left (1)</item>
+    </string-array>4
 
     <string-array name="DisplayClockEntries">
         <item>Niente</item>

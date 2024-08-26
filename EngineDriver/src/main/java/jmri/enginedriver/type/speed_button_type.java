@@ -17,11 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface consist_function_rule_style_type {
-    String ORIGINAL = "original";
-    String COMPLEX = "complex";
-    String SPECIAL_EXACT = "specialExact";
-    String SPECIAL_PARTIAL = "specialPartial";
-    String SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
-    String SPECIAL = "special";  // only used for partial matching. not for exact matching
+public interface speed_button_type {
+    String LEFT = "left";
+    String RIGHT = "right";
+    String STOP = "stop";
 }

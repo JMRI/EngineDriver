@@ -448,6 +448,9 @@ public class dcc_ex extends AppCompatActivity {
 
                     if (TRACK_TYPES_SELECTABLE[typeIndex]) {
                         if (!TRACK_TYPES_NEED_ID[typeIndex]) {
+                            if (type=="AUTO") { // needs to be set to main first if AUTO is selected
+                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " MAIN", 0);
+                            }
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, 0);
                         } else {
                             try {

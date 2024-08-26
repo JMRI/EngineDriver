@@ -38,7 +38,9 @@ import android.widget.SeekBar;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 
 public class throttle_switching_horizontal extends throttle {
@@ -50,9 +52,6 @@ public class throttle_switching_horizontal extends throttle {
 //    private LinearLayout[] lLowers;
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
-
-//    private static final int TICK_TYPE_0_100 = 0;
-    private static final int TICK_TYPE_0_100_0 = 1;
 
     private final int[] throttleMidPointZero = {0,0,0};
     private final int[] throttleSwitchingMax = {0,0,0};
@@ -86,6 +85,7 @@ public class throttle_switching_horizontal extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_switching_horizontal: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
 
@@ -150,7 +150,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -163,7 +163,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_1);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -176,7 +176,7 @@ public class throttle_switching_horizontal extends throttle {
                     lSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_2);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(TICK_TYPE_0_100_0);
+                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
 //                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
                     hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
                     hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
@@ -207,6 +207,7 @@ public class throttle_switching_horizontal extends throttle {
 
     @Override
     public void onResume() {
+        Log.d("Engine_Driver", "throttle_switching_horizontal: onResume(): called");
         super.onResume();
 
         if (mainapp.appIsFinishing) { return;}
@@ -700,9 +701,9 @@ public class throttle_switching_horizontal extends throttle {
                         doLocoSound(whichThrottle);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_DECREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                         } else { // going up
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_INCREMENT);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                         }
 
                         if ((lastSliderPosition < throttleMidPointZero[whichThrottle]) && (newSliderPosition > throttleMidPointZero[whichThrottle])) { // passing from reverse to forward
@@ -789,7 +790,7 @@ public class throttle_switching_horizontal extends throttle {
                         } else {
                             Log.d("Engine_Driver", "onProgressChanged !!-- LimitedJump hit jump speed.");
                             limitedJump[whichThrottle] = false;
-                            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
                             doLocoSound(whichThrottle);
                             speedUpdate(whichThrottle, getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
@@ -810,7 +811,7 @@ public class throttle_switching_horizontal extends throttle {
         public void onStopTrackingTouch(SeekBar sb) {
 //            Log.d("Engine_Driver", "onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
-            setAutoIncrementDecrement(whichThrottle, AUTO_INCREMENT_DECREMENT_OFF);
+            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
             kidsTimerActions(kids_timer_action_type.STARTED,0);
         }
     }

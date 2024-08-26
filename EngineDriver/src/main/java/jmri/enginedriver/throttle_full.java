@@ -33,6 +33,7 @@ import android.widget.LinearLayout;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 
 public class throttle_full extends throttle {
@@ -120,6 +121,7 @@ public class throttle_full extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("Engine_Driver", "throttle_full: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -150,7 +152,7 @@ public class throttle_full extends throttle {
                     bPauses[throttleIndex] = null;
                     break;
             }
-
+            sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
         }
 
         // set label and dcc functions (based on settings) or hide if no label

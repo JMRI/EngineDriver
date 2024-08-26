@@ -17,11 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface consist_function_rule_style_type {
-    String ORIGINAL = "original";
-    String COMPLEX = "complex";
-    String SPECIAL_EXACT = "specialExact";
-    String SPECIAL_PARTIAL = "specialPartial";
-    String SPECIAL_PARTIAL_CONTAINS_ONLY = "specialPartialContainsOnly";
-    String SPECIAL = "special";  // only used for partial matching. not for exact matching
+public interface auto_increment_or_decrement_type {
+    int OFF = 0;
+    int INCREMENT = 1;
+    int DECREMENT = 2;
+    int INVERT = 3;
 }

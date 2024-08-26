@@ -1217,9 +1217,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     void checkIfDccexServerName(String serverName, int serverPort) {
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
 
-        mainapp.isDCCEX = ( ((mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
-                                && (serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")))
-                || (serverPort==2560)
-                );
+        mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+                       && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
     }
 }
