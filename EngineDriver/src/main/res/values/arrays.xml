@@ -64,6 +64,25 @@
         <item>126</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">  <!-- display version -->
+        <item>Percentage</item>
+        <item>2 steps</item>
+        <item>3 steps</item>
+        <item>4 steps</item>
+        <item>5 steps</item>
+        <item>6 steps</item>
+        <item>7 steps</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>100</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>none</item>
         <item>Top</item>

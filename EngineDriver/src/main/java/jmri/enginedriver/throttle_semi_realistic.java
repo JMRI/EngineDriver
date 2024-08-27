@@ -76,6 +76,9 @@ public class throttle_semi_realistic extends throttle {
 
     int prefSemiRealisticThrottleSpeedStep = 1;
     int prefDisplaySemiRealisticThrottleNotches = 100;
+    int prefSemiRealisticThrottleNumberOfBrakeSteps = 5;
+    int prefSemiRealisticThrottleNumberOfLoadSteps = 2;
+    int prefSemiRealisticThrottleLoadPcnt = 100;
     boolean useNotches = false;
 
     protected void removeLoco(int whichThrottle) {
@@ -94,6 +97,8 @@ public class throttle_semi_realistic extends throttle {
         useNotches = (prefDisplaySemiRealisticThrottleNotches!=100);
         prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
         REP_DELAY = threaded_application.getIntPrefValue(prefs,"speed_arrows_throttle_repeat_delay", "100");
+        prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue));
+        prefSemiRealisticThrottleNumberOfLoadSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfLoadSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue));
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
@@ -186,12 +191,8 @@ public class throttle_semi_realistic extends throttle {
             vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
 
             vsbSemiRealisticThrottles[throttleIndex] = findViewById(R.id.semi_realistic_speed_0);
-
             vsbBrakes[throttleIndex] = findViewById(R.id.brake_0);
-            vsbBrakes[throttleIndex].setMax(5);
-
             vsbLoads[throttleIndex] = findViewById(R.id.load_0);
-            vsbLoads[throttleIndex].setMax(2);
 
             svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
 
@@ -205,11 +206,17 @@ public class throttle_semi_realistic extends throttle {
             }
 
             vsbBrakes[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-            vsbBrakes[throttleIndex].setTickType(tick_type.TICK_0_5);
+//            vsbBrakes[throttleIndex].setMax(5);
+//            vsbBrakes[throttleIndex].setTickType(tick_type.TICK_0_5);
+            vsbBrakes[throttleIndex].setMax(prefSemiRealisticThrottleNumberOfBrakeSteps);
+            vsbBrakes[throttleIndex].setTickType(prefSemiRealisticThrottleNumberOfBrakeSteps);
             vsbBrakes[throttleIndex].setTitle(getResources().getString(R.string.brake));
 
             vsbLoads[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-            vsbLoads[throttleIndex].setTickType(tick_type.TICK_0_2);
+//            vsbLoads[throttleIndex].setMax(2);
+//            vsbLoads[throttleIndex].setTickType(tick_type.TICK_0_2);
+            vsbLoads[throttleIndex].setMax(prefSemiRealisticThrottleNumberOfLoadSteps);
+            vsbLoads[throttleIndex].setTickType(prefSemiRealisticThrottleNumberOfLoadSteps);
             vsbLoads[throttleIndex].setTitle(getResources().getString(R.string.load));
         }
 
@@ -959,15 +966,17 @@ public class throttle_semi_realistic extends throttle {
         Log.d("Engine_Driver","srmt: setTargetSpeed(): fromSlider: " + fromSlider);
         int targetSpeed;
         if (fromSlider) {
-//            targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle, false);
             targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
         } else {
             targetSpeed = targetSpeeds[whichThrottle];
         }
         int targetDirection = getTargetDirection(whichThrottle);
         double targetAccelleration = 1; //default
-        double brakeSliderPosition = (double) getBrakeSliderPosition(whichThrottle);
-        double loadSliderPosition = (double) getLoadSliderPosition(whichThrottle);
+        double brakeSliderPosition = getBrakeSliderPosition(whichThrottle);
+        double brakeOffset = 5 / ((double) prefSemiRealisticThrottleNumberOfBrakeSteps); // offset from the default to 5 positions
+        double loadSliderPosition = getLoadSliderPosition(whichThrottle);
+        double loadOffset = 2 / ((double) prefSemiRealisticThrottleNumberOfLoadSteps); // offset from the default to 2 positions
+        loadOffset = loadOffset * ((double) prefSemiRealisticThrottleLoadPcnt) / 100;
         int speed = getSpeed(whichThrottle);
 
         if (targetDirection == DIRECTION_NEUTRAL) {
@@ -975,18 +984,25 @@ public class throttle_semi_realistic extends throttle {
             targetAccelleration = -1;
         }
         if (brakeSliderPosition > 0) {
-            targetSpeed = 0;
-            targetAccelleration = -1 * 1/(brakeSliderPosition+1)/0.52;
+            if (targetSpeed==0) {
+                targetSpeed = 0;
+                targetAccelleration = -1 / ((brakeSliderPosition*brakeOffset) + 1) / 0.52;
+            } else { // throttle is still active
+                targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition * brakeOffset / (double) prefSemiRealisticThrottleNumberOfLoadSteps) );
+                targetAccelleration = -1 / ((brakeSliderPosition*brakeOffset) + 1) / 0.26;
+            }
+
         }
         if  (loadSliderPosition > 0) {
-            targetAccelleration = targetAccelleration * (loadSliderPosition+1) ;
+            targetAccelleration = targetAccelleration * ((loadSliderPosition*loadOffset) + 1);
         }
         if (targetSpeed < 0) targetSpeed = 0;
-//        if (targetSpeed > MAX_SPEED_VAL_WIT) targetSpeed = MAX_SPEED_VAL_WIT;
         if (targetSpeed > maxThrottle) targetSpeed = maxThrottle;
 
-        if ((targetSpeed < speed) && (targetAccelleration > 0)) targetAccelleration = targetAccelleration * -1;
-        if ((targetSpeed > speed) && (targetAccelleration < 0)) targetAccelleration = targetAccelleration * -1;
+        if ( ((targetSpeed < speed) && (targetAccelleration > 0))
+        || ((targetSpeed > speed) && (targetAccelleration < 0)) ) {
+            targetAccelleration = targetAccelleration * -1;
+        }
 
         targetAccelerations[whichThrottle] = targetAccelleration;
         displayTargetAcceleration((whichThrottle));

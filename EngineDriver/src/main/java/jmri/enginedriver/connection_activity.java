@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_LONG;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -134,6 +136,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     View host_numeric_or_text;
     Button host_numeric;
     Button host_text;
+    Button connect_button;
 
     LinearLayout rootView;
     int rootViewHeight = 0;
@@ -257,8 +260,8 @@ public class connection_activity extends AppCompatActivity implements Permission
             entry.setInputType(InputType.TYPE_CLASS_NUMBER);
             entry.setKeyListener(DigitsKeyListener.getInstance("01234567890."));
             entry.requestFocus();
-            host_numeric.setVisibility(View.GONE);
-            host_text.setVisibility(View.VISIBLE);
+            host_numeric.setVisibility(GONE);
+            host_text.setVisibility(VISIBLE);
             mainapp.buttonVibration();
         }
     }
@@ -269,8 +272,8 @@ public class connection_activity extends AppCompatActivity implements Permission
             EditText entry = findViewById(R.id.host_ip);
             entry.setInputType(InputType.TYPE_CLASS_TEXT);
             entry.requestFocus();
-            host_numeric.setVisibility(View.VISIBLE);
-            host_text.setVisibility(View.GONE);
+            host_numeric.setVisibility(VISIBLE);
+            host_text.setVisibility(GONE);
             mainapp.buttonVibration();
         }
     }
@@ -278,9 +281,9 @@ public class connection_activity extends AppCompatActivity implements Permission
     private void showHideNumericOrTextButtons(boolean show) {
         View v = findViewById(R.id.host_numeric_or_text);
         if (show) {
-            v.setVisibility(View.VISIBLE);
+            v.setVisibility(VISIBLE);
         } else {
-            v.setVisibility(View.GONE);
+            v.setVisibility(GONE);
         }
     }
 
@@ -544,10 +547,8 @@ public class connection_activity extends AppCompatActivity implements Permission
             public void afterTextChanged(Editable s) {
                 checkIP();
             }
-
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
@@ -567,20 +568,30 @@ public class connection_activity extends AppCompatActivity implements Permission
                 }
             }
         });
+        port.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                checkIPandPort();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
 
         host_numeric_or_text = findViewById(R.id.host_numeric_or_text);
         host_numeric = findViewById(R.id.host_numeric);
         HostNumericListener host_numeric_listener = new HostNumericListener();
         host_numeric.setOnClickListener(host_numeric_listener);
-        host_numeric.setVisibility(View.GONE);
+        host_numeric.setVisibility(GONE);
         host_text = findViewById(R.id.host_text);
         HostTextListener host_text_listener = new HostTextListener();
         host_text.setOnClickListener(host_text_listener);
 
         //Set the button callback.
-        Button button = findViewById(R.id.connect);
+        connect_button = findViewById(R.id.connect);
         button_listener click_listener = new button_listener();
-        button.setOnClickListener(click_listener);
+        connect_button.setOnClickListener(click_listener);
 
         set_labels();
         DisplayMetrics dm = new DisplayMetrics();
@@ -600,7 +611,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
         }
 
-        button = findViewById(R.id.clear_recent_connections_button);
+        Button button = findViewById(R.id.clear_recent_connections_button);
         button.setOnClickListener(new ClearRecentConnectionsButtonListener());
 
         rootView = findViewById(R.id.connection_view);
@@ -920,6 +931,16 @@ public class connection_activity extends AppCompatActivity implements Permission
             host_ip.setText(tempIP.replace(":", ""));
             port.requestFocus();
         }
+        checkIPandPort();
+    }
+
+    private void checkIPandPort() {
+        String tempIP = host_ip.getText().toString().trim();
+        String tempPort = port.getText().toString().trim();
+        connect_button.setEnabled(true);
+        if ( (tempIP.isEmpty()) || (tempPort.isEmpty()) ) {
+            connect_button.setEnabled(false);
+        }
     }
 
     /***
@@ -1206,11 +1227,11 @@ public class connection_activity extends AppCompatActivity implements Permission
         TextView DCCEXheading =  findViewById(R.id.cons_DccexConnectionOption_heading);
         LinearLayout DCCEXlayout =  findViewById(R.id.cons_DccexConnectionOption_layout);
         if (prefDccexConnectionOption) {
-            DCCEXheading.setVisibility(View.VISIBLE);
-            DCCEXlayout.setVisibility(View.VISIBLE);
+            DCCEXheading.setVisibility(VISIBLE);
+            DCCEXlayout.setVisibility(VISIBLE);
         } else {
-            DCCEXheading.setVisibility(View.GONE);
-            DCCEXlayout.setVisibility(View.GONE);
+            DCCEXheading.setVisibility(GONE);
+            DCCEXlayout.setVisibility(GONE);
         }
     }
 

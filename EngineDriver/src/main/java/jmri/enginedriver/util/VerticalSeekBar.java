@@ -197,12 +197,13 @@ public class VerticalSeekBar extends SeekBar {
                     break;
 
                 case tick_type.TICK_0_2:
-//                case tick_type.TICK_0_3:
+                case tick_type.TICK_0_3:
+                case tick_type.TICK_0_4:
                 case tick_type.TICK_0_5:
-//                case tick_type.TICK_0_6:
-//                case tick_type.TICK_0_7:
+                case tick_type.TICK_0_6:
+                case tick_type.TICK_0_7:
                 case tick_type.TICK_0_8:
-//                case tick_type.TICK_0_9:
+                case tick_type.TICK_0_9:
                 case tick_type.TICK_0_28:
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / tickMarkType;

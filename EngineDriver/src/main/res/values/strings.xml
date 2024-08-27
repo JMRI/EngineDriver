@@ -1280,7 +1280,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefThrottleSwitchOption2DefaultValue" translatable="false">Switching</string>
 
     <string name="prefSemiRealisticThrottleTitle">Semi-Realistic Throttle Preferences</string>
-    <string name="prefSemiRealisticThrottleSummary">Prefrences specific to the Semi-Realistic Throttle screen</string>
+    <string name="prefSemiRealisticThrottleSummary">Preferences specific to the Semi-Realistic Throttle screen</string>
 
     <string name="prefSemiRealisticThrottleRepeatTitle">Speed Step Repeat Delay</string>
     <string name="prefSemiRealisticThrottleRepeatSummary">How long between speed step repeats (in milliseconds).\nSmaller is faster.</string>
@@ -1295,6 +1295,18 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNotchesDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="toastVolumeButtonsNotSupported">Volume buttons are not yet supported on this throttle layout</string>
+
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Number Of Brake Steps</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Adjust the number of steps in the Brake Slider</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Number Of Load Steps</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Adjust the number of steps in the Load Slider</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">2</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleLoadPcntTitle">Load Percentage multiplier</string>
+    <string name="prefSemiRealisticThrottleLoadPcntSummary">Adjust the effect of the load slider on the speed changes. &gt;100% = more load</string>
+    <string name="prefSemiRealisticThrottleLoadPcntDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefCategoryDevicePageTitle">Device Preferences</string>
 

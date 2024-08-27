@@ -1963,7 +1963,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "maximum_throttle_preference":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
                         break;
+
+                    case "prefSemiRealisticThrottleNumberOfBrakeSteps":
+                    case "prefSemiRealisticThrottleNumberOfLoadSteps":
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
+                        break;
                 }
+
+
             }
         }
     }

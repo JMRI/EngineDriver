@@ -80,6 +80,7 @@
             android:layout_marginRight="4dp"
             android:layout_marginBottom="10dp"
             android:text="@string/connect_button"
+            android:enabled="false"
             tools:ignore="RtlHardcoded" />
 
     </RelativeLayout>
