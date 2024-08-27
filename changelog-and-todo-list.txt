@@ -7,7 +7,8 @@
  * Send heartbeat restart on reconnect
  * Bug fix for 'No' option for the DCC-EX protocol option
  * Linting
- * Semi-Realistic Throttle layout
+ * New Semi-Realistic Throttle layout
+ * Connect Screen - Disable the connect button if no IP/host name AND port
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents

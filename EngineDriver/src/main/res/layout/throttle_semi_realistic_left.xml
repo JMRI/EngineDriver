@@ -99,7 +99,7 @@
                                     android:id="@+id/loco_cell_0"
                                     android:layout_width="0dp"
                                     android:layout_height="40dp"
-                                    android:layout_weight=".65">
+                                    android:layout_weight=".63">
 
                                     <Button
                                         android:id="@+id/button_select_loco_0"
@@ -185,7 +185,7 @@
                                     android:id="@+id/target_speed_cell_0"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="0.09">
+                                    android:layout_weight="0.11">
 
                                     <TextView
                                         android:id="@+id/target_speed_value_label_0"

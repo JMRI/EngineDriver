@@ -630,6 +630,7 @@
                     android:dialogTitle="@string/prefMaximumThrottleTitle"
                     android:key="maximum_throttle_preference"
                     android:maxLength="3"
+                    android:digits="0123456789"
                     android:inputType="number"
                     android:summary="@string/prefMaximumThrottleSummary"
                     android:title="@string/prefMaximumThrottleTitle"
@@ -642,6 +643,35 @@
                     android:key="prefDisplaySemiRealisticThrottleNotches"
                     android:summary="@string/prefSemiRealisticThrottleNotchesSummary"
                     android:title="@string/prefSemiRealisticThrottleNotchesTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <ListPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue"
+                    android:entries="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntries"
+                    android:entryValues="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntryValues"
+                    android:key="prefSemiRealisticThrottleNumberOfBrakeSteps"
+                    android:summary="@string/prefSemiRealisticThrottleNumberOfBrakeStepsSummary"
+                    android:title="@string/prefSemiRealisticThrottleNumberOfBrakeStepsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <ListPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue"
+                    android:entries="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntries"
+                    android:entryValues="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntryValues"
+                    android:key="prefSemiRealisticThrottleNumberOfLoadSteps"
+                    android:summary="@string/prefSemiRealisticThrottleNumberOfLoadStepsSummary"
+                    android:title="@string/prefSemiRealisticThrottleNumberOfLoadStepsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefMaximumThrottleDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleLoadPcntTitle"
+                    android:key="prefSemiRealisticThrottleLoadPcnt"
+                    android:maxLength="4"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleLoadPcntSummary"
+                    android:title="@string/prefSemiRealisticThrottleLoadPcntTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>
