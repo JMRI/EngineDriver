@@ -27,4 +27,5 @@ public interface tts_msg_type {
     int GAMEPAD_GAMEPAD_TEST_FAIL = 7;
     int GAMEPAD_GAMEPAD_TEST_KEY_AND_PURPOSE = 8;
     int GAMEPAD_THROTTLE_SPEED = 9;
+    int GAMEPAD_THROTTLE_TARGET_AND_SPEED = 10;
 }

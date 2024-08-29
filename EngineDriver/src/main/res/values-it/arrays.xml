@@ -135,6 +135,11 @@
         <item>Corno (IPLS)</item>
         <item>Corta Corta (IPLS)</item>
         <item>Parla velocità attuale</item>
+        <item >Neutral</item>
+        <item >Increase Brake</item>
+        <item >Decrease Brake</item>
+        <item >Increase Load</item>
+        <item >Decrease Load</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

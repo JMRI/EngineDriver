@@ -33,4 +33,9 @@ public interface pref_gamepad_button_option_type {
     String SOUNDS_HORN = "Horn (IPLS)";
     String SOUNDS_HORN_SHORT = "Horn Short (IPLS)";
     String SPEAK_CURRENT_SPEED = "Speak Current Speed";
+    String NEUTRAL = "Neutral";
+    String INCREASE_BRAKE = "Increase Brake";
+    String DECREASE_BRAKE = "Decrease Brake";
+    String INCREASE_LOAD = "Increase Load";
+    String DECREASE_LOAD = "Decrease Load";
 }

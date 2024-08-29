@@ -134,6 +134,11 @@
         <item>Buzina (IPLS)</item>
         <item>Chifre Curta (IPLS)</item>
         <item>Fale a velocidade atual</item>
+        <item >Neutral</item>
+        <item >Increase Brake</item>
+        <item >Decrease Brake</item>
+        <item >Increase Load</item>
+        <item >Decrease Load</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>

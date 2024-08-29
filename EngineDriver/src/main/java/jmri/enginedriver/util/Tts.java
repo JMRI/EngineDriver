@@ -67,22 +67,26 @@ public class Tts {
     }
 
     public void speakWords(int msgNo) {
-        speakWords(msgNo, ' ', false, 0, 0, 0, "");
+        speakWords(msgNo, ' ', false, 0, 0, 0, 0, false, "");
     }
 
     public void speakWords(int msgNo, String argString) {
-        speakWords(msgNo, ' ', false, 0, 0, 0, argString);
+        speakWords(msgNo, ' ', false, 0, 0, 0, 0, false, argString);
     }
 
     public void speakWords(int msgNo, int whichThrottle) {
-        speakWords(msgNo, whichThrottle, false, 0, 0, 0, "");
+        speakWords(msgNo, whichThrottle, false, 0, 0, 0, 0, false, "");
     }
 
     public void speakWords(int msgNo, int whichThrottle, boolean force) {
-        speakWords(msgNo, whichThrottle, force, 0, 0, 0, "");
+        speakWords(msgNo, whichThrottle, force, 0, 0, 0, 0, false, "");
     }
 
     public void speakWords(int msgNo, int whichThrottle, boolean force, int argInt1, int argInt2, int argInt3, String argString) {
+        speakWords(msgNo, whichThrottle, force, argInt1, argInt2, argInt3, 0, false, argString);
+    }
+
+    public void speakWords(int msgNo, int whichThrottle, boolean force, int argInt1, int argInt2, int argInt3,  int argInt4, boolean isSemiRealisticThrottle, String argString) {
         boolean result = false;
         String speech = "";
         if (!prefTtsWhen.equals(PREF_TTS_WHEN_NONE)) {
@@ -110,7 +114,8 @@ public class Tts {
                     case tts_msg_type.GAMEPAD_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_NONE)) {
                             int whichLastGamepad1 = argInt1;
-                            int displaySpeedFromCurrentSliderPosition = argInt2; // getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
+                            int speed = argInt2; // getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
+                            int targetSpeed = argInt4; // getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
                             String consistAddressString = argString; // getConsistAddressString(whichThrottle)
 
                             if ((whichLastGamepad1 != whichThrottle) || (force)) {
@@ -123,7 +128,11 @@ public class Tts {
                             }
                             if ((prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsSpeed) + " "
-                                        + (displaySpeedFromCurrentSliderPosition);
+                                        + (speed);
+                                if (isSemiRealisticThrottle) {
+                                    speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsTargetSpeed) + " "
+                                            + (targetSpeed);
+                                }
                             }
                         }
                         break;
@@ -167,7 +176,8 @@ public class Tts {
                         if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
                             int maxSpd = argInt1; // getMaxSpeed(whichThrottle);
                             int spd = argInt2;    // getSpeedFromCurrentSliderPosition(whichThrottle,false)
-                            int displaySpeedFromCurrentSliderPosition = argInt3;    // getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                            int speed = argInt3;    // getSpeedFromCurrentSliderPosition(whichThrottle,true)
+                            int targetSpeed = argInt4;    // getSpeedFromCurrentSliderPosition(whichThrottle,true)
 
                             if (spd == 0) {
                                 result = true;
@@ -176,8 +186,12 @@ public class Tts {
                                 result = true;
                                 speech = mainapp.getResources().getString(R.string.TtsGamepadTestSpeedMax);
                                 if ((prefTtsThrottleSpeed.equals("Zero + Max + speed"))) {
-                                    speech = speech + " " + displaySpeedFromCurrentSliderPosition;
+                                    speech = speech + " " + speed;
                                 }
+                            }
+                            if (isSemiRealisticThrottle) {
+                                speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsTargetSpeed) + " "
+                                        + (targetSpeed);
                             }
                         }
                         break;

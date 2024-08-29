@@ -54,6 +54,11 @@
     <integer name="KeyCode_X"> 52</integer>
     <integer name="KeyCode_Y"> 53</integer>
     <integer name="KeyCode_Z"> 54</integer>
+    <integer name="KeyCode_COMMA"> 55</integer>
+    <integer name="KeyCode_PERIOD"> 56</integer>
+    <integer name="KeyCode_Backslash"> 73</integer>
+    <integer name="KeyCode_Semicolon"> 74</integer>
+    <integer name="KeyCode_Apostrophe"> 75</integer>
     <integer name="KeyCode_Dpad_Up"> 19</integer>
     <integer name="KeyCode_Dpad_Down"> 20</integer>
     <integer name="KeyCode_Dpad_Left"> 21</integer>
