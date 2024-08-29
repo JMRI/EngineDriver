@@ -132,6 +132,11 @@
         <item>Klaxon (IPLS)</item>
         <item>Klaxon court (IPLS)</item>
         <item>Annonce vitesse actuelle</item>
+        <item >Neutral</item>
+        <item >Increase Brake</item>
+        <item >Decrease Brake</item>
+        <item >Increase Load</item>
+        <item >Decrease Load</item>
     </string-array>
 
 <!--

@@ -148,6 +148,11 @@
         <item >Roh (IPLS)</item>
         <item >Roh krátký (IPLS)</item>
         <item >Mluvit aktuální rychlostí</item>
+        <item >Neutral</item>
+        <item >Increase Brake</item>
+        <item >Decrease Brake</item>
+        <item >Increase Load</item>
+        <item >Decrease Load</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">

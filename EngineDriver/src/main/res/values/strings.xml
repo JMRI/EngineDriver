@@ -784,21 +784,29 @@
 \n-----------------
 \nUp or \'+\' or \'=\' = Increase Speed
 \nDown or \'-\' = Decrease Speed
-\n\'X\' = Stop
-\nLeft or \'\[\' = Reverse (Forward if buttons swapped in preferences)
-\nRight or \'\]\' = Forward (Ahead) (Reverse if buttons swapped in preferences)
+\n►► = Increase Speed * 2
+\n◄◄ = Decrease Speed * 2
+\n\'X\' or End = Stop
+\nLeft or \'\[\' = Reverse (Fwd if buttons swapped)
+\nRight or \'\]\' = Forward (Ahead) (Rev if buttons)
 \n\'D\' = Direction - Toggle Forward/Reverse
 \n\'N\' = Next Throttle
-\n\'Z\' = All stop
+\n\'Z\' or Home = All stop
+\nSemi-Realistic Throttle Only:
+\n - \'\\\' = Neutral
+\n - PgUp or \' = Decrease Brake
+\n - PgDn or \';\' = Increase Brake
+\n - \'.\' = Decrease Load
+\n - \',\' = Increase Load
 \n
-\nF00 - F28 = Function
+\nF00 - F32 = Function
 \nMust be \'F\' followed by two digits
 \n\'0\'-\'9\' = Functions 0-9
 \nWithout a preceding \'F\', \'S\' or \'L\'
 \n
 \nS000 - S100 = Speed
 \nMust be \'S\' followed by three digits
-\n
+\n\'V\` = Speak Speed
 \nIn Phone Loco Sounds (IPLS)
 \n\'B\' = Bell
 \n\'H\' = Horn / Whistle
@@ -992,6 +1000,7 @@
     <string name="TtsGamepadThrottle">Throttle</string>
     <string name="TtsLoco">Loco</string>
     <string name="TtsSpeed">Speed</string>
+    <string name="TtsTargetSpeed">Target Speed</string>
     <string name="TtsGamepadTest">Gamepad test</string>
     <string name="TtsGamepadTestComplete">Test complete</string>
     <string name="TtsGamepadTestSkipped">Test skipped</string>
@@ -1292,17 +1301,15 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefSemiRealisticThrottleNotchesTitle">Throttle Notches</string>
     <string name="prefSemiRealisticThrottleNotchesSummary">Adjust the throttle as percentage, or by a specific number of steps</string>
-    <string name="prefSemiRealisticThrottleNotchesDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
-
-    <string name="toastVolumeButtonsNotSupported">Volume buttons are not yet supported on this throttle layout</string>
+    <string name="prefSemiRealisticThrottleNotchesDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Number Of Brake Steps</string>
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Adjust the number of steps in the Brake Slider</string>
-    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue" translatable="false">7</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Number Of Load Steps</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Adjust the number of steps in the Load Slider</string>
-    <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">2</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleLoadPcntTitle">Load Percentage multiplier</string>
     <string name="prefSemiRealisticThrottleLoadPcntSummary">Adjust the effect of the load slider on the speed changes. &gt;100% = more load</string>

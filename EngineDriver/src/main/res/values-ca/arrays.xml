@@ -132,6 +132,11 @@
         <item>Banya (IPLS)</item>
         <item>Banya Curta (IPLS)</item>
         <item >Parla la velocitat actual</item>
+        <item >Neutral</item>
+        <item >Increase Brake</item>
+        <item >Decrease Brake</item>
+        <item >Increase Load</item>
+        <item >Decrease Load</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>
