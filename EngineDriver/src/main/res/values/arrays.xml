@@ -72,6 +72,8 @@
         <item>5 steps</item>
         <item>6 steps</item>
         <item>7 steps</item>
+        <item>8 steps</item>
+        <item>9 steps</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>100</item>
@@ -81,6 +83,8 @@
         <item>5</item>
         <item>6</item>
         <item>7</item>
+        <item>8</item>
+        <item>9</item>
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->

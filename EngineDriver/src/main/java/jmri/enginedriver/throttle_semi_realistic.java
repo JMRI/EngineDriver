@@ -75,10 +75,12 @@ public class throttle_semi_realistic extends throttle {
     int maxThrottle = 126;
 
     int prefSemiRealisticThrottleSpeedStep = 1;
-    int prefDisplaySemiRealisticThrottleNotches = 100;
+    int prefDisplaySemiRealisticThrottleNotches = 8;
     int prefSemiRealisticThrottleNumberOfBrakeSteps = 5;
     int prefSemiRealisticThrottleNumberOfLoadSteps = 2;
     int prefSemiRealisticThrottleLoadPcnt = 100;
+    int prefSemiRealisticThrottleAcceleratonRepeat = 300;
+    int prefSemiRealisticThrottleDeceleratonRepeat = 600;
     boolean useNotches = false;
 
     protected void removeLoco(int whichThrottle) {
@@ -101,6 +103,9 @@ public class throttle_semi_realistic extends throttle {
         REP_DELAY = threaded_application.getIntPrefValue(prefs,"speed_arrows_throttle_repeat_delay", "100");
         prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue));
         prefSemiRealisticThrottleNumberOfLoadSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfLoadSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue));
+
+        prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
+        prefSemiRealisticThrottleDeceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDeceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
@@ -208,15 +213,11 @@ public class throttle_semi_realistic extends throttle {
             }
 
             vsbBrakes[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-//            vsbBrakes[throttleIndex].setMax(5);
-//            vsbBrakes[throttleIndex].setTickType(tick_type.TICK_0_5);
             vsbBrakes[throttleIndex].setMax(prefSemiRealisticThrottleNumberOfBrakeSteps);
             vsbBrakes[throttleIndex].setTickType(prefSemiRealisticThrottleNumberOfBrakeSteps);
             vsbBrakes[throttleIndex].setTitle(getResources().getString(R.string.brake));
 
             vsbLoads[throttleIndex].setSliderPurpose(SLIDER_PURPOSE_OTHER);
-//            vsbLoads[throttleIndex].setMax(2);
-//            vsbLoads[throttleIndex].setTickType(tick_type.TICK_0_2);
             vsbLoads[throttleIndex].setMax(prefSemiRealisticThrottleNumberOfLoadSteps);
             vsbLoads[throttleIndex].setTickType(prefSemiRealisticThrottleNumberOfLoadSteps);
             vsbLoads[throttleIndex].setTitle(getResources().getString(R.string.load));
@@ -670,22 +671,22 @@ public class throttle_semi_realistic extends throttle {
             if (lastSliderPosition == finalSliderPosition) {
                 int targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
                 if (getSpeed(whichThrottle) < targetSpeed) {
-                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
+                    setSemiRealisticAutoDecrement(whichThrottle);
                 } else if (getSpeed(whichThrottle) > targetSpeed) {
-                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
+                    setSemiRealisticAutoIncrement(whichThrottle);
                 } else {
                     return;
                 }
             } else {
                 if (lastSliderPosition > finalSliderPosition) { // going down
-                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
+                    setSemiRealisticAutoDecrement(whichThrottle);
                 } else { // going up
-                    setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
+                    setSemiRealisticAutoIncrement(whichThrottle);
                 }
             }
 
             setTargetSpeed(whichThrottle,true);
-            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
+//            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle));
         }
     }
 
@@ -782,7 +783,7 @@ public class throttle_semi_realistic extends throttle {
                 mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
                 setTargetSpeed(whichThrottle, 0);
             }
-            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
+            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle));
 
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             mainapp.buttonVibration();
@@ -910,6 +911,12 @@ public class throttle_semi_realistic extends throttle {
         vsbSemiRealisticThrottles[whichThrottle].setProgress(sliderPosition);
     }
 
+    protected void setSemiRealisticAutoIncrement(int whichThrottle) {
+        setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
+    }
+    protected void setSemiRealisticAutoDecrement(int whichThrottle) {
+        setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
+    }
     protected void setSemiRealisticAutoIncrementDecrement(int whichThrottle, int direction) {
         Log.d("Engine_Driver","srmt: setSemiRealisticAutoIncrementDecrement(): direction " + direction);
         switch (direction) {
@@ -1076,6 +1083,8 @@ public class throttle_semi_realistic extends throttle {
             targetSpeed = 0;
             targetAccelleration = -1;
         }
+
+        // brake
         if (brakeSliderPosition > 0) {
             if (targetSpeed==0) {
                 targetSpeed = 0;
@@ -1084,14 +1093,19 @@ public class throttle_semi_realistic extends throttle {
                 targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition * brakeOffset / (double) prefSemiRealisticThrottleNumberOfLoadSteps) );
                 targetAccelleration = -1 / ((brakeSliderPosition*brakeOffset) + 1) / 0.26;
             }
+        }
 
-        }
+        // load
         if  (loadSliderPosition > 0) {
-            targetAccelleration = targetAccelleration * ((loadSliderPosition*loadOffset) + 1);
+//            targetAccelleration = targetAccelleration * ((loadSliderPosition*loadOffset) + 1);
+            targetAccelleration = targetAccelleration * (((loadSliderPosition*loadOffset) * (loadSliderPosition*loadOffset) * 0.3) + 1);
         }
+
+        // check max and min
         if (targetSpeed < 0) targetSpeed = 0;
         if (targetSpeed > maxThrottle) targetSpeed = maxThrottle;
 
+        // check up or down
         if ( ((targetSpeed < speed) && (targetAccelleration > 0))
         || ((targetSpeed > speed) && (targetAccelleration < 0)) ) {
             targetAccelleration = targetAccelleration * -1;
@@ -1108,14 +1122,20 @@ public class throttle_semi_realistic extends throttle {
 
         // now change the speed if necessary
         if ( (targetSpeed != speed)
-        && (targetSpeed != prevTargetSpeeds[whichThrottle])
+        && ((targetSpeed != prevTargetSpeeds[whichThrottle]) || (loadSliderPosition != prevLoads[whichThrottle]))
         && (!semiRealisticSpeedButtonLongPressActive)) {
+            if (targetSpeed > speed) {
+                setSemiRealisticAutoIncrement(whichThrottle);
+            } else {
+                setSemiRealisticAutoDecrement(whichThrottle);
+            }
             semiRealisticTargetSpeedUpdateHandlers[whichThrottle].removeCallbacksAndMessages(null);
-            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getRepeatDelay());
+            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle));
         }
 
         showTargetDirectionIndication(whichThrottle);
         prevTargetSpeeds[whichThrottle] = targetSpeeds[whichThrottle];
+        prevLoads[whichThrottle] = (int) loadSliderPosition;
     }
 
     // *******************************************************************************************************************************************
@@ -1396,9 +1416,8 @@ public class throttle_semi_realistic extends throttle {
 
         protected SemiRealisticTargetSpeedRptUpdater(int myWhichThrottle, int myRepeatDelay) {
             whichThrottle = myWhichThrottle;
-            int repeatDelay = getRepeatDelay(myRepeatDelay);
-            double delay = getSemiRealisticTargetSpeedRptDelay(whichThrottle, repeatDelay);
-            delayMillis = (int) Math.round(delay);
+//            delayMillis = getSemiRealisticTargetSpeedRptDelay(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle, myRepeatDelay));
+            delayMillis = myRepeatDelay;
         }
 
         @Override
@@ -1430,21 +1449,26 @@ public class throttle_semi_realistic extends throttle {
         }
     }
 
-    double getSemiRealisticTargetSpeedRptDelay(int whichThrottle, int repeatDelay) {
-        return repeatDelay * getTargetAccelleration(whichThrottle);
+    int getSemiRealisticTargetSpeedRptDelay(int whichThrottle) {
+        return getSemiRealisticTargetSpeedRptDelay(whichThrottle, getRepeatDelay(whichThrottle));
+    }
+    int getSemiRealisticTargetSpeedRptDelay(int whichThrottle, int repeatDelay) {
+        Log.d("Engine_Driver","srmt: getSemiRealisticTargetSpeedRptDelay():" + ((int) Math.round( ((double) repeatDelay) * getTargetAccelleration(whichThrottle))) );
+        return (int) Math.round( ((double) repeatDelay) * getTargetAccelleration(whichThrottle) );
     }
 
-    int getRepeatDelay() {
-        return getRepeatDelay(0);
+    int getRepeatDelay(int whichThrottle) {
+        return getRepeatDelay(whichThrottle, 0);
     }
-    int getRepeatDelay (int myRepeatDelay) {
+    int getRepeatDelay(int whichThrottle, int myRepeatDelay) {
+        Log.d("Engine_Driver","srmt: getRepeatDelay():");
         int repeatDelay = myRepeatDelay;
 
         if (repeatDelay==0) {
-            try {
-                repeatDelay = Integer.parseInt(prefs.getString("prefSemiRealisticThrottleRepeat", mainapp.getResources().getString(R.string.prefSemiRealisticThrottleRepeatDefaultValue)));
-            } catch (NumberFormatException ex) {
-                repeatDelay = Integer.parseInt(mainapp.getResources().getString(R.string.prefSemiRealisticThrottleRepeatDefaultValue));
+            if (mSemiRealisticAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
+                repeatDelay = prefSemiRealisticThrottleAcceleratonRepeat;
+            } else {
+                repeatDelay = prefSemiRealisticThrottleDeceleratonRepeat;
             }
         }
         return repeatDelay;
@@ -1453,9 +1477,11 @@ public class throttle_semi_realistic extends throttle {
     void restartSemiRealisticThrottleTargetSpeedRepeater(int whichThrottle, int delayMillis) {
         Log.d("Engine_Driver","srmt: restartSemiRealisticThrottleTargetSpeedRepeater(): delayMillis: " + delayMillis);
         if (delayMillis == 0) {
-            semiRealisticTargetSpeedUpdateHandlers[whichThrottle].post(new SemiRealisticTargetSpeedRptUpdater(whichThrottle, prefPauseSpeedRate));
+            semiRealisticTargetSpeedUpdateHandlers[whichThrottle]
+                    .post(new SemiRealisticTargetSpeedRptUpdater(whichThrottle, getRepeatDelay(whichThrottle)));
         } else {
-            semiRealisticTargetSpeedUpdateHandlers[whichThrottle].postDelayed(new SemiRealisticTargetSpeedRptUpdater(whichThrottle,getRepeatDelay()), delayMillis);
+            semiRealisticTargetSpeedUpdateHandlers[whichThrottle]
+                    .postDelayed(new SemiRealisticTargetSpeedRptUpdater(whichThrottle,getSemiRealisticTargetSpeedRptDelay(whichThrottle)), delayMillis);
         }
     }
 
@@ -1474,6 +1500,7 @@ public class throttle_semi_realistic extends throttle {
         Log.d("Engine_Driver","srmt: stopSemiRealsticThrottleSpeedButtonRepeater()");
         semiRealisticSpeedButtonLongPressActive = false;
         prevTargetSpeeds[whichThrottle] = 999;
+        prevLoads[whichThrottle] = 999;
         mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
         semiRealisticSpeedButtonUpdateHandlers[whichThrottle].removeCallbacks(null);
     }

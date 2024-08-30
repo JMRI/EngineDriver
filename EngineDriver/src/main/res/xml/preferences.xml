@@ -604,14 +604,25 @@
                 android:icon="@drawable/category_semi_realistic_throttle_black" >
 
                 <EditTextPreference
-                    android:defaultValue="@string/prefSemiRealisticThrottleRepeatDefaultValue"
-                    android:dialogTitle="@string/prefSemiRealisticThrottleRepeatTitle"
-                    android:key="prefSemiRealisticThrottleRepeat"
+                    android:defaultValue="@string/prefSemiRealisticThrottleAccelerationRepeatDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleAccelerationRepeatTitle"
+                    android:key="prefSemiRealisticThrottleAccelerationRepeat"
                     android:maxLength="4"
                     android:inputType="number"
                     android:digits="0123456789"
-                    android:summary="@string/prefSemiRealisticThrottleRepeatSummary"
-                    android:title="@string/prefSemiRealisticThrottleRepeatTitle"
+                    android:summary="@string/prefSemiRealisticThrottleAccelerationRepeatSummary"
+                    android:title="@string/prefSemiRealisticThrottleAccelerationRepeatTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecelerationRepeatDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecelerationRepeatTitle"
+                    android:key="prefSemiRealisticThrottleDecelerationRepeat"
+                    android:maxLength="4"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:summary="@string/prefSemiRealisticThrottleDecelerationRepeatSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecelerationRepeatTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <EditTextPreference
