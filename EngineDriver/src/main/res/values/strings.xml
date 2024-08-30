@@ -1291,16 +1291,20 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleTitle">Semi-Realistic Throttle Preferences</string>
     <string name="prefSemiRealisticThrottleSummary">Preferences specific to the Semi-Realistic Throttle screen</string>
 
-    <string name="prefSemiRealisticThrottleRepeatTitle">Speed Step Repeat Delay</string>
-    <string name="prefSemiRealisticThrottleRepeatSummary">How long between speed step repeats (in milliseconds).\nSmaller is faster.</string>
-    <string name="prefSemiRealisticThrottleRepeatDefaultValue" translatable="false">300</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Acceleration Speed Step Repeat Delay</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">How long between acceleration speed step repeats (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatDefaultValue" translatable="false">300</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Deceleration Speed Step Repeat Delay</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">How long between deceleration speed step repeats (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatDefaultValue" translatable="false">800</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleSpeedStepTitle">Speed Step Amount</string>
-    <string name="prefSemiRealisticThrottleSpeedStepSummary">How much the actual speed jumps each step to the target speed</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">How much the actual speed jumps each step to the target speed. \nLarger is faster.</string>
     <string name="prefSemiRealisticThrottleSpeedStepDefaultValue" translatable="false">2</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNotchesTitle">Throttle Notches</string>
-    <string name="prefSemiRealisticThrottleNotchesSummary">Adjust the throttle as percentage, or by a specific number of steps</string>
+    <string name="prefSemiRealisticThrottleNotchesSummary">Adjust the Throttle as percentage, or by a specific number of steps/notches</string>
     <string name="prefSemiRealisticThrottleNotchesDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Number Of Brake Steps</string>

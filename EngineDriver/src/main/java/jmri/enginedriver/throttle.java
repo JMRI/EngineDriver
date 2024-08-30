@@ -275,6 +275,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected static int[] targetSpeeds = {0, 0, 0, 0, 0, 0};
     protected static int[] prevTargetSpeeds = {0, 0, 0, 0, 0, 0};
+    protected static int[] prevLoads = {0, 0, 0, 0, 0, 0};
     protected static int[] targetDirections = {1, 1, 1, 1, 1, 1};
     protected static double[] targetAccelerations = {0, 0, 0, 0, 0, 0};  /// -4=full brake  +1=normal acceleration  0=at target speed
 

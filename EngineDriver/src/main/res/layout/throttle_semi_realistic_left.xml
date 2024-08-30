@@ -201,13 +201,14 @@
                                     <TextView
                                         android:id="@+id/target_acceleration_value_label_0"
                                         style="?attr/floating_text_style"
+                                        android:textColor="?android:attr/textColorSecondary"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_below="@id/target_speed_value_label_0"
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="0"
-                                        android:textSize="16sp"
+                                        android:textSize="14sp"
                                         tools:ignore="HardcodedText" />
                                 </RelativeLayout>
 

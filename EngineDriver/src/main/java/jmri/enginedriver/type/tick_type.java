@@ -27,6 +27,7 @@ public interface tick_type {
     int TICK_0_7 = 7;
     int TICK_0_8 = 8;
     int TICK_0_9 = 9;
+    int TICK_0_14 = 14;
     int TICK_0_28 = 28;
     int TICK_0_100 = 100;
 }

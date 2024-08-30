@@ -89,7 +89,7 @@ public class VerticalSeekBar extends SeekBar {
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
-        textPaint.setTextSize(12);
+        textPaint.setTextSize(10);
     }
 
     public VerticalSeekBar(final Context context, final AttributeSet attrs) {
@@ -135,6 +135,12 @@ public class VerticalSeekBar extends SeekBar {
         c.rotate(ROTATION_ANGLE);
         c.translate(-getHeight(), 0);
 
+        height = getHeight();
+        width = getWidth();
+
+        int size = (int) Math.round((double) (width) / 12);
+        textPaint.setTextSize(size);
+
         if (!tickMarksChecked) {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
@@ -166,8 +172,6 @@ public class VerticalSeekBar extends SeekBar {
         realHeight = getHeight() - paddingLeft - paddingRight;
 
         if (prefTickMarksOnSliders) {
-            height = getHeight();
-            width = getWidth();
 
             int startSize = 10;
             float endSize = width/2 - 30;
@@ -180,76 +184,68 @@ public class VerticalSeekBar extends SeekBar {
 
             gridMiddle = width / 2;
 
-            switch (tickMarkType) {
-                default:
-                case tick_type.TICK_0_100:
-                    gridBottom = height - paddingLeft;
-                    tickSpacing = (paddingRight - gridBottom) / (steps - 1);
-                    sizeIncrease = endSize / (steps * steps);
+            if (tickMarkType == tick_type.TICK_0_100) {
+                gridBottom = height - paddingLeft;
+                tickSpacing = (paddingRight - gridBottom) / (steps - 1);
+                sizeIncrease = endSize / (steps * steps);
 
-                    for (int i = -1; i < steps; i++) {
-                        j = (steps - i);
-                        d = gridBottom + i * tickSpacing;
-                        l = gridMiddle - startSize - sizeIncrease * j * j;
-                        r = gridMiddle + startSize + sizeIncrease * j * j;
-                        c.drawLine(d, l, d, r, tickPaint);
-                    }
-                    break;
+                for (int i = -1; i < steps; i++) {
+                    j = (steps - i);
+                    d = gridBottom + i * tickSpacing;
+                    l = gridMiddle - startSize - sizeIncrease * j * j;
+                    r = gridMiddle + startSize + sizeIncrease * j * j;
+                    c.drawLine(d, l, d, r, tickPaint);
+                }
+            } else if (tickMarkType == tick_type.TICK_0_100_0) {
+                int tempSteps = steps / 2;
+                gridBottom = height / 2 - paddingLeft;
+                tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
+                sizeIncrease = endSize / (tempSteps * tempSteps);
 
-                case tick_type.TICK_0_2:
-                case tick_type.TICK_0_3:
-                case tick_type.TICK_0_4:
-                case tick_type.TICK_0_5:
-                case tick_type.TICK_0_6:
-                case tick_type.TICK_0_7:
-                case tick_type.TICK_0_8:
-                case tick_type.TICK_0_9:
-                case tick_type.TICK_0_28:
-                    gridBottom = height - paddingLeft;
-                    tickSpacing = (paddingRight - gridBottom) / tickMarkType;
-                    sizeIncrease = endSize / ((tickMarkType+1) * (tickMarkType+1));
+                for (int i = -1; i < tempSteps; i++) {
+                    j = (tempSteps - i);
+                    d = gridBottom + (height / 2) + (i * tickSpacing);
+                    l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                    r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                    c.drawLine(d, l, d, r, tickPaint);
+                }
 
-                    for (int i = -1; i < (tickMarkType+1); i++) {
-                        j = ((tickMarkType+1) - i);
-                        d = gridBottom + i * tickSpacing;
-                        l = gridMiddle - startSize - sizeIncrease * j * j;
-                        r = gridMiddle + startSize + sizeIncrease * j * j;
-                        c.drawLine(d, l, d, r, tickPaint);
-                        c.rotate(90, d-10, r+20);
-                        c.drawText(Integer.toString(steps-i),  d-10,r+20, textPaint);
-                        c.rotate(-90, d-10, r+20);
-                    }
+                for (int i = -1; i < tempSteps; i++) {
+                    j = (tempSteps - i);
+                    d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
+                    l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                    r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                    c.drawLine(d, l, d, r, tickPaint);
+                }
 
+            } else {
+                if (width < 150) {
+                    startSize = 2;
+                    endSize = width/2 - 15;
+                } else if ( (endSize) > startSize * 6) {
+                    endSize = startSize * 6;
+                }
+
+                gridBottom = height - paddingLeft;
+                tickSpacing = (paddingRight - gridBottom) / tickMarkType;
+                sizeIncrease = endSize / ((tickMarkType+1) * (tickMarkType+1));
+
+                for (int i = 0; i < (tickMarkType+1); i++) {
+                    j = ((tickMarkType+1) - i);
+                    d = gridBottom + i * tickSpacing;
+                    l = gridMiddle - startSize - sizeIncrease * j * j;
+                    r = gridMiddle + startSize + sizeIncrease * j * j;
+                    c.drawLine(d, l, d, r, tickPaint);
+                    c.rotate(90, d-10, r+10);
+                    c.drawText(Integer.toString(steps-i),  d-10,r+10, textPaint);
+                    c.rotate(-90, d-10, r+10);
+                }
+
+                if (!title.isEmpty()) {
                     c.rotate(90, height - paddingLeft + 10, gridMiddle);
-                    c.drawText(title,  height - paddingLeft + 10,gridMiddle, textPaint);
+                    c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
                     c.rotate(-90, height - paddingLeft + 10, gridMiddle);
-
-                    break;
-
-                case tick_type.TICK_0_100_0:
-                    int tempSteps = steps/2;
-                    gridBottom = height/2 - paddingLeft;
-                    tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
-                    sizeIncrease = endSize / (tempSteps * tempSteps);
-
-                    for (int i = -1; i < tempSteps; i++) {
-                        j = (tempSteps - i);
-                        d = gridBottom + (height/2) + (i * tickSpacing);
-                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
-                        c.drawLine(d, l, d, r, tickPaint);
-                    }
-
-                    for (int i = -1; i < tempSteps; i++) {
-                        j = (tempSteps - i);
-                        d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
-                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
-                        c.drawLine(d, l, d, r, tickPaint);
-                    }
-
-                    break;
-
+                }
             }
         }
 
