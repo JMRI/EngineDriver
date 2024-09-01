@@ -516,6 +516,7 @@
     <string name="prefEmerStopTitle">Emergency Stop button?</string>
     <string name="prefEmerStopSummary">Show loco Emergency Stop button in action bar</string>
     <string name="EStop">Estop</string>
+    <string name="EmergencyStop">Emergency Stop</string>
     <string name="PowerButtonBar">power_button</string>
     <string name="prefPowerButtonBarTitle">Layout Power button?</string>
     <string name="prefPowerButtonBarSummary">Show Layout Power button in action bar</string>
