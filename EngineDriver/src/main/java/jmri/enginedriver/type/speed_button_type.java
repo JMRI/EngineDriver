@@ -21,4 +21,5 @@ public interface speed_button_type {
     String LEFT = "left";
     String RIGHT = "right";
     String STOP = "stop";
+    String ESTOP = "estop";
 }

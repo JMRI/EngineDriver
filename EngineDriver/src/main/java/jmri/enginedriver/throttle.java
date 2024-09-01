@@ -1230,6 +1230,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         dispatchGenericMotionEvent(null);
                     }
                     break;
+
+                case message_type.ESTOP: // only needed for the Semi-Reasistic Throttle
+                    if (isSemiRealisticTrottle) {
+                        int whichThrottle = Integer.parseInt(response_str);
+                        semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
+                        setTargetSpeed(whichThrottle, 0);
+                    }
+                    break;
             }
         }
     }

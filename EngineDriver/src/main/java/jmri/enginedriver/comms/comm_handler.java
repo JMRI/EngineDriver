@@ -168,12 +168,12 @@ public class comm_handler extends Handler {
             break;
          }
 
-            //estop requested.   arg1 holds whichThrottle
+         //estop requested.   arg1 holds whichThrottle
          //  M0A*<;>X  was(0X)
          case message_type.ESTOP: {
             final int whichThrottle = msg.arg1;
-//            commThread.wifiSend(String.format("M%sA*<;>X", mainapp.throttleIntToString(whichThrottle)));  //send eStop request
             commThread.sendEStop(whichThrottle);
+            mainapp.alert_activities(message_type.ESTOP, mainapp.throttleIntToString(msg.arg1));
             break;
          }
 

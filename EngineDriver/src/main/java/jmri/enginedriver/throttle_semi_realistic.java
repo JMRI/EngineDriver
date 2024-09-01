@@ -82,6 +82,7 @@ public class throttle_semi_realistic extends throttle {
     int prefSemiRealisticThrottleAcceleratonRepeat = 300;
     int prefSemiRealisticThrottleDeceleratonRepeat = 600;
     boolean useNotches = false;
+    Button [] bEStops;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -131,6 +132,7 @@ public class throttle_semi_realistic extends throttle {
         bTargetRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetStops = new Button[mainapp.maxThrottlesCurrentScreen];
+        bEStops = new Button[mainapp.maxThrottlesCurrentScreen];
 
         TargetArrowSpeedButtonTouchListener targetArrowSpeedButtonTouchListener;
 
@@ -140,7 +142,7 @@ public class throttle_semi_realistic extends throttle {
             tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
             tvTargetSpdVals[throttleIndex] = findViewById(R.id.target_speed_value_label_0);
             tvTargetAccelerationVals[throttleIndex] = findViewById(R.id.target_acceleration_value_label_0);
-            bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
+//            bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
 
             bTargetFwds[throttleIndex] = findViewById(R.id.button_target_fwd_0);
             bTargetRevs[throttleIndex] = findViewById(R.id.button_target_rev_0);
@@ -149,6 +151,8 @@ public class throttle_semi_realistic extends throttle {
             bTargetRSpds[throttleIndex] = findViewById(R.id.right_target_speed_button_0);
             bTargetLSpds[throttleIndex] = findViewById(R.id.left_target_speed_button_0);
             bTargetStops[throttleIndex] = findViewById(R.id.button_target_stop_0);
+
+            bEStops[throttleIndex] = findViewById(R.id.button_e_stop_0);
 
             bTargetRSpds[throttleIndex].setClickable(true);
             targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.RIGHT);
@@ -168,8 +172,14 @@ public class throttle_semi_realistic extends throttle {
             bTargetStops[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
             bTargetStops[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
 
-            PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(throttleIndex);
-            bPauses[throttleIndex].setOnTouchListener(psvtl);
+            bEStops[throttleIndex].setClickable(true);
+            targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, "estop");
+            bEStops[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
+            bEStops[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
+            bEStops[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
+
+//            PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(throttleIndex);
+//            bPauses[throttleIndex].setOnTouchListener(psvtl);
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -244,23 +254,6 @@ public class throttle_semi_realistic extends throttle {
             vsbLoads[i].setOnSeekBarChangeListener(lsl);
             vsbLoads[i].setOnTouchListener(lsl);
         }
-
-//        // set listeners for the limit speed buttons for each throttle
-//        LimitSpeedButtonSemiRealisticTouchListener lsstl;
-//        Button bLimitSpeed = findViewById(R.id.limit_speed_0);
-//
-//        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-//            bLimitSpeed = findViewById(R.id.limit_speed_0);
-//
-//            bLimitSpeeds[throttleIndex] = bLimitSpeed;
-//            limitSpeedSliderScalingFactors[throttleIndex] = 1;
-//            lsstl = new LimitSpeedButtonSemiRealisticTouchListener(throttleIndex);
-//            bLimitSpeeds[throttleIndex].setOnTouchListener(lsstl);
-//            isLimitSpeeds[throttleIndex] = false;
-//            if (!prefLimitSpeedButton) {
-//                bLimitSpeed.setVisibility(View.GONE);
-//            }
-//        }
 
         // setup the handlers for the semi-realistic throttle updates
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
@@ -773,17 +766,22 @@ public class throttle_semi_realistic extends throttle {
         @Override
         public boolean onLongClick(View v) {
             Log.d("Engine_Driver","srmt: TargetArrowSpeedButtonTouchListener: onLongClick()");
+            boolean repeatRequired = true;
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (arrowDirection.equals(speed_button_type.RIGHT)) {
                 mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.INCREMENT;
             } else if (arrowDirection.equals(speed_button_type.LEFT)) {
                 mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
-            } else { // stop
+            } else if (arrowDirection.equals(speed_button_type.STOP)) {
                 mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
                 mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.DECREMENT;
                 setTargetSpeed(whichThrottle, 0);
+            } else { //estop
+                setEStop(whichThrottle);
+                repeatRequired = false;
             }
-            restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle));
+            if (repeatRequired)
+                restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, getSemiRealisticTargetSpeedRptDelay(whichThrottle));
 
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             mainapp.buttonVibration();
@@ -804,11 +802,13 @@ public class throttle_semi_realistic extends throttle {
                 if (!semiRealisticSpeedButtonLongPressActive)
                     decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
                 setTargetSpeed(whichThrottle, true);
-            } else { // stop
+            } else if (arrowDirection.equals(speed_button_type.STOP)) {
 //                semiRealisticSpeedButtonLongPressActive = false;
                 semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
                 stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
                 mSemiRealisticAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
+            } else { // estop
+                setEStop(whichThrottle);
             }
             setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
             mainapp.buttonVibration();
@@ -874,6 +874,14 @@ public class throttle_semi_realistic extends throttle {
                 }
             }
         }
+    }
+
+    void setEStop(int whichThrottle) {
+        semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
+        setSpeed(whichThrottle, 0, SPEED_COMMAND_FROM_BUTTONS);
+        mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
+        setTargetSpeed(whichThrottle, 0);
+        mainapp.sendEStopMsg();
     }
 
     // For volume speed buttons.
