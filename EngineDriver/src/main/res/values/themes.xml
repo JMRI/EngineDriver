@@ -42,6 +42,9 @@
         <item name="android:textColorHint">@color/tertiary_text</item>
         <item name="android:textColorPrimaryDisableOnly">@color/primaryDisabled</item>
 
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/grey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
@@ -136,6 +139,9 @@
         <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/darkGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
@@ -223,6 +229,9 @@
         <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
         <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -313,6 +322,9 @@
         <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
         <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -412,6 +424,9 @@
 <!--        <item name="android:background">@color/windowBackground_colorful</item> -->
 <!--        <item name="android:editTextBackground">@color/windowBackground_colorful</item> -->
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
+
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>

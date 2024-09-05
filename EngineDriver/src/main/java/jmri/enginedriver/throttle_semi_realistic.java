@@ -23,6 +23,10 @@ import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -63,7 +67,7 @@ public class throttle_semi_realistic extends throttle {
     private static final int SLIDER_PURPOSE_OTHER = 1;
     private static final int SLIDER_PURPOSE_SEMI_REALISTIC_THROTTLE = 2;
 
-    private final int[] throttleSwitchingMax = {0, 0, 0, 0, 0, 0};
+//    private final int[] throttleSwitchingMax = {0, 0, 0, 0, 0, 0};
 
     private static final int GESTURE_NOT_STARTED = 0;
     private static final int GESTURE_STARTED     = 1;
@@ -77,6 +81,7 @@ public class throttle_semi_realistic extends throttle {
     int prefSemiRealisticThrottleSpeedStep = 1;
     int prefDisplaySemiRealisticThrottleNotches = 8;
     int prefSemiRealisticThrottleNumberOfBrakeSteps = 5;
+    int prefSemiRealisticThrottleAirRefreshRate = 250;
     int prefSemiRealisticThrottleNumberOfLoadSteps = 2;
     int prefSemiRealisticThrottleLoadPcnt = 100;
     int prefSemiRealisticThrottleAcceleratonRepeat = 300;
@@ -103,6 +108,7 @@ public class throttle_semi_realistic extends throttle {
         prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
         REP_DELAY = threaded_application.getIntPrefValue(prefs,"speed_arrows_throttle_repeat_delay", "100");
         prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue));
+        prefSemiRealisticThrottleAirRefreshRate = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAirRefreshRate", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAirRefreshRateDefaultValue));
         prefSemiRealisticThrottleNumberOfLoadSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfLoadSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue));
 
         prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
@@ -133,6 +139,7 @@ public class throttle_semi_realistic extends throttle {
         bTargetLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetStops = new Button[mainapp.maxThrottlesCurrentScreen];
         bEStops = new Button[mainapp.maxThrottlesCurrentScreen];
+        airIndicators = new ImageView[mainapp.maxThrottlesCurrentScreen];
 
         TargetArrowSpeedButtonTouchListener targetArrowSpeedButtonTouchListener;
 
@@ -153,6 +160,8 @@ public class throttle_semi_realistic extends throttle {
             bTargetStops[throttleIndex] = findViewById(R.id.button_target_stop_0);
 
             bEStops[throttleIndex] = findViewById(R.id.button_e_stop_0);
+
+            airIndicators[throttleIndex] = findViewById(R.id.air_indicator_0);
 
             bTargetRSpds[throttleIndex].setClickable(true);
             targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.RIGHT);
@@ -259,6 +268,11 @@ public class throttle_semi_realistic extends throttle {
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             semiRealisticTargetSpeedUpdateHandlers[i] = new Handler();
             semiRealisticSpeedButtonUpdateHandlers[i] = new Handler();
+        }
+
+        // setup the handlers for the semi-realistic air updates
+        for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
+            semiRealisticAirUpdateHandlers[i] = new Handler();
         }
 
         sliderType = SLIDER_TYPE_VERTICAL;
@@ -707,6 +721,7 @@ public class throttle_semi_realistic extends throttle {
         public void onProgressChanged(SeekBar sbBrake, int newSliderPosition, boolean fromUser) {
             mainapp.buttonVibration();
             setTargetSpeed(whichThrottle, true);
+            setAirValues(whichThrottle);
         }
 
         @Override
@@ -1080,26 +1095,35 @@ public class throttle_semi_realistic extends throttle {
         int targetDirection = getTargetDirection(whichThrottle);
         double targetAccelleration = 1; //default
         double brakeSliderPosition = getBrakeSliderPosition(whichThrottle);
-        double brakeOffset = 5 / ((double) prefSemiRealisticThrottleNumberOfBrakeSteps); // offset from the default to 5 positions
         double loadSliderPosition = getLoadSliderPosition(whichThrottle);
-//        double loadOffset = 2 / ((double) prefSemiRealisticThrottleNumberOfLoadSteps); // offset from the default to 2 positions
-        double loadOffset = 1;
-        loadOffset = loadOffset * ((double) prefSemiRealisticThrottleLoadPcnt) / 100;
         int speed = getSpeed(whichThrottle);
+
+        double loadOffset = ((double) prefSemiRealisticThrottleLoadPcnt) / 100;
 
         if (targetDirection == DIRECTION_NEUTRAL) {
             targetSpeed = 0;
             targetAccelleration = -1;
         }
 
+        // air & brake
+        double air = (double) 1 - (((double) getAirValue(whichThrottle)) / 100);
+        double brake = (double) brakeSliderPosition / (double) prefSemiRealisticThrottleNumberOfBrakeSteps;
+        double effeciveBrake = brake;
+        if ( (brake>0) || (air>0) ) {
+            effeciveBrake = (air >= brake) ? air : brake;
+        }
+
         // brake
-        if (brakeSliderPosition > 0) {
+        if (effeciveBrake > 0) {
             if (targetSpeed==0) {
                 targetSpeed = 0;
-                targetAccelleration = -1 / ((brakeSliderPosition*brakeOffset) + 1) / 0.52;
+//                targetAccelleration = -1 / ((brakeSliderPosition) + 1) / 0.52;
+                targetAccelleration = -1 / (1 + (effeciveBrake * effeciveBrake * 0.7 / 0.4));
             } else { // throttle is still active
-                targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition * brakeOffset / (double) prefSemiRealisticThrottleNumberOfLoadSteps) );
-                targetAccelleration = -1 / ((brakeSliderPosition*brakeOffset) + 1) / 0.26;
+                targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition / (double) prefSemiRealisticThrottleNumberOfBrakeSteps) );
+//                targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * maxBrake ) );
+//                targetAccelleration = -1 / ((brakeSliderPosition) + 1) / 0.26;
+                targetAccelleration = -1 / (1 + (effeciveBrake * effeciveBrake * 0.7 / 0.2));
             }
         }
 
@@ -1142,6 +1166,7 @@ public class throttle_semi_realistic extends throttle {
         }
 
         showTargetDirectionIndication(whichThrottle);
+        showAirIndicator(whichThrottle);
         prevTargetSpeeds[whichThrottle] = targetSpeeds[whichThrottle];
         prevLoads[whichThrottle] = (int) loadSliderPosition;
     }
@@ -1263,6 +1288,44 @@ public class throttle_semi_realistic extends throttle {
 
     int getBrakeSliderPosition(int whichThrottle) {
         return vsbBrakes[whichThrottle].getProgress();
+    }
+
+    int getAirValue(int whichThrottle) {
+        return airValues[whichThrottle];
+    }
+
+    void setAirValues(int whichThrottle) {
+        if (getBrakeSliderPosition(whichThrottle) > previousBrakePosition[whichThrottle]) {
+            double result = ((double) (prefSemiRealisticThrottleNumberOfBrakeSteps - getBrakeSliderPosition(whichThrottle)) / (double) prefSemiRealisticThrottleNumberOfBrakeSteps) * 100;
+            airValues[whichThrottle] = (int) Math.round(result);
+            if (!isAirRechaging) startSemiRealisticThrottleAirRepeater(whichThrottle);
+        }
+        previousBrakePosition[whichThrottle] = getBrakeSliderPosition(whichThrottle);
+    }
+
+    void showAirIndicator(int whichThrottle) {
+        TypedValue typedValue = new TypedValue();
+        int forgroundColor;
+        int backgroundColor;
+        getTheme().resolveAttribute(R.attr.ed_primaryLineColor, typedValue, true);
+        forgroundColor = typedValue.data;
+        getTheme().resolveAttribute(R.attr.ed_secondaryLineColor, typedValue, true);
+        backgroundColor = typedValue.data;
+
+        Bitmap bitmap = Bitmap.createBitmap(10, 100, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.TRANSPARENT);
+        Paint paint = new Paint();
+//        paint.setColor(Color.RED);
+        paint.setColor(backgroundColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(4);
+        paint.setAntiAlias(true);
+        canvas.drawLine( 5, 0, 5, 100, paint);
+//        paint.setColor(Color.GREEN);
+        paint.setColor(forgroundColor);
+        canvas.drawLine( 5, 100, 5, 100-airValues[whichThrottle], paint);
+        airIndicators[whichThrottle].setImageBitmap(bitmap);
     }
 
     VerticalSeekBar getLoadSlider(int whichThrottle) {
@@ -1511,6 +1574,44 @@ public class throttle_semi_realistic extends throttle {
         prevLoads[whichThrottle] = 999;
         mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
         semiRealisticSpeedButtonUpdateHandlers[whichThrottle].removeCallbacks(null);
+    }
+
+    // For Semi Realistic Air update repeater
+    protected class SemiRealisticAirRptUpdater implements Runnable {
+        int whichThrottle;
+        int delayMillis;
+
+        protected SemiRealisticAirRptUpdater(int myWhichThrottle, int myRepeatDelay) {
+            whichThrottle = myWhichThrottle;
+            delayMillis = myRepeatDelay;
+        }
+
+        @Override
+        public void run() {
+            Log.d("Engine_Driver","srmt: SemiRealisticAirRptUpdater: run()");
+            if (mainapp.appIsFinishing) { return;}
+
+            if (getAirValue(whichThrottle) >= 100) {
+                isAirRechaging = false;
+                return;
+            }
+
+            airValues[whichThrottle] = getAirValue(whichThrottle) + 10;
+
+            setTargetSpeed(whichThrottle,false);
+            showAirIndicator(whichThrottle);
+//            restartSemiRealisticThrottleAirRepeater(whichThrottle);
+            semiRealisticAirUpdateHandlers[whichThrottle]
+                    .postDelayed(new SemiRealisticAirRptUpdater(whichThrottle,prefSemiRealisticThrottleAirRefreshRate), prefSemiRealisticThrottleAirRefreshRate);
+        }
+    }
+
+    void startSemiRealisticThrottleAirRepeater(int whichThrottle) {
+        Log.d("Engine_Driver","srmt: restartSemiRealisticThrottleAirRepeater():");
+        isAirRechaging = true;
+        semiRealisticAirUpdateHandlers[whichThrottle].removeCallbacks(null);
+        semiRealisticAirUpdateHandlers[whichThrottle]
+           .postDelayed(new SemiRealisticAirRptUpdater(whichThrottle,prefSemiRealisticThrottleAirRefreshRate), prefSemiRealisticThrottleAirRefreshRate);
     }
 }
 

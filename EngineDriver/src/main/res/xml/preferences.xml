@@ -665,6 +665,17 @@
                     android:title="@string/prefSemiRealisticThrottleNumberOfBrakeStepsTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleAirRefreshRateDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleAirRefreshRateTitle"
+                    android:key="prefSemiRealisticThrottleAirRefreshRate"
+                    android:maxLength="5"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleAirRefreshRateSummary"
+                    android:title="@string/prefSemiRealisticThrottleAirRefreshRateTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <ListPreference
                     android:defaultValue="@string/prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue"
                     android:entries="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntries"
