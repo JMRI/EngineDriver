@@ -1312,6 +1312,10 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Adjust the number of steps in the Brake Slider</string>
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue" translatable="false">7</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Rate the air brakes refresh</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Adjust the rate that the Air brakes will refresh/refill (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateDefaultValue" translatable="false">2000</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Number Of Load Steps</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Adjust the number of steps in the Load Slider</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->

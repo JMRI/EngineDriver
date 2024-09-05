@@ -281,10 +281,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected Handler[] semiRealisticTargetSpeedUpdateHandlers = {null, null, null, null, null, null};
     protected Handler[] semiRealisticSpeedButtonUpdateHandlers = {null, null, null, null, null, null};
-    //    protected Handler semiRealisticRepeatUpdateHandler = new Handler();
     protected int[] mSemiRealisticAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
     protected int[] mSemiRealisticSpeedButtonsAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
     protected boolean semiRealisticSpeedButtonLongPressActive = false;
+    protected ImageView[] airIndicators = {null, null, null, null, null, null};
+    protected int[] airValues = {100, 100, 100, 100, 100, 100};
+    protected boolean isAirRechaging = false;
+    protected int[] previousBrakePosition = {0, 0, 0, 0, 0, 0};
+    protected Handler[] semiRealisticAirUpdateHandlers = {null, null, null, null, null, null};
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIds;
