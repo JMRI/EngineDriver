@@ -128,14 +128,8 @@
     <item name="android:shadowRadius">1</item>
   </style>
 
-  <style name="edit_label_style" parent="@android:style/Theme">
-    <item name="android:textSize">18sp</item>
-    <item name="android:singleLine">true</item>
+  <style name="edit_label_style" parent="@android:style/Widget.TextView">
     <item name="android:ellipsize">none</item>
-    <item name="android:layout_height">48dp</item>
-    <item name="android:layout_width">0dp</item>
-    <item name="android:layout_weight">7</item>
-    <item name="android:maxLength">16</item>
     <item name="android:shadowColor">#FFFFFFFF</item>
     <item name="android:shadowDx">1</item>
     <item name="android:shadowDy">1</item>
@@ -145,6 +139,7 @@
   <style name="spinner" parent="Widget.AppCompat.Spinner">
     <item name="android:ellipsize">none</item>
     <item name="android:dropDownVerticalOffset">18dp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_item" parent="Widget.AppCompat.TextView.SpinnerItem">
@@ -154,6 +149,7 @@
     <item name="android:shadowColor">#dbffffff</item>
     <item name="android:ellipsize">none</item>
     <item name="android:textSize">16sp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_style" parent="Widget.AppCompat.ListView.DropDown">
@@ -162,6 +158,7 @@
     <item name="android:dividerHeight">1px</item>
     <item name="android:scrollbars">none</item>
     <item name="android:textSize">16sp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_dropdown_item_style" parent="Widget.AppCompat.DropDownItem.Spinner">
@@ -169,6 +166,7 @@
     <item name="android:color">@color/primary_text</item>
     <item name="android:textColorHint">@color/hint_text</item>
     <item name="android:textSize">16sp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="edit_func_style">
@@ -1115,6 +1113,7 @@
     <item name="android:shadowColor">#dbffffff</item>
     <item name="android:ellipsize">none</item>
     <item name="android:textSize">16sp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_style_colorful" parent="Widget.AppCompat.ListView.DropDown">
@@ -1123,6 +1122,7 @@
     <item name="android:dividerHeight">1px</item>
     <item name="android:scrollbars">none</item>
     <item name="android:textSize">16sp</item>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_dropdown_item_style_colorful" parent="Widget.AppCompat.Light.DropDownItem.Spinner">

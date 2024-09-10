@@ -9,6 +9,8 @@
  * Linting
  * New Semi-Realistic Throttle layout
  * Connect Screen - Disable the connect button if no IP/host name AND port
+ * Bug fix for the Close button on the Function Defaults screen
+ * Bug Fix for the Default theme on the Function Settings page
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents

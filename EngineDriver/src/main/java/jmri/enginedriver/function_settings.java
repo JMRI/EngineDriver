@@ -143,6 +143,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                settingsCurrent = false;
             }
         });
 
@@ -153,6 +154,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                settingsCurrent = false;
             }
         });
 
@@ -611,15 +613,14 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         public void onClick(View v) {
             mainapp.buttonVibration();
 
+            prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
+            prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
+
             move_view_to_settings();        //sync settings array to view
             if ( (!settingsCurrent)
                     || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
                     || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
                 saveSettings();         //save function labels to file
-
-            prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
-            prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
-
             finish();
         }
     }
