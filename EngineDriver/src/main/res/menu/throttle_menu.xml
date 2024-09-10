@@ -84,7 +84,7 @@
         android:title="@string/kidsTimer"
         android:visible="false" />
     <item android:id="@+id/function_defaults_mnu"
-        android:title="@string/settings" />
+        android:title="@string/functionDefaultSettings" />
     <item android:id="@+id/function_consist_settings_mnu"
         android:title="@string/functionConsistSettings"
         android:visible="false" />

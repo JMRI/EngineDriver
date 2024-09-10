@@ -67,6 +67,7 @@ import static android.view.KeyEvent.KEYCODE_SEMICOLON;
 import static android.view.KeyEvent.KEYCODE_BACKSLASH;
 import static android.view.KeyEvent.KEYCODE_PERIOD;
 import static android.view.KeyEvent.KEYCODE_COMMA;
+import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -1368,9 +1369,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
             }
-            screenNameLine.setVisibility(View.VISIBLE);
-            toolbar.setVisibility(View.VISIBLE);
-            statusLine.setVisibility(View.VISIBLE);
+            screenNameLine.setVisibility(VISIBLE);
+            toolbar.setVisibility(VISIBLE);
+            statusLine.setVisibility(VISIBLE);
             webView.invalidate();
         }
     }
@@ -1758,7 +1759,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!(keepWebViewLocation.equals(WEB_VIEW_LOCATION_NONE))) { // show/hide the web view if the preference is set
             if (!webViewIsOn) {
                 webViewLocation = keepWebViewLocation;
-                webView.setVisibility(View.VISIBLE);
+                webView.setVisibility(VISIBLE);
             } else {
                 webViewLocation = WEB_VIEW_LOCATION_NONE;
                 webView.setVisibility(View.GONE);
@@ -2212,9 +2213,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (speed > 0) {
                 if (((!directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_FORWARD))
                         || ((directionButtonsAreCurrentlyReversed(whichThrottle)) && (dir == DIRECTION_REVERSE))) {
-                    showForword = View.VISIBLE;
+                    showForword = VISIBLE;
                 } else {
-                    showReverse = View.VISIBLE;
+                    showReverse = VISIBLE;
                 }
             }
             tvDirectionIndicatorForwards[whichThrottle].setVisibility(showForword);
@@ -2809,6 +2810,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
         mainapp.prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        Log.d("Engine_Driver", "setGamepadKeys() : prefGamePadType" + mainapp.prefGamePadType);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -3063,6 +3065,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // map the button pressed to the user selected action for that button on the gamepad or ESP32 DIY Gamepad (which thinks it is a Keyboard)
     private void performButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int whichGamePadIsEventFrom, int repeatCnt) {
+        Log.d("Engine_Driver", "throttle: performButtonAction() buttonNo: " + buttonNo + " action: " + ((action == ACTION_DOWN) ? "ACTION_DOWN" : "ACTION_UP"));
 
         if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.ALL_STOP)) {  // All Stop
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
@@ -3341,6 +3344,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // map the button pressed to the user selected action for that button on a keyboard
     private void performKeyboardKeyAction(int keyCode, int action, boolean isShiftPressed, int repeatCnt, int originalWhichThrottle, int whichGamePadIsEventFrom) {
+        Log.d("Engine_Driver", "throttle: performKeyboardKeyAction() action: " + action);
         int whichThrottle = originalWhichThrottle;
         boolean isActive = getConsist(originalWhichThrottle).isActive();
         if ((keyboardThrottle >= 0) && (keyboardThrottle != originalWhichThrottle)) {
@@ -3762,7 +3766,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d("Engine_Driver", "game " + event.getAction());
+        Log.d("Engine_Driver", "dispatchGenericMotionEvent() Joystick Event");
         if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             boolean acceptEvent = true; // default to assuming that we will respond to the event
@@ -3817,6 +3821,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     xAxis2 = externalGamepadxAxis2;
                     yAxis2 = externalGamepadyAxis2;
                 }
+
+                Log.d("Engine_Driver", "dispatchGenericMotionEvent() Joystick Event x: " + xAxis + "y: " + yAxis + "x2: " + xAxis2 + "y2: " + yAxis2 );
 
                 if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                     if (whichGamePadIsEventFrom >= 0) {
@@ -3969,10 +3975,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
-                            Log.d("Engine_Driver", "dispatchKeyEvent (not Keyboard): ACTION_UP"
+                            Log.d("Engine_Driver", "throttle: dispatchKeyEvent (not Keyboard): ACTION_UP"
                                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                             );
+                        } else {
+                            Log.d("Engine_Driver", "throttle: dispatchKeyEvent (not Keyboard): ACTION_DOWN");
                         }
 
                         // if the preference name has "-rotate" at the end of it swap the direction keys around
@@ -4067,6 +4075,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
+        Log.d("Engine_Driver", "GamepadIncrementSpeed()");
         incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4079,6 +4088,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
+        Log.d("Engine_Driver", "GamepadDecrementSpeed()");
         decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4156,6 +4166,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
+            Log.d("Engine_Driver", "GamepadRptUpdater: run(): WhichThrottle: " + whichThrottle
+                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+            );
             if (mainapp.appIsFinishing) {
                 return;
             }
@@ -4175,6 +4189,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int whichThrottle;
 
         private VolumeKeysRptUpdater(int WhichThrottle) {
+            Log.d("Engine_Driver", "VolumeKeysRptUpdater: WhichThrottle: " + whichThrottle
+                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+            );
             whichThrottle = WhichThrottle;
 
             try {
@@ -4186,6 +4204,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
+            Log.d("Engine_Driver", "VolumeKeysRptUpdater: run(): WhichThrottle: " + whichThrottle
+                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
+                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+            );
             if (mVolumeKeysAutoIncrement) {
                 incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
                 volumeKeysRepeatUpdateHandler.postDelayed(new VolumeKeysRptUpdater(whichThrottle), REP_DELAY);
@@ -6139,7 +6161,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else {
             webView = findViewById(R.id.throttle_webview);
         }
-        webView.setVisibility(View.VISIBLE);
+        webView.setVisibility(VISIBLE);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(databasePath);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -6513,9 +6535,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             boolean isSpecial = (mainapp.prefAlwaysUseDefaultFunctionLabels)
                     && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL));
-            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
-            if ((!isSpecial) && (mainapp.isDCCEX)) {
-                TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
+//            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
+            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(true);
+            if (!isSpecial) {
+                if (mainapp.isDCCEX) {
+                    TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
+                } else {
+                    TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionLatchingSettings);
+                }
             } else {
                 TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionConsistSettings);
             }
@@ -6754,7 +6781,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 b.setOnTouchListener(functionButtonTouchListener);
 //                                bt = (bt + "                      ").trim();  // pad with spaces, and limit to 20 characters
                                 b.setText(bt);
-                                b.setVisibility(View.VISIBLE);
+                                b.setVisibility(VISIBLE);
                                 // if there is a long first word or the total length is long, reduce the font size
                                 if (((bt + " ").indexOf(" ") > 8) || (bt.length() > 15)) {
                                     b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -8186,7 +8213,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ((whichThrottle < mainapp.maxThrottlesCurrentScreen) && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)) {
             if (bMutes != null) {
                 if (bMutes[whichThrottle] != null) {
-                    int rslt = View.VISIBLE;
+                    int rslt = VISIBLE;
                     if (mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
                         rslt = View.GONE;
                     }
@@ -8194,7 +8221,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].setVisibility(rslt);
                     bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle].setVisibility(rslt);
-                    if (rslt == View.VISIBLE) {
+                    if (rslt == VISIBLE) {
                         setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
                         setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BUTTON_BELL]);
                         setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BUTTON_HORN]);
@@ -8271,7 +8298,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (!prefLimitSpeedButton) {
                 bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
             } else {
-                bLimitSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+                bLimitSpeeds[whichThrottle].setVisibility(VISIBLE);
             }
         }
 
@@ -8282,10 +8309,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setVisibility(View.GONE);
             } else {
                 if ((bPauses[whichThrottle] != null) && (prefPauseAlternateButton)) {
-                    bPauses[whichThrottle].setVisibility(View.VISIBLE);
+                    bPauses[whichThrottle].setVisibility(VISIBLE);
                     bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
                 } else {
-                    bPauseSpeeds[whichThrottle].setVisibility(View.VISIBLE);
+                    bPauseSpeeds[whichThrottle].setVisibility(VISIBLE);
                 }
             }
         }

@@ -15,9 +15,10 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="exit">Exit</string>
-    <string name="settings">Function Defaults</string>
+    <string name="functionDefaultSettings">Function Defaults</string>
     <string name="functionConsistSettings">Consist Function Settings</string>
     <string name="dccExFunctionSettings">DCC-EX Function Settings</string>
+    <string name="functionLatchingSettings">Function Latching Settings</string>
 <!--    <string name="fb_label">Function Label</string>-->
     <string name="fb_column_label">Label</string>
     <string name="fb_column_function">Func#</string>
@@ -31,7 +32,7 @@
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">latching</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValueEnglish" translatable="false">latching</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefFunctionConsistLocosDefaultValue">lead</string>
-    <string name="functionConsistHelpText">Used for:\na) the \'Special\' consist function following options.\nb) non-roster locos when using the DCC-EX native protocol.\n\nFor \'a\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
+    <string name="functionConsistHelpText">Used for:\na) the \'Special\' consist function following options.\nb) non-roster locos.\n\nFor \'a\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
     <string name="functionConsistHeader">Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->

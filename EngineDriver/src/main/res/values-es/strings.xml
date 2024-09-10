@@ -15,7 +15,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Salir</string>
-    <string name="settings">Funciones por defecto</string>
+    <string name="functionDefaultSettings">Funciones por defecto</string>
 <!--    <string name="fb_label">Etiquetas de funciones</string>-->
     <string name="dccExFunctionSettings">Configuración de funciones DCC-EX</string>
     <string name="fb_column_label">Etiqueta</string>

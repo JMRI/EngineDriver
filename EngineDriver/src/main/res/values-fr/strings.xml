@@ -17,7 +17,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="exit">Sortir</string>
-    <string name="settings">Fonction par défaut</string>
+    <string name="functionDefaultSettings">Fonction par défaut</string>
 <!--    <string name="fb_label">Libellé de  fonction</string>-->
     <string name="fb_column_label">Libellé</string>
     <string name="fb_column_function">Fn num.</string>
