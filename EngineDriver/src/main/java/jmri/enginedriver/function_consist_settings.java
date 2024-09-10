@@ -281,14 +281,17 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
     }
 
-    //take data from arrays and update the editing view
     void move_settings_to_view() {
+        move_settings_to_view(false);
+    }
+    //take data from arrays and update the editing view
+    void move_settings_to_view(boolean isReset) {
 
 //        if ((!isSpecial) && (mainapp.isDCCEX)) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
-        if (!isSpecial) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
+        if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
             View v = findViewById(R.id.function_consist_instruction);
             ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
-            Double newWidth = layoutParams.width * 1.6;
+            Double newWidth = layoutParams.width * 2.0;
             layoutParams.width =  newWidth.intValue();
             v.setLayoutParams(layoutParams);
         }
@@ -409,7 +412,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                     settingsCurrent = false;
                 }
             }
-            move_settings_to_view();
+            move_settings_to_view(true);
             mainapp.buttonVibration();
         }
     }
