@@ -75,17 +75,6 @@ public class HorizontalSeekBar extends SeekBar {
     }
 
 
-//    @Override
-//    protected final void onSizeChanged(final int width, final int height, final int oldWidth, final int oldHeight) {
-//        super.onSizeChanged(height, width, oldHeight, oldWidth);
-//    }
-//
-//    @Override
-//    protected final synchronized void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-//        super.onMeasure(heightMeasureSpec, widthMeasureSpec);
-//        setMeasuredDimension(getMeasuredHeight(), getMeasuredWidth());
-//    }
-
     public void setTickType(int requestedTickMarkType) {
         tickMarkType = requestedTickMarkType;
     }

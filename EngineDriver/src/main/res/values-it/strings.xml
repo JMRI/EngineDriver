@@ -18,7 +18,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="exit">Uscita</string>
-    <string name="settings">Funzioni Standard</string>
+    <string name="functionDefaultSettings">Funzioni Standard</string>
 <!--    <string name="fb_label">Etichetta Funzione</string>-->
 <!--    <string name="function_buttons">Default Funzioni</string>-->
     <string name="introMenu">Introduzione</string>

@@ -17,7 +17,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="exit">Beenden</string>
-    <string name="settings">Funktionsvorgaben</string>
+    <string name="functionDefaultSettings">Funktionsvorgaben</string>
 <!--    <string name="fb_label">Funktionsbezeichnung</string>-->
     <string name="dccExFunctionSettings">DCC-EX-Funktionseinstellungen</string>
     <string name="fb_column_label">Bezeichn.</string>
