@@ -37,7 +37,7 @@
                 style="?attr/floating_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8sp"
+                android:padding="4sp"
                 android:text="@string/fb_helptext"
                 android:textSize="12sp" />
 
@@ -51,14 +51,14 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="0dp">
 
                 <TextView
                     android:id="@+id/fb_number_of_default_function_labels_label"
                     style="?attr/floating_text_style"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:padding="8sp"
+                    android:padding="4dp"
                     android:text="@string/prefNumberOfDefaultFunctionLabelsTitle" />
 
                 <EditText
@@ -80,14 +80,14 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="0dp">
 
                 <TextView
                     android:id="@+id/fb_number_of_default_function_labels_for_roster_label"
                     style="?attr/floating_text_style"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:padding="8sp"
+                    android:padding="4dp"
                     android:text="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
 
                 <EditText
@@ -109,7 +109,7 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp">
+                android:layout_margin="0dp">
 
                 <TextView
                     android:id="@+id/fb_always_use_default_function_labels_label"
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:padding="8sp"
+                    android:padding="4dp"
                     android:text="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
 
                 <Spinner
@@ -134,6 +134,39 @@
                     android:layout_marginRight="0dp"
                     android:layout_marginBottom="0dp"
                     android:layout_toRightOf="@+id/fb_always_use_default_function_labels_label"
+                    android:entries="@array/prefYesNoEntries"
+                    android:entryValues="@array/prefYesNoEntryValues"
+                    android:padding="0dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp">
+
+                <TextView
+                    android:id="@+id/fb_override_withrottles_function_latching_label"
+                    style="?attr/floating_text_style"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="4sp"
+                    android:text="@string/prefOverrideWiThrottlesFunctionLatchingTitle" />
+
+                <Spinner
+                    android:id="@+id/fb_override_withrottles_function_latching"
+                    style="?attr/edit_label_style"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@+id/fb_override_withrottles_function_latching_label"
                     android:entries="@array/prefYesNoEntries"
                     android:entryValues="@array/prefYesNoEntryValues"
                     android:padding="0dp" />

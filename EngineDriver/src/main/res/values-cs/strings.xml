@@ -20,6 +20,7 @@
     <string name="functionDefaultSettings">Nastavení funkcí</string>
 <!--    <string name="fb_label">Funkce štítek</string>-->
     <string name="dccExFunctionSettings">Nastavení funkcí DCC-EX</string>
+    <string name="functionLatchingSettings">Nastavení funkce Latching</string>
     <string name="fb_column_label">Štítek</string>
     <string name="fb_column_function">Fn#</string>
 <!--    <string name="function_buttons">Funkce tlačítko</string>-->
@@ -72,6 +73,9 @@
     <string name="stop">Zastavit</string>
     <string name="forward">Vpřed</string>
     <string name="reverse">Vzad</string>
+    <string name="neutral">Neutrální</string>
+    <string name="brake">Brzda</string>
+    <string name="load">Zatížení</string>
     <string name="none">Nic</string>
     <string name="fb_helptext">Zadejte štítky a funkce v seznamu. Pro skrytí tlačítka ponechte prázdné. Použijte v případě, že funkce v evidenci nejsou k dispozici.</string>
     <string name="copy_function_labels">Kopírovat štítky z evidence</string>
@@ -96,6 +100,7 @@
         <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
     -->
     <string name="mrc_settings">MRC nastavení</string>
+    <string name="dccesp_settings">Nastavení DCC ESP</string>
     <string name="loco">Lokomotiva:</string>
     <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
@@ -308,6 +313,9 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Použít výchozí štítky funkcí?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Zobrazit výchozí štítky funkcí namísto štítků ze záznamů evidence.</string>
 
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Překonání blokování funkce WiThrottle</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Použijte výchozí blokování ovladače motoru pro lokace bez rozpisu, spíše než výchozí nastavení poskytované WiThrottle</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Zobrazte výchozí popisky funkcí namísto popisků z položek seznamu.                                                               \\nToto MUSÍ být povoleno, chcete-li používat \\\'Speciální\\\' Styly podle pravidel.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Změnšit výšku lokomotivy č.?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Použít menší tlačítko pro lokomotivu číslo, tlačítka rychlosti a směru.</string>
     <string name="prefNumOfThrottles">Počet ovladačů</string>
@@ -423,6 +431,7 @@
     <string name="prefEmerStopTitle">Zobrazit tlačítko nouzového zastavení?</string>
     <string name="prefEmerStopSummary">Zobrazit tlačítko nouzového zastavení lokomotivy v liště akcí?</string>
     <string name="EStop">EStop</string>
+    <string name="EmergencyStop">Nouzové zastavení</string>
     <string name="PowerButtonBar">Tlačítko napájení</string>
     <string name="prefPowerButtonBarTitle">Zobrazit tlačítko napájení kolejiště?</string>
     <string name="prefPowerButtonBarSummary">Zobrazit tlačítk napájení v obrazovce ovladače, výhybek a tras?</string>
@@ -639,6 +648,8 @@
     <string name="gamepadTestButtonLabelButtonLeftTrigger">Levý spouštěč</string>
     <string name="gamepadTestButtonLabelButtonRightTrigger">Pravý spouštěč</string>
 
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Levý palec</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Pravý palec</string>
     <string name="gamepadTestOptionalLabel">Volitelné (nemusí být na všech zařízeních)</string>
     <string name="gamepadTestAllKeyCodesLabel">Všechny kódy:\s\s</string>
     <string name="gamepadTestModeLabel">Typ:\s\s</string>
@@ -801,6 +812,7 @@
     <string name="TtsGamepadThrottle">Ovladač</string>
     <string name="TtsLoco">Lokomotiva</string>
     <string name="TtsSpeed">Rychlost</string>
+    <string name="TtsTargetSpeed">Cílová rychlost</string>
     <string name="TtsGamepadTest">Gamepad test</string>
     <string name="TtsGamepadTestComplete">Test hotový</string>
     <string name="TtsGamepadTestSkipped">Test přeskočen</string>
@@ -1035,7 +1047,25 @@
     <string name="prefThrottleSwitchOption2Title">Přepínač rozvržení Rozvržení druhé obrazovky</string>
     <string name="prefThrottleSwitchOption2Summary">Tlačítko přepínání rozvržení přepne mezi předchozím předvoleným a tímto.</string>
 
-    
+
+    <string name="prefSemiRealisticThrottleTitle">Polorealistické předvolby plynu</string>
+    <string name="prefSemiRealisticThrottleSummary">Předvolby specifické pro obrazovku Semi-Realistic Throttle</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Akcelerace Speed ​​Step Repeat Delay</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">Jak dlouho mezi opakováním kroku rychlosti zrychlení (v milisekundách). Menší je rychlejší.</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Deceleration Speed ​​Step Repeat Delay</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">Jak dlouho mezi opakováním kroku rychlosti zpomalení (v milisekundách). Menší je rychlejší.</string>
+    <string name="prefSemiRealisticThrottleSpeedStepTitle">"Rychlostní krok "</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">Jak moc skutečná rychlost vyskočí každým krokem na cílovou rychlost.  Větší je rychlejší.</string>
+    <string name="prefSemiRealisticThrottleNotchesTitle">Zářezy plynu</string>
+    <string name="prefSemiRealisticThrottleNotchesSummary">Nastavte plyn v procentech nebo o určitý počet kroků/zářezů</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Počet Brzdových Kroků</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Upravte počet kroků na jezdci brzdy</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Ohodnoťte osvěžení vzduchových brzd</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Upravte rychlost, jakou se budou vzduchové brzdy obnovovat/doplňovat (v milisekundách). Menší je rychlejší.</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">"Počet zatížení "</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Upravte počet kroků na posuvníku zatížení</string>
+    <string name="prefSemiRealisticThrottleLoadPcntTitle">Násobitel procenta zatížení</string>
+    <string name="prefSemiRealisticThrottleLoadPcntSummary">Upravte účinek jezdce zatížení na změny rychlosti. >100 % = větší zatížení</string>
     <string name="prefCategoryDevicePageTitle">Předvolby zařízení</string>
     <string name="prefPauseSpeedButtonTitle">Show \'Pause\' Tlačítko</string>
     <string name="prefPauseSpeedButtonSummary">Zobrazovat tlačítko pro zpomalení a zastavení lokomotivy, pak se vrátí do rychlosti na propuštění.</string>
@@ -1179,7 +1209,7 @@
     <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku ECC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Akce</string>
-    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(vyloučit \'&lt;\' a \'&gt;\')</small></string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small><small>\n(vyloučit \'&lt;\' a \'&gt;\')</small></small></string>
     <string name="DCCEXclearCommands">Průhledná</string>
     <string name="DccexConnectionOptionTitle">Protokol připojení</string>
     <string name="DccexFailed">Akce selhala</string>
@@ -1189,7 +1219,12 @@
     <string name="DCCEXrouteHandoff">Ruce pryč</string>
     <string name="DCCEXrouteSet">Soubor</string>
     <string name="DccexSendCommandButtonLabel">Poslat</string>
+    <string name="witActionTypeLabel">Akce</string>
+    <string name="witWriteAddressLabel">Adresa DCC</string>
+    <string name="witPomWarning">Poznámky: - Toto nebude fungovat na některých systémech DCC. - Změna adresy lokomotivy je zabráněna - CV 1, 17 &amp; 18 a bit 5 CV 29. \\n\\nPoužívejte opatrně.</string>
+    <string name="witPomMaxValueWarning">Hodnota \'%1$s\' překračuje maximální podporovanou hodnotu (\'%2$s\')</string>
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
+    <string name="DCCEXcommonCommnadsLabel">Běžné CMD</string>
     <string name="DCCEXsetTrackButtonLabel">Soubor</string>
     <string name="DccexSucceeded">Akce uspěla</string>
     <string name="DCCEXturnoutClosed">ZAVŘENO</string>
@@ -1208,6 +1243,24 @@
     <string name="prefDccexPreferencesSummary">Možnosti použití EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
+    <string name="DCCEXbuttonDefaultFunctions">Výchozí Fns</string>
+    <string name="DCCEXbuttonTrackManager">Dráha Mgr</string>
+    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programovací stopa (servisní režim)</string>
+    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programování na hlavní (provozní režim)</string>
+    <string name="DCCEXheadingTrackManager">DCC-EX - Správce trati/okresu</string>
+    <string name="DCCEXrequestLocoIdFailed">Požadavek na ID lokomotivy se nezdařil</string>
+    <string name="cv29SpeedSteps14">Rychlostní kroky: 14</string>
+    <string name="cv29SpeedSteps28">Rychlostní kroky: 28/128</string>
+    <string name="cv29AnalogueConversionOn">Analogový převod: ON</string>
+    <string name="cv29AnalogueConversionOff">Analogový převod: VYP</string>
+    <string name="cv29DirectionForward">Normální směr: Vpřed</string>
+    <string name="cv29DirectionReverse">Normální směr: Reverzní</string>
+    <string name="cv29AddressSize2bit">Velikost adresy: 2 bity (0-127)</string>
+    <string name="cv29AddressSize4bit">Velikost adresy: 4 bity (1-10239)</string>
+    <string name="cv29SpeedTableNo">Tabulka rychlostí: Nepoužito (používá CV 2,5 &amp; 6)</string>
+    <string name="cv29SpeedTableYes">Tabulka rychlosti: Používá se</string>
+    <string name="cv29SpeedToggleDirection">Zapište hodnotu %d do CV29 pro přepnutí směru.</string>
+    <string name="witHeadingCvProgrammerPoM">WiThrottle - Programování na hlavní (provozní režim)</string>
     <string name="order">Seřadit</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">Vždy zobrazovat Hodit/Zavřít?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">U výhybek vždy zobrazujte tlačítka Hod i Zavřít, nikdy ne tlačítko Přepnout.</string>

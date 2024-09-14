@@ -93,6 +93,7 @@ public class throttle_switching_left_or_right extends throttle {
         mainapp.currentScreenSupportsWebView = true;
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String x = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -323,8 +324,8 @@ public class throttle_switching_left_or_right extends throttle {
 
 
     protected void set_labels() {
+        Log.d("Engine_Driver","throttle_switching_left_or_right: set_labels() starting");
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
 
         if (mainapp.appIsFinishing) { return;}
 

@@ -268,6 +268,8 @@
         <item tools:ignore="Typos">MagicseeR1C</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
+        <item>AuvisioB</item>
+        <item>AuvisioB-rotate</item>
         <item>Generic</item>
         <item>Generic3x4</item>
         <item>Keyboard</item>
@@ -286,6 +288,8 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Mode C</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item >Auvisio Android-B</item>
+        <item >Auvisio Android-B - ↺ DPAD</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (4x4 Keypad +Encoder)</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (3x4 Keypad +Encoder)</item>
         <item >Keyboard</item>
@@ -762,19 +766,62 @@
     <string-array name="prefGamePadUtopiaCLabels">
         <item> </item> //not used
         <item>Button not usable</item>
-        <item>Gamepad Button DPAD Up action</item>
-        <item>Gamepad Button DPAD Down action</item>
-        <item>Gamepad Button DPAD Left action</item>
-        <item>Gamepad Button DPAD Right action</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
         <item>Button not usable</item>
-        <item>Gamepad Button A action</item>
-        <item>Gamepad Button D action</item>
-        <item>Gamepad Button B action</item>
-        <item>Gamepad Button C action</item>
+        <item>Button A action</item>
+        <item>Button D action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
         <item>Button not available</item> //not used
-        <item>Gamepad Trigger Front Lower</item>
+        <item>Trigger Front Lower</item>
         <item>Button not available</item> //not used
-        <item>Gamepad Trigger Front Upper</item>
+        <item>Trigger Front Upper</item>
+    </string-array>
+
+    <integer-array name="prefGamePadAuvisioB" translatable="false">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
+        <item>@integer/KeyCode_Button_Start</item> //gamepadStart
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_Y</item> //gamepadD
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
+        <item>@integer/KeyCode_Button_X</item> //gamepadC
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_L1</item> //lower front button
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_R1</item> //upper front button
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </integer-array>
+
+    <string-array name="prefGamePadAuvisioBLabels">
+        <item> </item> //not used
+        <item>Button not usable</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
+        <item>Button Start</item>
+        <item>Button A action</item>
+        <item>Button D action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Lower</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Upper</item>
     </string-array>
 
     <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -805,10 +852,10 @@
     <string-array name="prefGamePadFlydigiWee2Labels">
         <item> </item> //not used
         <item>Button Select action</item>
-        <item>Button DPAD Up action</item>
-        <item>Button DPAD Down action</item>
-        <item>Button DPAD Left action</item>
-        <item>Button DPAD Right action</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
         <item>Button Start action</item>
         <item>Button X action</item>
         <item>Button Y action</item>
@@ -830,10 +877,10 @@
     <string-array name="prefGamePadMocuteLabels">
         <item> </item> //not used
         <item>Button Select (if present) action</item>
-        <item>Button DPAD Up action</item>
-        <item>Button DPAD Down action</item>
-        <item>Button DPAD Left action</item>
-        <item>Button DPAD Right action</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
         <item>Button Start action</item>
         <item>Button X [iOS] action</item>
         <item>Button Y [Triangle] action</item>
@@ -882,10 +929,10 @@
     <string-array name="prefGamePadMagicseeR1Labels">
         <item> </item> //not used
         <item>Button OK (Front Upper)</item>
-        <item>Button DPAD Up action</item>
-        <item>Button DPAD Down action</item>
-        <item>Button DPAD Left action</item>
-        <item>Button DPAD Right action</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
         <item>Button Return (Front Lower)</item>
         <item>Button C action</item>
         <item>Button D action</item>

@@ -220,7 +220,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
     protected void set_labels() {
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
+         Log.d("Engine_Driver","throttle_vertical_left_or_right set_labels(): starting");
 
         if (mainapp.appIsFinishing) { return;}
 

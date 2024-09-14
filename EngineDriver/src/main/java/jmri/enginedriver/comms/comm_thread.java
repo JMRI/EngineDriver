@@ -499,7 +499,7 @@ public class comm_thread extends Thread {
 
         if (!mainapp.isDCCEX) { // not DCC-EX
             if (addr.length() == 0) addr = "*";
-            wifiSend(String.format("M%dA%s<;>F%d%d", whichThrottle, addr, fState, fn));
+            wifiSend(String.format("M%1$dA%2$s<;>F%3$d%4$02d", whichThrottle, addr, fState, fn));
 
         } else { //DCC-EX
             String msgTxt;
@@ -578,7 +578,7 @@ public class comm_thread extends Thread {
     protected void sendForceFunction(int whichThrottle, String addr, int fn, int fState) {
         if (!mainapp.isDCCEX) { // not DCC-EX
             if (addr.length() == 0) addr = "*";
-            wifiSend(String.format("M%dA%s<;>f%d%d", whichThrottle, addr, fn, fState));
+            wifiSend(String.format("M%1$dA%2$s<;>f%3$d%4$02d", whichThrottle, addr, fState, fn));
 
         } else { //DCC-EX
             sendFunction(whichThrottle, addr, fn, fState, true);
@@ -1697,23 +1697,25 @@ public class comm_thread extends Thread {
                         int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                         if (whichThrottle >= 0) {
 
-                            String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                            responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                            for (int i = 0; i < fnArgs.length; i++) {
-                                if (fnArgs[i].length() == 0) {
-                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                } else {
-                                    if (fnArgs[i].charAt(0) == '*') { // is NOT latching
-                                        responseStrBuilder.append(fnArgs[i].substring(1));
+                            if ( (args.length!=4) || (!args[2].equals("\"\"")) || (!args[2].equals("\"\"")) ) {
+                                String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
+                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                for (int i = 0; i < fnArgs.length; i++) {
+                                    if (fnArgs[i].length() == 0) {
                                         mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
                                     } else {
-                                        responseStrBuilder.append(fnArgs[i]);
-                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                        if (fnArgs[i].charAt(0) == '*') { // is NOT latching
+                                            responseStrBuilder.append(fnArgs[i].substring(1));
+                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                        } else {
+                                            responseStrBuilder.append(fnArgs[i]);
+                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                        }
                                     }
-                                }
-                                if (i < fnArgs.length-1) {
-                                    responseStrBuilder.append("]\\[");
+                                    if (i < fnArgs.length - 1) {
+                                        responseStrBuilder.append("]\\[");
+                                    }
                                 }
                             }
 
