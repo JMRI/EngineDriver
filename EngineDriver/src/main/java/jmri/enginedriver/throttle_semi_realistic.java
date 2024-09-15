@@ -1108,22 +1108,23 @@ public class throttle_semi_realistic extends throttle {
         // air & brake
         double air = (double) 1 - (((double) getAirValue(whichThrottle)) / 100);
         double brake = (double) brakeSliderPosition / (double) prefSemiRealisticThrottleNumberOfBrakeSteps;
-        double effeciveBrake = brake;
-        if ( (brake>0) || (air>0) ) {
-            effeciveBrake = (air >= brake) ? air : brake;
+        double effectiveBrake = brake;
+        if ( ((brake>0) || (air>0)) && (air>brake) ) {
+           effectiveBrake = air;
         }
 
-        // brake
-        if (effeciveBrake > 0) {
+        // brake and/or air
+        if (effectiveBrake > 0) {
             if (targetSpeed==0) {
                 targetSpeed = 0;
-//                targetAccelleration = -1 / ((brakeSliderPosition) + 1) / 0.52;
-                targetAccelleration = -1 / (1 + (effeciveBrake * effeciveBrake * 0.7 / 0.4));
+                targetAccelleration = -1 / (1 + (effectiveBrake * effectiveBrake * 0.7 / 0.4));
             } else { // throttle is still active
                 targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition / (double) prefSemiRealisticThrottleNumberOfBrakeSteps) );
-//                targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * maxBrake ) );
-//                targetAccelleration = -1 / ((brakeSliderPosition) + 1) / 0.26;
-                targetAccelleration = -1 / (1 + (effeciveBrake * effeciveBrake * 0.7 / 0.2));
+                if (targetSpeed <= getSpeed(whichThrottle))  {
+                    targetAccelleration = -1 / (1 + (effectiveBrake * effectiveBrake * 0.7 / 0.2));
+                } else {
+                    targetAccelleration = 2 - (1 / (1 + (effectiveBrake * effectiveBrake * 0.7 / 0.2)));
+                }
             }
         }
 
