@@ -164,8 +164,8 @@ public class throttle_simple extends throttle {
 
 
     protected void set_labels() {
+        Log.d("Engine_Driver","throttle_simple: set_labels() starting");
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
 
         if (mainapp.appIsFinishing) { return;}
 

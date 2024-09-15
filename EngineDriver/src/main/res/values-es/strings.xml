@@ -18,6 +18,7 @@
     <string name="functionDefaultSettings">Funciones por defecto</string>
 <!--    <string name="fb_label">Etiquetas de funciones</string>-->
     <string name="dccExFunctionSettings">Configuración de funciones DCC-EX</string>
+    <string name="functionLatchingSettings">Configuración de bloqueo de funciones</string>
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
 <!--    <string name="function_buttons">botones_de_funciones</string>-->
@@ -67,6 +68,8 @@
     <string name="stop">Detener</string>
     <string name="forward">Adelante</string>
     <string name="reverse">Atrás</string>
+    <string name="brake">Freno</string>
+    <string name="load">Carga</string>
     <string name="none">Ninguna</string>
     <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco para esconder la tecla. Estos se utilizan cuando las funciones de la flota no están disponibles</string>
     <string name="copy_function_labels">Copiar etiquetas desde la flota</string>
@@ -77,6 +80,7 @@
     <string name="about_page_url">file:///android_asset/about_page-es.html</string>
 
     <string name="mrc_settings">Parámetros MRC</string>
+    <string name="dccesp_settings">Configuración de DCC ESP</string>
     <string name="loco">Locomotora:</string>
     <string name="loco_direction_left_extra">"\u00B7A\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
@@ -229,6 +233,9 @@
     <string name="toastEsuMc2NoButtonPresses">Presionar la tecla no está permitido: Mobile Control II en modo de parada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">¿Utiliza las etiquetas de las funciones por defecto?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Muestra las etiquetas de funciones predeterminadas en lugar de las etiquetas de las entradas de la flota</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anular con el bloqueo de la función del acelerador</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilice el bloqueo predeterminado de Engine Driver para ubicaciones que no pertenecen a la lista, en lugar de los valores predeterminados proporcionados por WiThrottle</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Muestra las etiquetas de función predeterminadas en lugar de las etiquetas de las entradas de la lista.                                                               \\nEsto DEBE estar habilitado para usar los estilos de regla de seguimiento \\\'especiales\\\'.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">¿Disminuye la altura del número de Locomotora?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utiliza teclas pequeñas para el número de Locomotora, velocidad y teclas de dirección</string>
     <string name="prefNumOfThrottles">Número de Controladores</string>
@@ -313,6 +320,7 @@
     <string name="prefEmerStopTitle">¿Muestra la tecla de parada de emergencia?</string>
     <string name="prefEmerStopSummary">¿Muestra la tecla de parada de emergencia de la Locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
+    <string name="EmergencyStop">Parada de emergencia</string>
     <string name="PowerButtonBar">Tecla de tensión de vía</string>
     <string name="prefPowerButtonBarTitle">¿Muestra la tecla de tensión de vía?</string>
     <string name="prefPowerButtonBarSummary">¿Muestra la tecla de tensión de vía en la pantalla de Ccntrolador, desvíos y rutas?</string>
@@ -436,6 +444,12 @@
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">Iniciar | Enviar</string>
     <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Enviar</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Hombro izquierdo</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Hombro derecho</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Gatillo izquierdo</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Gatillo derecho</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Pulgar izquierdo</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Pulgar derecho</string>
     <string name="gamepadTestOptionalLabel">Opcional (puede ser que no esté en el dispositivo)</string>
     <string name="gamepadTestAllKeyCodesLabel">Todos los códigos:</string>
     <string name="gamepadTestModeLabel">Tipo:\s\s</string>
@@ -542,6 +556,7 @@
     <string name="TtsGamepadThrottle">Controlador</string>
     <string name="TtsLoco">Locomotora</string>
     <string name="TtsSpeed">Velocidad</string>
+    <string name="TtsTargetSpeed">Velocidad objetivo</string>
     <string name="TtsGamepadTest">Prueba de gamepad</string>
     <string name="TtsGamepadTestComplete">Prueba completada</string>
     <string name="TtsGamepadTestSkipped">Prueba omitida</string>
@@ -770,6 +785,7 @@
     <string name="RecentConsistsNameEditText">Introduzca un nombre para la Tracción Múltiple</string>
     <string name="RecentConsistsNameEditTitle">Nombres recientes de Tracciones Múltiples</string>
     <string name="RecentsNameEditText">Introduzca un nombre para una Locomotora</string>
+    <string name="infoSaveLogFile">Neutral</string>
     <string name="RecentsNameEditTitle">Nombres recientes de Locomotoras</string>
     <string name="rosterDetailsDialogTitle">"Detalles de la flota para "</string>
     <string name="toastRecentCleared">Locomotora eliminada de la lista</string>
@@ -872,6 +888,24 @@
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver necesita permisos para almacenar y leer preferencias.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver necesita permisos para activar o desactivar los datos móviles.</string>-->
     <string name="permissionsSystemSettingsButton">Ajustes del sistema</string>
+    <string name="prefSemiRealisticThrottleTitle">Preferencias de aceleración semirealistas</string>
+    <string name="prefSemiRealisticThrottleSummary">Preferencias específicas de la pantalla Acelerador semirealista</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Aceleración Velocidad Paso Repetición Retardo</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">Cuánto tiempo transcurre entre repeticiones de pasos de velocidad de aceleración (en milisegundos). Cuanto más pequeño es más rápido.</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Desaceleración Velocidad Paso Repetición Retardo</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">Cuánto tiempo transcurre entre repeticiones de pasos de velocidad de desaceleración (en milisegundos). Cuanto más pequeño es más rápido.</string>
+    <string name="prefSemiRealisticThrottleSpeedStepTitle">"Paso de velocidad "</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">Cuánto salta la velocidad real en cada paso hasta la velocidad objetivo.  Cuanto más grande es más rápido.</string>
+    <string name="prefSemiRealisticThrottleNotchesTitle">Muescas del acelerador</string>
+    <string name="prefSemiRealisticThrottleNotchesSummary">Ajuste el acelerador como porcentaje o mediante un número específico de pasos/muescas</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Número de pasos de freno</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajustar el número de pasos en el control deslizante de freno</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Califica la actualización de los frenos de aire</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajuste la velocidad a la que los frenos de aire se actualizarán/recargarán (en milisegundos). Cuanto más pequeño es más rápido.</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">"Número de carga "</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajustar el número de pasos en el control deslizante de carga</string>
+    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentaje de carga</string>
+    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste el efecto del control deslizante de carga en los cambios de velocidad. >100% = más carga</string>
     <string name="prefCategoryDevicePageTitle">Preferencias del Dispositivo</string>
     <string name="prefSortOrderRosterTitle">Orden de clasificación de la lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que las entradas de la lista aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
@@ -978,7 +1012,7 @@
     <string name="prefActionBarShowDccExButtonSummary">Mostrar el botón en la barra de acción para acceder a la pantalla ECC-EX. (Solo para conexiones nativas de DCC-EX).</string>
     <string name="prefActionBarShowDccExButtonTitle">¿Botón DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acción</string>
-    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(excluir \'&lt;\' y \'&gt;\')</small></string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small><small>\n(excluir \'&lt;\' y \'&gt;\')</small></small></string>
     <string name="DCCEXclearCommands">Claro</string>
     <string name="DccexConnectionOptionTitle">Protocolo de conexión</string>
     <string name="DccexFailed" tools:ignore="Typos">Accion: Fallida</string>
@@ -988,7 +1022,12 @@
     <string name="DCCEXrouteHandoff">Manos libres</string>
     <string name="DCCEXrouteSet">Colocar</string>
     <string name="DccexSendCommandButtonLabel">Enviar</string>
+    <string name="witActionTypeLabel">Acción</string>
+    <string name="witWriteAddressLabel">Dirección DCC</string>
+    <string name="witPomWarning">Notas: - Esto no funcionará en algunos sistemas DCC. - Se evita el cambio de dirección de locomotora - CV 1, 17 y 2. 18 y bit 5 de CV 29. \\n\\nUtilizar con precaución.</string>
+    <string name="witPomMaxValueWarning">El valor \'%1$s\' excede el máximo admitido (\'%2$s\')</string>
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
+    <string name="DCCEXcommonCommnadsLabel">CMD comunes</string>
     <string name="DCCEXsetTrackButtonLabel">Colocar</string>
     <string name="DccexSucceeded">Acción tuvo éxito</string>
     <string name="DCCEXturnoutClosed">Cerrado</string>
@@ -1007,6 +1046,24 @@
     <string name="prefDccexPreferencesSummary">Opciones para usar un EX-CommandStation</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Use siempre etiquetas de funciones desde el servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Cuando esté deshabilitado, use etiquetas predeterminadas de EnginedRiver para locos seleccionados por dirección (no en la lista), ignorando las etiquetas predeterminadas del servidor.</string>
+    <string name="cv29AnalogueConversionOff">Conversión analógica: APAGADO</string>
+    <string name="cv29AnalogueConversionOn">Conversión analógica: ENCENDIDO</string>
+    <string name="cv29DirectionForward">Dirección normal: adelante</string>
+    <string name="cv29DirectionReverse">Dirección normal: inversa</string>
+    <string name="DCCEXbuttonTrackManager">Gerente de seguimiento</string>
+    <string name="DCCEXbuttonDefaultFunctions">Fns predeterminado</string>
+    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Pista de programación (modo de servicio)</string>
+    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programación en Principal (Modo de Operación)</string>
+    <string name="DCCEXheadingTrackManager">DCC-EX - Gerente de pista/distrito</string>
+    <string name="DCCEXrequestLocoIdFailed">Solicitar ID de locomotora fallida</string>
+    <string name="cv29SpeedSteps14">Pasos de velocidad: 14</string>
+    <string name="cv29SpeedSteps28">Pasos de velocidad: 28/128</string>
+    <string name="cv29AddressSize2bit">Tamaño de dirección: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit">Tamaño de dirección: 4 bits (1-10239)</string>
+    <string name="cv29SpeedTableNo">Tabla de velocidades: No utilizada (utiliza CV 2,5 y 6)</string>
+    <string name="cv29SpeedTableYes">Tabla de velocidad: en uso</string>
+    <string name="cv29SpeedToggleDirection">Escriba un valor de %d en CV29 para alternar la dirección.</string>
+    <string name="witHeadingCvProgrammerPoM">WiThrottle - Programación en principal (modo de operación)</string>
     <string name="order">Clasificar</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">¿Mostrar siempre Lanzar/Cerrar?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Muestre siempre los botones Lanzar y Cerrar para Desvíos, nunca el botón Alternar.</string>

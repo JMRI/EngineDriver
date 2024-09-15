@@ -366,7 +366,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Integer NOT_HEADLIGHT = 0;
     }
 
-    //    private static final String FUNCTION_CONSIST_LATCHING = "latching";
+    private static final String FUNCTION_CONSIST_LATCHING = "latching";
     private static final String FUNCTION_CONSIST_NOT_LATCHING = "none";
 
     private static final int FUNCTION_CONSIST_LATCHING_NA = -1;
@@ -1585,6 +1585,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
         prefNumberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)));
 
+        mainapp.prefOverrideWiThrottlesFunctionLatching = prefs.getBoolean("prefOverrideWiThrottlesFunctionLatching", getResources().getBoolean(R.bool.prefOverrideWiThrottlesFunctionLatchingDefaultValue));
+
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 
         // set speed buttons speed step
@@ -2428,8 +2430,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int isLatching = FUNCTION_CONSIST_LATCHING_NA;
 //        Consist con = mainapp.consists[whichThrottle];
 
-        if (((mainapp.prefAlwaysUseDefaultFunctionLabels)
-                && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)))
+        if (((mainapp.prefAlwaysUseDefaultFunctionLabels) && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)))
+                || (mainapp.prefOverrideWiThrottlesFunctionLatching)
                 || (mainapp.isDCCEX)
         ) {
             int doPress = -1;
@@ -2881,6 +2883,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 break;
             case "UtopiaC":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
+            case "AuvisioB":
+            case "AuvisioB-rotate":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadAuvisioB);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
             case "Generic":
@@ -3753,11 +3760,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 followLeadFunction = true;
             }
 
+            int isLatching = setFunctionButtonState(whichThrottle, fKey, true);  //special handling for when using the default function labels, and one of 'Special' function following options
             if (action == ACTION_DOWN) {
                 GamepadFeedbackSound(false);
-                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
+//                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
+                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_DOWN, leadOnly, trailOnly, followLeadFunction, isLatching);
             } else {
-                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
+//                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction, FUNCTION_CONSIST_LATCHING_NA);
+                sendFunctionToConsistLocos(whichThrottle, fKey, lab, BUTTON_PRESS_MESSAGE_UP, leadOnly, trailOnly, followLeadFunction, isLatching);
             }
         }
 
@@ -3767,7 +3777,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         Log.d("Engine_Driver", "dispatchGenericMotionEvent() Joystick Event");
-        if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
+        if ( (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick) ) {
 
             boolean acceptEvent = true; // default to assuming that we will respond to the event
 
@@ -3984,23 +3994,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
 
                         // if the preference name has "-rotate" at the end of it swap the direction keys around
-                        if (mainapp.prefGamePadType.contains("-rotate")) {
-                            if ((keyCode >= 19) && (keyCode <= 22)) {
-                                if (keyCode == 19) {
-                                    keyCode = 22;
-                                }  // was Up -> Right
-                                else if (keyCode == 20) {
-                                    keyCode = 21;
-                                } // was Down -> Left
-                                else if (keyCode == 21) {
-                                    keyCode = 20;
-                                } // was Left -> Down
-//                                else if (keyCode==22) { keyCode=19; } // was Right -> Up
-                                else {
-                                    keyCode = 19;
-                                } // was Right -> Up
-                            }
-                        }
+//                        if (mainapp.prefGamePadType.contains("-rotate")) {
+//                            if ((keyCode >= 19) && (keyCode <= 22)) {
+//                                if (keyCode == 19) {
+//                                    keyCode = 22;
+//                                }  // was Up -> Right
+//                                else if (keyCode == 20) {
+//                                    keyCode = 21;
+//                                } // was Down -> Left
+//                                else if (keyCode == 21) {
+//                                    keyCode = 20;
+//                                } // was Left -> Down
+////                                else if (keyCode==22) { keyCode=19; } // was Right -> Up
+//                                else {
+//                                    keyCode = 19;
+//                                } // was Right -> Up
+//                            }
+//                        }
 
                         int rslt = -1;
                         int actionNo = -1;
@@ -4909,13 +4919,41 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
 
             String addr = "";
+//            if ( (leadOnly) || (mainapp.prefOverrideWiThrottlesFunctionLatching) )
             if (leadOnly)
                 addr = con.getLeadAddr();
 
             if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_TOGGLE) {
                 mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, function);
             } else {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
+                if (!mainapp.prefOverrideWiThrottlesFunctionLatching) {
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
+                } else {
+//                    boolean isLatch = mainapp.function_consist_latching.get(function).equals(FUNCTION_CONSIST_LATCHING); // ignore what we were sent
+//                    if (isLatch) {
+                    boolean fnState = mainapp.function_states[whichThrottle][function];
+                    int oldFnState = fnState ? 1 : 0;
+                    int newFnState = fnState ? 0 : 1;
+
+                    if (isLatching == FUNCTION_CONSIST_LATCHING_YES) {
+                        if (buttonPressMessageType == BUTTON_PRESS_MESSAGE_UP) {
+//                            int newState = (mainapp.function_states[whichThrottle][function]) ? BUTTON_PRESS_MESSAGE_DOWN : BUTTON_PRESS_MESSAGE_UP;
+//                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newState);
+
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, oldFnState);
+                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
+//                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
+                            mainapp.function_states[whichThrottle][function] = (newFnState==1);
+                        }
+                    } else {
+//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
+//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, oldFnState);
+
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
+//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
+                        mainapp.function_states[whichThrottle][function] = (newFnState==1);
+                    }
+                }
             }
 
             if (followLeadFunction) {
@@ -6541,6 +6579,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (mainapp.isDCCEX) {
                     TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
                 } else {
+                    TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(mainapp.prefOverrideWiThrottlesFunctionLatching);
                     TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionLatchingSettings);
                 }
             } else {
@@ -6828,7 +6867,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // screen elements
 
     protected void set_labels() {
-        // Log.d("Engine_Driver","starting set_labels");
+         Log.d("Engine_Driver","throttle: set_labels() starting");
 
         if (mainapp.appIsFinishing) {
             return;

@@ -305,7 +305,7 @@ public class throttle_semi_realistic extends throttle {
     }
 
     protected void set_labels() {
-        Log.d("Engine_Driver", "srmt: set_labels(): called");
+        Log.d("Engine_Driver", "srmt: set_labels(): starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) { return; }

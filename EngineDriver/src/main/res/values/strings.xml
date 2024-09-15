@@ -354,8 +354,10 @@
     <string name="prefDefaultFunctionsSummary">When and how the default Function Labels are displayed</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default Function Labels instead of labels from roster entries</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries.
-                                                              \nThis MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries.                                                                This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
+
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locs, rather that the defaults provided by WiThrottle</string>
 
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>
@@ -447,9 +449,9 @@
     <string name="prefRosterFilterDefaultValue" translatable="false"> </string>
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
-    <string name="FilterRosterListFilterOwnerLabel">👤</string>
+    <string name="FilterRosterListFilterOwnerLabel" translatable="false">👤</string>
     <string name="FilterRosterListDownloadLabel">Download</string>
-    <string name="FilterRosterListFilterByLabel">🔎</string>
+    <string name="FilterRosterListFilterByLabel" translatable="false">🔎</string>
     <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
     <string name="prefRosterOwnersFilterShowOptionTitle">Filter by Roster Owner</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
@@ -789,8 +791,8 @@
 \n►► = Increase Speed * 2
 \n◄◄ = Decrease Speed * 2
 \n\'X\' or End = Stop
-\nLeft or \'\[\' = Reverse (Fwd if buttons swapped)
-\nRight or \'\]\' = Forward (Ahead) (Rev if buttons)
+\nLeft or \'\[\' = Reverse (Fwd if swapped)
+\nRight or \'\]\' = Forward (Ahead) (Rev if swapped)
 \n\'D\' = Direction - Toggle Forward/Reverse
 \n\'N\' = Next Throttle
 \n\'Z\' or Home = All stop
@@ -808,7 +810,7 @@
 \n
 \nS000 - S100 = Speed
 \nMust be \'S\' followed by three digits
-\n\'V\` = Speak Speed
+\n\'V\' = Speak Speed
 \nIn Phone Loco Sounds (IPLS)
 \n\'B\' = Bell
 \n\'H\' = Horn / Whistle
@@ -1294,15 +1296,15 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleSummary">Preferences specific to the Semi-Realistic Throttle screen</string>
 
     <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Acceleration Speed Step Repeat Delay</string>
-    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">How long between acceleration speed step repeats (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">How long between acceleration speed step repeats (in milliseconds). Smaller is faster.</string>
     <string name="prefSemiRealisticThrottleAccelerationRepeatDefaultValue" translatable="false">300</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Deceleration Speed Step Repeat Delay</string>
-    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">How long between deceleration speed step repeats (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">How long between deceleration speed step repeats (in milliseconds). Smaller is faster.</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatDefaultValue" translatable="false">800</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleSpeedStepTitle">Speed Step Amount</string>
-    <string name="prefSemiRealisticThrottleSpeedStepSummary">How much the actual speed jumps each step to the target speed. \nLarger is faster.</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">How much the actual speed jumps each step to the target speed.  Larger is faster.</string>
     <string name="prefSemiRealisticThrottleSpeedStepDefaultValue" translatable="false">2</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNotchesTitle">Throttle Notches</string>
@@ -1314,7 +1316,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue" translatable="false">7</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Rate the air brakes refresh</string>
-    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Adjust the rate that the Air brakes will refresh/refill (in milliseconds).\nSmaller is faster.</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Adjust the rate that the Air brakes will refresh/refill (in milliseconds). Smaller is faster.</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateDefaultValue" translatable="false">2000</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Number Of Load Steps</string>
@@ -1429,16 +1431,13 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="DccexSendCommandButtonLabel">Send</string>
     <string name="DccexPreviousCommandButtonLabel">Prior</string>
     <string name="DccexNextCommandButtonLabel">Next</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small>(exclude \'&lt;\' and \'&gt;\')</small></string>
+    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' and \'&gt;\')</small></small></string>
 <!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
     <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>
-    <string name="witPomWarning">Notes:
-        \n- This will not work on some DCC systems.
-        \n- Loco Address change is prevented - CVs 1, 17 &amp; 18 and bit 5 of CV 29.
-        \n\nUse with Caution.</string>
+    <string name="witPomWarning">Notes: - This will not work on some DCC systems. - Loco Address change is prevented - CVs 1, 17 &amp; 18 and bit 5 of CV 29.           Use with Caution.</string>
     <string name="witPomMaxValueWarning">Value \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>

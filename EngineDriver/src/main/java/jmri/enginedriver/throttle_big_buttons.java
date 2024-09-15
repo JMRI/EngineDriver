@@ -134,8 +134,8 @@ public class throttle_big_buttons extends throttle {
 
 
     protected void set_labels() {
+        Log.d("Engine_Driver","throttle_big_buttons: set_labels() starting");
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
 
         if (mainapp.appIsFinishing) { return;}
 

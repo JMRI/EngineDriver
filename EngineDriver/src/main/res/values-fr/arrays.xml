@@ -248,6 +248,8 @@
         <item >MagicseeR1 Android-Mode C</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item >Auvisio Android-B</item>
+        <item >Auvisio Android-B - ↺ DPAD</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +3x4 Hat +Encoder)</item>
         <item >Keyboard</item>

@@ -18,6 +18,7 @@
     <string name="functionDefaultSettings">Funcions per defecte</string>
 <!--    <string name="fb_label">Etiquetes de funcions</string>-->
     <string name="dccExFunctionSettings">Configuració de la funció DCC-EX</string>
+    <string name="functionLatchingSettings">Configuració de bloqueig de funcions</string>
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
 <!--    <string name="function_buttons">botons_de_funcions</string>-->
@@ -67,6 +68,9 @@
     <string name="stop">Atura</string>
     <string name="forward">Endavant</string>
     <string name="reverse">Enrere</string>
+    <string name="neutral">Neutre</string>
+    <string name="brake">Fre</string>
+    <string name="load">Carrega</string>
     <string name="none">Cap</string>
     <string name="fb_helptext">Entra etiquetes i funcions a la llista de la dreta. Deixa-la en blanc  per amagar la tecla. Aquests s\'utilitzen quan les funcions de la flota no estan disponibles</string>
     <string name="copy_function_labels">Copiar etiquetes des de la flota</string>
@@ -78,6 +82,7 @@
     <string name="about_page_url">file:///android_asset/about_page-ca.html</string>
 
     <string name="mrc_settings">Paràmetres MRC</string>
+    <string name="dccesp_settings">Configuració DCC ESP</string>
     <string name="loco">Locomotora:</string>
     <string name="loco_direction_left_extra">"\u00B7E\u00B7"</string>
     <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
@@ -230,6 +235,9 @@
     <string name="toastEsuMc2NoButtonPresses">Prémer la tecla no està permès: Mobile Control II en mode d\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anul·lació del bloqueig de la funció de l\'accelerador</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilitzeu el bloqueig predeterminat del controlador del motor per a blocs que no són de la llista, en lloc dels valors predeterminats proporcionats per WiThrottle</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la llista.                                                               \\nAixò HA d\'estar activat per utilitzar els estils de regles de seguiment \\\'Especials\\\'.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del número de Locomotora?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilitza tecles mes petits per al número de Locomotora, velocitat i tecles de direcció</string>
     <string name="prefNumOfThrottles">Número de Controladors</string>
@@ -314,6 +322,7 @@
     <string name="prefEmerStopTitle">Mostra la tecla d\'aturada d\'emergència?</string>
     <string name="prefEmerStopSummary">Mostra la tecla d\'aturada d\'emergència de la Locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
+    <string name="EmergencyStop">Parada d\'emergència</string>
     <string name="PowerButtonBar">Botó de corrent</string>
     <string name="prefPowerButtonBarTitle">Mostra la tecla de corrent de via?</string>
     <string name="prefPowerButtonBarSummary">Mostra la tecla de corrent de via a la pantalla de Controlador, agulles i rutes?</string>
@@ -439,6 +448,12 @@
     <string name="gamepadTestButtonLabelButtonStart">Iniciar | Envia</string>
     <string name="gamepadTestButtonLabelButtonEnter">Selecciona | Envia</string>
 
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Espatlla Esquerra</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Espatlla dreta</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Disparador esquerre</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Disparador dret</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Polze esquerre</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Polze dret</string>
     <string name="gamepadTestOptionalLabel">Opcional (pot ser que no estigui al dispositiu)</string>
     <string name="gamepadTestAllKeyCodesLabel">Tots els codis:</string>
     <string name="gamepadTestModeLabel">Tipus:</string>
@@ -548,6 +563,7 @@
     <string name="TtsGamepadThrottle">Controlador</string>
     <string name="TtsLoco">Locomotora</string>
     <string name="TtsSpeed">Velocitat</string>
+    <string name="TtsTargetSpeed">Velocitat objectiu</string>
     <string name="TtsGamepadTest">Prova de gamepad</string>
     <string name="TtsGamepadTestComplete">Prova completada</string>
     <string name="TtsGamepadTestSkipped">Prova omesa</string>
@@ -723,6 +739,7 @@
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada</string>
 <!--    <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació</string>-->
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
+    <string name="permissionsSystemSettingsButton">Configuració del sistema</string>
     <string name="permissionsRetryButton">Torneu a provar</string>
     <string name="permissionsRequestTitle">Permisos necessaris</string>
     <string name="permissionsRetryTitle">Permisos rebutjats</string>
@@ -877,6 +894,24 @@
     <string name="toastPreferencesSwipeThroughWebDisabled">Lliscar a través del web deshabilitat</string>
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver necessita permisos d\'emmagatzematge per carregar i llegfir les preferències.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver Engine necesita permisos per activar o desactivar les dades mòbils.</string>-->
+    <string name="prefSemiRealisticThrottleTitle">Preferències de l\'accelerador semi-realistes</string>
+    <string name="prefSemiRealisticThrottleSummary">Preferències específiques de la pantalla de l\'accelerador semi-realista</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Retard de repetició de pas de velocitat d\'acceleració</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">Quant de temps entre es repeteix el pas de velocitat d\'acceleració (en mil·lisegons). Més petit és més ràpid.</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Retard de repetició de pas de velocitat de desacceleració</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">Quant de temps entre es repeteix el pas de velocitat de desacceleració (en mil·lisegons). Més petit és més ràpid.</string>
+    <string name="prefSemiRealisticThrottleSpeedStepTitle">"Pas de velocitat "</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">Quant salta la velocitat real cada pas a la velocitat objectiu.  Més gran és més ràpid.</string>
+    <string name="prefSemiRealisticThrottleNotchesTitle">Osques de l\'accelerador</string>
+    <string name="prefSemiRealisticThrottleNotchesSummary">Ajusteu l\'accelerador com a percentatge o per un nombre específic de passos/osques</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">Nombre de passos de fre</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajusteu el nombre de passos al control lliscant de fre</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Valoreu el refresc dels frens d\'aire</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajusteu la velocitat amb què els frens d\'aire s\'actualitzaran/ompliran (en mil·lisegons). Més petit és més ràpid.</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">"Nombre de càrrega "</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajusteu el nombre de passos al control lliscant de càrrega</string>
+    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de percentatge de càrrega</string>
+    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajusteu l\'efecte del control lliscant de càrrega sobre els canvis de velocitat. &gt;100% = més càrrega</string>
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
     <string name="prefSortOrderRosterTitle">Ordre d\'ordenació de la llista</string>
     <string name="prefSortOrderRosterSummary">Ordeneu que les entrades de la llista apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
@@ -989,7 +1024,7 @@
     <string name="prefActionBarShowDccExButtonSummary">Mostra el botó a la barra d’acció per accedir a la pantalla ECC-EX. (Només per a connexions natives DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acció</string>
-    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\n(exclou \'&lt;\' i \'>\')</small></string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small><small>\n(exclou \'&lt;\' i \'&gt;\')</small></small></string>
     <string name="DCCEXclearCommands">Clar</string>
     <string name="DccexConnectionOptionTitle">Protocol de connexió</string>
     <string name="DccexFailed">L\'acció ha fallat</string>
@@ -999,7 +1034,12 @@
     <string name="DCCEXrouteHandoff">Mà</string>
     <string name="DCCEXrouteSet">Conjunt</string>
     <string name="DccexSendCommandButtonLabel">Enviar</string>
+    <string name="witActionTypeLabel">Acció</string>
+    <string name="witWriteAddressLabel">Adreça DCC</string>
+    <string name="witPomWarning">Notes: - Això no funcionarà en alguns sistemes DCC. - S\'ha impedit el canvi d\'adreça de lloc - CV 1, 17 &amp; 18 i el bit 5 de CV 29. \\n\\nFeu servir amb precaució.</string>
+    <string name="witPomMaxValueWarning">El valor \'%1$s\' supera el màxim admès (\'%2$s\')</string>
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
+    <string name="DCCEXcommonCommnadsLabel">CMD comuns</string>
     <string name="DCCEXsetTrackButtonLabel">Conjunt</string>
     <string name="DccexSucceeded">L\'acció va tenir èxit</string>
     <string name="DCCEXturnoutClosed">Tancada</string>
@@ -1021,6 +1061,24 @@
     <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée sur manette verrouillée</string>
     <string name="prefHapticFeedbackButtonsSummary">Retour haptique sur touches (vibration)</string>
     <string name="prefHapticFeedbackButtonsTitle">Retour haptique sur touches</string>
+    <string name="DCCEXbuttonDefaultFunctions">Fns per defecte</string>
+    <string name="DCCEXbuttonTrackManager">Track Mgr</string>
+    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Pista de programació (mode de servei)</string>
+    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programació principal (mode de funcionament)</string>
+    <string name="DCCEXheadingTrackManager">DCC-EX - Gestor de pista/districte</string>
+    <string name="DCCEXrequestLocoIdFailed">No s\'ha pogut sol·licitar l\'identificador de la Loco</string>
+    <string name="cv29SpeedSteps14">Passos de velocitat: 14</string>
+    <string name="cv29SpeedSteps28">Passos de velocitat: 28/128</string>
+    <string name="cv29AnalogueConversionOn">Conversió analògica: ON</string>
+    <string name="cv29AnalogueConversionOff">Conversió analògica: OFF</string>
+    <string name="cv29DirectionForward">Direcció normal: endavant</string>
+    <string name="cv29DirectionReverse">Direcció normal: inversa</string>
+    <string name="cv29AddressSize2bit">Mida de l\'adreça: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit">Mida de l\'adreça: 4 bits (1-10239)</string>
+    <string name="cv29SpeedTableNo">Taula de velocitat: no s\'utilitza (utilitza CV 2,5 i 6)</string>
+    <string name="cv29SpeedTableYes">Taula de velocitat: en ús</string>
+    <string name="cv29SpeedToggleDirection">Escriu un valor de %d a CV29 per canviar la direcció.</string>
+    <string name="witHeadingCvProgrammerPoM">WiThrottle: programació principal (mode de funcionament)</string>
     <string name="order">Ordena</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">Mostrar sempre Llançar/Tancar?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Mostra sempre els botons Llançar i Tancar per als desviaments, mai el botó Commuta.</string>

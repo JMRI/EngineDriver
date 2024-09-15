@@ -241,6 +241,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
                 bGamePadKeysUp = bGamePadKeys;
                 break;
+            case "AuvisioB":
+            case "AuvisioB-rotate":
+                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadAuvisioB);
+                bGamePadKeysUp = bGamePadKeys;
+                break;
             case "Generic":
                 bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
                 bGamePadKeysUp = bGamePadKeys;

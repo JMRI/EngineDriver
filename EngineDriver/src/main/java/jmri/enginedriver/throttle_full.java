@@ -177,8 +177,8 @@ public class throttle_full extends throttle {
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
+        Log.d("Engine_Driver","throttle_full: set_labels() starting");
         super.set_labels();
-        // Log.d("Engine_Driver","starting set_labels");
 
         if (mainapp.appIsFinishing) { return;}
 
