@@ -325,6 +325,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             return ((null != objects) ? objects.get(position) : null);
         }
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
 

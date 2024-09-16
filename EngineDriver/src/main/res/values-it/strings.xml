@@ -730,7 +730,7 @@
     <string name="RecentConsistsNameEditText">Inserire un nome per il Consist</string>
     <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
-    <string name="infoSaveLogFile">Neutro</string>
+    <string name="infoSaveLogFile">Accesso a: %s</string>
     <string name="RecentsNameEditTitle">Recenti Nome Loco</string>
     <string name="rosterDetailsDialogTitle">"Selezionare tra Roster / Consistono Entries "</string>
     <string name="toastRecentCleared">Loco rimosso dalla lista</string>
@@ -1006,8 +1006,8 @@
     <string name="DCCEXrequestLocoIdFailed">Richiesta ID loco non riuscita</string>
     <string name="cv29SpeedSteps14">Passi veloci: 14</string>
     <string name="cv29SpeedSteps28">Passi veloci: 28/128</string>
-    <string name="cv29AddressSize2bit">Dimensione indirizzo: 2 bit (0-127)</string>
-    <string name="cv29AddressSize4bit">Dimensione indirizzo: 4 bit (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Dimensione indirizzo: 2 bit (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Dimensione indirizzo: 4 bit (1-10239)</string>
     <string name="cv29SpeedTableNo">Tabella delle velocità: non utilizzata (utilizza CV 2,5 e 6)</string>
     <string name="cv29SpeedTableYes">Tabella della velocità: in uso</string>
     <string name="cv29SpeedToggleDirection">Scrivere un valore di %d in CV29 per cambiare la direzione.</string>

@@ -2198,7 +2198,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
 
             String engineName = hm.get("roster_name");
             if (engineName != null) {
@@ -2246,7 +2246,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
 
             String str = hm.get("engine_name");
             if (str != null) {
@@ -2312,7 +2312,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
 
             String str = hm.get("consist_name");
             if (str != null) {

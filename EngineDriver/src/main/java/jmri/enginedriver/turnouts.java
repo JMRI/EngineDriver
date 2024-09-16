@@ -1095,7 +1095,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.turnouts_recent_item, null, false);
+            @SuppressLint("InflateParams") LinearLayout view = (LinearLayout) inflater.inflate(R.layout.turnouts_recent_item, null, false);
 
             String toName = hm.get("turnout_name");
             if (toName != null) {

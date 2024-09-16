@@ -785,7 +785,7 @@
     <string name="RecentConsistsNameEditText">Introduzca un nombre para la Tracción Múltiple</string>
     <string name="RecentConsistsNameEditTitle">Nombres recientes de Tracciones Múltiples</string>
     <string name="RecentsNameEditText">Introduzca un nombre para una Locomotora</string>
-    <string name="infoSaveLogFile">Neutral</string>
+    <string name="infoSaveLogFile">Iniciando sesión en: %s</string>
     <string name="RecentsNameEditTitle">Nombres recientes de Locomotoras</string>
     <string name="rosterDetailsDialogTitle">"Detalles de la flota para "</string>
     <string name="toastRecentCleared">Locomotora eliminada de la lista</string>
@@ -1058,8 +1058,8 @@
     <string name="DCCEXrequestLocoIdFailed">Solicitar ID de locomotora fallida</string>
     <string name="cv29SpeedSteps14">Pasos de velocidad: 14</string>
     <string name="cv29SpeedSteps28">Pasos de velocidad: 28/128</string>
-    <string name="cv29AddressSize2bit">Tamaño de dirección: 2 bits (0-127)</string>
-    <string name="cv29AddressSize4bit">Tamaño de dirección: 4 bits (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Tamaño de dirección: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Tamaño de dirección: 4 bits (1-10239)</string>
     <string name="cv29SpeedTableNo">Tabla de velocidades: No utilizada (utiliza CV 2,5 y 6)</string>
     <string name="cv29SpeedTableYes">Tabla de velocidad: en uso</string>
     <string name="cv29SpeedToggleDirection">Escriba un valor de %d en CV29 para alternar la dirección.</string>

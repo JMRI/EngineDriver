@@ -703,6 +703,7 @@
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
+    <string name="introbackButtonPress">Reinicie o aplicativo Engine Driver para concluir a introdução.</string>
     <string name="edit_consist_throttle_1">Editar Consistem acelerador 1</string>
     <string name="edit_consist_throttle_2">Editar Consistem acelerador 2</string>
     <string name="edit_consist_throttle_3">Editar Consistem acelerador 3</string>
@@ -729,7 +730,7 @@
     <string name="RecentConsistsNameEditText">Digite um nome para a Consist</string>
     <string name="RecentConsistsNameEditTitle">Recentes Consistem Nome</string>
     <string name="RecentsNameEditText">Digite um nome para o Loco</string>
-    <string name="infoSaveLogFile">Neutro</string>
+    <string name="infoSaveLogFile">Registrando em: %s</string>
     <string name="RecentsNameEditTitle">Recentes Nome Loco</string>
     <string name="rosterDetailsDialogTitle">"Seleccione a partir Roster / Consistem Entradas "</string>
     <string name="toastRecentCleared">Loco removido da lista</string>
@@ -1010,8 +1011,8 @@
     <string name="DCCEXrequestLocoIdFailed">Falha na solicitação de ID Loco</string>
     <string name="cv29SpeedSteps14">Etapas de velocidade: 14</string>
     <string name="cv29SpeedSteps28">Etapas de velocidade: 28/128</string>
-    <string name="cv29AddressSize2bit">Tamanho do endereço: 2 bits (0-127)</string>
-    <string name="cv29AddressSize4bit">Tamanho do endereço: 4 bits (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Tamanho do endereço: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Tamanho do endereço: 4 bits (1-10239)</string>
     <string name="cv29SpeedTableNo">Tabela de Velocidade: Não usada (usa CV 2,5 e 6)</string>
     <string name="cv29SpeedTableYes">Tabela de Velocidade: Em uso</string>
     <string name="cv29SpeedToggleDirection">Escreva um valor de %d em CV29 para alternar a direção.</string>

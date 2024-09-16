@@ -794,6 +794,7 @@
     <string name="RecentConsistsNameEditText">Introduïu un nom per a la Tracció Múltiple</string>
     <string name="RecentConsistsNameEditTitle">Nom recent de la Tracció Múltiple</string>
     <string name="RecentsNameEditText">Introduïu un nom per a la Locomotora</string>
+    <string name="infoSaveLogFile">Inici de sessió a: %s</string>
     <string name="RecentsNameEditTitle">Nom recent de la Locomotora</string>
     <string name="prefLimitSpeedButtonSummary">Opció per mostrar una tecla que limita la velocitat màxima d\'una Locomotora</string>
     <string name="prefLimitSpeedButtonTitle">Mostra la tecla de \'Límit de velocitat\'</string>
@@ -1073,8 +1074,8 @@
     <string name="cv29AnalogueConversionOff">Conversió analògica: OFF</string>
     <string name="cv29DirectionForward">Direcció normal: endavant</string>
     <string name="cv29DirectionReverse">Direcció normal: inversa</string>
-    <string name="cv29AddressSize2bit">Mida de l\'adreça: 2 bits (0-127)</string>
-    <string name="cv29AddressSize4bit">Mida de l\'adreça: 4 bits (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Mida de l\'adreça: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Mida de l\'adreça: 4 bits (1-10239)</string>
     <string name="cv29SpeedTableNo">Taula de velocitat: no s\'utilitza (utilitza CV 2,5 i 6)</string>
     <string name="cv29SpeedTableYes">Taula de velocitat: en ús</string>
     <string name="cv29SpeedToggleDirection">Escriu un valor de %d a CV29 per canviar la direcció.</string>
