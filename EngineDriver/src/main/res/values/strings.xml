@@ -1432,7 +1432,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="DccexSendCommandButtonLabel">Send</string>
     <string name="DccexPreviousCommandButtonLabel">Prior</string>
     <string name="DccexNextCommandButtonLabel">Next</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' and \'&gt;\')</small></small></string>
+    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' &amp; \'&gt;\')</small></small></string>
 <!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 
