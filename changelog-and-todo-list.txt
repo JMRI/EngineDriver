@@ -14,6 +14,8 @@
  * Bug fix for the Close button on the Function Defaults screen
  * Bug Fix for the Default theme on the Function Settings page
  * Minor improvements on screen layouts when using German Langauge
+ * Update to Gradle 8.4.2
+ * Cleanup of the Power screen
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents
