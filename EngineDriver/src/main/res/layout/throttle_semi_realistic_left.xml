@@ -582,7 +582,7 @@
                                                 tools:ignore="TooManyViews" />
                                         </TableRow>
 
-                                        <TableRow>
+                                        <TableRow tools:ignore="TooManyViews">
 
                                             <Button
                                                 style="?attr/ed_fn_button_style"
@@ -735,7 +735,9 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="0dp"
                                     android:layout_centerInParent="true"
-                                    android:layout_weight=".55" />
+                                    android:layout_weight=".55"
+                                    android:importantForAccessibility="no"
+                                    tools:ignore="NestedWeights,ObsoleteLayoutParam" />
 
                             </LinearLayout>
 
@@ -792,7 +794,7 @@
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
                                         android:text="@string/EmergencyStop"
-                                        android:textSize="14dp" />
+                                        android:textSize="14sp" />
 
                                 </RelativeLayout>
 

@@ -1071,8 +1071,8 @@
     <string name="DCCEXrequestLocoIdFailed">Anforderung der Lok-ID fehlgeschlagen</string>
     <string name="cv29SpeedSteps14">Geschwindigkeitsstufen: 14</string>
     <string name="cv29SpeedSteps28">Geschwindigkeitsstufen: 28/128</string>
-    <string name="cv29AddressSize2bit">Adressgröße: 2 Bit (0-127)</string>
-    <string name="cv29AddressSize4bit">Adressgröße: 4 Bit (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Adressgröße: 2 Bit (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Adressgröße: 4 Bit (1-10239)</string>
     <string name="cv29SpeedTableNo">Geschwindigkeitstabelle: Nicht verwendet (verwendet CV 2,5 und 6)</string>
     <string name="cv29SpeedTableYes">Geschwindigkeitstabelle: Im Einsatz</string>
     <string name="cv29SpeedToggleDirection">Schreiben Sie den Wert %d in CV29, um die Richtung umzuschalten.</string>

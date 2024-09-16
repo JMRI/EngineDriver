@@ -95,6 +95,7 @@
     <string name="reverse">Reverse</string>
     <string name="neutral">Neutral</string>
     <string name="brake">Brake</string>
+    <string name="air_reservoir">Air Reservoir</string>
     <string name="load">Load</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>

@@ -785,6 +785,7 @@
 <!--    <string name="toastRecentTurnoutsConfirmClear">Potvrďte, že chcete odebrat všechny nedávné Výhybky OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
 <!--    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>-->
 
+    <string name="infoSaveLogFile">Přihlašování do: %s</string>
     <string name="RecentsNameEditTitle">Název nedávné lokomotivy</string>
     <string name="RecentsNameEditText">Zadejte název lokomotivy</string>
 
@@ -1255,8 +1256,8 @@
     <string name="cv29AnalogueConversionOff">Analogový převod: VYP</string>
     <string name="cv29DirectionForward">Normální směr: Vpřed</string>
     <string name="cv29DirectionReverse">Normální směr: Reverzní</string>
-    <string name="cv29AddressSize2bit">Velikost adresy: 2 bity (0-127)</string>
-    <string name="cv29AddressSize4bit">Velikost adresy: 4 bity (1-10239)</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Velikost adresy: 2 bity (0-127)</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">Velikost adresy: 4 bity (1-10239)</string>
     <string name="cv29SpeedTableNo">Tabulka rychlostí: Nepoužito (používá CV 2,5 &amp; 6)</string>
     <string name="cv29SpeedTableYes">Tabulka rychlosti: Používá se</string>
     <string name="cv29SpeedToggleDirection">Zapište hodnotu %d do CV29 pro přepnutí směru.</string>
