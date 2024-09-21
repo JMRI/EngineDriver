@@ -9,14 +9,10 @@ import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.type.pref_import_type;
 
 public class importServerManualEditTextPreference extends EditTextPreference {
     private final Context context;
-
-    private static final String PREF_IMPORT_ALL_FULL = "Yes";
-    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-    private static final String PREF_IMPORT_ALL_RESET = "-";
-
 
     public importServerManualEditTextPreference(Context context) {
         super(context);
@@ -50,13 +46,13 @@ public class importServerManualEditTextPreference extends EditTextPreference {
 
         switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
-                    prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
+                    prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_FULL).commit();
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
-                    prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
+                    prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_PARTIAL).commit();
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
-                    prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+                    prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
                     break;
 
 //            PreferenceManager prefManager = getPreferenceManager();

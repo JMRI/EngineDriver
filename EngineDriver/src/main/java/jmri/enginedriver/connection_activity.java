@@ -86,7 +86,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 
-import jmri.enginedriver.util.BackgroundImageLoader;
+//import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
@@ -292,7 +292,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.exitDoubleBackButtonInitiated = 0;
             EditText entry = findViewById(R.id.host_ip);
             connected_hostip = entry.getText().toString();
-            if (connected_hostip.trim().length() > 0) {
+            if (!connected_hostip.trim().isEmpty()) {
                 entry = findViewById(R.id.port);
                 try {
                     connected_port = Integer.parseInt(entry.getText().toString());
@@ -367,7 +367,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                 connected_hostip = tm.get("ip_address");
 
-                if (connected_hostip.trim().length() > 0) {
+                if (!connected_hostip.trim().isEmpty()) {
                     try {
                         connected_port = Integer.parseInt(tm.get("port"));
                     } catch (Exception except) {
@@ -973,8 +973,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-//                                File sdcard_path = Environment.getExternalStorageDirectory();
-//                                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
                             File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
                             if (connections_list_file.exists()) {
@@ -1061,11 +1059,6 @@ public class connection_activity extends AppCompatActivity implements Permission
 	 */
 
     private void saveSharedPreferencesToFile() {
-//            navigateToHandler(PermissionsHelper.STORE_PREFERENCES);
-//        saveSharedPreferencesToFileImpl();
-//    }
-//
-//    private void saveSharedPreferencesToFileImpl() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -1074,10 +1067,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-//                    File path = Environment.getExternalStorageDirectory();
-//                    File engine_driver_dir = new File(path, "engine_driver");
-//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
                     importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {

@@ -21,6 +21,7 @@ was rewritten to support AppCompat.V7
 
 package jmri.enginedriver;
 
+import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -66,6 +67,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 
@@ -76,6 +78,7 @@ import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
 
 import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.pref_import_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -97,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private Menu SAMenu;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
-    private boolean overwriteFile = false;
+//    private boolean overwriteFile = false;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
 
@@ -118,10 +121,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private static final String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
     private static final String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
 
-//    private static final String PREF_IMPORT_ALL_FULL = "Yes";
-//    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-//    private static final String PREF_IMPORT_ALL_RESET = "-";
-
     private boolean forceRestartAppOnPreferencesClose = false;
     private int forceRestartAppOnPreferencesCloseReason = 0;
     private boolean forceReLaunchAppOnPreferencesClose = false;
@@ -140,10 +139,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private String priorPrefConsistFollowRuleStyle = "original";
 
     private boolean ignoreThisThrottleNumChange = false;
-
-    private static String[] deviceSoundsEntryValuesArray;
-    private static String[] deviceSoundsEntriesArray; // display version
-    public static InPhoneLocoSoundsLoader iplsLoader;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -176,14 +171,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         //put pointer to this activity's message handler in main app's shared variable (If needed)
 //        mainapp.preferences_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
 
-        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        InPhoneLocoSoundsLoader iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        iplsLoader.getIplsList();
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
@@ -245,7 +241,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
@@ -290,7 +286,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
-            if (mainapp.connectedHostName != null) {
+            if (!mainapp.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 saveSharedPreferencesToFile(prefs, exportedPreferencesFileName, false);
             }
@@ -342,44 +338,34 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
-    private boolean saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
+    private void saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
         Log.d("Engine_Driver", "Settings: Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
-        boolean res = false;
         if (!exportedPreferencesFileName.equals(".ed")) {
-//            File path = Environment.getExternalStorageDirectory();
-//            File engine_driver_dir = new File(path, ENGINE_DRIVER_DIR);
-//            engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//            File dst = new File(path, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
                 overwriteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
-                res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
         } else {
             Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG).show();
         }
-        return res;
     }
 
-    public boolean overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
-//        boolean res = false;
-
+    public void overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
             public void onClick(DialogInterface dialog, int which) {
-//                boolean res = false;
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-//                        res = importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                         importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
-                        overwriteFile = true;
+//                        overwriteFile = true;
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        overwriteFile = false;
+//                        overwriteFile = false;
                         break;
                 }
                 fixAndReloadImportExportPreference(sharedPreferences);
@@ -391,7 +377,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 .setPositiveButton(R.string.yes, dialogClickListener)
                 .setNegativeButton(R.string.cancel, dialogClickListener);
         ab.show();
-        return overwriteFile;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -429,7 +414,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
 
-    private boolean loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
+    private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Settings: Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
@@ -439,7 +424,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     Toast.LENGTH_LONG).show();
         }
         forceRestartApp(forceRestartReason);
-        return res;
     }
 
     private void resetPreferencesDialog() {
@@ -497,8 +481,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
             });
             if (edFiles != null && edFiles.length > 0){
-                for (int i=0; i<edFiles.length; i++) {
-                    delete_settings_file(edFiles[i].getName());
+                for (File edFile : edFiles) {
+                    delete_settings_file(edFile.getName());
                 }
             }
         }
@@ -506,8 +490,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void delete_settings_file(String file_name) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File settings_file = new File(sdcard_path, "engine_driver/" + file_name);
             File settings_file = new File(context.getExternalFilesDir(null), file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
@@ -661,7 +643,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                    dismissDialog(PROGRESS_BAR_TYPE);
 //                } catch (Exception ignored) {
 //                }
-//                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+//                prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
 //                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
 //            }
 //
@@ -757,7 +739,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 String[] filePathColumn = { MediaStore.MediaColumns.DATA };
 
                 // Get the cursor
+                assert selectedImage != null;
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -781,57 +765,47 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
-    protected boolean limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+    protected void limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         Log.d("Engine_Driver", "Settings: limitIntPrefValue()");
-        boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
                 prefText.setText(Integer.toString(maxVal));
-                isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
                 prefText.setText(Integer.toString(minVal));
-                isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            isValid = false;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
         }
-        return isValid;
     }
 
     @SuppressLint("ApplySharedPref")
-    protected boolean limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
+    protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         Log.d("Engine_Driver", "Settings: limitFloatPrefValue()");
-        boolean isValid = true;
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
-            Float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
+            float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
                 prefText.setText(Float.toString(maxVal));
-                isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
                 prefText.setText(Float.toString(minVal));
-                isValid = false;
                 Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            isValid = false;
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
         }
-        return isValid;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -976,7 +950,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         boolean thisEnabled = !prefGamePadType.equals("None");
-        Preference thisPref;
 
         enableDisablePreference(prefScreen, "prefGamePadFeedbackVolume", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamePadSpeedArrowsThrottleRepeatDelay", thisEnabled);
@@ -1097,6 +1070,20 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
     }
 
+    private void showHideSemiRealisticthrottlePreferences(PreferenceScreen prefScreen) {
+        String prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
+
+        boolean enable = prefDisplaySemiRealisticThrottleDecoderBrakeType.equals("esu");
+
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", enable);
+
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu", enable);
+    }
+
     public void loadSharedPreferences(){
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     }
@@ -1108,8 +1095,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String errMsg;
 
         try {
-//                File sdcard_path = Environment.getExternalStorageDirectory();
-//                File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
             File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
             if (connections_list_file.exists()) {
@@ -1123,7 +1108,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         if (host_name.equals(DEMO_HOST)) {
                             foundDemoHost = true;
                         }
-                        if ((!host_name.equals("")) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
+                        if ((!host_name.isEmpty()) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
                             prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename);
                             prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
                             prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
@@ -1173,37 +1158,20 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-        static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
-        static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
+//        static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
+//        static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
         private threaded_application mainapp;  // hold pointer to mainapp
         private SharedPreferences prefs;
 
-//        private int result;                     // set to RESULT_FIRST_USER when something is edited
-
-//        private static final String DEMO_HOST = "jmri.mstevetodd.com";
-//        private String[] prefHostImportExportEntriesFound = {"None"};
-//        private String[] prefHostImportExportEntryValuesFound = {"None"};
-
-//        private static String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
-//        private static String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
-
         private String prefThemeOriginal = "Default";
 
-//        private static final String PREF_IMPORT_ALL_FULL = "Yes";
-//        private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-        private static final String PREF_IMPORT_ALL_RESET = "-";
-
         public String[] advancedPreferences;
-
-//        public static final int RESULT_LOAD_IMG = 1;
 
         protected String defaultName;
         SettingsActivity parentActivity;
 
-//        private static final String TAG = SettingsFragment.class.getName();
         public static final String PAGE_ID = "page_id";
-//        public static final String FRAGMENT_TAG = "my_preference_fragment";
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1406,7 +1374,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveModeHideToolbar", false);
                 }
 
-                if (mainapp.connectedHostName.equals("")) { // option is only available when there is no current connection
+                if (mainapp.connectedHostName.isEmpty()) { // option is only available when there is no current connection
                     parentActivity.getConnectionsList();
                     ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
                     if (preference!=null) {
@@ -1423,15 +1391,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
                 }
 
-                if ((mainapp.connectedHostip == null) || (mainapp.web_server_port == 0)) {
+                if ((!mainapp.connectedHostip.isEmpty()) || (mainapp.web_server_port == 0)) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
                 }
 
-                iplsLoader.getIplsList();
+//                iplsLoader.getIplsList();
                 int ipslCount = mainapp.iplsNames.size();
                 int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
-                deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
-                deviceSoundsEntryValuesArray = new String[deviceSoundsCount + ipslCount];
+                // display version
+                String[] deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
+                String[] deviceSoundsEntryValuesArray = new String[deviceSoundsCount + ipslCount];
                 for (int i=0; i<deviceSoundsCount; i++) {
                     deviceSoundsEntriesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntries)[i];
                     deviceSoundsEntryValuesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntryValues)[i];
@@ -1487,7 +1456,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
-                prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+                prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
 
                 if (!prefs.getString("prefImportExport", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
                     // preference is still confused after a reload or reset
@@ -1506,19 +1475,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         }
 
-        @SuppressLint("ApplySharedPref")
-        static void putObject(SharedPreferences sharedPreferences, final String key, final Object val) {
-            if (val instanceof Boolean)
-                sharedPreferences.edit().putBoolean(key, (Boolean) val).commit();
-            else if (val instanceof Float)
-                sharedPreferences.edit().putFloat(key, (Float) val).commit();
-            else if (val instanceof Integer)
-                sharedPreferences.edit().putInt(key, (Integer) val).commit();
-            else if (val instanceof Long)
-                sharedPreferences.edit().putLong(key, (Long) val).commit();
-            else if (val instanceof String)
-                sharedPreferences.edit().putString(key, ((String) val)).commit();
-        }
+//        @SuppressLint("ApplySharedPref")
+//        static void putObject(SharedPreferences sharedPreferences, final String key, final Object val) {
+//            if (val instanceof Boolean)
+//                sharedPreferences.edit().putBoolean(key, (Boolean) val).commit();
+//            else if (val instanceof Float)
+//                sharedPreferences.edit().putFloat(key, (Float) val).commit();
+//            else if (val instanceof Integer)
+//                sharedPreferences.edit().putInt(key, (Integer) val).commit();
+//            else if (val instanceof Long)
+//                sharedPreferences.edit().putLong(key, (Long) val).commit();
+//            else if (val instanceof String)
+//                sharedPreferences.edit().putString(key, ((String) val)).commit();
+//        }
 
         private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
             Log.d("Engine_Driver", "Settings: showHideThrottleNumberPreference()");
@@ -1539,12 +1508,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
-        }
-
-        private void showHideSimpleThrottleLayoutShowFunctionButtonCountPreference() {
-            boolean enable = !parentActivity.prefThrottleSwitchButtonDisplay;
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSimpleThrottleLayoutShowFunctionButtonCount", !enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleSwitchOption2", !enable);
         }
 
         @SuppressLint("ApplySharedPref")
@@ -1686,6 +1649,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             Activity a = getActivity();
             parentActivity = (SettingsActivity) a;
+            assert parentActivity != null;
             if (parentActivity.prefs==null) {
                 parentActivity.loadSharedPreferences();
             }
@@ -1697,22 +1661,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
             parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
-
             parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
-
             parentActivity.showHideTTSPreferences(getPreferenceScreen());
-
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
-
             parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
-
             parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
             parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
 
             // option is only available when there is no current connection
 
             if (parentActivity.mainapp != null) {
-                if (parentActivity.mainapp.connectedHostName.equals("")) {
+                if (parentActivity.mainapp.connectedHostName.isEmpty()) {
                     parentActivity.getConnectionsList();
                     ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
                     if (preference != null) {
@@ -1731,11 +1691,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public void onViewCreated(View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-
-            // Set the default white background in the view so as to avoid transparency
-//            view.setBackgroundColor(
-//                    ContextCompat.getColor(getContext(), R.color.background_material_light));
-
         }
 
         @Override
@@ -1841,7 +1796,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefPreferencesImportAll":
 //                        String val = sharedPreferences.getString("prefImportServerManual", parentActivity.getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue));
 //                        val = val.trim();
-//                        if (!(sharedPreferences.getString("prefPreferencesImportAll", "").equals(PREF_IMPORT_ALL_RESET))) {
+//                        if (!(sharedPreferences.getString("prefPreferencesImportAll", "").equals(pref_import_type.ALL_RESET))) {
 //                            new preferences.importFromURL().execute(val);
 //                        }
                         break;
@@ -1973,9 +1928,30 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
                         break;
+
+                    case "prefDisplaySemiRealisticThrottleDecoderBrakeType":
+                        parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
+                        break;
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "4");
+                        break;
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "5");
+                        break;
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "6");
+                        break;
+
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "30");
+                        break;
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu":
+                    parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "60");
+                        break;
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "100");
+                        break;
                 }
-
-
             }
         }
     }

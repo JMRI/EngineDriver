@@ -705,6 +705,81 @@
                     android:title="@string/prefSemiRealisticThrottleLoadPcntTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <ListPreference
+                    android:defaultValue="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue"
+                    android:entries="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries"
+                    android:entryValues="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues"
+                    android:key="prefDisplaySemiRealisticThrottleDecoderBrakeType"
+                    android:summary="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary"
+                    android:title="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu"
+                    android:maxLength="2"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu"
+                    android:maxLength="3"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu"
+                    android:maxLength="2"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu"
+                    android:maxLength="3"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu"
+                    android:maxLength="2"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue"
+                    android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
+                    android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu"
+                    android:maxLength="3"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary"
+                    android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>

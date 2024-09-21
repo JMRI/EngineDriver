@@ -1324,6 +1324,30 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Adjust the number of steps in the Load Slider</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Decoder Brake Type</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake fucnctions on the decoder</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">ESU Low Functon Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">ESU - Which Decoder Function to activate at Low Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">ESU Mid Functon Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">ESU - Which Decoder Function to activate at Mid Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">ESU High Functon Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">ESU - Which Decoder Function to activate at High Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue" translatable="false">6</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">ESU Low Brake Value (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU - What Percentage Brake to activate the Low Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue" translatable="false">30</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">ESU Mid Brake alue (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - What Percentage Brake to activate the Mid Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue" translatable="false">60</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU High Brake Value (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - What Percentage Brake to activate the High Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="prefSemiRealisticThrottleLoadPcntTitle">Load Percentage multiplier</string>
     <string name="prefSemiRealisticThrottleLoadPcntSummary">Adjust the effect of the load slider on the speed changes. &gt;100% = more load</string>
     <string name="prefSemiRealisticThrottleLoadPcntDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
@@ -1432,7 +1456,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="DccexSendCommandButtonLabel">Send</string>
     <string name="DccexPreviousCommandButtonLabel">Prior</string>
     <string name="DccexNextCommandButtonLabel">Next</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' and \'&gt;\')</small></small></string>
+    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' &amp; \'&gt;\')</small></small></string>
 <!--    <string name="DccexHideSends">Hide Sends</string>-->
     <string name="DCCEXclearCommands">Clear</string>
 

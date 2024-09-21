@@ -43,14 +43,14 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.tick_type;
-import jmri.enginedriver.type.tts_msg_type;
+//import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_semi_realistic extends throttle {
@@ -89,6 +89,20 @@ public class throttle_semi_realistic extends throttle {
     boolean useNotches = false;
     Button [] bEStops;
 
+    String prefDisplaySemiRealisticThrottleDecoderBrakeType = "none";
+    int prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu = 4;
+    int prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu = 5;
+    int prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu = 6;
+    int prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu = 30;
+    int prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu = 60;
+    int prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu = 100;
+
+    boolean useEsuDecoderBrakes = false;
+    int [] esuBrakeFunctions = {4,5,6};
+    int [] esuBrakeLevels = {30, 60, 100};
+    boolean [] esuBrakeActive = {false, false, false};
+
+
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
         set_function_labels_and_listeners_for_view(whichThrottle);
@@ -113,6 +127,24 @@ public class throttle_semi_realistic extends throttle {
 
         prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
         prefSemiRealisticThrottleDeceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDeceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
+
+        prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
+        if (prefDisplaySemiRealisticThrottleDecoderBrakeType.equals("esu")) { useEsuDecoderBrakes = true;}
+
+        prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
+        prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
+        prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
+        esuBrakeFunctions[0] = prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu;
+        esuBrakeFunctions[1] = prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu;
+        esuBrakeFunctions[2] = prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu;
+
+        prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue));
+        prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue));
+        prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue));
+        esuBrakeLevels[0] = prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu;
+        esuBrakeLevels[1] = prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu;
+        esuBrakeLevels[2] = prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu;
+
     }
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
@@ -322,7 +354,7 @@ public class throttle_semi_realistic extends throttle {
             if ((mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive())) {
                 if (!prefShowAddressInsteadOfName) {
-                    if (!overrideThrottleNames[throttleIndex].equals("")) {
+                    if (!overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = overrideThrottleNames[throttleIndex];
                         bLabelPlainText = overrideThrottleNames[throttleIndex];
                     } else {
@@ -330,7 +362,7 @@ public class throttle_semi_realistic extends throttle {
                         bLabelPlainText = mainapp.consists[throttleIndex].toString();
                     }
                 } else {
-                    if (overrideThrottleNames[throttleIndex].equals("")) {
+                    if (overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
@@ -428,11 +460,13 @@ public class throttle_semi_realistic extends throttle {
         // save part the screen for webview
         if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
             webViewIsOn = true;
+            double height = screenHeight;
             if (!prefIncreaseWebViewSize) {
-                screenHeight *= 0.5; // save half the screen
+                height *= 0.5; // save half the screen
             } else {
-                screenHeight *= 0.4; // save 60% of the screen for web view
+                height *= 0.4; // save 60% of the screen for web view
             }
+            screenHeight = (int) height;
             LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, fullScreenHeight - titleBar - screenHeight);
             webView.setLayoutParams(webViewParams);
         }
@@ -705,6 +739,7 @@ public class throttle_semi_realistic extends throttle {
     protected class BrakeSliderListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
         int lastBrakeSliderPosition;
+        boolean dragInProgress = false;
 
         protected BrakeSliderListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
@@ -720,22 +755,59 @@ public class throttle_semi_realistic extends throttle {
         @Override
         public void onProgressChanged(SeekBar sbBrake, int newSliderPosition, boolean fromUser) {
             mainapp.buttonVibration();
-            setTargetSpeed(whichThrottle, true);
-            setAirValues(whichThrottle);
+            int currentBrakeSliderPosition = getBrakeSliderPosition(whichThrottle);
+            if ( ((currentBrakeSliderPosition >= lastBrakeSliderPosition) || (currentBrakeSliderPosition==0))
+            && (!dragInProgress) ) {
+                setTargetSpeed(whichThrottle, true);
+                setAirValues(whichThrottle);
+                setDecoderBrake(whichThrottle);
+            }
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar sbBrake) {
-            gestureInProgress = false;
+            lastBrakeSliderPosition = getBrakeSliderPosition(whichThrottle);
+            dragInProgress = true;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar sbBrake) {
-            setTargetSpeed(whichThrottle, true);
+            int currentBrakeSliderPosition = getBrakeSliderPosition(whichThrottle);
+            if ( (currentBrakeSliderPosition >= lastBrakeSliderPosition) || (currentBrakeSliderPosition==0)) {
+                setTargetSpeed(whichThrottle, true);
+                setAirValues(whichThrottle);
+                setDecoderBrake(whichThrottle);
+            } else {
+                vsbBrakes[whichThrottle].setProgress(lastBrakeSliderPosition);
+            }
+            dragInProgress = false;
         }
     }
 
-    //Listeners for the brake slider
+    void setDecoderBrake(int whichThrottle) {
+        if (useEsuDecoderBrakes) {
+            double brakePcnt = (double) getBrakeSliderPosition(whichThrottle) / (double) prefSemiRealisticThrottleNumberOfBrakeSteps * 100;
+            int foundBrakeLevel = -1;
+            for (int i = 2; i >= 0; i--) {
+                if ((brakePcnt >= esuBrakeLevels[i]) && (foundBrakeLevel < 0)) {
+                    if (!esuBrakeActive[i]) {
+                        if (!mainapp.function_states[whichThrottle][i]) {
+                            sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", BUTTON_PRESS_MESSAGE_DOWN, false, false, true, FUNCTION_CONSIST_LATCHING_NO, true);
+                        }
+                        esuBrakeActive[i] = true;
+                    }
+                    foundBrakeLevel = i;
+                } else {
+                    if ( (mainapp.function_states[whichThrottle][i]) || (esuBrakeActive[i]) ) {
+                        sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", BUTTON_PRESS_MESSAGE_UP, false, false, true, FUNCTION_CONSIST_LATCHING_NO, true);
+                    }
+                    esuBrakeActive[i] = false;
+                }
+            }
+        }
+    }
+
+    //Listeners for the load slider
     protected class LoadSliderListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
         int lastLoadSliderPosition;
@@ -1116,7 +1188,6 @@ public class throttle_semi_realistic extends throttle {
         // brake and/or air
         if (effectiveBrake > 0) {
             if (targetSpeed==0) {
-                targetSpeed = 0;
                 targetAccelleration = -1 / (1 + (effectiveBrake * effectiveBrake * 0.7 / 0.4));
             } else { // throttle is still active
                 targetSpeed = (int) (Math.round((double) targetSpeed) - (Math.round((double) targetSpeed) * brakeSliderPosition / (double) prefSemiRealisticThrottleNumberOfBrakeSteps) );

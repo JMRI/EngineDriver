@@ -51,6 +51,7 @@ import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.source_type;
+import jmri.enginedriver.type.pref_import_type;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -85,24 +86,11 @@ public class ImportExportPreferences {
     public ArrayList<Integer> recent_turnout_source_list;
     public ArrayList<String> recent_turnout_server_list;
 
-    private static final String PREF_IMPORT_ALL_FULL = "Yes";
-    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-    private static final String PREF_IMPORT_ALL_RESET = "-";
-
-//    private static final int PREF_TYPE_INT = 0;
-//    private static final int PREF_TYPE_BOOLEAN = 1;
-//    private static final int PREF_TYPE_STRING = 2;
-
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
         boolean res = false;
         ObjectOutputStream output = null;
 
-//        File path = Environment.getExternalStorageDirectory();
-//        File engine_driver_dir = new File(path, "engine_driver");
-//        engine_driver_dir.mkdir();            // create directory if it doesn't exist
-//
-//        File dst = new File(path, "engine_driver/"+exportedPreferencesFileName);
         File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
         try {
@@ -136,9 +124,8 @@ public class ImportExportPreferences {
         return res;
     }
 
-    public boolean saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+    public void saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
         Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file");
-        boolean res = false;
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
         if (prefImportExportLocoList) {
@@ -173,7 +160,7 @@ public class ImportExportPreferences {
 //        saveStringListDataToPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences);
 
         if (!exportedPreferencesFileName.equals(".ed")) {
-            res = writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
+            writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
         } else {
             Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
         }
@@ -222,13 +209,10 @@ public class ImportExportPreferences {
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutServer", sharedPreferences);
             }
         }
-
         Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file - Finished");
-        return res;
     }
 
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
-    @SuppressWarnings({ "unchecked" })
     public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d("Engine_Driver", "loadSharedPreferencesFromFile: ImportExportPreferences: Loading saved preferences from file");
         currentlyImporting = true;
@@ -247,22 +231,18 @@ public class ImportExportPreferences {
             String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
             String prefAndroidId = sharedPreferences.getString("prefAndroidId", "");
 
-            String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL);
+            String prefPreferencesImportAll = sharedPreferences.getString("prefPreferencesImportAll", pref_import_type.ALL_FULL);
             String prefTheme = "";
             String prefThrottleScreenType = "Default";
             boolean prefDisplaySpeedButtons = false;
             boolean prefHideSlider = false;
-            if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional prefereneces for restoration
+            if (prefPreferencesImportAll.equals(pref_import_type.ALL_PARTIAL)) { // save some additional prefereneces for restoration
                 prefTheme = sharedPreferences.getString("prefTheme", "");
                 prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "Default");
                 prefDisplaySpeedButtons = sharedPreferences.getBoolean("prefDisplaySpeedButtons", false);
                 prefHideSlider = sharedPreferences.getBoolean("prefHideSlider", false);
             }
 
-
-//            File path = Environment.getExternalStorageDirectory();
-//            File engine_driver_dir = new File(path, "engine_driver");
-//            File src = new File(path, "engine_driver/" + exportedPreferencesFileName);
             File src = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
 
             if (src.exists()) {
@@ -309,7 +289,7 @@ public class ImportExportPreferences {
 
 
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a different to device to where it was originally saved
-                    if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.equals(""))) {
+                    if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.isEmpty())) {
                         prefEdit.putString("throttle_name_preference", currentThrottleNameValue);
                     }
                     prefEdit.putString("prefImportExport", "None");  //reset the preference
@@ -322,13 +302,13 @@ public class ImportExportPreferences {
                     prefEdit.putString("prefPreferencesImportFileName", prefPreferencesImportFileName);  //reset the preference
                     prefEdit.putString("prefAndroidId", prefAndroidId);  //reset the preference
 
-                    if (prefPreferencesImportAll.equals(PREF_IMPORT_ALL_PARTIAL)) { // save some additional preferences for restoration
+                    if (prefPreferencesImportAll.equals(pref_import_type.ALL_PARTIAL)) { // save some additional preferences for restoration
                         prefEdit.putString("prefTheme", prefTheme);
                         prefEdit.putString("prefThrottleScreenType", prefThrottleScreenType);
                         prefEdit.putBoolean("prefDisplaySpeedButtons", prefDisplaySpeedButtons);
                         prefEdit.putBoolean("prefHideSlider", prefHideSlider);
                     }
-                    prefEdit.putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET); // reset the preference
+                    prefEdit.putString("prefPreferencesImportAll", pref_import_type.ALL_RESET); // reset the preference
 
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
@@ -442,9 +422,7 @@ public class ImportExportPreferences {
 
         try {
             // Populate the List with the recent engines saved in a file. This
-            // will be stored in /sdcard/engine_driver/recent_engine_list.txt
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File engine_list_file = new File(sdcard_path + "/" + RECENT_ENGINES_FILENAME);
+            // will be stored in recent_engine_list.txt
             File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
             if (engine_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(
@@ -453,7 +431,7 @@ public class ImportExportPreferences {
                     String line = list_reader.readLine();
                     int splitPos = line.indexOf(':');
                     if (splitPos > 0) {
-                        Integer addr, size, source = 0;
+                        int addr, size, source = 0;
                         String locoName = "";
                         String functions = "";
                         try {
@@ -471,7 +449,6 @@ public class ImportExportPreferences {
                                             functions = "";
                                         } else { // has the function map as well
                                             locoName = args[0];
-                                            functions = "";
                                             StringBuilder tempFunctions = new StringBuilder();
                                             for (int i = 1; i < args.length; i++) {
                                                 tempFunctions.append(args[i]);
@@ -496,7 +473,7 @@ public class ImportExportPreferences {
                             recent_loco_address_size_list.add(size);
                             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
                             String engineAddressString = String.format("%s(%s)", addr, addressLengthString);
-                            if ((locoName.length()==0  || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
+                            if ((locoName.isEmpty() || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
                                 locoName = engineAddressString;
                             }
                             recent_loco_name_list.add(locoName);
@@ -520,8 +497,6 @@ public class ImportExportPreferences {
         Log.d("Engine_Driver", "writeRecentLocosListToFile: ImportExportPreferences: Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
-//        File sdcard_path = Environment.getExternalStorageDirectory();
-//        File engine_list_file = new File(sdcard_path, RECENT_ENGINES_FILENAME);
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
 
         PrintWriter list_output;
@@ -580,9 +555,7 @@ public class ImportExportPreferences {
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             try {
                 // Populate the List with the recent consists saved in a file. This
-                // will be stored in /sdcard/engine_driver/recent_consist_list.txt
-//                File sdcard_path = Environment.getExternalStorageDirectory();
-//                File consist_list_file = new File(sdcard_path + "/" + RECENT_CONSISTS_FILENAME);
+                // will be stored in recent_consist_list.txt
                 File consist_list_file = new File(context.getExternalFilesDir(null), RECENT_CONSISTS_FILENAME);
                 if (consist_list_file.exists()) {
                     BufferedReader list_reader = new BufferedReader(
@@ -625,10 +598,12 @@ public class ImportExportPreferences {
                                     tempConsistLightList_inner));
                             oneConsistHtml.append(addOneConsistAddressHtml(
                                     tempConsistEngineAddressList_inner.get(0),
-                                    tempConsistAddressSizeList_inner.get(0),
-                                    tempConsistDirectionList_inner.get(0),
-                                    tempConsistSourceList_inner.get(0),
-                                    light_follow_type.FOLLOW));
+                                    tempConsistAddressSizeList_inner.get(0)
+//                                    ,
+//                                    tempConsistDirectionList_inner.get(0),
+//                                    tempConsistSourceList_inner.get(0),
+//                                    light_follow_type.FOLLOW)
+                            ));
 
                             boolean foundOne = true;
                             while (foundOne) {
@@ -653,10 +628,12 @@ public class ImportExportPreferences {
                                 int lastItem = tempConsistEngineAddressList_inner.size()-1;
                                 oneConsistHtml.append(addOneConsistAddressHtml(
                                         tempConsistEngineAddressList_inner.get(lastItem),
-                                        tempConsistAddressSizeList_inner.get(lastItem),
-                                        tempConsistDirectionList_inner.get(lastItem),
-                                        tempConsistSourceList_inner.get(lastItem),
-                                        tempConsistLightList_inner.get(lastItem)));
+                                        tempConsistAddressSizeList_inner.get(lastItem)
+//                                        ,
+//                                        tempConsistDirectionList_inner.get(lastItem),
+//                                        tempConsistSourceList_inner.get(lastItem),
+//                                        tempConsistLightList_inner.get(lastItem)
+                                ));
                             }
                             if (splitLine.length < 3) {  // old format - need to add some dummy roster names
                                 for (int j = 0; j < tempConsistEngineAddressList_inner.size(); j++) {
@@ -669,7 +646,7 @@ public class ImportExportPreferences {
                             consistSourceList.add(tempConsistSourceList_inner);
                             consistRosterNameList.add(tempConsistRosterNameList_inner);
                             consistLightList.add(tempConsistLightList_inner);
-                            if (consistName.length() == 0) {
+                            if (consistName.isEmpty()) {
                                 consistName = oneConsist.toString();
                             }
                             consistNameList.add(consistName);
@@ -717,16 +694,14 @@ public class ImportExportPreferences {
         return rslt;
     }
 
-    public String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
-        String rslt = "<span>" + addr.toString()
+//    public String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
+    public String addOneConsistAddressHtml(Integer addr, int size) {
+        return "<span>" + addr.toString()
                 +"<small><small>("+ (size==0 ? "S":"L") +")"  + "</small></small>"
 //                + "<small><small>" + (dir==0 ? "▲":"▼") + "</small></small>"
 //                +  (light==light_follow_type.OFF ? "○": (light==light_follow_type.FOLLOW ? "●":"<small><small>?</small></small>"))
 //                +  getSourceHtmlString(source)
                 + " &nbsp;</span>";
-
-        return rslt;
-
     }
 
     public int addCurrentConsistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
@@ -800,8 +775,6 @@ public class ImportExportPreferences {
         Log.d("Engine_Driver", "writeRecentConsistsListToFile: ImportExportPreferences: Writing recent consists list to file");
 
         // write it out from the saved preferences to the file
-//        File sdcard_path = Environment.getExternalStorageDirectory();
-//        File consist_list_file = new File(sdcard_path, RECENT_CONSISTS_FILENAME);
         File consist_list_file = new File(context.getExternalFilesDir(null), RECENT_CONSISTS_FILENAME);
 
         PrintWriter list_output;
@@ -958,8 +931,6 @@ public class ImportExportPreferences {
     public void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
 //        Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: Writing recent turnouts list to file");
 
-//        File sdcard_path = Environment.getExternalStorageDirectory();
-//        File engine_list_file = new File(sdcard_path,RECENT_TURNOUTS_FILENAME);
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
         PrintWriter list_output;
@@ -1000,8 +971,6 @@ public class ImportExportPreferences {
     public boolean deleteFile(String filename) {
         Log.d("Engine_Driver", "deleteRecentTurnoutsListFile: ImportExportPreferences: delete file");
 
-//        File sdcard_path = Environment.getExternalStorageDirectory();
-//        File file = new File(sdcard_path, filename);
         File file = new File(context.getExternalFilesDir(null), filename);
         if (file.exists()) {
             try {
@@ -1020,9 +989,7 @@ public class ImportExportPreferences {
 //        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
-            // will be stored in /sdcard/engine_driver/recent_engine_list.txt
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File turnouts_list_file = new File(sdcard_path + "/" + RECENT_TURNOUTS_FILENAME);
+            // will be stored in recent_engine_list.txt
             File turnouts_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
             if (turnouts_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(

@@ -307,11 +307,13 @@ public class throttle_full extends throttle {
         // save part the screen for webview
         if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
             webViewIsOn = true;
+            double height = screenHeight;
             if (!prefIncreaseWebViewSize) {
-                screenHeight *= 0.5; // save half the screen
+                height *= 0.5; // save half the screen
             } else {
-                screenHeight *= 0.4; // save 60% of the screen for web view
+                height *= 0.4; // save 60% of the screen for web view
             }
+            screenHeight = (int) height;
             LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
             webView.setLayoutParams(webViewParams);
         }

@@ -178,6 +178,7 @@ import jmri.enginedriver.util.ShakeDetector;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.type.pref_import_type;
 
 public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
 
@@ -357,9 +358,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean prefSelectiveLeadSoundF1 = false;
     private boolean prefSelectiveLeadSoundF2 = false;
 
-    private static final int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
-    private static final int BUTTON_PRESS_MESSAGE_UP = 0;
-    private static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
+    protected static final int BUTTON_PRESS_MESSAGE_TOGGLE = -1;
+    protected static final int BUTTON_PRESS_MESSAGE_UP = 0;
+    protected static final int BUTTON_PRESS_MESSAGE_DOWN = 1;
 
     public interface consist_function_is {
         Integer HEADLIGHT = 1;
@@ -369,9 +370,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String FUNCTION_CONSIST_LATCHING = "latching";
     private static final String FUNCTION_CONSIST_NOT_LATCHING = "none";
 
-    private static final int FUNCTION_CONSIST_LATCHING_NA = -1;
-    private static final int FUNCTION_CONSIST_LATCHING_NO = 1;
-    private static final int FUNCTION_CONSIST_LATCHING_YES = 2;
+    protected static final int FUNCTION_CONSIST_LATCHING_NA = -1;
+    protected static final int FUNCTION_CONSIST_LATCHING_NO = 1;
+    protected static final int FUNCTION_CONSIST_LATCHING_YES = 2;
 
     protected InPhoneLocoSoundsLoader iplsLoader;
 
@@ -638,9 +639,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String EXTERNAL_PREFERENCES_IMPORT_FILENAME = "auto_preferences.ed";
     private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
     private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
-    private static final String PREF_IMPORT_ALL_FULL = "Yes";
-    private static final String PREF_IMPORT_ALL_PARTIAL = "No";
-    private static final String PREF_IMPORT_ALL_RESET = "-";
 
     protected LinearLayout screenNameLine;
     protected Toolbar toolbar;
@@ -2167,11 +2165,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
-
-//        if (mainapp != null) {
-//            mainapp.throttleVibration(speed,lastSpeed,true);
-//        }
-
         doLocoSound(whichThrottle);
     }
 
@@ -2538,10 +2531,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Button bSel = bSels[whichThrottle];
         boolean tIsEnabled = lls[whichThrottle].isEnabled();
         int dir = dirs[whichThrottle];
-
-//        if ((kidsTimerRunning == threaded_application.KIDS_TIMER_RUNNING)
-//                && (!prefKidsTimerEnableReverse)) {
-//        }
 
         if (getConsist(whichThrottle).isActive()) {
             boolean dirChangeAllowed = tIsEnabled && isChangeDirectionAllowed(whichThrottle);
@@ -4902,7 +4891,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     }
 
-    private void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching) {
+    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching) {
+        sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, false);
+    }
+    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean force) {
         Consist con;
         con = mainapp.consists[whichThrottle];
 
@@ -4916,7 +4908,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             tempPrefConsistFollowRuleStyle = consist_function_rule_style_type.ORIGINAL;
         }
 
-        if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
+        if (force) { // only used for the Sem-Realistic Throttle - ESU Decoder Brakes
+            int newFnState = (buttonPressMessageType == BUTTON_PRESS_MESSAGE_UP) ? 0 : 1;
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + "*", function, newFnState);
+
+        } else if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
 
             String addr = "";
 //            if ( (leadOnly) || (mainapp.prefOverrideWiThrottlesFunctionLatching) )
@@ -7932,17 +7928,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 String urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_FULL).commit();
+                        prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_FULL).commit();
                         loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, restart_reason_type.IMPORT_SERVER_AUTO);
 
                         break;
                     case DialogInterface.BUTTON_NEUTRAL:
-                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_PARTIAL).commit();
+                        prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_PARTIAL).commit();
                         loadSharedPreferencesFromFileImpl(prefs, urlPreferencesFileName, deviceId, restart_reason_type.IMPORT_SERVER_AUTO);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-                        prefs.edit().putString("prefPreferencesImportAll", PREF_IMPORT_ALL_RESET).commit();
+                        prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
                         break;
                 }
                 mainapp.buttonVibration();

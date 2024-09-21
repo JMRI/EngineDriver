@@ -357,7 +357,7 @@ public class select_loco extends AppCompatActivity {
         if (prefRosterRecentLocoNames) {
             if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
-                    if (engineName.equals("")) {
+                    if (engineName.isEmpty()) {
                         if (mainapp.roster_entries.get(rostername).equals(engineAddress)) {
                             RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
                             if (rosterentry == null) return "";
@@ -575,7 +575,7 @@ public class select_loco extends AppCompatActivity {
             }
         }
 
-        if (!roster_name.equals("")) {// add roster selection info if present
+        if (!roster_name.isEmpty()) {// add roster selection info if present
             sAddr += "<;>" + roster_name;
         }
 
@@ -599,9 +599,6 @@ public class select_loco extends AppCompatActivity {
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
-//            if (numberInConsist < 0) { // don't save the recents if a recent consist was selected
-//                saveRecentLocosList(bUpdateList);
-//            }
             result = RESULT_OK;
             endThisActivity();
 
@@ -975,10 +972,12 @@ public class select_loco extends AppCompatActivity {
                 int lastItem = tempConsistEngineAddressList_inner.size() - 1;
                 oneConsistHtml.append(importExportPreferences.addOneConsistAddressHtml(
                         tempConsistEngineAddressList_inner.get(lastItem),
-                        tempConsistAddressSizeList_inner.get(lastItem),
-                        tempConsistDirectionList_inner.get(lastItem),
-                        tempConsistSourceList_inner.get(lastItem),
-                        tempConsistLightList_inner.get(lastItem)));
+                        tempConsistAddressSizeList_inner.get(lastItem)
+//                        ,
+//                        tempConsistDirectionList_inner.get(lastItem),
+//                        tempConsistSourceList_inner.get(lastItem),
+//                        tempConsistLightList_inner.get(lastItem)
+                ));
             }
 
             // check if we already have it
@@ -1372,8 +1371,6 @@ public class select_loco extends AppCompatActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearConsistsList();
-//                            onCreate(null);
-//                            onResume();
                             recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -1628,13 +1625,6 @@ public class select_loco extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-//                    try {
-//                        InputMethodManager imm =
-//                                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//                    } catch (Exception e) {
-//                        Log.e("Engine_Driver", "select_loco: onEditorAction(): onCreate: unable to hide the soft keyboard");
-//                    }
                     hideSoftKeyboard(v);
                     return true;
                 } else
