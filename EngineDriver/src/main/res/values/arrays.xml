@@ -87,6 +87,15 @@
         <item>9</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>None</item>
+        <item>ESU (3 Brake Levels)</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>none</item>
+        <item>esu</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>none</item>
         <item>Top</item>

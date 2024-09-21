@@ -38,17 +38,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class power_control extends AppCompatActivity {
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Drawable power_on_drawable;  //hold background graphics for power button
-    private Drawable power_on_and_off_drawable;
-    private Drawable power_off_drawable;
-    private Drawable power_unknown_drawable;
-    private Menu PMenu;
+    private Drawable powerOnDrawable;  //hold background graphics for power button
+    private Drawable powerOnAndOffDrawable;
+    private Drawable powerOffDrawable;
+    private Drawable powerUnknownDrawable;
+    private Menu menu;
 
     static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX"};
     private final Button[] dccExTrackPowerButton = {null, null, null, null, null, null, null, null};
@@ -58,14 +60,11 @@ public class power_control extends AppCompatActivity {
 
     float vn = 4; // DCC-EC Version number
 
-    private Toolbar toolbar;
-    private LinearLayout statusLine;
-
     //Handle messages from the communication thread back to this thread (responses from withrottle)
     @SuppressLint("HandlerLeak")
-    class power_control_handler extends Handler {
+    class PowerControlMessageHandler extends Handler {
 
-        public power_control_handler(Looper looper) {
+        public PowerControlMessageHandler(Looper looper) {
             super(looper);
         }
 
@@ -169,7 +168,7 @@ public class power_control extends AppCompatActivity {
     //Set the button text based on current power state  TODO: improve code 
     public void refresh_power_control_view() {
         Button b = findViewById(R.id.power_control_button);
-        Drawable currentImage = power_unknown_drawable;
+        Drawable currentImage = powerUnknownDrawable;
         if (!mainapp.isPowerControlAllowed()) {
             b.setEnabled(false);
             TextView tv = findViewById(R.id.power_control_text);
@@ -178,26 +177,27 @@ public class power_control extends AppCompatActivity {
             b.setEnabled(true);
             switch (mainapp.power_state) {
                 case "1":
-                    currentImage = power_on_drawable;
+                    currentImage = powerOnDrawable;
                     break;
                 case "2":
                     if (!mainapp.isDCCEX) {
-                        currentImage = power_unknown_drawable;
+                        currentImage = powerUnknownDrawable;
                     } else {
-                        currentImage = power_on_and_off_drawable;
+                        currentImage = powerOnAndOffDrawable;
                     }
                     break;
                 default:
-                    currentImage = power_off_drawable;
+                    currentImage = powerOffDrawable;
                     break;
             }
         }
 
-        if (PMenu != null) {
-            mainapp.displayEStop(PMenu);
+        if (menu != null) {
+            mainapp.displayEStop(menu);
         }
 
-        b.setBackgroundDrawable(currentImage);
+//        b.setBackgroundDrawable(currentImage);
+        b.setBackground(currentImage);
     }
 
     /**
@@ -216,19 +216,19 @@ public class power_control extends AppCompatActivity {
         setContentView(R.layout.power_control);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.power_control_msg_handler = new power_control_handler(Looper.getMainLooper());
+        mainapp.power_control_msg_handler = new PowerControlMessageHandler(Looper.getMainLooper());
 
         // request this as early as possible
         if (mainapp.isDCCEX) mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
         try {
-            vn = Float.valueOf(mainapp.DccexVersion);
+            vn = Float.parseFloat(mainapp.DccexVersion);
         } catch (Exception ignored) { } // invalid version
 
-        power_on_drawable = getResources().getDrawable(R.drawable.power_green);
-        power_on_and_off_drawable = getResources().getDrawable(R.drawable.power_green_red);
-        power_off_drawable = getResources().getDrawable(R.drawable.power_red);
-        power_unknown_drawable = getResources().getDrawable(R.drawable.power_yellow);
+        powerOnDrawable = getResources().getDrawable(R.drawable.power_green);
+        powerOnAndOffDrawable = getResources().getDrawable(R.drawable.power_green_red);
+        powerOffDrawable = getResources().getDrawable(R.drawable.power_red);
+        powerUnknownDrawable = getResources().getDrawable(R.drawable.power_yellow);
 
 
         //Set the button callbacks, storing the command to pass for each
@@ -237,7 +237,7 @@ public class power_control extends AppCompatActivity {
         b.setOnClickListener(click_listener);
 
         Button closeButton = findViewById(R.id.power_button_close);
-        close_button_listener close_click_listener = new close_button_listener();
+        CloseButtonClickListener close_click_listener = new CloseButtonClickListener();
         closeButton.setOnClickListener(close_click_listener);
 
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
@@ -297,11 +297,11 @@ public class power_control extends AppCompatActivity {
         }
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
-        toolbar = findViewById(R.id.toolbar);
-        statusLine = findViewById(R.id.status_line);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_power_control),
@@ -319,10 +319,10 @@ public class power_control extends AppCompatActivity {
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
-        if (PMenu != null) {
-            mainapp.displayEStop(PMenu);
-            mainapp.displayFlashlightMenuButton(PMenu);
-            mainapp.setFlashlightButton(PMenu);
+        if (menu != null) {
+            mainapp.displayEStop(menu);
+            mainapp.displayFlashlightMenuButton(menu);
+            mainapp.setFlashlightButton(menu);
         }
         //update power state
         refresh_power_control_view();
@@ -345,13 +345,13 @@ public class power_control extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu myMenu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.power_menu, menu);
-        PMenu = menu;
+        inflater.inflate(R.menu.power_menu, myMenu);
+        menu = myMenu;
         mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(PMenu);
-        mainapp.setFlashlightButton(PMenu);
+        mainapp.displayFlashlightMenuButton(menu);
+        mainapp.setFlashlightButton(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -364,12 +364,12 @@ public class power_control extends AppCompatActivity {
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, PMenu);
+            mainapp.toggleFlashlight(this, menu);
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.power_layout_button) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(PMenu);
+                mainapp.powerControlNotAllowedDialog(menu);
             } else {
                 mainapp.powerStateMenuButton();
             }
@@ -402,7 +402,7 @@ public class power_control extends AppCompatActivity {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    public class close_button_listener implements View.OnClickListener {
+    public class CloseButtonClickListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
             finish();

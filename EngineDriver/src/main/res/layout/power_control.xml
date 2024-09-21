@@ -12,6 +12,7 @@
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/power_control_label" />
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

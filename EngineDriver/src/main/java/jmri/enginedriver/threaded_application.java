@@ -703,8 +703,6 @@ public class threaded_application extends Application {
         function_consist_locos = new LinkedHashMap<>();
         function_consist_latching = new LinkedHashMap<>();
         try {
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File settings_file = new File(sdcard_path + "/engine_driver/function_settings.txt");
             File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
@@ -2304,16 +2302,8 @@ public class threaded_application extends Application {
                 && (prefForcedRestartReason != restart_reason_type.SHAKE_THRESHOLD));
     }
 
-    // saveSharedPreferencesToFile if the necessary permissions have already been granted, otherwise do nothing.
-    // use this method if exiting since we don't want to prompt for permissions at this point if they have not been granted
     public void saveSharedPreferencesToFileIfAllowed() {
-//        if (PermissionsHelper.getInstance().isPermissionGranted(threaded_application.context, PermissionsHelper.STORE_PREFERENCES)) {
-//            saveSharedPreferencesToFileImpl();
-////        }
-//    }
-//
-//    private void saveSharedPreferencesToFileImpl() {
-        Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileImpl: start");
+        Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -2322,10 +2312,6 @@ public class threaded_application extends Application {
                 String exportedPreferencesFileName = this.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-//                    File path = Environment.getExternalStorageDirectory();
-//                    File engine_driver_dir = new File(path, "engine_driver");
-//                    engine_driver_dir.mkdir();            // create directory if it doesn't exist
-
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                     importExportPreferences.saveSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
                 }
@@ -2738,11 +2724,6 @@ public class threaded_application extends Application {
                     gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
                     gamePadDeviceNames[gamepadCount - 1] = eventDeviceName;
                     whichGamePadDeviceId = gamepadCount - 1;
-
-//                    setGamepadTestMenuOption(TMenu,gamepadCount);
-//
-//                    start_gamepad_test_activity(gamepadCount - 1);
-
                 }
 
                 for (i = 0; i < numThrottles; i++) {
