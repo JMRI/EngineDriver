@@ -85,7 +85,13 @@ public class LocaleHelper {
     @TargetApi(17)
     private static Context updateResources(Context context, String language) {
 
-        Locale locale = new Locale(language);
+        String [] languageAndCountry = language.split("_");
+        Locale locale;
+        if (languageAndCountry.length==1) {
+            locale = new Locale(language);
+        } else {
+            locale = new Locale(languageAndCountry[0], languageAndCountry[1]);
+        }
         Locale.setDefault(locale);
 
         Configuration configuration = context.getResources().getConfiguration();

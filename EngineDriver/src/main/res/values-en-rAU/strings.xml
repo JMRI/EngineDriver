@@ -13,12 +13,8 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
-<resources>
-    <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to anti-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
-    <string name="prefEsuMc2EndStopDirectionChangeSummary">Allow Loco direction to change when control knob at anti-clockwise end-stop position.</string>
-
-    <string name="app_name_turnouts">Points</string>
-    <string name="app_name_turnouts_long">Engine Driver - Points</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name_turnouts">Engine Driver - Points</string>
     <string name="app_name_turnouts_short">Points</string>
 
     <string name="turnouts">Points</string>
@@ -55,9 +51,61 @@
 
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want remove all the Recent Points</string>
 
-    <string name="prefPauseAlternateButtonSummary">Show alternate \'Pause\' button near the \'Stop\' button. (Vertical layouts only)</string>
-
     <string name="prefSortOrderTurnoutsTitle">Points sort order</string>
     <string name="prefSortOrderTurnoutsSummary">Order that the Points entries will appear, by default, each time you start Engine Driver</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Always show both the Throw and Close buttons for Points, never the Toggle button.</string>
+
+<!--    Consist == MU  -->
+
+    <string name="app_name_consist_functions">Consist (MU) Function Settings</string>
+    <string name="app_name_ConsistEdit">Consist (MU) Edit</string>
+    <string name="app_name_ConsistLightsEdit">Consist (MU) Lights</string>
+    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist (MU). Long press a loco to remove it from the consist (MU). Press Back Arrow or Close when done.</string>
+    <string name="consist_list_label">All Locos in Consist (MU)</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists (MUs)</string>
+
+    <string name="edit_consist_menu">\≡ Edit Consist (MU)</string>
+    <string name="edit_consist_lights_throttle_1">Edit Consist (MU) Lights Throttle 1</string>
+    <string name="edit_consist_lights_throttle_2">Edit Consist (MU) Lights Throttle 2</string>
+    <string name="edit_consist_lights_throttle_3">Edit Consist (MU) Lights Throttle 3</string>
+    <string name="edit_consist_lights_throttle_4">Edit Consist (MU) Lights Throttle 4</string>
+    <string name="edit_consist_lights_throttle_5">Edit Consist (MU) Lights Throttle 5</string>
+    <string name="edit_consist_lights_throttle_6">Edit Consist (MU) Lights Throttle 6</string>
+    <string name="edit_consist_throttle_1">Edit Consist (MU) Throttle 1</string>
+    <string name="edit_consist_throttle_2">Edit Consist (MU) Throttle 2</string>
+    <string name="edit_consist_throttle_3">Edit Consist (MU) Throttle 3</string>
+    <string name="edit_consist_throttle_4">Edit Consist (MU) Throttle 4</string>
+    <string name="edit_consist_throttle_5">Edit Consist (MU) Throttle 5</string>
+    <string name="edit_consist_throttle_6">Edit Consist Throttle 6</string>
+    <string name="functionConsistHeader">Consist (MU) Function Actions</string>
+    <string name="functionConsistHelpText">Only used for the \'Special\' consist (MU) function following options. Select how the text of each function will be searched for in the function labels for each loco in the consist (MU).</string>
+    <string name="functionConsistSettings">Consist (MU) Function Settings</string>
+    <string name="LocoSelectMethodRecentConsist">Recent Consist (MU)</string>
+
+    <string name="prefConsistFollowAction1Summary">Which locos in the consist (MU) should react to the found headlight functions.</string>
+    <string name="prefConsistFollowAction2Summary">Which locos in the consist (MU) should react to the found functions.</string>
+    <string name="prefConsistFollowAction3Summary">Which locos in the consist (MU) should react to the found functions.</string>
+    <string name="prefConsistFollowAction4Summary">Which locos in the consist (MU) should react to the found functions.</string>
+    <string name="prefConsistFollowAction5Summary">Which locos in the consist (MU) should react to the found functions.</string>
+    <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist (MU) should react to the function buttons if none of the rules below are meet.</string>
+    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">Which style of rules to follow in a consist (MU) when function buttons are pressed.\nNote: If \'Use Default function labels\' is enabled, \'Special...\' will also apply to the lead (or only) loco.</string>
+    <string name="prefConsistFollowRuleStyleTitle">Consist (MU) Functions - Follow Rule Style</string>
+    <string name="prefConsistFollowString1Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise the \'Headlight\' function (normally F0).</string>
+    <string name="prefConsistFollowString2Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise a similar function.</string>
+    <string name="prefConsistFollowString3Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise a similar function.</string>
+    <string name="prefConsistFollowString4Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise a similar function.</string>
+    <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise a similar function.</string>
+    <string name="prefConsistFollowSummary">Options for how functions will behave in a Consist (MU).</string>
+    <string name="prefConsistFollowTitle">Consist (MU) Function Follow Preferences</string>
+    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist (MU) with a long click on the Loco Select button.</string>
+    <string name="prefConsistLightsLongClickTitle">Control Consist (MU) lights on long click</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">Control Consist (MU) lights on long click</string>
+    <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist (MU).  (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
+    <string name="recent_consists">Select from Recent Consists (MUs)</string>
+    <string name="RecentConsistsNameEditText">Enter a name for the Consist (MU)</string>
+    <string name="RecentConsistsNameEditTitle">Recent Consist (MU) Name</string>
+    <string name="roster_list">Select from Roster / Consist (MU) Entries</string>
+    <string name="toastRecentConsistCleared">Consist (MU) removed from list</string>
+<!--    <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists (MUs) by pressing the 'Clear List' button AGAIN.</string>-->
+
 </resources>

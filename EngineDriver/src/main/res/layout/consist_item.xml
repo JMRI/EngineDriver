@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
 
     <TextView
         android:id="@+id/con_loco_name"
@@ -32,6 +34,7 @@
         <TextView
             android:id="@+id/con_lead_label"
             style="?attr/list_id_style"
+            android:textColor="?android:attr/textColorSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="lead"
@@ -40,6 +43,7 @@
         <TextView
             android:id="@+id/con_trail_label"
             style="?attr/list_id_style"
+            android:textColor="?android:attr/textColorSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="trail"
@@ -66,6 +70,7 @@
         <TextView
             android:id="@+id/con_facing_label"
             style="?attr/list_id_style"
+            android:textColor="?android:attr/textColorSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/editConsistLocoFacingLabel" />

@@ -71,7 +71,7 @@
         <item tools:ignore="TypographyDashes">Switching - (2)</item>
         <item tools:ignore="TypographyDashes">Switching - Gauche (1)</item>
         <item tools:ignore="TypographyDashes">Switching - Droite (1)</item>
-        <item tools:ignore="TypographyDashes">Switching - Horizontal (3)</item>
+        <item tools:ignore="TypographyDashes">Switching - horizontale (1-3)</item>
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
@@ -84,7 +84,7 @@
         <item>Format 24 heures</item>
     </string-array>
 
-    <string-array name="prefGamePadKeyEntries">
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item>Arrêter tout</item>
         <item>Arrêt</item>
         <item>Avant</item>
@@ -132,11 +132,11 @@
         <item>Klaxon (IPLS)</item>
         <item>Klaxon court (IPLS)</item>
         <item>Annonce vitesse actuelle</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>Neutre</item>
+        <item>Augmenter le frein</item>
+        <item>Diminuer le frein</item>
+        <item>Augmenter la charge</item>
+        <item>Diminuer la charge</item>
     </string-array>
 
 <!--
@@ -194,12 +194,17 @@
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Utiliser les paramètres globaux du téléphone</item>
         <item>Anglais (Etats-Unis) - Engine Driver\'s Standard</item>
+        <item>Anglais (Australie)</item>
+        <item>Anglais (Canada)</item>
+        <item>Anglais (Nouvelle-Zélande)</item>
+        <item>Anglais (Royaume-Uni)</item>
         <item>Italien</item>
         <item>Portugais</item>
         <item>Allemand</item>
         <item>Espanol</item>
         <item>Catalan</item>
         <item>Français</item>
+        <item>Français (Canada)</item>
         <item>Tchèque</item>
     </string-array>
 
@@ -208,7 +213,7 @@
         <item>Correspondance exacte du texte - loco de tete toujours active, les autres locos suivent les règles suivantes</item>
         <item>Correspondance complete - Fonctions appliquees a toutes les locos en cas de correspondance exacte des libelles</item>
         <item>Correspondance partielle - Fonctions appliquees a toutes les locos en cas de correspondance partielle des libelles</item>
-        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
+        <item>Le partiel spécial contient uniquement - Activé si l\'étiquette de fonction contient l\'étiquette par défaut</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
@@ -234,26 +239,6 @@
         <item>5 minutes</item>
         <item>10 minutes</item>
         <item>Session terminée</item>
-    </string-array>
-
-    <string-array name="prefGamePadTypeEntries">  <!-- display version -->
-        <item >Aucun</item>
-        <item >Mocute iCade</item>
-        <item >Mocute iCade+DPAD</item>
-        <item >Mocute MTK</item>
-        <item >Mocute Android-Game</item>
-        <item >Mocute Android-Game</item>
-        <item >MagicseeR1 Android-Game B</item>
-        <item >MagicseeR1 Android-Mode A</item>
-        <item >MagicseeR1 Android-Mode C</item>
-        <item >Flydigi Wee 2</item>
-        <item >Utopia 360 Android-C</item>
-        <item >Auvisio Android-B</item>
-        <item >Auvisio Android-B - ↺ DPAD</item>
-        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +4x4 Hat +Encoder)</item>
-        <item tools:ignore="TypographyDashes">ESP32 DIY (Btns 0-9 +3x4 Hat +Encoder)</item>
-        <item >Keyboard</item>
-        <item >USB Volume Dial</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">

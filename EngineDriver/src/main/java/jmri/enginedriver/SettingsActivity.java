@@ -1351,6 +1351,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.mainapp.prefAlwaysUseFunctionsFromServer = sharedPreferences.getBoolean("prefAlwaysUseFunctionsFromServer",
                                 getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
                         break;
+                    case "prefSortOrderRoster":
+                        parentActivity.mainapp.getDefaultSortOrderRoster();
+                        break;
 
                 }
             }

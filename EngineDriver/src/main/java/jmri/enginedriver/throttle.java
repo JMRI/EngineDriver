@@ -163,6 +163,7 @@ import jmri.enginedriver.type.direction_button;
 import jmri.enginedriver.type.function_button;
 
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
@@ -5784,7 +5785,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         setContentView(mainapp.throttleLayoutViewId);
 
         getCommonPrefs(true); // get all the common preferences
-
+        mainapp.getDefaultSortOrderRoster();
         setThrottleNumLimits();
 
         getDirectionButtonPrefs();
@@ -6386,7 +6387,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         getCommonPrefs(false);
         getDirectionButtonPrefs();
+
         setThrottleNumLimits();
+
 
         clearVolumeAndGamepadAdditionalIndicators();
 
@@ -8432,6 +8435,5 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 gamepadRepeatUpdateHandler.postDelayed(new SemiRealisticGamepadRptUpdater(whichThrottle, stepMultiplier), REP_DELAY);
             }
         }
-
     }
 }

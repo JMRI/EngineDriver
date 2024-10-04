@@ -1,0 +1,548 @@
+<!--
+      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+      original translation by Alain Carasso
+-->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="about">À propos</string>
+
+
+    <string name="app_description">Engine Driver - Application pour Android. Cette application peut se connecter à un serveur JMRI, DCC-EX, MRC ou DigiTrax WiThrottle, et à son tour contrôler vos locomotives. La vitesse, la direction et jusqu\'à 32 fonctions DCC sont prises en charge pour une ou deux locomotives.</string>
+
+    <string name="app_name_about">À propos</string>
+    <string name="app_name_connect">Connexion au Serveur - Engine Driver</string>
+    <string name="app_name_consist_functions">Paramètres des fonctions d\'unités multiples</string>
+    <string name="app_name_ConsistEdit">Édition des unités multipes</string>
+    <string name="app_name_ConsistLightsEdit">Phares des unités multiples</string>
+    <string name="app_name_device_sounds_settings">Sons des locomotives via le téléphone</string>
+    <string name="app_name_functions">Paramètres des fonctions par défaut - Engine Driver</string>
+    <string name="app_name_gamepad_test">Manette de jeu - Engine Driver</string>
+
+    <string name="app_name_log_viewer">Visionneuse du journal</string>
+    <string name="app_name_power_control">Contrôle de l\'alimentation - Engine Driver</string>
+
+    <string name="app_name_reconnect_status">État de la reconnexion</string>
+    <string name="app_name_reconnect_status_long">État de la reconnexion - Engine Driver</string>
+
+    <string name="app_name_select_loco">Sélection / Libération de locomotive - Engine Driver</string>
+    <string name="app_name_throttle">Régulateur - Engine Driver</string>
+    <string name="app_name_throttle_kids_enabled">Régulateur - Minuterie prête</string>
+    <string name="app_name_throttle_kids_ended">Régulateur - Minuterie terminée</string>
+    <string name="app_name_throttle_kids_running">Régulateur - %1$s secondes restantes</string>
+    <string name="app_name_throttle_short">Régulateur</string>
+    <string name="app_name_turnouts_short">Aiguillages</string>
+    <string name="app_name_turnouts">Aiguillages - Engine Driver</string>
+
+
+    <string name="ca_recent_conn_notice">Les connexions récentes ne sont pas disponibles - Carte SD introuvable.</string>
+    <string name="cancel">Annuler</string>
+    <string name="ClearConnList">Effacer la liste des locomotives récemment utilisées</string>
+    <string name="clearLocoList">Effacer la liste</string>
+    <string name="close_button">Fermer</string>
+
+    <string name="consist_help">Choisir une locomotive pour définir sa direction de marche en fonction de la locomotive de tête. Un appui long supprime la locomotive de l\'unité multiple.  Appuyer sur la flèche de retour une fois terminé.</string>
+
+    <string name="consist_list_label">Unité multiple de tête</string>
+
+    <string name="ConsistEditLabelLead">TÊTE</string>
+
+    <string name="consistLights_help">Cliquer sur une locomotive pour alterner les phares entre \'Off\' et \'Selon la touche de fonction\'.\n\nUn clic prolongé sur une locomotive force l\'état des phares à \'Off\' sans envoyer la commande vers la locomotive (ie: si Engine Driver est confus par exemple).\n\nAppuyer sur la flèche de retour une fois terminé.</string>
+
+
+    <string name="copy_function_labels">Copier les libellés à partir du catalogue (JMRI roster)</string>
+
+    <string name="cv29AddressSize2bit">Adresse courte: 2 bits (0-127)</string>
+    <string name="cv29AddressSize4bit">Adresse longue: 4 bits (1-10239)</string>
+    <string name="cv29AnalogueConversionOff">Conversion analogique: OFF</string>
+    <string name="cv29AnalogueConversionOn">Conversion analogique: ON</string>
+    <string name="cv29DirectionForward">Direction de marche: Avant</string>
+    <string name="cv29DirectionReverse">Direction de marche: Recul</string>
+    <string name="cv29SpeedSteps14">Crans de vitesse: 14</string>
+    <string name="cv29SpeedSteps28">Crans de vitesse: 28/128</string>
+    <string name="cv29SpeedTableNo">Table de vitesse: Inutilisée (utilisation des CV 2, 5 et 6)</string>
+    <string name="cv29SpeedTableYes">Table de vitesse: En utilisation</string>
+    <string name="cv29SpeedToggleDirection">Écrire une valeur %d dans le CV29 pour changer la direction de marche.</string>
+    <string name="dccesp_settings">DCC ESP - Réglages</string>
+
+
+
+    <string name="DCCEXclearCommands">Effacer</string>
+
+    <string name="DCCEXcommonCvsLabel">CV du NMRA</string>
+
+
+    <string name="DccexFailed">Action échouée</string>
+    <string name="dccExFunctionSettings">DCC-EX - Réglages des fonctions</string>
+
+
+
+
+
+    <string name="DccexPreviousCommandButtonLabel">Précédent</string>
+
+    <string name="DCCEXrequestLocoIdFailed">Acquisition du \'Loco ID\' a échoué</string>
+
+    <string name="DCCEXrouteSet">Assigner</string>
+
+    <string name="DCCEXsetTrackButtonLabel">Assigner</string>
+    <string name="DccexSucceeded">Action réussie</string>
+
+
+    <string name="DCCEXturnoutThrown">Ouvert</string>
+
+    <string name="DccexWriteAddressButtonLabel">Écrire</string>
+
+    <string name="DCCEXJoinTrackButtonLabel">Joindre</string>
+    <string name="DccexSendCommandLabel">Cmd DCC-EX\n<small>(exclure \'&lt;\' and \'&gt;\')</small></string>
+
+
+    <string name="deviceSoundsMenu">Sons de locomotive via le téléphone</string>
+
+
+    <string name="dialogConfirmImportPreferencesTitle">Préférences pour les importations</string>
+
+    <string name="dialogImportPreferencesQuestion">Confirmer l\'importation des préférences.\nLes préférences actuelles seront perdues.</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">Confirmer la suppression de toutes les connexions récemment utilisées</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">Confirmer la suppression de toutes les Unités Multiples récemment utilisées</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">Confirmer la suppression de toutes les locomotives récemment utilisées</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression de tous les aiguillages récemment utilisés</string>
+    <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES les préférences actuelles seront perdues.</string>
+
+
+
+
+
+    <string name="discovered_services">Serveurs découverts</string>
+
+    <string name="edit_consist_lights_throttle_1">Modifier phares de l\'unité multiple du régulateur 1</string>
+    <string name="edit_consist_lights_throttle_2">Modifier phares de l\'unité multiple du régulateur 2</string>
+    <string name="edit_consist_lights_throttle_3">Modifier phares de l\'unité multiple du régulateur 3</string>
+    <string name="edit_consist_lights_throttle_4">Modifier phares de l\'unité multiple du régulateur 4</string>
+    <string name="edit_consist_lights_throttle_5">Modifier phares de l\'unité multiple du régulateur 5</string>
+    <string name="edit_consist_lights_throttle_6">Modifier phares de l\'unité multiple du régulateur 6</string>
+    <string name="edit_consist_throttle_1">Modifier l\'unité multiple du régulateur 1</string>
+    <string name="edit_consist_throttle_2">Modifier l\'unité multiple du régulateur 2</string>
+    <string name="edit_consist_throttle_3">Modifier l\'unité multiple du régulateur 3</string>
+    <string name="edit_consist_throttle_4">Modifier l\'unité multiple du régulateur 4</string>
+    <string name="edit_consist_throttle_5">Modifier l\'unité multiple du régulateur 5</string>
+    <string name="edit_consist_throttle_6">Modifier l\'unité multiple du régulateur 6</string>
+    <string name="editConsistButtonLabel">Modifier l\'ordre et la direction de marche</string>
+    <string name="editConsistLightsButtonLabel">Modifier phares</string>
+    <string name="editConsistLocoFacingLabel">Orientation</string>
+
+
+    <string name="EsuMc2KnobAction">Activer / Désactiver la molette</string>
+    <string name="exit">Quitter</string>
+    <string name="exit_text">Quitter Engine Driver?</string>
+    <string name="exit_title">Quitter</string>
+    <string name="fb_column_function"># Fonct.</string>
+
+    <string name="fb_header">Modifier les fonctions</string>
+    <string name="fb_helptext">Saisir les libellés et numéros de fonction dans la liste de droite.  Laisser le libellé à blanc pour cacher cette touche.  Ils serviront lorsque les informations du cataloogue ne sont pas disponibles.</string>
+
+    <string name="fbResetFunctionLabels">Réinitialisation complète</string>
+
+    <string name="FilterRosterListHint">Contient...</string>
+
+
+
+
+    <string name="flashlightAction">Lampe de poche</string>
+    <string name="flashlightStateOff">Lampe de poche éteinte</string>
+    <string name="flashlightStateOn">Lampe de poche allumée</string>
+
+    <string name="fs_edit_notice"> ATTENTION: Les modifications des paramètres des fonctions par défaut seront perdues à la sortie de l\'application - Aucune carte SD trouvée!</string>
+
+    <string name="functionButton00DefaultValue">Phares</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="functionButtonLookForBell">CLOCHE</string>
+    <string name="functionButtonLookForHead">TÊTE</string>
+
+    <string name="functionButtonLookForLight">PHARES</string>
+
+
+
+
+
+    <string name="functionConsistHeader">Actions des fonctions d\'unités multiples</string>
+    <string name="functionConsistHelpText">Utilisation uniquement pour les fonctions d\'unités multiples \'Spéciales\' suivantes.  Spécifier comment sera recherché le libellé de chaque fonction pour chacune des locomotives de l\'unité multiple.</string>
+    <string name="functionConsistSettings">Paramètres d\'unités multiples</string>
+    <string name="gamepad_test_reset">Réinitialisation complète de la manette de jeu</string>
+    <string name="gamepad1_test">Vérification de la manette de jeu 1</string>
+    <string name="gamepad2_test">Vérification de la manette de jeu 2</string>
+    <string name="gamepad3_test">Vérification de la manette de jeu 3</string>
+    <string name="gamepadTestAllKeyCodesLabel">Tous les codes:\s\s</string>
+
+
+    <string name="gamepadTestButtonLabelButtonEnter">Sélectionner | Entrer</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">Gâchette haute de gauche</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Joystick de gauche</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Gâchette de gauche</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">Gâchette haute de droite</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Joystick de droite</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Gâchette de droite</string>
+    <string name="gamepadTestButtonLabelButtonStart">Démarrer | Entrer</string>
+
+
+
+
+
+
+    <string name="gamepadTestCancel">Annuler</string>
+
+    <string name="gamepadTestComplete">Test complété</string>
+    <string name="gamepadTestCompleteLabel">État du test:\s\s</string>
+    <string name="gamepadTestCompleteToast">Test de la manette de jeu terminé avec succès</string>
+
+
+    <string name="gamepadTestHelp">Défiler vers le bas pour consulter l\'ensemble des instructions...\n\nAppuyer sur les 4 extrémités de la croix ainsi que les 4 touches primaires sinon la manette de jeu NE FONCTIONNERA PAS.\n\nSi vous ne pouvez activer l\'ensemble des touches, changer le mode de disposition des boutons de la manette de jeu (suivre les instructions fournies avec votre manette de jeu) ou essayer un différent type de manette de jeu (voir plus haut).\n\n\'RETOUR\' ou \'ANNULER\' terminera le test mais la manette de jeu ne fonctionnera pas.\n\'IGNORER\' ou appuyer à 3 répétitions sur la touche de réduction de vitesse de la manette de jeu forcera la réussite du test et ce même si la manette de jeu ne fonctionne pas correctement.\n\'RÉINITIALISATION\' fera croire à Engine Driver qu\'aucune manette de jeu n\'a été utilisée jusqu\'à présent.\nlfTest \'Simple\' est sélectionné, un simple appui sur la touche \'Réduire vitesse\' annulera le test.\n\nUtiliser les options du menu \'Test de la manette de jeu\' pour revenir à cette page.</string>
+    <string name="gamepadTestHelpNonForced">Si vous ne pouvez activer l\'ensemble des boutons, changer le mode de disposition des boutons de la manette de jeu (suivre les instructions fournies avec votre manette de jeu) ou essayer un différent type de manette de jeu (voir plus haut).\nIl peut être nécessaire de refaire le test de la manette de jeu lors de sa première utilisation à partir de l\'écran du régulateur.</string>
+
+    <string name="gamepadTestInvalidKeycode">Code numérique invalide pour ce mode</string>
+    <string name="gamepadTestKeyboardHelp">Sélectionner \'Ignorer\' ci-dessous pour utiliser le clavier--------------------Commandes du clavier--------------------Haut ou \'+\' ou \'=\' = Augmenter la vitesseBas ou \'-\' = Réduire la vitesse\'X\' = ArrêtGauche ou \'\[\' = Marche arrière (Marche avant si les touches sont interchangées dans les préférences)Droite ou \'\]\' = Marche avant (Marche arrière si les touches sont interchangées dans les préférences)\'D\' = Direction de marche - Alterne entre Avant/Arrière\'N\' = Régulateur suivant\'Z\' = Arrêt completF00 - F28 = FonctionDoit débuter par \'F\' suivi de 2 chiffres\'0\'-\'9\' = Fonctions 0-9Sans aucun préfixe \'F\', \'S\' or \'L\'S000 - S100 = VitesseDoit débuter par \'S\' suivi de 3 chiffresSons de locomotive émis par le téléphone (IPLS)\'B\' = Cloche\'H\' = Klaxon / SiffletShift + \'H\' = Klaxon court\'M\' ou Volume Muet = Rendre IPLS muetT0 - T5 = Spécifier un régulateur pour la prochaine commandeDoit débuter par \'T\' suivi d\'un seul chiffreLa commande qui suivra sera dirigée vers le régulateur spécifié indépendemment de la manette de jeu actuellement sélectionnéeToutes les autres commandes sont ignoréesNe pas compléter \'F\', \'S\' ou \'L\' avec le bon nombre de chiffres annulera cette commande</string>
+    <string name="gamepadTestKeycodeLabel">Code de clé:\s\s</string>
+
+
+
+
+
+
+
+    <string name="gamepadTestOptionalLabel">Optionnel (peut ne pas être présent sur l\'appareil)</string>
+    <string name="gamepadTestReset">Réinitialiser</string>
+    <string name="gamepadTestSkip">Ignorer</string>
+
+    <string name="idngo_button">Demander le ID de la loco</string>
+    <string name="idngo_help_text">Appuyer sur la touche pour envoyer une requête au serveur pour identifier et acquérir la locomotive actuellement sur la voie de programmation et retourner ses valeurs au régulateur.</string>
+    <string name="idngo_label">Demander le ID de la loco</string>
+    <string name="importServerAutoDialog">Un nouveau fichier de préférences a été trouvé sur ce serveur: (%1$s).\nVoulez-vous importer celles-ci?\n\nAttention!\n\'Complet\' - Toutes vos préférences seront écrasées.\n\n\'Partiel\' - Toutes les préférences, sauf la thématique et quelques préférences de type de page seront écrasées.</string>
+
+
+    <string name="infoSaveLogFile">Enregistré sous: %s</string>
+
+
+
+    <string name="introbackButtonPress">Svp, redémarrer l\'application Engine Driver pour terminer l\'introduction.</string>
+
+    <string name="introButtonsSlider">Curseur seulement\n(non disponible avec \'Grosses touches\')</string>
+    <string name="introButtonsSliderAndButtons">Curseur + touches\n(non disponible avec \'Grosses touches\')</string>
+    <string name="introButtonsSummary">Sélectionner comment ajuster la vitesse de vos trains.</string>
+    <string name="introButtonsTitle">Vitesse des curseurs et touches</string>
+
+
+    <string name="introFinishSummary2">Pour des instructions détaillées, consulter la page \'À propos\' du menu ou visiter la page d\'accueil de Engine Driver au\n\'https://enginedriver.mstevetodd.com\'.</string>
+    <string name="introFinishSummary3">Il est possible d\'effectuer des ajustements d\'apparence et de comportements de l\'application à partir du menu \'Préférences\'.</string>
+
+    <string name="introMenu">Assistant Introduction/Installation</string>
+    <string name="introThemeSummary">Sélectionner les couleurs et apparences de l\'ensemble de cette application.</string>
+    <string name="introThrottleNameSummary">Définir un nom pour cet appareil</string>
+    <string name="introThrottleNameSummary1">Le nom défini apparaîtra dans la fenêtre WiThrottle de JMRI.  Ceci peut aider quand vient le temps de résoudre des problèmes avec plusieurs régulateurs connectés.  Ce nom doit être unique.</string>
+    <string name="introThrottleTypeSummary">Sélectionner la mise en page de l\'écran principal.</string>
+    <string name="introThrottleTypeSummary2">Selon la mise en page sélectionnée, le nombre maximal de régulateurs (1 à 6) sera ajusté à l\'écran.</string>
+    <string name="introWelcomeSummary">Cette application peut se connecter à un serveur WIThrottle JMRI, MRC ou Digitrax pour contrôler vos locomotives et accessoires DCC.  Les pages qui suivent vous assisteront pour la configuration initiale.</string>
+
+    <string name="introDccexTitle">Options pour la EX-CommandStation</string>
+    <string name="introDccexSummary">Engine Driver offre des fonctionnalités additionnelles, incluant la programmation des CV si vous utilisez directement la EX-CommandStation de DCC-EX (et non via JMRI)\n\nEn répondant \'Oui\' ci-dessous, Engine Driver utilisera par défaut les commandes propres à DCC-EX au lieu de celles de WiThrottle si le nom du serveur contient \'DCC-EX\' ou \'DCCEX\'.</string>
+    <string name="introDccexQuestionYes">Oui, j\'utiliserai la EX-CommandStation</string>
+    <string name="introDccexQuestionNo">Non, je n\'utiliserai pas la EX-CommandStation</string>
+    <string name="kidsTimer">Minuterie</string>
+
+
+
+
+
+
+    <string name="lightsTextFollow">Copier Touche Fonc</string>
+
+
+    <string name="limitSpeedButtonLabel">Limiter vitesse</string>
+    <string name="load">Chargement</string>
+    <string name="location_all">TOUS LES EMPLACEMENTS</string>
+
+
+
+
+    <string name="locoPressToSelect">Sélectionner</string>
+
+    <string name="LocoSelectMethodHelp">Inscrire l\'adresse DCC de la locomotive ci-dessus et cliquer sur \'Acquérir\'.\nAlternativement, sélectionner une locomotive du catalogue JMRI (Roster) ou sélectionner à partir de la liste des locomotives récemment utilisées via la boutons radio ci-dessus.</string>
+    <string name="LocoSelectMethodIDNGo">Demander le ID de la loco</string>
+
+
+    <string name="LocoSelectMethodRecentConsist">Unités multiples récentes</string>
+    <string name="LocoSelectMethodRoster">Catalogue JMRI (Roster)</string>
+    <string name="logViewer">Affichage du journal</string>
+
+    <string name="logviewerSave">Débuter l\'enregistrement du fichier</string>
+
+
+
+
+
+    <string name="none">Aucun</string>
+    <string name="notification_text">Appuyer pour ouvrir Engine Driver à nouveau</string>
+    <string name="notification_title">Engine Driver en cours d\'exécution</string>
+
+
+    <string name="ok">Ok</string>
+
+
+
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver nécessite la permission ACCESS_FINE_LOCATION pour récupérer le SSDI Wi-Fi actuel.</string>
+    <string name="permissionsAppSettingsButton">Réglages de l\'application</string>
+
+
+
+    <string name="permissionsConnectToServer">Engine Driver nécessite la permission STORAGE pour consigner les connexions récentes et les permissions téléphoniques pour suspendre l\'application lors d\'un appel téléphonique.</string>
+
+
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver nécessite la permission NOTIFICATION pour vous aviser avec des notifications lorsque l\'application est basculée en arrière plan.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver nécessite la permission READ_MEDIA_IMAGES pour afficher les images en arrière plan.</string>
+
+
+
+    <string name="permissionsReadPhoneState">Engine Driver nécessite la permission PHONE pour suspendre l\'application à la réception d\'un appel.</string>
+
+
+    <string name="permissionsRequestTitle">Permissions requises</string>
+
+
+
+
+
+
+
+    <string name="permissionsVIBRATE">Engine Driver nécessite la permission VIBRATE pour utiliser le retour haptique de votre appareil.</string>
+    <string name="permissionsWriteSettings">Engine Driver nécessite la permission WRITE SETTINGS pour altérer la luminosité de l\'écran.</string>
+    <string name="permissionsWriteSettingsAdditional">- Sélectionner le bouton ci-dessous.\nAccorder la permission.\n- Sélectionner \'Retour\' pour revenir à cet écran.</string>
+    <string name="permissionsWriteSettingsAdditional2">Ignorer ceci s\'il n\'est pas nécessaire que Engine Driver altère la luminosité de l\'écran.</string>
+
+
+
+    <string name="power_control_label">Paramètre de contrôle de l\'alimentation électrique du réseau.</string>
+    <string name="power_control_not_allowed">Le contrôle de l\'alimentation électrique du réseau n\'est pas permis.   Modifier le paramètre correspondant dans les préférences du serveur.</string>
+
+    <string name="powerWillNotWork">L\'alimentation électrique WiThrottle de JMRI est actuellement coupée.\nL\'icône d\'alimentation électrique n\'est plus visible mais elle réapparaîtra dès que JMRI rétablira l\'alimentation électrique.</string>
+
+
+    <string name="prefAccelerometerShakeSummary">Options quand l\'appareil est secoué.</string>
+
+    <string name="prefAccelerometerShakeThresholdSummary">Seuil à partir duquel la secousse sera détectée. (1.5&#8211;3.5)  Une valeur moindre détectera les secousses plus douces.\nNécessite un redémarrage de l\'application pour prendre effet.</string>
+    <string name="prefAccelerometerShakeThresholdTitle">Seuil de secousse</string>
+    <string name="prefAccelerometerShakeTitle">Action lors d\'une secousse</string>
+    <string name="prefAccelerometerSummary">Options de mouvement de l\'appareil pour la page du régulateur.</string>
+    <string name="prefAccelerometerTitle">Préférences de l\'accélémomètre</string>
+    <string name="prefActionBarShowDccExButtonSummary">Affiche une touche dans la barre d\'outils permettant l\'accès à l\'écran DCC-EX. (Pour les connexions directes DCC-EX seulement).</string>
+    <string name="prefActionBarShowDccExButtonTitle">Touche DCC-EX ?</string>
+    <string name="prefActionBarShowServerDescriptionSummary">Afficher la description du serveur actuel dans la barre d\'outils</string>
+    <string name="prefActionBarShowServerDescriptionTitle">Afficher la description du serveur</string>
+    <string name="prefAllowMobileDataSummary">Permettre à votre appareil une connexion à JMRI via les données mobiles.</string>
+    <string name="prefAllowMobileDataTitle">Permettre les connexions via les données mobiles.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Afficher les libellés de fonctions par défaut au lieu de ceux provenant du catalogue des locomotives (Roster).</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Afficher les libellés de fonctions par défaut au lieu de ceux provenant du catalogue des locomotives (Roster).\nCeci est un PRÉ-REQUIS pour activer le style la copie de règles \'Spéciales\'.</string>
+    <string name="prefCenterDirectionButtonsShortDefaultValue">N</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">Si désactivé, utiliser les libellés par défaut de Engine Driver pour les locomotives sélectionées via une adresse (et non via le catalogue des locomotives (Roster)).  Les libellés par défaut du serveur sont ignorés.</string>
+
+
+
+    <string name="prefAlwaysUseFunctionsFromServerTitle">Toujours utiliser les libellés de fonctions provenant du serveur..</string>
+    <string name="prefAppIconActionSummary">Action exécutée lors d\'un clic sur l\'icône de l\'application ou sur le nom de l\'application dans la barre d\'outils.</string>
+    <string name="prefAppIconActionTitle">Action de l\'icône de l\'application</string>
+
+    <string name="prefAutoImportExportSummary">Pour chacune des connexions vers un serveur, \'Importer\' AUTOMATIQUEMENT les préférences de ce serveur et optionnellement les \'Exporter\' à la déconnexion.\n(Pour réinitialiser systématiquement à un état précis, ajuster à \'Importation automatique sur connexion seulement\' après l\'utilisation initiale ou suite à une sauvegarde manuelle (ci-dessous)).</string>
+    <string name="prefAutoImportExportTitle">Importation/Exportation automatique par serveur</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image sélectionée</string>
+    <string name="prefBackgroundImageFileNameSummary">Entrer le nom de l\'image d\'arrière plan.</string>
+    <string name="prefBackgroundImageFileNameTitle">Nom de fichier de l\'image d\'arrière plan.</string>
+    <string name="prefBackgroundImagePositionSummary">Spécifier l\'emplacement de l\'image d\'arrière plan sur l\'écran.</string>
+    <string name="prefBackgroundImagePositionTitle">Emplacement de l\'image d\'arrière plan</string>
+    <string name="prefBackgroundImagePreferencesTitle">Préférences de l\'image d\'arrière plan</string>
+    <string name="prefBackgroundImageSummary">Afficher une image d\'arrière plan sur l\'écran du régulateur</string>
+    <string name="prefBackgroundImageTitle">Image d\'arrière plan</string>
+    <string name="prefCategoryDevicePageTitle">Préférences de l\'appareil</string>
+    <string name="prefConnectTimeoutMsSummary">Delai de connexion initiale par défaut</string>
+    <string name="prefConnectTimeoutMsTitle">Délai de connexion initiale</string>
+
+    <string name="PrefConnectToFirstServerSummary">Connexion automatique au premier serveur WiThrottle découvert?</string>
+    <string name="PrefConnectToFirstServerTitle">Connexion automatique au premier serveur WiThrottle découvert?</string>
+    <string name="prefConsistFollowAction1Summary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux commandes de phares.</string>
+
+    <string name="prefConsistFollowAction2Summary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux fonctions trouvées.</string>
+    <string name="prefConsistFollowAction2Title">Action pour la chaîne de caractères 2</string>
+    <string name="prefConsistFollowAction3Summary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux fonctions trouvées.</string>
+    <string name="prefConsistFollowAction3Title">Action pour la chaîne de caractères 3</string>
+    <string name="prefConsistFollowAction4Summary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux fonctions trouvées.</string>
+    <string name="prefConsistFollowAction4Title">Action pour la chaîne de caractères 4</string>
+    <string name="prefConsistFollowAction5Summary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux fonctions trouvées.</string>
+    <string name="prefConsistFollowAction5Title">Action pour la chaîne de caractères 5</string>
+    <string name="prefConsistFollowDefaultActionSummary">Préciser quelles locomotives de l\'unité multiple\' doivent réagir aux touches de fonctions si aucune des règles ci-dessous ne sont respectées.</string>
+    <string name="prefConsistFollowDefaultActionTitle">Action effectuée si l\'ensemble de la validation échoue</string>
+    <string name="prefConsistFollowRuleStyleSummary">Préciser le style de règles à appliquer aux unités multiples lorsqu\'une touche de fonction est appuyée.\nNote: Si \'Utiliser le libellé par défaut des fonctions\' est activé, \'... Spéciales\' seront également appliqués à la locomotive de tête.</string>
+    <string name="prefConsistFollowRuleStyleTitle">Fonctions des unités multiples - Respecter le style de la règle</string>
+    <string name="prefConsistFollowString1DefaultValue">PHARES</string>
+    <string name="prefConsistFollowString1Summary">Chaîne de caractères séparée par des virgules à inspecter pour les libellés des fonctions des locomotives de l\'unité multiple pour reconnaître la fonction \'Phares\' (habituellement F0).</string>
+    <string name="prefConsistFollowString1Title">Chaîne de caractères 1 spécifique aux phares</string>
+
+    <string name="prefConsistFollowString2Summary">Chaîne de caractères séparée par des virgules à inspecter pour les libellés des fonctions des locomotives de l\'unité multiple pour identifier une fonction similaire.</string>
+    <string name="prefConsistFollowString2Title">Chaîne de caractères 2</string>
+    <string name="prefConsistFollowString3Summary">Chaîne de caractères séparée par des virgules à inspecter pour les libellés des fonctions des locomotives de l\'unité multiple pour identifier une fonction similaire.</string>
+    <string name="prefConsistFollowString3Title">Chaîne de caractères 3</string>
+    <string name="prefConsistFollowString4Summary">Chaîne de caractères séparée par des virgules à inspecter pour les libellés des fonctions des locomotives de l\'unité multiple pour identifier une fonction similaire.</string>
+    <string name="prefConsistFollowString4Title">Chaîne de caractères 4</string>
+    <string name="prefConsistFollowString5Summary">Chaîne de caractères séparée par des virgules à inspecter pour les libellés des fonctions des locomotives de l\'unité multiple pour identifier une fonction similaire.</string>
+    <string name="prefConsistFollowString5Title">Chaîne de caractères 5</string>
+    <string name="prefConsistFollowSummary">Options pour déterminer le comportement des fonctions à l\'intérieur des unités multiples.</string>
+    <string name="prefConsistFollowTitle">Préférences à suivre pour les fonctions des unités multiples</string>
+    <string name="prefConsistLightsLongClickSummary">Modifier de façon indépendante les phares de chacune des locomotives des unités multiples en appuyant longuement sur la touche de sélection des locomotives.</string>
+    <string name="prefConsistLightsLongClickTitle">Gestion des phares des unités multiples via un appui prolongé</string>
+    <string name="prefDccexConnectionOptionSummary">Afficher l\'option de basculer entre les protocoles WiThrottle et DCC-EX à l\'écran de connexion.</string>
+    <string name="prefDccexConnectionOptionTitle">Afficher les options des protocoles</string>
+
+
+    <string name="prefDccexSummary">Utilisation des commandes natives DCC-EX plutôt que celles de WiThrottle pour l\'ensemble des connexions.  Note: Ne prendra effet qu\'au prochain redémarrage de Engine Driver suivi d\'une connexion à un serveur.</string>
+    <string name="prefDccexTitle">Utilisation des commandes natives DCC-EX</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">Réduire la taille des touches Numéro loco, vitesse et direction de marche.</string>
+    <string name="prefDecreaseLocoNumberHeightTitle">Réduire la taille du numéro de locomotive?</string>
+
+    <string name="prefDefaultAddressLengthSummary">Longueur par défaut de l\'adresse de locomotive (Auto se basera sur le nombre de chiffres inscrits).</string>
+    <string name="prefDefaultAddressLengthTitle">Longueur par défaut de l\'adresse de locomotive</string>
+    <string name="prefDefaultFunctionsSummary">Indique quand ainsi que la façon dont sont affichés les libellés des touches de fonctions.</string>
+    <string name="prefDefaultFunctionsTitle">Préférences par défaut des touches de fonction</string>
+
+    <string name="prefDelimiterSummary">Spécifier le caractère qui délimite la fin de la portion de l\'emplacement de l\'aiguillage et des noms de routes</string>
+    <string name="prefDelimiterTitle">Délémiteur d\'emplacement</string>
+    <string name="prefDeviceSounds0Summary">Utiliser les sons de base via le téléphone pour le régulateur 1</string>
+    <string name="prefDeviceSounds0Title">Sons de locomotive - Régulateur 1</string>
+    <string name="prefDeviceSounds1Summary">Utiliser les sons de base via le téléphone pour le régulateur 2</string>
+    <string name="prefDeviceSounds1Title">Sons de locomotive - Régulateur 2</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">Préférences supplémentaires pour les sons via le téléphone.</string>
+
+
+
+    <string name="prefDeviceSoundsBellIsMomentarySummary">La touche Cloche est momentanée.  (Verrouillage si décoché).</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">Touche Cloche verrouillée / momentanée</string>
+    <string name="prefDeviceSoundsBellVolumeSummary">Volume des sons de cloche via le téléphone (1-100)</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">Volume des sons de cloche via le téléphone</string>
+    <string name="prefDeviceSoundsButtonSummary">Afficher une touche sur la barre d\'outils pour modifier les sons de locomotives via le téléphone</string>
+    <string name="prefDeviceSoundsButtonTitle">Touche de volume des sons via le téléphone</string>
+    <string name="prefDeviceSoundsCategoryTitle">Volume des sons de locomotives via le téléphone</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1 et F2 activent également la cloche IPLS et le klaxon</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1 et F2 activent la cloche et le klaxon?</string>
+    <string name="prefDeviceSoundsHideMuteButtonSummary">Ne pas afficher la touche Muet sur les régulateurs</string>
+    <string name="prefDeviceSoundsHideMuteButtonTitle">Ne pas afficher la touche Muet</string>
+    <string name="prefDeviceSoundsHornVolumeSummary">Volume des sons de cloche/sifflet va le téléphone (1-100)</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">Volume du klaxon et du sifflet via le téléphone</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary">Volume des sons de moteur via le téléphone (1-100)</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">Volume des sons de locomotives via le téléphone</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">Les sons de locomotives proportionnels à la vitesse sont joués en entier lors d\'un changement de régime moteur.  Le taux de momentum (ci-dessus) devient un temps minimal seulement.</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">Ne pa interrompre les sons proportionnnels à la vitesse</string>
+    <string name="prefDeviceSoundsMomentumSummary">Délai (momentum) par changement de régime en millisecondes (0-2000)</string>
+    <string name="prefDeviceSoundsMomentumTitle">Momentum via le téléphone</string>
+    <string name="prefDirChangeWhileMovingSummary">Permettre le changement de direction de marche en déplacement.</string>
+    <string name="prefDirChangeWhileMovingTitle">Changement de direction de marche en déplacement?</string>
+
+    <string name="prefDirectionButtonLongPressDelaySummary">Combien de millisecondes constituent un appui long sur les touches de direction de marche.</string>
+    <string name="prefDirectionButtonLongPressDelayTitle">Délai de l\'appui long des touches de direction de marche.</string>
+
+
+
+    <string name="prefDirectionSummary">Options pour les touches de direction de marche.</string>
+    <string name="prefDirectionTitle">Préférences des touches de direction de marche</string>
+    <string name="prefDisableVolumeKeysSummary">Désactiver les boutons physiques de volume de l\'appareil/tablette qui autrement contrôleraient la vitesse.  Note: Si sélectionné: remplace \'l\'indicateur de sélection de locomotive additionnelle\'.</string>
+    <string name="prefDisableVolumeKeysTitle">Désactiver les boutons physiques de volume de l\'appareil.</string>
+
+    <string name="prefDisplayClockSummary">Spécifier le format de l\'horloge rapide (Fast clock) dans les écrans du régulateur et des écrans web.</string>
+    <string name="prefDisplayClockTitle">Affichage de l\'horloge rapide (Fast clock)</string>
+    <string name="prefDisplaySpeedArrowsSummary">Aficher des touches près du curseur de vitesse afin de changer la vitesse de la locomotive??</string>
+    <string name="prefDisplaySpeedArrowsTitle">Afficher les touches de vitesse?</string>
+
+    <string name="prefDisplaySpeedUnitsSummary">Afficher la vitesse en pourcentage ou en nombre de crans (steps)?</string>
+    <string name="prefDisplaySpeedUnitsTitle">Unités de vitesse</string>
+    <string name="prefDropOnAcquireSummary">Libérer la locomotive actuelle avant d\'acquérir une nouvelle locomotive.</string>
+    <string name="prefDropOnAcquireTitle">Libérer la locomotive actuelle avant d\'acquérir?</string>
+    <string name="prefEmerStopSummary">Afficher la touche d\'arrêt d\'urgence dans la barre d\'outils?</string>
+    <string name="prefEmerStopTitle">Afficher la touche d\'arrêt d\'urgence?</string>
+
+
+    <string name="prefEsuMc2ButtonBLSummary">Sélectionner l\'action lorsqu\'une touche est apuyée.</string>
+    <string name="prefEsuMc2ButtonBLTitle">Action de la touche d\'action inférieure gauche</string>
+
+    <string name="prefEsuMc2ButtonBRSummary">Sélectionner l\'action lorsqu\'une touche est apuyée.</string>
+    <string name="prefEsuMc2ButtonBRTitle">Action de la touche d\'action inférieure droite</string>
+    <string name="prefEsuMc2ButtonsCategoryTitle">Options des touches latérales de l\'appareil</string>
+
+    <string name="prefEsuMc2ButtonsRepeatSummary">Délai entre les répétions des toudches latérales de l\'appareil.</string>
+    <string name="prefEsuMc2ButtonsRepeatTitle">Délai de répétition des touches</string>
+
+    <string name="prefEsuMc2ButtonTLSummary">Sélectioner l\'action quand la touche est appuyée.</string>
+    <string name="prefEsuMc2ButtonTLTitle">Action de la touche supérieure gauche</string>
+
+    <string name="prefEsuMc2ButtonTRSummary">Sélectioner l\'action quand la touche est appuyée.</string>
+    <string name="prefEsuMc2ButtonTRTitle">Action de la touche supérieure droite</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Permettre le changement de direction de marche de la locomotive quand la molette est tournée complètement en sens anti-horaire.</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Changement de direction lorsque la molette est réglée à 0</string>
+    <string name="prefEsuMc2KnobButtonSummary">Permettre de désactiver la molette via une touche d\'action à l\'écran du régulateur.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Afficher la touche de désactivation de la molette</string>
+    <string name="prefEsuMc2StopButtonCategoryTitle">Options lorsque la molette est réglée à 0</string>
+
+    <string name="prefEsuMc2StopButtonDelaySummary">Délai pour un \'appui prolongé\' de la touche d\'arrêt.\nUn \'appui prolongé\' force l\'arrêt de l\'ensemble des régulateurs; une \'pression rapide\' force l\'arrêt du régulateur actruel.\nUn valeur basse correspond à un délai plus court.</string>
+    <string name="prefEsuMc2StopButtonDelayTitle">Durée de l\'appui prolongé de la touche d\'arrêt</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary"> Une \'pression rapide\' suspend la locomotive ou l\'unité multiple actuelle.\nLa vitesse sera rétablie à la reprise des opérationsl.</string>
+    <string name="prefEsuMc2StopButtonShortPressTitle">Activer la \'pression rapide\'</string>
+    <string name="prefEsuMc2Summary"> Sélectionner les options du module ESU MobileControl II</string>
+
+    <string name="prefEsuMc2Title">Options du module ESU MobileControl II</string>
+    <string name="prefEsuMc2ZeroTrimCategoryTitle">Options de la molette de contrôle</string>
+
+    <string name="prefEsuMc2ZeroTrimSummary">Définir la zone d\'arrêt de la molette de commande.\nUne valeur basse déplace la zone vers l\'extrémité anti-horaire.\nÉtendue autorisée 0&#8211;255.</string>
+    <string name="prefEsuMc2ZeroTrimTitle">Zone d\'arrêt de la molette de commande</string>
+    <string name="prefFeedbackOnDisconnectSummary">Émettre un son et faire vibrer l\'appareil lors d\'une déconnexion imPrévue.</string>
+    <string name="prefFeedbackOnDisconnectTitle">Réaction lors d\'une déconnexion</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">Alerte sonore lorsque l\'application se retrouve en arrière plan.</string>
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">Alerte en arrière plan</string>
+    <string name="prefFlashlightSummary">Afficher la touche de lampe de poche à l\'écran du régulateur, des aiguillages et des itinéraires?</string>
+    <string name="prefFlashlightTitle">Afficher la touche de la lampe de poche?</string>
+    <string name="prefFullScreenSwipeAreaSummary">Lorsque activé, seule la barre d\'outils peut être balayée latéralement pour basculer entre les écrans</string>
+    <string name="prefFullScreenSwipeAreaTitle">Désactivation du balayage latéral plein écran</string>
+
+</resources>

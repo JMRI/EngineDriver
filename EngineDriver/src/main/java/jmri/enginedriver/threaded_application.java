@@ -234,6 +234,7 @@ public class threaded_application extends Application {
     public boolean [] DccexTrackAvailable = {false, false, false, false, false, false, false, false};
     public String [] DccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
+    public boolean dccexJoined = false;
 
     public String rosterStringDCCEX = ""; // used to process the roster list
     public int [] rosterIDsDCCEX;  // used to process the roster list
@@ -725,7 +726,7 @@ public class threaded_application extends Application {
                             function_consist_latching.put(Integer.parseInt(temp[1]), temp[3]);
                         } else {
                             function_consist_locos.put(Integer.parseInt(temp[1]), locosDefault);
-                            if ((i<2) || (i>2)) { // make everything other than 'horn' latching by default
+                            if (i != 2) { // make everything other than 'horn' latching by default
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingLightBellDefault);
                             } else {
                                 function_consist_latching.put(Integer.parseInt(temp[1]), latchingDefault);
@@ -988,34 +989,49 @@ public class threaded_application extends Application {
         this.serverDescription = serverDescription;
     }
 
-    @SuppressLint("DefaultLocale")
     public String getAboutInfo() {
-        String s = "<span>";
+        return getAboutInfo(true);
+    }
+    @SuppressLint("DefaultLocale")
+    public String getAboutInfo(boolean html) {
+        String sHtml = "<span>";
+        String s = "";
         // device info
-        s += "About: " + String.format("<small>OS: </small><b>%s</b> <small>SDK: </small><b>%s</b>", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+        sHtml += "About: " + String.format("<small>OS: </small><b>%s</b> <small>SDK: </small><b>%s</b>", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+        s += "About: " + String.format("OS: %s SDK: %s", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
 
-        s += String.format("<small>, DeviceID: </small><b>%s</b>", getDeviceId());
+        sHtml += String.format("<small>, DeviceID: </small><b>%s</b>", getDeviceId());
+        s += String.format(", DeviceID: %s", getDeviceId());
 
         if (client_address_inet4 != null) {
-            s += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
-            s += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", client_ssid, client_type);
+            sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
+            sHtml += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", client_ssid, client_type);
+            s += String.format(", IP: %s", client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format(", SSID: %s Net: %s", client_ssid, client_type);
         }
 
         // ED version info
-        s += "<small>, EngineDriver: </small><b>" + appVersion + "</b>";
+        sHtml += "<small>, EngineDriver: </small><b>" + appVersion + "</b>";
+        s += ", EngineDriver: " + appVersion;
         if (getHostIp() != null) {
             // WiT info
             if (getWithrottleVersion() != 0.0) {
-                s += "<small>, Protocol: </small>";
+                sHtml += "<small>, Protocol: </small>";
+                s += ", Protocol: ";
                 if (!isDCCEX) {
-                    s += "<b>WiThrottle</b> v</small><b>" + getWithrottleVersion() +"</b>";
-                    s += String.format("<small>, Heartbeat: </small><b>%dms</b>", heartbeatInterval);
+                    sHtml += "<b>WiThrottle</b> v</small><b>" + getWithrottleVersion() +"</b>";
+                    sHtml += String.format("<small>, Heartbeat: </small><b>%dms</b>", heartbeatInterval);
+                    s += "WiThrottle v" + getWithrottleVersion();
+                    s += String.format(", Heartbeat: %dms", heartbeatInterval);
                 } else {
-                    s += "<b>DCC-EX</b>";
+                    sHtml += "<b>DCC-EX</b>";
+                    s += "DCC-EX";
                 }
             }
-            s += String.format("<small>, Host: </small><b>%s</b>", getHostIp() );
-            s += String.format("<small> Port: </small><b>%s</b>", connectedPort);
+            sHtml += String.format("<small>, Host: </small><b>%s</b>", getHostIp() );
+            sHtml += String.format("<small> Port: </small><b>%s</b>", connectedPort);
+            s += String.format(", Host: %s", getHostIp() );
+            s += String.format(" Port: %s", connectedPort);
             //show server type and description if set
             String sServer;
             if (getServerDescription().contains(getServerType())) {
@@ -1024,13 +1040,15 @@ public class threaded_application extends Application {
                 sServer = getServerType() + " " + getServerDescription();
             }
             if (!sServer.isEmpty()) {
-                s += "<small>, Server: </small><b>" + sServer + "</b>";
+                sHtml += "<small>, Server: </small><b>" + sServer + "</b>";
+                s += ", Server: " + sServer;
             }
         } else {
-            s += "<small><br/>Not Connected</small>";
+            sHtml += "<small><br/>Not Connected</small>";
+            s += " Not Connected";
         }
-        s += "</span>";
-        return s;
+        sHtml += "</span>";
+        return (html) ? sHtml : s;
     }
 
     //reinitialize statics in activities as required to be ready for next launch
@@ -2730,9 +2748,10 @@ public class threaded_application extends Application {
                     if (gamePadIdsAssignedToThrottles[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
                             gamePadIdsAssignedToThrottles[i] = eventDeviceId;
-                            if (reassigningGamepad == -1) { // not a reassignment
+//                            if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
-                            } else { // reasigning
+//                            } else { // reasigning
+                            if (reassigningGamepad != -1) { // not a reassignment
                                 gamePadThrottleAssignment[i] = reassigningGamepad;
                             }
                             whichGamePad = i;
@@ -2967,6 +2986,7 @@ public class threaded_application extends Application {
     static public String formatNumberInName (String name) {
         String tempName = name;
         String tempNo = "";
+        //noinspection UnusedAssignment
         int tempVal = 0;
         char tempChar;
         boolean haveNo = false;
@@ -3051,4 +3071,19 @@ public class threaded_application extends Application {
         return functionLabels.toString();
     }
 
+    public void getDefaultSortOrderRoster() {
+        String prefSortOrderRoster = prefs.getString("prefSortOrderRoster", this.getResources().getString(R.string.prefSortOrderRosterDefaultValue));
+        switch (prefSortOrderRoster) {
+            default:
+            case "name":
+                mainapp.rosterOrder = sort_type.NAME;
+                break;
+            case "id":
+                mainapp.rosterOrder = sort_type.ID;
+                break;
+            case "position":
+                mainapp.rosterOrder = sort_type.POSITION;
+                break;
+        }
+    }
 }

@@ -23,19 +23,18 @@
 <!--    <string name="function_buttons">Default Funzioni</string>-->
     <string name="introMenu">Introduzione</string>
 
-    <string name="app_description">Engine Driver - Controllo per il tuo telefono Android. Questa app può connettersi a JMRI, MRC o server Digitrax WiThrottle, e controllare gli scambi e le locomotive. Velocità, direzione, e fino a 29 funzioni DCC sono supportatte per una o due locomotive.</string>
+    <string name="app_description">Engine Driver - Controllo per il tuo telefono Android. Questa app può connettersi a JMRI, DCC-EX, MRC o server Digitrax WiThrottle, e controllare gli scambi e le locomotive. Velocità, direzione, e fino a 32 funzioni DCC sono supportatte per una o due locomotive.</string>
     <string name="app_name_intro">Introduzione</string>
     <string name="app_name_connect">Connessione al Server</string>
     <string name="app_name_throttle">Controllo</string>
     <string name="app_name_throttle_long">Engine Driver - Controllo</string>
-    <string name="app_name_throttle_short">Controllo </string>
+    <string name="app_name_throttle_short">Controllo</string>
     <string name="app_name_power_control">Controllo di Energia</string>
     <string name="app_name_reconnect_status">Status Ri-connessione</string>
     <string name="app_name_routes">Rotte</string>
     <string name="app_name_routes_long">Engine Driver - Rotte</string>
     <string name="app_name_routes_short">Rotte</string>
-    <string name="app_name_turnouts">Scambi</string>
-    <string name="app_name_turnouts_long">Engine Driver - Scambi</string>
+    <string name="app_name_turnouts">Engine Driver - Scambi</string>
     <string name="app_name_turnouts_short">Scambi</string>
     <string name="app_name_about">Circa</string>
     <string name="app_name_functions">Configurazione Funzioni Default</string>
@@ -58,7 +57,7 @@
     <string name="select_loco">Inserire Indirizzo Locomotiva da Acquisire</string>
     <string name="select_loco_address">Indirizzo</string>
     <string name="acquire_button">Acquisire</string>
-    <string name="roster_list">Selezionare da Elenco/Convogli</string>
+    <string name="roster_list">Selezionare da Elenco / Convogli</string>
     <string name="recent_engines">Selezionare da Locomotive Recenti</string>
 <!--    <string name="direction">Avanti</string>-->
 <!--    <string name="speed">Velocità:</string>-->
@@ -83,11 +82,10 @@
 
     <string name="consist_help">Cliccare una locomotiva per cambiare la sua direzione rispetto alla testa del convoglio. Premere a lungo per rimuovere una locmotiva dal convoglio. Premere Indietro quando pronto.</string>
     <string name="about">Circa</string>
-    <string name="web">Web</string>
     <string name="mrc_settings">Configurazione MRC</string>
     <string name="dccesp_settings">Impostazioni ESP DCC</string>
-    <string name="loco_direction_left_extra">"\u00B7A\u00B7"</string>
-    <string name="loco_direction_right_extra">"\u00B7I\u00B7"</string>
+    <string name="loco_direction_left_extra">\u00B7A\u00B7</string>
+    <string name="loco_direction_right_extra">\u00B7I\u00B7</string>
     <string name="locoPressToSelect">Selezionare</string>
     <string name="powerWillNotWorkTitle">Non funzionerà!</string>
     <string name="powerWillNotWork">JMRI ha regolato il  controllo di energia WiThrottle su spento.\nRimuoverà adesso l\'icona di energia.\nMostrerà di nuovo quando la regolazione di JMRI sarà su acceso.</string>
@@ -150,7 +148,7 @@
     <string name="prefSwipeUpDownSummary">Opzioni scorrimento Alto-Basso schermo Controllore.</string>
     <string name="prefThrottleNameTitle">Nome Controllore</string>
 
-    <string name="prefThrottleNameSummary">Definire nome del presente dispositivo (mostrato sullo schermo WiThrottle)</string>
+    <string name="prefThrottleNameSummary">Definire nome del presente dispositivo (mostrato sullo schermo JMRI WiThrottle)</string>
     <string name="prefThrottleOrientationTitle">Orientamento schermo</string>
 
     <string name="prefThrottleOrientationSummary">Orientamento schermo (eccetto Web)</string>
@@ -250,14 +248,14 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Visualizzare le etichette funzione di default al posto delle etichette delle entrate dell\'elenco locomotive.</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override con blocco della funzione acceleratore</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilizza il blocco predefinito di Engine Driver per le posizioni non del roster, anziché i valori predefiniti forniti da WiThrottle</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Visualizza le etichette delle funzioni predefinite invece delle etichette delle voci dell\'elenco.                                                               \\nQuesto DEVE essere abilitato per utilizzare gli stili di regola di seguito \\\'Speciale\\\'.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Visualizza le etichette delle funzioni predefinite invece delle etichette delle voci dell\'elenco.\nQuesto DEVE essere abilitato per utilizzare gli stili di regola di seguito \'Speciale\'.</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Diminuire altezza numero Locomotiva?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Usare pulsanti minori per Numero locomotiva, velocità e pulsanti di direzione.</string>
     <string name="prefNumOfThrottles">Numero di Controllori</string>
     <string name="prefNumOfThrottlesSummary">Scegli quanti Controllori visualizzare sullo schermo.</string>
 
     <string name="prefThrottleScreenTypeTitle">Tipo di schermo del controllore</string>
-    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.</string>
+    <string name="prefThrottleScreenTypeSummary">Quale tipo di schermo del controllore usare.\n(Il numero tra parentesi dopo il nome è il numero di acceleratori che il layout può supportare.)</string>
 
     <string name="prefMaximumThrottleTitle">Percentuale massima di controllo</string>
 
@@ -361,7 +359,7 @@
     <string name="prefDisplaySpeedArrowsTitle">Mostrare pulsanti di velocità?</string>
     <string name="prefDisplaySpeedArrowsSummary">Mostrare pulsanti accanto al controllo di velocità per cambiare la velocità della locomotiva?</string>
 
-    <string name="prefSelectedLocoIndicatorTitle">Indicatore Addizionale della Locomotiva Selezionata </string>
+    <string name="prefSelectedLocoIndicatorTitle">Indicatore Addizionale della Locomotiva Selezionata</string>
     <string name="prefSelectedLocoIndicatorSummary">Evidenziatore addizionale del pulsante Selezione Locomotiva basato sul metodo di selezione.</string>
 
     <string name="prefDisableVolumeKeysTitle">Disabilita tasti Volume</string>
@@ -446,7 +444,7 @@
     <string name="prefDirectionButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata per i pulsanti di direzione.</string>
 
     <string name="prefThemeTitle">Tema/Stile</string>
-    <string name="prefThemeSummary">Tema App. ATTENZIONE! Engine Driver si riavvierà immediatamente.\nRichiede Android Honeycomb o successivo.</string>
+    <string name="prefThemeSummary">Tema App.</string>
 
     <string name="prefHideDemoServerTitle">Nascondere Server Demo</string>
     <string name="prefHideDemoServerSummary">Nascondere il server demo \'jmri.mstevetodd.com\' dalla lista di connessioni.</string>
@@ -492,19 +490,19 @@
     <string name="gamepadTestCompleteLabel">Status test:\s\s</string>
     <string name="gamepadTestHelp">Scorrere verso il basso per leggere le istruzioni complete&#8230;\n\bPremere  Dpad E TUTTI i quattro pulsanti principali NON FUNZIONERÀ.\n\Se non riesci ad attivare tutti i pulsanti, cambia il modo del tuo gamepad (leggi le istruzioni del gamepad per come fare) o prova a cambiare il tipo di  gamepad (alto).\n\n\'RITORNARE\' ou \'CANCELLARE\' uscirá dal test ma il  gamepad NON FUNZIONERÀ.\n\'SALTARE\', o premere il pulsante del gamepad \'Diminuire Velocità\' tre volte, forzerà test a passare, anche se il gamepad non funziona correttamente.\n\'RESET\' comunicherà a ED che nessun gamepad è stato usato.\nSe il test \'SEMPLICE\' è stato selezionato, una unica pressione del pulsante  \'Diminuire Velocità\' salterà il test.\n\nUsa l\'opzione \'Test Gamepad\' nel menu per tornare a questa pagina.</string>
     <string name="gamepadTestHelpNonForced">\Se non riesci ad attivare tutti i pulsanti, cambia il modo del tuo gamepad (leggi le istruzioni del gamepad per come fare) o prova a cambiare il tipo di  gamepad (alto).\n Potrà essere necessario ritestare il gamepad quando sará usato per la prima volta dallo schermo del controllore.</string>
-    <string name="gamepadTestIncomplete">"Test Incompleto"</string>
-    <string name="gamepadTestComplete">"Test Completo"</string>
-    <string name="gamepadTestCompleteToast">"Gamepad testato completamente con successo"</string>
-    <string name="gamepadTestInvalidKeycode">"Codice tasto invalido per questo modo"</string>
-    <string name="gamepadTestReset">"Ripristinare"</string>
-    <string name="gamepadTestCancel">"Cancellare"</string>
-    <string name="gamepadTestCancelNonForced">"Chiudere"</string>
-    <string name="gamepadTestSkip">"Saltare"</string>
+    <string name="gamepadTestIncomplete">Test Incompleto</string>
+    <string name="gamepadTestComplete">Test Completo</string>
+    <string name="gamepadTestCompleteToast">Gamepad testato completamente con successo</string>
+    <string name="gamepadTestInvalidKeycode">Codice tasto invalido per questo modo</string>
+    <string name="gamepadTestReset">Ripristinare</string>
+    <string name="gamepadTestCancel">Cancellare</string>
+    <string name="gamepadTestCancelNonForced">Chiudere</string>
+    <string name="gamepadTestSkip">Saltare</string>
 
-    <string name="gamepadTestKeyCodesUpCode">"Su"</string>
-    <string name="gamepadTestKeyCodesDownCode">"Giu"</string>
-    <string name="gamepadTestKeyCodesLeftCode">"Sin"</string>
-    <string name="gamepadTestKeyCodesRightCode">"Des"</string>
+    <string name="gamepadTestKeyCodesUpCode">Su</string>
+    <string name="gamepadTestKeyCodesDownCode">Giu</string>
+    <string name="gamepadTestKeyCodesLeftCode">Sin</string>
+    <string name="gamepadTestKeyCodesRightCode">Des</string>
     <string name="prefGamepadTestNowTitle">Test impostazioni Gamepad Adesso!</string>
     <string name="prefGamepadTestNowSummary">Permette la conferma chele impostazioni scelte funzionano correttamente.\nLa pagina di Test sará lanciata IMMEDIATAMENTE dopo la selezione.</string>
     <string name="toastDoubleBackButtonToExit">Premere di nuovo \"Indietro\" per uscire da Engine Driver</string>
@@ -552,7 +550,7 @@
     <string name="toastConnectRemoveDemoHostError">Il server demo può essere rimosso solo modificando le preferenze.</string>
     <string name="toastConnectRemoved">Server rimosso dalla lista.</string>
 
-<!--    <string name="toastRoutesCommandSent">"Comando inviato per selezionare la Rotta"</string>-->
+<!--    <string name="toastRoutesCommandSent">Comando inviato per selezionare la Rotta</string>-->
     <string name="toastImportExportExportSucceeded">Esportazione preferenze in \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' realizzata com successo.</string>
     <string name="toastImportExportImportSucceeded">Importazione preferenze da \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' realizzata com successo.</string>
     <string name="toastImportExportExportFailed">Esportazione preferenze in \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' fallita!</string>
@@ -719,6 +717,15 @@
 
     <string name="prefLimitSpeedButtonTitle">pulsante Show \'limite di velocità\'</string>
     <string name="prefLimitSpeedButtonSummary">Opzione per mostrare un pulsante che limita la velocità massima di una locomotiva.</string>
+    <string name="prefPauseAlternateButtonTitle">Pulsante alternativo \'Pausa\'</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">Cambio di direzione a fine corsa</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">Consentire alla locomotiva di cambiare direzione quando la manopola di controllo è in posizione di finecorsa in senso antiorario.</string>
+    <string name="prefEsuMc2KnobButtonTitle">Cambio di direzione a fine corsa</string>
+    <string name="prefEsuMc2KnobButtonSummary">Consentire la disattivazione della manopola di controllo tramite un pulsante di azione sulla schermata dell\'acceleratore.</string>
+    <string name="EsuMc2KnobAction">Abilita/Disabilita manopola</string>
+    <string name="toastThreadedAppNotWIFI">Utilizzando %1$s rete, non WIFI.\nVerificare le impostazioni Wi-Fi.\n</string>
+    <string name="prefEsuMc2StopButtonShortPressTitle">Abilita la pressione breve</string>
+    <string name="prefPauseAlternateButtonSummary">Mostra il pulsante alternativo \'Pausa\' accanto al pulsante \'Stop\'. (Solo layout verticale)</string>
     <string name="prefLimitSpeedPercentTitle">\'Limite di velocità\' a \%</string>
     <string name="prefLimitSpeedPercentSummary">Impostare il \% della valvola a farfalla che la velocità sarà limitata a.</string>
     <string name="limitSpeedButtonLabel">limite di velocità</string>
@@ -732,7 +739,7 @@
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
     <string name="infoSaveLogFile">Accesso a: %s</string>
     <string name="RecentsNameEditTitle">Recenti Nome Loco</string>
-    <string name="rosterDetailsDialogTitle">"Selezionare tra Roster / Consistono Entries "</string>
+    <string name="rosterDetailsDialogTitle">Selezionare tra Roster / Consistono Entries </string>
     <string name="toastRecentCleared">Loco rimosso dalla lista</string>
     <string name="toastRecentConsistCleared">Consistono rimosso dalla lista</string>
     <string name="editConsistButtonLabel">Modifica ordine e la direzione</string>
@@ -813,7 +820,7 @@
     <string name="prefFunctionConsistLocosDefaultValue">condurre</string>
     <string name="functionConsistHelpText">Utilizzato solo per il \'Special\' costituito opzioni seguente funzione + DCC-EX. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
     <string name="functionConsistHeader">Azioni di funzione</string>
-    <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni - macchinista</string>
+    <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra timestamp su Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>
     <string name="prefVerticalStopButtonMarginSummary">Numero di pixel per compensare margine del pulsante di arresto dai pulsanti di velocità e inferiore dello schermo.</string>
@@ -841,7 +848,7 @@
     <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">Quanto tempo tra le ripetizioni del passo di velocità di accelerazione (in millisecondi). Più piccolo è più veloce.</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Ritardo ripetizione passo velocità decelerazione</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">Intervallo di tempo tra le ripetizioni del passo di velocità di decelerazione (in millisecondi). Più piccolo è più veloce.</string>
-    <string name="prefSemiRealisticThrottleSpeedStepTitle">"Passo di velocità "</string>
+    <string name="prefSemiRealisticThrottleSpeedStepTitle">Passo di velocità </string>
     <string name="prefSemiRealisticThrottleSpeedStepSummary">Di quanto la velocità effettiva salta ad ogni passo rispetto alla velocità target.  Più grande è più veloce.</string>
     <string name="prefSemiRealisticThrottleNotchesTitle">Tacche dell\'acceleratore</string>
     <string name="prefSemiRealisticThrottleNotchesSummary">Regola l\'acceleratore in percentuale o in base a un numero specifico di passi/tacche</string>
@@ -849,7 +856,7 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Regola il numero di passaggi nel cursore del freno</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Valuta l\'aggiornamento dei freni ad aria compressa</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Regola la velocità con cui i freni ad aria compressa si aggiorneranno/riempiranno (in millisecondi). Più piccolo è più veloce.</string>
-    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">"Numero di carico "</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Numero di carico </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Regola il numero di passaggi nel cursore Carica</string>
     <string name="prefSemiRealisticThrottleLoadPcntTitle">Moltiplicatore percentuale di carico</string>
     <string name="prefSemiRealisticThrottleLoadPcntSummary">Regola l\'effetto del cursore del carico sulle variazioni di velocità. &gt;100% = carico maggiore</string>
@@ -874,6 +881,8 @@
     <string name="prefLeftRightSwipePreferencesSummary">Opzioni per fendenti agli schermi di cambiamento</string>
     <string name="prefHapticFeedbackDurationTitle">Haptic feedback Durata</string>
     <string name="prefHapticFeedbackDurationSummary">Durata di ogni vibrazione (in millisecondi).</string>
+    <string name="prefHapticFeedbackButtonsTitle">Durata di ciascuna vibrazione (in millisecondi).</string>
+    <string name="prefHapticFeedbackButtonsSummary">Feedback tattile sulla pressione dei pulsanti</string>
     <string name="LocoSelectMethodIDNGo">Richiedi Loco ID</string>
     <string name="idngo_label">Richiedi Loco ID</string>
     <string name="idngo_button">Richiedi Loco ID</string>
@@ -907,6 +916,10 @@
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">Ritardo (slancio) per cambio di passo in millisecondi (0-2000)</string>
     <string name="prefDeviceSoundsMomentumTitle">Nel momento del telefono</string>
     <string name="deviceSoundsMuteButton">Muto</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1 e F2 attivano anche il campanello e il clacson IPLS</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1 e F2 attivano il campanello e il clacson?</string>
+    <string name="prefDeviceSoundsHideMuteButtonSummary">Nascondi il pulsante di disattivazione IPLS sulle manette</string>
+    <string name="prefDeviceSoundsHideMuteButtonTitle">Nascondi il pulsante di disattivazione audio</string>
     <string name="prefDeviceSoundsButtonSummary">Mostra un pulsante della barra di azione per modificare le opzioni dei suoni del telefono del telefono</string>
     <string name="prefDeviceSoundsButtonTitle">Nel pulsante dei suoni del telefono</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
@@ -920,7 +933,7 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell pulsante chiaggiatore / momentatore</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Il pulsante Bell è momentaneo. (Chiusura se non controllata.)</string>
 <!--    <string name="permissionsReadLegacyFiles">Il driver del motore ha bisogno di autorizzazioni di archiviazione per caricare le impostazioni legacy (Posizione vecchia).</string>-->
-    <string name="permissionsReadPhoneState">Il driver del motore ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.</string>
+    <string name="permissionsReadPhoneState">Engine Driver ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Ulteriori preferenze</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Ulteriori preferenze del telefono dei suoni del telefono</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Loco Step Sounds giocherà fino alla fine quando cambiano il passaggio. L\'importo dello slancio (sopra) diventa solo un tempo minimo.</string>
@@ -957,10 +970,10 @@
     <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opzione protocollo</string>
-    <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo ECC-EX. (Solo per connessioni DCC-Ex native.)</string>
+    <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo DCC-EX. (Solo per connessioni DCC-Ex native.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Azione</string>
-    <string name="DccexSendCommandLabel">DCC-EX CMD <small><small>\n(esclude \'&lt;\' e \'&gt;\')</small></small></string>
+    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(esclude \'&lt;\' e \'&gt;\')</small></small></string>
     <string name="DCCEXclearCommands">Chiaro</string>
     <string name="DccexConnectionOptionTitle">Protocollo di connessione</string>
     <string name="DccexFailed">L\'azione non è riuscita</string>
@@ -972,10 +985,10 @@
     <string name="DccexSendCommandButtonLabel">Inviare</string>
     <string name="witActionTypeLabel">Azione</string>
     <string name="witWriteAddressLabel">Indirizzo DCC</string>
-    <string name="witPomWarning">Note: - Questo non funzionerà su alcuni sistemi DCC. - Il cambio dell\'indirizzo della locomotiva è impedito - CV 1, 17 e amp; 18 e bit 5 del CV 29. \\n\\nUtilizzare con cautela.</string>
+    <string name="witPomWarning">Note: - Questo non funzionerà su alcuni sistemi DCC. - Il cambio dell\'indirizzo della locomotiva è impedito - CV 1, 17 e amp; 18 e bit 5 del CV 29.\n\nUtilizzare con cautela.</string>
     <string name="witPomMaxValueWarning">Il valore \'%1$s\' supera il massimo supportato (\'%2$s\')</string>
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommnadsLabel">CMD comuni</string>
+    <string name="DCCEXcommonCommandsLabel">CMD comuni</string>
     <string name="DCCEXsetTrackButtonLabel">Impostare</string>
     <string name="DccexSucceeded">L\'azione è riuscita</string>
     <string name="DCCEXturnoutClosed">Chiuso</string>
@@ -1015,5 +1028,30 @@
     <string name="order">Ordinare</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">Mostra sempre Lancia/Chiudi?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Mostra sempre entrambi i pulsanti Lancia e Chiudi per gli scambi, mai il pulsante Attiva/disattiva.</string>
+    <string name="DCCEXJoinTrackButtonLabel">Giuntura</string>
+    <string name="prefDoubleBackButtonToExitTitle">Doppio pulsante Indietro per uscire?</string>
+    <string name="prefDoubleBackButtonToExitSummary">Premendo due volte entro 3 secondi il pulsante \"Indietro\" di Android sulla schermata \"Accelerazione\" o \"Connessione\" si uscirà da Engine Driver</string>
+    <string name="prefHeartbeatResponseFactorTitle">Fattore di risposta del battito cardiaco</string>
+    <string name="prefHeartbeatResponseFactorSummary">Percentuale del periodo di heartbeat in cui inviare l\'heartbeat (50%-90%). Avrà effetto alla prossima connessione.</string>
+    <string name="server">Server</string>
+    <string name="toastWaitingForConnection">Timeout in attesa del messaggio WiThrottle \'VN\' da %1$s:%2$s. Disconnessione</string>
+    <string name="toastWaitingForConnectionDccEx">Timeout in attesa del messaggio DCC-EX \'iDCCEX...\' da %1$s:%2$s. Disconnessione</string>
+    <string name="toastAddressExceedsMax">L\'indirizzo \'%1$s\' supera il massimo supportato (\'%2$s\')</string>
+
+    <string name="air_reservoir">Serbatoio dell\'aria</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Tipo di freno del decodificatore</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activar las funciones de freno en el decodificador.</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Número de función baja de ESU</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">ESU: qué función de decodificador activar en un valor de freno bajo</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">Número de función media de ESU</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">ESU: qué función de decodificador activar en el valor medio del freno</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">Número de función alta de ESU</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">ESU: qué función de decodificador activar en un valor de freno alto</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">Valor de freno bajo de ESU (porcentaje)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU: qué porcentaje de freno activar el número de función bajo</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">Valor del freno medio ESU (porcentaje)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU: qué porcentaje de freno activar el número de función media</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valor de freno alto de ESU (porcentaje)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU: qué porcentaje de freno activar el número de función alto</string>
 
 </resources>

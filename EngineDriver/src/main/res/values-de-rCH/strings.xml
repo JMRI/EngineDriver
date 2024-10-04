@@ -61,16 +61,14 @@
     <string name="prefHostImportExportSummary">\'Import\' oder \'Export\' deiner Voreinstellungen für einen spezifischen Host in das \'\\Android\\data\\jmri.enginedriver\\files\\\' Verzeichnis. Der Host muss in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
 
     <string name="gamepadTestHelp">Nach unten rollen um eine vollständige Anleitung zu sehen…\n\nDrücke ALLE Dpad UND vier primäre Knöpfe oder das Gamepad WIRD NICHT FUNKTIONIEREN.\n\nWenn nicht alle Knöpfe aktiviert werden können, dann wechsle den Gamepad Modus (siehe Anleitung zu deinem Gamepad) oder versuche ein anderer Gamepad Typ (oben).\n\n\'ZURÜCK\' oder \'ABBRECHEN\' wird den Test beenden, aber das Gamepad WIRD NICHT FUNKTIONIEREN.\n\'ÜBERSPRINGEN\', oder dreimaliges Drücken des Gamepad Knopfes \'Geschwindigkeit verringern\' erzwingt einen guten Test, selbst wenn das Gamepad nicht einwandfrei funktioniert.\n\'ZURÜCKSETZEN\' lässt ED annehmen, dass bisher keine Gamepads benutzt wurden.\nWenn für den Test \'einfach\' gewählt wurde, wird einmaliges Drücken des Knopfes \'Geschwindigkeit verringern\' den Test überspringen.\n\nVerwende die \'Gamepad Test n\' Menüoptionen, um zu dieser Seite zurück zu kommen.</string>
-
-    <string name="gamepadTestCancelNonForced" tools:ignore="Typos">"Schliessen"</string>
-
+    <string name="gamepadTestCancelNonForced" tools:ignore="Typos">Schliessen</string>
     <string name="prefGamepadTestNowSummary">Erlaubt dir zu bestätigen, dass die gewählte Einstellung korrekt funktioniert.\nTest Seite wird SOFORT bei Auswahl gestartet.</string>
 
     <string name="toastShakeWebViewUnavailable">Web Anzeige muss zuerst in den Voreinstellungen ermöglicht werden.</string>
 
     <string name="toastPreferencesOutsideLimits" tools:ignore="Typos">Eingegebener Wert liegt ausserhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
 
-<!--    <string name="toastRoutesCommandSent">"Befehl geschickt zum Stellen der Fahrstrasse "</string>-->
+<!--    <string name="toastRoutesCommandSent">Befehl geschickt zum Stellen der Fahrstrasse </string>-->
 
     <string name="prefFlashlightSummary">Zeige Knopf für Taschenlampe in Fahrregler-, Weichen- und Fahrstrassenanzeigen?</string>
 

@@ -652,6 +652,18 @@ public class comm_thread extends Thread {
         }
     }
 
+    protected static void joinTracks() {
+        joinTracks(true);
+    }
+    protected static void joinTracks(boolean join) {
+        if (join) {
+            wifiSend("<1 JOIN>");
+        } else {
+            wifiSend("<0 PROG>");
+            wifiSend("<1 PROG>");
+        }
+    }
+
     protected void sendTurnout(String cmd) {
 //        Log.d("Engine_Driver", "comm_thread.sendTurnout: cmd=" + cmd);
         char action = cmd.charAt(0); //first char is action (C=close,T=throw,2=toggle)

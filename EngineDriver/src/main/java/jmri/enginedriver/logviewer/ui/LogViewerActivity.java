@@ -41,6 +41,7 @@ import java.util.List;
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
@@ -111,7 +112,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        LinearLayout statusLine = (LinearLayout) findViewById(R.id.status_line);
+        LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -127,6 +128,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
 
         Log.d("Engine_Driver", mainapp.getAboutInfo());
+        Log.d("Engine_Driver", mainapp.getAboutInfo(false));
 
     } // end onCreate
 
@@ -194,6 +196,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         super.onDestroy();
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
@@ -246,12 +253,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
-            process = Runtime.getRuntime().exec("logcat -f " + logFile);
+            Runtime.getRuntime().exec("logcat -f " + logFile);
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
             Log.d("Engine_Driver", "Logging started to: " + logFile);
             Log.d("Engine_Driver", mainapp.getAboutInfo());
+            Log.d("Engine_Driver", mainapp.getAboutInfo(false));
         } catch ( IOException e ) {
             e.printStackTrace();
         }

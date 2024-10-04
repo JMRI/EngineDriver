@@ -16,4 +16,23 @@
 <resources>
     <string name="introThemeSummary">Choose the colours and appearance of the whole app.</string>
 
+    <string name="app_name_turnouts">Engine Driver - Turnouts</string>
+    <string name="app_name_turnouts_short">Turnouts</string>
+
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirm that you want to remove all the Recent Turnouts</string>
+
+    <string name="prefSortOrderTurnoutsTitle">Turnouts Sort Order</string>
+    <string name="prefSortOrderTurnoutsSummary">Order that the Turnouts entries will appear, by default, each time you start Engine Driver</string>
+    <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Turnouts?</string>
+    <string name="prefSwipeThroughTurnoutsSummary">Include Turnouts Screen when swiping between screens</string>
+    <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Always show both the Throw and Close buttons for Turnouts, never the Toggle button.</string>
+
+    <string name="turnouts">Turnouts</string>
+    <string name="turnouts_direct_entry_label">Enter Turnout # or name</string>
+    <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
+    <string name="turnouts_location_label">Filter by Location</string>
+    <string name="turnouts_turnout">Turnout</string>
+    <string name="turnoutsRecentHeading">Recent Turnouts</string>
+    <string name="turnoutsSelectionTypeHeading">Turnout Selection Method</string>
 </resources>
