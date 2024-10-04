@@ -25,4 +25,12 @@
         <item>Colourful</item>
     </string-array>
 
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Fit - Shrink/expand</item>
+        <item>Fill - Crop one edge pair</item>
+        <item>Centre - No Scaling</item>
+        <item>Fit - Shrink only</item>
+        <item>Fill - Distort if needed</item>
+    </string-array>
+
 </resources>

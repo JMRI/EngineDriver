@@ -67,11 +67,11 @@
         <item >Switching &#8211; (2)</item>
         <item >Switching &#8211; Esquerda (1)</item>
         <item >Switching &#8211; Direita (1)</item>
-        <item >Switching &#8211; Horizontal (3)</item>
+        <item >Comutação horizontal (1-3)</item>
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Esquerda (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Esquerda (1-6)</item>
-        <item >Semi-Realistic Left (1)</item>
+        <item >Esquerda Semi-Realista (1)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -86,7 +86,7 @@
         <item >2</item>
     </string-array>
     -->
-    <string-array name="prefGamePadKeyEntries">
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item>Para Tudo</item>
         <item>Para</item>
         <item>Frente</item>
@@ -134,11 +134,11 @@
         <item>Buzina (IPLS)</item>
         <item>Chifre Curta (IPLS)</item>
         <item>Fale a velocidade atual</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>Neutro</item>
+        <item>Aumentar o freio</item>
+        <item>Diminuir Freio</item>
+        <item>Aumentar carga</item>
+        <item>Diminuir carga</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>
@@ -201,12 +201,17 @@
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Usar a configuração global do telefone</item>
         <item>Inglês (EUA) - padrão do Engine Driver</item>
+        <item>Inglês (Austrália)</item>
+        <item>Inglês (Canadá)</item>
+        <item>Inglês (Nova Zelândia)</item>
+        <item>Inglês (Reino Unido)</item>
         <item>Italiano</item>
         <item>Português</item>
         <item>Alemão</item>
         <item>Espanhol</item>
         <item>Catalão</item>
         <item>Francês</item>
+        <item>Francês (Canadá)</item>
         <item>Tcheco</item>
     </string-array>
 
@@ -215,7 +220,7 @@
         <item>Complexo de correspondência de texto - loco Chumbo sempre activado, Trail segue as regras abaixo</item>
         <item>Especial Exact - Chumbo e Tudo Trail activado se eles correspondem exactamente às etiquetas de função</item>
         <item>Especial Parcial - Chumbo e Tudo Trail ativado se eles correspondem parcialmente os rótulos de função</item>
-        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
+        <item>Parcial especial contém apenas - ativado se o rótulo da função contiver rótulo padrão</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->

@@ -45,7 +45,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+//import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -118,13 +118,14 @@ public class dcc_ex extends AppCompatActivity {
     Button previousCommandButton;
     Button nextCommandButton;
     Button writeTracksButton;
+    Button joinTracksButton;
     //    Button hideSendsButton;
     Button clearCommandsButton;
 
     private LinearLayout dexcProgrammingCommonCvsLayout;
     private LinearLayout dexcProgrammingAddressLayout;
     private LinearLayout dexcProgrammingCvLayout;
-    private final LinearLayout[] dexcDccexTracklayout = {null, null, null, null, null, null, null, null};
+//    private final LinearLayout[] dexcDccexTracklayout = {null, null, null, null, null, null, null, null};
     private LinearLayout dexcDccexTrackLinearLayout;
     Spinner dccexCommonCvsSpinner;
     Spinner dccexCommonCommandsSpinner;
@@ -448,7 +449,7 @@ public class dcc_ex extends AppCompatActivity {
 
                     if (TRACK_TYPES_SELECTABLE[typeIndex]) {
                         if (!TRACK_TYPES_NEED_ID[typeIndex]) {
-                            if (type=="AUTO") { // needs to be set to main first if AUTO is selected
+                            if (type.equals("AUTO")) { // needs to be set to main first if AUTO is selected
                                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " MAIN", 0);
                             }
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, 0);
@@ -481,6 +482,23 @@ public class dcc_ex extends AppCompatActivity {
             dccexSendsStr = "";
             refreshDccexView();
         }
+    }
+
+    public class JoinTracksButtonListener implements View.OnClickListener {
+        public void onClick(View v) {
+            if (!mainapp.dccexJoined) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_JOIN_TRACKS, "");
+                activateJoinedButton(true);
+            } else {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_UNJOIN_TRACKS, "");
+                activateJoinedButton(false);
+            }
+        }
+    }
+
+    void activateJoinedButton(boolean joined) {
+        mainapp.dccexJoined = joined;
+        joinTracksButton.setSelected(joined);
     }
 
 //    public class hide_sends_button_listener implements View.OnClickListener {
@@ -945,8 +963,12 @@ public class dcc_ex extends AppCompatActivity {
         WriteTracksButtonListener writeTracksButtonListener = new WriteTracksButtonListener();
         writeTracksButton.setOnClickListener(writeTracksButtonListener);
 
-        ScrollView dccexResponsesScrollView = findViewById(R.id.dexc_DccexResponsesScrollView);
-        ScrollView dccexSendsScrollView = findViewById(R.id.dexc_DccexSendsScrollView);
+        joinTracksButton = findViewById(R.id.dexc_DccexJoinTracksButton);
+        JoinTracksButtonListener joinTracksButtonListener = new JoinTracksButtonListener();
+        joinTracksButton.setOnClickListener(joinTracksButtonListener);
+
+//        ScrollView dccexResponsesScrollView = findViewById(R.id.dexc_DccexResponsesScrollView);
+//        ScrollView dccexSendsScrollView = findViewById(R.id.dexc_DccexSendsScrollView);
 
         clearCommandsButton = findViewById(R.id.dexc_DCCEXclearCommandsButton);
         ClearCommandsButtonListener clearCommandsButtonListener = new ClearCommandsButtonListener();
@@ -983,6 +1005,7 @@ public class dcc_ex extends AppCompatActivity {
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+        activateJoinedButton(mainapp.dccexJoined);
 
         if (menu != null) {
             mainapp.displayEStop(menu);

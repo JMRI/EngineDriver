@@ -36,7 +36,7 @@
     <string name="functionConsistHeader">Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
-    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, DCC-EX, MRC or DigiTrax WiThrottle server, or DCC-EX native server, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one to six locomotives. </string>
+    <string name="app_description">Engine Driver - Throttle for your Android phone.  This application can connect to a JMRI, DCC-EX, MRC or DigiTrax WiThrottle server, or DCC-EX native server, and in turn control your locomotives. Speed, direction, and up to 32 DCC functions are supported for one to six locomotives.</string>
     <string name="app_name_intro">Introduction</string>
     <string name="app_name_connect">Connect to Server</string>
     <string name="app_name_throttle">Throttle</string>
@@ -50,8 +50,7 @@
     <string name="app_name_routes">Routes</string>
     <string name="app_name_routes_long">Engine Driver - Routes</string>
     <string name="app_name_routes_short">Routes</string>
-    <string name="app_name_turnouts">Turnouts</string>
-    <string name="app_name_turnouts_long">Engine Driver - Turnouts</string>
+    <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_turnouts_short">Turnouts</string>
     <string name="app_name_about">❔About</string>
     <string name="app_name_web" translatable="false">Web</string>
@@ -82,8 +81,8 @@
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
-    <string name="roster_list">Select from Roster/Consist Entries</string>
-    <string name="rosterDetailsDialogTitle">"Roster details for "</string>
+    <string name="roster_list">Select from Roster / Consist Entries</string>
+    <string name="rosterDetailsDialogTitle">Roster details for</string>
     <string name="recent_engines">Select from Recent Locomotives</string>
     <string name="recent_consists">Select from Recent Consists</string>
 <!--    <string name="direction">Fwd</string>-->
@@ -124,8 +123,8 @@
     <string name="mrc_settings">MRC Settings</string>
     <string name="dccesp_settings">DCC ESP Settings</string>
     <string name="loco">Loco:</string>
-    <string name="loco_direction_left_extra">"\u00B7F\u00B7"</string>
-    <string name="loco_direction_right_extra">"\u00B7R\u00B7"</string>
+    <string name="loco_direction_left_extra">\u00B7F\u00B7</string>
+    <string name="loco_direction_right_extra">\u00B7R\u00B7</string>
     <string name="locoPressToSelect">Select</string>
     <string name="powerWillNotWorkTitle">Will Not Work!</string>
     <string name="powerWillNotWork">Server has the WiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
@@ -156,7 +155,7 @@
     <string name="press_to_toggle">Press button to toggle layout power state.</string>
     <string name="power_control_not_allowed">Power Control not allowed.  Change in Preferences/Settings on server.</string>
     <string name="reconnect_label">Reconnect Attempt Status</string>
-    <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press BackArrow to Exit.</string>
+    <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press \'Back\' to Exit.</string>
     <string name="reconnect_success">RECONNECTED.  Resuming normal operation.</string>
     <string name="fs_edit_notice">WARNING: changes to Default Functions Settings will be lost on exit - No SD card found.</string>
     <string name="ca_recent_conn_notice">Recent Connections unavailable - No SD card found.</string>
@@ -170,8 +169,8 @@
     <string name="volume_indicator" translatable="false">v</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="ok">"OK"</string>
-    <string name="cancel">"Cancel"</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string name="exit_text">Exit Engine Driver?</string>
     <string name="exit_title">Exit</string>
     <string name="steal_text">Steal address %1$s?</string>
@@ -199,7 +198,7 @@
     <string name="prefSwipeUpDownSummary">Options for swipe up or down on the Throttle screen</string>
     <string name="prefThrottleNameTitle">Throttle Name</string>
     <string name="prefThrottleNameDefaultValue" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefThrottleNameSummary">Set a name for this device (shown on WiThrottle Server)</string>
+    <string name="prefThrottleNameSummary">Set a name for this device (shown on JMRI WiThrottle Server)</string>
     <string name="prefThrottleOrientationTitle">Screen orientation</string>
     <string name="prefThrottleOrientationDefaultValue" translatable="false">Portrait</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefThrottleOrientationSummary">Screen orientation (except Web)</string>
@@ -221,7 +220,8 @@
     <string name="prefHideSliderSummary">Do not show speed slider, use speed buttons instead</string>
 
     <string name="prefHideSliderAndSpeedButtonsTitle">Hide Slider AND Speed Buttons?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Show neither speed slider nor speed buttons.
+        \nNote: Overrides the \'Hide Slider\', \'Slider Height\' and \'Display Speed buttons\' options.</string>
 
     <string name="prefDirChangeWhileMovingTitle">Direction change while moving?</string>
     <string name="prefDirChangeWhileMovingSummary">Allow direction changes when moving</string>
@@ -447,13 +447,13 @@
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
-    <string name="prefRosterFilterDefaultValue" translatable="false"> </string>
+    <string name="prefRosterFilterDefaultValue" translatable="false"></string>
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
     <string name="FilterRosterListFilterOwnerLabel" translatable="false">👤</string>
     <string name="FilterRosterListDownloadLabel">Download</string>
     <string name="FilterRosterListFilterByLabel" translatable="false">🔎</string>
-    <string name="rosterEmpty">Unable to find any entries in the Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
+    <string name="rosterEmpty">Unable to find any entries in the WiThrottle Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
     <string name="prefRosterOwnersFilterShowOptionTitle">Filter by Roster Owner</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
     <string name="prefRosterOwnersFilterDefaultOwner">All</string>
@@ -492,7 +492,7 @@
     <string name="prefSocketTimeoutMsSummary">Set socket read timeout in milliseconds</string>
     <string name="prefSocketTimeoutMsDefaultValue" translatable="false">500</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefHeartbeatResponseFactorTitle">Heartbeat Response Factor</string>
-    <string name="prefHeartbeatResponseFactorSummary">Percentage of the heartbeat period for when to send the heartbeat (50%-90%).\nWill take effect on next connection.</string>
+    <string name="prefHeartbeatResponseFactorSummary">Percentage of the heartbeat period for when to send the heartbeat (50%-90%). Will take effect on next connection.</string>
     <string name="prefHeartbeatResponseFactorDefaultValue" translatable="false">80</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTurnoutsTitle">Turnouts and Routes Preferences</string>
@@ -509,7 +509,7 @@
 
     <string name="prefScreenBrightnessDimTitle">Screen Dimming \% Value</string>
     <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
-    <string name="prefScreenBrightnessDimDefaultValue" translatable="false">"5"</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefScreenBrightnessDimDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="deviceSoundsMenu">Loco Sounds</string>
 
@@ -826,23 +826,23 @@
 \n
 \nFailure to follow the \'F\', \'S\' or \'L\' with the correct number of digits will ignore the command</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
-    <string name="gamepadTestIncomplete">"Test Incomplete"</string>
-    <string name="gamepadTestComplete">"Test Complete"</string>
-    <string name="gamepadTestCompleteToast">"Gamepad test completed successfully"</string>
-    <string name="gamepadTestInvalidKeycode">"Invalid Keycode for this mode"</string>
+    <string name="gamepadTestIncomplete">Test Incomplete</string>
+    <string name="gamepadTestComplete">Test Complete</string>
+    <string name="gamepadTestCompleteToast">Gamepad test completed successfully</string>
+    <string name="gamepadTestInvalidKeycode">Invalid Keycode for this mode</string>
 
-    <string name="gamepadTestReset">"Reset"</string>
-    <string name="gamepadTestCancel">"Cancel"</string>
-    <string name="gamepadTestCancelNonForced">"Close"</string>
-    <string name="gamepadTestSkip">"Skip"</string>
+    <string name="gamepadTestReset">Reset</string>
+    <string name="gamepadTestCancel">Cancel</string>
+    <string name="gamepadTestCancelNonForced">Close</string>
+    <string name="gamepadTestSkip">Skip</string>
 
-    <string name="gamepadTestKeyCodesUpAction" translatable="false">"\u2191"</string>
-    <string name="gamepadTestKeyCodesDownAction" translatable="false">"\u2193"</string>
+    <string name="gamepadTestKeyCodesUpAction" translatable="false">\u2191</string>
+    <string name="gamepadTestKeyCodesDownAction" translatable="false">\u2193</string>
 
-    <string name="gamepadTestKeyCodesUpCode">"Up"</string>
-    <string name="gamepadTestKeyCodesDownCode">"Dn"</string>
-    <string name="gamepadTestKeyCodesLeftCode">"Lf"</string>
-    <string name="gamepadTestKeyCodesRightCode">"Rt"</string>
+    <string name="gamepadTestKeyCodesUpCode">Up</string>
+    <string name="gamepadTestKeyCodesDownCode">Dn</string>
+    <string name="gamepadTestKeyCodesLeftCode">Lf</string>
+    <string name="gamepadTestKeyCodesRightCode">Rt</string>
 
     <!--    Gamepad test page -->
 
@@ -926,7 +926,7 @@
     <string name="toastPreferencesChangedForceWiFi">\'Allow Mobile Data\' preference changed.</string>
 
     <!--    Toast messages for the Routes Activity -->
-<!--    <string name="toastRoutesCommandSent">"Command sent to Set route "</string>-->
+<!--    <string name="toastRoutesCommandSent">Command sent to Set route </string>-->
 
     <!--    Toast messages for the Import/Export -->
     <string name="toastImportExportExportSucceeded">Preferences export to \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' succeeded.</string>
@@ -990,16 +990,16 @@
     <string name="prefTtsThrottleSpeedDefaultValue" translatable="false">Zero + Max</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefTtsGamepadTestTitle">On Gamepad Test start</string>
-    <string name="prefTtsGamepadTestSummary">When the gamepad test screen is launched </string>
+    <string name="prefTtsGamepadTestSummary">When the gamepad test screen is launched</string>
 
     <string name="prefTtsGamepadTestKeysTitle">On Gamepad Test key press</string>
     <string name="prefTtsGamepadTestKeysSummary">When each buttons is pressed in the gamepad test screen</string>
 
     <string name="prefTtsGamepadTestCompleteTitle">On Gamepad Test complete</string>
-    <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test screen is finished </string>
+    <string name="prefTtsGamepadTestCompleteSummary">When the gamepad test screen is finished</string>
 
 <!--    <string name="prefTurnMobileDataOnOffTitle">Mobile Data</string>-->
-<!--    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close </string>-->
+<!--    <string name="prefTurnMobileDataOnOffSummary">Turn Mobile Data off at start of Engine Driver and back on at close</string>-->
 
     <string name="TtsVolumeThrottle">Throttle</string>
     <string name="TtsGamepadThrottle">Throttle</string>
@@ -1069,10 +1069,10 @@
 
     <string name="prefConsistFollowString1DefaultValue">LIGHT</string>
     <string name="prefConsistFollowString2DefaultValue">WHISTLE,HORN,BELL</string>
-    <string name="prefConsistFollowStringOtherDefaultValue" />
+    <string name="prefConsistFollowStringOtherDefaultValue" translatable="false" />
     <string name="prefConsistFollowAction1DefaultValue" translatable="false">lead</string>
     <string name="prefConsistFollowAction2DefaultValue" translatable="false">lead</string>
-    <string name="prefConsistFollowActionOtherDefaultValue">lead</string>
+    <string name="prefConsistFollowActionOtherDefaultValue" translatable="false">lead</string>
 
     <string name="prefConsistFollowDefaultActionTitle">If All matches Fail Action</string>
     <string name="prefConsistFollowDefaultActionSummary">Which locos in the consist should react to the function buttons if none of the rules below are meet. (\'Complex\' matching rule only)</string>
@@ -1401,7 +1401,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
-    <string name="useProtocolDCCEX">Use WiThrottle or DCC-EX protocol?"</string>
+    <string name="useProtocolDCCEX">Use WiThrottle or DCC-EX protocol?</string>
     <string name="useProtocolDCCEXplusAutoHint">WiThrottle or DCC-EX protocol? (\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
@@ -1414,7 +1414,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefHapticFeedbackTitle">Haptic Feedback (Vibration)</string>
     <string name="prefHapticFeedbackSummary">Haptic feedback (vibrate) on speed changes</string>
-    <string name="prefHapticFeedbackDefaultValue" translatable="false">"None"</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefHapticFeedbackDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefFullScreenSwipeAreaTitle">Disable full screen Swipe?</string>
     <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
@@ -1424,11 +1424,11 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <!--    <string name="prefHapticFeedbackStepsTitle">Haptic Feedback Steps</string>-->
     <!--    <string name="prefHapticFeedbackStepsSummary">Number of steps for slider haptic feedback</string>-->
-    <!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">"10"</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
+    <!--    <string name="prefHapticFeedbackStepsDefaultValue" translatable="false">10</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
 
     <string name="prefHapticFeedbackDurationTitle">Haptic Feedback Duration</string>
     <string name="prefHapticFeedbackDurationSummary">Duration of each vibration (in milliseconds).</string>
-    <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">"25"</string>
+    <string name="prefHapticFeedbackDurationDefaultValue" translatable="false">25</string>
     <string name="prefHapticFeedbackButtonsTitle">Haptic Feedback on Button Presses</string>
     <string name="prefHapticFeedbackButtonsSummary">Haptic feedback (vibrate) on button presses.</string>
     <string name="LocoSelectMethodIDNGo">Request Loco ID</string>
@@ -1466,9 +1466,10 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="witPomMaxValueWarning">Value \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
     <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommnadsLabel" >Common CMDs</string>
+    <string name="DCCEXcommonCommandsLabel" >Common CMDs</string>
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
+    <string name="DCCEXJoinTrackButtonLabel">Join</string>
 
     <string name="DccexSucceeded">Action Succeeded</string>
     <string name="DccexFailed">Action Failed</string>

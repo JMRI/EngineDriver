@@ -66,11 +66,11 @@
         <item >Switching &#8211; (2)</item>
         <item >Switching &#8211; izquierdo (1)</item>
         <item >Switching &#8211; derecha (1)</item>
-        <item >Switching &#8211; Horizontal (3)</item>
+        <item >Switching - Horizontal (1-3)</item>
         <item>Simple &#8211; tablet recomendado (1&#8211;6)</item>
         <item>Tablet Switching Left (1&#8211;6)</item>
         <item>Tablet Vertical Left (1&#8211;6)</item>
-        <item >Semi-Realistic Left (1)</item>
+        <item >Izquierda semirealista (1)</item>
     </string-array>
     <string-array name="DisplayClockEntries">
         <item>Ninguno</item>
@@ -84,7 +84,7 @@
         <item >2</item>
     </string-array>
     -->
-    <string-array name="prefGamePadKeyEntries">
+    <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item>Detiene todo</item>
         <item>Detiene</item>
         <item>Adelante</item>
@@ -132,11 +132,11 @@
         <item>Bocina (IPLS)</item>
         <item>Cuerno Corto (IPLS)</item>
         <item>Hablar la velocidad actual</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>Neutral</item>
+        <item>Aumentar freno</item>
+        <item>Disminuir freno</item>
+        <item>aumentar la carga</item>
+        <item>Disminuir la carga</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Ninguno</item>
@@ -184,12 +184,17 @@
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Utilizar los parámetros globales del teléfono</item>
         <item>Inglés (USA) - Engine Driver\'s por defecto</item>
+        <item>Inglés (Australia)</item>
+        <item>Inglés (Canadá)</item>
+        <item>Inglés (Nueva Zelanda)</item>
+        <item>Inglés (Reino Unido)</item>
         <item>Italiano</item>
         <item>Portugués</item>
         <item>Alemán</item>
         <item>Español</item>
         <item>Catalán</item>
         <item>Francés</item>
+        <item>Francés (Canadá)</item>
         <item>Checo</item>
     </string-array>
 
@@ -198,7 +203,7 @@
         <item>Complejo texto coincidente - loco plomo siempre activado, Trail sigue las reglas siguientes</item>
         <item>Especial exacta - El plomo y el Camino para activarse si coinciden exactamente las etiquetas de función</item>
         <item>Especial Parcial - Plomo y Camino para activarse si coinciden parcialmente las etiquetas de función</item>
-        <item>Special Partial Contains Only  - Activated if function label contains Default Label</item>
+        <item>Sólo contiene parcial especial: se activa si la etiqueta de función contiene la etiqueta predeterminada</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>Locomotora delantera - Coincidencia parcial</item>

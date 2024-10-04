@@ -52,7 +52,7 @@
         android:layout_weight="0.25"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="10sp"
-        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="1sp"
         android:text="testing"
         tools:ignore="HardcodedText,UnusedAttribute" />

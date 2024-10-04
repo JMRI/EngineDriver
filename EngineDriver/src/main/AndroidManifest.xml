@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:versionCode="188"
-    android:versionName="2.38.188" android:installLocation="auto">
+    android:versionName="2.38.188ad" android:installLocation="auto">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
@@ -167,7 +167,7 @@
         <activity
             android:name=".turnouts"
             android:alwaysRetainTaskState="true"
-            android:label="@string/app_name_turnouts_long"
+            android:label="@string/app_name_turnouts"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
             android:theme="@style/app_theme_black" >

@@ -147,10 +147,10 @@
                         style="?attr/floating_text_style"
                         android:layout_width="47dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:paddingLeft="5dp"
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonDefaultFunctions"
-                        android:layout_gravity="center"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
                 </LinearLayout>
@@ -394,6 +394,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="120sp"
                 android:layout_margin="0sp"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="5sp"
                 android:weightSum="1"
@@ -403,7 +404,7 @@
                     android:id="@+id/dexc_DccexTrackScrollView"
                     android:layout_width="0sp"
                     android:layout_height="fill_parent"
-                    android:layout_weight=".85"
+                    android:layout_weight=".83"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -906,21 +907,50 @@
 
                 </ScrollView>
 
-                <Button
-                    android:id="@+id/dexc_DccexWriteTracksButton"
-                    style="?attr/ed_small_button_style"
-                    android:layout_width="0sp"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".15"
-                    android:autoSizeMaxTextSize="20sp"
-                    android:autoSizeMinTextSize="8sp"
-                    android:autoSizeStepGranularity="1sp"
-                    android:padding="0sp"
-                    android:text="@string/DCCEXsetTrackButtonLabel"
-                    tools:ignore="UnusedAttribute" />
+                    android:layout_weight=".17"
+                    android:layout_marginTop="8sp"
+                    android:background="#00000000"
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
+                    <Button
+                        android:id="@+id/dexc_DccexWriteTracksButton"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="40sp"
+                        android:autoSizeMaxTextSize="18sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:padding="0dp"
+                        android:text="@string/DCCEXsetTrackButtonLabel"
+                        tools:ignore="UnusedAttribute" />
+
+                    <Button
+                        android:id="@+id/dexc_DccexJoinTracksButton"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="32sp"
+                        android:autoSizeMaxTextSize="18sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeStepGranularity="1sp"
+                        android:layout_marginTop="10dp"
+                        android:padding="0sp"
+                        android:text="@string/DCCEXJoinTrackButtonLabel"
+                        tools:ignore="UnusedAttribute" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="6sp"
+                android:background="#888888"
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -985,7 +1015,7 @@
                             android:id="@+id/dexc_DccexPreviousCommandButton"
                             style="?attr/ed_small_button_style"
                             android:layout_width="fill_parent"
-                            android:layout_height="22sp"
+                            android:layout_height="26dp"
                             android:layout_weight=".5"
                             android:padding="2sp"
                             android:text="@string/DccexPreviousCommandButtonLabel" />
@@ -997,7 +1027,7 @@
                             android:id="@+id/dexc_DccexNextCommandButton"
                             style="?attr/ed_small_button_style"
                             android:layout_width="fill_parent"
-                            android:layout_height="22sp"
+                            android:layout_height="22dp"
                             android:layout_weight=".5"
                             android:padding="2sp"
                             android:text="@string/DccexNextCommandButtonLabel" />
@@ -1023,7 +1053,7 @@
                     android:layout_weight=".3"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DCCEXcommonCommnadsLabel"
+                    android:text="@string/DCCEXcommonCommandsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />

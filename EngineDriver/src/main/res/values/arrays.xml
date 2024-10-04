@@ -1587,7 +1587,7 @@
         <item>Colorful</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
-        <item>Default</item>
+        <item>Original (Checker plate)</item>
         <item>High Contrast</item>
         <item>Outline</item>
         <item>Dark</item>
@@ -1690,23 +1690,33 @@
     <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
         <item>en_US</item>
+        <item>en_AU</item>
+        <item>en_CA</item>
+        <item>en_NZ</item>
+        <item>en_GB</item>
         <item>it</item>
         <item>pt</item>
         <item>de</item>
         <item>es</item>
         <item>ca</item>
         <item>fr</item>
+        <item>fr_CA</item>
         <item>cs</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
-        <item>English (US) - Engine Driver\'s default </item>
+        <item>English (US) - Engine Driver\'s default</item>
+        <item>English (Australia)</item>
+        <item>English (Canada)</item>
+        <item>English (New Zealand)</item>
+        <item>English (United Kingdom)</item>
         <item>Italian</item>
         <item>Portuguese</item>
         <item>German</item>
         <item>Spanish</item>
         <item>Catalan</item>
         <item>French</item>
+        <item>Canadian French</item>
         <item>Czech</item>
     </string-array>
 

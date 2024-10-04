@@ -287,6 +287,16 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.DCCEX_JOIN_TRACKS: { // DCC-EX only
+            comm_thread.joinTracks();
+            break;
+         }
+
+         case message_type.DCCEX_UNJOIN_TRACKS: { // DCC-EX only
+            comm_thread.joinTracks(false);
+            break;
+         }
+
          case message_type.WRITE_TRACK_POWER: { // DCC-EX only
             String [] args = msg.obj.toString().split(" ");
             comm_thread.sendTrackPower(args[0], msg.arg1);

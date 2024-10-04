@@ -217,6 +217,8 @@ public class select_loco extends AppCompatActivity {
                 Log.w("Engine_Driver", "select_loco: refreshRosterList(): xml roster not available");
             }
 
+            int position = -1;
+
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
@@ -242,6 +244,9 @@ public class select_loco extends AppCompatActivity {
                         }
                     }
                     hm.put("roster_owner", owner);
+                    position++;
+                    hm.put("roster_position", String.format("%04d",position));
+
 
                     boolean includeInList = false;
                     if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
@@ -292,6 +297,8 @@ public class select_loco extends AppCompatActivity {
                     hm.put("roster_address", consist_addr);
                     hm.put("roster_entry_type", "consist");
                     hm.put("roster_owner", "");
+                    position++;
+                    hm.put("roster_position", String.format("%04d",position));
 
                     // add temp hashmap to list which view is hooked to
                     rosterList.add(hm);
@@ -305,12 +312,20 @@ public class select_loco extends AppCompatActivity {
                     int rslt;
                     String s0;
                     String s1;
-                    if (mainapp.rosterOrder == sort_type.NAME) {
-                        s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
-                        s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
-                    } else {
-                        s0 = threaded_application.formatNumberInName(arg0.get("roster_address"));
-                        s1 = threaded_application.formatNumberInName(arg1.get("roster_address"));
+                    switch (mainapp.rosterOrder) {
+                        case sort_type.NAME:
+                        default:
+                            s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
+                            s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
+                            break;
+                        case sort_type.ID:
+                            s0 = threaded_application.formatNumberInName(arg0.get("roster_address"));
+                            s1 = threaded_application.formatNumberInName(arg1.get("roster_address"));
+                            break;
+                        case sort_type.POSITION:
+                            s0 = threaded_application.formatNumberInName(arg0.get("roster_position"));
+                            s1 = threaded_application.formatNumberInName(arg1.get("roster_position"));
+                            break;
                     }
                     rslt = s0.compareTo(s1);
                     return rslt;
@@ -1168,10 +1183,16 @@ public class select_loco extends AppCompatActivity {
         SortRosterButtonListener() {}
 
         public void onClick(View v) {
-            if (mainapp.rosterOrder==sort_type.NAME) {
-                mainapp.rosterOrder=sort_type.ID;
-            } else {
-                mainapp.rosterOrder=sort_type.NAME;
+            switch (mainapp.rosterOrder) {
+                case sort_type.NAME:
+                    mainapp.rosterOrder = sort_type.ID;
+                    break;
+                case sort_type.ID:
+                    mainapp.rosterOrder = sort_type.POSITION;
+                    break;
+                case sort_type.POSITION:
+                default:
+                    mainapp.rosterOrder = sort_type.NAME;
             }
             refreshRosterList();
             mainapp.toastSortType(mainapp.rosterOrder);
@@ -1484,7 +1505,7 @@ public class select_loco extends AppCompatActivity {
         // put pointer to this activity's handler in main app's shared variable
         mainapp.select_loco_msg_handler = new SelectLocoHandler(Looper.getMainLooper());
 
-        getDefaultSortOrderRoster();
+//        getDefaultSortOrderRoster();
         prefRosterFilter = prefs.getString("prefRosterFilter", this.getResources().getString(R.string.prefRosterFilterDefaultValue));
         prefRosterRecentLocoNames = prefs.getBoolean("prefRosterRecentLocoNames",
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
@@ -2536,22 +2557,6 @@ public class select_loco extends AppCompatActivity {
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-        }
-    }
-
-    void getDefaultSortOrderRoster() {
-        String prefSortOrderRoster = prefs.getString("prefSortOrderRoster", this.getResources().getString(R.string.prefSortOrderRosterDefaultValue));
-        switch (prefSortOrderRoster) {
-            default:
-            case "name":
-                mainapp.rosterOrder = sort_type.NAME;
-                break;
-            case "id":
-                mainapp.rosterOrder = sort_type.ID;
-                break;
-            case "position":
-                mainapp.rosterOrder = sort_type.POSITION;
-                break;
         }
     }
 }
