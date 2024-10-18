@@ -203,6 +203,7 @@ public class select_loco extends AppCompatActivity {
     private int maxAddr = 9999;
 
     // populate the on-screen roster view from global hashmap
+    @SuppressLint("DefaultLocale")
     public void refreshRosterList() {
         // clear and rebuild
         rosterList.clear();  // local list. For UI
@@ -335,7 +336,7 @@ public class select_loco extends AppCompatActivity {
 
             rosterListAdapter.notifyDataSetChanged();
             View v = findViewById(R.id.roster_list_heading);
-            v.setVisibility(View.VISIBLE);
+            if (prefSelectLocoMethod == which_method.ROSTER) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
             v = findViewById(R.id.filter_roster_text);
             v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list);
@@ -646,7 +647,7 @@ public class select_loco extends AppCompatActivity {
                     String lead = mainapp.consists[whichThrottle].getLeadAddr();
                     if (lead.equals(sAddr)) {                        // only process if for lead engine in consist
                         processRosterFunctionString("RF29}|{1234(L)"
-                                + importExportPreferences.recent_loco_functions_list.get(position), whichThrottle);  //prepend some stuff to match old-style
+                                + importExportPreferences.recentLocoFunctionsList.get(position), whichThrottle);  //prepend some stuff to match old-style
                         mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                     }
                 }
@@ -771,34 +772,34 @@ public class select_loco extends AppCompatActivity {
 
             // check if it is already in the list and remove it
             String keepFunctions = "";
-            for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+            for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
                 Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): vLocoName='"+locoName+"', address="+locoAddress+", size="+locoAddressSize);
-                Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): sLocoName='"+importExportPreferences.recent_loco_name_list.get(i)
-                        + "', address=" + importExportPreferences.recent_loco_address_list.get(i)
-                        + ", size="+importExportPreferences.recent_loco_address_size_list.get(i));
-                if (locoAddress == importExportPreferences.recent_loco_address_list.get(i)
-                        && locoAddressSize == importExportPreferences.recent_loco_address_size_list.get(i)
-                        && locoName.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+                Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): sLocoName='"+importExportPreferences.recentLocoNameList.get(i)
+                        + "', address=" + importExportPreferences.recentLocoAddressList.get(i)
+                        + ", size="+importExportPreferences.recentLocoAddressSizeList.get(i));
+                if (locoAddress == importExportPreferences.recentLocoAddressList.get(i)
+                        && locoAddressSize == importExportPreferences.recentLocoAddressSizeList.get(i)
+                        && locoName.equals(importExportPreferences.recentLocoNameList.get(i))) {
 
-                    keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
+                    keepFunctions = importExportPreferences.recentLocoFunctionsList.get(i);
                     if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
-                    importExportPreferences.recent_loco_address_list.remove(i);
-                    importExportPreferences.recent_loco_address_size_list.remove(i);
-                    importExportPreferences.recent_loco_name_list.remove(i);
-                    importExportPreferences.recent_loco_source_list.remove(i);
-                    importExportPreferences.recent_loco_functions_list.remove(i);
+                    importExportPreferences.recentLocoAddressList.remove(i);
+                    importExportPreferences.recentLocoAddressSizeList.remove(i);
+                    importExportPreferences.recentLocoNameList.remove(i);
+                    importExportPreferences.recentLocoSourceList.remove(i);
+                    importExportPreferences.recentLocoFunctionsList.remove(i);
                     Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
 
             // now append it to the beginning of the list
-            importExportPreferences.recent_loco_address_list.add(0, locoAddress);
-            importExportPreferences.recent_loco_address_size_list.add(0, locoAddressSize);
-            importExportPreferences.recent_loco_name_list.add(0, locoName);
-            importExportPreferences.recent_loco_source_list.add(0, locoSource);
-            importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);
+            importExportPreferences.recentLocoAddressList.add(0, locoAddress);
+            importExportPreferences.recentLocoAddressSizeList.add(0, locoAddressSize);
+            importExportPreferences.recentLocoNameList.add(0, locoName);
+            importExportPreferences.recentLocoSourceList.add(0, locoSource);
+            importExportPreferences.recentLocoFunctionsList.add(0, keepFunctions);
             Log.d("Engine_Driver", "select_loco: saveRecentLocosList(): Loco '"+ locoName + "' added to Recents");
         }
 
@@ -806,11 +807,11 @@ public class select_loco extends AppCompatActivity {
     }
 
     private void loadRecentLocosList(boolean reload) {
-        importExportPreferences.recent_loco_address_list = new ArrayList<>();
-        importExportPreferences.recent_loco_address_size_list = new ArrayList<>();
-        importExportPreferences.recent_loco_name_list = new ArrayList<>();
-        importExportPreferences.recent_loco_source_list = new ArrayList<>();
-        importExportPreferences.recent_loco_functions_list = new ArrayList<>();
+        importExportPreferences.recentLocoAddressList = new ArrayList<>();
+        importExportPreferences.recentLocoAddressSizeList = new ArrayList<>();
+        importExportPreferences.recentLocoNameList = new ArrayList<>();
+        importExportPreferences.recentLocoSourceList = new ArrayList<>();
+        importExportPreferences.recentLocoFunctionsList = new ArrayList<>();
         if (reload) {
             recentEngineList = new ArrayList<>();
         }
@@ -825,28 +826,28 @@ public class select_loco extends AppCompatActivity {
             rbRecent.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
 
-            importExportPreferences.getRecentLocosListFromFile();
+            importExportPreferences.loadRecentLocosListFromFile();
 
-            for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
+            for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
                 String engineAddressString = importExportPreferences.locoAddressToString(
-                        importExportPreferences.recent_loco_address_list.get(i),
-                        importExportPreferences.recent_loco_address_size_list.get(i), false);
-                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString, importExportPreferences.recent_loco_name_list.get(i));
+                        importExportPreferences.recentLocoAddressList.get(i),
+                        importExportPreferences.recentLocoAddressSizeList.get(i), false);
+                String engineIconUrl = getLocoIconUrlFromRoster(engineAddressString, importExportPreferences.recentLocoNameList.get(i));
 
                 hm.put("engine_icon", engineIconUrl);
-                hm.put("engine", importExportPreferences.recent_loco_name_list.get(i)); // the larger loco name text
+                hm.put("engine", importExportPreferences.recentLocoNameList.get(i)); // the larger loco name text
                 hm.put("engine_name", importExportPreferences.locoAddressToHtml(
-                        importExportPreferences.recent_loco_address_list.get(i),
-                        importExportPreferences.recent_loco_address_size_list.get(i),
-                        importExportPreferences.recent_loco_source_list.get(i)));   // the small loco address field at the top of the row
-                hm.put("locoAddress", Integer.toString(importExportPreferences.recent_loco_address_list.get(i)));
+                        importExportPreferences.recentLocoAddressList.get(i),
+                        importExportPreferences.recentLocoAddressSizeList.get(i),
+                        importExportPreferences.recentLocoSourceList.get(i)));   // the small loco address field at the top of the row
+                hm.put("locoAddress", Integer.toString(importExportPreferences.recentLocoAddressList.get(i)));
                 hm.put("last_used", Integer.toString(i));
-                hm.put("functions", importExportPreferences.recent_loco_functions_list.get(i));
+                hm.put("functions", importExportPreferences.recentLocoFunctionsList.get(i));
                 recentEngineList.add(hm);
             }
 
-            if (importExportPreferences.recent_loco_address_list.isEmpty()) {  // if the list is empty, hide the radio button
+            if (importExportPreferences.recentLocoAddressList.isEmpty()) {  // if the list is empty, hide the radio button
                 rbRecent.setVisibility(GONE);
             } else {
 
@@ -901,7 +902,7 @@ public class select_loco extends AppCompatActivity {
             v.setText(getString(R.string.sl_recent_engine_notice));
             myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
-            importExportPreferences.getRecentConsistsListFromFile();
+            importExportPreferences.loadRecentConsistsListFromFile();
             for (int i = 0; i < importExportPreferences.consistEngineAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
                 hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.consistNameHtmlList.get(i),
@@ -1158,7 +1159,7 @@ public class select_loco extends AppCompatActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
 //                            downloadRosterToRecents();
-                            importExportPreferences.getRecentLocosListFromFile();
+                            importExportPreferences.loadRecentLocosListFromFile();
                             importExportPreferences.downloadRosterToRecents(context,prefs,mainapp);
                             recreate();
                             break;
@@ -1270,12 +1271,12 @@ public class select_loco extends AppCompatActivity {
                     clearRecentListItem(position);
                 }
             } else {  //no swipe
-                locoAddress = importExportPreferences.recent_loco_address_list.get(position);
-                locoAddressSize = importExportPreferences.recent_loco_address_size_list.get(position);
-                locoSource = importExportPreferences.recent_loco_source_list.get(position);
-                locoName = importExportPreferences.recent_loco_name_list.get(position);
+                locoAddress = importExportPreferences.recentLocoAddressList.get(position);
+                locoAddressSize = importExportPreferences.recentLocoAddressSizeList.get(position);
+                locoSource = importExportPreferences.recentLocoSourceList.get(position);
+                locoName = importExportPreferences.recentLocoNameList.get(position);
                 // simple map of functions. Only used by 'Recent Locos' temporarily to retrieve the fucntions.
-                String functions = importExportPreferences.recent_loco_functions_list.get(position);
+                String functions = importExportPreferences.recentLocoFunctionsList.get(position);
                 if (locoSource == source_type.UNKNOWN) {
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, false), true);
                 }
@@ -1676,7 +1677,7 @@ public class select_loco extends AppCompatActivity {
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", which_method.FIRST);
         // make sure the radio button will be pointing to something valid
         if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_CONSISTS)))
-                | ((importExportPreferences.recent_loco_address_list.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)))
+                | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)))
                 | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(which_method.IDNGO))) {
             prefSelectLocoMethod = which_method.ADDRESS;
         }
@@ -1798,7 +1799,7 @@ public class select_loco extends AppCompatActivity {
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
 
                 if (!mainapp.shownToastRoster) { // only show it once
-                    mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastRosterHelp), Toast.LENGTH_LONG);
+                    mainapp.safeToastInstructional(R.string.toastRosterHelp, Toast.LENGTH_LONG);
                     mainapp.shownToastRoster = true;
                 }
                 hideSoftKeyboard(rbAddress);
@@ -1808,8 +1809,7 @@ public class select_loco extends AppCompatActivity {
                 rlRecentHeader.setVisibility(View.VISIBLE);
                 llRecent.setVisibility(View.VISIBLE);
                 rbRecent.setChecked(true);
-                mainapp.shownToastRecentLocos = mainapp.safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(R.string.toastRecentsHelp),
-                        Toast.LENGTH_LONG, mainapp.shownToastRecentLocos);
+                mainapp.shownToastRecentLocos = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentLocos);
                 hideSoftKeyboard(rbAddress);
                 break;
             }
@@ -1817,8 +1817,7 @@ public class select_loco extends AppCompatActivity {
                 rlRecentConsistsHeader.setVisibility(View.VISIBLE);
                 llRecentConsists.setVisibility(View.VISIBLE);
                 rbRecentConsists.setChecked(true);
-                mainapp.shownToastRecentConsists = mainapp.safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp),
-                        Toast.LENGTH_LONG, mainapp.shownToastRecentConsists);
+                mainapp.shownToastRecentConsists = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentConsistsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentConsists);
                 hideSoftKeyboard(rbAddress);
                 break;
             }
@@ -2093,9 +2092,9 @@ public class select_loco extends AppCompatActivity {
 
     /** @noinspection SameReturnValue*/ // long click for the recent loco list items.
     protected boolean onLongRecentListItemClick(int position) {
-        if (importExportPreferences.recent_loco_source_list.get(position) == source_type.ROSTER) {
-            String rosterEntryName = importExportPreferences.recent_loco_name_list.get(position);
-            Integer rosterEntryAddress = importExportPreferences.recent_loco_address_list.get(position);
+        if (importExportPreferences.recentLocoSourceList.get(position) == source_type.ROSTER) {
+            String rosterEntryName = importExportPreferences.recentLocoNameList.get(position);
+            Integer rosterEntryAddress = importExportPreferences.recentLocoAddressList.get(position);
             RosterEntry re = null;
             if (mainapp.rosterJmriWeb != null) {
                 re = mainapp.rosterJmriWeb.get(rosterEntryName);
@@ -2114,11 +2113,11 @@ public class select_loco extends AppCompatActivity {
     //  Clears the entry from the list
     protected void clearRecentListItem(final int position) {
 
-        importExportPreferences.recent_loco_address_list.remove(position);
-        importExportPreferences.recent_loco_address_size_list.remove(position);
-        importExportPreferences.recent_loco_name_list.remove(position);
-        importExportPreferences.recent_loco_source_list.remove(position);
-        importExportPreferences.recent_loco_functions_list.remove(position);
+        importExportPreferences.recentLocoAddressList.remove(position);
+        importExportPreferences.recentLocoAddressSizeList.remove(position);
+        importExportPreferences.recentLocoNameList.remove(position);
+        importExportPreferences.recentLocoSourceList.remove(position);
+        importExportPreferences.recentLocoFunctionsList.remove(position);
 
         removingLocoOrForceReload = true;
 
@@ -2136,7 +2135,7 @@ public class select_loco extends AppCompatActivity {
                 recentEngineList.remove(position);
                 saveRecentLocosList(true);
                 recentListView.invalidateViews();
-                mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastRecentCleared), Toast.LENGTH_SHORT);
+                mainapp.safeToastInstructional(R.string.toastRecentCleared, Toast.LENGTH_SHORT);
             }
 
             @Override
@@ -2178,7 +2177,7 @@ public class select_loco extends AppCompatActivity {
                 recent_consists_list.remove(position);
                 updateRecentConsists(true);
                 consists_list_view.invalidateViews();
-                mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastRecentConsistCleared), Toast.LENGTH_SHORT);
+                mainapp.safeToastInstructional(R.string.toastRecentConsistCleared, Toast.LENGTH_SHORT);
             }
 
             @Override
@@ -2387,7 +2386,7 @@ public class select_loco extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText edt = dialogView.findViewById(R.id.editRecentName);
-        edt.setText(importExportPreferences.recent_loco_name_list.get(pos));
+        edt.setText(importExportPreferences.recentLocoNameList.get(pos));
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentsNameEditTitle));
         dialogBuilder.setMessage(getApplicationContext().getResources().getString(R.string.RecentsNameEditText));
@@ -2395,7 +2394,7 @@ public class select_loco extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String rslt = edt.getText().toString();
                 if (!rslt.isEmpty()) {
-                    importExportPreferences.recent_loco_name_list.set(pos, rslt);
+                    importExportPreferences.recentLocoNameList.set(pos, rslt);
                     removingLocoOrForceReload = true;
                     saveRecentLocosList(true);
                     loadRecentLocosList(true);

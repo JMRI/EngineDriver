@@ -16,10 +16,12 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string-array name="address_size">
+    <string-array name="address_size" translatable="false">
         <item>Short</item>
         <item>Long</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="address_size_defaultsEntries">  <!-- display version -->
         <item>Short</item>
@@ -31,6 +33,8 @@
         <item>Long</item>
         <item>Auto</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentage</item>
@@ -51,6 +55,8 @@
         <item>126</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
         <item>Percentage</item>
         <item>8 steps</item>
@@ -63,6 +69,8 @@
         <item>28</item>
         <item>126</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">  <!-- display version -->
         <item>Percentage</item>
@@ -87,6 +95,8 @@
         <item>9</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>None</item>
         <item>ESU (3 Brake Levels)</item>
@@ -95,6 +105,8 @@
         <item>none</item>
         <item>esu</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>none</item>
@@ -106,6 +118,8 @@
         <item>Top</item>
         <item>Bottom</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="OrientationEntries">  <!-- display version -->
         <item>Portrait</item>
@@ -120,6 +134,8 @@
         <item>Auto-Web</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="WebOrientationEntries">  <!-- display version -->
         <item>Portrait</item>
         <item>Landscape</item>
@@ -130,6 +146,8 @@
         <item>Landscape</item>
         <item>Auto-Rotate</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="deviceSoundsEntries">  <!-- display version -->
         <item>None</item>
@@ -152,6 +170,8 @@
         <item>dieselNW2</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->
         <item >One</item>
         <item >Two</item>
@@ -168,6 +188,8 @@
         <item >Five</item>
         <item >Six</item>
     </string-array>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item tools:ignore="TypographyDashes">Horizontal (1-3)</item>
@@ -254,6 +276,8 @@
         <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="DisplayClockEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >0</item>
         <item >1</item>
@@ -264,6 +288,8 @@
         <item >12 Hr format</item>
         <item >24 hr format</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefGamePadTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
@@ -284,7 +310,6 @@
         <item>Keyboard</item>
         <item>Volume</item>
     </string-array>
-
     <string-array name="prefGamePadTypeEntries">  <!-- display version -->
         <item >None</item>
         <item >Mocute iCade</item>
@@ -305,6 +330,8 @@
         <item >USB Volume Dial</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefSwipeUpOptionsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item >None</item>
         <item >Hide Web View</item>
@@ -313,7 +340,6 @@
         <item >Immersive Mode</item>
         <item >Switch Layouts</item>
     </string-array>
-
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
         <item >None</item>
         <item >Hide Web View\n(requires \'Throttle Web View\' preference)</item>
@@ -322,6 +348,8 @@
         <item >Immersive Mode temporarily enable-disable</item>
         <item >Switch Throttle Screen Layouts</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
         <item >All Stop</item>
@@ -377,7 +405,6 @@
         <item >Increase Load</item>
         <item >Decrease Load</item>
     </string-array>
-
     <string-array name="prefGamePadKeyEntryValues" translatable="false">
         <item >All Stop</item>
         <item >Stop</item>
@@ -432,7 +459,8 @@
         <item >Increase Load</item>
         <item >Decrease Load</item>
     </string-array>
-    <!--- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <integer-array name="prefGamePadiCade" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
@@ -1110,6 +1138,8 @@
         <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="gamepadTestButtonLabelsDefault">
         <item> </item>
         <item>Select | Enter</item>
@@ -1369,6 +1399,8 @@
         <item>Function 31</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="dccCvsEntries">  <!-- display version -->
         <item>&lt;select&gt;</item>
         <item>Vstart</item>
@@ -1429,6 +1461,8 @@
         <item>66</item>
         <item>95</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="dccExCommonCommandsEntries">  <!-- display version -->
         <item>&lt;select&gt;</item>
@@ -1503,6 +1537,8 @@
         <item>1</item>  // D RAM
     </integer-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Programming Track (Service mode)</item>
         <item>Program on Main (Operation mode)</item>
@@ -1513,6 +1549,8 @@
         <item>MAIN</item>
         <item>TRACK</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>NONE</item>  <!-- if less than v4.2.68 this needs to be changed to OFF -->
@@ -1535,17 +1573,20 @@
         <item>7</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
         <item>(no function)</item>
         <item>All Stop</item>
         <item>Forward/Reverse Toggle</item>
     </string-array>
-
     <string-array name="prefGamePadDoublePressStopEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>(no function)</item>
         <item>All Stop</item>
         <item>Forward/Reverse Toggle</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>None</item>
@@ -1553,13 +1594,14 @@
         <item>Import</item>
         <item>Reset</item>
     </string-array>
-
     <string-array name="prefImportExportEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Export</item>
         <item>Import</item>
         <item>Reset</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefAutoImportExportEntries">  <!-- display version -->
         <item>None</item>
@@ -1572,12 +1614,16 @@
         <item>Connect Only</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefHostImportExportEntries">   <!-- this is dynamically built so does not follow the norms -->
         <item>None</item>
     </string-array>
     <string-array name="prefHostImportExportEntryValues">   <!-- this is dynamically built so does not follow the norms -->
         <item>None</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefThemeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
@@ -1594,6 +1640,8 @@
         <item>Colorful</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefSelectedLocoIndicatorEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Both</item>
@@ -1604,6 +1652,8 @@
         <item>Both Volume and Gamepad 1</item>
         <item>Gamepad 1 only</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefAccelerometerShakeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
@@ -1622,6 +1672,8 @@
         <item>All Stop</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefTtsWhenEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Key</item>
@@ -1631,6 +1683,8 @@
         <item>Key events only</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefTtsThrottleResponseEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Throttle</item>
@@ -1638,7 +1692,6 @@
         <item>Speed</item>
         <item>LocoSpeed</item>
     </string-array>
-
     <string-array name="prefTtsThrottleResponseEntries">  <!-- display version -->
         <item>None</item>
         <item>Throttle</item>
@@ -1647,45 +1700,52 @@
         <item>Throttle + Loco + Speed</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefTtsThrottleSpeedEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Zero + Max</item>
         <item>Zero + Max + speed</item>
     </string-array>
-
     <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
         <item>None</item>
         <item>Zero and Max</item>
         <item>Zero and (Max + speed)</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefYesNoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Yes</item>
         <item>No</item>
     </string-array>
-
     <string-array name="prefYesNoEntries">  <!-- display version -->
         <item>Yes</item>
         <item>No</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefYesNoAutoEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Yes</item>
         <item>No</item>
         <item>Auto</item>
     </string-array>
-
     <string-array name="prefYesNoAutoEntries">  <!-- display version -->
         <item>Yes</item>
         <item>No</item>
         <item>Auto</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefDccexConnectionOptionsEntries">  <!-- display version -->
         <item>DCC-EX</item>
         <item>WiThrottle</item>
         <item>Auto</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefLocaleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>Default</item>
@@ -1720,6 +1780,8 @@
         <item>Czech</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefConsistFollowRuleStyleEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>original</item>
         <item>complex</item>
@@ -1734,6 +1796,8 @@
         <item>Special Partial - Activated if the roster function label CONTAINS the \'Default\' Label or vice-versa</item>
         <item>Special Partial Contains Only - Activated if the roster function label CONTAINS \'Default\' Label</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefConsistFollowEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>lead</item>
@@ -1752,6 +1816,8 @@
         <item>All Locos - Exact Match</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefFunctionConsistLocosEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>lead</item>
         <item>lead and trail</item>
@@ -1765,6 +1831,8 @@
         <item>Trail Loco</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefFunctionConsistLatchingEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>latch</item>
         <item>none</item>
@@ -1774,19 +1842,22 @@
         <item>Not Latching</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefConsistFollowDefaultActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>f lead</item>
         <item>f lead and trail</item>
         <item>f all</item>
     </string-array>
-
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>Do Nothing</item>
         <item>Lead Loco - Same Function number</item>
         <item>Lead+Trail Locos - Same Function number</item>
         <item>All Locos - Same Function number</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefKidsTimerEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -1805,6 +1876,8 @@
         <item>Run completed</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefBackgroundImagePositionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>FIT_CENTER</item>
         <item>CENTER_CROP</item>
@@ -1820,7 +1893,9 @@
         <item>Fill - Distort if needed</item>
     </string-array>
 
-<!--    <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!--    <string-array name="prefThrottleSwitchWebViewEntryValues" translatable="false">  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
 <!--        <item>NONE</item>-->
 <!--        <item>1</item>-->
 <!--        <item>2</item>-->
@@ -1833,6 +1908,8 @@
 <!--        <item>Both First and Second Layouts</item>-->
 <!--    </string-array>-->
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
         <item>1</item>
@@ -1840,7 +1917,6 @@
         <item>3</item>
         <item>4</item>
     </string-array>
-
     <string-array name="prefSimpleThrottleLayoutShowFunctionButtonCountEntries" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
         <item>1</item>
@@ -1849,39 +1925,45 @@
         <item>4</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefHapticFeedbackEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>Slider</item>
         <item>Scaled</item>
     </string-array>
-
     <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
         <item>None </item>
         <item>Slider - Every Step</item>
         <item>Slider - Skip some at 28, 100, 128 Steps</item>
     </string-array>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="prefAppIconActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>estop</item>
     </string-array>
-
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>None</item>
         <item>Emergency Stop</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefSortOrderEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>name</item>
         <item>id</item>
         <item>position</item>
     </string-array>
-
     <string-array name="prefSortOrderEntries">  <!-- display version -->
         <item>Name</item>
         <item>ID</item>
         <item>Position</item>
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <!-- always put any categories after the preferences in the category.  i.e. preferences and PreferenceScreens, then categories -->
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
@@ -1889,6 +1971,7 @@
         <!-- Device Preferences -->
         <item>prefLocale</item>
         <item>prefDoubleBackButtonToExit</item>
+        <item>prefHideInstructionalToasts</item>
 
         <!-- Throttle Screen Appearance Preferences -->
         <item>prefDecreaseLocoNumberHeight</item>
@@ -2013,8 +2096,9 @@
         <item>prefHostImportExport</item>
         <item>prefShowTimeOnLogEntry</item>
 
-        <item>prefHideInstructionalToasts</item>
-
     </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 </resources>

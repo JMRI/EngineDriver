@@ -23,7 +23,7 @@
         <item>Llarga</item>
         <item>Auto</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitsEntries">
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentatge</item>
         <item>Passos de velocitat automàtics</item>
         <item>8 passos</item>
@@ -32,6 +32,26 @@
         <item>28 passos</item>
         <item>128 passos</item>
     </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
+        <item>Percentatge</item>
+        <item>8 passos</item>
+        <item>28 passos</item>
+        <item>128 passos</item>
+    </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>Percentatge</item>
+        <item>2 passos</item>
+        <item>3 passos</item>
+        <item>4 passos</item>
+        <item>5 passos</item>
+        <item>6 passos</item>
+        <item>7 passos</item>
+        <item>8 passos</item>
+        <item>9 passos</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>Cap</item>
         <item>Superior</item>
@@ -48,6 +68,18 @@
         <item>Horitzontal</item>
         <item>Rotació automàtica</item>
     </string-array>
+
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>Cap</item>
+        <item>Steam genèric (ràpid)</item>
+        <item>Steam genèric (lent)</item>
+        <item>Steam (classe 64)</item>
+        <item>Steam (classe 94)</item>
+        <item>Dièsel (EMD 645 Turbo)</item>
+        <item>Dièsel (GE 7FDL)</item>
+        <item>Dièsel (EMD NW2)</item>
+    </string-array>
+
     <string-array name="NumOfThrottlesEntries">
         <item>Un</item>
         <item>Dos</item>
@@ -265,5 +297,21 @@
         <item>Auto</item>
     </string-array>
 
+    <string-array name="prefDccexConnectionOptionsEntries">  <!-- display version -->
+        <item>DCC-EX</item>
+        <item>WiThrottle</item>
+        <item>Automàtic</item>
+    </string-array>
+
+    <string-array name="prefAppIconActionEntries">  <!-- display version -->
+        <item>Cap</item>
+        <item>Parada d\'emergència</item>
+    </string-array>
+
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>Nome</item>
+        <item>ID</item>
+        <item>Posició</item>
+    </string-array>
 </resources>
 

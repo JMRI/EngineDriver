@@ -34,6 +34,7 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 
 public class throttle_simple extends throttle {
@@ -132,6 +133,7 @@ public class throttle_simple extends throttle {
                     break;
             }
 
+            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
             PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(psvtl);
         }
@@ -357,7 +359,7 @@ public class throttle_simple extends throttle {
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            set_all_function_states(throttleIndex);
+            setAllFunctionStates(throttleIndex);
         }
 
 
@@ -366,7 +368,7 @@ public class throttle_simple extends throttle {
     }
 
     @Override
-    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+    void enableDisableButtons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
@@ -377,15 +379,15 @@ public class throttle_simple extends throttle {
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
 
-        super.enable_disable_buttons(whichThrottle, forceDisable);
+        super.enableDisableButtons(whichThrottle, forceDisable);
 
-    } // end of enable_disable_buttons
+    } // end of enableDisableButtons
 
 
     // helper function to enable/disable all children for a group
     @Override
-    void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
+    void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
+        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
         // newEnabledState);
 
         if (vg == null) { return;}
@@ -400,11 +402,11 @@ public class throttle_simple extends throttle {
                 b.setEnabled(newEnabledState);
             }
         }
-    } // enable_disable_buttons_for_view
+    } // enableDisableButtonsForView
 
     // update the appearance of all function buttons
     @Override
-    void set_all_function_states(int whichThrottle) {
+    void setAllFunctionStates(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
 
         if (mainapp.appIsFinishing) { return;}

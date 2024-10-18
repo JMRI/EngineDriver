@@ -18,10 +18,10 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string-array name="address_size">
-        <item>Krátká</item>
-        <item>Dlouhá</item>
-    </string-array>
+<!--    <string-array name="address_size">-->
+<!--        <item>Krátká</item>-->
+<!--        <item>Dlouhá</item>-->
+<!--    </string-array>-->
 
     <string-array name="address_size_defaultsEntries">  <!-- display version -->
         <item>Krátká</item>
@@ -42,6 +42,25 @@
         <item>128 kroků</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
+        <item>Procenta</item>
+        <item>8 kroků</item>
+        <item>28 kroků</item>
+        <item>128 kroků</item>
+    </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>Procenta</item>
+        <item>2 kroky</item>
+        <item>3 kroky</item>
+        <item>4 kroky</item>
+        <item>5 kroků</item>
+        <item>6 kroků</item>
+        <item>7 kroků</item>
+        <item>8 kroků</item>
+        <item>9 kroků</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>nic</item>
         <item>Horní</item>
@@ -57,6 +76,17 @@
         <item>Na výšku</item>
         <item>Na šířku</item>
         <item>Automaticky rotovat</item>
+    </string-array>
+
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>Žádný</item>
+        <item>Obecný Steam (rychlý)</item>
+        <item>Obecný Steam (pomalý)</item>
+        <item>Steam (třída 64)</item>
+        <item>Steam (třída 94)</item>
+        <item>Diesel (EMD 645 Turbo)</item>
+        <item>Diesel (GE 7FDL)</item>
+        <item>Diesel (EMD NW2)</item>
     </string-array>
 
     <string-array name="NumOfThrottlesEntries">  <!-- display version -->
@@ -466,4 +496,14 @@
         <item>Track/District Manager</item>
     </string-array>
 
+    <string-array name="prefAppIconActionEntries">  <!-- display version -->
+        <item>Žádný</item>
+        <item>Nouzové zastavení</item>
+    </string-array>
+
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>Jméno</item>
+        <item>ID</item>
+        <item>Pozice</item>
+    </string-array>
 </resources>

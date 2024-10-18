@@ -66,6 +66,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -82,6 +83,7 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jmri.enginedriver.type.dccex_protocol_option_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
@@ -147,6 +149,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     TextView dccexConnectionOptionLabel;
     Spinner dccexConnectionOptionSpinner;
     String [] dccexConnectionOptionEntriesArray;
+    TextView discoveredServersHeading;
+    TextView discoveredServersWarning;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -297,7 +301,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 try {
                     connected_port = Integer.parseInt(entry.getText().toString());
                 } catch (Exception except) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                     connected_port = 0;
                     return;
                 }
@@ -306,9 +311,11 @@ public class connection_activity extends AppCompatActivity implements Permission
                 checkIfDccexServerName(connected_hostname, connected_port);
                 connect();
             } else {
-                if (!mainapp.prefHideInstructionalToasts) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-                }
+//                if (!mainapp.prefHideInstructionalToasts) {
+//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+//                }
+//                mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT);
+                mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
         }
@@ -338,9 +345,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (!mainapp.prefHideInstructionalToasts) {
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
-                    }
+//                    if (!mainapp.prefHideInstructionalToasts) {
+//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
+//                    }
+                    mainapp.safeToastInstructional(R.string.toastConnectRemoved, Toast.LENGTH_SHORT);
 //                        new saveConnectionsList().execute();
                     importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "", connected_ssid, connected_serviceType);
                 }
@@ -349,12 +357,14 @@ public class connection_activity extends AppCompatActivity implements Permission
                 public void onAnimationRepeat(Animation animation) {
                 }
 
+                /** @noinspection EmptyMethod*/
                 public void run() {
                 }
             });
 
         } else {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(R.string.toastConnectRemoveDemoHostError, Toast.LENGTH_SHORT);
         }
     }
 
@@ -371,7 +381,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                     try {
                         connected_port = Integer.parseInt(tm.get("port"));
                     } catch (Exception except) {
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
+                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                         connected_port = 0;
                         return;
                     }
@@ -379,11 +390,13 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connected_ssid = mainapp.client_ssid;
                     checkIfDccexServerName(connected_hostname, connected_port);
                     connect();
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
                 } else {
-                    if (!mainapp.prefHideInstructionalToasts) {
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-                    }
+//                    if (!mainapp.prefHideInstructionalToasts) {
+//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
+//                    }
+                    mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                 }
             }
         } catch (Exception ex) {
@@ -467,7 +480,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    saveSharedPreferencesToFile();
+                    writeSharedPreferencesToFile();
                     mainapp.connectedHostName = "";
                     shutdown();
                     break;
@@ -593,6 +606,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         button_listener click_listener = new button_listener();
         connect_button.setOnClickListener(click_listener);
 
+        discoveredServersHeading = findViewById(R.id.discoveredServersHeading);
+        discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
+
         set_labels();
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -639,7 +655,6 @@ public class connection_activity extends AppCompatActivity implements Permission
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexConnectionOptionSpinner.setOnItemSelectedListener(new DccexConnectionOption_listener());
         setConnectionProtocolOption();
-
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -745,9 +760,19 @@ public class connection_activity extends AppCompatActivity implements Permission
         TextView v = findViewById(R.id.ca_footer);
         String throttleName = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
         throttleName = mainapp.fixThrottleName(throttleName); //insure uniqueness
-        v.setText(getString(R.string.throttle_name, throttleName));
+        v.setText(String.format(getString(R.string.throttle_name), throttleName));
 
-        //sets the tile to include throttle name.
+        String ssid = mainapp.client_ssid;
+        if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) ) {
+            ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
+            discoveredServersWarning.setVisibility(VISIBLE);
+        } else {
+            discoveredServersWarning.setVisibility(GONE);
+        }
+
+        discoveredServersHeading.setText(String.format(getString(R.string.discovered_services), ssid));
+
+
         if (toolbar != null) {
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
@@ -965,7 +990,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(R.string.toastConnectErrorReadingRecentConnections, Toast.LENGTH_SHORT);
         } else {
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -1018,7 +1044,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 importExportConnectionList.getConnectionsList(addressToRemove, portToRemove);
 
                 if (importExportConnectionList.failureReason.length() > 0) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT);
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (importExportConnectionList.connections_list.size() > 0)) {
@@ -1058,7 +1085,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 	}
 	 */
 
-    private void saveSharedPreferencesToFile() {
+    private void writeSharedPreferencesToFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -1067,10 +1094,11 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-                    importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastConnectUnableToSavePref, LENGTH_LONG);
             }
         }
     }
@@ -1096,7 +1124,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastConnectUnableToLoadPref, LENGTH_LONG);
             }
         }
     }
@@ -1127,8 +1156,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                        getConnectionsListImpl("", "");
 //                        break;
 //                    case PermissionsHelper.STORE_PREFERENCES:
-//                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to saveSharedPreferencesToFileImpl()");
-//                        saveSharedPreferencesToFileImpl();
+//                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
+//                        writeSharedPreferencesToFileImpl();
 //                        break;
 //                    case PermissionsHelper.READ_PREFERENCES:
 //                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
@@ -1185,10 +1214,10 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.prefUseDccexProtocol = dccexConnectionOptionEntriesArray[spinnerPosition];
             prefs.edit().putString("prefUseDccexProtocol", mainapp.prefUseDccexProtocol).commit();  //set the preference
 
-            if ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES))
-            || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_NO)) ) {
+            if ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
+            || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.NO)) ) {
                 dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
-            } else { // if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+            } else { // if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                 dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
             }
         }
@@ -1202,19 +1231,19 @@ public class connection_activity extends AppCompatActivity implements Permission
         prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
 
-        if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES)) {
+        if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES)) {
             dccexConnectionOptionSpinner.setSelection(0);
             dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
-        } else if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_NO)) {
+        } else if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.NO)) {
             dccexConnectionOptionSpinner.setSelection(1);
             dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
-        } else { // if (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+        } else { // if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
             dccexConnectionOptionSpinner.setSelection(2);
             dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
         }
 
         TextView DCCEXheading =  findViewById(R.id.cons_DccexConnectionOption_heading);
-        LinearLayout DCCEXlayout =  findViewById(R.id.cons_DccexConnectionOption_layout);
+        RelativeLayout DCCEXlayout =  findViewById(R.id.cons_DccexConnectionOption_layout);
         if (prefDccexConnectionOption) {
             DCCEXheading.setVisibility(VISIBLE);
             DCCEXlayout.setVisibility(VISIBLE);
@@ -1227,7 +1256,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     void checkIfDccexServerName(String serverName, int serverPort) {
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
 
-        mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO))
+        mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                        && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
     }
 }

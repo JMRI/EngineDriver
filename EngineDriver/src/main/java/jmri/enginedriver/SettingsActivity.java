@@ -21,6 +21,7 @@ was rewritten to support AppCompat.V7
 
 package jmri.enginedriver;
 
+import static java.lang.String.format;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -288,7 +289,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
             if (!mainapp.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                saveSharedPreferencesToFile(prefs, exportedPreferencesFileName, false);
+                writeSharedPreferencesToFile(prefs, exportedPreferencesFileName, false);
             }
         }
         finish();
@@ -338,7 +339,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
-    private void saveSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
+    private void writeSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
         Log.d("Engine_Driver", "Settings: Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         if (!exportedPreferencesFileName.equals(".ed")) {
@@ -347,10 +348,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if ((dst.exists()) && (confirmDialog)) {
                 overwriteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
-                importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
         } else {
-            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
         }
     }
 
@@ -360,7 +362,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        importExportPreferences.saveSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                        importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
 //                        overwriteFile = true;
                         break;
 
@@ -413,15 +415,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         ab.show();
     }
 
-
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Settings: Loading saved preferences from file: " + exportedPreferencesFileName);
-        boolean res = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+        boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
-        if (!res) {
-            Toast.makeText(getApplicationContext(),
-                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
-                    Toast.LENGTH_LONG).show();
+        if (!result) {
+//            Toast.makeText(getApplicationContext(),
+//                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
+//                    Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
     }
@@ -539,9 +541,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File not Found");
                     prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
                     prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
-                    Toast.makeText(getApplicationContext(),
-                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
-                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),
+//                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
+//                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))), Toast.LENGTH_LONG).show();
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
+                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
+                            Toast.LENGTH_LONG);
                     reload();
                     break;
 
@@ -756,7 +761,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
             }
             else {
-                Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
             Log.e("Engine_Driver", "Settings: Loading background image Failed: " + e.getMessage());
@@ -773,16 +779,22 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
                 prefText.setText(Integer.toString(maxVal));
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
                 prefText.setText(Integer.toString(minVal));
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                        Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
     }
 
@@ -795,16 +807,22 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
                 prefText.setText(Float.toString(maxVal));
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                    Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
                 prefText.setText(Float.toString(minVal));
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                    Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                    Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
     }
 
@@ -848,7 +866,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
+                                        textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
             ListPreference p = (ListPreference) prefScreen.findPreference("NumThrottle");
             if (p != null) {
@@ -1123,7 +1143,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } catch (IOException except) {
             errMsg = except.getMessage();
             Log.e("Engine_Driver", "Settings: Error reading recent connections list: " + errMsg);
-            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
         }
 
         if (!foundDemoHost) {
@@ -1304,7 +1325,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                            && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
                            && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
                               || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
-                            Toast.makeText(context, R.string.toastDeviceSoundsSimpleLayoutWarning, Toast.LENGTH_LONG).show();
+//                            Toast.makeText(context, R.string.toastDeviceSoundsSimpleLayoutWarning, Toast.LENGTH_LONG).show();
+                            threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastDeviceSoundsSimpleLayoutWarning), Toast.LENGTH_LONG);
                         }
                     case "NumThrottle":
                         showHideThrottleNumberPreference(sharedPreferences);
@@ -1353,6 +1375,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                     case "prefSortOrderRoster":
                         parentActivity.mainapp.getDefaultSortOrderRoster();
+                        break;
+
+                    case "prefHideInstructionalToasts":
+                        parentActivity.mainapp.prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts",
+                                getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
                         break;
 
                 }
@@ -1523,8 +1550,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
                 if (swipeWeb) {
                     prefs.edit().putBoolean("swipe_through_web_preference", false).commit();  //make sure preference is off
-                    Toast.makeText(parentActivity.getApplicationContext(), parentActivity.getApplicationContext().getResources()
-                            .getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(parentActivity.getApplicationContext(), parentActivity.getApplicationContext().getResources()
+//                            .getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG).show();
+                    threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
                 }
             } else {
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "swipe_through_web_preference", true);
@@ -1782,7 +1810,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                             String currentValue = sharedPreferences.getString(key, "");
                             switch (currentValue) {
                                 case import_export_option_type.EXPORT:
-                                    parentActivity.saveSharedPreferencesToFile(sharedPreferences,
+                                    parentActivity.writeSharedPreferencesToFile(sharedPreferences,
                                             parentActivity.exportedPreferencesFileName, true);
                                     break;
                                 case import_export_option_type.IMPORT:
@@ -1810,7 +1838,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 String action = currentValue.substring(0, IMPORT_PREFIX.length());
                                 parentActivity.exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length());
                                 if (action.equals(EXPORT_PREFIX)) {
-                                    parentActivity.saveSharedPreferencesToFile(sharedPreferences,
+                                    parentActivity.writeSharedPreferencesToFile(sharedPreferences,
                                             parentActivity.exportedPreferencesFileName, true);
                                 } else if (action.equals(IMPORT_PREFIX)) {
                                     parentActivity.loadSharedPreferencesFromFile(sharedPreferences,

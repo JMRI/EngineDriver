@@ -63,7 +63,7 @@
     <string name="recent_engines">Sélectionner parmi les Locomotives Récentes</string>
 <!--    <string name="direction">Marche Avant</string>-->
 <!--    <string name="speed">Vitesse:</string>-->
-    <string name="discovered_services">Serveurs découverts et disponibles</string>
+    <string name="discovered_services">Serveurs découverts - WiFi: %1$s</string>
 <!--    <string name="save_settings">Enregistrer les paramètres</string>-->
     <string name="stop">Arrêt</string>
     <string name="forward">Marche Avant</string>
@@ -491,7 +491,7 @@
     <string name="prefGamepadTestNowSummary">Vous permet de confirmer que le paramétrage effectué fonctionne correctement.
         \nLa page de test va démarrer IMMEDIATEMENT!</string>
     <string name="toastWaitingForConnection">Délai d\'attente en attente du message WiThrottle \'VN\' de %1$s:%2$s. Déconnexion</string>
-    <string name="toastWaitingForConnectionDccEx">Délai d\'attente pour le message DCC-EX \'iDCCEX...\' de %1$s:%2$s. Déconnexion</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Délai d\'attente pour le message DCC-EX \'iDCCEX...\' de %1$s:%2$s. Déconnexion</string>
     <string name="toastThreadedAppNoLocalIp">Adresse IP locale non trouvée.\n Verifier votre connexion WiFi.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Erreur à la création du listener WiThrottle Zeroconf: IOException:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle version %1$s pas supportée.</string>
@@ -502,6 +502,7 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Erreur creation flux de sortie, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Erreur attente de flux, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Utilisation réseau %1$s , pas de WIFI.\nVérifier vos paramètres WiFi.\n</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">La découverte de serveur n\'est pas possible sans connexion WiFi !</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
@@ -516,6 +517,7 @@
     <string name="toastShakeWebViewHidden">Vue Web cachée. Agiter à nouveau pour la rétablir. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastShakeWebViewUnavailable">La vue Web doit etre activée dans les préférences</string>
     <string name="toastShakeScreenLocked">Ecran verrouillé - Agiter à nouveau pour déverrouiller.</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée sur manette verrouillée</string>
     <string name="toastShakeScreenDimmed">Luminosité réduite. Agiter à nouveau pour augmenter.</string>
     <string name="toastSwipeUpDownScreenLocked">Ecran verrouillé - Faire glisser vers le haut pour deverrouiller.</string>
     <string name="toastSwipeUpDownScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
@@ -552,6 +554,7 @@
     <string name="toastImportExportCannotImport">Import des préférences impossible. Aucune connexion sur un serveur.</string>
 <!--    <string name="toastImportExportCannotExport">Export des préférences impossible. Aucune connexion sur un serveur.</string>-->
 <!--    <string name="toastSelectLocoConfirmClear">Confirmer la suppression de toutes les locos récentes en appuyant A NOUVEAU sur la touche \'Efface list\'</string>-->
+    <string name="toastImportExportCouldNotParseAddress">Impossible d\'analyser l\'adresse\n%1$s</string>
     <string name="toastNumThrottles">L affichage choisi ne supporte pas autant de régulateurs. Limitation à %1$s.</string>
 
     <!--    Toast messages for the Log Viewer Activity -->
@@ -708,7 +711,7 @@
     <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur sur lecture de la liste de connexions récentes:</string>
     <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
-    <string name="prefImportExportErrorNotConnected">Non connecté à un hôte.</string>
+    <string name="prefImportExportErrorNotConnected">Non connecté à un hôte</string>
 
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
@@ -1018,7 +1021,7 @@
     <string name="prefDccexTitle">Utilisez les commandes natives DCC-EX</string>
     <string name="useProtocolDCCEX">Utilisez les commandes natives DCC-EX pas la WiThrottle</string>
     <string name="prefPauseAlternateButtonSummary">Bouton pause alternatif</string>
-    <string name="useProtocolDCCEXplusAutoHint">Utilisez des commandes DCC-EX natives. Pour \'Auto\', le nom doit contenir \"DCCEX\" ou \"DCC-EX\"</string>
+    <string name="useProtocolDCCEXplusAutoHint">Utilisez des commandes DCC-EX natives.\n<small><small>Pour \'Auto\', le nom doit contenir \"DCCEX\" ou \"DCC-EX\"</small></small></string>
     <string name="usingProtocolDCCEX">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Afficher l option pour basculer entre les protocoles WiThrottle ou DCC-EX sur l ecran de connexion.</string>
     <string name="prefDccexConnectionOptionTitle">Afficher les choix de protocoles</string>
@@ -1109,5 +1112,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Quale freno percentuale per attivare il numero di funzione centrale</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valore freno elevato ESU (percentuale)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quale Freno Percentuale per attivare il Numero di Funzione Alto</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Non connecté au WiFi</string>
 
 </resources>

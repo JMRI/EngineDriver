@@ -23,7 +23,7 @@
         <item>Longo</item>
         <item>Auto</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitsEntries">
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Porcentagem</item>
         <item>Auto passos velocidade</item>
         <item>8 passos</item>
@@ -32,6 +32,26 @@
         <item>28 passos</item>
         <item>128 passos</item>
     </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
+        <item>Porcentagem</item>
+        <item>8 passos</item>
+        <item>28 passos</item>
+        <item>128 passos</item>
+    </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>Porcentagem</item>
+        <item>2 etapas</item>
+        <item>3 etapas</item>
+        <item>4 etapas</item>
+        <item>5 etapas</item>
+        <item>6 etapas</item>
+        <item>7 etapas</item>
+        <item>8 etapas</item>
+        <item>9 passos</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>nada</item>
         <item>Principal</item>
@@ -48,6 +68,18 @@
         <item>Panorama</item>
         <item>Auto-rotação</item>
     </string-array>
+
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>Nenhum</item>
+        <item>Steam genérico (rápido)</item>
+        <item>Steam genérico (lento)</item>
+        <item>Vapor (Classe 64)</item>
+        <item>Vapor (Classe 94)</item>
+        <item>Diesel (EMD 645 Turbo)</item>
+        <item>Diesel (GE 7FDL)</item>
+        <item>Diesel (EMD NW2)</item>
+    </string-array>
+
     <string-array name="NumOfThrottlesEntries">
         <item>Um</item>
         <item>Dois</item>
@@ -67,7 +99,7 @@
         <item >Switching &#8211; (2)</item>
         <item >Switching &#8211; Esquerda (1)</item>
         <item >Switching &#8211; Direita (1)</item>
-        <item >Comutação horizontal (1-3)</item>
+        <item tools:ignore="TypographyDashes">Comutação horizontal (1-3)</item>
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Esquerda (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Esquerda (1-6)</item>
@@ -283,4 +315,14 @@
         <item>Auto</item>
     </string-array>
 
+    <string-array name="prefAppIconActionEntries">  <!-- display version -->
+        <item>Nenhum</item>
+        <item>Parada de Emergência</item>
+    </string-array>
+
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>Nome</item>
+        <item>EU IA</item>
+        <item>Posição</item>
+    </string-array>
 </resources>

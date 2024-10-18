@@ -60,22 +60,22 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 import jmri.enginedriver.type.Consist;
-import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.source_type;
+import jmri.enginedriver.type.heartbeat_interval_type;
 
 public class comm_thread extends Thread {
     JmDNS jmdns = null;
     volatile boolean endingJmdns = false;
-    withrottle_listener listener;
+    WithrottleListener listener;
     android.net.wifi.WifiManager.MulticastLock multicast_lock;
-    static socketWifi socketWiT;
+    static SocketWifi socketWiT;
     PhoneListener phone;
-    static heartbeat heart = new heartbeat();
+    static Heartbeat heart = new Heartbeat();
     private static long lastSentMs = System.currentTimeMillis();
     private static long lastQueuedMs = System.currentTimeMillis();
 
@@ -107,7 +107,7 @@ public class comm_thread extends Thread {
     /* ******************************************************************************************** */
 
     //Listen for a WiThrottle service advertisement on the LAN.
-    public class withrottle_listener implements ServiceListener {
+    public class WithrottleListener implements ServiceListener {
 
         public void serviceAdded(ServiceEvent event) {
             //          Log.d("Engine_Driver", String.format("comm_thread.serviceAdded fired"));
@@ -184,11 +184,11 @@ public class comm_thread extends Thread {
 
                 jmdns = JmDNS.create(mainapp.client_address_inet4, mainapp.client_address);  //pass ip as name to avoid hostname lookup attempt
 
-                listener = new withrottle_listener();
+                listener = new WithrottleListener();
                 Log.d("Engine_Driver", "comm_thread.startJmdns: listener created");
 
             } else {
-                threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNoLocalIp), Toast.LENGTH_SHORT);
+                threaded_application.safeToast(R.string.toastThreadedAppNoLocalIp, Toast.LENGTH_LONG);
             }
         } catch (Exception except) {
             Log.e("Engine_Driver", "comm_thread.startJmdns - Error creating withrottle listener: " + except.getMessage());
@@ -291,7 +291,7 @@ public class comm_thread extends Thread {
             socketWiT.disconnect(true, fast);     //stop reading from the socket
         }
         Log.d("Engine_Driver", "comm_thread.Shutdown: socketWit down");
-        mainapp.saveSharedPreferencesToFileIfAllowed();
+        mainapp.writeSharedPreferencesToFileIfAllowed();
         mainapp.host_ip = null;
         mainapp.port = 0;
         threaded_application.reinitStatics();                    // ensure activities are ready for relaunch
@@ -723,9 +723,9 @@ public class comm_thread extends Thread {
                 if (whichLoco.length()>0) {
                     String routeType = "";
                     int routeId = Integer.parseInt(systemName);
-                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                        if (mainapp.routeIDsDCCEX[i]==routeId) {
-                            routeType = mainapp.routeTypesDCCEX[i];
+                    for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+                        if (mainapp.dccexRouteIDs[i]==routeId) {
+                            routeType = mainapp.dccexRouteTypes[i];
                             break;
                         }
                     }
@@ -802,17 +802,17 @@ public class comm_thread extends Thread {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
                     String fmt = ( (Float.valueOf(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
-                    msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], newDir);
+                    msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                     wifiSend(msgTxt);
-                    mainapp.lastKnownDirDCCEX[whichThrottle] = newDir;
+                    mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
 //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
                 }
             } else {
                 String fmt = ( (Float.valueOf(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
-                msgTxt = String.format(fmt, addr.substring(1), mainapp.lastKnownSpeedDCCEX[whichThrottle], dir);
+                msgTxt = String.format(fmt, addr.substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], dir);
                 wifiSend(msgTxt);
                 if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
-                    mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                    mainapp.dccexLastKnownDirection[whichThrottle] = dir;
                 }
 //                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
             }
@@ -831,8 +831,8 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             Consist con = mainapp.consists[whichThrottle];
             String msgTxt;
-            int dir = mainapp.lastKnownDirDCCEX[whichThrottle];
-            mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
+            int dir = mainapp.dccexLastKnownDirection[whichThrottle];
+            mainapp.dccexLastKnownSpeed[whichThrottle] = speed;
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
@@ -841,7 +841,7 @@ public class comm_thread extends Thread {
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
             }
-            mainapp.lastSpeedCommandSentTimeDCCEX[whichThrottle] = Calendar.getInstance().getTimeInMillis();
+            mainapp.dccexLastSpeedCommandSentTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
         }
     }
 
@@ -1393,8 +1393,8 @@ public class comm_thread extends Thread {
                 responseStr = "PPA" + power;
                 mainapp.alert_activities(message_type.RESPONSE, responseStr);
                 if (power != '2') {
-                    for (int i = 0; i < mainapp.DccexTrackType.length; i++) {
-                        mainapp.DccexTrackPower[i] = power - '0';
+                    for (int i = 0; i < mainapp.dccexTrackType.length; i++) {
+                        mainapp.dccexTrackPower[i] = power - '0';
                         responseStr = "PXX" + ((char) (i + '0')) + power;
                         mainapp.alert_activities(message_type.RESPONSE, responseStr);
                     }
@@ -1413,7 +1413,7 @@ public class comm_thread extends Thread {
 
             if (args[1].length()==1) {  // <p0|1 A|B|C|D|E|F|G|H|>
                 int trackNo = args[1+trackOffset].charAt(0) - 'A';
-                mainapp.DccexTrackPower[trackNo] = power - '0';
+                mainapp.dccexTrackPower[trackNo] = power - '0';
                 responseStr = "PXX" + ((char) (trackNo + '0')) + power;
                 mainapp.alert_activities(message_type.RESPONSE, responseStr);
 
@@ -1429,9 +1429,9 @@ public class comm_thread extends Thread {
                         break;
                     }
                 }
-                for (int i=0; i<mainapp.DccexTrackType.length; i++) {
-                    if (mainapp.DccexTrackType[i] == trackType) {
-                        mainapp.DccexTrackPower[i] = power - '0';
+                for (int i=0; i<mainapp.dccexTrackType.length; i++) {
+                    if (mainapp.dccexTrackType[i] == trackType) {
+                        mainapp.dccexTrackPower[i] = power - '0';
                         responseStr = "PXX" + ((char) (i + '0')) + power;
                         mainapp.alert_activities(message_type.RESPONSE, responseStr);
                     }
@@ -1439,12 +1439,12 @@ public class comm_thread extends Thread {
             }
             boolean globalPowerOn = true;
             boolean globalPowerOff = true;
-            for (int i=0; i<mainapp.DccexTrackType.length; i++) {
-                if ( (mainapp.DccexTrackAvailable[i]) && (mainapp.DccexTrackType[i] != 0) ) {  // not "NONE"
-                    if (mainapp.DccexTrackPower[i] == 1) {
+            for (int i=0; i<mainapp.dccexTrackType.length; i++) {
+                if ( (mainapp.dccexTrackAvailable[i]) && (mainapp.dccexTrackType[i] != 0) ) {  // not "NONE"
+                    if (mainapp.dccexTrackPower[i] == 1) {
                         globalPowerOff = false;
                     }
-                    if (mainapp.DccexTrackPower[i] == 0) {
+                    if (mainapp.dccexTrackPower[i] == 0) {
                         globalPowerOn = false;
                     }
                 }
@@ -1501,13 +1501,13 @@ public class comm_thread extends Thread {
                 }
 
                 if (trackTypeIndex>=0) {
-                    mainapp.DccexTrackType[trackNo] = trackTypeIndex;
-                    mainapp.DccexTrackId[trackNo] = "";
+                    mainapp.dccexTrackType[trackNo] = trackTypeIndex;
+                    mainapp.dccexTrackId[trackNo] = "";
                 }
                 if ( (needsId) && (args.length>=3) ) {
-                    mainapp.DccexTrackId[trackNo] = args[3];
+                    mainapp.dccexTrackId[trackNo] = args[3];
                 }
-                mainapp.DccexTrackAvailable[trackNo] = true;
+                mainapp.dccexTrackAvailable[trackNo] = true;
             }
             mainapp.alert_activities(message_type.RECEIVED_TRACKS, type);  //send response to running activities
         }
@@ -1560,10 +1560,10 @@ public class comm_thread extends Thread {
         for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {   //loco may be the lead on more that one throttle
             int whichThrottle = mainapp.getWhichThrottleFromAddress(addressStr, throttleIndex);
             if (whichThrottle >= 0) {
-                timeSinceLastCommand = Calendar.getInstance().getTimeInMillis() - mainapp.lastSpeedCommandSentTimeDCCEX[whichThrottle];
+                timeSinceLastCommand = Calendar.getInstance().getTimeInMillis() - mainapp.dccexLastSpeedCommandSentTime[whichThrottle];
 
                 if (timeSinceLastCommand>1000) {  // don't process an incoming speed if we sent a command for this throttle in the last second
-                    mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
+                    mainapp.dccexLastKnownSpeed[whichThrottle] = speed;
                     responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addressStr + "<;>V" + speed;
                     mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
 
@@ -1571,7 +1571,7 @@ public class comm_thread extends Thread {
 
                     // only process the direction if it is the lead loco
                     if (con.getLeadAddr().equals(addressStr)) {
-                        mainapp.lastKnownDirDCCEX[whichThrottle] = dir;
+                        mainapp.dccexLastKnownDirection[whichThrottle] = dir;
                         responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addressStr + "<;>R" + dir;
                         mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
                     }
@@ -1635,7 +1635,7 @@ public class comm_thread extends Thread {
                     mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[1]);  //send response to running activities
                 }
             }  else {// else {} did not succeed
-                threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.DCCEXrequestLocoIdFailed), Toast.LENGTH_SHORT);
+                threaded_application.safeToast(R.string.DCCEXrequestLocoIdFailed, Toast.LENGTH_SHORT);
             }
 
         } else {
@@ -1649,51 +1649,51 @@ public class comm_thread extends Thread {
 
         if ( (args!=null) && (args.length>1)) {
             if ( (args.length<3) || (args[2].charAt(0) != '"') ) {  // loco list
-                if (mainapp.rosterStringDCCEX.equals("")) {
-                    mainapp.rosterStringDCCEX = "";
-                    mainapp.rosterIDsDCCEX = new int[args.length - 1];
-                    mainapp.rosterLocoNamesDCCEX = new String[args.length - 1];
-                    mainapp.rosterLocoFunctionsDCCEX = new String[args.length - 1];
-                    mainapp.rosterDetailsReceivedDCCEX = new boolean[args.length - 1];
+                if (mainapp.dccexRosterString.equals("")) {
+                    mainapp.dccexRosterString = "";
+                    mainapp.dccexRosterIDs = new int[args.length - 1];
+                    mainapp.dccexRosterLocoNames = new String[args.length - 1];
+                    mainapp.dccexRosterLocoFunctions = new String[args.length - 1];
+                    mainapp.dccexRosterDetailsReceived = new boolean[args.length - 1];
                     for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        mainapp.rosterIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
-                        mainapp.rosterDetailsReceivedDCCEX[i] = false;
+                        mainapp.dccexRosterIDs[i] = Integer.parseInt(args[i + 1]);
+                        mainapp.dccexRosterDetailsReceived[i] = false;
                         wifiSend("<JR " + args[i + 1] + ">");
                     }
                 }
             } else {  // individual loco
                 if (mainapp.DCCEXlistsRequested < 3) {
-                    if (mainapp.rosterIDsDCCEX != null) {
-                        for (int i = 0; i < mainapp.rosterIDsDCCEX.length; i++) {
-                            if (mainapp.rosterIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                                mainapp.rosterLocoNamesDCCEX[i] = args[2].substring(1, args[2].length() - 1);  // stip the quotes
-                                mainapp.rosterLocoFunctionsDCCEX[i] = args[3]; // ignore this
-                                mainapp.rosterDetailsReceivedDCCEX[i] = true;
+                    if (mainapp.dccexRosterIDs != null) {
+                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                            if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
+                                mainapp.dccexRosterLocoNames[i] = args[2].substring(1, args[2].length() - 1);  // stip the quotes
+                                mainapp.dccexRosterLocoFunctions[i] = args[3]; // ignore this
+                                mainapp.dccexRosterDetailsReceived[i] = true;
                                 break;
                             }
                         }
 
                         // check if we have all of them
                         boolean ready = true;
-                        for (int i = 0; i < mainapp.rosterIDsDCCEX.length; i++) {
-                            if (!mainapp.rosterDetailsReceivedDCCEX[i]) {
+                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                            if (!mainapp.dccexRosterDetailsReceived[i]) {
                                 ready = false;
                                 break;
                             }
                         }
                         if (ready) {
-                            mainapp.rosterStringDCCEX = "RL" + mainapp.rosterIDsDCCEX.length;
-                            for (int i = 0; i < mainapp.rosterIDsDCCEX.length; i++) {
-                                mainapp.rosterStringDCCEX = mainapp.rosterStringDCCEX
-                                        + "]\\[" + mainapp.rosterLocoNamesDCCEX[i]
-                                        + "}|{" + mainapp.rosterIDsDCCEX[i]
-                                        + "}|{" + (mainapp.rosterIDsDCCEX[i] <= 127 ? "S" : "L");
+                            mainapp.dccexRosterString = "RL" + mainapp.dccexRosterIDs.length;
+                            for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                                mainapp.dccexRosterString = mainapp.dccexRosterString
+                                        + "]\\[" + mainapp.dccexRosterLocoNames[i]
+                                        + "}|{" + mainapp.dccexRosterIDs[i]
+                                        + "}|{" + (mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L");
                             }
-                            processRosterList(mainapp.rosterStringDCCEX);
-                            mainapp.rosterStringDCCEX = "";
+                            processRosterList(mainapp.dccexRosterString);
+                            mainapp.dccexRosterString = "";
                             mainapp.DCCEXlistsRequested++;
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
-                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.rosterIDsDCCEX.length);
+                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
                         }
                     }
 
@@ -1810,34 +1810,34 @@ public class comm_thread extends Thread {
                 if ( args.length == 1) { // no turnouts
                     noTurnouts = true;
                 } else {
-                    for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                        if (mainapp.turnoutIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                            mainapp.turnoutStatesDCCEX[i] = args[2];
+                    for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
+                        if (mainapp.dccexTurnoutIDs[i] == Integer.parseInt(args[1])) {
+                            mainapp.dccexTurnoutStates[i] = args[2];
                             if ((args.length > 3) && (args[3].length() > 2)) {
-                                mainapp.turnoutNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
+                                mainapp.dccexTurnoutNames[i] = args[3].substring(1, args[3].length() - 1);
                             } else {
-                                mainapp.turnoutNamesDCCEX[i] = "";
+                                mainapp.dccexTurnoutNames[i] = "";
                             }
-                            mainapp.turnoutDetailsReceivedDCCEX[i] = true;
+                            mainapp.dccexTurnoutDetailsReceived[i] = true;
                             break;
                         }
                     }
                     // check if we have all of them
-                    for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                        if (!mainapp.turnoutDetailsReceivedDCCEX[i]) {
+                    for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
+                        if (!mainapp.dccexTurnoutDetailsReceived[i]) {
                             ready = false;
                             break;
                         }
                     }
                 }
                 if (ready) {
-                    mainapp.turnoutStringDCCEX = "PTL";
+                    mainapp.dccexTurnoutString = "PTL";
                     if (!noTurnouts) {
-                        for (int i = 0; i < mainapp.turnoutIDsDCCEX.length; i++) {
-                            mainapp.turnoutStringDCCEX = mainapp.turnoutStringDCCEX
-                                    + "]\\[" + mainapp.turnoutIDsDCCEX[i]
-                                    + "}|{" + mainapp.turnoutNamesDCCEX[i]
-                                    + "}|{" + (mainapp.turnoutStatesDCCEX[i].equals("T") ? 4 : 2);
+                        for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
+                            mainapp.dccexTurnoutString = mainapp.dccexTurnoutString
+                                    + "]\\[" + mainapp.dccexTurnoutIDs[i]
+                                    + "}|{" + mainapp.dccexTurnoutNames[i]
+                                    + "}|{" + (mainapp.dccexTurnoutStates[i].equals("T") ? 4 : 2);
                         }
                     }
                     processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
@@ -1845,34 +1845,34 @@ public class comm_thread extends Thread {
                             + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
-                    processTurnoutList(mainapp.turnoutStringDCCEX);
+                    processTurnoutList(mainapp.dccexTurnoutString);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
-                    mainapp.turnoutStringDCCEX = "";
+                    mainapp.dccexTurnoutString = "";
                     mainapp.DCCEXlistsRequested++;
 
-                    int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
+                    int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
                     Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts complete. Count: " + count);
-                    mainapp.turnoutsBeingProcessedDCCEX = false;
+                    mainapp.dccexTurnoutsBeingProcessed = false;
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
                 Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received.");
-                if (!mainapp.turnoutsBeingProcessedDCCEX) {
-                    mainapp.turnoutsBeingProcessedDCCEX = true;
-                    if (mainapp.turnoutStringDCCEX.equals("")) {
-                        mainapp.turnoutStringDCCEX = "";
-                        mainapp.turnoutIDsDCCEX = new int[args.length - 1];
-                        mainapp.turnoutNamesDCCEX = new String[args.length - 1];
-                        mainapp.turnoutStatesDCCEX = new String[args.length - 1];
-                        mainapp.turnoutDetailsReceivedDCCEX = new boolean[args.length - 1];
+                if (!mainapp.dccexTurnoutsBeingProcessed) {
+                    mainapp.dccexTurnoutsBeingProcessed = true;
+                    if (mainapp.dccexTurnoutString.equals("")) {
+                        mainapp.dccexTurnoutString = "";
+                        mainapp.dccexTurnoutIDs = new int[args.length - 1];
+                        mainapp.dccexTurnoutNames = new String[args.length - 1];
+                        mainapp.dccexTurnoutStates = new String[args.length - 1];
+                        mainapp.dccexTurnoutDetailsReceived = new boolean[args.length - 1];
                         for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                            mainapp.turnoutIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
-                            mainapp.turnoutDetailsReceivedDCCEX[i] = false;
+                            mainapp.dccexTurnoutIDs[i] = Integer.parseInt(args[i + 1]);
+                            mainapp.dccexTurnoutDetailsReceived[i] = false;
                             wifiSend("<JT " + args[i + 1] + ">");
                         }
 
-                        int count = (mainapp.turnoutIDsDCCEX==null) ? 0 : mainapp.turnoutIDsDCCEX.length;
+                        int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
                         Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received. Count: " + count);
                     }
                 }
@@ -1892,83 +1892,83 @@ public class comm_thread extends Thread {
                 if ( args.length == 1) { // no Routes
                     noRoutes = true;
                 } else {
-                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                        if (mainapp.routeIDsDCCEX[i] == Integer.parseInt(args[1])) {
-                            mainapp.routeTypesDCCEX[i] = args[2];
-                            mainapp.routeNamesDCCEX[i] = args[3].substring(1, args[3].length() - 1);
-                            mainapp.routeDetailsReceivedDCCEX[i] = true;
+                    for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+                        if (mainapp.dccexRouteIDs[i] == Integer.parseInt(args[1])) {
+                            mainapp.dccexRouteTypes[i] = args[2];
+                            mainapp.dccexRouteNames[i] = args[3].substring(1, args[3].length() - 1);
+                            mainapp.dccexRouteDetailsReceived[i] = true;
                             break;
                         }
                     }
                     // check if we have all of them
 
-                    for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                        if (!mainapp.routeDetailsReceivedDCCEX[i]) {
+                    for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+                        if (!mainapp.dccexRouteDetailsReceived[i]) {
                             ready = false;
                             break;
                         }
                     }
                 }
                 if (ready) {
-                    mainapp.routeStringDCCEX = "PRL";
+                    mainapp.dccexRouteString = "PRL";
                     if (!noRoutes) {
-                        for (int i = 0; i < mainapp.routeIDsDCCEX.length; i++) {
-                            mainapp.routeStringDCCEX = mainapp.routeStringDCCEX
-                                    + "]\\[" + mainapp.routeIDsDCCEX[i]
-                                    + "}|{" + mainapp.routeNamesDCCEX[i]
-                                    + "}|{" + (mainapp.routeTypesDCCEX[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
+                        for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+                            mainapp.dccexRouteString = mainapp.dccexRouteString
+                                    + "]\\[" + mainapp.dccexRouteIDs[i]
+                                    + "}|{" + mainapp.dccexRouteNames[i]
+                                    + "}|{" + (mainapp.dccexRouteTypes[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
                         }
                     }
                     processRouteTitles("PRT]\\[Routes}|{Route]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
-                    processRouteList(mainapp.routeStringDCCEX);
+                    processRouteList(mainapp.dccexRouteString);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
-                    mainapp.routeStringDCCEX = "";
+                    mainapp.dccexRouteString = "";
                     mainapp.DCCEXlistsRequested++;
 
-                    if (mainapp.routeStatesReceivedDCCEX) { // we received some DCC-EX route states before the list was complete
-                        for (int i=0; i<mainapp.routeIDsDCCEX.length;i++) {
-                            if (mainapp.routeStatesDCCEX[i]!=null) {
-                                mainapp.routeDccexStates[i] = Integer.parseInt(mainapp.routeStatesDCCEX[i]);
+                    if (mainapp.dccexRouteStatesReceived) { // we received some DCC-EX route states before the list was complete
+                        for (int i=0; i<mainapp.dccexRouteIDs.length;i++) {
+                            if (mainapp.dccexRouteStates[i]!=null) {
+                                mainapp.routeDccexStates[i] = Integer.parseInt(mainapp.dccexRouteStates[i]);
                             } else {
                                 mainapp.routeDccexStates[i] = 0;
                             }
-                            if (mainapp.routeLabelsDCCEX[i]!=null) {
-                                mainapp.routeDccexLabels[i] = mainapp.routeLabelsDCCEX[i];
+                            if (mainapp.dccexRouteLabels[i]!=null) {
+                                mainapp.routeDccexLabels[i] = mainapp.dccexRouteLabels[i];
                             } else {
-                                mainapp.routeDccexLabels[i] =  mainapp.routeTypesDCCEX[i].equals("R")
+                                mainapp.routeDccexLabels[i] =  mainapp.dccexRouteTypes[i].equals("R")
                                         ? mainapp.getResources().getString(R.string.DCCEXrouteSet)
                                         : mainapp.getResources().getString(R.string.DCCEXrouteHandoff);
                             }
                         }
                     }
 
-                    int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
+                    int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
                     Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes complete. Count: " + count);
-                    mainapp.routesBeingProcessedDCCEX = false;
+                    mainapp.dccexRoutesBeingProcessed = false;
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
 
                 Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received.");
-                if (!mainapp.routesBeingProcessedDCCEX) {
-                    mainapp.routesBeingProcessedDCCEX = true;
-                    if (mainapp.routeStringDCCEX.equals("")) {
-                        mainapp.routeStringDCCEX = "";
-                        mainapp.routeIDsDCCEX = new int[args.length - 1];
-                        mainapp.routeNamesDCCEX = new String[args.length - 1];
-                        mainapp.routeTypesDCCEX = new String[args.length - 1];
-                        mainapp.routeStatesDCCEX = new String[args.length - 1];
-                        mainapp.routeLabelsDCCEX = new String[args.length - 1];
-                        mainapp.routeDetailsReceivedDCCEX = new boolean[args.length - 1];
+                if (!mainapp.dccexRoutesBeingProcessed) {
+                    mainapp.dccexRoutesBeingProcessed = true;
+                    if (mainapp.dccexRouteString.equals("")) {
+                        mainapp.dccexRouteString = "";
+                        mainapp.dccexRouteIDs = new int[args.length - 1];
+                        mainapp.dccexRouteNames = new String[args.length - 1];
+                        mainapp.dccexRouteTypes = new String[args.length - 1];
+                        mainapp.dccexRouteStates = new String[args.length - 1];
+                        mainapp.dccexRouteLabels = new String[args.length - 1];
+                        mainapp.dccexRouteDetailsReceived = new boolean[args.length - 1];
                         for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                            mainapp.routeIDsDCCEX[i] = Integer.parseInt(args[i + 1]);
-                            mainapp.routeDetailsReceivedDCCEX[i] = false;
+                            mainapp.dccexRouteIDs[i] = Integer.parseInt(args[i + 1]);
+                            mainapp.dccexRouteDetailsReceived[i] = false;
                             wifiSend("<JA " + args[i + 1] + ">");
                         }
 
-                        int count = (mainapp.routeIDsDCCEX==null) ? 0 : mainapp.routeIDsDCCEX.length;
+                        int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
                         Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received. Count: " + count);
                     }
                 }
@@ -1998,14 +1998,14 @@ public class comm_thread extends Thread {
             }
             if (!foundInMainList) { // received a value before the main route list has been built. need to save them for later.
                 int routeId = Integer.valueOf(args[1]);
-                for (int i=0; i<mainapp.routeIDsDCCEX.length;i++) {
-                    if (mainapp.routeIDsDCCEX[i]==routeId) {
+                for (int i=0; i<mainapp.dccexRouteIDs.length;i++) {
+                    if (mainapp.dccexRouteIDs[i]==routeId) {
                         if (args[2].charAt(0) != '"') { // <jB id "stuff">
-                            mainapp.routeStatesDCCEX[i] = args[2];
+                            mainapp.dccexRouteStates[i] = args[2];
                         } else { // <jB id <state>    state: 0=inactive 1=active 2=hidden
-                            mainapp.routeLabelsDCCEX[i] = args[2].substring(1, args[2].length() - 1);
+                            mainapp.dccexRouteLabels[i] = args[2].substring(1, args[2].length() - 1);
                         }
-                        mainapp.routeStatesReceivedDCCEX = true;
+                        mainapp.dccexRouteStatesReceived = true;
                         break;
                     }
                 }
@@ -2294,7 +2294,7 @@ public class comm_thread extends Thread {
     /* ******************************************************************************************** */
     /* ******************************************************************************************** */
 
-    static class socketWifi extends Thread {
+    static class SocketWifi extends Thread {
         InetAddress host_address;
         Socket clientSocket = null;
         BufferedReader inputBR = null;
@@ -2306,13 +2306,14 @@ public class comm_thread extends Thread {
         private int connectTimeoutMs = 3000; //connection timeout in milliseconds
         private int socketTimeoutMs = 500; //socket timeout in milliseconds
 
+        /** @noinspection FieldCanBeLocal*/
         private final int MAX_INBOUND_TIMEOUT_RETRIES = 2;
         private int inboundTimeoutRetryCount = 0;           // number of consecutive inbound timeouts
         private boolean inboundTimeoutRecovery = false;     // attempting to force WiT to respond
 
 
-        socketWifi() {
-            super("socketWifi");
+        SocketWifi() {
+            super("SocketWifi");
         }
 
         public boolean connect() {
@@ -2338,21 +2339,22 @@ public class comm_thread extends Thread {
             if (socketOk) {
                 try {
                     //look for someone to answer on specified socket, and set timeout
-                    Log.d("Engine_Driver", "comm_thread.socketWifi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                     clientSocket = new Socket();
                     InetSocketAddress sa = new InetSocketAddress(mainapp.host_ip, mainapp.port);
                     clientSocket.connect(sa, connectTimeoutMs);
-                    Log.d("Engine_Driver", "comm_thread.socketWifi: Opening socket: Connect successful.");
+                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: Connect successful.");
                     clientSocket.setSoTimeout(socketTimeoutMs);
-                    Log.d("Engine_Driver", "comm_thread.socketWifi: Opening socket: set timeout successful.");
+                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: set timeout successful.");
                 } catch (Exception except) {
                     if (!firstConnect) {
                         threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
-                                mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
+                                                      mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
                     }
                     if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
-                        Log.d("Engine_Driver", "comm_thread.socketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
-                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type), Toast.LENGTH_LONG);
+                        Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
+                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI,
+                                                            mainapp.client_type), Toast.LENGTH_LONG);
                     }
                     socketOk = false;
                 }
@@ -2368,7 +2370,7 @@ public class comm_thread extends Thread {
                 }
             }
 
-            //start the socketWifi thread.
+            //start the SocketWifi thread.
             if (socketOk) {
                 if (!this.isAlive()) {
                     endRead = false;
@@ -2424,7 +2426,7 @@ public class comm_thread extends Thread {
                 try {
                     clientSocket.close();
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.socketWifi: Error closing the Socket: " + e.getMessage());
+                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Error closing the Socket: " + e.getMessage());
                 }
             }
         }
@@ -2457,7 +2459,7 @@ public class comm_thread extends Thread {
                 }
             }
             heart.stopHeartbeat();
-            Log.d("Engine_Driver", "comm_thread.run(): socketWifi exit.");
+            Log.d("Engine_Driver", "comm_thread.run(): SocketWifi exit.");
         }
 
         @SuppressLint("StringFormatMatches")
@@ -2604,7 +2606,7 @@ public class comm_thread extends Thread {
 
     /* ******************************************************************************************** */
 
-    static class heartbeat {
+    static class Heartbeat {
         //  outboundHeartbeat - send a periodic heartbeat to WiT to show that ED is alive.
         //  inboundHeartbeat - WiT doesn't send a heartbeat to ED, so send a periodic message to WiT that requires a response.
         //
@@ -2650,15 +2652,15 @@ public class comm_thread extends Thread {
                 // outbound interval (in ms)
                 int outInterval;
                 if (heartbeatIntervalSetpoint == 0) {   //wit heartbeat is disabled so use default outbound heartbeat
-                    outInterval = threaded_application.DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL;
+                    outInterval = heartbeat_interval_type.DEFAULT_OUTBOUND;
                 } else {
 //                        outInterval = (int) (heartbeatIntervalSetpoint * HEARTBEAT_RESPONSE_FACTOR);
                     outInterval = (int) (heartbeatIntervalSetpoint * ( (double) mainapp.prefHeartbeatResponseFactor) / 100);
                     //keep values in a reasonable range
-                    if (outInterval < threaded_application.MIN_OUTBOUND_HEARTBEAT_INTERVAL)
-                        outInterval = threaded_application.MIN_OUTBOUND_HEARTBEAT_INTERVAL;
-                    if (outInterval > threaded_application.MAX_OUTBOUND_HEARTBEAT_INTERVAL)
-                        outInterval = threaded_application.MAX_OUTBOUND_HEARTBEAT_INTERVAL;
+                    if (outInterval < heartbeat_interval_type.MIN_OUTBOUND)
+                        outInterval = heartbeat_interval_type.MIN_OUTBOUND;
+                    if (outInterval > heartbeat_interval_type.MAX_OUTBOUND)
+                        outInterval = heartbeat_interval_type.MAX_OUTBOUND;
                 }
                 heartbeatOutboundInterval = outInterval;
 
@@ -2667,13 +2669,13 @@ public class comm_thread extends Thread {
                 if (heartbeatIntervalSetpoint == 0) {    // wit heartbeat is disabled so disable inbound heartbeat
                     inInterval = 0;
                 } else {
-                    if (inInterval < threaded_application.MIN_INBOUND_HEARTBEAT_INTERVAL)
-                        inInterval = threaded_application.MIN_INBOUND_HEARTBEAT_INTERVAL;
+                    if (inInterval < heartbeat_interval_type.MIN_INBOUND)
+                        inInterval = heartbeat_interval_type.MIN_INBOUND;
                     if (inInterval < outInterval)
 //                            inInterval = (int) (outInterval / HEARTBEAT_RESPONSE_FACTOR);
                         inInterval = (int) (outInterval / ( ((double) mainapp.prefHeartbeatResponseFactor) / 100) );
-                    if (inInterval > threaded_application.MAX_INBOUND_HEARTBEAT_INTERVAL)
-                        inInterval = threaded_application.MAX_INBOUND_HEARTBEAT_INTERVAL;
+                    if (inInterval > heartbeat_interval_type.MAX_INBOUND)
+                        inInterval = heartbeat_interval_type.MAX_INBOUND;
                 }
                 heartbeatInboundInterval = inInterval;
                 //sInboundInterval = Integer.toString(inInterval);    // seconds

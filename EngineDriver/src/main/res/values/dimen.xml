@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- common -->
 
     <dimen name="buttonStroke_hover">1dip</dimen>
@@ -75,6 +75,8 @@
 
     <!-- Ultra Black theme -->
 
+    <dimen name="headingCornerRadius_ultra">1dp</dimen>
+
     <dimen name="buttonDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonSelectedStroke_ultra">1px</dimen>
     <dimen name="buttonSelectedInsideStroke_ultra">2dp</dimen>
@@ -82,21 +84,21 @@
     <dimen name="buttonActivatedInsideStrokePadding_ultra">2dp</dimen>
     <dimen name="buttonActivated2InsideStrokePadding_ultra">3dp</dimen>
     <dimen name="buttonStroke_ultra">1dp</dimen>
-    <dimen name="buttonCornerRadius_ultra">2dp</dimen>
+    <dimen name="buttonCornerRadius_ultra">3dp</dimen>
 
     <dimen name="buttonFnDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonFnSelectedStroke_ultra">1px</dimen>
     <dimen name="buttonFnSelectedInsideStroke_ultra">2dp</dimen>
     <dimen name="buttonFnSelectedInsideStrokePadding_ultra">2dp</dimen>
     <dimen name="buttonFnStroke_ultra">1dp</dimen>
-    <dimen name="buttonFnCornerRadius_ultra">2dp</dimen>
+    <dimen name="buttonFnCornerRadius_ultra">3dp</dimen>
 
     <dimen name="buttonStopDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonStopSelectedStroke_ultra">1px</dimen>
     <dimen name="buttonStopSelectedInsideStroke_ultra">2dp</dimen>
     <dimen name="buttonStopSelectedInsideStrokePadding_ultra">2dp</dimen>
     <dimen name="buttonStopStroke_ultra">1dp</dimen>
-    <dimen name="buttonStopCornerRadius_ultra">2dp</dimen>
+    <dimen name="buttonStopCornerRadius_ultra">3dp</dimen>
 
     <dimen name="spinnerBackgroundCornerRadius_ultra">3dp</dimen>
 

@@ -42,6 +42,7 @@ public class InPhoneLocoSoundsLoader {
 
    private int soundsCountOfSoundBeingLoaded = 0;
 
+   /** @noinspection EmptyMethod*/
    protected void onPreExecute() {
    }
 
@@ -342,7 +343,8 @@ public class InPhoneLocoSoundsLoader {
          }
       }
       if (soundsLoading) {
-         Toast.makeText(context, R.string.toastInitialisingSounds, Toast.LENGTH_LONG).show();
+//         Toast.makeText(context, R.string.toastInitialisingSounds, Toast.LENGTH_LONG).show();
+         threaded_application.safeToast(R.string.toastInitialisingSounds, Toast.LENGTH_LONG);
       }
       return true;   // true = sounds were reloaded
    } // end loadSounds()
@@ -545,7 +547,7 @@ public class InPhoneLocoSoundsLoader {
          }
 
       }
-      Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
+      Log.d("Engine_Driver", "loadRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
    }
 
    public void clearAllSounds() {

@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/host_ip"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -65,6 +66,7 @@
             android:layout_above="@id/port"
             android:layout_toRightOf="@id/host_ip"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/port"
@@ -86,13 +88,25 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/discoveredServersHeading"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/discovered_services"
         android:paddingLeft="4dp"
+        android:paddingStart="4dp"
         android:layout_marginBottom="2dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/discoveredServersWarning"
+        style="?attr/floating_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/statusThreadedAppServerDiscoveryNotPossible"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -125,6 +139,7 @@
             android:text="@string/recent_connections"
             android:layout_alignParentLeft="true"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="2dp"
@@ -158,51 +173,59 @@
             android:footerDividersEnabled="true" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/cons_DccexConnectionOption_heading"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/DccexConnectionOptionTitle"
-        android:visibility="gone"
-        android:paddingLeft="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/cons_DccexConnectionOption_layout"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".15"
+        android:layout_height="wrap_content"
         android:background="#00000000"
         android:orientation="horizontal"
-        android:visibility="gone" >
+        android:visibility="visible" >
+
+        <TextView
+            android:id="@+id/cons_DccexConnectionOption_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/DccexConnectionOptionTitle"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:id="@+id/cons_DccexConnectionOption_Label"
             style="?attr/floating_text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:padding="8sp"
+            android:padding="4sp"
             android:text="@string/useProtocolDCCEX"
-            tools:ignore="NestedWeights" />
+            android:layout_below="@id/cons_DccexConnectionOption_heading"/>
 
         <Spinner
             android:id="@+id/cons_DccexConnectionOption"
-            android:layout_width="wrap_content"
+            android:layout_width="120sp"
             android:layout_height="wrap_content"
-            android:layout_weight=".3"
+            android:layout_alignParentRight="true"
             android:ellipsize="none"
+            android:padding="0dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="5dp"
             android:entries="@array/prefDccexConnectionOptionsEntries"
             android:entryValues="@array/prefYesNoAutoEntryValues"
-            android:padding="0dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:singleLine="true" />
+            android:layout_below="@id/cons_DccexConnectionOption_heading"
+            tools:ignore="RtlHardcoded" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:background="?attr/ed_primaryLineColor"
+        tools:ignore="PxUsage" />
 
     <TextView
         android:id="@+id/ca_footer"
@@ -210,6 +233,8 @@
         android:textColor="?android:attr/textColorSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="14sp"
         android:text="@string/none" />
 
     <RelativeLayout

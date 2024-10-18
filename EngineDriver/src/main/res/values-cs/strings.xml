@@ -47,6 +47,7 @@
     <string name="app_name_ConsistLightsEdit">Souprava světla</string>
     <string name="app_name_gamepad_test">Gamepad Test</string>
     <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="gamepad_test_reset">Úplný reset gamepadů</string>
     <string name="gamepad1_test">Test gamepadu 1</string>
     <string name="gamepad2_test">Test gamepadu 2</string>
     <string name="gamepad3_test">Test gamepadu 3</string>
@@ -67,7 +68,7 @@
     <string name="recent_consists">Vybrat z Nedávných souprav</string>
 <!--    <string name="direction">Vpřed</string>-->
 <!--    <string name="speed">Rychlost:</string>-->
-    <string name="discovered_services">Nalezené servery</string>
+    <string name="discovered_services">Nalezené servery - WiFi: %1$s</string>
 <!--    <string name="save_settings">Uložit nastavení</string>-->
     <string name="stop">Zastavit</string>
     <string name="forward">Vpřed</string>
@@ -128,7 +129,7 @@
     <string name="toggle_button">Přehodit</string>
     <string name="power_control_label">Nastavení ovládání napájení kolejiště</string>
 <!--    <string name="power_control_button">neznámý</string>-->
-    <string name="press_to_toggle">Stiskněte tlačítko pro přepnutí stavu napájení kolejiště.</string>
+    <string name="press_to_toggle">Stiskněte tlačítko pro přepnutí stavu napájení kolejiště</string>
     <string name="power_control_not_allowed">Ovládání napájení není povoleno. Změňte v předvolbách/nastavení na serveru.</string>
     <string name="reconnect_label">Stav pokusu o znovupřipojení</string>
     <string name="reconnect_help">Pokoušet se o znovupřipojení automaticky. Počtejte na znovupřipojení nebo stskněte Šipka zpět pro Konec.</string>
@@ -349,7 +350,7 @@
 <!--    <string name="FilterRosterList">Filtr</string>-->
     <string name="FilterRosterListHint">Obsahuje…</string>
     <string name="FilterRosterListDownloadLabel">Stažení</string>
-    <string name="rosterEmpty">Nemohu najít žádné záznamy v evidenci JMRI. Místo toho použijte volbu \'DCC adresa\' nebo \'Nedávné\'.</string>
+    <string name="rosterEmpty">Nemohu najít žádné záznamy v evidenci JMRI.\n\nMísto toho použijte volbu \'DCC adresa\' nebo \'Nedávné\'.</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Metoda: </string>-->
     <string name="prefDoubleBackButtonToExitTitle">Dvojité tlačítko Zpět pro ukončení?</string>
@@ -469,7 +470,7 @@
     <string name="prefImportExportOverwite">Soubor \'%1$s\' již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
     <string name="prefImportExportErrorReadingFrom">Dovoz \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
-    <string name="prefImportExportErrorNotConnected">Není připojení na tento host.</string>
+    <string name="prefImportExportErrorNotConnected">Není připojení na tento host</string>
 
 <!--    <string name="prefImportServerManualTitle">Import z aktuálního Serveru (Ručně)</string>-->
 <!--    <string name="prefImportServerManualSummary">Soubor Serveru pro \'Import\' nastaví předvolby z aktuálně připojeného serveru.\nSoubor musí být v adresáři \'\\Android\\data\\jmri.enginedriver\\files\\\' serveru a Web Server musí být spuštěn.\nVarování: Import se spustí okamžitě při ukládání těchto předvoleb.</string>-->
@@ -609,7 +610,7 @@
 
     <!--    Toast messages for the ThreadedApplication -->
     <string name="toastWaitingForConnection">Časový limit čekání na zprávu WiThrottle \'VN\' od %1$s:%2$s. Odpojování</string>
-    <string name="toastWaitingForConnectionDccEx">Časový limit čekání na zprávu DCC-EX \'iDCCEX...\' od %1$s:%2$s. Odpojování</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Časový limit čekání na zprávu DCC-EX \'iDCCEX...\' od %1$s:%2$s. Odpojování</string>
     <string name="toastThreadedAppNoLocalIp">Nebyla nalezena žádná lokální IP adresa.\nZkontrolujte WiFi připojení.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Chyba při vytváření WiThrottle posluchače zeroconf: IOException:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle verze %1$s není podporovaná.</string>
@@ -620,6 +621,7 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Chyba vytváření output stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Chyba spícího vlákna, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Používáte síť %1$s, není WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery není možný bez WiFi připojení!</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
     <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
@@ -635,6 +637,7 @@
     <string name="toastShakeWebViewHidden">Zobrazení webu je dočasně skryto. Pro zobrazení znovu zatřeste. Pro trvalé skrytí proveďte změnu v předvolbách</string>
     <string name="toastShakeWebViewUnavailable">Zobrazení webu musí být nejdříve povoleno v předvolbách</string>
     <string name="toastShakeScreenLocked">Obrazovka ovladače zamčena – znovu zatřeste pro odemčení</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Akce není povolena, když je obrazovka plynu uzamčena</string>
     <string name="toastShakeScreenDimmed">Obrazovka ovladače setmělá – znovu zatřeste pro obnovení</string>
     <string name="toastSwipeUpDownScreenLocked">Obrazovka ovladače zamčena – přetáhněte pro odemčení</string>
     <string name="toastSwipeUpDownScreenDimmed">Obrazovka ovladače setmělá – přetáhněte pro obnovení</string>
@@ -689,6 +692,7 @@
     <!--    Toast messages for the Select Loco Activity -->
 <!--    <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
 <!--    <string name="toastSelectConsistsConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné soupravy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
+    <string name="toastImportExportCouldNotParseAddress">Adresu se nepodařilo analyzovat\\n%1$s</string>
     <string name="toastNumThrottles">Zvolený typ obrazovky nepodporuje tolik ovladačů. Omezuji na %1$s.</string>
     <string name="toastRecentsHelp">Dotykem vyberete položku Nedávný záznam,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování.\nPřetažením doprava odeberete položku.</string>
     <string name="toastRecentConsistsHelp">Dotykem vyberete položku záznam Soupravy,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování (pro zadané adresy) nebo zobrazte detaily Evidence.\nPřetažením doprava odeberte záznam.</string>
@@ -1123,8 +1127,8 @@
     <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
     <string name="prefDccexSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
     <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
-    <string name="useProtocolDCCEX">Použijte nativní příkazy DCC-EX (nikoli srottle)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Použijte nativní příkazy DCC-Ex. Pro „Auto“ musí jméno obsahovat „DCCEX“ nebo „DCC-EX“</string>
+    <string name="useProtocolDCCEX">Protokol použít?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protokol, který chcete použít?\n<small><small>(\'Auto\' hledá \"DCCEX\", \"DCC-EX\" nebo port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
     <string name="prefDccexConnectionOptionTitle">Zobrazit možnost protokolu</string>
@@ -1203,5 +1207,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Jaká procentuální brzda pro aktivaci středního čísla funkce</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Vysoká hodnota brzd ESU (procenta)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Jaká procentuální brzda pro aktivaci vysokého funkčního čísla</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Není připojeno k WiFi</string>
 
 </resources>

@@ -62,7 +62,7 @@
     <string name="recent_engines">Selecciona desde Lomotoras recientes</string>
 <!--    <string name="direction">Adelante</string>-->
 <!--    <string name="speed">Velocidad:</string>-->
-    <string name="discovered_services">Descubre servidores</string>
+    <string name="discovered_services">Descubre servidores - WiFi: %1$s</string>
 <!--    <string name="save_settings">Guarda los parámetros</string>-->
     <string name="stop">Detener</string>
     <string name="forward">Adelante</string>
@@ -485,6 +485,7 @@
     <string name="toastShakeWebViewHidden">Vista web oculta temporalmente. Agita de nuevo para mostrar. Para esconder permanentemente cámbialo en las preferencias</string>
     <string name="toastShakeWebViewUnavailable">La vista web debe estar habilitada en las preferencias primero</string>
     <string name="toastShakeScreenLocked">Pantalla de Controlador bloqueada - Agita de nuevo para desbloquearla</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Acción no permitida mientras la pantalla del acelerador está bloqueada</string>
     <string name="toastShakeScreenDimmed">Pantalla del Controlador atenuada - Agitalo de nuevo para restaurarlo</string>
     <string name="toastSwipeUpDownScreenLocked">Pantalla del Controlador bloqueada - Desliza hacia arriba para desbloquear</string>
     <string name="toastSwipeUpDownScreenDimmed">Pantalla del Controlador atenuada - Desliza hacia arriba para restaurar</string>
@@ -627,7 +628,7 @@
     <string name="prefSocketTimeoutMsTitle">Tiempo de espera del socket</string>
     <string name="prefSocketTimeoutMsSummary">Establece el tiempo de espera en milisegundos para el socket </string>
     <string name="toastWaitingForConnection">Se agotó el tiempo de espera para el mensaje WiThrottle \'VN\' de %1$s:%2$s. Desconectando</string>
-    <string name="toastWaitingForConnectionDccEx">Se agotó el tiempo de espera para el mensaje DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconectando</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Se agotó el tiempo de espera para el mensaje DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconectando</string>
     <string name="toastThreadedAppNoLocalIp">No se ha encontrado dirección IP.\nVerifica la conexión WIFI</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creando el cliente zeroconf del withrottle: Excepción IO:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">Versión de WiThrottle %1$s no soportada</string>
@@ -1017,8 +1018,10 @@
     <string name="prefTtsThrottleSpeedSummary">Cuando la velocidad alcanza ciertas velocidades cuando se usa un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">En velocidades de gamepad</string>
     <string name="FilterRosterListDownloadLabel">Descargar</string>
-    <string name="rosterEmpty">Incapaz de encontrar entidades en la lista de JMRI. Use la opción \'Dirección DCC\' o \'reciente\' en su lugar.</string>
+    <string name="rosterEmpty">No se puede encontrar ninguna entidad en la lista del servidor.\n\nUtilice en su lugar la opción \'Dirección DCC\' o \'Reciente\'.</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">¡Server Discovery no es posible sin una conexión WiFi!</string>
     <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
+    <string name="toastImportExportCouldNotParseAddress">No se pudo analizar la dirección\n%1$s</string>
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máximo</string>
     <string name="TtsGamepadTestSpeedZero">Cero</string>
@@ -1026,8 +1029,8 @@
     <string name="prefGamePadDoublePressStopSummary">Elija la acción cuando presione cualquier botón que esté configurado como \'Stop\'</string>
     <string name="prefDccexSummary">Use los comandos nativos de DCC-EX en lugar de Withrottle para todas las conexiones. \nNota: No entrará en vigencia hasta que reinicie el controlador del motor y se conecte a un servidor.</string>
     <string name="prefDccexTitle">Use comandos nativos de DCC-EX</string>
-    <string name="useProtocolDCCEX">Use comandos nativos de DCC-EX (no con Rottle)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Use comandos nativos de DCC-EX. Para \'Auto\', el nombre debe contener \"DCCEX\" o \"DCC-EX\"</string>
+    <string name="useProtocolDCCEX">¿Protocolo a utilizar?</string>
+    <string name="useProtocolDCCEXplusAutoHint">¿Protocolo a utilizar?\n<small><small>(\'Auto\' busca \"DCCEX\", \"DCC-EX\" o el puerto 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Usando el protocolo DCC-EX. Desactivar \"Use los comandos DCC-EX nativos\" Preferencia para usar el protocolo Witrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostrar opción para cambiar entre los protocolos Withrottle y DCC-EX en la pantalla de conexión.</string>
     <string name="prefDccexConnectionOptionTitle">Opción de protocolo Mostrar</string>
@@ -1106,5 +1109,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU – Welcher Prozentsatz der Bremse, um die mittlere Funktionsnummer zu aktivieren</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU-Hochbremswert (Prozent)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Welcher Prozentsatz der Bremse, um die hohe Funktionsnummer zu aktivieren</string>
+    <string name="statusThreadedAppNotconnectedToWifi">No conectado a WiFi</string>
 
 </resources>

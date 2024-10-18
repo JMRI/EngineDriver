@@ -123,7 +123,8 @@
 
 
 
-    <string name="discovered_services">Serveurs découverts</string>
+    <string name="discovered_services">Serveurs découverts - WiFi: %1$s</string>
+
 
     <string name="edit_consist_lights_throttle_1">Modifier phares de l\'unité multiple du régulateur 1</string>
     <string name="edit_consist_lights_throttle_2">Modifier phares de l\'unité multiple du régulateur 2</string>
@@ -544,5 +545,163 @@
     <string name="prefFlashlightTitle">Afficher la touche de la lampe de poche?</string>
     <string name="prefFullScreenSwipeAreaSummary">Lorsque activé, seule la barre d\'outils peut être balayée latéralement pour basculer entre les écrans</string>
     <string name="prefFullScreenSwipeAreaTitle">Désactivation du balayage latéral plein écran</string>
+
+
+    <string name="prefFunctionConsistLocosDefaultValue">de tête</string>
+
+    <string name="prefGamePadButton1Title">Action du bouton de la manette de jeu</string>
+
+    <string name="prefGamePadButton2Title">Action du bouton de la manette de jeu</string>
+
+    <string name="prefGamePadButton3Title">Action du bouton de la manette de jeu</string>
+
+    <string name="prefGamePadButton4Title">Action du bouton de la manette de jeu</string>
+
+    <string name="prefGamePadButtonDownTitle">Action du bouton Bas du pavé directionnel</string>
+
+    <string name="prefGamePadButtonLeftTitle">Action du bouton Gauche du pavé directionnel</string>
+
+    <string name="prefGamePadButtonReturnTitle">Action du bouton de la manette de jeu</string>
+
+    <string name="prefGamePadButtonRightTitle">Action du bouto Droite du pavé directionnel</string>
+
+    <string name="prefGamePadButtonStartTitle">Action du bouton de la manette de jeu</string>
+    <string name="prefGamePadButtonSummary">Sélectionner l\'action associée au bouton</string>
+
+    <string name="prefGamePadButtonUpTitle">Action du bouton Haut du pavé directionnel</string>
+    <string name="prefGamePadDoublePressStopSummary">Sélectionner l\'action lorsqu\'un bouton configuré comme \'Arrêt\' est appuyé</string>
+    <string name="prefGamePadDoublePressStopTitle">Action de la double pression de d\'action Arrêt</string>
+
+    <string name="prefGamePadFeedbackVolumeSummary">Définir le pourcentage de volume pour les boutons de la manette de jeu.</string>
+    <string name="prefGamePadFeedbackVolumeTitle">% Volume du bouton de la manette de jeu</string>
+    <string name="prefGamePadIgnoreJoystickSummary">Activer si le pavé directionnel de la manette de jeu produit à la fois des séquences de commandes ainsi que des événements de manette de jeu</string>
+    <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions de la manette de jeu</string>
+
+
+    <string name="prefGamepadOnlyOneGamepadSummary">Si activé, Engine Driver ne tentera pas de vérifier la présence de manettes de jeu supplémentaires.</string>
+    <string name="prefGamepadOnlyOneGamepadTitle">Une seule manette de jeu?</string>
+
+    <string name="prefGamePadSpeedButtonsRepeatSummary">Délai d\'attente entre les répétitions des boutons de vitesse de la manette de jeu.  Des valeurs basses provoquent une répétition plus rapide.</string>
+    <string name="prefGamePadSpeedButtonsRepeatTitle">Délai de répétition du buton de vitesse</string>
+
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">Valeur de l\'incrément de vitesse des boutons de la manette de jeu</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">Ajustement du nombre d\'incréments du bouton de vitesse</string>
+
+
+
+    <string name="prefGamePadSummary">Sélectionner le type de manette de jeu et autres options</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">Inversion temporaire des boutons de direction de la manette de jeu si les boutons de direction de l\'écran sont également inversés.</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">Inverser les boutons de direction conformément à ceux de l\'écran</string>
+    <string name="prefGamepadTestEnforceTestingSimpleSummary">Permet de vérifier uniquement la réduction de vitesse</string>
+    <string name="prefGamepadTestEnforceTestingSimpleTitle">Utiliser la vérification simple</string>
+    <string name="prefGamepadTestEnforceTestingSummary">Vérifier chaque manette de jeu lorsqu\'elles sont connectées.</string>
+    <string name="prefGamepadTestEnforceTestingTitle">Vérification systématique des manettes de jeu</string>
+    <string name="prefGamepadTestNowSummary">Permet de confirmer que les paramètres en place fonctionnent convenablement.\nLa page de vérification démarrera AUTOMATIQUEMENT la confirmation.</string>
+    <string name="prefGamepadTestNowTitle">Confirmer les paramètres de la manette de jeu maintenant!</string>
+    <string name="prefGamePadTitle">Préférences de la manette de jeu</string>
+
+    <string name="prefGamePadTypeSummary">Sélectionner les options appropriées de votre manette de jeu.</string>
+    <string name="prefGamePadTypeTitle">Type de manette de jeu</string>
+    <string name="prefHapticFeedbackButtonsSummary">Vibration des boutons</string>
+    <string name="prefHapticFeedbackButtonsTitle">Vibration des boutons</string>
+    <string name="prefHapticFeedbackDurationSummary">Durée de  vibration (en millisecondes)</string>
+    <string name="prefHapticFeedbackDurationTitle">Durée de vibration</string>
+    <string name="prefHapticFeedbackSummary">Vibration lors de changement de vitesse.</string>
+
+    <string name="prefHapticFeedbackTitle">Vibration</string>
+
+
+
+    <string name="prefHideDemoServerSummary">Masquer le serveur de démonstration \'jmri.mstevetodd.com\' dans la liste des connexions.</string>
+    <string name="prefHideDemoServerTitle">Masquer le serveur de démonstration</string>
+    <string name="prefHideIfNoUserNameSummary">Exclure de la liste les aiguillages et routes si le nom de l\'utilisateur n\'est pas complété.</string>
+    <string name="prefHideIfNoUserNameTitle">Masquer si nom d\'utilisateur inexistant</string>
+
+
+    <string name="prefHideSliderAndSpeedButtonsTitle">Masquer le curseur et les boutons de vitesse</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">Masquer le curseur ainsi que les boutons de vitesse.\nNote: Supplante les options \'Masquer curseur\', \'Hauteur du curseur\' ainsi que \'Afficher les boutons de vitesse\'.</string>
+    <string name="prefHideSliderSummary">Masquer le curseur de vitesse.  Utilisation des boutons de vitesse comme alternative.</string>
+    <string name="prefHideSliderTitle">Masquer le curseur de vitesse?</string>
+    <string name="prefHideSystemRouteNamesSummary">Masquer le nom système des itinéraires. Permet d\'alléger la liste des itinéraires.</string>
+    <string name="prefHideSystemRouteNamesTitle">Masqeur le nom système des itinéraires?</string>
+
+    <string name="prefHostImportExportSummary">\'Importation\' ou \'Exportation\' de vos préférences d\'un serveur specifique vers le dossier \'engine_driver/\'.  Le serveur doit se trouver dans la liste des connexions récentes.\nPrend effet IMMÉDIATEMENT en sélectionnant l\'option.\n(Disponible uniquement en étant hors connexion.)</string>
+    <string name="prefHostImportExportTitle">Imporation / exportation manuelle d\'un serveur</string>
+
+
+    <string name="prefImportExportErrorReadingFrom">Importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' échouée!  Les préférences de cet hôte doivent être préalablement sauvegardées.</string>
+    <string name="prefImportExportErrorReadingList">Erreur à la lecture de la liste des locomotives récentes:</string>
+    <string name="prefImportExportLocoListSummary">Inclure la liste des locomotives récentes dans les \'Importations\' et \'Exportations\'.</string>
+    <string name="prefImportExportLocoListTitle">Inclure la liste des locomotives récentes</string>
+    <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà.  Écraser?</string>
+    <string name="prefImportExportSummary">\'Importation\' ou \'Exportation\' des préférences vers le dossier \'\\Android\\data\\jmri.enginedriver\\files\\\' ou \'Réinitialisation\'.
+\nPrend effet IMMÉDIATEMENT en sélectionnant l\'option.
+\n(Un transfert des préférences vers un autre téléphone est possible en transférant une copie de ce dossier.)</string>
+    <string name="prefImportExportTitle">Importation, Exportation ou Réinitialisation</string>
+    <string name="prefImportServerAutoSummary">Importation automatique des préférences du serveur lors de sa connexion.\n(À la condition que le fichier \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' soit présent sur le serveur et qu\'il ultérieur à la date de dernière vérification.)</string>
+    <string name="prefImportServerAutoTitle">Importation automatique des préférences des serveurs</string>
+
+
+
+
+
+
+    <string name="prefIncreaseSliderHeightSummary">Utilisation de curseur ou touches de vitesse de plus grand format pour les régulateurs.</string>
+    <string name="prefIncreaseSliderHeightTitle">Augmentation de la taille du curseur et touches de vitesse</string>
+    <string name="prefIncreaseWebViewSizeSummary">Augmentation de l\'affichage web de 60% pour les écrans de petite taille.</string>
+    <string name="prefIncreaseWebViewSizeTitle">Augmentation de l\'affichage web?</string>
+
+    <string name="prefInitialThrotWebPageSummary">Page web initiale du régulateur (tel que \'/panel/\')</string>
+    <string name="prefInitialThrotWebPageTitle">Page web initiale du régulateur</string>
+
+    <string name="prefInitialWebPageSummary">Page web initiale (tel que \'/panel/\')</string>
+    <string name="prefInitialWebPageTitle">Page web initiale</string>
+    <string name="prefKidsHelpSummary">- Sélectionner préalablement la locomotive.\nLe minuteur se déclenchera au premier déplacement.\nUne fois le temps expiré, revenir à cet page de préférences pour réinitialiser le minuteur ou le supprimer.\n\nRecommandation - Désactivation des préférences ou éléments suivants:\n- Touches physiques de volume.\n- \'Balayage pour actionner les aiguillages\'.\n- \'Balayage pour les itinéraires\'.\n- Arrêt d\'urgence.</string>
+    <string name="prefKidsHelpTitle">Instructions pour la minuterie:</string>
+
+
+    <string name="prefKidsTimerButtonDefaultSummary">Durée par défaut de la minuterie si activée via sa touche de la barre d\'outils.</string>
+
+    <string name="prefKidsTimerButtonSummary">Affichage de la touche Minuterie pour permettre son déclenchement.</string>
+    <string name="prefKidsTimerButtonTitle">Affichage de la touche Minuterie?</string>
+    <string name="prefKidsTimerEnableReverseSummary">Activation de la touche de marche arrière.</string>
+    <string name="prefKidsTimerEnableReverseTitle">Permettre la marche arrière?</string>
+    <string name="prefKidsTimerResetPasswordSummary">Mot de passe pour réinitialier ou désactiver le minuteur.</string>
+    <string name="prefKidsTimerResetPasswordTitle">Mot de passe de réinitialisation / désactivation</string>
+    <string name="prefKidsTimerRestartPasswordSummary">Mot de passe pour relancer le minuteur avec les valeurs actuelles.</string>
+    <string name="prefKidsTimerRestartPasswordTitle">Mot de passe de relance du minuteur</string>
+    <string name="prefKidsTimerSummary">Restreindre la durée de fonctionnement de la locomotive.  ie: Chaque enfant aura une durée d\'utilisation identique.</string>
+    <string name="prefKidsTimerTitle">Durée maximale allouée</string>
+
+
+    <string name="prefLeftDirectionButtonsShortSummary">Court libellé pour l\'ensemble des touches de direction GAUCH.  Entrer \'Avant\' ou laisser vide pour un comportement normal.</string>
+    <string name="prefLeftDirectionButtonsShortTitle">Court libellé touches de gauche</string>
+    <string name="prefLeftDirectionButtonsSummary">Libellé pour l\'ensemble des touches de direction GAUCH.  Entrer \'Avant\' ou laisser vide pour un comportement normal.</string>
+    <string name="prefLeftDirectionButtonsTitle">Libellé touches de gauche</string>
+    <string name="prefLeftRightSwipePreferencesSummary">Options de balayage pour basculer entre les écrans</string>
+    <string name="prefLeftRightSwipePreferencesTitle">Préférences de balayage Gauche/Droite</string>
+    <string name="prefLimitSpeedButtonPreferencesTitle">Préférences de la touche \'Limite de vitesse\'</string>
+    <string name="prefLimitSpeedButtonSummary">Affiche une touche temporaire pour restreindre temporairement la limite de vitesse d\'un régulateur particullier.</string>
+    <string name="prefLimitSpeedButtonTitle">Afficher la touche \'Limite de vitesse\'</string>
+    <string name="prefLimitSpeedPercentSummary">Définir le \% maximal servant de limite de vitesse temporaire du régulateur.</string>
+    <string name="prefLimitSpeedPercentTitle">Vitesse limitée à \%</string>
+    <string name="prefLocaleSummary">Langue à utiliser.\nATENTION: Engine Driver redémarrera immédiatement.  Les touches de direction de marche seront réinitialisées.</string>
+    <string name="prefLocaleTitle">Langues</string>
+
+    <string name="prefMaximumRecentConnectionsSummary">Nombre maximal d\'entrées dans la liste des connexions</string>
+    <string name="prefMaximumRecentConnectionsTitle">Nombre maximal de connexions récemment utilisées</string>
+
+    <string name="prefMaximumRecentLocosSummary">Nombre maximal d\'entrées dans la liste des locomotives récemment utilisées</string>
+    <string name="prefMaximumRecentLocosTitle">Nombre maximal de locomotives récemment utilisées</string>
+
+    <string name="prefMaximumThrottleChangeSummary">Pourcentage maximal de changement de vitesse autorisé</string>
+    <string name="prefMaximumThrottleChangeTitle">Poiurcentage maximal de changement</string>
+
+    <string name="prefMaximumThrottleSummary">Pourcentage maximal alloué de la valeur de tous les curseurs de vitesse</string>
+    <string name="prefMaximumThrottleTitle">Pourcentage maximal des curseurs de vitesse</string>
+
+
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Nombre maximal de fonctions par défaut pour les libelés de fonctions non complétées du catalogue JMRI (Roster) </string>
+
 
 </resources>

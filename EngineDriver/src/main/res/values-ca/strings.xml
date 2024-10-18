@@ -62,7 +62,7 @@
     <string name="recent_engines">Selecciona des de Lomotores recents</string>
 <!--    <string name="direction">Adelante</string>-->
 <!--    <string name="speed">Velocitat:</string>-->
-    <string name="discovered_services">Descobreix servidors</string>
+    <string name="discovered_services">Descobreix servidors - WiFi: %1$s</string>
 <!--    <string name="save_settings">Desa els paràmetres</string>-->
     <string name="stop">Atura</string>
     <string name="forward">Endavant</string>
@@ -225,6 +225,7 @@
     <string name="prefEsuMc2StopButtonDelayTitle">Retard de la pulsació-llarga de la tecla d\'aturada</string>
     <string name="prefEsuMc2StopButtonDelaySummary">Com de llarga he de ser la \'pulsació-llarga\' de la tecla atura.\nUna \'pulsació-llarga\' atura tots els Controladors actius; una \'pulsació-breu\' atura el Controlador actual. \nUn valor petit l\'acció és mes ràpida</string>
 
+    <string name="prefEsuMc2StopButtonShortPressSummary">Una \\\'premsa curta\\\' posa en pausa la locomotora/consisteix controlada actualment.\\nRevertirà a la velocitat original quan es reprenguin les operacions.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opcions de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero de la tecla regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255</string>
@@ -636,13 +637,14 @@
     <string name="prefSocketTimeoutMsTitle">Temps d\'espera del socket</string>
     <string name="prefSocketTimeoutMsSummary">Estableix el temps d\'espera en mil·lisegons per al socket</string>
     <string name="toastWaitingForConnection">Temps d\'espera pendent del missatge \'VN\' de WiThrottle de %1$s:%2$s. Desconnectant</string>
-    <string name="toastWaitingForConnectionDccEx">S\'espera el temps d\'espera del missatge DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconnectant</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">S\'espera el temps d\'espera del missatge DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconnectant</string>
     <string name="toastThreadedAppNoLocalIp">No s\'ha trobat l\'adreça IP.\nVerifica la connexió WIFI</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Error creant el client zeroconf del withrottle: Excepció IO:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">Versió de WiThrottle %1$s no suportada</string>
 <!--
     <string name="toastThreadedAppCantDeterminIp">No s\'ha pogut determinar l\'adreça IP de %1$s</string>
 -->
+    <string name="toastThreadedAppCantDetermineIp">No es pot determinar l\'adreça IP de %1$s</string>
     <string name="toastThreadedAppCantConnect">No s\'ha pogut connectar al host %1$s i al port %2$s des de %3$s - %4$s Verifica els parèmetres de xarxa del WiThrottle</string>
     <string name="toastThreadedAppErrorInputStream">Error al crear el fluxe d\'entrada, Excepció IO: %1$s</string>
     <string name="toastThreadedAppErrorStartingSocket">Error en iniciar el fluxe del socket_WiT: %1$s</string>
@@ -1022,20 +1024,23 @@
     <string name="prefWebViewButtonSummary">Zobrazit tlačítko Ukázat/Skrýt zobrazit Web v panelu akcí? (vyžaduje v předvolbách povoleno \'Ovladač zobrazení Web\')</string>
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
     <string name="FilterRosterListDownloadLabel">descarregar</string>
-    <string name="rosterEmpty">No s\'ha pogut trobar cap entitat a la llista del servidor WiThrottle. Utilitzeu l\'opció "Adreça DCC" o "Recent".</string>
+    <string name="rosterEmpty">No es pot trobar cap entitat a la llista del servidor.\n\nUtilitzeu l\'opció "Adreça DCC" o "Recent".</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">El descobriment del servidor no és possible sense connexió WiFi!</string>
     <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \n\nReintentant</string>
+    <string name="toastImportExportCouldNotParseAddress">No s\'ha pogut analitzar l\'adreça\n%1$s</string>
     <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Màxim</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
 <!--    <string name="webViewAction">Ukázat/Skrýt zobrazit Web</string>-->
+    <string name="toastFlashlightOffFailed">Ho sento! S\'ha produït un problema en apagar la llanterna&#8230;</string>
     <string name="webViewButtonBar">Tlačítko zobrazit Web</string>
     <string name="prefGamePadDoublePressStopSummary">Trieu l\'acció quan premeu qualsevol botó que es configuri com a \"parar\"</string>
     <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
     <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
-    <string name="useProtocolDCCEX">Utilitzeu les ordres natives DCC-EX (no withrottle)</string>
+    <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protocol a utilitzar?\n<small><small>(\'Automàtic\' cerca \"DCCEX\", \"DCC-EX\" o el port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opció de protocol</string>
@@ -1117,5 +1122,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Quin percentatge de fre per activar el número de funció mitjana</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valor de fre alt ESU (percentatge)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quin percentatge de fre per activar el número de funció alta</string>
+    <string name="statusThreadedAppNotconnectedToWifi">No connectat a WiFi</string>
 
 </resources>

@@ -64,7 +64,7 @@
     <string name="recent_engines">Auswahl aus kürzlich verwendeten Loks</string>
 <!--    <string name="direction">Vorwärts</string>-->
 <!--    <string name="speed">Geschwindigkeit:</string>-->
-    <string name="discovered_services">Erkannte Server</string>
+    <string name="discovered_services">Erkannte Server - WiFi: %1$s</string>
 <!--    <string name="save_settings">Einstellungen Speichern</string>-->
     <string name="stop">Halt</string>
     <string name="forward">Vorwärts</string>
@@ -110,7 +110,7 @@
     <string name="toggle_button">Umlegen</string>
     <string name="power_control_label">Anlagenstrom steuern</string>
 <!--    <string name="power_control_button">unbekannt</string>-->
-    <string name="press_to_toggle">Knopf drücken um Anlagenstrom Ein/Aus zu schalten.</string>
+    <string name="press_to_toggle">Knopf drücken um Anlagenstrom Ein/Aus zu schalten</string>
     <string name="power_control_not_allowed">Steuerung des Anlagenstroms nicht erlaubt. Ändere die Einstellungen auf dem Server.</string>
     <string name="reconnect_label">Wiederverbindungsstatus</string>
     <string name="reconnect_help">Versuche automatisch neu zu verbinden. Warte auf Wiederverbindung oder drücke Zurück-Pfeil zum Beenden.</string>
@@ -481,7 +481,7 @@
     <string name="prefGamepadTestNowSummary">Erlaubt dir zu bestätigen, daß die gewählte Einstellung korrekt funktioniert.\nTest Seite wird SOFORT bei Auswahl gestartet.</string>
 
     <string name="toastWaitingForConnection">Zeitüberschreitung beim Warten auf die WiThrottle \'VN\'-Nachricht von %1$s:%2$s. Trennen</string>
-    <string name="toastWaitingForConnectionDccEx">Zeitüberschreitung beim Warten auf die DCC-EX \'iDCCEX...\'-Nachricht von %1$s:%2$s. Trennen</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Zeitüberschreitung beim Warten auf die DCC-EX \'iDCCEX...\'-Nachricht von %1$s:%2$s. Trennen</string>
     <string name="toastThreadedAppNoLocalIp">Keine lokale IP Adresse gefunden.\n Überprüfe deine WiFi Verbindung.</string>
     <string name="toastThreadedAppErrorCreatingWiThrottle">Fehler beim Erstellen eines von WiThrottle selbständig konfigurierten Zuhörers: IOException:\n%1$s</string>
     <string name="toastThreadedAppWiThrottleNotSupported">WiThrottle Version %1$s wird nicht unterstützt.</string>
@@ -504,6 +504,7 @@
     <string name="toastShakeWebViewHidden">Web Ansicht temporär ausgeblendet. Schüttle nochmals zum Anzeigen. Um sie permanent auszublenden, ändere die Voreinstellungen.</string>
     <string name="toastShakeWebViewUnavailable" tools:ignore="Typos">Web Anzeige muß zuerst in den Voreinstellungen ermöglicht werden.</string>
     <string name="toastShakeScreenLocked">Fahrregler Bildschirm blockiert - Schüttle nochmals zum Freigeben.</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Aktion nicht zulässig, während der Drosselklappenbildschirm gesperrt ist</string>
     <string name="toastShakeScreenDimmed">Fahrregler Bildschirm gedimmt - Schüttle nochmals zum Wiederherstellen.</string>
     <string name="toastSwipeUpDownScreenLocked">Fahrregler Bildschirm blockiert - Wische nach oben um Blockierung aufzuheben.</string>
     <string name="toastSwipeUpDownScreenDimmed">Fahrregler Bildschirm gedimmt - Wische nach oben zum Wiederherstellen.</string>
@@ -653,7 +654,7 @@
     <string name="prefImportExportOverwite">Datei \'%1$s\' existiert schon. Überschreiben?</string>
     <string name="prefImportExportErrorReadingList">Fehler beim Lesen der Liste Letzte Verbindungen:</string>
     <string name="prefImportExportErrorReadingFrom">Import von \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' fehlgeschlagen! Möglicherweise hast du die Voreinstellungen für diesen Host bisher nicht gespeichert.</string>
-    <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden.</string>
+    <string name="prefImportExportErrorNotConnected">Mit keinem Host verbunden</string>
 
 <!--    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>-->
 
@@ -750,6 +751,7 @@
     <string name="gamepadTestButtonLabelButtonRightShoulder">Rechte Schulter</string>
     <string name="gamepadTestButtonLabelButtonLeftTrigger">Linker Trigger</string>
     <string name="gamepadTestButtonLabelButtonRightTrigger">Rechter Abzug</string>
+    <string name="toastImportExportCouldNotParseAddress">Adresse\n%1$s konnte nicht analysiert werden</string>
     <string name="toastNumThrottles">Gewählter Gasbildschirmtyp nicht unterstützt, dass viele drosselt. Die Reduzierung auf %1$s.</string>
     <string name="prefTtsThrottleResponseTitle">Auf Gamepad Gaswechsel</string>
     <string name="prefTtsThrottleResponseSummary">Wenn Sie wählen Sie eine andere Drossel auf dem Gamepad.</string>
@@ -762,9 +764,10 @@
     <string name="prefEsuMc2KnobButtonSummary">Lassen Sie den Steuerknopf werden, indem eine Aktionstaste auf dem Bildschirm Drossel deaktiviert.</string>
     <string name="EsuMc2KnobAction">Aktivieren / Deaktivieren Knob</string>
     <string name="FilterRosterListDownloadLabel">Herunterladen</string>
-    <string name="rosterEmpty">Kann keine enties im JMRI Roster finden. Verwenden Sie entweder die ‚DCC-Adresse‘ oder ‚Neue‘ Option statt.</string>
+    <string name="rosterEmpty">Im Serververzeichnis konnten keine Einträge gefunden werden.\n\nVerwenden Sie stattdessen entweder die Option „DCC-Adresse“ oder „Zuletzt“.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">Ohne WLAN-Verbindung ist eine Servererkennung nicht möglich!</string>
     <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\n\nNeuer Versuch</string>
     <string name="prefConsistFollowDefaultActionTitle">Wenn Alle Spiele Fail-Aktion</string>
     <string name="prefConsistFollowDefaultActionSummary">Welche locos im bestehen sollte auf die Funktionstasten reagieren, wenn keine der folgenden Regeln treffen sind.</string>
@@ -1026,8 +1029,8 @@
     <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
     <string name="prefDccexSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
     <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
-    <string name="useProtocolDCCEX">Verwenden Sie native DCC-EX-Befehle (nicht withrottle)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Verwenden Sie native DCC-EX-Befehle. Für \'Auto\' muss der Name \"DCCEX\" oder \"DCC-EX\" enthalten.</string>
+    <string name="useProtocolDCCEX">Zu verwendendes Protokoll?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
     <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
@@ -1105,5 +1108,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Qual a porcentagem de freio para ativar o número da função intermediária</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Alto valor de freio da ESU (porcentagem)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Qual a Porcentagem de Freio para ativar o Número de Função Alto</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Nicht mit WLAN verbunden</string>
 
 </resources>

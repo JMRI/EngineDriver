@@ -82,8 +82,11 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
     private SharedPreferences prefs;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
     public void refreshConsistLists() {
@@ -352,7 +355,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
         super.onDestroy();
 
-        importExportPreferences.getRecentConsistsListFromFile();
+        importExportPreferences.loadRecentConsistsListFromFile();
         int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
 

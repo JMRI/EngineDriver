@@ -254,7 +254,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         try {
             Process process = Runtime.getRuntime().exec("logcat -c");
             Runtime.getRuntime().exec("logcat -f " + logFile);
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
             Log.d("Engine_Driver", "Logging started to: " + logFile);
@@ -290,7 +291,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                case PermissionsHelper.STORE_LOG_FILES:
-//                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to saveSharedPreferencesToFileImpl()");
+//                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to writeSharedPreferencesToFileImpl()");
 //                    saveLogFileImpl();
 //                    break;
                 default:
@@ -446,16 +447,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 }
             }
             return null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
         }
 
         @Override

@@ -127,7 +127,7 @@ public class power_control extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            if (mainapp.DccexTrackPower[myTrack] == 0 ) {
+            if (mainapp.dccexTrackPower[myTrack] == 0 ) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 1);
             } else {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 0);
@@ -155,10 +155,10 @@ public class power_control extends AppCompatActivity {
     public void refreshDccexTracksView() {
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             if (vn >= 05.002005) {  /// need to remove the track power options
-                dccExTrackTypeLayout[i].setVisibility(mainapp.DccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
-                dccExTrackType[i].setText(TRACK_TYPES[mainapp.DccexTrackType[i]]);
-                dccExTrackTypeId[i].setText(mainapp.DccexTrackId[i]);
-                setPowerButton(dccExTrackPowerButton[i],mainapp.DccexTrackPower[i]);
+                dccExTrackTypeLayout[i].setVisibility(mainapp.dccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
+                dccExTrackType[i].setText(TRACK_TYPES[mainapp.dccexTrackType[i]]);
+                dccExTrackTypeId[i].setText(mainapp.dccexTrackId[i]);
+                setPowerButton(dccExTrackPowerButton[i],mainapp.dccexTrackPower[i]);
             } else {
                 dccExTrackTypeLayout[i].setVisibility(View.GONE);
             }
