@@ -65,12 +65,12 @@ public class ImportExportPreferences {
     private static final String RECENT_CONSISTS_FILENAME = "recent_consist_list.txt";
     private static final String RECENT_ENGINES_FILENAME = "recent_engine_list.txt";
 
-    public ArrayList<Integer> recent_loco_address_list;
-    public ArrayList<Integer> recent_loco_address_size_list; // Look at address_type.java
-    public ArrayList<String> recent_loco_name_list;
-//    ArrayList<String> recent_loco_name_html_list;
-    public ArrayList<Integer> recent_loco_source_list;
-    public ArrayList<String> recent_loco_functions_list;
+    public ArrayList<Integer> recentLocoAddressList;
+    public ArrayList<Integer> recentLocoAddressSizeList; // Look at address_type.java
+    public ArrayList<String> recentLocoNameList;
+//    ArrayList<String> recentLocoNameHtmlList;
+    public ArrayList<Integer> recentLocoSourceList;
+    public ArrayList<String> recentLocoFunctionsList;
 
     public ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
     public ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
@@ -81,14 +81,14 @@ public class ImportExportPreferences {
     public ArrayList<String> consistNameList = new ArrayList<>();
     public ArrayList<String> consistNameHtmlList = new ArrayList<>();
 
-    public ArrayList<String> recent_turnout_address_list;
-    public ArrayList<String> recent_turnout_name_list;
-    public ArrayList<Integer> recent_turnout_source_list;
-    public ArrayList<String> recent_turnout_server_list;
+    public ArrayList<String> recentTurnoutAddressList;
+    public ArrayList<String> recentTurnoutNameList;
+    public ArrayList<Integer> recentTurnoutSourceList;
+    public ArrayList<String> recentTurnoutServerList;
 
     private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
-        boolean res = false;
+        boolean result = false;
         ObjectOutputStream output = null;
 
         File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
@@ -97,9 +97,10 @@ public class ImportExportPreferences {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
             @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
-            Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(m, Toast.LENGTH_SHORT);
             Log.d("Engine_Driver", m);
-            res = true;
+            result = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -114,34 +115,35 @@ public class ImportExportPreferences {
                 ex.printStackTrace();
             }
         }
-        if (!res) {
+        if (!result) {
             Log.e("Engine_Driver", "writeExportFile: ImportExportPreferences: Export Failed");
-            Toast.makeText(context, "Export failed!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, "Export failed!", Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         } else {
             Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Export succeeded");
 
         }
-        return res;
+        return result;
     }
 
-    public void saveSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
-        Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file");
+    public void writeSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+        Log.d("Engine_Driver", "writeSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file");
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
         if (prefImportExportLocoList) {
-            recent_loco_address_list = new ArrayList<>();
-            recent_loco_address_size_list = new ArrayList<>();
-            recent_loco_name_list = new ArrayList<>();
-            recent_loco_source_list = new ArrayList<>();
-            recent_loco_functions_list = new ArrayList<>();
-            getRecentLocosListFromFile();
-            saveIntListDataToPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences);
-            saveIntListDataToPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences);
-            saveStringListDataToPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences);
-            saveIntListDataToPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences);
-            saveStringListDataToPreferences(recent_loco_functions_list, "prefRecentLocoFunction", sharedPreferences);
+            recentLocoAddressList = new ArrayList<>();
+            recentLocoAddressSizeList = new ArrayList<>();
+            recentLocoNameList = new ArrayList<>();
+            recentLocoSourceList = new ArrayList<>();
+            recentLocoFunctionsList = new ArrayList<>();
+            loadRecentLocosListFromFile();
+            saveIntListDataToPreferences(recentLocoAddressList, "prefRecentLoco", sharedPreferences);
+            saveIntListDataToPreferences(recentLocoAddressSizeList, "prefRecentLocoSize", sharedPreferences);
+            saveStringListDataToPreferences(recentLocoNameList, "prefRecentLocoName", sharedPreferences);
+            saveIntListDataToPreferences(recentLocoSourceList, "prefRecentLocoSource", sharedPreferences);
+            saveStringListDataToPreferences(recentLocoFunctionsList, "prefRecentLocoFunction", sharedPreferences);
 
-            getRecentConsistsListFromFile();
+            loadRecentConsistsListFromFile();
             saveStringListDataToPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
             for (int i = 0; i < consistNameList.size(); i++) {
                 saveIntListDataToPreferences(consistEngineAddressList.get(i), "prefRecentConsistAddress_"+i, sharedPreferences);
@@ -153,16 +155,11 @@ public class ImportExportPreferences {
             }
         }
 
-//        getRecentTurnoutsListFromFile();
-//        saveStringListDataToPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences);
-//        saveStringListDataToPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences);
-//        saveIntListDataToPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences);
-//        saveStringListDataToPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences);
-
         if (!exportedPreferencesFileName.equals(".ed")) {
             writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
         } else {
-            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         }
 
         int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
@@ -170,10 +167,10 @@ public class ImportExportPreferences {
         int prefCount;
         if (prefImportExportLocoList) {  // now clean out the preference data
 
-            Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Normal Cleanout of old Recent Locos preferences");
+            Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Normal Cleanout of old Recent Locos preferences");
             prefCount = removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentLoco", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
-                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
+                Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentLoco", sharedPreferences);
             }
             removeExtraListDataFromPreferences(0, prefCount,"prefRecentLocoSize", sharedPreferences);
@@ -182,16 +179,16 @@ public class ImportExportPreferences {
 
             prefCount =removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentConsistName", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, look for more
-                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
+                Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Extended Cleanout of old Recent Locos preferences");
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, numberOfRecentLocosToWrite+20, "prefRecentConsistName", sharedPreferences);
 
                 if (prefCount == numberOfRecentLocosToWrite+20) {  // if there were that many, assume the worst
-                    Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended DEEP CLEAN of old Recent Locos preferences");
+                    Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Extended DEEP CLEAN of old Recent Locos preferences");
                     prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
                 }
             }
 
-            Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Normal Cleanout of old Recent Consist preferences");
+            Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Normal Cleanout of old Recent Consist preferences");
             for (int i = 0; i < numberOfRecentLocosToWrite; i++) {
                 int subPrefCount = removeExtraListDataFromPreferences(0,10,"prefRecentConsistAddress_"+i, sharedPreferences);
                 removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSize_"+i, sharedPreferences);
@@ -202,14 +199,14 @@ public class ImportExportPreferences {
             }
 
             if (sharedPreferences.contains("prefRecentTurnoutServer_0")) {  // there should not be any so assume the worst
-                Log.d("Engine_Driver", "saveSharedPreferencesToFile:  Extended Cleanout of old Recent turnouts preferences - these should not exist");
+                Log.d("Engine_Driver", "writeSharedPreferencesToFile:  Extended Cleanout of old Recent turnouts preferences - these should not exist");
                 prefCount = removeExtraListDataFromPreferences(0, 600, "prefRecentTurnout", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutName", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutSource", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutServer", sharedPreferences);
             }
         }
-        Log.d("Engine_Driver", "saveSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file - Finished");
+        Log.d("Engine_Driver", "writeSharedPreferencesToFile: ImportExportPreferences: Saving preferences to file - Finished");
     }
 
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
@@ -253,7 +250,6 @@ public class ImportExportPreferences {
                     String restoredDeviceId = "";
                     input = new ObjectInputStream(new FileInputStream(src));
                     prefEdit.clear();
-
 
                     int i = 0;
                     Map<String, ?> entries = (Map<String, ?>) input.readObject();
@@ -313,7 +309,8 @@ public class ImportExportPreferences {
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
                     Log.d("Engine_Driver", "ImportExportPreferences: " + m);
-                    Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(m, Toast.LENGTH_SHORT);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -340,16 +337,16 @@ public class ImportExportPreferences {
 
                 if (prefImportExportLocoList) {
                     // now take the recent locos list that was stored in the preferences and push them in the file
-                    recent_loco_address_list = new ArrayList<>();
-                    recent_loco_address_size_list = new ArrayList<>();
-                    recent_loco_name_list = new ArrayList<>();
-                    recent_loco_source_list = new ArrayList<>();
-                    recent_loco_functions_list = new ArrayList<>();
-                    getIntListDataFromPreferences(recent_loco_address_list, "prefRecentLoco", sharedPreferences,-1, 0);
-                    getIntListDataFromPreferences(recent_loco_address_size_list, "prefRecentLocoSize", sharedPreferences, recent_loco_address_list.size(), 0);
-                    getStringListDataFromPreferences(recent_loco_name_list, "prefRecentLocoName", sharedPreferences, recent_loco_address_list.size(), "");
-                    getIntListDataFromPreferences(recent_loco_source_list, "prefRecentLocoSource", sharedPreferences, recent_loco_address_list.size(), source_type.UNKNOWN);
-                    getStringListDataFromPreferences(recent_loco_functions_list, "prefRecentLocoFunctions", sharedPreferences, recent_loco_address_list.size(), "");
+                    recentLocoAddressList = new ArrayList<>();
+                    recentLocoAddressSizeList = new ArrayList<>();
+                    recentLocoNameList = new ArrayList<>();
+                    recentLocoSourceList = new ArrayList<>();
+                    recentLocoFunctionsList = new ArrayList<>();
+                    getIntListDataFromPreferences(recentLocoAddressList, "prefRecentLoco", sharedPreferences,-1, 0);
+                    getIntListDataFromPreferences(recentLocoAddressSizeList, "prefRecentLocoSize", sharedPreferences, recentLocoAddressList.size(), 0);
+                    getStringListDataFromPreferences(recentLocoNameList, "prefRecentLocoName", sharedPreferences, recentLocoAddressList.size(), "");
+                    getIntListDataFromPreferences(recentLocoSourceList, "prefRecentLocoSource", sharedPreferences, recentLocoAddressList.size(), source_type.UNKNOWN);
+                    getStringListDataFromPreferences(recentLocoFunctionsList, "prefRecentLocoFunctions", sharedPreferences, recentLocoAddressList.size(), "");
                     writeRecentLocosListToFile(sharedPreferences);
 
                     getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
@@ -376,17 +373,6 @@ public class ImportExportPreferences {
                         consistLightList.add(tempConsistLightList_inner);
                     }
                     writeRecentConsistsListToFile(sharedPreferences, -1);
-
-//                    recent_turnout_address_list = new ArrayList<>();
-//                    recent_turnout_name_list = new ArrayList<>();
-//                    recent_turnout_source_list = new ArrayList<>();
-//                    recent_turnout_server_list = new ArrayList<>();
-//                    getStringListDataFromPreferences(recent_turnout_address_list, "prefRecentTurnout", sharedPreferences, -1,"");
-//                    getStringListDataFromPreferences(recent_turnout_name_list, "prefRecentTurnoutName", sharedPreferences, recent_turnout_address_list.size(), "");
-//                    getIntListDataFromPreferences(recent_turnout_source_list, "prefRecentTurnoutSource", sharedPreferences, recent_turnout_address_list.size(), source_type.UNKNOWN);
-//                    getStringListDataFromPreferences(recent_turnout_server_list, "prefRecentTurnoutServer", sharedPreferences, recent_turnout_server_list.size(), "");
-//                    writeRecentTurnoutsListToFile(sharedPreferences);
-
                 }
             } else {
                 deleteFile(RECENT_ENGINES_FILENAME);
@@ -396,13 +382,18 @@ public class ImportExportPreferences {
 
             if (!res) {
                 if (srcExists) {
-                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed,
+                                                        exportedPreferencesFileName), Toast.LENGTH_LONG);
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
+                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed,
+                                                        exportedPreferencesFileName), Toast.LENGTH_LONG);
                 }
             }
         } else {
-            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportCannotImport), Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportCannotImport), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(R.string.toastImportExportCannotImport, Toast.LENGTH_LONG);
         }
 
         prefEdit.commit();
@@ -410,14 +401,14 @@ public class ImportExportPreferences {
         return res;
     }
 
-    public void getRecentLocosListFromFile() {
-        Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
-        if (recent_loco_address_list == null) { //make sure arrays are valid
-            recent_loco_address_list = new ArrayList<>();
-            recent_loco_address_size_list = new ArrayList<>();
-            recent_loco_name_list = new ArrayList<>();
-            recent_loco_source_list = new ArrayList<>();
-            recent_loco_functions_list = new ArrayList<>();
+    public void loadRecentLocosListFromFile() {
+        Log.d("Engine_Driver", "loadRecentLocosListFromFile: ImportExportPreferences: Loading recent locos list from file");
+        if (recentLocoAddressList == null) { //make sure arrays are valid
+            recentLocoAddressList = new ArrayList<>();
+            recentLocoAddressSizeList = new ArrayList<>();
+            recentLocoNameList = new ArrayList<>();
+            recentLocoSourceList = new ArrayList<>();
+            recentLocoFunctionsList = new ArrayList<>();
         }
 
         try {
@@ -469,26 +460,26 @@ public class ImportExportPreferences {
                             functions = "";
                         }
                         if ((addr >= 0) && (size >= 0)) {
-                            recent_loco_address_list.add(addr);
-                            recent_loco_address_size_list.add(size);
+                            recentLocoAddressList.add(addr);
+                            recentLocoAddressSizeList.add(size);
                             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
                             String engineAddressString = String.format("%s(%s)", addr, addressLengthString);
                             if ((locoName.isEmpty() || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
                                 locoName = engineAddressString;
                             }
-                            recent_loco_name_list.add(locoName);
-                            recent_loco_source_list.add(source);
-                            recent_loco_functions_list.add(functions);
+                            recentLocoNameList.add(locoName);
+                            recentLocoSourceList.add(source);
+                            recentLocoFunctionsList.add(functions);
 
                         }
                     }
                 }
                 list_reader.close();
             }
-            Log.d("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
+            Log.d("Engine_Driver", "loadRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
 
         } catch (IOException except) {
-            Log.e("Engine_Driver", "getRecentLocosListFromFile: ImportExportPreferences: select_loco - Error reading recent loco file. "
+            Log.e("Engine_Driver", "loadRecentLocosListFromFile: ImportExportPreferences: select_loco - Error reading recent loco file. "
                     + except.getMessage());
         }
     }
@@ -505,13 +496,13 @@ public class ImportExportPreferences {
             int mrl = Integer.parseInt(smrl);
             list_output = new PrintWriter(engine_list_file);
             if (mrl > 0) {
-                for (int i = 0; i < recent_loco_address_list.size() && i < mrl; i++) {
+                for (int i = 0; i < recentLocoAddressList.size() && i < mrl; i++) {
                     list_output.format("%d:%d%d~%s]\\[%s\n",
-                            recent_loco_address_list.get(i),
-                            recent_loco_address_size_list.get(i),
-                            recent_loco_source_list.get(i),
-                            recent_loco_name_list.get(i),
-                            recent_loco_functions_list.get(i));
+                            recentLocoAddressList.get(i),
+                            recentLocoAddressSizeList.get(i),
+                            recentLocoSourceList.get(i),
+                            recentLocoNameList.get(i),
+                            recentLocoFunctionsList.get(i));
                 }
             }
             list_output.flush();
@@ -532,8 +523,8 @@ public class ImportExportPreferences {
         }
     }
 
-    public void getRecentConsistsListFromFile() {
-        Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
+    public void loadRecentConsistsListFromFile() {
+        Log.d("Engine_Driver", "loadRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
         consistEngineAddressList = new ArrayList<>();
         consistAddressSizeList = new ArrayList<>();
@@ -654,11 +645,11 @@ public class ImportExportPreferences {
                         }
                     }
                     list_reader.close();
-                    Log.d("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Read recent consists list from file completed successfully");
+                    Log.d("Engine_Driver", "loadRecentConsistsListFromFile: ImportExportPreferences: Read recent consists list from file completed successfully");
                 }
 
             } catch (IOException except) {
-                Log.e("Engine_Driver", "getRecentConsistsListFromFile: ImportExportPreferences: Error reading recent consist file. "
+                Log.e("Engine_Driver", "loadRecentConsistsListFromFile: ImportExportPreferences: Error reading recent consist file. "
                         + except.getMessage());
             }
         }
@@ -694,7 +685,6 @@ public class ImportExportPreferences {
         return rslt;
     }
 
-//    public String addOneConsistAddressHtml(Integer addr, int size, int dir, int source, int light) {
     public String addOneConsistAddressHtml(Integer addr, int size) {
         return "<span>" + addr.toString()
                 +"<small><small>("+ (size==0 ? "S":"L") +")"  + "</small></small>"
@@ -778,10 +768,8 @@ public class ImportExportPreferences {
         File consist_list_file = new File(context.getExternalFilesDir(null), RECENT_CONSISTS_FILENAME);
 
         PrintWriter list_output;
-//        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", "10"); //retrieve pref for max recent locos to show
         int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
         try {
-//            int numberOfRecentLocosToWrite = Integer.parseInt(smrl);
             list_output = new PrintWriter(consist_list_file);
             if (numberOfRecentLocosToWrite > 0) {
                 for (int i = 0; i < consistNameList.size() && numberOfRecentLocosToWrite > 0; i++) {
@@ -937,16 +925,16 @@ public class ImportExportPreferences {
         String smrl = sharedPreferences.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
             int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
-            numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recent_turnout_address_list.size());
+            numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recentTurnoutAddressList.size());
             list_output = new PrintWriter(engine_list_file);
             if (numberOfRecentTurnoutsToWrite > 0) {
-//                for (int i = 0; i < recent_turnout_address_list.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
+//                for (int i = 0; i < recentTurnoutAddressList.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
                 for (int i = 0; i < numberOfRecentTurnoutsToWrite; i++) {
                     list_output.format("%s:%d<~>%s<~>%s\n",
-                            recent_turnout_address_list.get(i),
-                            recent_turnout_source_list.get(i),
-                            recent_turnout_server_list.get(i),
-                            recent_turnout_name_list.get(i));
+                            recentTurnoutAddressList.get(i),
+                            recentTurnoutSourceList.get(i),
+                            recentTurnoutServerList.get(i),
+                            recentTurnoutNameList.get(i));
 //                    numberOfRecentTurnoutsToWrite--;
                 }
             } else {
@@ -956,7 +944,7 @@ public class ImportExportPreferences {
             list_output.flush();
             list_output.close();
             Log.d("Engine_Driver", "writeRecentTurnoutsListToFile: ImportExportPreferences: " +
-                    "Write recent turnouts list to file completed successfully with " + recent_turnout_address_list.size() + " entries.");
+                    "Write recent turnouts list to file completed successfully with " + recentTurnoutAddressList.size() + " entries.");
         } catch (IOException except) {
             Log.e("Engine_Driver",
                     "writeRecentTurnoutsListToFile: ImportExportPreferences: Error creating a PrintWriter, IOException: "
@@ -985,8 +973,8 @@ public class ImportExportPreferences {
         return(false);
     }
 
-        public void getRecentTurnoutsListFromFile() {
-//        Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
+        public void loadRecentTurnoutsListFromFile() {
+//        Log.d("Engine_Driver", "loadRecentTurnoutsListFromFile: ImportExportPreferences: Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in recent_engine_list.txt
@@ -1022,21 +1010,21 @@ public class ImportExportPreferences {
                             source = -1;
                         }
                         if (addr.length() > 0) {
-                            recent_turnout_address_list.add(addr);
-                            recent_turnout_name_list.add(turnoutName);
-                            recent_turnout_source_list.add(source);
-                            recent_turnout_server_list.add(turnoutServer);
+                            recentTurnoutAddressList.add(addr);
+                            recentTurnoutNameList.add(turnoutName);
+                            recentTurnoutSourceList.add(source);
+                            recentTurnoutServerList.add(turnoutServer);
 
                         }
                     }
                 }
                 list_reader.close();
             }
-            Log.d("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: " +
-                    "Read recent turnouts list from file completed successfully with " + recent_turnout_address_list.size() + " entries.");
+            Log.d("Engine_Driver", "loadRecentTurnoutsListFromFile: ImportExportPreferences: " +
+                    "Read recent turnouts list from file completed successfully with " + recentTurnoutAddressList.size() + " entries.");
 
         } catch (IOException except) {
-            Log.e("Engine_Driver", "getRecentTurnoutsListFromFile: ImportExportPreferences: Error reading recent turnouts file. "
+            Log.e("Engine_Driver", "loadRecentTurnoutsListFromFile: ImportExportPreferences: Error reading recent turnouts file. "
                     + except.getMessage());
         }
     }
@@ -1057,7 +1045,7 @@ public class ImportExportPreferences {
 
     @SuppressLint({"DefaultLocale", "ApplySharedPref"})
     public void downloadRosterToRecents(Context context, SharedPreferences sharedPreferences, threaded_application mainapp) {
-        getRecentLocosListFromFile();
+        loadRecentLocosListFromFile();
 
         ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
         int recentsSize = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
@@ -1084,7 +1072,8 @@ public class ImportExportPreferences {
                 try {
                     locoAddress = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
-                    Toast.makeText(context, "ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportCouldNotParseAddress, e.getMessage()), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }
                 if ("loco".equals(rosterEntryType)) {
@@ -1094,30 +1083,30 @@ public class ImportExportPreferences {
 
             // check if it is already in the list and remove it
             String keepFunctions = "";
-            for (int i = 0; i < recent_loco_address_list.size(); i++) {
+            for (int i = 0; i < recentLocoAddressList.size(); i++) {
                 Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: locoName='"+locoName+"', address=" + locoAddress);
-                if (locoAddress == recent_loco_address_list.get(i)
-                        && locoAddressSize == recent_loco_address_size_list.get(i)
-                        && locoName.equals(recent_loco_name_list.get(i))) {
+                if (locoAddress == recentLocoAddressList.get(i)
+                        && locoAddressSize == recentLocoAddressSizeList.get(i)
+                        && locoName.equals(recentLocoNameList.get(i))) {
 
-                    recent_loco_address_list.remove(i);
-                    recent_loco_address_size_list.remove(i);
-                    recent_loco_name_list.remove(i);
-                    recent_loco_source_list.remove(i);
-                    keepFunctions = recent_loco_functions_list.get(i);
-                    recent_loco_functions_list.remove(i);
+                    recentLocoAddressList.remove(i);
+                    recentLocoAddressSizeList.remove(i);
+                    recentLocoNameList.remove(i);
+                    recentLocoSourceList.remove(i);
+                    keepFunctions = recentLocoFunctionsList.get(i);
+                    recentLocoFunctionsList.remove(i);
                     Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
 
             // now append it to the end of the list
-            int endOfList = recent_loco_address_list.size();
-            recent_loco_address_list.add(endOfList, locoAddress);
-            recent_loco_address_size_list.add(endOfList, locoAddressSize);
-            recent_loco_name_list.add(endOfList, locoName);
-            recent_loco_source_list.add(endOfList, source_type.ROSTER);
-            recent_loco_functions_list.add(endOfList, keepFunctions);  // blank for now
+            int endOfList = recentLocoAddressList.size();
+            recentLocoAddressList.add(endOfList, locoAddress);
+            recentLocoAddressSizeList.add(endOfList, locoAddressSize);
+            recentLocoNameList.add(endOfList, locoName);
+            recentLocoSourceList.add(endOfList, source_type.ROSTER);
+            recentLocoFunctionsList.add(endOfList, keepFunctions);  // blank for now
 
             Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' added to Recents");
 
@@ -1129,8 +1118,8 @@ public class ImportExportPreferences {
         // now get all the function labels
         j=0;
         for (String rostername : rns) {
-            String sAddr = locoAddressToString(recent_loco_address_list.get(j),
-                    recent_loco_address_size_list.get(j), true);
+            String sAddr = locoAddressToString(recentLocoAddressList.get(j),
+                    recentLocoAddressSizeList.get(j), true);
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, mainapp.maxThrottles);  // one past the actual number of allow throttles
             j++;
         }

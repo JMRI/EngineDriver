@@ -61,7 +61,7 @@
     <string name="recent_engines">Selezionare da Locomotive Recenti</string>
 <!--    <string name="direction">Avanti</string>-->
 <!--    <string name="speed">Velocità:</string>-->
-    <string name="discovered_services">Server Individuati</string>
+    <string name="discovered_services">Server Individuati - WiFi: %1$s</string>
 <!--    <string name="save_settings">Salvare Impostazioni</string>-->
     <string name="stop">Stop</string>
     <string name="forward">Avanti</string>
@@ -112,7 +112,7 @@
     <string name="toggle_button">Cambiare</string>
     <string name="power_control_label">Controllo Energia del Plastico</string>
 <!--    <string name="power_control_button">sconosciuto</string>-->
-    <string name="press_to_toggle">Premere il tasto per cambiare lo stato di energia del plastico.</string>
+    <string name="press_to_toggle">Premere il tasto per cambiare lo stato di energia del plastico</string>
     <string name="power_control_not_allowed">Controllo di Energia non permesso. Cambiare in Preferenze/Impostazioni sul server.</string>
     <string name="reconnect_label">Status Tentativi di Riconnessione</string>
     <string name="reconnect_help">Tentando riconnettere autimaticamente. Attendere la riconnessione o premere la freccia Indietro per Uscire.</string>
@@ -410,7 +410,7 @@
     <string name="prefImportExportOverwite">File \'%1$s\' giá presente. Sovrascrivere?</string>
     <string name="prefImportExportErrorReadingList">Errore lettura lista connessioni recenti:</string>
     <string name="prefImportExportErrorReadingFrom">Importazione da \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' fallita! Puoi non aver ancora salvato le preferenze per questo host.</string>
-    <string name="prefImportExportErrorNotConnected">Host non connesso.</string>
+    <string name="prefImportExportErrorNotConnected">Host non connesso</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Cambia Direzione Pulsanti</string>
     <string name="prefSwapForwardReverseButtonsSummary">Scambia permanentemente i due Pulsanti Direzione per tutti i controllori.</string>
@@ -515,6 +515,7 @@
     <string name="toastShakeWebViewHidden">Vista Web temporaneamente nascosta. Scuotere di nuovo per mostrare. Per nascondere permanentemente, alterare le preferenze.</string>
     <string name="toastShakeWebViewUnavailable">Vista Webe deve essere abilitata nelle preferenze per primo</string>
     <string name="toastShakeScreenLocked">Schermo Controllore Bloccato - Scuotere per sbloccare</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Azione non consentita mentre la schermata dell\'acceleratore è bloccata</string>
     <string name="toastShakeScreenDimmed">Schermo Controllore Scurito - Scuotere per ripristinare</string>
     <string name="toastSwipeUpDownScreenLocked">Schermo Controllore Bloccato - Scorrere per sbloccare</string>
     <string name="toastSwipeUpDownScreenDimmed">Schermo Controllore Scurito - Scorrere per ripristinare</string>
@@ -697,7 +698,7 @@
     <string name="fb_column_label">Etichetta</string>
     <string name="fb_column_function">funz #</string>
     <string name="FilterRosterListDownloadLabel">Scaricamento</string>
-    <string name="rosterEmpty">Impossibile trovare nessuna enties nel roster JMRI. Utilizzare il \'DCC Indirizzo\' o opzione \'recente\', invece.</string>
+    <string name="rosterEmpty">Impossibile trovare entità nell\'elenco dei server.\n\nUtilizzare invece l\'opzione \'Indirizzo DCC\' o \'Recenti\'.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Tutte le partite Fail Azione</string>
     <string name="prefConsistFollowDefaultActionSummary">Quale locos nella consistere dovrebbero reagire ai tasti funzione, se nessuna delle regole di sotto sono si incontrano.</string>
@@ -956,17 +957,19 @@
     <string name="prefTtsGamepadTestKeysTitle">Sulla pressione del tasto di prova GamePad</string>
     <string name="prefTtsThrottleSpeedSummary">Quando la velocità colpisce determinate velocità quando si utilizza un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Su velocità di gamepad</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">Il Server Discovery non è possibile senza una connessione WiFi!</string>
     <string name="statusThreadedAppNotConnected">Non connesso a una rete. Controllare le impostazioni WiFi.\n\n ReTring</string>
     <string name="statusThreadedAppUnableToConnect">Impossibile connettersi al server a %1$s:%2$s da %3$s. Riprovare</string>
     <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server Withrottle sia in esecuzione. Riprovare</string>
+    <string name="toastImportExportCouldNotParseAddress">Impossibile analizzare l\'indirizzo\n%1$s</string>
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
     <string name="prefGamePadDoublePressStopTitle">Azione di arresto a doppia stampa</string>
     <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \'Stop\'</string>
     <string name="prefDccexSummary">Utilizzare i comandi DCC-EX nativi invece di Withrottle per tutte le connessioni. \nNOTA: non avrà effetto fino a quando non riavvia il driver del motore e si connette a un server.</string>
     <string name="prefDccexTitle">Usa i comandi DCC-Ex nativi</string>
-    <string name="useProtocolDCCEX">Usa i comandi DCC-EX nativi (non withrottle)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Utilizzare comandi DCC-EX nativi. Per \'Auto\', il nome deve contenere \"DCCEX\" o \"DCC-EX\"</string>
+    <string name="useProtocolDCCEX">Protocollo da utilizzare?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protocollo da utilizzare?\n<small><small>(\'Auto\' cerca \"DCCEX\", \"DCC-EX\" o porta 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opzione protocollo</string>
@@ -1035,7 +1038,7 @@
     <string name="prefHeartbeatResponseFactorSummary">Percentuale del periodo di heartbeat in cui inviare l\'heartbeat (50%-90%). Avrà effetto alla prossima connessione.</string>
     <string name="server">Server</string>
     <string name="toastWaitingForConnection">Timeout in attesa del messaggio WiThrottle \'VN\' da %1$s:%2$s. Disconnessione</string>
-    <string name="toastWaitingForConnectionDccEx">Timeout in attesa del messaggio DCC-EX \'iDCCEX...\' da %1$s:%2$s. Disconnessione</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Timeout in attesa del messaggio DCC-EX \'iDCCEX...\' da %1$s:%2$s. Disconnessione</string>
     <string name="toastAddressExceedsMax">L\'indirizzo \'%1$s\' supera il massimo supportato (\'%2$s\')</string>
 
     <string name="air_reservoir">Serbatoio dell\'aria</string>
@@ -1053,5 +1056,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU: qué porcentaje de freno activar el número de función media</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valor de freno alto de ESU (porcentaje)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU: qué porcentaje de freno activar el número de función alto</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Non connesso al Wi-Fi</string>
 
 </resources>

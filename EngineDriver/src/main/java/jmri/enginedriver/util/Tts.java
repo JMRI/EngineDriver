@@ -49,7 +49,8 @@ public class Tts {
                         if (status != TextToSpeech.ERROR) {
                             myTts.setLanguage(Locale.getDefault());
                         } else {
-                            Toast.makeText(mainapp, mainapp.getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mainapp, mainapp.getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT).show();
+                            threaded_application.safeToast(mainapp.getResources().getString(R.string.toastTtsFailed), Toast.LENGTH_SHORT);
                         }
                     }
                 });

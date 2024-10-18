@@ -60,7 +60,7 @@
     <string name="recent_engines">Selecionar das Locomotivas Recentes</string>
 <!--    <string name="direction">Frente</string>-->
 <!--    <string name="speed">Velocidade:</string>-->
-    <string name="discovered_services">Servidores Encontrados</string>
+    <string name="discovered_services">Servidores Encontrados - WiFi: %1$s</string>
 <!--    <string name="save_settings">Salvar Configuração</string>-->
     <string name="stop">Pare</string>
     <string name="forward">Frente</string>
@@ -111,7 +111,7 @@
     <string name="toggle_button">Mudar</string>
     <string name="power_control_label">Regulagem Controle Energia da Maquete</string>
 <!--    <string name="power_control_button">desconhecido</string>-->
-    <string name="press_to_toggle">Apertar botão para mudar o estado de energia da maquete.</string>
+    <string name="press_to_toggle">Apertar botão para mudar o estado de energia da maquete</string>
     <string name="power_control_not_allowed">Controle de Energia não permitido. Mudar em Preferências no servidor.</string>
     <string name="reconnect_label">Status Tentativas de Re-conexão</string>
     <string name="reconnect_help">Tentando reconectar automaticamente. Aguarde para re-conectar ou aperte a seta Atrás para Sair.</string>
@@ -409,7 +409,7 @@
     <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
     <string name="prefImportExportErrorReadingFrom">Importação de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
-    <string name="prefImportExportErrorNotConnected">Host não conectado.</string>
+    <string name="prefImportExportErrorNotConnected">Host não conectado</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">Troca Direção dos  Botões</string>
     <string name="prefSwapForwardReverseButtonsSummary">Troca permanentemente os dois Botões Direção para todos os controladores.</string>
@@ -519,6 +519,7 @@
     <string name="toastShakeWebViewHidden">Vista Web temporariamente escondida. Agitar novamente para mostrar. Para esconder permanentemente alterar as preferências.</string>
     <string name="toastShakeWebViewUnavailable">Vista Web deve ser abilitada nas preferências primeiro</string>
     <string name="toastShakeScreenLocked">Tela Controlador Bloqueada - Agitar para desbloquear</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Ação não permitida enquanto a tela do acelerador está bloqueada</string>
     <string name="toastShakeScreenDimmed">Tela Controlador Esmaecida - Agitar para reativar</string>
     <string name="toastSwipeUpDownScreenLocked">Tela Controlador Bloqueada - Deslizar para desbloquear</string>
     <string name="toastSwipeUpDownScreenDimmed">Tela Controlador Esmaecida - Deslizar para reativar</string>
@@ -696,7 +697,7 @@
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
     <string name="FilterRosterListDownloadLabel">Download</string>
-    <string name="rosterEmpty">Não foi possível localizar nenhum enties no seu registo de JMRI. Use o \'Endereço DCC\' ou opção \'recente\' em seu lugar.</string>
+    <string name="rosterEmpty">Não foi possível encontrar nenhuma entidade na lista de servidores.\n\nUse a opção \'Endereço DCC\' ou \'Recente\'.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
@@ -960,9 +961,11 @@
     <string name="prefTtsGamepadTestKeysTitle">Na tecla de teste gamepad, imprensa</string>
     <string name="prefTtsThrottleSpeedSummary">Quando a velocidade atinge certas velocidades ao usar um gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">A descoberta de servidor não é possível sem uma conexão WiFi!</string>
     <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi.\n\n nova tentativa</string>
     <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
     <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$dms segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
+    <string name="toastImportExportCouldNotParseAddress">Não foi possível analisar o endereço\n%1$s</string>
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máx</string>
     <string name="TtsGamepadTestSpeedZero">Zero</string>
@@ -970,8 +973,8 @@
     <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
     <string name="prefDccexSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
     <string name="prefDccexTitle">Use comandos nativos do DCC-EX</string>
-    <string name="useProtocolDCCEX">Use comandos nativos do DCC-EX (não Withrottle)</string>
-    <string name="useProtocolDCCEXplusAutoHint">Use comandos nativos DCC-EX. Para \'Auto\', o nome deve conter \"DCCEX\" ou \"DCC-EX\"</string>
+    <string name="useProtocolDCCEX">Protocolo a ser usado?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
     <string name="prefDccexConnectionOptionTitle">Mostrar opção de protocolo</string>
@@ -1040,7 +1043,7 @@
     <string name="prefHeartbeatResponseFactorSummary">Porcentagem do período de batimento cardíaco para quando enviar o batimento cardíaco (50%-90%). Entrará em vigor na próxima conexão.</string>
     <string name="server">Servidor</string>
     <string name="toastWaitingForConnection">Tempo limite de espera pela mensagem \'VN\' do WiThrottle de %1$s:%2$s. Desconectando</string>
-    <string name="toastWaitingForConnectionDccEx">Tempo limite aguardando mensagem DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconectando</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Tempo limite aguardando mensagem DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconectando</string>
     <string name="toastAddressExceedsMax">O endereço \'%1$s\' excede o máximo suportado (\'%2$s\')</string>
 
     <string name="air_reservoir">Reservatório de Ar</string>
@@ -1058,5 +1061,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Quel pourcentage de freinage pour activer le numéro de fonction intermédiaire</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valeur de freinage élevée ESU (pour cent)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quel pourcentage de freinage pour activer le numéro de fonction élevé</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Não conectado ao Wi-Fi</string>
 
 </resources>

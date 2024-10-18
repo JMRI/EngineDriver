@@ -42,7 +42,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -142,6 +141,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
+    /** @noinspection FieldCanBeLocal*/
     private int toolbarHeight;
 
     protected View turnoutsView;
@@ -157,7 +157,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private EditText trn;
 //    private TextView trnStatic;
 
-    public void refresh_turnout_view() {
+    public void refreshTurnoutsView() {
         //specify logic for sort comparison (by username/id)
         Comparator<HashMap<String, String>> turnout_comparator = new Comparator<HashMap<String, String>>() {
             @Override
@@ -300,6 +300,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         turnouts_list_adapter.notifyDataSetChanged();  //update the list
     }
 
+    /** @noinspection UnusedReturnValue*/
     //set the button states for the turnout address direct entry
     private int updateTurnoutEntry() {
         Button butTog = findViewById(R.id.turnout_toggle);
@@ -364,7 +365,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         String com1 = response_str.substring(0, 3);
                         //refresh turnouts if any have changed or if turnout list has changed
                         if ("PTA".equals(com1) || "PTL".equals(com1)) {
-                            refresh_turnout_view();
+                            refreshTurnoutsView();
                             refreshTurnoutViewStates();
                             refreshRecentTurnoutViewStates();
                             //show server list first time it arrives
@@ -382,7 +383,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     witRetry(msg.obj.toString());
                     break;
                 case message_type.WIT_CON_RECONNECT:
-                    refresh_turnout_view();
+                    refreshTurnoutsView();
                     refreshTurnoutViewStates();
                     refreshRecentTurnoutViewStates();
                     break;
@@ -426,7 +427,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     try {
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
-                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
+                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT);
                         return;
                     }
                 }
@@ -437,8 +439,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 turnoutSource = source_type.ADDRESS;
 
                 boolean reloadRecents = false;
-                if (importExportPreferences.recent_turnout_address_list.size() > 0) {
-                    if (!turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(0))) {
+                if (importExportPreferences.recentTurnoutAddressList.size() > 0) {
+                    if (!turnoutSystemName.equals(importExportPreferences.recentTurnoutAddressList.get(0))) {
                         reloadRecents = true;
                     }
                 } else {
@@ -471,7 +473,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 default:
                     mainapp.turnoutsOrder=sort_type.NAME;
             }
-            refresh_turnout_view();
+            refreshTurnoutsView();
             mainapp.toastSortType(mainapp.turnoutsOrder);
             mainapp.buttonVibration();
         }
@@ -726,7 +728,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
-        if (((importExportPreferences.recent_turnout_address_list.size() == 0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS)))) {
+        if (((importExportPreferences.recentTurnoutAddressList.size() == 0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS)))) {
             prefSelectTurnoutsMethod = WHICH_METHOD_ADDRESS;
         }
 
@@ -746,7 +748,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         });
 
         //update turnout list
-        refresh_turnout_view();
+        refreshTurnoutsView();
         refreshTurnoutViewStates();
 
         screenNameLine = findViewById(R.id.screen_name_line);
@@ -962,7 +964,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests
-        refresh_turnout_view();
+        refreshTurnoutsView();
         refreshTurnoutViewStates();
         refreshRecentTurnoutViewStates();
     }
@@ -980,24 +982,24 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     private void loadRecentTurnoutsList() {
 
-        importExportPreferences.recent_turnout_address_list = new ArrayList<>();
-        importExportPreferences.recent_turnout_name_list = new ArrayList<>();
-        importExportPreferences.recent_turnout_source_list = new ArrayList<>();
-        importExportPreferences.recent_turnout_server_list = new ArrayList<>();
+        importExportPreferences.recentTurnoutAddressList = new ArrayList<>();
+        importExportPreferences.recentTurnoutNameList = new ArrayList<>();
+        importExportPreferences.recentTurnoutSourceList = new ArrayList<>();
+        importExportPreferences.recentTurnoutServerList = new ArrayList<>();
         ArrayList<HashMap<String, String>> tempRecentTurnoutsList = new ArrayList<>();
 
         //if no SD Card present then there is no recent consists list
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            importExportPreferences.getRecentTurnoutsListFromFile();
-            for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
+            importExportPreferences.loadRecentTurnoutsListFromFile();
+            for (int i = 0; i < importExportPreferences.recentTurnoutAddressList.size(); i++) {
                 // only load the turnout if it came from the current server
-                if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip)) {
+                if (importExportPreferences.recentTurnoutServerList.get(i).equals(mainapp.connectedHostip)) {
                     HashMap<String, String> hm = new HashMap<>();
-                    String turnoutAddressString = importExportPreferences.recent_turnout_address_list.get(i);
-                    String turnoutAddressSource = importExportPreferences.recent_turnout_source_list.get(i).toString();
-                    String turnoutAddressServer = importExportPreferences.recent_turnout_server_list.get(i);
+                    String turnoutAddressString = importExportPreferences.recentTurnoutAddressList.get(i);
+                    String turnoutAddressSource = importExportPreferences.recentTurnoutSourceList.get(i).toString();
+                    String turnoutAddressServer = importExportPreferences.recentTurnoutServerList.get(i);
 
-                    hm.put("turnout_name", importExportPreferences.recent_turnout_name_list.get(i)); // the larger name text
+                    hm.put("turnout_name", importExportPreferences.recentTurnoutNameList.get(i)); // the larger name text
                     hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
                     hm.put("turnout_source", turnoutAddressSource);
                     hm.put("turnout_server", turnoutAddressServer);
@@ -1132,12 +1134,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             return;
 
-        for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= 0; i--) {
-            if (turnoutToRemoveSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
-                importExportPreferences.recent_turnout_address_list.remove(i);
-                importExportPreferences.recent_turnout_name_list.remove(i);
-                importExportPreferences.recent_turnout_source_list.remove(i);
-                importExportPreferences.recent_turnout_server_list.remove(i);
+        for (int i = importExportPreferences.recentTurnoutAddressList.size() - 1; i >= 0; i--) {
+            if (turnoutToRemoveSystemName.equals(importExportPreferences.recentTurnoutAddressList.get(i))) {
+                importExportPreferences.recentTurnoutAddressList.remove(i);
+                importExportPreferences.recentTurnoutNameList.remove(i);
+                importExportPreferences.recentTurnoutSourceList.remove(i);
+                importExportPreferences.recentTurnoutServerList.remove(i);
             }
         }
         removingTurnoutOrForceReload = true;
@@ -1172,32 +1174,32 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
 
             // check if the most recently used turnout is already in the list and remove it
-            for (int i = 0; i < importExportPreferences.recent_turnout_address_list.size(); i++) {
-                if (turnoutSystemName.equals(importExportPreferences.recent_turnout_address_list.get(i))) {
+            for (int i = 0; i < importExportPreferences.recentTurnoutAddressList.size(); i++) {
+                if (turnoutSystemName.equals(importExportPreferences.recentTurnoutAddressList.get(i))) {
                     //noinspection SuspiciousListRemoveInLoop
-                    importExportPreferences.recent_turnout_address_list.remove(i);
+                    importExportPreferences.recentTurnoutAddressList.remove(i);
                     //noinspection SuspiciousListRemoveInLoop
-                    importExportPreferences.recent_turnout_name_list.remove(i);
+                    importExportPreferences.recentTurnoutNameList.remove(i);
                     //noinspection SuspiciousListRemoveInLoop
-                    importExportPreferences.recent_turnout_source_list.remove(i);
+                    importExportPreferences.recentTurnoutSourceList.remove(i);
                     //noinspection SuspiciousListRemoveInLoop
-                    importExportPreferences.recent_turnout_server_list.remove(i);
+                    importExportPreferences.recentTurnoutServerList.remove(i);
                 }
             }
 
             // now prepend it to the beginning of the list
-            importExportPreferences.recent_turnout_address_list.add(0, turnoutSystemName);
-            importExportPreferences.recent_turnout_name_list.add(0, turnoutUserName);
-            importExportPreferences.recent_turnout_source_list.add(0, turnoutSource);
-            importExportPreferences.recent_turnout_server_list.add(0, mainapp.connectedHostip);
+            importExportPreferences.recentTurnoutAddressList.add(0, turnoutSystemName);
+            importExportPreferences.recentTurnoutNameList.add(0, turnoutUserName);
+            importExportPreferences.recentTurnoutSourceList.add(0, turnoutSource);
+            importExportPreferences.recentTurnoutServerList.add(0, mainapp.connectedHostip);
 
             // remove any extra ones
-            if (importExportPreferences.recent_turnout_address_list.size() > numberOfRecentTurnoutsToWrite) {
-                for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= numberOfRecentTurnoutsToWrite; i--) {
-                    importExportPreferences.recent_turnout_address_list.remove(i);
-                    importExportPreferences.recent_turnout_name_list.remove(i);
-                    importExportPreferences.recent_turnout_source_list.remove(i);
-                    importExportPreferences.recent_turnout_server_list.remove(i);
+            if (importExportPreferences.recentTurnoutAddressList.size() > numberOfRecentTurnoutsToWrite) {
+                for (int i = importExportPreferences.recentTurnoutAddressList.size() - 1; i >= numberOfRecentTurnoutsToWrite; i--) {
+                    importExportPreferences.recentTurnoutAddressList.remove(i);
+                    importExportPreferences.recentTurnoutNameList.remove(i);
+                    importExportPreferences.recentTurnoutSourceList.remove(i);
+                    importExportPreferences.recentTurnoutServerList.remove(i);
                 }
             }
         }
@@ -1238,17 +1240,17 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     public void clearRecentTurnoutsList() {
 
-        for (int i = importExportPreferences.recent_turnout_address_list.size() - 1; i >= 0; i--) {
+        for (int i = importExportPreferences.recentTurnoutAddressList.size() - 1; i >= 0; i--) {
             // only remove the turnout if it came from the current server
-            if (importExportPreferences.recent_turnout_server_list.get(i).equals(mainapp.connectedHostip)) {
-                importExportPreferences.recent_turnout_name_list.remove(i);
-                importExportPreferences.recent_turnout_address_list.remove(i);
-                importExportPreferences.recent_turnout_source_list.remove(i);
-                importExportPreferences.recent_turnout_server_list.remove(i);
+            if (importExportPreferences.recentTurnoutServerList.get(i).equals(mainapp.connectedHostip)) {
+                importExportPreferences.recentTurnoutNameList.remove(i);
+                importExportPreferences.recentTurnoutAddressList.remove(i);
+                importExportPreferences.recentTurnoutSourceList.remove(i);
+                importExportPreferences.recentTurnoutServerList.remove(i);
             }
         }
 
-        if (importExportPreferences.recent_turnout_address_list.size() == 0) {
+        if (importExportPreferences.recentTurnoutAddressList.size() == 0) {
             importExportPreferences.deleteFile(ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
             importExportPreferences.writeRecentTurnoutsListToFile(prefs);

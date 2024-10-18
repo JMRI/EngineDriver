@@ -23,7 +23,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.LinkAddress;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,7 +32,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -85,8 +83,11 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     protected InPhoneLocoSoundsLoader iplsLoader;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
 //    @Override
@@ -106,20 +107,26 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);
         return sVal;

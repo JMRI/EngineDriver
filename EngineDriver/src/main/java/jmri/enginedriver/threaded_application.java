@@ -186,12 +186,6 @@ public class threaded_application extends Application {
     public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     //all heartbeat values are in milliseconds
-    public static final int DEFAULT_OUTBOUND_HEARTBEAT_INTERVAL = 10000; //interval for outbound heartbeat when WiT heartbeat is disabled
-    public static final int MIN_OUTBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for outbound heartbeat generator
-    public static final int MAX_OUTBOUND_HEARTBEAT_INTERVAL = 30000;  //maximum allowed interval for outbound heartbeat generator
-//    static final double HEARTBEAT_RESPONSE_FACTOR = 0.9;   //adjustment for inbound and outbound timers
-    public static final int MIN_INBOUND_HEARTBEAT_INTERVAL = 1000;   //minimum allowed interval for (enabled) inbound heartbeat generator
-    public static final int MAX_INBOUND_HEARTBEAT_INTERVAL = 60000;  //maximum allowed interval for inbound heartbeat generator
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
     public int prefHeartbeatResponseFactor = 90;   //adjustment for inbound and outbound timers as a percent
 
@@ -228,19 +222,19 @@ public class threaded_application extends Application {
     public boolean dccexScreenIsOpen = false;
     public boolean witScreenIsOpen = false;
 
-    public int dccExActionTypeIndex = 0;
-    public int [] DccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
-    public int [] DccexTrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
-    public boolean [] DccexTrackAvailable = {false, false, false, false, false, false, false, false};
-    public String [] DccexTrackId = {"", "", "", "", "", "", "", ""};
+    public int dccexActionTypeIndex = 0;
+    public int [] dccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
+    public int [] dccexTrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
+    public boolean [] dccexTrackAvailable = {false, false, false, false, false, false, false, false};
+    public String [] dccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
     public boolean dccexJoined = false;
 
-    public String rosterStringDCCEX = ""; // used to process the roster list
-    public int [] rosterIDsDCCEX;  // used to process the roster list
-    public String [] rosterLocoNamesDCCEX;  // used to process the roster list
-    public String [] rosterLocoFunctionsDCCEX;  // used to process the roster list
-    public boolean [] rosterDetailsReceivedDCCEX;  // used to process the roster list
+    public String dccexRosterString = ""; // used to process the roster list
+    public int [] dccexRosterIDs;  // used to process the roster list
+    public String [] dccexRosterLocoNames;  // used to process the roster list
+    public String [] dccexRosterLocoFunctions;  // used to process the roster list
+    public boolean [] dccexRosterDetailsReceived;  // used to process the roster list
 
     public int dccexPreviousCommandIndex = -1;
     public ArrayList<String> dccexPreviousCommandList = new ArrayList<>();
@@ -248,22 +242,22 @@ public class threaded_application extends Application {
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
-    public boolean turnoutsBeingProcessedDCCEX = false;
-    public String turnoutStringDCCEX = ""; // used to process the turnout list
-    public int [] turnoutIDsDCCEX;  // used to process the turnout list
-    public String [] turnoutNamesDCCEX;  // used to process the turnout list
-    public String [] turnoutStatesDCCEX;  // used to process the turnout list
-    public boolean [] turnoutDetailsReceivedDCCEX;  // used to process the turnout list
+    public boolean dccexTurnoutsBeingProcessed = false;
+    public String dccexTurnoutString = ""; // used to process the turnout list
+    public int [] dccexTurnoutIDs;  // used to process the turnout list
+    public String [] dccexTurnoutNames;  // used to process the turnout list
+    public String [] dccexTurnoutStates;  // used to process the turnout list
+    public boolean [] dccexTurnoutDetailsReceived;  // used to process the turnout list
 
-    public boolean routesBeingProcessedDCCEX = false;
-    public String routeStringDCCEX = ""; // used to process the route list
-    public int [] routeIDsDCCEX;  // used to process the route list
-    public String [] routeNamesDCCEX;  // used to process the route list
-    public String [] routeTypesDCCEX;  // used to process the route list
-    public String [] routeStatesDCCEX;  // used to process the route list
-    public String [] routeLabelsDCCEX;  // used to process the route list
-    public boolean [] routeDetailsReceivedDCCEX;  // used to process the route list
-    public boolean routeStatesReceivedDCCEX = false;
+    public boolean dccexRoutesBeingProcessed = false;
+    public String dccexRouteString = ""; // used to process the route list
+    public int [] dccexRouteIDs;  // used to process the route list
+    public String [] dccexRouteNames;  // used to process the route list
+    public String [] dccexRouteTypes;  // used to process the route list
+    public String [] dccexRouteStates;  // used to process the route list
+    public String [] dccexRouteLabels;  // used to process the route list
+    public boolean [] dccexRouteDetailsReceived;  // used to process the route list
+    public boolean dccexRouteStatesReceived = false;
 
     // only used to track the state of the numeric keys of an attached keyboard for DCCEX (0-9)
     public int[] numericKeyIsPressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
@@ -284,7 +278,6 @@ public class threaded_application extends Application {
     public volatile Handler dcc_ex_msg_handler;
     public volatile Handler withrottle_cv_programmer_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
-//    public volatile Handler preferences_msg_handler;
     public volatile Handler settings_msg_handler;
     public volatile Handler logviewer_msg_handler;
     public volatile Handler about_page_msg_handler;
@@ -341,6 +334,7 @@ public class threaded_application extends Application {
     public boolean shownRosterTurnouts = false;
     public boolean firstWebActivity = false;
     private boolean exitConfirmed = false;
+    /** @noinspection FieldCanBeLocal*/
     private ApplicationLifecycleHandler lifecycleHandler;
     public static Context context;
 
@@ -458,15 +452,11 @@ public class threaded_application extends Application {
 
     public boolean prefGamePadIgnoreJoystick = false;
 
-    public int[] lastKnownSpeedDCCEX = {0,0,0,0,0,0};
-    public int[] lastKnownDirDCCEX = {1,1,1,1,1,1};
-    public long[] lastSpeedCommandSentTimeDCCEX = {0,0,0,0,0,0};
+    public int[] dccexLastKnownSpeed = {0,0,0,0,0,0};
+    public int[] dccexLastKnownDirection = {1,1,1,1,1,1};
+    public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
-
-    public static final String DCCEX_PROTOCOL_OPTION_YES = "Yes";
-    public static final String DCCEX_PROTOCOL_OPTION_NO = "No";
-    public static final String DCCEX_PROTOCOL_OPTION_AUTO = "Auto";
 
     public String witCv = "";
     public String witCvValue = "";
@@ -529,7 +519,7 @@ public class threaded_application extends Application {
             // Add as notification
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(ED_NOTIFICATION_ID, builder.build());
-            safeToast(threaded_application.context.getResources().getString(R.string.notification_title), Toast.LENGTH_LONG);
+            safeToast(R.string.notification_title, Toast.LENGTH_LONG);
         }
     }
 
@@ -1087,9 +1077,9 @@ public class threaded_application extends Application {
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
-        rosterStringDCCEX = "";
-        turnoutStringDCCEX = "";
-        routeStringDCCEX = "";
+        dccexRosterString = "";
+        dccexTurnoutString = "";
+        dccexRouteString = "";
 
         try {
             consists = new Consist[maxThrottles];
@@ -1101,8 +1091,8 @@ public class threaded_application extends Application {
                 function_labels[i] = new LinkedHashMap<Integer, String>();
                 function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
 
-                lastKnownSpeedDCCEX[i] = 0;
-                lastKnownDirDCCEX[i] = 1;
+                dccexLastKnownSpeed[i] = 0;
+                dccexLastKnownDirection[i] = 1;
             }
 
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
@@ -1570,6 +1560,7 @@ public class threaded_application extends Application {
         return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsgDelay(Handler h, long delayMs, int msgType, int msgArg1) {
         return sendMsgDelay(h, delayMs, msgType, "", msgArg1, 0);
     }
@@ -1578,6 +1569,7 @@ public class threaded_application extends Application {
         return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody) {
         return sendMsgDelay(h, delayMs, msgType, msgBody, 0, 0);
     }
@@ -1767,7 +1759,8 @@ public class threaded_application extends Application {
             long time = System.currentTimeMillis();
             if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
                 exitDoubleBackButtonInitiated = time;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
             } else {
                 exitConfirmed = true;
                 exitDoubleBackButtonInitiated = 0;
@@ -1785,7 +1778,8 @@ public class threaded_application extends Application {
             long time = System.currentTimeMillis();
             if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
                 exitDoubleBackButtonInitiated = time;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
+                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
             } else {
                 exitConfirmed = true;
                 exitDoubleBackButtonInitiated = 0;
@@ -2118,24 +2112,34 @@ public class threaded_application extends Application {
                 .replaceAll("[+]", "<small>+</small>");
     }
 
-    //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
-    public static void safeToast(final String msg_txt) {
-        safeToast(msg_txt, Toast.LENGTH_SHORT);
-    }
 
     // used for Instructional Toasts.  They can be blocked by preference
-    void safeToastInstructional(final String msg_txt, final int length) {
+    public void safeToastInstructional(final int resourceId, final int length) {
+        safeToastInstructional(context.getResources().getString(resourceId), length);
+    }
+    public void safeToastInstructional(final String msg_txt, final int length) {
         if (!prefHideInstructionalToasts) {
             safeToast(msg_txt, length);
         }
     }
-    boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
+    /** @noinspection SameReturnValue*/
+    public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
+        return safeToastInstructionalShowOnce(context.getResources().getString(resourceId), length, shownBefore);
+    }
+    public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
         if ((!prefHideInstructionalToasts) && (!shownBefore)) {
             safeToast(msg_txt, length);
         }
         return true;
     }
 
+    //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
+    public static void safeToast(final int resourceId, final int length) {
+        safeToast(context.getResources().getString(resourceId), length);
+    }
+    public static void safeToast(final String msg_txt) {
+        safeToast(msg_txt, Toast.LENGTH_SHORT);
+    }
     public static void safeToast(final String msg_txt, final int length) {
         Log.d("Engine_Driver", "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
@@ -2270,40 +2274,51 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_MANUAL: {
-                Toast.makeText(context,
-                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context,
+//                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG).show();
+                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
+                                        prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.RESET: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesResetSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.THEME: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesThemeChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.BACKGROUND: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesBackgroundChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.THROTTLE_PAGE:
             case restart_reason_type.THROTTLE_SWITCH: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesThrottleChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.LOCALE: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesLocaleChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_AUTO: {
-                Toast.makeText(context,
-                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName", "")),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context,
+//                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName", "")),
+//                        Toast.LENGTH_LONG).show();
+                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
+                                    prefs.getString("prefPreferencesImportFileName", "")),
+                        Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.FORCE_WIFI: {
-                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesChangedForceWiFi),
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesChangedForceWiFi),
+//                        Toast.LENGTH_LONG).show();
+                safeToast(R.string.toastPreferencesChangedForceWiFi, Toast.LENGTH_LONG);
                 break;
             }
         }
@@ -2320,8 +2335,8 @@ public class threaded_application extends Application {
                 && (prefForcedRestartReason != restart_reason_type.SHAKE_THRESHOLD));
     }
 
-    public void saveSharedPreferencesToFileIfAllowed() {
-        Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileIfAllowed: start");
+    public void writeSharedPreferencesToFileIfAllowed() {
+        Log.d("Engine_Driver", "t_a: writeSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -2331,11 +2346,11 @@ public class threaded_application extends Application {
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                    importExportPreferences.saveSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.writeSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
                 }
-                Log.d("Engine_Driver", "t_a: saveSharedPreferencesToFileImpl: done");
+                Log.d("Engine_Driver", "t_a: writeSharedPreferencesToFileIfAllowed: done");
             } else {
-                safeToast(threaded_application.context.getResources().getString(R.string.toastConnectUnableToSavePref), Toast.LENGTH_LONG);
+                safeToast(R.string.toastConnectUnableToSavePref, Toast.LENGTH_LONG);
             }
         }
     }
@@ -2372,7 +2387,7 @@ public class threaded_application extends Application {
             return;
         }
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.getRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile();
 
         Integer locoAddress = conLoco.getIntAddress();
         Integer address_size = conLoco.getIntAddressLength();
@@ -2395,33 +2410,33 @@ public class threaded_application extends Application {
         } else {
             functionLabels = mainapp.packFunctionLabels(mainapp.function_labels_default);
         }
-        for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
-            if (locoAddress.equals(importExportPreferences.recent_loco_address_list.get(i))
-                    && address_size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
-                    && loco_name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+        for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
+            if (locoAddress.equals(importExportPreferences.recentLocoAddressList.get(i))
+                    && address_size.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
+                    && loco_name.equals(importExportPreferences.recentLocoNameList.get(i))) {
 
-                keepFunctions = importExportPreferences.recent_loco_functions_list.get(i);
+                keepFunctions = importExportPreferences.recentLocoFunctionsList.get(i);
                 if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
-                importExportPreferences.recent_loco_address_list.remove(i);
-                importExportPreferences.recent_loco_address_size_list.remove(i);
-                importExportPreferences.recent_loco_name_list.remove(i);
-                importExportPreferences.recent_loco_source_list.remove(i);
-                importExportPreferences.recent_loco_functions_list.remove(i);
+                importExportPreferences.recentLocoAddressList.remove(i);
+                importExportPreferences.recentLocoAddressSizeList.remove(i);
+                importExportPreferences.recentLocoNameList.remove(i);
+                importExportPreferences.recentLocoSourceList.remove(i);
+                importExportPreferences.recentLocoFunctionsList.remove(i);
                 Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
                 break;
             }
         }
 
         // now append it to the beginning of the list
-        importExportPreferences.recent_loco_address_list.add(0, locoAddress);
-        importExportPreferences.recent_loco_address_size_list.add(0, address_size);
-        importExportPreferences.recent_loco_name_list.add(0, loco_name);
-        importExportPreferences.recent_loco_source_list.add(0, locoSource);
+        importExportPreferences.recentLocoAddressList.add(0, locoAddress);
+        importExportPreferences.recentLocoAddressSizeList.add(0, address_size);
+        importExportPreferences.recentLocoNameList.add(0, loco_name);
+        importExportPreferences.recentLocoSourceList.add(0, locoSource);
         if ( (!functionLabels.isEmpty()) && (!functionLabels.equals("]\\[")) ) {
             keepFunctions = functionLabels;
         }
-        importExportPreferences.recent_loco_functions_list.add(0, keepFunctions);  // restore from the previous value
+        importExportPreferences.recentLocoFunctionsList.add(0, keepFunctions);  // restore from the previous value
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
         Log.d("Engine_Driver", "t_a: Loco '" + loco_name + "' added to Recents");
@@ -2431,12 +2446,12 @@ public class threaded_application extends Application {
     public int findLocoInRecents(Integer address, Integer size, String name) {
         int position = -1;
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.getRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile();
 
-        for (int i = 0; i < importExportPreferences.recent_loco_address_list.size(); i++) {
-            if (address.equals(importExportPreferences.recent_loco_address_list.get(i))
-                    && size.equals(importExportPreferences.recent_loco_address_size_list.get(i))
-                    && name.equals(importExportPreferences.recent_loco_name_list.get(i))) {
+        for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
+            if (address.equals(importExportPreferences.recentLocoAddressList.get(i))
+                    && size.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
+                    && name.equals(importExportPreferences.recentLocoNameList.get(i))) {
                 position = i;
                 Log.d("Engine_Driver", "t_a: findLocoInRecents: Loco '" + name + "' found in Recents");
                 break;
@@ -2479,7 +2494,8 @@ public class threaded_application extends Application {
                 Log.d("Engine_Driver", "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                 comm_msg_handler.sendMessage(msg);
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
+                safeToast(getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG);
             }
         }
 //        }

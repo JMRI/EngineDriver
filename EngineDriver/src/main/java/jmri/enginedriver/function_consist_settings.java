@@ -80,8 +80,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     SharedPreferences prefs;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
     /**
@@ -466,9 +469,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             Log.e("settings_activity", "Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (!errMsg.isEmpty())
-            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
+            threaded_application.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
-            Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
 
     }
 

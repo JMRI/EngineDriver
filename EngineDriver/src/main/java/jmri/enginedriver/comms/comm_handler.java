@@ -35,6 +35,7 @@ import java.util.Objects;
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.dccex_protocol_option_type;
 
 public class comm_handler extends Handler {
    //All of the work of the communications thread is initiated from this function.
@@ -62,8 +63,8 @@ public class comm_handler extends Handler {
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
-               mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_YES))
-                       || (mainapp.prefUseDccexProtocol.equals(threaded_application.DCCEX_PROTOCOL_OPTION_AUTO));
+               mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
+                       || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO));
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
@@ -127,11 +128,11 @@ public class comm_handler extends Handler {
             }
 
             //attempt connection to WiThrottle server
-            comm_thread.socketWiT = new comm_thread.socketWifi();
+            comm_thread.socketWiT = new comm_thread.SocketWifi();
             if (comm_thread.socketWiT.connect()) {
                if (mainapp.isDCCEX) {
                   if (!mainapp.prefHideInstructionalToasts) {
-                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.usingProtocolDCCEX), Toast.LENGTH_LONG);
+                     threaded_application.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_LONG);
                   }
                }
 

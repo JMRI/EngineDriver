@@ -27,6 +27,7 @@
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:paddingLeft="4dp"
+                android:paddingStart="4dp"
                 android:text="@string/select_loco_heading"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </RelativeLayout>
@@ -218,6 +219,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:text="@string/select_loco"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -298,6 +300,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:text="@string/idngo_label"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -331,6 +334,7 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="fill_parent"
         android:paddingLeft="4dp"
+        android:paddingStart="4dp"
         android:paddingTop="2dp"
         android:text="@string/roster_list"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -484,6 +488,7 @@
             android:layout_alignTop="@+id/clear_Loco_List_button"
             android:layout_alignParentLeft="true"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             android:paddingTop="2dp"
             android:layout_toLeftOf="@+id/recent_engines_sort"
@@ -542,6 +547,7 @@
             android:layout_alignTop="@+id/clear_consists_list_button"
             android:layout_alignParentLeft="true"
             android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             android:paddingTop="2dp"
             android:layout_toLeftOf="@+id/recent_consists_sort"

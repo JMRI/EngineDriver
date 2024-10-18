@@ -83,8 +83,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     SharedPreferences prefs;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
     /**
@@ -523,9 +526,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             Log.e("settings_activity", "Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (errMsg.length() != 0)
-            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
+            threaded_application.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
-            Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
 
         prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
         prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
@@ -544,20 +549,26 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                                Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                        Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);
         return sVal;

@@ -14,6 +14,7 @@ import android.view.Surface;
 import android.widget.Toast;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 /**
  * Represents an on-device flashlight.
@@ -103,7 +104,8 @@ public abstract class Flashlight {
                 return true;
             } catch (Exception ex) {
                 Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
-                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
+//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             }
         }
@@ -119,7 +121,8 @@ public abstract class Flashlight {
                 Log.d("Engine_Driver", "Flashlight switched off");
             } catch (Exception ex) {
                 Log.e("Engine_Driver", "Error switching off flashlight: " + ex.getMessage());
-                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
+//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             }
         }
 
@@ -178,7 +181,8 @@ public abstract class Flashlight {
                 return true;
             } catch (CameraAccessException ex) {
                 Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
-                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
+//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             } catch (IllegalArgumentException ex) {
                 Log.e("Engine_Driver", "Problem switching on flashlight:" + ex.getMessage());
@@ -193,7 +197,8 @@ public abstract class Flashlight {
                 Log.d("Engine_Driver", "Flashlight switched off");
             } catch (CameraAccessException ex) {
                 Log.e("Engine_Driver", "Error switching off flashlight: " + ex.getMessage());
-                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
+//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             } catch (IllegalArgumentException ex) {
                 Log.e("Engine_Driver", "Problem switching off flashlight:" + ex.getMessage());
             }

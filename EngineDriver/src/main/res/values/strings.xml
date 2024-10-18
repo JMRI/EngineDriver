@@ -83,11 +83,11 @@
     <string name="acquire_button">Acquire</string>
     <string name="roster_list">Select from Roster / Consist Entries</string>
     <string name="rosterDetailsDialogTitle">Roster details for</string>
-    <string name="recent_engines">Select from Recent Locomotives</string>
+    <string name="recent_engines">Select from Recent Locos</string>
     <string name="recent_consists">Select from Recent Consists</string>
 <!--    <string name="direction">Fwd</string>-->
 <!--    <string name="speed">Speed:</string>-->
-    <string name="discovered_services">Discovered Servers</string>
+    <string name="discovered_services">Discovered Servers - WiFi: %1$s</string>
 <!--    <string name="save_settings">Save Settings</string>-->
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
@@ -152,7 +152,7 @@
     <string name="toggle_button">Toggle</string>
     <string name="power_control_label">Control Layout Power Setting</string>
 <!--    <string name="power_control_button">unknown</string>-->
-    <string name="press_to_toggle">Press button to toggle layout power state.</string>
+    <string name="press_to_toggle">Press button to toggle layout power state</string>
     <string name="power_control_not_allowed">Power Control not allowed.  Change in Preferences/Settings on server.</string>
     <string name="reconnect_label">Reconnect Attempt Status</string>
     <string name="reconnect_help">Attempting to Reconnect automatically.  Wait for Reconnection or press \'Back\' to Exit.</string>
@@ -355,7 +355,7 @@
     <string name="prefDefaultFunctionsSummary">When and how the default Function Labels are displayed</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Use default function labels?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default Function Labels instead of labels from roster entries</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries.                                                                This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries. This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
 
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locs, rather that the defaults provided by WiThrottle</string>
@@ -453,7 +453,7 @@
     <string name="FilterRosterListFilterOwnerLabel" translatable="false">👤</string>
     <string name="FilterRosterListDownloadLabel">Download</string>
     <string name="FilterRosterListFilterByLabel" translatable="false">🔎</string>
-    <string name="rosterEmpty">Unable to find any entries in the WiThrottle Server roster.  Use either the \'DCC Address\' or \'Recent\' option instead.</string>
+    <string name="rosterEmpty">Unable to find any entries in the Server Roster.\n\nUse either the \'DCC Address\' or \'Recent\' option instead.</string>
     <string name="prefRosterOwnersFilterShowOptionTitle">Filter by Roster Owner</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
     <string name="prefRosterOwnersFilterDefaultOwner">All</string>
@@ -463,7 +463,7 @@
     <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>
     <string name="LocoSelectMethodRecentConsist">Recent Consists</string>
-    <string name="LocoSelectMethodHelp">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
+    <string name="LocoSelectMethodHelp" tools:ignore="Typos">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue" translatable="false">20</string>  <!-- DO NOT TRANSLATE -->
@@ -609,7 +609,7 @@
     <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
     <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' failed! You may not have saved the preferences for this host yet.</string>
-    <string name="prefImportExportErrorNotConnected">Not connected to a host.</string>
+    <string name="prefImportExportErrorNotConnected">Not connected to a host</string>
 
 <!--    <string name="prefImportServerManualTitle">Import from current Server (manually)</string>-->
 <!--    <string name="prefImportServerManualSummary">Server file to \'Import\' a set of preferences from the currently connected server.\nThe file must be in the \'\\Android\\data\\jmri.enginedriver\\files\\\' folder of the server and the Web Server must be running.\nWarning: Import will start immediately on saving this preference.</string>-->
@@ -867,6 +867,8 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Error creating output stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error sleeping the thread, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings and Preferences.\n</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Not connected to WiFi</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery is not possible without a WiFi connection!</string>
     <string name="statusThreadedAppNotConnected">Not connected to a network.  Check WiFi settings.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">No response from server %1$s:%2$s for %3$dms. Check that the WiThrottle Server is running.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.  Retrying</string>
@@ -935,6 +937,7 @@
     <string name="toastImportExportImportFailed">Preferences import from \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' failed!</string>
     <string name="toastImportExportServerImportFailed">Preferences not imported from \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\'. You may not have saved the preferences for this host yet.</string>
     <string name="toastImportExportCannotImport">Can\'t import preferences. Not connected to a host.</string>
+    <string name="toastImportExportCouldNotParseAddress">Could not parse address\n%1$s</string>
 <!--    <string name="toastImportExportCannotExport">Can\'t export host specific preferences. Not connected to a host.</string>-->
 
     <!--    Toast messages for the Select Loco Activity -->
@@ -1401,8 +1404,8 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
-    <string name="useProtocolDCCEX">Use WiThrottle or DCC-EX protocol?</string>
-    <string name="useProtocolDCCEXplusAutoHint">WiThrottle or DCC-EX protocol? (\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</string>
+    <string name="useProtocolDCCEX">Protocol to use?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protocol to use?\n<small><small>(\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>

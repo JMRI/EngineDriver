@@ -181,7 +181,6 @@ public class throttle_semi_realistic extends throttle {
             tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
             tvTargetSpdVals[throttleIndex] = findViewById(R.id.target_speed_value_label_0);
             tvTargetAccelerationVals[throttleIndex] = findViewById(R.id.target_acceleration_value_label_0);
-//            bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
 
             bTargetFwds[throttleIndex] = findViewById(R.id.button_target_fwd_0);
             bTargetRevs[throttleIndex] = findViewById(R.id.button_target_rev_0);
@@ -560,12 +559,12 @@ public class throttle_semi_realistic extends throttle {
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            set_all_function_states(throttleIndex);
+            setAllFunctionStates(throttleIndex);
         }
     }
 
     @Override
-    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+    void enableDisableButtons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
@@ -576,7 +575,7 @@ public class throttle_semi_realistic extends throttle {
             newEnabledState = mainapp.consists[whichThrottle].isActive(); // set false if lead loco is not assigned
         }
 
-        super.enable_disable_buttons(whichThrottle, forceDisable);
+        super.enableDisableButtons(whichThrottle, forceDisable);
 
         //avoid npe
         if (vsbSemiRealisticThrottles == null) return;
@@ -594,11 +593,13 @@ public class throttle_semi_realistic extends throttle {
         vsbSemiRealisticThrottles[whichThrottle].setEnabled(newEnabledState);
         vsbBrakes[whichThrottle].setEnabled(newEnabledState);
         vsbLoads[whichThrottle].setEnabled(newEnabledState);
-    } // end of enable_disable_buttons
+
+        bEStops[whichThrottle].setEnabled(newEnabledState);
+    } // end of enableDisableButtons
 
     // helper function to enable/disable all children for a group
     @Override
-    void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
+    void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
 
         if (vg == null) {
             return;
@@ -616,11 +617,11 @@ public class throttle_semi_realistic extends throttle {
                 b.setEnabled(newEnabledState);
             }
         }
-    } // enable_disable_buttons_for_view
+    } // enableDisableButtonsForView
 
     // update the appearance of all function buttons
     @Override
-    void set_all_function_states(int whichThrottle) {
+    void setAllFunctionStates(int whichThrottle) {
         // Log.d("Engine_Driver","srmt: set_function_states");
 
         if (mainapp.appIsFinishing) {
@@ -1284,10 +1285,10 @@ public class throttle_semi_realistic extends throttle {
         try {
             switch (targetDirection) {
                 case DIRECTION_FORWARD:
-                    result = Integer.toString(scaleSpeed) + " ↑";
+                    result = scaleSpeed + " ↑";
                     break;
                 case DIRECTION_REVERSE:
-                    result = Integer.toString(scaleSpeed) + " ↓";
+                    result = scaleSpeed + " ↓";
                     break;
                 case DIRECTION_NEUTRAL:
                 default:
@@ -1465,6 +1466,18 @@ public class throttle_semi_realistic extends throttle {
                 bRev.setEnabled(true);
             }
             bTargetNeutrals[whichThrottle].setEnabled(true);
+        }
+    }
+
+    @Override
+    void showHideSpeedLimitAndPauseButtons(int whichThrottle) {
+        // not currently implemented
+
+        if ((bLimitSpeeds != null) && (bLimitSpeeds[whichThrottle] != null)) {
+            bLimitSpeeds[whichThrottle].setVisibility(View.GONE);
+        }
+        if ((bPauseSpeeds != null) && (bPauseSpeeds[whichThrottle] != null)) {
+            bPauseSpeeds[whichThrottle].setVisibility(View.GONE);
         }
     }
 

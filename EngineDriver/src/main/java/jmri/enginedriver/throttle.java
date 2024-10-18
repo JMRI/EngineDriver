@@ -276,6 +276,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected Button[] bTargetLSpds;
     protected Button[] bTargetStops;
 
+    // semi-realistic throttle variables
     protected static int[] targetSpeeds = {0, 0, 0, 0, 0, 0};
     protected static int[] prevTargetSpeeds = {0, 0, 0, 0, 0, 0};
     protected static int[] prevLoads = {0, 0, 0, 0, 0, 0};
@@ -871,9 +872,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (kidsTimer != null) kidsTimer.cancel();
                     kidsTimerRunning = kids_timer_action_type.DISABLED;
                     for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                        enable_disable_buttons(throttleIndex, false);
+                        enableDisableButtons(throttleIndex, false);
                         bSels[throttleIndex].setEnabled(true);
-                        enable_disable_buttons(throttleIndex, false);
+                        enableDisableButtons(throttleIndex, false);
                     }
                     mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                             getApplicationContext().getResources().getString(R.string.app_name),
@@ -894,7 +895,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                if (((prefKidsTime>0) && (kidsTimerRunning!=KIDS_TIMER_RUNNING))) {
                 kidsTimerRunning = kids_timer_action_type.ENABLED;
                 for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    enable_disable_buttons(throttleIndex, false);
+                    enableDisableButtons(throttleIndex, false);
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
@@ -921,7 +922,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 kidsTimerRunning = kids_timer_action_type.ENDED;
                 if (kidsTimer != null) kidsTimer.cancel();
                 for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    enable_disable_buttons(throttleIndex, true);
+                    enableDisableButtons(throttleIndex, true);
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
@@ -983,12 +984,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if ((whichThrottle >= 0) && (whichThrottle < mainapp.numThrottles)) {
                                 if (com2 == '+' || com2 == 'L') { // if loco added or function labels updated
                                     if (com2 == ('+')) {
-                                        enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
+                                        enableDisableButtons(whichThrottle); // direction and slider: pass whichthrottle
                                         showHideConsistMenus();
                                     }
                                     // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
                                     set_function_labels_and_listeners_for_view(whichThrottle);
-                                    enable_disable_buttons_for_view(fbs[whichThrottle], true);
+                                    enableDisableButtonsForView(fbs[whichThrottle], true);
                                     soundsShowHideDeviceSoundsButton(whichThrottle);
                                     showHideSpeedLimitAndPauseButtons(whichThrottle);
                                     set_labels();
@@ -1093,7 +1094,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case '3':
                         case '4':
                         case '5':
-                            enable_disable_buttons(com0); // pass whichthrottle
+                            enableDisableButtons(com0); // pass whichthrottle
                             set_labels();
                             break;
                         case 'P': // panel info
@@ -1118,8 +1119,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.REFRESH_FUNCTIONS:
                     setAllFunctionLabelsAndListeners();
                     for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                        set_all_function_states(throttleIndex);
-                        enable_disable_buttons(throttleIndex); // direction and slider: pass whichthrottle
+                        setAllFunctionStates(throttleIndex);
+                        enableDisableButtons(throttleIndex); // direction and slider: pass whichthrottle
                         showHideConsistMenus();
                     }
                     break;
@@ -1142,8 +1143,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                        set_labels();
                         removeLoco(whichThrottle);
                         setAllFunctionLabelsAndListeners();
-                        set_all_function_states(whichThrottle);
-                        enable_disable_buttons(whichThrottle); // direction and slider: pass whichthrottle
+                        setAllFunctionStates(whichThrottle);
+                        enableDisableButtons(whichThrottle); // direction and slider: pass whichthrottle
                         showHideConsistMenus();
                     } catch (Exception e) {
                         // do nothing
@@ -1315,7 +1316,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue);
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastUnableToSetBrightness), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastUnableToSetBrightness), Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(R.string.toastUnableToSetBrightness, Toast.LENGTH_SHORT);
                 }
             }
         }
@@ -1394,7 +1396,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             setScreenBrightnessMode(screenBrightnessModeOriginal);
         } else {
             screenDimmed = true;
-            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
         }
@@ -1404,14 +1407,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void setRestoreScreenLockDim(String toastMsg) {
         if (isScreenLocked) {
             isScreenLocked = false;
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(R.string.toastThrottleScreenUnlocked, Toast.LENGTH_SHORT);
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
             if (!prefThrottleViewImmersiveMode)
                 setImmersiveModeOff(webView, true);
         } else {
             isScreenLocked = true;
-            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
             if (!prefThrottleViewImmersiveMode)
@@ -1435,7 +1440,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             case ACCELERATOROMETER_SHAKE_WEB_VIEW:
                                 if ((webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) && (keepWebViewLocation.equals(WEB_VIEW_LOCATION_NONE))) {
                                     GamepadFeedbackSound(true);
-                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeWebViewUnavailable), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeWebViewUnavailable), Toast.LENGTH_SHORT).show();
+                                    threaded_application.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
                                 } else {
                                     GamepadFeedbackSound(false);
                                     showHideWebView(getApplicationContext().getResources().getString(R.string.toastShakeWebViewHidden));
@@ -1466,7 +1472,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 });
                 accelerometerCurrent = true;
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastAccelerometerNotFound), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastAccelerometerNotFound), Toast.LENGTH_LONG).show();
+                threaded_application.safeToast(R.string.toastAccelerometerNotFound, Toast.LENGTH_LONG);
             }
         }
     }
@@ -1765,7 +1772,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 webViewLocation = WEB_VIEW_LOCATION_NONE;
                 webView.setVisibility(View.GONE);
                 if (!toastMsg.isEmpty())
-                    Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
+                    threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             }
             webViewIsOn = !webViewIsOn;
 
@@ -1844,8 +1852,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             speed = 0;
         getThrottleSlider(whichThrottle).setProgress(speed);
 
-        mainapp.lastKnownSpeedDCCEX[whichThrottle] = speed;
-        mainapp.lastKnownDirDCCEX[whichThrottle] = getDirection(whichThrottle);
+        mainapp.dccexLastKnownSpeed[whichThrottle] = speed;
+        mainapp.dccexLastKnownDirection[whichThrottle] = getDirection(whichThrottle);
     }
 
     // get the current speed of the throttle from the slider
@@ -2176,7 +2184,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
@@ -2196,7 +2205,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
@@ -2512,11 +2522,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void disable_buttons(int whichThrottle) {
-        enable_disable_buttons(whichThrottle, true);
+        enableDisableButtons(whichThrottle, true);
     }
 
-    void enable_disable_buttons(int whichThrottle) {
-        enable_disable_buttons(whichThrottle, false);
+    void enableDisableButtons(int whichThrottle) {
+        enableDisableButtons(whichThrottle, false);
     }
 
     void applySpeedRelatedOptions() {
@@ -2574,7 +2584,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    void enable_disable_buttons(int whichThrottle, boolean forceDisable) {
+    void enableDisableButtons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
@@ -2599,7 +2609,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvSpdVals[whichThrottle].setEnabled(newEnabledState);
         bLSpds[whichThrottle].setEnabled(newEnabledState);
         bRSpds[whichThrottle].setEnabled(newEnabledState);
-        enable_disable_buttons_for_view(fbs[whichThrottle], newEnabledState);
+        enableDisableButtonsForView(fbs[whichThrottle], newEnabledState);
         soundsShowHideDeviceSoundsButton(whichThrottle);
         showHideSpeedLimitAndPauseButtons(whichThrottle);
         if (!newEnabledState) {
@@ -2615,18 +2625,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         soundsEnableDisableDeviceSoundsButton(whichThrottle, newEnabledState);
 
-    } // end of enable_disable_buttons
+    } // end of enableDisableButtons
 
     // helper function to enable/disable all children for a group
-    void enable_disable_buttons_for_view(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enable_disable_buttons_for_view " +
+    void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
+        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
 
         // implemented in derived class, but called from this class
 
     }
 
     // update the appearance of all function buttons
-    void set_all_function_states(int whichThrottle) {
+    void setAllFunctionStates(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
 
         // implemented in derived class, but called from this class
@@ -4452,7 +4462,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if (isEsuMc2Stopped) {
             Log.d("Engine_Driver", "ESU_MCII: Device button presses whilst stopped ignored");
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoButtonPresses), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoButtonPresses), Toast.LENGTH_SHORT).show();
+            threaded_application.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
             return;
         }
 
@@ -4653,13 +4664,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void onClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (IS_ESU_MCII && isEsuMc2Stopped) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT);
             } else if (isSelectLocoAllowed(whichThrottle)) {
                 // don't loco change while moving if the preference is set
                 start_select_loco_activity(whichThrottle); // pass throttle #
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
         }
@@ -4817,7 +4830,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             //v.playSoundEffect(SoundEffectConstants.CLICK);
                             currentSwapForwardReverseButtons[whichThrottle] = !currentSwapForwardReverseButtons[whichThrottle];
                             setDirectionButtonLabels();
-                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
+                            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT);
                         }
                         doButtonPress();
                     }
@@ -5514,7 +5528,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 set_labels();
                             }
                             if (IS_ESU_MCII && isEsuMc2Stopped) {
-                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getText(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getText(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT).show();
+                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT);
                             }
                             break;
 
@@ -6377,7 +6392,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // format the screen area
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            enable_disable_buttons(throttleIndex);
+            enableDisableButtons(throttleIndex);
             soundsShowHideDeviceSoundsButton(throttleIndex);
             showHideSpeedLimitAndPauseButtons(throttleIndex);
         }
@@ -6815,28 +6830,36 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 functionButtonMap.put(func, b); // save function to button
                                 // mapping
                                 String bt = function_labels_temp.get(func);
+
                                 functionButtonTouchListener = new FunctionButtonTouchListener(func, whichThrottle, bt);
                                 b.setOnTouchListener(functionButtonTouchListener);
-//                                bt = (bt + "                      ").trim();  // pad with spaces, and limit to 20 characters
+
+                                // if there is a long first word or the total length is long, reduce the font size
+                                String [] words = bt.split(" ");
+                                int longestWord = 0;
+                                for (int l=0; l<words.length; l++) {
+                                    if (words[l].length()>longestWord) longestWord = words[l].length();
+                                }
+                                int textSize = 18;
+                                int maxLines = 2;
+                                if ( (longestWord > 14) || (bt.length() > 22) ) {
+                                    textSize = 10;
+                                    maxLines = 3;
+                                } else if ( (longestWord > 12) || (bt.length() > 19) ) {
+                                    textSize = 12;
+                                    maxLines = 3;
+                                } else if ( (longestWord > 10) || (bt.length() > 16) ) {
+                                    textSize = 14;
+                                    maxLines = 3;
+                                } else if ( (longestWord > 8) || (bt.length() > 13) ) {
+                                    textSize = 16;
+                                }
+                                bt = bt.replaceAll("-","-\u0020"); // replace hyphen with hyphen+small-space
                                 b.setText(bt);
                                 b.setVisibility(VISIBLE);
-                                // if there is a long first word or the total length is long, reduce the font size
-                                if (((bt + " ").indexOf(" ") > 8) || (bt.length() > 15)) {
-                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                                    if (((bt + " ").indexOf(" ") > 10) || (bt.length() > 18)) {
-                                        b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                                        if (((bt + " ").indexOf(" ") > 12) || (bt.length() > 21)) {
-                                            b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                                            if (((bt + " ").indexOf(" ") > 14) || (bt.length() > 24)) {
-                                                b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-                                                b.setMaxLines(3);
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    b.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                                    b.setMaxLines(2);
-                                }
+                                b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+                                b.setMaxLines(maxLines);
+
                                 b.setEnabled(false); // start out with everything disabled
                             } else {
                                 b.setVisibility(View.GONE);
@@ -6983,7 +7006,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     return (true); // stop processing this key
                 }
             } else {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT).show();
+                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
 //            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
@@ -7626,7 +7650,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case SWIPE_UP_OPTION_IMMERSIVE:
                             if (immersiveModeIsOn) {
                                 setImmersiveModeOff(webView, false);
-                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
+                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
                             } else {
                                 setImmersiveModeOn(webView, false);
                             }
@@ -7960,12 +7985,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // note: should verify that permissions have been granted before calling this method since it will try to read the preference file
     private void loadSharedPreferencesFromFileImpl(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
-        boolean res = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+        boolean result = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
-        if (!res) {
-            Toast.makeText(getApplicationContext(),
-                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
-                    Toast.LENGTH_LONG).show();
+        if (!result) {
+//            Toast.makeText(getApplicationContext(),
+//                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
+//                    Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom), exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
     }
@@ -8096,7 +8122,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index]))) {
             prefs.edit().putString("NumThrottle", textNumbers[max[index] - 1]).commit();
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastNumThrottles), textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
         }
     }
 

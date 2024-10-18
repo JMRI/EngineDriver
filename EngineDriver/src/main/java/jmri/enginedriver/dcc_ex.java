@@ -316,7 +316,7 @@ public class dcc_ex extends AppCompatActivity {
             String cvStr = etDccexCv.getText().toString();
             String cvValueStr = etDccexCvValue.getText().toString();
             String addrStr = etDccexWriteAddressValue.getText().toString();
-            if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
+            if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
                 try {
                     int cv = Integer.decode(cvStr);
                     int cvValue = Integer.decode(cvValueStr);
@@ -425,7 +425,7 @@ public class dcc_ex extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            if (mainapp.DccexTrackPower[myTrack] == 0 ) {
+            if (mainapp.dccexTrackPower[myTrack] == 0 ) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 1);
             } else {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK_POWER, ""+myTrackLetter, 0);
@@ -441,11 +441,11 @@ public class dcc_ex extends AppCompatActivity {
             char trackLetter;
 
             for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-                if (mainapp.DccexTrackAvailable[i]) {
+                if (mainapp.dccexTrackAvailable[i]) {
                     trackLetter = (char) ('A' + i);
                     typeIndex = dccexTrackTypeSpinner[i].getSelectedItemPosition();
                     type = TRACK_TYPES[typeIndex];
-                    mainapp.DccexTrackType[i] = typeIndex;
+                    mainapp.dccexTrackType[i] = typeIndex;
 
                     if (TRACK_TYPES_SELECTABLE[typeIndex]) {
                         if (!TRACK_TYPES_NEED_ID[typeIndex]) {
@@ -456,8 +456,8 @@ public class dcc_ex extends AppCompatActivity {
                         } else {
                             try {
                                 id = Integer.parseInt(dccexTrackTypeIdEditText[i].getText().toString());
-                                mainapp.DccexTrackId[i] = Integer.toString(id);
-                                if (mainapp.DccexTrackType[i] != TRACK_TYPE_OFF_NONE_INDEX) {
+                                mainapp.dccexTrackId[i] = Integer.toString(id);
+                                if (mainapp.dccexTrackType[i] != TRACK_TYPE_OFF_NONE_INDEX) {
                                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_TRACK, trackLetter + " " + type, id);
                                 }
                             } catch (Exception ignored) {
@@ -568,7 +568,7 @@ public class dcc_ex extends AppCompatActivity {
     }
 
     private void showHideButtons() {
-        if (mainapp.dccExActionTypeIndex != TRACK_MANAGER) {
+        if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
             dexcProgrammingCommonCvsLayout.setVisibility(View.VISIBLE);
             dccexCommonCvsSpinner.setVisibility(View.VISIBLE);
 
@@ -580,7 +580,7 @@ public class dcc_ex extends AppCompatActivity {
             sendCommandButton.setEnabled(false);
             writeAddressButton.setEnabled(!dccexAddress.isEmpty());
             readCvButton.setEnabled(!dccexCv.isEmpty());
-            if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
+            if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
                 writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty())));
             } else {
                 writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
@@ -611,7 +611,7 @@ public class dcc_ex extends AppCompatActivity {
         etDccexCvValue.setText(dccexCvValue);
 //        etDccexSendCommandValue.setText(dccexSendCommandValue);
 
-        if (mainapp.dccExActionTypeIndex == PROGRAMMING_TRACK) {
+        if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
             readAddressButton.setVisibility(View.VISIBLE);
             writeAddressButton.setVisibility(View.VISIBLE);
             readCvButton.setVisibility(View.VISIBLE);
@@ -620,7 +620,7 @@ public class dcc_ex extends AppCompatActivity {
             readAddressButton.setVisibility(View.GONE);
             writeAddressButton.setVisibility(View.GONE);
             readCvButton.setVisibility(View.GONE);
-            if (mainapp.dccExActionTypeIndex != TRACK_MANAGER) {
+            if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
                 dccexHeadingLabel.setText(R.string.DCCEXheadingCvProgrammerPoM);
             } else {
                 dccexHeadingLabel.setText(R.string.DCCEXheadingTrackManager);
@@ -644,15 +644,15 @@ public class dcc_ex extends AppCompatActivity {
     public void refreshDccexTracksView() {
 
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-            dccexTrackTypeSpinner[i].setSelection(mainapp.DccexTrackType[i]);
-            dccexTrackTypeIdEditText[i].setText(mainapp.DccexTrackId[i]);
-            dccexTrackTypeLayout[i].setVisibility(mainapp.DccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
+            dccexTrackTypeSpinner[i].setSelection(mainapp.dccexTrackType[i]);
+            dccexTrackTypeIdEditText[i].setText(mainapp.dccexTrackId[i]);
+            dccexTrackTypeLayout[i].setVisibility(mainapp.dccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
             if (vn >= 5.002005) {
-                setPowerButton(dccexTrackPowerButton[i], mainapp.DccexTrackPower[i]);
+                setPowerButton(dccexTrackPowerButton[i], mainapp.dccexTrackPower[i]);
             } else {
                 dccexTrackPowerButton[i].setVisibility(View.GONE);
             }
-            dccexTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.DccexTrackType[i]]);
+            dccexTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.dccexTrackType[i]]);
         }
         showHideButtons();
 
@@ -847,14 +847,14 @@ public class dcc_ex extends AppCompatActivity {
         final List<String> dccActionTypeValuesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntryValuesArray));
         final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntriesArray));
 
-//        mainapp.dccExActionTypeIndex = PROGRAMMING_TRACK;
+//        mainapp.dccexActionTypeIndex = PROGRAMMING_TRACK;
         dccActionTypeSpinner = findViewById(R.id.dexc_action_type_list);
 //        ArrayAdapter<?> dccActionTypeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dccExActionTypeEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<?> dccActionTypeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dccexActionTypeEntriesArray);
         dccActionTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccActionTypeSpinner.setAdapter(dccActionTypeSpinnerAdapter);
         dccActionTypeSpinner.setOnItemSelectedListener(new DccActionTypeSpinnerListener());
-        dccActionTypeSpinner.setSelection(mainapp.dccExActionTypeIndex);
+        dccActionTypeSpinner.setSelection(mainapp.dccexActionTypeIndex);
 
         LinearLayout cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
         DccExNavigationButtonListener dccExNavigationButtonListener = new DccExNavigationButtonListener(0);
@@ -1201,7 +1201,7 @@ public class dcc_ex extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             Spinner spinner = findViewById(R.id.dexc_action_type_list);
-            mainapp.dccExActionTypeIndex = spinner.getSelectedItemPosition();
+            mainapp.dccexActionTypeIndex = spinner.getSelectedItemPosition();
             resetTextField(WHICH_CV);
             resetTextField(WHICH_CV_VALUE);
             dccexInfoStr = "";

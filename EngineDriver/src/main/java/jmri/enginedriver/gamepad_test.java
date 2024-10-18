@@ -41,11 +41,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-//import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -69,7 +67,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.tts_msg_type;
@@ -134,8 +131,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     Tts tts;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
     void GamepadFeedbackSound(boolean invalidAction) {
@@ -337,7 +337,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (testComplete) {
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
             if (!whichGamepadNo.equals(" ")) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
+                threaded_application.safeToast(R.string.gamepadTestCompleteToast, Toast.LENGTH_SHORT);
                 if (result != RESULT_OK) {
                     result = RESULT_OK;
                     end_this_activity(GAMEPAD_TEST_PASS);

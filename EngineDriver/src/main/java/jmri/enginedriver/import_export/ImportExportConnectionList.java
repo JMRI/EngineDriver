@@ -261,7 +261,8 @@ public class ImportExportConnectionList {
         @Override
         protected void onPostExecute(String errMsg) {
             if (errMsg.length() > 0)
-                Toast.makeText(mainapp, mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mainapp, mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT).show();
+                threaded_application.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
         }
     }
 }

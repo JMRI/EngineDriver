@@ -264,7 +264,8 @@ public class intro_activity extends AppIntro2 {
 
         mainapp.introIsRunning = false;
         if (!introComplete) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.introbackButtonPress), Toast.LENGTH_LONG).show();
+            threaded_application.safeToast(R.string.introbackButtonPress, Toast.LENGTH_LONG);
         }
         super.onDestroy();
     }

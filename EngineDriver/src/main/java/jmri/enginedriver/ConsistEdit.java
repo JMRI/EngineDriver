@@ -94,8 +94,11 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
     private SharedPreferences prefs;
 
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
+    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
+    /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
     public void refreshConsistLists() {
@@ -303,9 +306,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         result = RESULT_OK;
 
         if (!mainapp.shownToastConsistEdit) {
-            if (!mainapp.prefHideInstructionalToasts) {
-                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
-            }
+//            if (!mainapp.prefHideInstructionalToasts) {
+//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
+//            }
+            mainapp.safeToastInstructional(R.string.toastConsistEditHelp, Toast.LENGTH_LONG);
             mainapp.shownToastConsistEdit = true;
         }
 
@@ -353,7 +357,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         super.onDestroy();
 
         if (saveConsistsFile == 'Y') {
-            importExportPreferences.getRecentConsistsListFromFile();
+            importExportPreferences.loadRecentConsistsListFromFile();
             int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
             importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
         }

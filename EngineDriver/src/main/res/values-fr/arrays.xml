@@ -24,12 +24,19 @@
         <item>Auto</item>
     </string-array>
 
-    <string-array name="DisplaySpeedUnitsEntries">
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Pourcentage</item>
         <item>Crans de vitesse automatiques</item>
         <item>8 crans</item>
         <item>10 crans</item>
         <item>14 crans</item>
+        <item>28 crans</item>
+        <item>128 crans</item>
+    </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->
+        <item>Pourcentage</item>
+        <item>8 crans</item>
         <item>28 crans</item>
         <item>128 crans</item>
     </string-array>
@@ -49,7 +56,7 @@
     <string-array name="WebOrientationEntries">
         <item>Portrait</item>
         <item>Paysage</item>
-        <item>Rotation auto</item>
+        <item>Rotation Auto</item>
     </string-array>
 
     <string-array name="NumOfThrottlesEntries">
@@ -475,5 +482,16 @@
         <item>Inversion Auto DCC</item>
         <item>EXT (non disponible)</item>
         <item>BOOST (non disponible)</item>
+    </string-array>
+
+    <string-array name="prefAppIconActionEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Arrêt d\'urgence</item>
+    </string-array>
+
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>Nom</item>
+        <item>ID</item>
+        <item>Position</item>
     </string-array>
 </resources>
