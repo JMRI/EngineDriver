@@ -51,8 +51,6 @@ public class ImportExportConnectionList {
         String errMsg;
 
         try {
-//            File sdcard_path = Environment.getExternalStorageDirectory();
-//            File connections_list_file = new File(sdcard_path, "engine_driver/connections_list.txt");
             File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
 
             if (connections_list_file.exists()) {
@@ -173,6 +171,16 @@ public class ImportExportConnectionList {
             if (connected_hostip == null || connected_port == 0) return errMsg;
 
             foundDemoHost = false;
+            boolean isBlankOrDemo = false;
+            boolean isDemo = false;
+            if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
+                isDemo = true;
+                foundDemoHost = true;
+            }
+            if ( ((webServerName.isEmpty()) || (connected_hostname.equals(webServerName)))
+                    || (isDemo) ) {
+                isBlankOrDemo = true;
+            }
 
             //if no SD Card present then nothing to do
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
@@ -183,15 +191,11 @@ public class ImportExportConnectionList {
 
                 if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
                     //Write selected connection to file, then write all others (skipping selected if found)
-                    if ( ((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
-                        || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) ) {
+                    if (isBlankOrDemo) {
                         list_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType);
                     } else {
                         list_output.format("%s:%s:%d:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType);
                     }
-                }
-                if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
-                    foundDemoHost = true;
                 }
 
                 String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
@@ -239,8 +243,7 @@ public class ImportExportConnectionList {
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter, 1024);
                     PrintWriter log_output = new PrintWriter(bufferedWriter);
 
-                    if (((webServerName.equals("")) || (connected_hostname.equals(webServerName)))
-                            || (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port))) {
+                    if (isBlankOrDemo) {
                         log_output.format("%s:%s:%d:%s:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
                     } else {
                         log_output.format("%s:%s:%d:%s:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);

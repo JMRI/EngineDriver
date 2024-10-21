@@ -14,7 +14,7 @@
 
       original translation by Alain Carasso
 -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
 
     <string name="exit">Sortir</string>
     <string name="functionDefaultSettings">Fonction par défaut</string>
@@ -502,7 +502,7 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Erreur creation flux de sortie, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Erreur attente de flux, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Utilisation réseau %1$s , pas de WIFI.\nVérifier vos paramètres WiFi.\n</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">La découverte de serveur n\'est pas possible sans connexion WiFi !</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">La découverte de serveur n\\\'est pas possible sans connexion WiFi !</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
@@ -1056,6 +1056,7 @@
     <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions du joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">A selectionner en cas de probleme si le DPAD cree des codes cles et des evenements Joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessite la permission d acces aux IMAGES pour charger celles-ci en arriere plan.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessite la permission d acces aux READ_MEDIA_VISUAL_USER_SELECTED pour charger celles-ci en arriere plan.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessite la permission d acces aux reseaux WiFi proches pour detecter le SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>
     <string name="prefDccexPreferencesTitle">Preferences DCC-EX - EX-CommandStation</string>

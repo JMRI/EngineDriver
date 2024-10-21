@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
@@ -41,9 +40,11 @@
                 android:layout_width="fill_parent"
                 android:drawableLeft="@drawable/in_device_sounds_button_icon"
                 android:drawablePadding="0dp"
+                android:drawableStart="@drawable/in_device_sounds_button_icon"
                 android:paddingLeft="3dp"
                 android:paddingStart="3dp"
-                android:text="@string/deviceSoundsMuteButton" />
+                android:text="@string/deviceSoundsMuteButton"
+                tools:ignore="RtlSymmetry" />
 
             <Button
                 android:id="@+id/device_sounds_bell_1"
@@ -51,9 +52,10 @@
                 android:layout_width="fill_parent"
                 android:drawableLeft="@drawable/in_device_sounds_button_icon"
                 android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
+                android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
                 android:paddingStart="3dp"
-                android:text="@string/functionButton01DefaultValue" />
+                android:text="@string/functionButton01DefaultValue"
+                tools:ignore="RtlSymmetry" />
 
             <Button
                 android:id="@+id/device_sounds_horn_1"
@@ -61,9 +63,10 @@
                 android:layout_width="fill_parent"
                 android:drawableLeft="@drawable/in_device_sounds_button_icon"
                 android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
+                android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
                 android:paddingStart="3dp"
-                android:text="@string/functionButton02DefaultValue" />
+                android:text="@string/functionButton02DefaultValue"
+                tools:ignore="RtlSymmetry" />
 
             <Button
                 android:id="@+id/device_sounds_horn_short_1"
@@ -71,9 +74,10 @@
                 android:layout_width="fill_parent"
                 android:drawableLeft="@drawable/in_device_sounds_button_icon"
                 android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
+                android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
                 android:paddingStart="3dp"
-                android:text="@string/soundsButtonHornShortDefaultValue" />
+                android:text="@string/soundsButtonHornShortDefaultValue"
+                tools:ignore="RtlSymmetry" />
 
             <TableLayout
                 android:id="@+id/function_buttons_table_1"

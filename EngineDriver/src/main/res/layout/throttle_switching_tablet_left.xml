@@ -115,7 +115,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -436,7 +437,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -755,7 +757,9 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop"
+                                        tools:ignore="TooManyViews" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -1074,7 +1078,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -1393,7 +1398,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -1712,7 +1718,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout

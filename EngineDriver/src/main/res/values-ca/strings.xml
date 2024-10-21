@@ -13,7 +13,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
       translations provided by Luis Zamora (eldelinux)
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Sortir</string>
     <string name="functionDefaultSettings">Funcions per defecte</string>
 <!--    <string name="fb_label">Etiquetes de funcions</string>-->
@@ -1075,6 +1075,7 @@
     <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita els permisos READ_MEDIA_VISUAL_USER_SELECTED per carregar imatges de fons.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>
     <string name="prefDccexPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>

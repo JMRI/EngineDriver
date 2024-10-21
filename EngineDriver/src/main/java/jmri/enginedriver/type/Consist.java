@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.source_type;
 
 //

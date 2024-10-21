@@ -43,15 +43,18 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-//import android.widget.Toast;
 
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.tick_type;
-//import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.type.button_press_message_type;
+import jmri.enginedriver.type.consist_function_latching_type;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
+import jmri.enginedriver.type.speed_commands_from_type;
 
 public class throttle_semi_realistic extends throttle {
 
@@ -306,7 +309,7 @@ public class throttle_semi_realistic extends throttle {
             semiRealisticAirUpdateHandlers[i] = new Handler();
         }
 
-        sliderType = SLIDER_TYPE_VERTICAL;
+        sliderType = slider_type.VERTICAL;
     } // end of onCreate()
 
     @Override
@@ -457,7 +460,7 @@ public class throttle_semi_realistic extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
+        if (!webViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             double height = screenHeight;
             if (!prefIncreaseWebViewSize) {
@@ -793,14 +796,14 @@ public class throttle_semi_realistic extends throttle {
                 if ((brakePcnt >= esuBrakeLevels[i]) && (foundBrakeLevel < 0)) {
                     if (!esuBrakeActive[i]) {
                         if (!mainapp.function_states[whichThrottle][i]) {
-                            sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", BUTTON_PRESS_MESSAGE_DOWN, false, false, true, FUNCTION_CONSIST_LATCHING_NO, true);
+                            sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", button_press_message_type.DOWN, false, false, true, consist_function_latching_type.NO, true);
                         }
                         esuBrakeActive[i] = true;
                     }
                     foundBrakeLevel = i;
                 } else {
                     if ( (mainapp.function_states[whichThrottle][i]) || (esuBrakeActive[i]) ) {
-                        sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", BUTTON_PRESS_MESSAGE_UP, false, false, true, FUNCTION_CONSIST_LATCHING_NO, true);
+                        sendFunctionToConsistLocos(whichThrottle, esuBrakeFunctions[i], "", button_press_message_type.UP, false, false, true, consist_function_latching_type.NO, true);
                     }
                     esuBrakeActive[i] = false;
                 }
@@ -883,12 +886,12 @@ public class throttle_semi_realistic extends throttle {
             if (arrowDirection.equals(speed_button_type.RIGHT)) {
                 stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
                 if (!semiRealisticSpeedButtonLongPressActive)
-                    incrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                    incrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.BUTTONS);
                 setTargetSpeed(whichThrottle, true);
             } else if (arrowDirection.equals(speed_button_type.LEFT)) {
                 stopSemiRealsticThrottleSpeedButtonRepeater(whichThrottle);
                 if (!semiRealisticSpeedButtonLongPressActive)
-                    decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                    decrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.BUTTONS);
                 setTargetSpeed(whichThrottle, true);
             } else if (arrowDirection.equals(speed_button_type.STOP)) {
 //                semiRealisticSpeedButtonLongPressActive = false;
@@ -966,7 +969,7 @@ public class throttle_semi_realistic extends throttle {
 
     void setEStop(int whichThrottle) {
         semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
-        setSpeed(whichThrottle, 0, SPEED_COMMAND_FROM_BUTTONS);
+        setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
         mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
         setTargetSpeed(whichThrottle, 0);
         mainapp.sendEStopMsg();
@@ -988,10 +991,10 @@ public class throttle_semi_realistic extends throttle {
         @Override
         public void run() {
             if (mVolumeKeysAutoIncrement) {
-                incrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
+                incrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.VOLUME);
                 volumeKeysRepeatUpdateHandler.postDelayed(new SemiRealisticThrottleVolumeKeysRptUpdater(whichThrottle), REP_DELAY);
             } else if (mVolumeKeysAutoDecrement) {
-                decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_VOLUME);
+                decrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.VOLUME);
                 volumeKeysRepeatUpdateHandler.postDelayed(new SemiRealisticThrottleVolumeKeysRptUpdater(whichThrottle), REP_DELAY);
             }
         }
@@ -1039,15 +1042,15 @@ public class throttle_semi_realistic extends throttle {
     @Override
     public void decrementSemiRealisticThrottlePosition(int whichThrottle, int from, int stepMultiplier) {
         switch (from) {
-            case SPEED_COMMAND_FROM_BUTTONS:
+            case speed_commands_from_type.BUTTONS:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case SPEED_COMMAND_FROM_VOLUME:
+            case speed_commands_from_type.VOLUME:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case SPEED_COMMAND_FROM_GAMEPAD:
+            case speed_commands_from_type.GAMEPAD:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
 //                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle, false
@@ -1070,15 +1073,15 @@ public class throttle_semi_realistic extends throttle {
     public void incrementSemiRealisticThrottlePosition(int whichThrottle, int from, int stepMultiplier) {
         Log.d("Engine_Driver","srmt: incrementSemiRealisticThrottlePosition(): from: " + from);
         switch (from) {
-            case SPEED_COMMAND_FROM_BUTTONS:
+            case speed_commands_from_type.BUTTONS:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case SPEED_COMMAND_FROM_VOLUME:
+            case speed_commands_from_type.VOLUME:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case SPEED_COMMAND_FROM_GAMEPAD:
+            case speed_commands_from_type.GAMEPAD:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
 //                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED,whichThrottle,false
@@ -1554,11 +1557,11 @@ public class throttle_semi_realistic extends throttle {
             if (mainapp.appIsFinishing) { return;}
 
             if (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
-                incrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                incrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.BUTTONS);
                 restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.INCREMENT, buttonRepeatDelay);
 
             } else if (mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.DECREMENT) {
-                decrementSemiRealisticThrottlePosition(whichThrottle, SPEED_COMMAND_FROM_BUTTONS);
+                decrementSemiRealisticThrottlePosition(whichThrottle, speed_commands_from_type.BUTTONS);
                 restartSemiRealisticThrottleSpeedButtonRepeater(whichThrottle, auto_increment_or_decrement_type.DECREMENT, buttonRepeatDelay);
             }
             mainapp.buttonVibration();
@@ -1585,20 +1588,20 @@ public class throttle_semi_realistic extends throttle {
 
             if (delayMillis > 0) { // increment
                 if (getSpeed(whichThrottle) > targetSpeeds[whichThrottle]) {
-                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], SPEED_COMMAND_FROM_BUTTONS);
+                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], speed_commands_from_type.BUTTONS);
                     showTargetDirectionIndication(whichThrottle);
                     return;
                 }
-                incrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
+                incrementSpeed(whichThrottle, speed_commands_from_type.BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
                 restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, delayMillis);
             } else {
                 if (getSpeed(whichThrottle) < targetSpeeds[whichThrottle]) {
-                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], SPEED_COMMAND_FROM_BUTTONS);
+                    setSpeed(whichThrottle, targetSpeeds[whichThrottle], speed_commands_from_type.BUTTONS);
                     showTargetDirectionIndication(whichThrottle);
                     return;
                 }
                 delayMillis = delayMillis * -1;
-                decrementSpeed(whichThrottle, SPEED_COMMAND_FROM_BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
+                decrementSpeed(whichThrottle, speed_commands_from_type.BUTTONS, 1, prefSemiRealisticThrottleSpeedStep);
                 restartSemiRealisticThrottleTargetSpeedRepeater(whichThrottle, delayMillis);
                 showTargetDirectionIndication(whichThrottle);
             }

@@ -72,6 +72,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.Tts;
+import jmri.enginedriver.type.gamepad_test_type;
 
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
 
@@ -122,10 +123,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private String allKeyCodes = "";
 
-    private static final String GAMEPAD_TEST_PASS = "1";
-    private static final String GAMEPAD_TEST_FAIL = "2";
-    private static final String GAMEPAD_TEST_SKIPPED = "3";
-    private static final String GAMEPAD_TEST_RESET = "9";
+//    private static final String GAMEPAD_TEST_PASS = "1";
+//    private static final String GAMEPAD_TEST_FAIL = "2";
+//    private static final String GAMEPAD_TEST_SKIPPED = "3";
+//    private static final String GAMEPAD_TEST_RESET = "9";
 
     private int decreaseButtonCount = 0;
 
@@ -341,7 +342,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 threaded_application.safeToast(R.string.gamepadTestCompleteToast, Toast.LENGTH_SHORT);
                 if (result != RESULT_OK) {
                     result = RESULT_OK;
-                    end_this_activity(GAMEPAD_TEST_PASS);
+                    endThisActivity(gamepad_test_type.PASS);
                 }
             }
         }
@@ -386,7 +387,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             decreaseButtonCount++;
             if ((decreaseButtonCount>=3) || (prefGamepadTestEnforceTestingSimple)) {
                 result = RESULT_OK;
-                end_this_activity(GAMEPAD_TEST_SKIPPED);
+                endThisActivity(gamepad_test_type.SKIPPED);
             }
         } else {
             decreaseButtonCount = 0;
@@ -576,20 +577,20 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private class cancel_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            end_this_activity(GAMEPAD_TEST_FAIL);
+            endThisActivity(gamepad_test_type.FAIL);
             mainapp.buttonVibration();
         }
     }
 
     private class reset_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            end_this_activity(GAMEPAD_TEST_RESET);
+            endThisActivity(gamepad_test_type.RESET);
             mainapp.buttonVibration();
         }
     }
     private class skip_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            end_this_activity(GAMEPAD_TEST_SKIPPED);
+            endThisActivity(gamepad_test_type.SKIPPED);
             mainapp.buttonVibration();
         }
     }
@@ -741,9 +742,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     }
 
     // end current activity
-    void end_this_activity(String passedTest) {
+    void endThisActivity(int passedTest) {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("whichGamepadNo", whichGamepadNo +passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
+        resultIntent.putExtra("whichGamepadNo", whichGamepadNo + passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
         setResult(result, resultIntent);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

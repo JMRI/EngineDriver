@@ -36,6 +36,7 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.type.slider_type;
 
 public class throttle_simple extends throttle {
 
@@ -141,7 +142,7 @@ public class throttle_simple extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        sliderType = SLIDER_TYPE_VERTICAL;
+        sliderType = slider_type.VERTICAL;
     } // end of onCreate()
 
     @Override

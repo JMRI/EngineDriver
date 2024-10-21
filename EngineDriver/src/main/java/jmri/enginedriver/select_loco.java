@@ -180,9 +180,9 @@ public class select_loco extends AppCompatActivity {
     RelativeLayout rlRosterHeaderGroup;
     RelativeLayout rlRosterEmpty;
     LinearLayout llRoster;
-    RelativeLayout rlRecentHeader;
+    LinearLayout rlRecentHeader;
     LinearLayout llRecent;
-    RelativeLayout rlRecentConsistsHeader;
+    LinearLayout rlRecentConsistsHeader;
     LinearLayout llRecentConsists;
     RelativeLayout rlIDnGo;
     RadioButton rbAddress;

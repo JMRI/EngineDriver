@@ -41,6 +41,8 @@ import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_switching_left_or_right extends throttle {
 
@@ -293,7 +295,7 @@ public class throttle_switching_left_or_right extends throttle {
             }
         }
 
-        sliderType = SLIDER_TYPE_SWITCHING;
+        sliderType = slider_type.SWITCHING;
     } // end of onCreate()
 
     @Override
@@ -457,7 +459,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
+        if (!webViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen
@@ -749,11 +751,6 @@ public class throttle_switching_left_or_right extends throttle {
                     }
 
                     if ( hitJumpSpeed) {   // stop when we reach the target
-//                        switch (isPauseSpeeds[whichThrottle]) {
-//                            case PAUSE_SPEED_TO_ZERO: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO; break;
-//                            case PAUSE_SPEED_TO_RETURN: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE; break;
-//                        }
-
                         if (mChangeDirectionAtZero) { // if change of direction is needed, then we must be at zero now.  need to continue to the final speed.
                             Log.d("Engine_Driver", "onProgressChanged !!-- Direction change now needed");
                             mChangeDirectionAtZero = false;

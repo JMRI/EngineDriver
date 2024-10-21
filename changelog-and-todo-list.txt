@@ -21,6 +21,7 @@
  * Add missing sort-by-position (order received) for the roster
  * Roster sort order remembered between selects
  * Moved all the function button button scroll regions to include files
+ * change to SDK 34 to support new READ_MEDIA_VISUAL_USER_SELECTED perission
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents

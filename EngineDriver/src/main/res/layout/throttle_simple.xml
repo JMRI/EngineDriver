@@ -114,7 +114,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -316,7 +317,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -374,7 +375,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -575,7 +577,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -633,7 +635,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -712,7 +715,8 @@
                                     android:id="@+id/direction_left_cell_2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight=".5">
+                                    android:layout_weight=".5"
+                                    tools:ignore="TooManyViews">
 
                                     <Button
                                         android:id="@+id/button_fwd_2"
@@ -834,7 +838,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -892,7 +896,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -1093,7 +1098,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1151,7 +1156,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -1352,7 +1358,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">
@@ -1410,7 +1416,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -1611,7 +1618,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
                             android:layout_weight=".5"
                             android:orientation="vertical"
                             android:paddingTop="10dp">

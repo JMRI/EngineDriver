@@ -35,8 +35,10 @@ import java.util.LinkedHashMap;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
 
-public class throttle_full extends throttle {
+public class throttle_original extends throttle {
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
 
@@ -45,18 +47,6 @@ public class throttle_full extends throttle {
         super.removeLoco(whichThrottle);
         set_function_labels_and_listeners_for_view(whichThrottle);
     }
-
-
-//    @Override
-//    void enableDisableButtons(int whichThrottle, boolean forceDisable) {
-//        super.enableDisableButtons(whichThrottle, forceDisable);
-//
-//        boolean newEnabledState = false;
-//        if (!forceDisable) {
-//            newEnabledState = mainapp.consists[whichThrottle].isActive();      // set false if lead loco is not assigned
-//        }
-//
-//    } // end of enableDisableButtons
 
     // helper function to enable/disable all children for a group
     @Override
@@ -121,7 +111,7 @@ public class throttle_full extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "throttle_full: onCreate(): called");
+        Log.d("Engine_Driver", "throttle_original: onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -158,7 +148,7 @@ public class throttle_full extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        sliderType = SLIDER_TYPE_VERTICAL;
+        sliderType = slider_type.VERTICAL;
     } // end of onCreate()
 
 
@@ -177,7 +167,7 @@ public class throttle_full extends throttle {
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
-        Log.d("Engine_Driver","throttle_full: set_labels() starting");
+        Log.d("Engine_Driver","throttle_original: set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) { return;}
@@ -218,7 +208,7 @@ public class throttle_full extends throttle {
         String bLabelPlainText;
 
         if(mainapp.consists==null) {
-            Log.d("Engine_Driver", "throttle_full.setLabels consists is null");
+            Log.d("Engine_Driver", "throttle_original.setLabels consists is null");
             return;
         }
 
@@ -229,7 +219,7 @@ public class throttle_full extends throttle {
 
             Consist con = mainapp.consists[throttleIndex];
             if(con==null) {
-                Log.d("Engine_Driver", "throttle_full setLabels consists[" + throttleIndex + "] is null");
+                Log.d("Engine_Driver", "throttle_original setLabels consists[" + throttleIndex + "] is null");
             }
             else {
                 if (con.isActive()) {
@@ -305,7 +295,7 @@ public class throttle_full extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
+        if (!webViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             double height = screenHeight;
             if (!prefIncreaseWebViewSize) {
@@ -396,15 +386,15 @@ public class throttle_full extends throttle {
                 boolean con1Active = false;
                 boolean con2Active = false;
                 if (mainapp.consists[0] == null)
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[0] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[0] is null");
                 else
                     con0Active = mainapp.consists[0].isActive();
                 if( mainapp.consists[1] == null)
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[1] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[1] is null");
                 else
                     con1Active = mainapp.consists[1].isActive();
                 if (mainapp.consists[2] == null) {
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[2] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[2] is null");
                 }
                 else
                     con2Active = mainapp.consists[2].isActive();

@@ -30,12 +30,22 @@ public class BackgroundImageLoader {
 
     public void loadBackgroundImage() {
         if (prefBackgroundImage) {
-            if ( ( (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
-                    && (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) )
-                    || ( (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    && (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) ) ) {
-                loadBackgroundImageImpl();
+            boolean result = false;
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) {
+                    result = true;
+                }
+            } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) {
+                    result = true;
+                }
+            } else {
+                if ((PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED))
+                   || (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
+                    result = true;
+                }
             }
+            if (result) loadBackgroundImageImpl();
         }
     }
 

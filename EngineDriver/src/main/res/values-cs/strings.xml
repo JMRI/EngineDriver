@@ -15,7 +15,7 @@
 
       translations provided by Petr Šídlo
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Konec</string>
     <string name="functionDefaultSettings">Nastavení funkcí</string>
 <!--    <string name="fb_label">Funkce štítek</string>-->
@@ -1163,6 +1163,7 @@
     <string name="prefGamePadIgnoreJoystickTitle">Ignorujte akce joysticku</string>
     <string name="prefGamePadIgnoreJoystickSummary">Vyberte to, pokud máte problémy s DPAD produkujícími jak události klíčových kódů, tak joysticků</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver potřebuje READ_MEDIA_VISUAL_USER_SELECTED oprávnění k načtení obrázků na pozadí.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation preference</string>
