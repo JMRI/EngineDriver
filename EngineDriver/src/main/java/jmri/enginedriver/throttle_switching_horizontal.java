@@ -42,6 +42,8 @@ import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_switching_horizontal extends throttle {
 
@@ -202,7 +204,7 @@ public class throttle_switching_horizontal extends throttle {
             hsbSwitchingSpeeds[i].setOnTouchListener(thsl);
 
         }
-        sliderType = SLIDER_TYPE_SWITCHING;
+        sliderType = slider_type.SWITCHING;
     } // end of onCreate()
 
     @Override
@@ -277,7 +279,7 @@ public class throttle_switching_horizontal extends throttle {
         String bLabelPlainText;
 
         if(mainapp.consists==null) {
-            Log.d("Engine_Driver", "throttle_full.setLabels consists is null");
+            Log.d("Engine_Driver", "throttle_original.setLabels consists is null");
             return;
         }
 
@@ -288,7 +290,7 @@ public class throttle_switching_horizontal extends throttle {
 
             Consist con = mainapp.consists[throttleIndex];
             if(con==null) {
-                Log.d("Engine_Driver", "throttle_full setLabels consists[" + throttleIndex + "] is null");
+                Log.d("Engine_Driver", "throttle_original setLabels consists[" + throttleIndex + "] is null");
             }
             else {
                 if (con.isActive()) {
@@ -364,7 +366,7 @@ public class throttle_switching_horizontal extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
+        if (!webViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen
@@ -453,15 +455,15 @@ public class throttle_switching_horizontal extends throttle {
                 boolean con1Active = false;
                 boolean con2Active = false;
                 if (mainapp.consists[0] == null)
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[0] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[0] is null");
                 else
                     con0Active = mainapp.consists[0].isActive();
                 if( mainapp.consists[1] == null)
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[1] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[1] is null");
                 else
                     con1Active = mainapp.consists[1].isActive();
                 if (mainapp.consists[2] == null) {
-                    Log.d("Engine_Driver", "throttle_full.set_labels() consists[2] is null");
+                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[2] is null");
                 }
                 else
                     con2Active = mainapp.consists[2].isActive();
@@ -683,16 +685,10 @@ public class throttle_switching_horizontal extends throttle {
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (hsbSwitchingSpeeds[whichThrottle].touchFromUser) ) {
-//            if ((fromUser) || (hsbSwitchingSpeeds[whichThrottle].touchFromUser)
-//                || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_TO_ZERO)
-//                || (isPauseSpeeds[whichThrottle] == PAUSE_SPEED_START_RETURN) ) {
 
                 if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
 
                     if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
-//                    if ((Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) // if jump is too large then limit it
-//                    || (isPauseSpeeds[whichThrottle]!=PAUSE_SPEED_INACTIVE)){
-//                        Log.d("Engine_Driver", "onProgressChanged -- throttling change");
 
                         jumpSpeed = getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false);      // save ultimate target value
                         jumpDir = dir; // save ultimate target direction
@@ -712,17 +708,7 @@ public class throttle_switching_horizontal extends throttle {
                             mChangeDirectionAtZero= true;
                         }
 
-//                        if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_INACTIVE) {
-//                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,0));
-//                        } else {
-//                            if (isPauseSpeeds[whichThrottle]==PAUSE_SPEED_START_TO_ZERO) {
-//                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_ZERO;
-//                            } else {
-//                                isPauseSpeeds[whichThrottle]=PAUSE_SPEED_TO_RETURN;
-//                                jumpSpeed = pauseSpeed[whichThrottle];  // the recorded thumb position may be slightly out
-//                            }
-                            repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
-//                        }
+                        repeatUpdateHandler.post(new RptUpdater(whichThrottle,prefPauseSpeedRate));
                         return;
                     }
 
@@ -778,11 +764,6 @@ public class throttle_switching_horizontal extends throttle {
                     }
 
                     if ( hitJumpSpeed) {   // stop when we reach the target
-//                        switch (isPauseSpeeds[whichThrottle]) {
-//                            case PAUSE_SPEED_TO_ZERO: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_ZERO; break;
-//                            case PAUSE_SPEED_TO_RETURN: isPauseSpeeds[whichThrottle] = PAUSE_SPEED_INACTIVE; break;
-//                        }
-
                         if (mChangeDirectionAtZero) { // if change of direction is needed, then we must be at zero now.  need to continue to the final speed.
                             Log.d("Engine_Driver", "onProgressChanged !!-- Direction change now needed");
                             mChangeDirectionAtZero = false;

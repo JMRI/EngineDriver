@@ -17,10 +17,12 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"  tools:ignore="ProtectedPermissions"/>
 <!-- needed for API 33 -->
-<!--    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />-->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 <!-- needed for API 33 -->
+<!-- needed for API 34 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
+<!-- needed for API 34 -->
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -88,7 +90,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_full"
+            android:name=".throttle_original"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"

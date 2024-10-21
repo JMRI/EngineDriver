@@ -62,7 +62,7 @@
                     android:id="@+id/backgroundImgView"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    tools:ignore="ContentDescription"></ImageView>
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -117,7 +117,8 @@
                                         android:paddingTop="2dp"
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
-                                        android:text="@string/loco" />
+                                        android:text="@string/loco"
+                                        tools:targetApi="lollipop" />
                                 </RelativeLayout>
 
                                 <RelativeLayout

@@ -15,7 +15,7 @@
 
       translations provided by Al Babinsky and Daniel Sieber
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Beenden</string>
     <string name="functionDefaultSettings">Funktionsvorgaben</string>
 <!--    <string name="fb_label">Funktionsbezeichnung</string>-->
@@ -1065,6 +1065,7 @@
     <string name="prefGamePadIgnoreJoystickTitle">Ignorieren Sie Joystick -Handlungen</string>
     <string name="prefGamePadIgnoreJoystickSummary">Wählen Sie dies aus, wenn Sie Probleme mit dem DPAD haben, der sowohl Schlüsselcodes als auch Joystick -Ereignisse erstellt</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver benötigt READ_MEDIA_VISUAL_USER_SELECTED -Berechtigungen, um Hintergrundbilder zu laden.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver benötigt die Berechtigungen in der Nähe_WIFI_Devices, um die aktuelle WLAN -SSID abzurufen.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>

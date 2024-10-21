@@ -22,7 +22,6 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -39,6 +38,8 @@ import java.util.LinkedHashMap;
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_vertical_left_or_right extends throttle {
 
@@ -187,7 +188,7 @@ public class throttle_vertical_left_or_right extends throttle {
             bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
         }
 
-        sliderType = SLIDER_TYPE_VERTICAL;
+        sliderType = slider_type.VERTICAL;
     } // end of onCreate()
 
     @Override
@@ -341,7 +342,7 @@ public class throttle_vertical_left_or_right extends throttle {
         }
 
         // save part the screen for webview
-        if (webViewLocation.equals(WEB_VIEW_LOCATION_TOP) || webViewLocation.equals(WEB_VIEW_LOCATION_BOTTOM)) {
+        if (webViewLocation.equals(web_view_location_type.TOP) || webViewLocation.equals(web_view_location_type.BOTTOM)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen

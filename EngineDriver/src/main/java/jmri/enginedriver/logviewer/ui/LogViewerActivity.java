@@ -324,10 +324,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             return ((null != objects) ? objects.size() : 0);
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+//        @Override
+//        public long getItemId(int position) {
+//            return position;
+//        }
 
         @Override
         public String getItem(int position) {

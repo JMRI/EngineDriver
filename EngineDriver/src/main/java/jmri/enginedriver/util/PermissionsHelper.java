@@ -51,6 +51,7 @@ public class PermissionsHelper {
 //            READ_LEGACY_FILES,
 //            NEARBY_WIFI_DEVICES,
             READ_MEDIA_IMAGES,
+            READ_MEDIA_VISUAL_USER_SELECTED,
             POST_NOTIFICATIONS
     })
     public @interface RequestCodes {}
@@ -81,6 +82,9 @@ public class PermissionsHelper {
     public static final int READ_MEDIA_IMAGES = 50;
     public static final int POST_NOTIFICATIONS = 51;
 //<!-- needed for API 33 -->
+//<!-- needed for API 34 -->
+    public static final int READ_MEDIA_VISUAL_USER_SELECTED = 52;
+//<!-- needed for API 34 -->
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -177,10 +181,10 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
             case VIBRATE:
                 return context.getResources().getString(R.string.permissionsVIBRATE);
-
-//<!-- needed for API 33 -->
-            case READ_MEDIA_IMAGES:
+            case READ_MEDIA_IMAGES: // needed for API 33
                 return context.getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES);
+            case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
+                return context.getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED);
 //            case NEARBY_WIFI_DEVICES:
 //                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
@@ -270,12 +274,19 @@ public class PermissionsHelper {
                             requestCode);
                     break;
 
-//<!-- needed for API 33 -->
-                case READ_MEDIA_IMAGES:
+                case READ_MEDIA_IMAGES: // needed for API 33
                     Log.d("Engine_Driver", "Requesting READ_MEDIA_IMAGES permissions");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.READ_MEDIA_IMAGES},
+                                requestCode);
+                    }
+                    break;
+                case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
+                    Log.d("Engine_Driver", "Requesting READ_MEDIA_VISUAL_USER_SELECTED permissions");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        activity.requestPermissions(new String[]{
+                                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
                                 requestCode);
                     }
                     break;
@@ -433,6 +444,11 @@ public class PermissionsHelper {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
                 }
+//<!-- needed for API 34 -->
+            case READ_MEDIA_VISUAL_USER_SELECTED:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
+                }
 //            case NEARBY_WIFI_DEVICES :
 //                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
@@ -484,6 +500,10 @@ public class PermissionsHelper {
             case READ_MEDIA_IMAGES:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
+                }
+            case READ_MEDIA_VISUAL_USER_SELECTED:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
                 }
 //            case NEARBY_WIFI_DEVICES:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);

@@ -13,7 +13,7 @@
       Public License along with this program; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Exit</string>
     <string name="functionDefaultSettings">Function Defaults</string>
     <string name="functionConsistSettings">Consist Function Settings</string>
@@ -447,7 +447,7 @@
 
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
-    <string name="prefRosterFilterDefaultValue" translatable="false"></string>
+    <string name="prefRosterFilterDefaultValue" translatable="false" />
 <!--    <string name="FilterRosterList">Filter</string>-->
     <string name="FilterRosterListHint">Contains…</string>
     <string name="FilterRosterListFilterOwnerLabel" translatable="false">👤</string>
@@ -1170,6 +1170,7 @@
 
 <!-- needed for API 33 -->
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver needs READ_MEDIA_IMAGES permissions to load background images.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver needs READ_MEDIA_VISUAL_USER_SELECTED permissions to load background images.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver needs NOTIFICATION permissions to warn you when push into background.</string>
 <!-- needed for API 33 -->

@@ -321,7 +321,7 @@ public class comm_thread extends Thread {
             String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
             wifiSend("N" + s);  //send throttle name
             if (sendHWID) {
-                wifiSend("HU" + mainapp.getDeviceId());
+                wifiSend("HU" + mainapp.getFakeDeviceId());
             }
 
         } else { //DCC-EX // name is not relevant, so send a Command Station Status Request
@@ -2253,6 +2253,7 @@ public class comm_thread extends Thread {
         //send if sufficient gap between messages or msg is timingSensitive, requeue if not
         if (lastGap >= threaded_application.WiThrottle_Msg_Interval || timingSensitive(msg)) {
             //perform the send
+            //noinspection UnnecessaryUnicodeEscape
             Log.d("Engine_Driver", "comm_thread.wifiSend: " + (mainapp.isDCCEX ? "DCC-EX" : "") + "           -->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
             lastSentMs = now;
             socketWiT.Send(msg);
@@ -2263,6 +2264,7 @@ public class comm_thread extends Thread {
         } else {
             //requeue this message
             int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.WiThrottle_Msg_Interval + 5); //extra 5 for processing
+            //noinspection UnnecessaryUnicodeEscape
             Log.d("Engine_Driver", "comm_thread.wifiSend: requeue:" + msg.replaceAll("\n", "\u21B5") +
                     ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
             mainapp.sendMsgDelay(mainapp.comm_msg_handler, nextGap, message_type.WIFI_SEND, msg);

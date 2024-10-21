@@ -21,7 +21,6 @@ was rewritten to support AppCompat.V7
 
 package jmri.enginedriver;
 
-import static java.lang.String.format;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -164,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        deviceId = mainapp.getDeviceId();
+        deviceId = mainapp.getFakeDeviceId();
 
         //put pointer to this activity's message handler in main app's shared variable (If needed)
         mainapp.settings_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
@@ -1468,7 +1467,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
 
-                parentActivity.deviceId = mainapp.getDeviceId();
+                parentActivity.deviceId = mainapp.getFakeDeviceId();
                 prefs.edit().putString("prefAndroidId", parentActivity.deviceId).commit();
 
                 // - - - - - - - - - - - -

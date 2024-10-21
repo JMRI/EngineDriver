@@ -135,9 +135,9 @@ public abstract class Flashlight {
         private int getDisplayOrientation(Activity activity) {
             switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
                 case Surface.ROTATION_0: return 0;
-                case Surface.ROTATION_90: return 90;
                 case Surface.ROTATION_180: return 180;
                 case Surface.ROTATION_270: return 270;
+                case Surface.ROTATION_90:
                 default: return 90;
             }
         }

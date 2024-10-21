@@ -106,7 +106,8 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/loco"
                                     android:translationZ="90dp"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -356,7 +357,8 @@
                                     android:paddingTop="2dp"
                                     android:text="@string/loco"
                                     android:translationZ="90dp"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -607,7 +609,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -713,7 +716,8 @@
                                 <RelativeLayout
                                     android:id="@+id/stop_cell_2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="TooManyViews">
 
                                     <Button
                                         android:id="@+id/button_stop_2"

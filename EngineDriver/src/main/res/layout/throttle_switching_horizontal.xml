@@ -106,7 +106,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <Button
@@ -395,7 +396,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <Button
@@ -685,7 +687,8 @@
                                     android:paddingTop="2dp"
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded"
+                                    tools:targetApi="lollipop" />
                             </RelativeLayout>
 
                             <Button
@@ -737,7 +740,7 @@
                                     android:layout_toLeftOf="@id/speed_value_label_2"
                                     android:text="@string/directionIndicatorReverse"
                                     android:textSize="14sp"
-                                    tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded,TooManyViews" />
 
                                 <TextView
                                     android:id="@+id/speed_value_label_2"

@@ -1114,7 +1114,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = mainapp.getDeviceId();
+        String deviceId = mainapp.getFakeDeviceId();
         sharedPreferences.edit().putString("prefAndroidId", deviceId).commit();
         sharedPreferences.edit().putInt("prefForcedRestartReason", restart_reason_type.AUTO_IMPORT).commit();
 

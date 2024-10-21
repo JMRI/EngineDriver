@@ -15,7 +15,7 @@
 
       translations provided by Daniel Sieber
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
 
     <string name="app_name_routes">Fahrstrassen</string>
     <string name="app_name_routes_short">Fahrstrassen</string>

@@ -36,6 +36,8 @@ import android.widget.ScrollView;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.type.slider_type;
+import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_big_buttons extends throttle {
 
@@ -102,7 +104,7 @@ public class throttle_big_buttons extends throttle {
 
         setAllFunctionLabelsAndListeners();
 
-        sliderType = SLIDER_TYPE_VERTICAL;   // they are not visible
+        sliderType = slider_type.VERTICAL;   // they are not visible
     } // end of onCreate()
 
     @Override
@@ -259,7 +261,7 @@ public class throttle_big_buttons extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(WEB_VIEW_LOCATION_NONE)) {
+        if (!webViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen

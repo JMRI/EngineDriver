@@ -990,8 +990,8 @@ public class threaded_application extends Application {
         sHtml += "About: " + String.format("<small>OS: </small><b>%s</b> <small>SDK: </small><b>%s</b>", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
         s += "About: " + String.format("OS: %s SDK: %s", android.os.Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
 
-        sHtml += String.format("<small>, DeviceID: </small><b>%s</b>", getDeviceId());
-        s += String.format(", DeviceID: %s", getDeviceId());
+        sHtml += String.format("<small>, DeviceID: </small><b>%s</b>", getFakeDeviceId());
+        s += String.format(", DeviceID: %s", getFakeDeviceId());
 
         if (client_address_inet4 != null) {
             sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
@@ -1044,7 +1044,7 @@ public class threaded_application extends Application {
     //reinitialize statics in activities as required to be ready for next launch
     public static void reinitStatics() {
         throttle.initStatics();
-        throttle_full.initStatics();
+        throttle_original.initStatics();
         throttle_simple.initStatics();
         web_activity.initStatics();
     }
@@ -2054,7 +2054,7 @@ public class threaded_application extends Application {
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
         if (currentValue.equals("") || currentValue.equals(defaultName)) {
-            deviceId = mainapp.getDeviceId();
+            deviceId = mainapp.getFakeDeviceId();
             if (MobileControl2.isMobileControl2()) {
                 // Change default name for ESU MCII
                 defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
@@ -2183,7 +2183,7 @@ public class threaded_application extends Application {
                 break;
             case "Default":
             default:
-                throttle = new Intent().setClass(this, throttle_full.class);
+                throttle = new Intent().setClass(this, throttle_original.class);
                 break;
         }
         return throttle;
@@ -2477,7 +2477,7 @@ public class threaded_application extends Application {
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue)).trim();
 
-        String deviceId = mainapp.getDeviceId();
+        String deviceId = mainapp.getFakeDeviceId();
         prefs.edit().putString("prefAndroidId", deviceId).commit();
         prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.AUTO_IMPORT).commit();
 
@@ -2982,12 +2982,12 @@ public class threaded_application extends Application {
         }
     }
 
-    public String getDeviceId() {
-        return getDeviceId(false);
+    public String getFakeDeviceId() {
+        return getFakeDeviceId(false);
     }
 
     @SuppressLint("ApplySharedPref")
-    public String getDeviceId(boolean forceNewId) {
+    public String getFakeDeviceId(boolean forceNewId) {
 //        return Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);  // no longer permitted
         mainapp.deviceId = prefs.getString("prefAndroidId", "");
         if ( (mainapp.deviceId.equals("")) || (forceNewId) ) {

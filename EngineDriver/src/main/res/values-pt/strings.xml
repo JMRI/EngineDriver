@@ -15,7 +15,7 @@
 
       translations provided by Roberto Falorni
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Saída</string>
     <string name="functionDefaultSettings">Padrão das Funções</string>
 <!--    <string name="fb_label">Rótulo Função</string>-->
@@ -1008,7 +1008,8 @@
     <string name="DccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignore as ações do joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Selecione isso se tiver problemas com o DPAD produzindo códigos -chave e eventos de joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver precisa de permissões read_media_images para carregar imagens em segundo plano.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver precisa de permissões permissionsREAD_MEDIA_IMAGES para carregar imagens em segundo plano.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver precisa de permissões READ_MEDIA_VISUAL_USER_SELECTED para carregar imagens em segundo plano.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver precisa de permissões nas proximidades de recuperar o WiFi SSID atual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver precisa de permissões de notificação para avisá -lo quando formar em segundo plano.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferências</string>
