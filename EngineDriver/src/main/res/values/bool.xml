@@ -98,6 +98,7 @@
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
     <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
     <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
+    <bool name="prefLeftRightSwipeChangesSpeedDefaultValue">false</bool>
 
     <bool name="prefKidsTimerEnableReverseDefaultValue">false</bool>
     <bool name="prefKidsTimerButtonDefaultValue">false</bool>

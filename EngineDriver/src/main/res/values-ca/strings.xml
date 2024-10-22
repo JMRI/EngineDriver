@@ -1124,5 +1124,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valor de fre alt ESU (percentatge)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quin percentatge de fre per activar el número de funció alta</string>
     <string name="statusThreadedAppNotconnectedToWifi">No connectat a WiFi</string>
+    <string name="app_name_withrottle_cv_programmer">Programa de CV a MAIN</string>
 
 </resources>

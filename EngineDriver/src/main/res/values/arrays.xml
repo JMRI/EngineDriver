@@ -1764,6 +1764,7 @@
         <item>fr</item>
         <item>fr_CA</item>
         <item>cs</item>
+        <item>ja</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
@@ -1780,6 +1781,7 @@
         <item>French</item>
         <item>Canadian French</item>
         <item>Czech</item>
+        <item>Japanese</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1966,6 +1968,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- The following preferences will only appear if the 'Advanced' preference options is enabled. -->
 
     <!-- always put any categories after the preferences in the category.  i.e. preferences and PreferenceScreens, then categories -->
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
@@ -1974,6 +1977,7 @@
         <item>prefLocale</item>
         <item>prefDoubleBackButtonToExit</item>
         <item>prefHideInstructionalToasts</item>
+        <item>prefLeftRightSwipeChangesSpeed</item>
 
         <!-- Throttle Screen Appearance Preferences -->
         <item>prefDecreaseLocoNumberHeight</item>
@@ -2076,6 +2080,7 @@
 
     <!-- no need to include the sub preference here if the whole PreferenceScreen is hidden-->
     <string-array name="advancedSubPreferences" translatable="false">
+        <item>prefLeftRightSwipeChangesSpeed</item>
         <item>increase_slider_height_preference</item>
         <item>left_slider_margin</item>
         <item>hide_slider_preference</item>

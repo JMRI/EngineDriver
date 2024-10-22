@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+      Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it 
+      under the terms of the GNU General Public License as published by the 
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes, TypographyEllipsis">
+
+    <string-array name="address_size_defaultsEntries">
+        <item>短い</item>
+        <item>長さ</item>
+        <item>自動</item>
+    </string-array>
+    <string-array name="address_size">
+        <item>短い</item>
+        <item>長さ</item>
+    </string-array>
+    <string-array name="DisplaySpeedUnitsEntries">
+        <item>パーセンテージ</item>
+        <item>自動速度ステップ</item>
+        <item>8ステップ</item>
+        <item>10ステップ</item>
+        <item>14ステップ</item>
+        <item>28ステップ</item>
+        <item>128ステップ</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">
+        <item>パーセンテージ</item>
+        <item>8ステップ</item>
+        <item>28ステップ</item>
+        <item>128ステップ</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>パーセンテージ</item>
+        <item>2ステップ</item>
+        <item>3ステップ</item>
+        <item>4つのステップ</item>
+        <item>5つのステップ</item>
+        <item>6つのステップ</item>
+        <item>7つのステップ</item>
+        <item>8ステップ</item>
+        <item>9ステップ</item>
+    </string-array>
+    <string-array name="WebViewLocationEntries">
+        <item>なし</item>
+        <item>トップ</item>
+        <item>底</item>
+    </string-array>
+    <string-array name="OrientationEntries">
+        <item>肖像画</item>
+        <item>風景</item>
+        <item>自動回転</item>
+        <item>自動ウェブ</item>
+    </string-array>
+    <string-array name="NumOfThrottlesEntries">
+        <item>1つ</item>
+        <item>二</item>
+        <item>三つ</item>
+        <item>4</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+    <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
+        <item>横型(1-3)</item>
+        <item>垂直 - (2)</item>
+        <item>大きなボタン - 左 (1)</item>
+        <item>大きなボタン - 右 (1)</item>
+        <item>縦 - 左 (1)</item>
+        <item>縦 - 右 (1)</item>
+        <item>垂直スイッチング (2)</item>
+        <item>垂直切り替え - 左 (1)</item>
+        <item>垂直切り替え - 右 (1)</item>
+        <item>水平切り替え(1-3)</item>
+        <item>シンプル (1-6) (タブレット推奨)</item>
+        <item>タブレット切り替え左 (1-6)</item>
+        <item>タブレット縦型左 (1-6)</item>
+        <item>セミリアル左 (1)</item>
+    </string-array>
+    <string-array name="DisplayClockEntries">
+        <item>なし</item>
+        <item>12時間形式</item>
+        <item>24時間形式</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="prefGamePadKeyEntries">
+        <item>オールストップ</item>
+        <item>停止</item>
+        <item>フォワード</item>
+        <item>逆行する</item>
+        <item>順方向/逆方向の切り替え</item>
+        <item>速度を上げる</item>
+        <item>速度を下げる</item>
+        <item>制限速度</item>
+        <item>一時停止</item>
+        <item>次のスロットル</item>
+        <item>機能00/ライト</item>
+        <item>機能01/ベル</item>
+        <item>機能02/ホーン</item>
+        <item>機能03</item>
+        <item>機能04</item>
+        <item>機能05</item>
+        <item>機能06</item>
+        <item>機能07</item>
+        <item>機能08</item>
+        <item>機能09</item>
+        <item>機能10</item>
+        <item>機能11</item>
+        <item>機能12</item>
+        <item>機能13</item>
+        <item>機能14</item>
+        <item>機能15</item>
+        <item>機能16</item>
+        <item>機能17</item>
+        <item>機能18</item>
+        <item>機能19</item>
+        <item>機能20</item>
+        <item>機能21</item>
+        <item>機能22</item>
+        <item>機能23</item>
+        <item>機能24</item>
+        <item>機能25</item>
+        <item>機能26</item>
+        <item>機能27</item>
+        <item>機能28</item>
+        <item>機能29</item>
+        <item>機能30</item>
+        <item>機能 31</item>
+        <item>ミュート (IPLS)</item>
+        <item>ベル (IPLS)</item>
+        <item>ホーン (IPLS)</item>
+        <item>ホーンショート(IPLS)</item>
+        <item>音声現在の速度 (IPLS)</item>
+        <item>中性</item>
+        <item>ブレーキを増やす</item>
+        <item>ブレーキを緩める</item>
+        <item>負荷を増やす</item>
+        <item>負荷を軽減する</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="prefThemeEntries">
+        <item>オリジナル（チェッカープレート）</item>
+        <item>標準</item>
+        <item>ハイコントラストの輪郭</item>
+        <item>暗い</item>
+        <item>カラフル</item>
+    </string-array>
+    <string-array name="prefSelectedLocoIndicatorEntries">
+        <item>なし (「v」、「1」のみを使用)</item>
+        <item>ボリュームとゲームパッドの両方 1</item>
+        <item>ゲームパッド1のみ</item>
+    </string-array>
+    <string-array name="prefAccelerometerShakeEntries">
+        <item>なし</item>
+        <item>Web ビューを非表示\n(「スロットル Web ビュー」設定が必要)</item>
+        <item>画面をロックして暗くする</item>
+        <item>薄暗い画面</item>
+        <item>次のスロットル - 音量ボタン用</item>
+        <item>オールストップ</item>
+    </string-array>
+    <string-array name="prefTtsWhenEntries">
+        <item>なし</item>
+        <item>主要なイベントのみ</item>
+    </string-array>
+    <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>Web ビューを非表示\n(「スロットル Web ビュー」設定が必要)</item>
+        <item>画面をロックして暗くする</item>
+        <item>薄暗い画面</item>
+        <item>イマーシブ モードを一時的に有効/無効にする</item>
+        <item>スロットル画面レイアウトの切り替え</item>
+        <item>Chaneg Speed</item>
+    </string-array>
+    <string-array name="prefImportExportEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>輸出</item>
+        <item>輸入</item>
+
+        <item>リセット</item>
+    </string-array>
+    <string-array name="prefLocaleEntries">  <!-- display version -->
+        <item>電話機のグローバル設定を使用する</item>
+        <item>英語 (米国) - エンジン ドライバーのデフォルト</item>
+        <item>英語 (オーストラリア)</item>
+        <item>英語 (カナダ)</item>
+        <item>英語 (ニュージーランド)</item>
+        <item>英語 (イギリス)</item>
+        <item>イタリア語</item>
+        <item>ポルトガル語</item>
+        <item>ドイツ語</item>
+        <item>スペイン語</item>
+        <item>カタルーニャ語</item>
+        <item>フランス語</item>
+        <item>フランス語 (カナダ)</item>
+        <item>チェコ語</item>
+        <item>日本語</item>
+    </string-array>
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>Coincidencia simple de texto (original)</item>
+        <item>複雑なテキスト マッチング - 先頭車両は常にアクティブ化され、トレイルは以下のルールに従います</item>
+        <item>特別に正確 - リードとすべてのトレイルが関数ラベルと正確に一致する場合にアクティブ化されます。</item>
+        <item>特別な部分 - リードとすべてのトレイルが機能ラベルと部分的に一致する場合にアクティブ化されます</item>
+        <item>特別な部分のみを含む - 関数ラベルにデフォルト ラベルが含まれる場合にアクティブ化されます。</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>リード ロコ - 部分一致</item>
+        <item>Lead+Trail Locos - 部分一致</item>
+        <item>すべての機関車 - 部分一致</item>
+        <item>リード ロコ - 完全一致</item>
+        <item>リード + トレイル ロコ - 完全一致</item>
+        <item>すべてのロコ - 完全一致</item>
+    </string-array>
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>何もしない</item>
+        <item>先頭車両 - 同じ機能番号</item>
+        <item>Lead+Trail Locos - 同じ機能番号</item>
+        <item>すべての機関車 - 同じ機能番号</item>
+    </string-array>
+    <string-array name="prefKidsTimerEntries">  <!-- display version -->
+        <item>無効</item>
+        <item>1分</item>
+        <item>2分</item>
+        <item>5分</item>
+        <item>10分</item>
+        <item>実行が完了しました</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="prefGamePadFlydigiWee2Labels">
+        <item> </item>
+        <item>ボタン選択アクション</item>
+        <item>ボタン DPAD 上アクション</item>
+        <item>ボタン DPAD 下アクション</item>
+        <item>ボタン DPAD 左アクション</item>
+        <item>ボタン DPAD 右アクション</item>
+        <item>ボタン アクションの開始</item>
+        <item>ボタン X アクション</item>
+        <item>ボタンYのアクション</item>
+        <item>ボタンAのアクション</item>
+        <item>ボタンBの動作</item>
+        <item>左肩</item>
+        <item>右肩</item>
+        <item>左トリガー</item>
+        <item>右トリガー</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadMocuteLabels">
+        <item> </item>
+        <item>ボタン (存在する場合) アクションを選択します</item>
+        <item>DPAD アップアクション</item>
+        <item>DPADダウンアクション</item>
+        <item>DPAD 左アクション</item>
+        <item>DPAD 正しいアクション</item>
+        <item>ボタン アクションの開始</item>
+        <item>ボタン X [iOS] アクション</item>
+        <item>ボタンY[三角]アクション</item>
+        <item>ボタンA[十字]アクション</item>
+        <item>ボタンB [@]アクション</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadMagicseeR1Labels">
+        <item>0</item>
+        <item>OKボタン（前上）</item>
+        <item>ボタン DPAD 上アクション</item>
+        <item>ボタン DPAD 下アクション</item>
+        <item>ボタン DPAD 左アクション</item>
+        <item>ボタン DPAD 右アクション</item>
+        <item>ボタンリターン（前下）</item>
+        <item>ボタンCの動作</item>
+        <item>ボタンDの動作</item>
+        <item>ボタンAのアクション</item>
+        <item>ボタンBの動作</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadNoneLabels">
+        <item> </item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>ボタンが使用できません</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->
+        <item>(機能なし)</item>
+        <item>オールストップ</item>
+        <item>停止</item>
+        <item>フォワード</item>
+        <item>逆行する</item>
+        <item>順方向/逆方向の切り替え</item>
+        <item>速度を上げる</item>
+        <item>速度を下げる</item>
+        <item>次のスロットル</item>
+        <item>機能00/ライト</item>
+        <item>機能01/ベル</item>
+        <item>機能02/ホーン</item>
+        <item>機能03</item>
+        <item>機能04</item>
+        <item>機能05</item>
+        <item>機能06</item>
+        <item>機能07</item>
+        <item>機能08</item>
+        <item>機能09</item>
+        <item>機能10</item>
+        <item>機能11</item>
+        <item>機能12</item>
+        <item>機能13</item>
+        <item>機能14</item>
+        <item>機能15</item>
+        <item>機能16</item>
+        <item>機能17</item>
+        <item>機能18</item>
+        <item>機能19</item>
+        <item>機能20</item>
+        <item>機能21</item>
+        <item>機能22</item>
+        <item>機能23</item>
+        <item>機能24</item>
+        <item>機能25</item>
+        <item>機能26</item>
+        <item>機能27</item>
+        <item>機能28</item>
+        <item>機能29</item>
+        <item>機能30</item>
+        <item>機能 31</item>
+    </string-array>
+    <string-array name="prefAutoImportExportEntries"> <!-- display version -->
+        <item>なし</item>
+        <item>接続時/切断時の自動インポート/エクスポート</item>
+        <item>接続時のみ自動インポート</item>
+    </string-array>
+    <string-array name="prefTtsThrottleResponseEntries"> <!-- display version -->
+        <item>なし</item>
+        <item>スロットル</item>
+        <item>スロットル+ロコ</item>
+        <item>スロットル + スピード</item>
+        <item>スロットル + ロコ + スピード</item>
+    </string-array>
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>はい</item>
+        <item>いいえ</item>
+    </string-array>
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>はい</item>
+        <item>いいえ</item>
+        <item>自動</item>
+    </string-array>
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>フィット - 縮小/拡張</item>
+        <item>塗りつぶし - 1 つのエッジ ペアをトリミング</item>
+        <item>中央 - スケーリングなし</item>
+        <item>フィット - 縮小のみ</item>
+        <item>塗りつぶし - 必要に応じて変形します</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>リードロコ</item>
+        <item>リード+トレイル ロコ</item>
+        <item>すべてのロコ</item>
+        <item>トレイルロコ</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>ラッチング</item>
+        <item>ラッチがかからない</item>
+    </string-array>
+    <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>スライダー - 各ステップ</item>
+        <item>スライダー - 28、100、128 ステップで一部をスキップ</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>プログラミングトラック（サービスモード）</item>
+        <item>メインプログラム（動作モード）</item>
+        <item>トラック/地区マネージャー</item>
+    </string-array>
+    <string-array name="dccExTrackTypeEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>DCCメイン</item>
+        <item>DCCメイン</item>
+        <item>DCCメイン</item>
+        <item>DC逆極性</item>
+        <item>AUTO - オートリバース DCC メイン</item>
+        <item>EXT（選択不可）</item>
+        <item>BOOST（選択不可）</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>ESU (3 ブレーキレベル)</item>
+    </string-array>
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>一般的なスチーム (高速)</item>
+        <item>一般的なスチーム (低速)</item>
+        <item>蒸気（クラス64）</item>
+        <item>蒸気（クラス94）</item>
+        <item>ディーゼル (EMD 645 ターボ)</item>
+        <item>ディーゼル（GE 7FDL）</item>
+        <item>ディーゼル (EMD NW2)</item>
+    </string-array>
+    <string-array name="WebOrientationEntries">  <!-- display version -->
+        <item>肖像画</item>
+        <item>風景</item>
+        <item>自動回転</item>
+    </string-array>
+    <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
+        <item>(機能なし)</item>
+        <item>オールストップ</item>
+        <item>順方向/逆方向の切り替え</item>
+    </string-array>
+    <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>ゼロとマックス</item>
+        <item>ゼロと (最大 + 速度)</item>
+    </string-array>
+    <string-array name="prefDccexConnectionOptionsEntries">
+        <item>DCC-EX</item>
+        <item>スロットル付き</item>
+        <item>自動</item>
+    </string-array>
+    <string-array name="prefAppIconActionEntries">
+        <item>なし</item>
+        <item>非常停止</item>
+    </string-array>
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>名前</item>
+        <item>ID</item>
+        <item>位置</item>
+    </string-array>
+
+</resources>

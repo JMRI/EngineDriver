@@ -1110,5 +1110,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Alto valor de freio da ESU (porcentagem)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Qual a Porcentagem de Freio para ativar o Número de Função Alto</string>
     <string name="statusThreadedAppNotconnectedToWifi">Nicht mit WLAN verbunden</string>
+    <string name="app_name_withrottle_cv_programmer">CV-Programm auf MAIN</string>
 
 </resources>
