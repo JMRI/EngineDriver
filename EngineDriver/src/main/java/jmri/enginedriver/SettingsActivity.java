@@ -1539,6 +1539,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
         }
 
+
         @SuppressLint("ApplySharedPref")
         private void setSwipeThroughWebPreference() {
             String to = prefs.getString("ThrottleOrientation",
@@ -1734,6 +1735,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.prefConsistFollowRuleStyle = parentActivity.prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
             parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+            showHideLeftRightSwipePreferences();
         }
 
         @Override
@@ -1796,6 +1798,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     }
                 }
             }
+        }
+
+        private void showHideLeftRightSwipePreferences() {
+            Log.d("Engine_Driver", "Settings: showHideLeftRightSwipePreferences()");
+            boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+                    getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);
         }
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
@@ -1980,6 +1989,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "100");
+                        break;
+                    case "prefLeftRightSwipeChangesSpeed":
+                        sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
+                        showHideLeftRightSwipePreferences();
                         break;
                 }
             }

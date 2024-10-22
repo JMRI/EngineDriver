@@ -44,7 +44,7 @@
     <string name="app_name_throttle_short">Throttle</string>
     <string name="app_name_power_control">Power Control</string>
     <string name="app_name_dcc_ex" translatable="false">DCC-EX</string>
-    <string name="app_name_withrottle_cv_programmer" translatable="false">CV Prog on MAIN</string>
+    <string name="app_name_withrottle_cv_programmer">CV Prog on MAIN</string>
     <string name="app_name_reconnect_status">Reconnect Status</string>
     <string name="app_name_reconnect_status_long">Engine Driver - Reconnect Status</string>
     <string name="app_name_routes">Routes</string>
@@ -1422,6 +1422,8 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefFullScreenSwipeAreaTitle">Disable full screen Swipe?</string>
     <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Left/Right Swipe Changes Speed?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">If checked, swipes on the main part of the screen will increase/decrease speed. Title Only swipe will be enabled for swipes between screens</string>
 
     <string name="prefLeftRightSwipePreferencesTitle">Left/Right Swipe Preferences</string>
     <string name="prefLeftRightSwipePreferencesSummary">Options for swipes to change screens</string>

@@ -1111,5 +1111,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU-Hochbremswert (Prozent)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Welcher Prozentsatz der Bremse, um die hohe Funktionsnummer zu aktivieren</string>
     <string name="statusThreadedAppNotconnectedToWifi">No conectado a WiFi</string>
+    <string name="app_name_withrottle_cv_programmer">Programa de CV en PRINCIPAL</string>
 
 </resources>

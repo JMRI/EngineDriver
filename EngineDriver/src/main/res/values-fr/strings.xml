@@ -1114,5 +1114,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valore freno elevato ESU (percentuale)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quale Freno Percentuale per attivare il Numero di Funzione Alto</string>
     <string name="statusThreadedAppNotconnectedToWifi">Non connecté au WiFi</string>
+    <string name="app_name_withrottle_cv_programmer">Programme CV sur MAIN</string>
 
 </resources>

@@ -248,6 +248,7 @@
         <item>Francese</item>
         <item>Francese (Canada)</item>
         <item>Ceco</item>
+        <item>Giapponese</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

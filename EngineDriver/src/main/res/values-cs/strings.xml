@@ -1209,5 +1209,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Vysoká hodnota brzd ESU (procenta)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Jaká procentuální brzda pro aktivaci vysokého funkčního čísla</string>
     <string name="statusThreadedAppNotconnectedToWifi">Není připojeno k WiFi</string>
+    <string name="app_name_withrottle_cv_programmer">CV Program na MAIN</string>
 
 </resources>

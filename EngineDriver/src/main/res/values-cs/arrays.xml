@@ -429,6 +429,7 @@
         <item>Francouzsky</item>
         <item>Francouzsky (Kanada)</item>
         <item>Česky</item>
+        <item>Japonský</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

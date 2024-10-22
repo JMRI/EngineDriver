@@ -1602,6 +1602,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+        mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+                getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
 
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
@@ -7585,6 +7587,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (!isScreenLocked) {
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.THROTTLE, deltaX);
                             startACoreActivity(this, nextScreenIntent, true, deltaX);
+                        }
+                    } else {
+                        if (mainapp.prefLeftRightSwipeChangesSpeed) {
+                            if (deltaX < 0.0) {  // swipe right
+                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            } else {
+                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            }
                         }
                     }
                 } else {
