@@ -138,6 +138,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="28sp"
+                                    android:paddingRight="4dp"
                                     tools:ignore="HardcodedText,RtlHardcoded" />
 
                                 <TextView
@@ -389,7 +390,8 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
-                                    tools:ignore="HardcodedText,RtlHardcoded" />
+                                    android:paddingRight="4dp"
+                                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_1"
@@ -641,7 +643,8 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
-                                    tools:ignore="HardcodedText,RtlHardcoded" />
+                                    android:paddingRight="4dp"
+                                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_2"
