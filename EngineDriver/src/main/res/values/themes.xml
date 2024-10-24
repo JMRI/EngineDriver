@@ -596,7 +596,7 @@
         <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
-        <item name="ed_icon">@drawable/icon_vector_ultra</item>
+        <item name="ed_icon">@drawable/icon_vector</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/neon_dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/neon_dccex_button_cv_programmer_prog_track</item>
