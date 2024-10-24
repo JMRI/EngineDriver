@@ -84,7 +84,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/toolbar_button_dcc_ex" />
+                app:srcCompat="@drawable/original_toolbar_button_dcc_ex" />
 
         </LinearLayout>
 

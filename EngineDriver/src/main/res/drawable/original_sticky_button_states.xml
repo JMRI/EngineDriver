@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<!--   <item-->
+<!--      android:state_enabled="false"-->
+<!--      android:drawable="@drawable/btn_disabled">-->
+<!--   </item>-->
+<!--   <item-->
+<!--      android:state_pressed="true"-->
+<!--      android:state_enabled="true"-->
+<!--      android:drawable="@drawable/btn_pressed">-->
+<!--   </item>-->
+<!--   <item-->
+<!--       android:state_selected="true"-->
+<!--       android:state_enabled="true"-->
+<!--       android:drawable="@drawable/btn_pressed">-->
+<!--   </item>-->
+   <!--      <item-->
+   <!--         android:drawable="@drawable/btn_not_pressed">-->
+
+   <item
+       android:state_enabled="false"
+       android:drawable="@drawable/original_button_layers_disabled" />
+   <item
+       android:state_pressed="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/original_button_layers_activated">
+   </item>
+   <item
+       android:state_selected="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/original_button_layers_activated">
+   </item>
+   <item
+       android:drawable="@drawable/original_button_layers_enabled">
+   </item>
+</selector>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_outline" />
+            <stroke android:width="@dimen/buttonDisabledStroke_outline" android:color="@color/buttonDisabledStroke_outline" />
+            <solid android:color="@color/buttonDisabledFill_outline" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/outline_button_layers_selected">
+    </item>
+
+    <item
+        android:state_selected="true"
+        android:state_activated="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/outline_button_layers_selected">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/outline_button_layers_activated_hovered">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="true"
+        android:state_hovered="false"
+        android:state_enabled="true"
+        android:drawable="@drawable/outline_button_layers_activated">
+    </item>
+
+    <item
+        android:state_selected="false"
+        android:state_activated="false"
+        android:state_hovered="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/outline_button_layers_hovered">
+    </item>
+
+    <item>
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_outline" />
+            <stroke android:width="@dimen/buttonStroke_outline" android:color="@color/buttonStroke_outline" />
+            <solid android:color="@color/buttonFill_outline" />
+        </shape>
+    </item>
+
+
+</selector>
