@@ -41,7 +41,7 @@
 
                 <RadioButton
                     android:id="@+id/select_turnout_method_address_button"
-                    style="?attr/floating_text_style"
+                    android:theme="?attr/EDRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -51,7 +51,7 @@
 
                 <RadioButton
                     android:id="@+id/select_turnout_method_roster_button"
-                    style="?attr/floating_text_style"
+                    android:theme="?attr/EDRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -209,6 +209,7 @@
 
                 <ListView
                     android:id="@+id/turnouts_list"
+                    style="?attr/EDListView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
@@ -256,6 +257,7 @@
 
                 <ListView
                     android:id="@+id/turnouts_recent_list"
+                    style="?attr/EDListView"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true">

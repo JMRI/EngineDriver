@@ -109,6 +109,17 @@
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 
+                <RadioButton
+                    android:id="@+id/intro_theme_neon_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_theme_neon"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textSize="18sp"
+                    android:text="@string/prefThemeDefaultValue"
+                    tools:ignore="RtlHardcoded" />
+
             </RadioGroup>
 
 

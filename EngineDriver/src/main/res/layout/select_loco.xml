@@ -57,7 +57,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_address_button"
-                        style="?attr/floating_text_style"
+                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodAddress"
@@ -65,7 +65,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_roster_button"
-                        style="?attr/floating_text_style"
+                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRoster"
@@ -73,7 +73,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_recent_button"
-                        style="?attr/floating_text_style"
+                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecent"
@@ -81,7 +81,7 @@
 
                     <RadioButton
                         android:id="@+id/select_consists_method_recent_button"
-                        style="?attr/floating_text_style"
+                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecentConsist"
@@ -89,7 +89,7 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_idngo"
-                        style="?attr/floating_text_style"
+                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodIDNGo"
@@ -469,6 +469,7 @@
 <!--        <jmri.enginedriver.util.TransparentListView-->
         <ListView
             android:id="@+id/roster_list"
+            style="?attr/EDListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true" />
@@ -486,13 +487,10 @@
             android:id="@+id/recent_engines_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
-            android:layout_alignTop="@+id/clear_Loco_List_button"
-            android:layout_alignParentLeft="true"
             android:paddingLeft="4dp"
             android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             android:paddingTop="2dp"
-            android:layout_toLeftOf="@+id/recent_engines_sort"
             android:text="@string/recent_engines"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -522,7 +520,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="@string/clearLocoList" />
+                android:text="@string/clearLocoList"
+                tools:ignore="RelativeOverlap" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -537,6 +536,7 @@
 
         <ListView
             android:id="@+id/engine_list"
+            style="?attr/EDListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true" />
@@ -554,13 +554,10 @@
             android:id="@+id/recent_consists_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
-            android:layout_alignTop="@+id/clear_consists_list_button"
-            android:layout_alignParentLeft="true"
             android:paddingLeft="4dp"
             android:paddingStart="4dp"
             android:layout_marginRight="4dp"
             android:paddingTop="2dp"
-            android:layout_toLeftOf="@+id/recent_consists_sort"
             android:text="@string/recent_consists"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -589,7 +586,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:text="@string/clearLocoList" />
+                    android:text="@string/clearLocoList"
+                    tools:ignore="RelativeOverlap" />
 
             </RelativeLayout>
 
@@ -605,6 +603,7 @@
 
         <ListView
             android:id="@+id/consists_list"
+            style="?attr/EDListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true" />

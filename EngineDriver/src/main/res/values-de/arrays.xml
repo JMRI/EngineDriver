@@ -181,6 +181,7 @@
         <item>Kontrastreiches Hervorgehobenes</item>
         <item>Dunkles</item>
         <item>Farben</item>
+        <item>Neonblau</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Keine (Benütze nur \'v\',\'1\')</item>

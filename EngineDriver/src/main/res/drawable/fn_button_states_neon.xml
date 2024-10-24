@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonFnCornerRadius_neon" />
+            <stroke android:width="@dimen/buttonFnDisabledStroke_neon" android:color="@color/buttonFnDisabledStroke_neon" />
+            <solid android:color="@color/buttonFnDisabledFill_neon" />
+        </shape>
+    </item>
+
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/button_fn_layers_selected_neon">
+    </item>
+
+    <item
+        android:drawable="@drawable/button_fn_layers_enabled_neon">
+    </item>
+</selector>
