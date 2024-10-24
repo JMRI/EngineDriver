@@ -1650,6 +1650,8 @@ public class threaded_application extends Application {
                     return R.style.app_theme_ultra;
                 case "Colorful":
                     return R.style.app_theme_colorful;
+                case "Neon":
+                    return R.style.app_theme_neon;
                 default:
                     return R.style.app_theme;
             }

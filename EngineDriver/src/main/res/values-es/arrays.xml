@@ -181,6 +181,7 @@
         <item>De bordes de alto contraste</item>
         <item>Oscuro</item>
         <item>De colores</item>
+        <item>Azul Neón</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Ninguno (Utiliza solo \'v\',\'1\')</item>

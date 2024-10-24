@@ -162,6 +162,7 @@
         <item>ハイコントラストの輪郭</item>
         <item>暗い</item>
         <item>カラフル</item>
+        <item>ネオンブルー</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>なし (「v」、「1」のみを使用)</item>

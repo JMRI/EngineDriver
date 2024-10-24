@@ -195,6 +195,7 @@
         <item>Bordi di Alto Contrasto</item>
         <item>Scuro</item>
         <item>Dei colori</item>
+        <item>Blu neon</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Niente (Usare solo \'v\',\'1\')</item>

@@ -66,6 +66,8 @@ public class intro_theme extends Fragment {
         v.setText(nameEntries[3]);
         v = getView().findViewById(R.id.intro_theme_colorful_name);
         v.setText(nameEntries[4]);
+        v = getView().findViewById(R.id.intro_theme_neon_name);
+        v.setText(nameEntries[5]);
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
 
@@ -75,6 +77,7 @@ public class intro_theme extends Fragment {
         else if (nameEntryValues[2].equals(currentValue)) {radioGroup.check(R.id.intro_theme_outline_name); }
         else if (nameEntryValues[3].equals(currentValue)) {radioGroup.check(R.id.intro_theme_ultra_name); }
         else if (nameEntryValues[4].equals(currentValue)) {radioGroup.check(R.id.intro_theme_colorful_name); }
+        else if (nameEntryValues[5].equals(currentValue)) {radioGroup.check(R.id.intro_theme_neon_name); }
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -88,6 +91,7 @@ public class intro_theme extends Fragment {
               else if (checkedId == R.id.intro_theme_outline_name) { Choice = 2; }
               else if (checkedId == R.id.intro_theme_ultra_name) { Choice = 3; }
               else if (checkedId == R.id.intro_theme_colorful_name) { Choice = 4; }
+              else if (checkedId == R.id.intro_theme_neon_name) { Choice = 5; }
               prefs.edit().putString("prefTheme", nameEntryValues[Choice]).commit();
           }
         });

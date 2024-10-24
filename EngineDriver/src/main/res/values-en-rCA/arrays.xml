@@ -23,6 +23,7 @@
         <item>Outline</item>
         <item>Dark</item>
         <item>Colourful</item>
+        <item>Neon Blue</item>
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->

@@ -192,6 +192,10 @@
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
   </style>
+  <style name="EDRadioButton" parent="floating_text_style">
+    <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
+    <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
+  </style>
   <style name="small_heading_style" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#FFFFFF</item>
     <item name="android:background">#8c8a8c</item>
@@ -346,6 +350,11 @@
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
+  </style>
+
+  <style name="EDRadioButton_black" parent="floating_text_style_black">
+    <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
+    <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
   </style>
 
   <style name="actionBarStyle_black" parent="@android:style/Widget.ActionBar">
@@ -952,6 +961,11 @@
     <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
     <item name="android:colorBackground">@color/windowBackground_colorful</item>  </style>
 
+  <style name="EDRadioButton_colorful" parent="floating_text_style_colorful">
+    <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
+    <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
+  </style>
+
   <style name="small_heading_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
 <!--    <item name="android:background">@color/heading_colorful</item>-->
@@ -1266,6 +1280,194 @@
 <!--    <item name="android:textColor">@color/primary_colorful</item>-->
 <!--    <item name="android:background">@color/windowBackground_colorful</item>-->
 <!--  </style>-->
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <!-- Neon Blue Theme. -->
+
+  <style name="small_heading_style_neon" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">#ffffff</item>
+    <!--    <item name="android:background">#5b5b5b</item>-->
+    <item name="android:background">@drawable/small_heading_style_neon</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">3</item>
+    <item name="android:padding">2dp</item>
+  </style>
+
+  <style name="EDListView_neon" parent="@android:style/Widget.ListView">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:windowBackground">@color/solidBlack</item>
+    <item name="android:divider">@color/divider_neon</item>
+    <item name="android:dividerHeight">1dp</item>
+    <item name="android:cacheColorHint">@android:color/transparent</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+
+  <style name="EDRadioButton_neon" parent="floating_text_style">
+    <item name="colorControlNormal">@color/neon_blue</item>
+    <item name="colorControlActivated">@color/neon_yellow</item>
+  </style>
+
+  <style name="large_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_neon</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_height">60dp</item>
+    <item name="android:padding">1dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_neon</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="normal_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_neon</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_neon</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <!-- <item name="android:ellipsize">end</item> -->
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+  <style name="normal_button2_style_neon" parent="normal_button_style_neon">
+  </style>
+  <style name="loco_select_button_style_neon" parent="normal_button_style_neon">
+    <item name="android:textColor">@color/btn_loco_select_text_states_neon</item>
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
+  <style name="stop_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_stop_btn_neon</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/stop_button_states_neon</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_neon</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_neon</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/fn_btn_text_states_neon</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
+    <item name="android:layout_width">60dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:padding">1dp</item>
+
+    <item name="android:background">@drawable/fn_button_states_neon</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="list_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/btn_text_states_neon</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/sticky_button_states_neon</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_scrollview_style_neon">
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+  </style>
+  <style name="list_item_style_neon" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:shadowColor">#FF000000</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+  </style>
+  <style name="list_id_style_neon" parent="@android:style/Widget.TextView">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textStyle">italic</item>
+    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:background">@color/transparent</item>
+  </style>
+  <style name="list_extras_style_neon" parent="list_id_style_neon">
+    <item name="android:textColor">#5b5b5b</item>
+    <item name="android:textStyle">normal</item>
+  </style>
+
+  <style name="spinner_style_neon" parent="Widget.AppCompat.ListView.DropDown">
+    <item name="android:background">@drawable/spinner_background_neon</item>
+    <item name="android:divider">@color/spinner_divider_neon</item>
+    <item name="android:dividerHeight">1px</item>
+    <item name="android:scrollbars">none</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="ActionBarPopup_neon" parent="Widget.AppCompat.PopupMenu">
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/spinner_background_neon</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
+  </style>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <style name="WindowAnimations">
     <item name="android:activityOpenEnterAnimation">

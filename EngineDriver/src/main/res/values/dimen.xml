@@ -129,4 +129,34 @@
 
     <dimen name="spinnerBackgroundCornerRadius_colorful">3dp</dimen>
 
+    <!-- Neon Blue theme -->
+
+    <dimen name="headingCornerRadius_neon">1dp</dimen>
+
+    <dimen name="buttonDisabledStroke_neon">1px</dimen>
+    <dimen name="buttonSelectedStroke_neon">1px</dimen>
+    <dimen name="buttonSelectedInsideStroke_neon">2dp</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_neon">2dp</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_neon">2dp</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_neon">3dp</dimen>
+    <dimen name="buttonStroke_neon">1dp</dimen>
+    <dimen name="buttonCornerRadius_neon">3dp</dimen>
+
+    <dimen name="buttonFnDisabledStroke_neon">1px</dimen>
+    <dimen name="buttonFnSelectedStroke_neon">1px</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_neon">2dp</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_neon">2dp</dimen>
+    <dimen name="buttonFnStroke_neon">1dp</dimen>
+    <dimen name="buttonFnCornerRadius_neon">3dp</dimen>
+
+    <dimen name="buttonStopDisabledStroke_neon">1px</dimen>
+    <dimen name="buttonStopSelectedStroke_neon">1px</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_neon">2dp</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_neon">2dp</dimen>
+    <dimen name="buttonStopStroke_neon">1dp</dimen>
+    <dimen name="buttonStopCornerRadius_neon">3dp</dimen>
+
+    <dimen name="spinnerBackgroundCornerRadius_neon">3dp</dimen>
+
+
 </resources>
