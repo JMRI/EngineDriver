@@ -18,7 +18,7 @@
 <resources>
 
     <string-array name="prefThemeEntries">  <!-- display version -->
-        <item>Default</item>
+        <item>Original (Checker plate)</item>
         <item>High Contrast</item>
         <item>Outline</item>
         <item>Dark</item>

@@ -147,6 +147,7 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="28sp"
+                                    android:paddingRight="6px"
                                     tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
@@ -460,6 +461,7 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
+                                    android:paddingRight="6px"
                                     tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
@@ -751,6 +753,7 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
+                                    android:paddingRight="6px"
                                     tools:ignore="RtlHardcoded, HardcodedText" />
 
                                 <TextView
