@@ -306,7 +306,7 @@
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
                                     android:thumb="?attr/ed_vertical_thumb"
-                                    android:progressDrawable="@android:color/transparent" />
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_0"
