@@ -2,11 +2,48 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <stroke
+                android:width="3px"
+                android:color="@color/buttonCommonSelectedStrokeDark_original" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3px" android:left="3px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <stroke
+                android:width="3px"
+                android:color="@color/buttonCommonSelectedStrokeMid_original" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="6px" android:left="6px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <stroke
+                android:width="3px"
+                android:color="@color/buttonCommonSelectedStrokeLight_original" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="9px" android:left="9px"
+        android:right="1px" android:bottom="1px">
         <shape android:shape="rectangle">
 
             <corners android:radius="3dp" />
-            <stroke android:width="2px" android:color="#878787" />
+            <stroke android:width="0px" android:color="#878787" />
             <!-- <solid android:color="@color/buttonFill_ultra" /> -->
             <gradient
                 android:angle="326"

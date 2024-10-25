@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <item
+        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonStopSelectedStroke_neon" android:color="@color/buttonCommonSelectedStroke_neon" />
+            <stroke android:width="2px"
+                android:color="@color/neon_blue_ultra_light" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px" android:right="1px" android:bottom="1px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
             <stroke android:width="0px" android:color="@color/black" />
@@ -27,20 +29,26 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonActivatedInsideStrokePadding_neon" android:left="@dimen/buttonActivatedInsideStrokePadding_neon" android:right="@dimen/buttonActivatedInsideStrokePadding_neon" android:bottom="@dimen/buttonActivatedInsideStrokePadding_neon">
+        android:top="@dimen/buttonActivatedInsideStrokePadding_neon" android:left="@dimen/buttonActivatedInsideStrokePadding_neon"
+        android:right="@dimen/buttonActivatedInsideStrokePadding_neon" android:bottom="@dimen/buttonActivatedInsideStrokePadding_neon">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonSelectedInsideStroke_neon" android:color="@color/buttonActivatedHoveredInsideStroke_neon" />
+            <stroke
+                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:color="@color/buttonActivatedHoveredInsideStroke_neon" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>
 
     <!-- inside border 2 -->
     <item
-        android:top="@dimen/buttonActivated2InsideStrokePadding_neon" android:left="@dimen/buttonActivated2InsideStrokePadding_neon" android:right="@dimen/buttonActivated2InsideStrokePadding_neon" android:bottom="@dimen/buttonActivated2InsideStrokePadding_neon">
+        android:top="@dimen/buttonActivated2InsideStrokePadding_neon" android:left="@dimen/buttonActivated2InsideStrokePadding_neon"
+        android:right="@dimen/buttonActivated2InsideStrokePadding_neon" android:bottom="@dimen/buttonActivated2InsideStrokePadding_neon">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonSelectedInsideStroke_neon" android:color="@color/buttonActivatedHoveredInside2Stroke_neon" />
+            <stroke
+                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:color="@color/buttonActivatedHoveredInside2Stroke_neon" />
             <solid android:color="@color/transparent"/>
         </shape>
     </item>

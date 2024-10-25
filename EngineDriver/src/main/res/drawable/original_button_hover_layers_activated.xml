@@ -4,7 +4,8 @@
     <item>
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_hover" />
-            <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/buttonStroke_outline" />
+            <stroke android:width="@dimen/buttonStroke_hover"
+                android:color="@color/buttonStroke_outline" />
             <solid android:color="@color/buttonSelectedFill_outline"/>
         </shape>
     </item>

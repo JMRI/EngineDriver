@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Define the background properties like color etc -->
+    <item android:id="@android:id/background"
+        android:height="1px"
+        android:gravity="center_vertical" >
+        <shape>
+            <solid
+                android:color="?attr/ed_progressBarBackground" />
+        </shape>
+    </item>
+
+    <!-- Define the progress properties like start color, end color etc -->
+    <item android:id="@android:id/progress"
+        android:height="7px"
+        android:gravity="center_vertical"  >
+        <clip>
+            <shape>
+                <solid
+                    android:color="?attr/ed_progressBarSelected" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

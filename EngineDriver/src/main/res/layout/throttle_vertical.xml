@@ -288,6 +288,7 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
+                                    android:progressDrawable="?attr/ed_progressBar"
                                     android:thumb="?attr/ed_vertical_thumb"/>
 
                                 <Button
@@ -568,6 +569,7 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
+                                    android:progressDrawable="?attr/ed_progressBar"
                                     android:thumb="?attr/ed_vertical_thumb"/>
 
                                 <Button
