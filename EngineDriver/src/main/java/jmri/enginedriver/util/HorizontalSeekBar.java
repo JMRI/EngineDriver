@@ -116,7 +116,7 @@ public class HorizontalSeekBar extends SeekBar {
                     tickSpacing = (width - (getPaddingLeft()*2) ) / (steps - 1);
                     sizeIncrease = (gridMiddle - getPaddingTop() - additionalPadding) / (steps * steps);
 
-                    for (int i = -1; i < steps; i++) {
+                    for (int i = 0; i < steps; i++) {
                         d = getPaddingLeft() + i * tickSpacing;
                         l = gridMiddle - startSize - sizeIncrease * i * i;
                         r = gridMiddle + startSize + sizeIncrease * i * i;

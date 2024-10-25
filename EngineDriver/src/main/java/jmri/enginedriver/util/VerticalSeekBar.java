@@ -189,7 +189,7 @@ public class VerticalSeekBar extends SeekBar {
                 tickSpacing = (paddingRight - gridBottom) / (steps - 1);
                 sizeIncrease = endSize / (steps * steps);
 
-                for (int i = -1; i < steps; i++) {
+                for (int i = 0; i < steps; i++) {
                     j = (steps - i);
                     d = gridBottom + i * tickSpacing;
                     l = gridMiddle - startSize - sizeIncrease * j * j;
