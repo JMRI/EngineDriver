@@ -248,7 +248,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_0"
@@ -570,7 +571,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_1"
@@ -891,7 +893,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_2"
@@ -1211,7 +1214,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_3"
@@ -1531,7 +1535,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_4"
@@ -1851,7 +1856,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="@android:color/transparent" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/speed_switching_5"

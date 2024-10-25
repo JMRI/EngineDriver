@@ -61,4 +61,8 @@
 
     <attr name="ed_primaryLineColor" format="reference" />
     <attr name="ed_secondaryLineColor" format="reference" />
+
+    <attr name="ed_progressBar" format="reference" />
+    <attr name="ed_progressBarBackground" format="reference" />
+    <attr name="ed_progressBarSelected" format="reference" />
 </resources>

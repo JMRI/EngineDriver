@@ -369,7 +369,8 @@
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
                                     android:thumb="?attr/ed_vertical_thumb"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/semi_realistic_speed_0"
@@ -382,7 +383,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="30dp"
                                     android:paddingRight="30dp"
-                                    android:thumb="?attr/ed_vertical_thumb" />
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_0"
@@ -491,7 +493,8 @@
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
                                     android:thumb="?attr/ed_vertical_thumb"
-                                    tools:ignore="NestedWeights" />
+                                    tools:ignore="NestedWeights"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <jmri.enginedriver.util.VerticalSeekBar
                                     android:id="@+id/load_0"
@@ -504,7 +507,8 @@
                                     android:minHeight="9999dp"
                                     android:paddingLeft="10dp"
                                     android:paddingRight="10dp"
-                                    android:thumb="?attr/ed_vertical_thumb" />
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <RelativeLayout
                                     android:layout_width="fill_parent"

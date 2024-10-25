@@ -136,9 +136,9 @@
     <dimen name="buttonDisabledStroke_neon">1px</dimen>
     <dimen name="buttonSelectedStroke_neon">1px</dimen>
     <dimen name="buttonSelectedInsideStroke_neon">2dp</dimen>
-    <dimen name="buttonSelectedInsideStrokePadding_neon">2dp</dimen>
-    <dimen name="buttonActivatedInsideStrokePadding_neon">2dp</dimen>
-    <dimen name="buttonActivated2InsideStrokePadding_neon">3dp</dimen>
+<!--    <dimen name="buttonSelectedInsideStrokePadding_neon">2dp</dimen>-->
+    <dimen name="buttonActivatedInsideStrokePadding_neon">4dp</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_neon">6dp</dimen>
     <dimen name="buttonStroke_neon">1dp</dimen>
     <dimen name="buttonCornerRadius_neon">3dp</dimen>
 

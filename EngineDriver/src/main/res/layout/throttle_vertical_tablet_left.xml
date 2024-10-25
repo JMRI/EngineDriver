@@ -286,7 +286,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_0"
@@ -551,7 +552,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_1"
@@ -816,7 +818,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_2"
@@ -1080,7 +1083,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_3"
@@ -1344,7 +1348,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_4"
@@ -1608,7 +1613,8 @@
                                     android:paddingRight="30dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:thumb="?attr/ed_vertical_thumb"/>
+                                    android:thumb="?attr/ed_vertical_thumb"
+                                    android:progressDrawable="?attr/ed_progressBar" />
 
                                 <Button
                                     android:id="@+id/left_speed_button_5"

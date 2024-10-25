@@ -48,6 +48,7 @@
     <color name="buttonCommonFillGradiantCenter_original">#C3C3C3</color>
     <color name="buttonCommonFillGradiantDark_original">#B1B1B1</color>
     <color name="buttonCommonSelectedStrokeLight_original">#D3D1D1</color>
+    <color name="buttonCommonSelectedStrokeMid_original">#878787</color>
     <color name="buttonCommonSelectedStrokeDark_original">#3C3C3C</color>
     <color name="buttonCommonOutlineStroke_original">#878787</color>
 
@@ -234,8 +235,9 @@
     <color name="spinner_background_colorful">#f2b465</color>
     <color name="spinner_divider_colorful">@color/solidBlack</color>
 
-    <!-- Neon-Blue Theme -->
+    <!-- Neon colours -->
 
+    <color name="neon_yellow_very_dark">#616100</color>
     <color name="neon_yellow_dark">#9E9E00</color>
     <color name="neon_yellow">#FFFF00</color>
     <color name="neon_yellow_light">#FFFF55</color>
@@ -249,7 +251,7 @@
     <color name="neon_blue">#0000FF</color>
     <color name="neon_blue_light">#2B2BFF</color>
     <color name="neon_blue_very_light">#3852AF</color>
-    <color name="neon_blue_very_very_light">#9DA3FF</color>
+    <color name="neon_blue_ultra_light">#9DA3FF</color>
     <color name="neon_red">#FF0000</color>
     <color name="neon_red_light">#FF3636</color>
     <color name="neon_red_very_light">#FF5959</color>
@@ -260,7 +262,7 @@
     <color name="buttonCommonFillGradiantLight_neon">@color/neon_blue</color>
     <color name="buttonCommonFillGradiantCenter_neon">@color/neon_blue_dark</color>
     <color name="buttonCommonFillGradiantDark_neon">@color/neon_blue_very_dark</color>
-    <color name="buttonCommonSelectedStroke_neon">@color/neon_blue_very_very_light</color>
+    <color name="buttonCommonSelectedStroke_neon">@color/neon_blue_ultra_light</color>
 
     <color name="buttonStopDisabledStroke_neon">#FF2d2d2d</color>
     <color name="buttonStopDisabledFill_neon">#00000000</color>
@@ -269,15 +271,15 @@
     <color name="buttonStopSelectedInsideStroke_neon">@color/neon_red_light</color>
 
     <color name="buttonText_neon">#d9d9d9</color>
-    <color name="buttonLocoSelectText_neon">@color/neon_blue_very_very_light</color>
+    <color name="buttonLocoSelectText_neon">@color/neon_blue_ultra_light</color>
     <color name="buttonDisabledFill_neon">#00000000</color>
     <color name="buttonDisabledStroke_neon">#FF2d2d2d</color>
     <color name="buttonSelectedText_neon">@color/neon_yellow</color>
     <color name="buttonLocoDisabledText_neon">@color/solidWhite</color>
     <color name="buttonSelectedFill_neon">#FF2d2d2d</color>
     <color name="buttonSelectedInsideStroke_neon">@color/neon_yellow</color>
-    <color name="buttonActivatedHoveredInsideStroke_neon">#7fffa000</color>
-    <color name="buttonActivatedHoveredInside2Stroke_neon">#7fffea00</color>
+    <color name="buttonActivatedHoveredInsideStroke_neon">@color/neon_yellow_dark</color>
+    <color name="buttonActivatedHoveredInside2Stroke_neon">@color/neon_yellow_very_dark</color>
 
     <color name="buttonFnDisabledFill_neon">#00000000</color>
     <color name="buttonFnDisabledStroke_neon">#FF262626</color>

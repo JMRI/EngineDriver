@@ -280,6 +280,7 @@
                                 android:maxHeight="80dp"
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
+                                android:progressDrawable="?attr/ed_progressBar"
                                 android:thumb="?attr/ed_thumb" />
 
                             <Button
@@ -533,6 +534,7 @@
                                 android:maxHeight="80dp"
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
+                                android:progressDrawable="?attr/ed_progressBar"
                                 android:thumb="?attr/ed_thumb" />
 
                             <Button
@@ -785,6 +787,7 @@
                                 android:maxHeight="80dp"
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
+                                android:progressDrawable="?attr/ed_progressBar"
                                 android:thumb="?attr/ed_thumb" />
 
                             <Button

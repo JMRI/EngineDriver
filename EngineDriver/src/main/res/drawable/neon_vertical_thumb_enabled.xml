@@ -7,7 +7,7 @@
             <solid android:color="@color/transparent"/>
             <stroke
                 android:width="@dimen/buttonFnStroke_outline"
-                android:color="@color/neon_blue_light"
+                android:color="@color/solidWhite"
                 />
             <size
                 android:width="20dp"

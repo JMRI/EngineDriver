@@ -112,6 +112,11 @@
         <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
 
         <item name="ed_icon">@drawable/icon_vector</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/holoBlue</item>
+
     </style>
 
     <!-- appears as 'high contrast' theme' -->
@@ -206,6 +211,11 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/outline_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/holoBlue</item>
+
     </style>
 
     <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
@@ -296,6 +306,11 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/outline_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/holoBlue</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -394,6 +409,11 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/ultra_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/ultra_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/ultra_dccex_button_function_defaults</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/holoBlue</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -501,12 +521,18 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/original_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/holoBlue</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+    <!-- appears as 'Neon Blue' theme -->
     <style name="app_theme_neon" parent="Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_black_preferences</item>
 
@@ -602,6 +628,10 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/neon_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/neon_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/neon_dccex_button_function_defaults</item>
+
+        <item name="ed_progressBar">@drawable/neon_progress_bar</item>
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/neon_blue</item>
 
     </style>
 

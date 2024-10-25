@@ -307,6 +307,7 @@
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
                                 android:thumb="?attr/ed_thumb"
+                                android:progressDrawable="@android:color/transparent"
                                 android:visibility="gone"  />
 
                             <jmri.enginedriver.util.HorizontalSeekBar
@@ -599,6 +600,7 @@
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
                                 android:thumb="?attr/ed_thumb"
+                                android:progressDrawable="@android:color/transparent"
                                 android:visibility="gone"/>
 
                             <jmri.enginedriver.util.HorizontalSeekBar
@@ -889,6 +891,7 @@
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
                                 android:thumb="?attr/ed_thumb"
+                                android:progressDrawable="@android:color/transparent"
                                 android:visibility="gone"  />
 
                             <jmri.enginedriver.util.HorizontalSeekBar

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <item
+        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonStopSelectedStroke_neon" android:color="@color/buttonCommonSelectedStroke_neon" />
+            <stroke android:width="2px"
+                android:color="@color/neon_blue_ultra_light" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px" android:right="1px" android:bottom="1px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
             <stroke android:width="0px" android:color="@color/black" />
@@ -26,12 +28,24 @@
     </item>
 
     <!-- inside border  -->
-    <item
-        android:top="@dimen/buttonSelectedInsideStrokePadding_neon" android:left="@dimen/buttonSelectedInsideStrokePadding_neon" android:right="@dimen/buttonSelectedInsideStrokePadding_neon" android:bottom="@dimen/buttonSelectedInsideStrokePadding_neon">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonStopSelectedInsideStroke_neon" android:color="@color/buttonStopSelectedInsideStroke_neon" />
-            <solid android:color="@color/transparent"/>
+<!--    <item-->
+<!--        android:top="@dimen/buttonSelectedInsideStrokePadding_neon" android:left="@dimen/buttonSelectedInsideStrokePadding_neon" android:right="@dimen/buttonSelectedInsideStrokePadding_neon" android:bottom="@dimen/buttonSelectedInsideStrokePadding_neon">-->
+<!--        <shape android:shape="rectangle"  >-->
+<!--            <corners android:radius="@dimen/buttonCornerRadius_neon" />-->
+<!--            <stroke android:width="@dimen/buttonStopSelectedInsideStroke_neon" android:color="@color/buttonStopSelectedInsideStroke_neon" />-->
+<!--            <solid android:color="@color/transparent"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+
+    <item android:gravity="bottom"
+        android:left="34px" android:right="32px"  android:bottom="8px" >
+        <shape android:shape="rectangle">
+            <corners
+                android:radius="3dp" />
+            <size
+                android:width="30dp"
+                android:height="5dp" />
+            <solid android:color="@color/buttonStopSelectedInsideStroke_neon" />
         </shape>
     </item>
 
