@@ -61,7 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodAddress"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:enabled="true" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_roster_button"
@@ -69,7 +70,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRoster"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:enabled="true" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_recent_button"
@@ -77,7 +79,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecent"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:enabled="true" />
 
                     <RadioButton
                         android:id="@+id/select_consists_method_recent_button"
@@ -85,7 +88,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodRecentConsist"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:enabled="true" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_idngo"
@@ -93,7 +97,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/LocoSelectMethodIDNGo"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:enabled="true" />
                 </RadioGroup>
 
             </RelativeLayout>

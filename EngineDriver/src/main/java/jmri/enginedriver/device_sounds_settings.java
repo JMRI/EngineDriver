@@ -477,7 +477,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             mainapp.toggleFlashlight(this, DSSMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(DSSMenu);
             } else {

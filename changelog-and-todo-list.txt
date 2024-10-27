@@ -24,6 +24,7 @@
  * Change to SDK 34 to support new READ_MEDIA_VISUAL_USER_SELECTED permission
  * Google Japanese Translations
  * New 'Neon Blue' theme
+ * Improvements to the Original and Colorful themes
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents

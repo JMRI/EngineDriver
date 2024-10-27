@@ -219,7 +219,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             mainapp.toggleFlashlight(this, FMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(FMenu);
             } else {

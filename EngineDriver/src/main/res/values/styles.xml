@@ -937,7 +937,7 @@
   <style name="EDListView_colorful" parent="@android:style/Widget.ListView">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:textSize">12sp</item>
-    <item name="android:background">@color/windowBackground_colorful</item>
+    <item name="android:background">@color/transparent</item>
     <item name="android:windowBackground">@color/transparent</item>
     <item name="android:divider">@color/divider_colorful</item>
     <item name="android:dividerHeight">1dp</item>
@@ -949,12 +949,27 @@
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:colorForeground">@color/primary_colorful</item>
     <item name="android:editTextColor">@color/primary_colorful</item>
-    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>
-    <item name="android:colorBackground">@color/windowBackground_colorful</item>  </style>
+    <item name="android:panelColorBackground">@color/transparent</item>
+    <item name="android:colorBackground">@color/transparent</item>
+  </style>
 
-  <style name="EDRadioButton_colorful" parent="floating_text_style_colorful">
-    <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
-    <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
+  <style name="EDRadioButton_colorful" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:divider">@color/divider_colorful</item>
+    <item name="android:dividerHeight">1dp</item>
+    <item name="android:cacheColorHint">@android:color/transparent</item>
+    <item name="android:shadowColor">@color/shadow_colorful</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
+    <item name="android:colorForeground">@color/primary_colorful</item>
+
+    <item name="colorControlNormal">@color/solidBlack</item>
+    <item name="colorControlActivated">@color/holoBlue</item>
   </style>
 
   <style name="small_heading_style_colorful" parent="@android:style/Widget.TextView">
@@ -971,13 +986,18 @@
   </style>
 
   <style name="large_button_style_colorful" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/outline_btn_text_states</item>
+    <item name="android:textColor">@color/colorful_btn_text_states</item>
     <item name="android:textSize">24sp</item>
     <item name="android:layout_height">60dp</item>
     <item name="android:padding">1dp</item>
     <item name="android:layout_width">0dp</item>
 
     <item name="android:background">@drawable/colorful_sticky_button_states</item>
+    <item name="android:shadowColor">@color/buttonTextShadow_colorful</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">5</item>
+
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -992,6 +1012,11 @@
     <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/colorful_sticky_button_states</item>
+    <item name="android:shadowColor">@color/buttonTextShadow_colorful</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">5</item>
+
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1016,6 +1041,11 @@
     <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/colorful_stop_button_states</item>
+    <item name="android:shadowColor">@color/buttonTextShadow_colorful</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">3</item>
+
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1032,6 +1062,11 @@
     <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/colorful_sticky_button_states</item>
+    <item name="android:shadowColor">@color/buttonTextShadow_colorful</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">5</item>
+
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1055,6 +1090,11 @@
     <item name="android:padding">1dp</item>
 
     <item name="android:background">@drawable/colorful_fn_button_states</item>
+    <item name="android:shadowColor">@color/buttonTextShadow_colorful</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">5</item>
+
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1093,7 +1133,6 @@
 
   <style name="floating_text_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
-    <!-- <item name="android:background">@color/transparent</item> -->
     <item name="android:shadowColor">@color/windowBackground_colorful</item>
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
@@ -1174,9 +1213,7 @@
   </style>
 
   <style name="alertDialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-<!--    <item name="android:windowBackground">@color/transparent</item>-->
     <item name="android:background">@color/dialogBackground_colorful</item>
-<!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
     <item name="android:textSize">16sp</item>
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
@@ -1186,9 +1223,7 @@
   </style>
 
   <style name="dialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
-<!--    <item name="android:windowBackground">@color/transparent</item>-->
     <item name="android:background">@color/dialogBackground_colorful</item>
-<!--    <item name="android:panelColorBackground">@color/windowBackground_colorful</item>-->
     <item name="android:fullBright">@color/windowBackground_colorful</item>
     <item name="android:fullDark">@color/windowBackground_colorful</item>
     <item name="android:textSize">16sp</item>
@@ -1247,9 +1282,7 @@
   <style name="OverflowMenuButton_colorful" parent="Widget.AppCompat.ActionButton.Overflow">
     <item name="android:tint">@color/solidWhite</item>
   </style>
-<!--  <style name="OverflowMenu_colorful" parent="Widget.AppCompat.PopupMenu.Overflow">-->
-<!--    <item name="android:popupBackground">@color/windowBackground_colorful</item>-->
-<!--  </style>-->
+
   <style name="ActionBarPopup_colorful" parent="Widget.AppCompat.PopupMenu">
     <item name="android:itemBackground">@android:color/transparent</item>
     <item name="android:actionBarItemBackground">@drawable/colorful_spinner_background</item>

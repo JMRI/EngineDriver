@@ -103,7 +103,7 @@ public class intro_activity extends AppIntro2 {
                 slideNumber = slideNumber + 1;
                 askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber);
             }
-        //<!-- needed for API 33 -->
+//<!-- needed for API 33 -->
         } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
                 SliderPage sliderPage = new SliderPage();

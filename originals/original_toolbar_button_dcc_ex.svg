@@ -8,7 +8,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="toolbar_button_dcc_ex.svg"
+   sodipodi:docname="original_toolbar_button_dcc_ex.svg"
    inkscape:export-filename="..\EngineDriver\src\main\res\drawable\dcc_ex_button_icon.png"
    inkscape:export-xdpi="5.5862069"
    inkscape:export-ydpi="5.5862069"
@@ -193,14 +193,48 @@
     </mask>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4139"
-       id="linearGradient4185"
-       x1="322.63055"
-       y1="-206.9404"
-       x2="928.63055"
-       y2="395.0596"
+       xlink:href="#linearGradient895"
+       id="linearGradient897"
+       x1="366.55927"
+       y1="-167.54758"
+       x2="674.70233"
+       y2="137.8203"
        gradientUnits="userSpaceOnUse"
-       spreadMethod="pad" />
+       gradientTransform="matrix(1.0209938,0,0,1.0209938,-12.646085,-1.4653666)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient895">
+      <stop
+         style="stop-color:#eeeeee;stop-opacity:1;"
+         offset="0"
+         id="stop891" />
+      <stop
+         style="stop-color:#d5d5d5;stop-opacity:1;"
+         offset="1"
+         id="stop893" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8256"
+       id="linearGradient8258"
+       x1="358.23788"
+       y1="-175.91824"
+       x2="676.27844"
+       y2="139.25801"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.98922022,0,0,0.98922022,7.2324905,1.4914746)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8256">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop8254" />
+      <stop
+         style="stop-color:#c8c8c8;stop-opacity:1;"
+         offset="1"
+         id="stop8252" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -210,8 +244,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
-     inkscape:cx="214.25336"
-     inkscape:cy="280.01429"
+     inkscape:cx="188.79751"
+     inkscape:cy="282.84271"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -220,10 +254,10 @@
      fit-margin-right="1"
      fit-margin-bottom="1"
      units="mm"
-     inkscape:window-width="2400"
-     inkscape:window-height="1244"
-     inkscape:window-x="2869"
-     inkscape:window-y="-11"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="1912"
+     inkscape:window-y="177"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
@@ -248,18 +282,18 @@
        id="g4165"
        transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-256.86318,384.18552)">
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:url(#linearGradient4185);stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:url(#linearGradient897);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:3.82874;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect5645"
-         width="580"
-         height="580"
-         x="335.63055"
-         y="-196.9404"
-         transform="rotate(45)"
-         ry="95"
-         rx="95"
+         width="592.17639"
+         height="592.17639"
+         x="330.03064"
+         y="-202.54031"
+         ry="96.994415"
+         rx="96.994415"
          inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
          inkscape:export-xdpi="14.4"
-         inkscape:export-ydpi="14.4" />
+         inkscape:export-ydpi="14.4"
+         transform="rotate(45)" />
       <g
          transform="matrix(0.61871659,0.61871659,-0.61871659,0.61871659,382.8425,177.48605)"
          id="g14" />

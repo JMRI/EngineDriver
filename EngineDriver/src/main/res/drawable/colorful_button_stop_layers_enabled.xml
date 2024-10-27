@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+
+    <item
+        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="@dimen/buttonStopSelectedStroke_colorful" android:color="@color/buttonStopSelectedStroke_colorful" />
+            <stroke android:width="2px"
+                android:color="@color/buttonStopFillGradiantLight_colorful" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="2px" android:left="2px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="0px" android:color="@color/black" />
+            <stroke android:width="2px"
+                android:color="@color/buttonStopFillGradiantVeryLight_colorful" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3px" android:left="3px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle">
+
+            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <!-- <solid android:color="@color/buttonFill_colorful" /> -->
             <gradient
                 android:angle="135"
-                android:centerX="5%"
-                android:startColor="@color/buttonStopFillGradiantLight_colorful"
-                android:centerColor="@color/buttonStopFillGradiantCenter_colorful"
-                android:endColor="@color/buttonStopFillGradiantDark_colorful"
+                android:centerX="70%"
+                android:endColor="@color/buttonStopFillGradiantCenter_colorful"
+                android:centerColor="@color/buttonStopFillGradiantDark_colorful"
+                android:startColor="@color/buttonStopFillGradiantVeryDark_colorful"
                 android:type="linear"
                 />
         </shape>
     </item>
-
 
 </layer-list>

@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="171.33333mm"
    height="171.33333mm"
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="throttle.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="original_toolbar_button_throttle.svg"
    inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\throttle.png"
    inkscape:export-xdpi="14.4"
-   inkscape:export-ydpi="14.4">
+   inkscape:export-ydpi="14.4"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient4155"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#000000;stop-opacity:1;"
          offset="0"
@@ -38,7 +37,7 @@
     </linearGradient>
     <linearGradient
        id="linearGradient4139"
-       osb:paint="gradient">
+       inkscape:swatch="gradient">
       <stop
          style="stop-color:#2b2200;stop-opacity:1;"
          offset="0"
@@ -50,14 +49,48 @@
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4139"
-       id="linearGradient4185"
-       x1="322.63055"
-       y1="-206.9404"
-       x2="928.63055"
-       y2="395.0596"
+       xlink:href="#linearGradient895"
+       id="linearGradient897"
+       x1="366.55923"
+       y1="-167.54758"
+       x2="771.93915"
+       y2="235.0571"
        gradientUnits="userSpaceOnUse"
-       spreadMethod="pad" />
+       gradientTransform="matrix(1.0361471,0,0,1.0361471,-21.439295,-2.1883873)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient895">
+      <stop
+         style="stop-color:#ffce8f;stop-opacity:1;"
+         offset="0"
+         id="stop891" />
+      <stop
+         style="stop-color:#f3a300;stop-opacity:1;"
+         offset="1"
+         id="stop893" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8256"
+       id="linearGradient8258"
+       x1="358.23788"
+       y1="-175.91824"
+       x2="776.63855"
+       y2="239.61804"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0039019,0,0,1.0039019,-1.2656873,0.81233841)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8256">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop8254" />
+      <stop
+         style="stop-color:#cb7400;stop-opacity:1;"
+         offset="1"
+         id="stop8252" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -67,8 +100,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
-     inkscape:cx="878.8321"
-     inkscape:cy="306.98067"
+     inkscape:cx="562.14989"
+     inkscape:cy="308.29856"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -78,21 +111,26 @@
      fit-margin-bottom="1"
      units="mm"
      inkscape:window-width="1600"
-     inkscape:window-height="847"
-     inkscape:window-x="1592"
-     inkscape:window-y="-8"
+     inkscape:window-height="829"
+     inkscape:window-x="3512"
+     inkscape:window-y="177"
      inkscape:window-maximized="1"
      inkscape:document-rotation="0"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:guide-bbox="true"
+     inkscape:showpageshadow="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
     <sodipodi:guide
        position="301.87501,70.836598"
        orientation="-0.96592583,-0.25881905"
-       id="guide872" />
+       id="guide872"
+       inkscape:locked="false" />
     <sodipodi:guide
        position="301.87501,70.836597"
        orientation="-0.96592583,0.25881905"
-       id="guide874" />
+       id="guide874"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -115,18 +153,18 @@
        id="g4165"
        transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-256.86318,384.18552)">
       <rect
-         style="fill:#ff9955;fill-opacity:0.5529412;stroke:url(#linearGradient4185);stroke-width:20.00000007;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:url(#linearGradient897);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:3.88556;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect5645"
-         width="580"
-         height="580"
-         x="335.63055"
-         y="-196.9404"
-         transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
-         ry="95"
-         rx="95"
+         width="600.96533"
+         height="600.96533"
+         x="326.32333"
+         y="-206.24763"
+         ry="98.433975"
+         rx="98.433975"
          inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
          inkscape:export-xdpi="14.4"
-         inkscape:export-ydpi="14.4" />
+         inkscape:export-ydpi="14.4"
+         transform="rotate(45)" />
       <g
          transform="matrix(0.61871659,0.61871659,-0.61871659,0.61871659,382.8425,177.48605)"
          id="g14" />

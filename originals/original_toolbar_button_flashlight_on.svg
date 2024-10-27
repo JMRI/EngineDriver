@@ -2,30 +2,29 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="171.33333mm"
    height="171.33333mm"
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="flashlight_on.svg"
    inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-hdpi\flashlight_on.png"
    inkscape:export-xdpi="10.8"
-   inkscape:export-ydpi="10.8">
+   inkscape:export-ydpi="10.8"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <linearGradient
        id="linearGradient4155"
-       osb:paint="solid">
+       inkscape:swatch="solid">
       <stop
          style="stop-color:#000000;stop-opacity:1;"
          offset="0"
@@ -40,7 +39,7 @@
     </linearGradient>
     <linearGradient
        id="linearGradient4139"
-       osb:paint="gradient">
+       inkscape:swatch="gradient">
       <stop
          style="stop-color:#2b2200;stop-opacity:1;"
          offset="0"
@@ -52,14 +51,48 @@
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient4139"
-       id="linearGradient4185"
-       x1="322.63055"
-       y1="-206.9404"
-       x2="928.63055"
-       y2="395.0596"
+       xlink:href="#linearGradient895"
+       id="linearGradient897"
+       x1="366.55923"
+       y1="-167.54758"
+       x2="771.93915"
+       y2="235.0571"
        gradientUnits="userSpaceOnUse"
-       spreadMethod="pad" />
+       gradientTransform="matrix(1.0360497,0,0,1.0360497,-21.406795,-2.2077634)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient895">
+      <stop
+         style="stop-color:#00e6ff;stop-opacity:1;"
+         offset="0"
+         id="stop891" />
+      <stop
+         style="stop-color:#00343a;stop-opacity:1;"
+         offset="1"
+         id="stop893" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8256"
+       id="linearGradient8258"
+       x1="358.23788"
+       y1="-175.91824"
+       x2="776.63855"
+       y2="239.61804"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0038075,0,0,1.0038075,-1.2350845,0.79268008)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8256">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop8254" />
+      <stop
+         style="stop-color:#002125;stop-opacity:1;"
+         offset="1"
+         id="stop8252" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -68,9 +101,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="134.26225"
-     inkscape:cy="258.0875"
+     inkscape:zoom="0.5"
+     inkscape:cx="325"
+     inkscape:cy="208"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -79,11 +112,14 @@
      fit-margin-right="1"
      fit-margin-bottom="1"
      units="mm"
-     inkscape:window-width="1680"
-     inkscape:window-height="998"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="1912"
+     inkscape:window-y="177"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -105,18 +141,18 @@
        id="g4165"
        transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-256.86318,384.18552)">
       <rect
-         style="fill:#438db8;fill-opacity:1;stroke:url(#linearGradient4185);stroke-width:20.00000007;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:url(#linearGradient897);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:3.88519;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect5645"
-         width="580"
-         height="580"
-         x="335.63055"
-         y="-196.9404"
-         transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
-         ry="95"
-         rx="95"
+         width="600.90881"
+         height="600.90881"
+         x="326.32312"
+         y="-206.24783"
+         ry="98.424713"
+         rx="98.424713"
          inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
          inkscape:export-xdpi="14.4"
-         inkscape:export-ydpi="14.4" />
+         inkscape:export-ydpi="14.4"
+         transform="rotate(45)" />
       <path
          transform="matrix(0.68392089,0.00183489,-0.00166605,0.75323097,145.88887,124.46345)"
          inkscape:transform-center-y="-0.20872218"
@@ -133,7 +169,7 @@
          sodipodi:cx="551"
          sodipodi:sides="3"
          id="path4163"
-         style="fill:#ffcc00;fill-opacity:1;stroke:#ffcc00;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#ffe700;fill-opacity:1;stroke:#ffe700;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          sodipodi:type="star" />
       <rect
          ry="13"

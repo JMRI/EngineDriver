@@ -775,7 +775,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             mainapp.toggleFlashlight(this, GPTMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(GPTMenu);
             } else {

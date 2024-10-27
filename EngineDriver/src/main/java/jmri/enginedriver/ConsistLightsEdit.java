@@ -392,7 +392,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
             mainapp.toggleFlashlight(this, CLEMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(CLEMenu);
             } else {
