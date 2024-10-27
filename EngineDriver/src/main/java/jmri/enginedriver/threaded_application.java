@@ -1170,9 +1170,9 @@ public class threaded_application extends Application {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
-            menu.findItem(R.id.power_layout_button).setVisible(true);
+            menu.findItem(R.id.powerLayoutButton).setVisible(true);
         } else {
-            menu.findItem(R.id.power_layout_button).setVisible(false);
+            menu.findItem(R.id.powerLayoutButton).setVisible(false);
         }
     }
 
@@ -1415,24 +1415,24 @@ public class threaded_application extends Application {
             TypedValue outValue = new TypedValue();
             if (power_state == null) {
                 theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
             } else if (power_state.equals("2")) {
                 if (!mainapp.isDCCEX) {
                     theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
                 } else {
                     theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
                 }
-                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is UnKnown");
+                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
             } else if (power_state.equals("1")) {
                 theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is ON");
+                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
             } else {
                 theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-                menu.findItem(R.id.power_layout_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.power_layout_button).setTitle("Layout Power is Off");
+                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
             }
         }
     }
@@ -1660,6 +1660,7 @@ public class threaded_application extends Application {
                 case "Black":
                 case "Outline":
                 case "Ultra":
+                case "neon":
                     return R.style.app_theme_black_preferences;
                 case "Colorful":
 //                    return R.style.app_theme_colorful_preferences;

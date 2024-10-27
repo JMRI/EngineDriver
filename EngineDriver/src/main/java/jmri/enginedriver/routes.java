@@ -707,7 +707,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(RMenu);
             } else {

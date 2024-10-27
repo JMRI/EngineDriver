@@ -1933,7 +1933,7 @@ public class select_loco extends AppCompatActivity {
             mainapp.toggleFlashlight(this, SMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(SMenu);
             } else {

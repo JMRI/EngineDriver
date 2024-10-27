@@ -1116,7 +1116,7 @@ public class dcc_ex extends AppCompatActivity {
             mainapp.toggleFlashlight(this, menu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(menu);
             } else {

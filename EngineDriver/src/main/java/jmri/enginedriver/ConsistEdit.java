@@ -394,7 +394,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             mainapp.toggleFlashlight(this, CEMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(CEMenu);
             } else {

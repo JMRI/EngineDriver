@@ -651,7 +651,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 mainapp.toggleFlashlight(this, WMenu);
                 mainapp.buttonVibration();
                 return true;
-            case R.id.power_layout_button:
+            case R.id.powerLayoutButton:
                 if (!mainapp.isPowerControlAllowed()) {
                     mainapp.powerControlNotAllowedDialog(WMenu);
                 } else {

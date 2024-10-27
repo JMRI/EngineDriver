@@ -982,7 +982,7 @@
     <string name="toastImportExportImportSucceeded">\'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' からの設定のインポートは成功しました。</string>
     <string name="toastImportExportServerImportFailed">設定は「\\Android\\data\\jmri.enginedriver\\files\\%1$s\」からインポートされていません。このホストの設定をまだ保存していない可能性があります。</string>
     <string name="toastInitialisingSounds">電話機のロコサウンドで初期化しています。</string>
-    <string name="toastLocoAlreadySelected">ロコ すでに選択されています</string>
+    <string name="toastLocoAlreadySelected">ロコ すでに選択されています \'%1$s\'</string>
     <string name="toastLocoChangeNotAllowed">ロコ変更は許可されていません: 「移動中の方向変更」は環境設定で無効になっています</string>
     <string name="toastNumThrottles">選択されたスロットル スクリーン タイプは、それほど多くのスロットルをサポートしていません。 %1$s に削減します。</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">背景の変更に成功しました。</string>

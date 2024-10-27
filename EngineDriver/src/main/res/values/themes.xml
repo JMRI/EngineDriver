@@ -86,14 +86,14 @@
         <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup</item>
 
-        <item name="ed_flashlight_on_button">@drawable/original_flashlight_on</item>
-        <item name="ed_flashlight_off_button">@drawable/original_flashlight_off</item>
+        <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
-        <item name="ed_power_green_button">@drawable/original_power_green</item>
-        <item name="ed_power_green_red_button">@drawable/original_power_green_red</item>
-        <item name="ed_power_yellow_button">@drawable/original_power_yellow</item>
-        <item name="ed_power_red_button">@drawable/original_power_red</item>
+        <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
+        <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>
+        <item name="ed_power_yellow_button">@drawable/original_toolbar_power_yellow</item>
+        <item name="ed_power_red_button">@drawable/original_toolbar_power_red</item>
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
@@ -424,7 +424,7 @@
         <item name="preferenceTheme">@style/app_theme_preferences</item>
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
 
-        <item name="android:windowBackground">@color/windowBackground_colorful</item>
+        <item name="android:windowBackground">@drawable/colorful_window_background</item>
         <item name="android:windowTitleStyle">@style/app_title_colorful</item>
         <item name="android:listViewStyle">@style/EDListView_colorful</item>
         <item name="android:expandableListViewStyle">@style/EDListView_colorful</item>
@@ -447,10 +447,7 @@
         <item name="android:textColorTertiary">@color/tertiary_colorful</item>
         <item name="android:textColorHint">@color/hint_colorful</item>
         <item name="android:textColorPrimaryDisableOnly">@color/primaryDisabled_colorful</item>
-<!--        <item name="android:editTextColor">@color/primary_colorful</item> -->
 
-<!--        <item name="android:background">@color/windowBackground_colorful</item> -->
-<!--        <item name="android:editTextBackground">@color/windowBackground_colorful</item> -->
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
@@ -496,14 +493,14 @@
         <item name="ed_toolbar_background">@drawable/colorful_toolbar_background</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_colorful</item>
 
-        <item name="ed_flashlight_on_button">@drawable/original_flashlight_on</item>
-        <item name="ed_flashlight_off_button">@drawable/original_flashlight_off</item>
+        <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
-        <item name="ed_power_green_button">@drawable/original_power_green</item>
-        <item name="ed_power_green_red_button">@drawable/original_power_green_red</item>
-        <item name="ed_power_yellow_button">@drawable/original_power_yellow</item>
-        <item name="ed_power_red_button">@drawable/original_power_red</item>
+        <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
+        <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>
+        <item name="ed_power_yellow_button">@drawable/original_toolbar_power_yellow</item>
+        <item name="ed_power_red_button">@drawable/original_toolbar_power_red</item>
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
@@ -526,6 +523,7 @@
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/holoBlue</item>
 
+        <item name="android:radioButtonStyle">@style/EDRadioButton_colorful</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

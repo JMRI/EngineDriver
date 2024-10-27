@@ -17,20 +17,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EmerStop"
-        android:title="@string/EStop"
-        android:visible="false"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
-
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction"
-        android:visible="false"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
-
-    <item android:id="@+id/power_layout_button"
-        android:title="@string/PowerButtonBar"
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
@@ -38,6 +26,18 @@
     <item android:id="@+id/dcc_ex_button"
         android:icon="?attr/ed_dcc_ex_button"
         android:title="@string/app_name_dcc_ex"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item android:id="@+id/EmerStop"
+        android:title="@string/EStop"
+        android:visible="false"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+    <item android:id="@+id/powerLayoutButton"
+        android:title="@string/PowerButtonBar"
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />

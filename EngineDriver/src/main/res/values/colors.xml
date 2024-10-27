@@ -187,9 +187,16 @@
     <color name="windowBackground_colorful">#fffaf6</color>
     <color name="dialogBackground_colorful">#f5971d</color>
 
+    <color name="windowBackgroundGradiantLight_colorful">#FFFFFF</color>
+    <color name="windowBackgroundGradiantMid_colorful">#FDECD5</color>
+    <color name="windowBackgroundGradiantDark_colorful">#FAD6A7</color>
+
+    <color name="buttonStopFillGradiantVeryLight_colorful">#F4B9B6</color>
     <color name="buttonStopFillGradiantLight_colorful">#f59590</color>
     <color name="buttonStopFillGradiantCenter_colorful">#f77a74</color>
     <color name="buttonStopFillGradiantDark_colorful">#f74036</color>
+    <color name="buttonStopFillGradiantVeryDark_colorful">#C81309</color>
+
     <color name="buttonStopSelectedStroke_colorful">#404040</color>
     <color name="buttonStopDisabledStroke_colorful">#b79d88</color>
     <color name="buttonStopDisabledFill_colorful">#faefe7</color>
@@ -197,16 +204,22 @@
     <color name="buttonStopSelectedText_colorful">#ac000000</color>
     <color name="buttonStopSelectedInsideStroke_colorful">#fdb1ad</color>
 
+    <color name="buttonFillGradiantVeryLight_colorful">#F4E6D4</color>
     <color name="buttonFillGradiantLight_colorful">#f1cea1</color>
     <color name="buttonFillGradiantCenter_colorful">#f2b465</color>
     <color name="buttonFillGradiantDark_colorful">#f5971d</color>
     <color name="buttonFillGradiantVeryDark_colorful">#DD660A</color>
     <color name="buttonFillGradiantUltraDark_colorful">#954100</color>
+
+    <color name="buttonFillGradiantVeryLight2_colorful">#C6E3F4</color>
     <color name="buttonFillGradiantLight2_colorful">#a1d3f1</color>
     <color name="buttonFillGradiantCenter2_colorful">#71c2f2</color>
     <color name="buttonFillGradiantDark2_colorful">#1ca0ef</color>
+    <color name="buttonFillGradiantVeryDark2_colorful">#026AA8</color>
+
     <color name="buttonSelectedStroke_colorful">#404040</color>
-    <color name="buttonText_colorful">#000000</color>
+    <color name="buttonText_colorful">#0A0A0A</color>
+    <color name="buttonTextShadow_colorful">#FFFFFFFF</color>
     <color name="buttonLocoSelectText_colorful">#ffa600</color>
     <color name="buttonDisabledFill_colorful">#faefe7</color>
     <color name="buttonDisabledStroke_colorful">#b79d88</color>
@@ -216,16 +229,18 @@
     <color name="buttonActivatedHoveredInsideStroke_colorful">#8c00ff</color>
     <color name="buttonActivatedHoveredInside2Stroke_colorful">#f200ff</color>
 
-    <color name="buttonFnFillGradiantExtraLight_colorful">#E2EFEB</color>
+    <color name="buttonFnFillGradiantVeryLight_colorful">#E2EFEB</color>
     <color name="buttonFnFillGradiantLight_colorful">#c3d9d3</color>
     <color name="buttonFnFillGradiantCenter_colorful">#8edac6</color>
     <color name="buttonFnFillGradiantDark_colorful">#3ad7ac</color>
+    <color name="buttonFnFillGradiantVeryDark_colorful">#11755A</color>
+
     <color name="buttonFnSelectedStroke_colorful">#404040</color>
     <color name="buttonFnDisabledFill_colorful">#faefe7</color>
     <color name="buttonFnDisabledStroke_colorful">#b79d88</color>
     <color name="buttonFnSelectedText_colorful">#000000</color>
     <color name="buttonFnSelectedFill_colorful">#FF262626</color>
-    <color name="buttonFnSelectedInsideStroke_colorful">#FF3D00</color>
+    <color name="buttonFnSelectedInsideStroke_colorful">#FF8C00</color>
 
     <color name="background_highlight_black">#994E4E4E</color>
     <color name="background_highlight_colorful">#33FFA600</color>

@@ -944,7 +944,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(TuMenu);
             } else {

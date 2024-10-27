@@ -225,10 +225,10 @@ public class power_control extends AppCompatActivity {
             vn = Float.parseFloat(mainapp.DccexVersion);
         } catch (Exception ignored) { } // invalid version
 
-        powerOnDrawable = getResources().getDrawable(R.drawable.original_power_green);
-        powerOnAndOffDrawable = getResources().getDrawable(R.drawable.original_power_green_red);
-        powerOffDrawable = getResources().getDrawable(R.drawable.original_power_red);
-        powerUnknownDrawable = getResources().getDrawable(R.drawable.original_power_yellow);
+        powerOnDrawable = getResources().getDrawable(R.drawable.original_toolbar_power_green);
+        powerOnAndOffDrawable = getResources().getDrawable(R.drawable.original_toolbar_power_green_red);
+        powerOffDrawable = getResources().getDrawable(R.drawable.original_toolbar_power_red);
+        powerUnknownDrawable = getResources().getDrawable(R.drawable.original_toolbar_power_yellow);
 
 
         //Set the button callbacks, storing the command to pass for each
@@ -367,7 +367,7 @@ public class power_control extends AppCompatActivity {
             mainapp.toggleFlashlight(this, menu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(menu);
             } else {

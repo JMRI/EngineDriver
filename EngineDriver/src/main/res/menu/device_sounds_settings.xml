@@ -2,16 +2,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EmerStop"
-        android:title="@string/EStop"
-        android:visible="false"
-        app:showAsAction="always" />
     <item android:id="@+id/flashlight_button"
         android:title="@string/flashlightAction"
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
-    <item android:id="@+id/power_layout_button"
+
+    <item android:id="@+id/EmerStop"
+        android:title="@string/EStop"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/powerLayoutButton"
         android:title="@string/PowerButtonBar"
         android:visible="false"
         app:showAsAction="always"

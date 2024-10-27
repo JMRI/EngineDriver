@@ -172,7 +172,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             mainapp.toggleFlashlight(this, AMenu);
             mainapp.buttonVibration();
             return true;
-        } else if (item.getItemId() == R.id.power_layout_button) {
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(AMenu);
             } else {
