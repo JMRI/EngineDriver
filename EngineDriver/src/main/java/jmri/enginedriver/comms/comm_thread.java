@@ -516,6 +516,7 @@ public class comm_thread extends Thread {
                 }
             } else {   // no roster entry. go look at the DCC-EX/consist defaults
                 isLatching = mainapp.function_consist_latching.get(fn);
+                if (isLatching == null) isLatching = LATCHING_DEFAULT;
             }
 
             if (!force) {

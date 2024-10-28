@@ -2,22 +2,25 @@
 
     <!-- Define the background properties like color etc -->
     <item android:id="@android:id/background"
-        android:height="1px"
         android:gravity="center_vertical" >
         <shape>
             <solid
-                android:color="?attr/ed_progressBarBackground" />
+                android:color="@color/transparent" />
         </shape>
     </item>
 
     <!-- Define the progress properties like start color, end color etc -->
     <item android:id="@android:id/progress"
-        android:height="7px"
         android:gravity="center_vertical"  >
         <clip>
             <shape>
-                <solid
-                    android:color="?attr/ed_progressBarSelected" />
+                <gradient
+                    android:angle="180"
+                    android:centerColor="@color/holoBlue_transparent_50"
+                    android:endColor="@color/holoBlue_transparent_25"
+                    android:startColor="@color/holoBlue_transparent_75"
+                    android:type="linear" />
+                <size android:height="11px" />
             </shape>
         </clip>
     </item>

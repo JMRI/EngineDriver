@@ -14,16 +14,10 @@
         android:gravity="center_vertical"  >
         <clip>
             <shape>
-                <gradient
-                    android:angle="180"
-                    android:startColor="@color/neon_blue_transparent_75"
-                    android:centerColor="@color/neon_blue_transparent_50"
-                    android:endColor="@color/neon_blue_transparent_25"
-                    android:type="linear"
-                    />
-                <size
-                    android:height="11px" />
+                <solid
+                    android:color="@color/transparent" />
             </shape>
+
         </clip>
     </item>
 </layer-list>

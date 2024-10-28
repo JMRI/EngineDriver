@@ -698,7 +698,7 @@
     <string name="fb_column_label">Etichetta</string>
     <string name="fb_column_function">funz #</string>
     <string name="FilterRosterListDownloadLabel">Scaricamento</string>
-    <string name="rosterEmpty">Impossibile trovare entità nell\'elenco dei server.\n\nUtilizzare invece l\'opzione \'Indirizzo DCC\' o \'Recenti\'.</string>
+    <string name="rosterEmpty">Impossibile trovare voci nell\'elenco dei server.\n\nUtilizzare invece l\'opzione \'Indirizzo DCC\' o \'Recenti\'.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Tutte le partite Fail Azione</string>
     <string name="prefConsistFollowDefaultActionSummary">Quale locos nella consistere dovrebbero reagire ai tasti funzione, se nessuna delle regole di sotto sono si incontrano.</string>

@@ -916,7 +916,7 @@
 
     <string name="roster_list">名簿から選択/エントリを構成</string>
     <string name="rosterDetailsDialogTitle">名簿の詳細 </string>
-    <string name="rosterEmpty">サーバー名簿にエンティティが見つかりません。\n\n代わりに「DCC アドレス」または「最近」オプションを使用してください。</string>
+    <string name="rosterEmpty">サーバー名簿にエントリが見つかりません。\n\n代わりに「DCC アドレス」または「最近」オプションを使用してください。</string>
     <string name="rosterEntryImageHelpText">ローカルに保存された画像のみ。  サーバーに機関車の画像がある場合、この選択は上書きされます。</string>
     <string name="rosterEntryImageRemoveButtonText">取り除く</string>
     <string name="rosterEntryImageSaveButtonText">保存</string>

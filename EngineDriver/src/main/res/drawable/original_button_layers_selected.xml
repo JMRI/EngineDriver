@@ -56,6 +56,7 @@
     </item>
 
     <item
+        android:height="1dp"
         android:top="20px" android:left="8px" android:right="8px" android:bottom="5px">
         <shape android:shape="rectangle">
         <corners
