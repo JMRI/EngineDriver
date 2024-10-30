@@ -1018,7 +1018,7 @@
     <string name="prefTtsThrottleSpeedSummary">Cuando la velocidad alcanza ciertas velocidades cuando se usa un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">En velocidades de gamepad</string>
     <string name="FilterRosterListDownloadLabel">Descargar</string>
-    <string name="rosterEmpty">No se puede encontrar ninguna entidad en la lista del servidor.\n\nUtilice en su lugar la opción \'Dirección DCC\' o \'Reciente\'.</string>
+    <string name="rosterEmpty">No se puede encontrar ninguna entrada en la lista de servidores.\n\nUtilice en su lugar la opción \'Dirección DCC\' o \'Reciente\'.</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">¡Server Discovery no es posible sin una conexión WiFi!</string>
     <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
     <string name="toastImportExportCouldNotParseAddress">No se pudo analizar la dirección\n%1$s</string>

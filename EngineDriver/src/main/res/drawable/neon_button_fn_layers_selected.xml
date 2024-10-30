@@ -38,6 +38,7 @@
 <!--    </item>-->
 
     <item android:gravity="bottom"
+        android:top="40dp" android:height="5dp"
         android:left="34px" android:right="32px"  android:bottom="8px" >
         <shape android:shape="rectangle">
             <corners

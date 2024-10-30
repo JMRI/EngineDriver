@@ -29,6 +29,10 @@
     <color name="holoBlue">#ff33b5e5</color>
     <color name="divider">#4A4A4A</color>
 
+    <color name="holoBlue_transparent_75">#BF33B5E5</color>
+    <color name="holoBlue_transparent_50">#8033B5E5</color>
+    <color name="holoBlue_transparent_25">#4033B5E5</color>
+
     <color name="primary_text">#ffffffff</color>
     <color name="secondary_text">#D8D8D8</color>
     <color name="tertiary_text">#A0A0A0</color>
@@ -270,6 +274,10 @@
     <color name="neon_red">#FF0000</color>
     <color name="neon_red_light">#FF3636</color>
     <color name="neon_red_very_light">#FF5959</color>
+
+    <color name="neon_blue_transparent_75">#BF0000FF</color>
+    <color name="neon_blue_transparent_50">#800000FF</color>
+    <color name="neon_blue_transparent_25">#400000FF</color>
 
     <color name="divider_neon">@color/neon_blue</color>
 

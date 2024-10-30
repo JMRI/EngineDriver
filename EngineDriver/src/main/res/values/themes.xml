@@ -114,8 +114,8 @@
         <item name="ed_icon">@drawable/icon_vector</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/holoBlue</item>
+<!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+<!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
     </style>
 
@@ -213,8 +213,8 @@
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/holoBlue</item>
+<!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+<!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
     </style>
 
@@ -308,8 +308,8 @@
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/holoBlue</item>
+<!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+<!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
     </style>
 
@@ -411,8 +411,8 @@
         <item name="ed_dccex_button_function_defaults">@drawable/ultra_dccex_button_function_defaults</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/holoBlue</item>
+<!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+<!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
     </style>
 
@@ -520,8 +520,8 @@
         <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/holoBlue</item>
+<!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+<!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
         <item name="android:radioButtonStyle">@style/EDRadioButton_colorful</item>
     </style>

@@ -697,7 +697,7 @@
     <string name="fb_column_label">Rótulo</string>
     <string name="fb_column_function">Esta função #</string>
     <string name="FilterRosterListDownloadLabel">Download</string>
-    <string name="rosterEmpty">Não foi possível encontrar nenhuma entidade na lista de servidores.\n\nUse a opção \'Endereço DCC\' ou \'Recente\'.</string>
+    <string name="rosterEmpty">Não foi possível encontrar nenhuma entrada na lista de servidores.\n\nUse a opção \'Endereço DCC\' ou \'Recente\'.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>

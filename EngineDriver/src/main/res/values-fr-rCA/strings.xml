@@ -841,4 +841,110 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Préférences bascul de dispositions de l\'affichage</string>
     <string name="prefThrottleSwitchButtonSummary">Afficher la touche de bascul de disposition de l\'affichage afin de permettre des changements rapides de dispositions.</string>
     <string name="prefThrottleSwitchButtonTitle">Touche de bascul de disposition de l\'écran</string>
+
+    <string name="prefThrottleSwitchOption1Summary">La touche de bascul basculera entre cette disposition de l\'écran et la suivante.</string>
+    <string name="prefThrottleSwitchOption1Title">Bascul vers la première disposition de l\'écran</string>
+    <string name="prefThrottleSwitchOption2Summary">La touche de bascul basculera entre cette disposition de l\'écran et la précédente.</string>
+    <string name="prefThrottleSwitchOption2Title">Bascul vers la seconde disposition de l\'écran</string>
+    <string name="prefThrottleTitle">Préférences des régulateurs</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Permet de masquer également la barre d\'outils en mode immersif.</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Masquage de la barre d\'outils en mode immersif?</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Affichage du régulateur en mode plein écran.  Se servir des options de balayage vertical pour temporairement désactiver l\'accès au menu.</string>
+    <string name="prefThrottleViewImmersiveModeTitle">Mode immersif du régulateur?</string>
+    <string name="prefTickMarksOnSlidersSummary">Afficher ou masquer la graduation des curseurs de vitesse.</string>
+    <string name="prefTickMarksOnSlidersTitle">Graduation des curseurs de vitesse?</string>
+
+    <string name="prefTtsGamepadTestCompleteSummary">Lorsque la vérification de la manette de jeu est terminée.</string>
+    <string name="prefTtsGamepadTestCompleteTitle">À la vérification complétée de la manette de jeu</string>
+    <string name="prefTtsGamepadTestKeysSummary">Lorsque tous les boutons de la manette de jeu ont été appuyés</string>
+    <string name="prefTtsGamepadTestKeysTitle">À la vérification complétée des boutons de la manette de jeu</string>
+    <string name="prefTtsGamepadTestSummary">Lors du l\'affichage de la page de vérification de la manette de jeu.</string>
+    <string name="prefTtsGamepadTestTitle">Au démarrage de la vérification de la manette de jeu</string>
+    <string name="prefTtsSummary">Événements de reconnaissance vocale</string>
+
+
+
+    <string name="prefTtsThrottleResponseSummary">Lors d\'un changement de régulateur depuis la manette de jeu.</string>
+    <string name="prefTtsThrottleResponseTitle">Au changement de régulateur via la manette de jeu</string>
+
+    <string name="prefTtsThrottleSpeedSummary">Lorsque certaines limites de vitesses sont atteintes via une manette de jeu</string>
+
+    <string name="prefTtsThrottleSpeedTitle">Aux changements de vitesse via la manette de jeu</string>
+
+
+
+
+    <string name="prefTtsWhenSummary">Lors de la réception de réponses provenant de la reconnaissance vocale.</string>
+
+
+
+    <string name="prefTurnoutsTitle">Préférences des aiguillages et itinéraires</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">Toujours afficher les touches Ouvert et Fermé des aiguillages, jamais la touche de bascul.</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">Toujours afficher Ouvert et Fermé?</string>
+
+    <string name="prefVerticalStopButtonMarginSummary">Nombre de pixels de décalage de la touche d\'arrêt entre les touches de vitesses et le bas de l\'écran.</string>
+    <string name="prefVerticalStopButtonMarginTitle">Décalage vertical de la touche d\'arrêt</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Les touches physiques de volume de l\'appareil se synchronisent avec la vitesse du régulateur actuel.</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Synchronisation des touches physiques de volume</string>
+
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">Facteur d\'incrémentation de vitesse appliqué aux boutons physiques de volume.</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepTitle">Facteur de vitesse des boutons physiques de volume</string>
+    <string name="prefVolumeSummary">Les boutons physiques de volume de l\'appareil se synchronisent avec la vitesse du régulateur actuel.</string>
+    <string name="prefVolumeTitle">Préférences des boutons physiques de volume</string>
+
+    <string name="prefWebOrientationSummary">Orientation de l\'écran du navigateur web</string>
+    <string name="prefWebOrientationTitle">Orientation de l\'écran du navigateur web</string>
+    <string name="prefWebTitle">Préférences du navigateur web</string>
+    <string name="prefWebViewButtonSummary">Activer l\'option de masquer ou non le navigateur web via la barre d\'outils.\n(Requiert l\'activation de \'Affichage du navigateur web\')</string>
+    <string name="prefWebViewButtonTitle">Touche d\'affichage ou pas du navigateur web?</string>
+
+    <string name="prefWebViewLocationSummary">Inclure le navigateur web dans le régulateur</string>
+    <string name="prefWebViewLocationTitle">Affichage du navigateur web?</string>
+    <string name="prefWebViewSummary">Options d\'affichage du navigateur web</string>
+    <string name="prefWebViewTitle">Préférences du navigateur web</string>
+    <string name="press_to_toggle">Appuyer sur ce bouton pour activer et désactiver l\'alimentation électrique du réseau</string>
+
+    <string name="recent_consists">Sélection parmi les unités multiples récemment utilisées</string>
+    <string name="recent_engines">Sélection parmi les locomotives récemment utilisées</string>
+    <string name="RecentConsistsNameEditText">Nom de l\'unité multiple</string>
+    <string name="RecentConsistsNameEditTitle">Nom récent de l\'unité multiple</string>
+    <string name="RecentsNameEditText">Nom de la locomotive</string>
+    <string name="reconnect_help">Tentative de reconnexion automatique.  Patienter pour la reconnexion ou appuyer sur \'Précédent\' pour terminer.</string>
+    <string name="reconnect_label">État de la tentative de reconnexion</string>
+    <string name="reconnect_success">RECONNEXION RÉUSSIE.  Reprise normale des opérations.</string>
+    <string name="release">Libération</string>
+    <string name="releaseThrottleLocos">Libération\n %1$s</string>
+
+
+
+    <string name="roster_list">Sélection à partir du catalogue JMRI (Roster) / Unités multiples</string>
+    <string name="rosterDetailsDialogTitle">Détails du catalogue JMRI (Roster) pour</string>
+    <string name="rosterEmpty">Aucune entrée dans le catalogue JMRI (Roster).\nSélectionner soit \'Adresse DCC\' ou bien l\'option \'Récemment utilisée\'.</string>
+    <string name="rosterEntryImageHelpText">Images sur stockage local seulement.  S\'il existe une image pour la locomotive, elle remplacera l\'image actuelle.</string>
+
+    <string name="rosterEntryImageSaveButtonText">Sauvegarder</string>
+
+    <string name="rosterEntryImageServerImageHelpText">Le serveur a déjà une image assignée pour cette locomotive.  Il n\'est pas possible de changer l\'image du stockage local car elle sera automatiquement remplacée par celle du serveur.</string>
+
+    <string name="routes_direct_entry_label">Entrer le nom Système de l\'itinéraire</string>
+
+    <string name="routes_list_label">Itinéraire (cliquer pour activer)</string>
+
+    <string name="routes_route">Nom Système de l\'itinéraire</string>
+
+    <string name="select_loco">Entrer l\'adresse de la locomotive à contrôler</string>
+
+
+
+
+    <string name="functionDefaultSettings">Fonctions par défaut</string>
+    <string name="sl_recent_engine_notice">Locomotives récemment utilisées sont indisponibles - Aucune carte SD détectée.</string>
+    <string name="soundsButtonHornShortDefaultValue">Klaxon bref</string>
+
+    <string name="statusThreadedAppNoResponse" tools:ignore="TypographyEllipsis">Aucune réponse du serveur %1$s:%2$s depuis %3$s secondes.  Vérifier le bon fonctionnement du serveur WiThrottle.  Nouvelle tentative...</string>
+
+    <string name="statusThreadedAppNotConnected" tools:ignore="TypographyEllipsis">Aucune connexion réseau.  Vérifier les paramètres Wi-Fi.  Nouvelle tentative...</string>
+    <string name="statusThreadedAppNotconnectedToWifi">Aucune connexion Wi-Fi</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">La recherche de serveur n\'est pas possible sans connexion Wi-Fi!</string>
+    <string name="statusThreadedAppUnableToConnect" tools:ignore="TypographyEllipsis">Incapable de se connecter au serveur %1$s:%2$s à partir de %3$s.  Nouvelle tentative...</string>
 </resources>
