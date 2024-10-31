@@ -659,7 +659,7 @@
     <string name="prefTickMarksOnSlidersSummary">Show tick marks on the background of the Speed Sliders</string>
 
     <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Hide function buttons on non-selected throttle?</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Horizintal throttle lyouts only! If enabled the, function buttons will be automatically hidden for all bar the selected throttle. Indicated by a \'v\'.\nClick on the speed value of a throttle to select it.</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">If enabled, on the horizontal layouts the function buttons will be hidden for all bar the selected throttle, indicated by a \'v\'.\nClick on the speed value of a throttle to select it.</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">Select a visual appearance for this app</string>

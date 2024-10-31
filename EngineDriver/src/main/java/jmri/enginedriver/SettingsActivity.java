@@ -1087,6 +1087,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
         enableDisablePreference(prefScreen, "DirChangeWhileMovingPreference", enable);
         enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
+
+        enable = prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                || prefThrottleScreenType.equals(throttle_screen_type.DEFAULT) ;
+
+        enableDisablePreference(prefScreen, "prefHideFunctionButtonsOfNonSelectedThrottle", enable);
     }
 
     private void showHideSemiRealisticthrottlePreferences(PreferenceScreen prefScreen) {

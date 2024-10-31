@@ -1989,6 +1989,7 @@
         <item>throttle_accelerometer_preference</item>  <!-- PreferenceScreen -->
         <item>prefShowAddressInsteadOfName</item>
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefHideFunctionButtonsOfNonSelectedThrottle</item>
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
         <item>prefBackgroundImageGroup</item> <!-- PreferenceScreen -->
         <item>prefCategoryHapticFeedbackScreen</item> <!-- PreferenceScreen -->
