@@ -210,7 +210,7 @@
         <item>Diminuire brillantezza Schermo</item>
         <item>Abilitazione-disabilitazione provvisoria del Modo Immersivo</item>
         <item>Passare a farfalla layout dello schermo</item>
-        <item >Increase/Decrease Loco Speed</item>
+<!--        <item >Increase/Decrease Loco Speed</item>-->
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">

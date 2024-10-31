@@ -54,8 +54,12 @@ public class throttle_original extends throttle {
         // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
         // newEnabledState);
 
-        if (vg == null) { return;}
-        if (mainapp.appIsFinishing) { return;}
+        if (vg == null) {
+            return;
+        }
+        if (mainapp.appIsFinishing) {
+            return;
+        }
 
         ViewGroup r; // row
         Button b; // button
@@ -73,7 +77,9 @@ public class throttle_original extends throttle {
     void setAllFunctionStates(int whichThrottle) {
         // Log.d("Engine_Driver","set_function_states");
 
-        if (mainapp.appIsFinishing) { return;}
+        if (mainapp.appIsFinishing) {
+            return;
+        }
 
         LinkedHashMap<Integer, Button> fMap;
         fMap = functionMaps[whichThrottle];
@@ -88,7 +94,8 @@ public class throttle_original extends throttle {
     void set_function_state(int whichThrottle, int function) {
         // Log.d("Engine_Driver","starting set_function_request");
 
-        if (function > threaded_application.MAX_FUNCTION_NUMBER) return; //bail if this function number not supported
+        if (function > threaded_application.MAX_FUNCTION_NUMBER)
+            return; //bail if this function number not supported
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array
@@ -120,26 +127,34 @@ public class throttle_original extends throttle {
         mainapp.throttleLayoutViewId = R.layout.throttle;
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return;}
+        if (mainapp.appIsFinishing) {
+            return;
+        }
 
         sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     bPauses[throttleIndex] = null;
+
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
                     break;
                 case 1:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     bPauses[throttleIndex] = null;
+
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
                     break;
                 case 2:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     bPauses[throttleIndex] = null;
+
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
                     break;
             }
             sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
@@ -162,15 +177,17 @@ public class throttle_original extends throttle {
     }
 
 
-//    // lookup and set values of various informational text labels and size the
+    //    // lookup and set values of various informational text labels and size the
 //    // screen elements
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
-        Log.d("Engine_Driver","throttle_original: set_labels() starting");
+        Log.d("Engine_Driver", "throttle_original: set_labels() starting");
         super.set_labels();
 
-        if (mainapp.appIsFinishing) { return;}
+        if (mainapp.appIsFinishing) {
+            return;
+        }
 
         int throttle_count = 0;
         int[] heights = {0, 0, 0, 0, 0, 0};
@@ -207,7 +224,7 @@ public class throttle_original extends throttle {
         String bLabel;
         String bLabelPlainText;
 
-        if(mainapp.consists==null) {
+        if (mainapp.consists == null) {
             Log.d("Engine_Driver", "throttle_original.setLabels consists is null");
             return;
         }
@@ -218,10 +235,9 @@ public class throttle_original extends throttle {
             bLabelPlainText = bLabel;
 
             Consist con = mainapp.consists[throttleIndex];
-            if(con==null) {
+            if (con == null) {
                 Log.d("Engine_Driver", "throttle_original setLabels consists[" + throttleIndex + "] is null");
-            }
-            else {
+            } else {
                 if (con.isActive()) {
                     if (!prefShowAddressInsteadOfName) {
                         if (!overrideThrottleNames[throttleIndex].equals("")) {
@@ -275,73 +291,31 @@ public class throttle_original extends throttle {
             b.setPressed(false);
         }
 
-        if (webView!=null) {
+        if (webView != null) {
             setImmersiveModeOn(webView, false);
         }
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
-        int fullScreenHeight = screenHeight;
-        if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
-            titleBar = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
-            if (screenHeight!=0) {
-                screenHeight = screenHeight - titleBar;
-            }
-        }
-        //Log.d("Engine_Driver","vThrotScrWrap.getHeight(), screenHeight=" + screenHeight);
-        if (screenHeight == 0) {
-            // throttle screen hasn't been drawn yet, so use display metrics for now
-            screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
-        }
+        int screenHeight = (int) getAvailableSceenHeight();
 
-        // save part the screen for webview
-        if (!webViewLocation.equals(web_view_location_type.NONE)) {
-            webViewIsOn = true;
-            double height = screenHeight;
-            if (!prefIncreaseWebViewSize) {
-                height *= 0.5; // save half the screen
-            } else {
-                height *= 0.4; // save 60% of the screen for web view
-            }
-            screenHeight = (int) height;
-            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
-            webView.setLayoutParams(webViewParams);
-        }
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                default:
-                case 0:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
-                    break;
-                case 1:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
-                    break;
-                case 2:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
-                    break;
-            }
-        }
-
-        // SPDHT set height of Loco Id and Direction Button areas
+        // set height of Loco Id and Direction Button areas
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
             LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
-            llLocoIds[throttleIndex].setLayoutParams(llLidp);
-            llLocoDirs[throttleIndex].setLayoutParams(llLidp);
+            llLocoIdAndSpeedViewGroups[throttleIndex].setLayoutParams(llLidp);
+            llLocoDirectionButtonViewGroups[throttleIndex].setLayoutParams(llLidp);
             //
             tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
             // SPDHT
 
             //set height of slider areas
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            llSetSpds[throttleIndex].setLayoutParams(llLp);
+            llSetSpeedLayouts[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
             int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
-            llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            llSetSpeedLayouts[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
 
             sbs[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -361,102 +335,28 @@ public class throttle_original extends throttle {
 //                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
-                llSetSpds[throttleIndex].setVisibility(View.GONE);
+                llSetSpeedLayouts[throttleIndex].setVisibility(View.GONE);
             }
 
-            int additionalPadding = (sbs[throttleIndex].getWidth()>400 ? 40 : 20);
-            sbs[throttleIndex].setPadding(additionalPadding+sliderMargin, 0, additionalPadding+sliderMargin, 0);
+            int additionalPadding = (sbs[throttleIndex].getWidth() > 400 ? 40 : 20);
+            sbs[throttleIndex].setPadding(additionalPadding + sliderMargin, 0, additionalPadding + sliderMargin, 0);
 
             // update the state of each function button based on shared variable
             setAllFunctionStates(throttleIndex);
         }
 
 
-        if ( (screenHeight > throttleMargin) && (mainapp.consists!=null)) { // don't do this if height is invalid
+        if ((screenHeight > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
             //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
-            screenHeight -= throttleMargin;
 
-            if (mainapp.numThrottles == 1) {        // just one throttle
-                heights[0] = screenHeight;
-                heights[1] = 0;
-                heights[2] = 0;
-            } else {                                // 2 or more throttles - split screen among active throttles
-                boolean con0Active = false;
-                boolean con1Active = false;
-                boolean con2Active = false;
-                if (mainapp.consists[0] == null)
-                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[0] is null");
-                else
-                    con0Active = mainapp.consists[0].isActive();
-                if( mainapp.consists[1] == null)
-                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[1] is null");
-                else
-                    con1Active = mainapp.consists[1].isActive();
-                if (mainapp.consists[2] == null) {
-                    Log.d("Engine_Driver", "throttle_original.set_labels() consists[2] is null");
-                }
-                else
-                    con2Active = mainapp.consists[2].isActive();
+            adjustThrottleHeights();
 
-                if (mainapp.numThrottles == 2) {
-                    if (!con1Active) {
-                        heights[0] = (int) (screenHeight * 0.9);
-                        heights[1] = (int) (screenHeight * 0.10);
-                        heights[2] = 0;
-                    } else if (!con0Active) {
-                        heights[0] = (int) (screenHeight * 0.10);
-                        heights[1] = (int) (screenHeight * 0.9);
-                        heights[2] = 0;
-                    } else {
-                        heights[0] = (int) (screenHeight * 0.5);
-                        heights[1] = (int) (screenHeight * 0.5);
-                        heights[2] = 0;
-                    }
-                } else if (throttle_count == 0 || throttle_count == 3) {    // none active or all active
-                    heights[0] = (int) (screenHeight * 0.33);
-                    heights[1] = (int) (screenHeight * 0.33);
-                    heights[2] = (int) (screenHeight * 0.33);
-                } else if (!con0Active && !con1Active) {            // just throttle 2 active
-                    heights[0] = (int) (screenHeight * 0.10);
-                    heights[1] = (int) (screenHeight * 0.10);
-                    heights[2] = (int) (screenHeight * 0.80);
-                } else if (!con0Active && !con2Active) {            // just throttle 1 active
-                    heights[0] = (int) (screenHeight * 0.10);
-                    heights[1] = (int) (screenHeight * 0.80);
-                    heights[2] = (int) (screenHeight * 0.10);
-                } else if (!con1Active && !con2Active) {            // just throttle 0 active
-                    heights[0] = (int) (screenHeight * 0.80);
-                    heights[1] = (int) (screenHeight * 0.10);
-                    heights[2] = (int) (screenHeight * 0.10);
-                } else if (!con0Active) {                           // throttles 1 and 2 active
-                    heights[0] = (int) (screenHeight * 0.10);
-                    heights[1] = (int) (screenHeight * 0.45);
-                    heights[2] = (int) (screenHeight * 0.45);
-                } else if (!con1Active) {                           // throttles 0 and 2 active
-                    heights[0] = (int) (screenHeight * 0.45);
-                    heights[1] = (int) (screenHeight * 0.10);
-                    heights[2] = (int) (screenHeight * 0.45);
-                } else {                                            // throttles 0 and 1 active
-                    heights[0] = (int) (screenHeight * 0.45);
-                    heights[1] = (int) (screenHeight * 0.45);
-                    heights[2] = (int) (screenHeight * 0.10);
-                }
-            }
-
-            ImageView myImage = findViewById(R.id.backgroundImgView);
-            myImage.getLayoutParams().height = screenHeight;
-
-            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                // set height of each area
-                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights[throttleIndex]);
-                llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-                lls[throttleIndex].setLayoutParams(llLp);
 
                 // update throttle slider top/bottom
-//                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
                 int[] location = new int[2];
                 ov.getLocationOnScreen(location);
@@ -471,7 +371,7 @@ public class throttle_original extends throttle {
                 sliderTopLeftX[throttleIndex] = x - ovx;
                 sliderTopLeftY[throttleIndex] = y - ovy;
                 sliderBottomRightX[throttleIndex] = x + sbSpeeds[throttleIndex].getWidth() - ovx;
-                sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() -ovy;
+                sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() - ovy;
 
 //            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
@@ -488,8 +388,136 @@ public class throttle_original extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-
         // Log.d("Engine_Driver","ending set_labels");
 
+    }
+
+    void adjustThrottleHeights() {
+        final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int[] throttleHeights = {0, 0, 0, 0, 0, 0};
+        boolean[] directionButtonsVisible = {false, false, false, false, false, false};
+        boolean[] functionButtonsVisible = {false, false, false, false, false, false};
+        int height = getAvailableSceenHeight();
+
+        if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
+
+            if (mainapp.numThrottles == 1) {        // just one throttle
+                throttleHeights[0] = height;
+                directionButtonsVisible[0] = true;
+                functionButtonsVisible[0] = true;
+            } else {
+                boolean[] throttlesInUse = {false, false, false, false, false, false};
+                int throttlesInUseCount = 0;
+                double newHeight = 0;
+                for (int i = 0; i < mainapp.numThrottles; i++) {
+                    if ((mainapp.consists[i] != null) && (mainapp.consists[i].isActive())) {
+                        throttlesInUse[i] = true;
+                        throttlesInUseCount++;
+                    }
+                }
+
+                double activeHeight = 0;
+                double semiActiveHeight = 0;
+                double inactiveHeight = llLocoIdAndSpeedViewGroups[0].getHeight();
+
+                if (!prefHideFunctionButtonsOfNonSelectedThrottle) {
+
+                    if (mainapp.numThrottles == 2) {
+                        if (throttlesInUseCount <= 1) {
+                            activeHeight = height - llLocoIdAndSpeedViewGroups[0].getHeight();
+                        } else {  // equals 2
+                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 2;
+                        }
+                    } else { // equals 3
+                        if (throttlesInUseCount <= 1) {
+                            activeHeight = height - (llLocoIdAndSpeedViewGroups[0].getHeight() * 2);
+                        } else if (throttlesInUseCount == 2) {
+                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 2;
+                        } else {  // equals 3
+                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 3;
+                        }
+                    }
+                    for (int i = 0; i < mainapp.numThrottles; i++) {
+                        if (throttlesInUse[i]) {
+                            throttleHeights[i] = (int) activeHeight;
+                        } else {
+                            throttleHeights[i] = (int) inactiveHeight;
+                        }
+                    }
+
+                } else { // hide function buttons of non-selected throttle
+                    int semiActiveCount = (throttlesInUseCount == 0) ? 0 : (throttlesInUseCount - 1);
+                    int inactiveCount = (throttlesInUseCount == 0) ? mainapp.numThrottles : (mainapp.numThrottles - 1 - semiActiveCount);
+                    semiActiveHeight = llLocoIdAndSpeedViewGroups[0].getHeight()
+                            + llLocoDirectionButtonViewGroups[0].getHeight()
+                            + llSetSpeedLayouts[0].getHeight();
+                    activeHeight = height - (semiActiveHeight * semiActiveCount) - (inactiveHeight * inactiveCount);
+
+                    for (int i = 0; i < mainapp.numThrottles; i++) {
+                        if (throttlesInUse[i]) {
+                            if (i == whichVolume) {
+                                throttleHeights[i] = (int) activeHeight;
+                            } else {
+                                throttleHeights[i] = (int) semiActiveHeight;
+                            }
+                        } else {
+                            throttleHeights[i] = (int) inactiveHeight;
+                        }
+                    }
+                }
+
+
+                if (throttlesInUseCount == 0) throttleHeights[0] = (int) activeHeight;
+            }
+
+            LinearLayout.LayoutParams llLp;
+            for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                // set height of each area
+                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, throttleHeights[throttleIndex]);
+                llLp.bottomMargin = (int) (throttleMargin * (displayMetrics.densityDpi / 160.));
+                llThrottleLayouts[throttleIndex].setLayoutParams(llLp);
+            }
+        }
+    }
+
+    int getAvailableSceenHeight() {   // excluding the webview if displayed
+        final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        final float density = displayMetrics.density;
+
+        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        int fullScreenHeight = screenHeight;
+        if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
+            titleBar = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);
+            if (screenHeight != 0) {
+                screenHeight = screenHeight - titleBar;
+            }
+        }
+        if (screenHeight == 0) {
+            // throttle screen hasn't been drawn yet, so use display metrics for now
+            screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
+            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+        }
+        screenHeight -= throttleMargin * mainapp.numThrottles;
+
+        double height = screenHeight;
+        if(!webViewLocation.equals(web_view_location_type.NONE))     {
+            webViewIsOn = true;
+            if (!prefIncreaseWebViewSize) {
+                height *= 0.5; // save half the screen
+            } else {
+                height *= 0.4; // save 60% of the screen for web view
+            }
+            screenHeight = (int) height;
+            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, fullScreenHeight - titleBar - screenHeight);
+            webView.setLayoutParams(webViewParams);
+        }
+        return (int) height;
+    }
+
+    @Override
+    protected void getCommonPrefs(boolean isCreate) {
+        super.getCommonPrefs(isCreate);
+
+        prefHideFunctionButtonsOfNonSelectedThrottle = prefs.getBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", false);
     }
 }

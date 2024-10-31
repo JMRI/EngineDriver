@@ -1735,7 +1735,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.prefConsistFollowRuleStyle = parentActivity.prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
             parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
-            showHideLeftRightSwipePreferences();
+//            showHideLeftRightSwipePreferences();
         }
 
         @Override
@@ -1800,12 +1800,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         }
 
-        private void showHideLeftRightSwipePreferences() {
-            Log.d("Engine_Driver", "Settings: showHideLeftRightSwipePreferences()");
-            boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
-                    getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);
-        }
+//        private void showHideLeftRightSwipePreferences() {
+//            Log.d("Engine_Driver", "Settings: showHideLeftRightSwipePreferences()");
+//            boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+//                    getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
+//            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);
+//        }
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
@@ -1990,10 +1990,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "100");
                         break;
-                    case "prefLeftRightSwipeChangesSpeed":
-                        sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
-                        showHideLeftRightSwipePreferences();
-                        break;
+//                    case "prefLeftRightSwipeChangesSpeed":
+//                        sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
+//                        showHideLeftRightSwipePreferences();
+//                        break;
                 }
             }
         }

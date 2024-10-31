@@ -109,17 +109,17 @@ public class throttle_switching_horizontal extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
                     break;
                 case 1:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_1);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_1);
                     break;
                 case 2:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_2);
                     tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_2);
                     break;            }
@@ -381,13 +381,13 @@ public class throttle_switching_horizontal extends throttle {
             switch (throttleIndex) {
                 default:
                 case 0:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     break;
                 case 1:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     break;
                 case 2:
-                    llSetSpds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
+                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     break;
             }
         }
@@ -396,21 +396,21 @@ public class throttle_switching_horizontal extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
             LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
-            llLocoIds[throttleIndex].setLayoutParams(llLidp);
-            llLocoDirs[throttleIndex].setLayoutParams(llLidp);
+            llLocoIdAndSpeedViewGroups[throttleIndex].setLayoutParams(llLidp);
+            llLocoDirectionButtonViewGroups[throttleIndex].setLayoutParams(llLidp);
             //
             tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
             // SPDHT
 
             //set height of slider areas
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            llSetSpds[throttleIndex].setLayoutParams(llLp);
+            llSetSpeedLayouts[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
             int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
-            llSetSpds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            llSetSpeedLayouts[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
 
             hsbSwitchingSpeeds[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -430,7 +430,7 @@ public class throttle_switching_horizontal extends throttle {
 //                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
-                llSetSpds[throttleIndex].setVisibility(View.GONE);
+                llSetSpeedLayouts[throttleIndex].setVisibility(View.GONE);
             }
 
             int additionalPadding = (sbs[throttleIndex].getWidth()>400 ? 40 : 20);
@@ -521,11 +521,11 @@ public class throttle_switching_horizontal extends throttle {
                 // set height of each area
                 llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights[throttleIndex]);
                 llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-                lls[throttleIndex].setLayoutParams(llLp);
+                llThrottleLayouts[throttleIndex].setLayoutParams(llLp);
 
                 // update throttle slider top/bottom
-//                tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//                bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
                 int[] location = new int[2];
                 ov.getLocationOnScreen(location);

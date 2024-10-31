@@ -232,7 +232,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected SeekBar[] sbs; // seekbars
 
-    protected ViewGroup[] fbs; // function button tables
+    protected ViewGroup[] functionButtonViewGroups; // function button tables
 
     protected Button[] bFwds; // buttons
     protected Button[] bStops;
@@ -256,8 +256,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected TextView[] tvGamePads;
 
-    protected LinearLayout[] lls; // throttles
-    protected LinearLayout[] llSetSpds;
+    protected LinearLayout[] llThrottleLayouts; // throttles
+    protected LinearLayout[] llSetSpeedLayouts;
 
     protected HorizontalSeekBar[] sbSpeeds = {};
     protected VerticalSeekBar[] vsbSpeeds;
@@ -299,8 +299,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected Handler[] semiRealisticAirUpdateHandlers = {null, null, null, null, null, null};
 
     // SPDHT for Speed Id and Direction Button Heights
-    protected LinearLayout[] llLocoIds;
-    protected LinearLayout[] llLocoDirs;
+    protected LinearLayout[] llLocoIdAndSpeedViewGroups;
+    protected LinearLayout[] llLocoDirectionButtonViewGroups;
 
     // SPDHT
     protected View vThrotScr;
@@ -507,6 +507,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected boolean pref_increase_slider_height_preference = false;
     protected boolean prefShowAddressInsteadOfName = false;
     protected boolean prefIncreaseWebViewSize = false;
+    protected boolean prefHideFunctionButtonsOfNonSelectedThrottle = false;
 
     // preference to change the consist's on long clicks
     boolean prefConsistLightsLongClick;
@@ -946,7 +947,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     }
                                     // loop through all function buttons and set label and dcc functions (based on settings) or hide if no label
                                     set_function_labels_and_listeners_for_view(whichThrottle);
-                                    enableDisableButtonsForView(fbs[whichThrottle], true);
+                                    enableDisableButtonsForView(functionButtonViewGroups[whichThrottle], true);
                                     soundsShowHideDeviceSoundsButton(whichThrottle);
                                     showHideSpeedLimitAndPauseButtons(whichThrottle);
                                     set_labels();
@@ -1095,8 +1096,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.FORCE_THROTTLE_RELOAD:
                     try {
                         int whichThrottle = Integer.parseInt(response_str);
-//                        lls[whichThrottle].invalidate();
-//                        lls[whichThrottle].requestLayout();
+//                        llThrottleLayouts[whichThrottle].invalidate();
+//                        llThrottleLayouts[whichThrottle].requestLayout();
 //                        set_labels();
                         removeLoco(whichThrottle);
                         setAllFunctionLabelsAndListeners();
@@ -1602,8 +1603,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
-        mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
-                getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
+//        mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+//                getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
 
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
@@ -2499,7 +2500,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Button bFwd = bFwds[whichThrottle];
         Button bRev = bRevs[whichThrottle];
         Button bSel = bSels[whichThrottle];
-        boolean tIsEnabled = lls[whichThrottle].isEnabled();
+        boolean tIsEnabled = llThrottleLayouts[whichThrottle].isEnabled();
         int dir = dirs[whichThrottle];
 
         if (getConsist(whichThrottle).isActive()) {
@@ -2568,7 +2569,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvSpdVals[whichThrottle].setEnabled(newEnabledState);
         bLSpds[whichThrottle].setEnabled(newEnabledState);
         bRSpds[whichThrottle].setEnabled(newEnabledState);
-        enableDisableButtonsForView(fbs[whichThrottle], newEnabledState);
+        enableDisableButtonsForView(functionButtonViewGroups[whichThrottle], newEnabledState);
         soundsShowHideDeviceSoundsButton(whichThrottle);
         showHideSpeedLimitAndPauseButtons(whichThrottle);
         if (!newEnabledState) {
@@ -5966,64 +5967,64 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             switch (i) {
                 case 0:
-                    lls[i] = findViewById(R.id.throttle_0);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_0);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_0);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_0);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_0);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_0);
                     tvVols[i] = findViewById(R.id.volume_indicator_0); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_0); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_0); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_0);
-                    fbs[i] = findViewById(R.id.function_buttons_table_0);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    lls[i] = findViewById(R.id.throttle_1);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_1);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_1);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_1);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_1);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_1);
                     tvVols[i] = findViewById(R.id.volume_indicator_1); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_1); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_1); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_1);
-                    fbs[i] = findViewById(R.id.function_buttons_table_1);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_1);
                     break;
                 case 2:
-                    lls[i] = findViewById(R.id.throttle_2);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_2);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_2);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_2);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_2);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_2);
                     tvVols[i] = findViewById(R.id.volume_indicator_2); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_2); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_2); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_2);
-                    fbs[i] = findViewById(R.id.function_buttons_table_2);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_2);
                     break;
                 case 3:
-                    lls[i] = findViewById(R.id.throttle_3);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_3);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_3);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_3);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_3);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_3);
                     tvVols[i] = findViewById(R.id.volume_indicator_3); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_3); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_3); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_3);
-                    fbs[i] = findViewById(R.id.function_buttons_table_3);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_3);
                     break;
                 case 4:
-                    lls[i] = findViewById(R.id.throttle_4);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_4);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_4);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_4);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_4);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_4);
                     tvVols[i] = findViewById(R.id.volume_indicator_4); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_4); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_4); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_4);
-                    fbs[i] = findViewById(R.id.function_buttons_table_4);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_4);
                     break;
                 case 5:
-                    lls[i] = findViewById(R.id.throttle_5);
-                    llLocoIds[i] = findViewById(R.id.loco_buttons_group_5);
-                    llLocoDirs[i] = findViewById(R.id.dir_buttons_table_5);
+                    llThrottleLayouts[i] = findViewById(R.id.throttle_5);
+                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_5);
+                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_5);
                     tvVols[i] = findViewById(R.id.volume_indicator_5); // volume indicators
                     tvGamePads[i] = findViewById(R.id.gamepad_indicator_5); // gamepad indicators
                     tvSpdLabs[i] = findViewById(R.id.speed_label_5); // set_default_function_labels();
                     tvSpdVals[i] = findViewById(R.id.speed_value_label_5);
-                    fbs[i] = findViewById(R.id.function_buttons_table_5);
+                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_5);
                     break;
             }
 
@@ -6474,16 +6475,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvDirectionIndicatorForwards = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
-        lls = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llSetSpds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llLocoIds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llLocoDirs = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llThrottleLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeedLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoIdAndSpeedViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llLocoDirectionButtonViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
         // Semi-Realistic throttle
         tvTargetSpdVals = new TextView[mainapp.maxThrottlesCurrentScreen];
         tvTargetAccelerationVals = new TextView[mainapp.maxThrottlesCurrentScreen];
 
-        fbs = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
+        functionButtonViewGroups = new ViewGroup[mainapp.maxThrottlesCurrentScreen];
 
         functionMaps = (LinkedHashMap<Integer, Button>[]) new LinkedHashMap<?, ?>[mainapp.maxThrottlesCurrentScreen];
 
@@ -6737,8 +6738,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
 //        // implemented in derived class, but called from this class
 
-        if (fbs != null) { // if it is null it probably because the Throttle Screen Type does not have Functions Buttons
-            if (fbs[0] != null) {
+        if (functionButtonViewGroups != null) { // if it is null it probably because the Throttle Screen Type does not have Functions Buttons
+            if (functionButtonViewGroups[0] != null) {
                 ViewGroup tv; // group
                 ViewGroup r; // row
                 FunctionButtonTouchListener functionButtonTouchListener;
@@ -6747,7 +6748,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 LinkedHashMap<Integer, String> function_labels_temp;
                 LinkedHashMap<Integer, Button> functionButtonMap = new LinkedHashMap<>();
 
-                tv = fbs[whichThrottle];
+                tv = functionButtonViewGroups[whichThrottle];
 
                 // note: we make a copy of function_labels_x because TA might change it
                 // while we are using it (causing issues during button update below)
@@ -7588,14 +7589,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.THROTTLE, deltaX);
                             startACoreActivity(this, nextScreenIntent, true, deltaX);
                         }
-                    } else {
-                        if (mainapp.prefLeftRightSwipeChangesSpeed) {
-                            if (deltaX < 0.0) {  // swipe right
-                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-                            } else {
-                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-                            }
-                        }
+//                    } else {
+//                        if (mainapp.prefLeftRightSwipeChangesSpeed) {
+//                            if (deltaX < 0.0) {  // swipe right
+//                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+//                            } else {
+//                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+//                            }
+//                        }
                     }
                 } else {
                     // swipe up/down
@@ -7627,13 +7628,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
                             switchThrottleScreenType();
                             break;
-                        case swipe_up_down_option_type.CHANGE_SPEED:
-                            if (deltaY > 0.0) {  // swipe down
-                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-                            } else {
-                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-                            }
-                            break;
+//                        case swipe_up_down_option_type.CHANGE_SPEED:
+//                            if (deltaY > 0.0) {  // swipe down
+//                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+//                            } else {
+//                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+//                            }
+//                            break;
                     }
                 }
             } else {

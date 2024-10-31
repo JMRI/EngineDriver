@@ -97,12 +97,12 @@
                     android:title="@string/prefSwipeThroughRoutesTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
-                    android:key="prefLeftRightSwipeChangesSpeed"
-                    android:summary="@string/prefLeftRightSwipeChangesSpeedSummary"
-                    android:title="@string/prefLeftRightSwipeChangesSpeedTitle"
-                    android:layout="@layout/checkbox_no_icon" />
+<!--                <CheckBoxPreference-->
+<!--                    android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"-->
+<!--                    android:key="prefLeftRightSwipeChangesSpeed"-->
+<!--                    android:summary="@string/prefLeftRightSwipeChangesSpeedSummary"-->
+<!--                    android:title="@string/prefLeftRightSwipeChangesSpeedTitle"-->
+<!--                    android:layout="@layout/checkbox_no_icon" />-->
 
             </PreferenceCategory>
 
@@ -222,6 +222,13 @@
                     android:maxLength="3"
                     android:summary="@string/prefVerticalStopButtonMarginSummary"
                     android:title="@string/prefVerticalStopButtonMarginTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="prefHideFunctionButtonsOfNonSelectedThrottle"
+                    android:summary="@string/prefHideFunctionButtonsOfNonSelectedThrottleSummary"
+                    android:title="@string/prefHideFunctionButtonsOfNonSelectedThrottleTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>

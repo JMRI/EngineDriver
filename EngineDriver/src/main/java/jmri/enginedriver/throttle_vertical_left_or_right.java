@@ -96,22 +96,22 @@ public class throttle_vertical_left_or_right extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
                 case 1:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_1);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     break;
                 case 2:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_2);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     break;
                 case 3:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_3);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_3);
                     break;
                 case 4:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_4);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_4);
                     break;
                 case 5:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_5);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_5);
                     break;
             }
 
@@ -403,8 +403,8 @@ public class throttle_vertical_left_or_right extends throttle {
             lLowers[throttleIndex].requestLayout();
 
             // update throttle slider top/bottom
-//            tops[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//            bottoms[throttleIndex] = lls[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
+//            bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
             int[] location = new int[2];
             ov.getLocationOnScreen(location);
