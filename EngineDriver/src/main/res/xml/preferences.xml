@@ -429,6 +429,13 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefHideFunctionButtonsOfNonSelectedThrottle"
+            android:summary="@string/prefHideFunctionButtonsOfNonSelectedThrottleSummary"
+            android:title="@string/prefHideFunctionButtonsOfNonSelectedThrottleTitle"
+            android:layout="@layout/checkbox_no_icon" />
+        
         <ListPreference
             android:defaultValue="@string/prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue"
             android:key="prefSimpleThrottleLayoutShowFunctionButtonCount"

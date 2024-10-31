@@ -82,7 +82,7 @@ public class throttle_big_buttons extends throttle {
             //noinspection SwitchStatementWithTooFewBranches
             switch (throttleIndex) {
                 case 0:
-                    fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
                     break;
             }
 

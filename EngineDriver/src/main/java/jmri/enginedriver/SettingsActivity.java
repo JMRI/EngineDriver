@@ -1087,6 +1087,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
         enableDisablePreference(prefScreen, "DirChangeWhileMovingPreference", enable);
         enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
+
+        enable = prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                || prefThrottleScreenType.equals(throttle_screen_type.DEFAULT) ;
+
+        enableDisablePreference(prefScreen, "prefHideFunctionButtonsOfNonSelectedThrottle", enable);
     }
 
     private void showHideSemiRealisticthrottlePreferences(PreferenceScreen prefScreen) {
@@ -1735,7 +1740,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.prefConsistFollowRuleStyle = parentActivity.prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
             parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
-            showHideLeftRightSwipePreferences();
+//            showHideLeftRightSwipePreferences();
         }
 
         @Override

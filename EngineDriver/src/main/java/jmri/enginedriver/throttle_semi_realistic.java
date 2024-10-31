@@ -179,7 +179,7 @@ public class throttle_semi_realistic extends throttle {
         TargetArrowSpeedButtonTouchListener targetArrowSpeedButtonTouchListener;
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            fbs[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+            functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
             tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
             tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
             tvTargetSpdVals[throttleIndex] = findViewById(R.id.target_speed_value_label_0);
