@@ -1603,8 +1603,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
-//        mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
-//                getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
+        mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+                getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
 
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
@@ -7589,14 +7589,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.THROTTLE, deltaX);
                             startACoreActivity(this, nextScreenIntent, true, deltaX);
                         }
-//                    } else {
-//                        if (mainapp.prefLeftRightSwipeChangesSpeed) {
-//                            if (deltaX < 0.0) {  // swipe right
-//                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-//                            } else {
-//                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-//                            }
-//                        }
+                    } else {
+                        if (mainapp.prefLeftRightSwipeChangesSpeed) {
+                            if (deltaX < 0.0) {  // swipe right
+                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            } else {
+                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            }
+                        }
                     }
                 } else {
                     // swipe up/down
@@ -7628,13 +7628,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
                             switchThrottleScreenType();
                             break;
-//                        case swipe_up_down_option_type.CHANGE_SPEED:
-//                            if (deltaY > 0.0) {  // swipe down
-//                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-//                            } else {
-//                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
-//                            }
-//                            break;
+                        case swipe_up_down_option_type.CHANGE_SPEED:
+                            if (deltaY > 0.0) {  // swipe down
+                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            } else {
+                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                            }
+                            break;
                     }
                 }
             } else {

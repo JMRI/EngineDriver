@@ -372,7 +372,7 @@ public class threaded_application extends Application {
     public boolean prefSwipeThoughWeb = true;
 
     public boolean prefFullScreenSwipeArea = false;
-//    public boolean prefLeftRightSwipeChangesSpeed = false;
+    public boolean prefLeftRightSwipeChangesSpeed = false;
     public boolean prefThrottleViewImmersiveModeHideToolbar = true;
     public boolean prefActionBarShowServerDescription = false;
 

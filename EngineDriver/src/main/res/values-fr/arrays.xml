@@ -190,7 +190,7 @@
         <item>Assombrir l écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
         <item>Changement affichage régulateur</item>
-<!--        <item >Increase/Decrease Loco Speed</item>-->
+        <item >Increase/Decrease Loco Speed</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

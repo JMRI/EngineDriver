@@ -339,7 +339,7 @@
         <item >Dim Screen</item>
         <item >Immersive Mode</item>
         <item >Switch Layouts</item>
-<!--        <item >Speed Change X 2</item>-->
+        <item >Speed Change X 2</item>
     </string-array>
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
         <item >None</item>
@@ -348,7 +348,7 @@
         <item >Dim Screen</item>
         <item >Immersive Mode temporarily enable-disable</item>
         <item >Switch Throttle Screen Layouts</item>
-<!--        <item >Increase/Decrease Loco Speed</item>-->
+        <item >Increase/Decrease Loco Speed</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1979,7 +1979,7 @@
         <item>prefLocale</item>
         <item>prefDoubleBackButtonToExit</item>
         <item>prefHideInstructionalToasts</item>
-<!--        <item>prefLeftRightSwipeChangesSpeed</item>-->
+        <item>prefLeftRightSwipeChangesSpeed</item>
 
         <!-- Throttle Screen Appearance Preferences -->
         <item>prefDecreaseLocoNumberHeight</item>
@@ -2082,7 +2082,7 @@
 
     <!-- no need to include the sub preference here if the whole PreferenceScreen is hidden-->
     <string-array name="advancedSubPreferences" translatable="false">
-<!--        <item>prefLeftRightSwipeChangesSpeed</item>-->
+        <item>prefLeftRightSwipeChangesSpeed</item>
         <item>increase_slider_height_preference</item>
         <item>left_slider_margin</item>
         <item>hide_slider_preference</item>
