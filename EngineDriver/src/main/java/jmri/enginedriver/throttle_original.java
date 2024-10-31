@@ -303,9 +303,8 @@ public class throttle_original extends throttle {
             LinearLayout.LayoutParams llLidp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newDlihHeight);
             llLocoIdAndSpeedViewGroups[throttleIndex].setLayoutParams(llLidp);
             llLocoDirectionButtonViewGroups[throttleIndex].setLayoutParams(llLidp);
-            //
+
             tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
-            // SPDHT
 
             //set height of slider areas
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
