@@ -529,7 +529,7 @@ public class throttle_semi_realistic extends throttle {
             // update throttle slider top/bottom
 
             int[] location = new int[2];
-            ov.getLocationOnScreen(location);
+            throttleOverlay.getLocationOnScreen(location);
             int ovx = location[0];
             int ovy = location[1];
 

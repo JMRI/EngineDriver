@@ -43,7 +43,7 @@
         <LinearLayout
             android:id="@+id/throttle_screen"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <include layout="@layout/toolbar_screen_name_line" />
@@ -325,6 +325,7 @@
                         android:id="@+id/throttle_1"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -579,6 +580,7 @@
                         android:id="@+id/throttle_2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -829,6 +831,6 @@
     <WebView
         android:id="@+id/throttle_webview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="300dp" />
 
 </LinearLayout>

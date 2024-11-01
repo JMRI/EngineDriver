@@ -531,17 +531,13 @@ public class throttle_switching_horizontal extends throttle {
 
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-//                // set height of each area
-//                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, heights[throttleIndex]);
-//                llLp.bottomMargin = (int) (throttleMargin * (dm.densityDpi / 160.));
-//                llThrottleLayouts[throttleIndex].setLayoutParams(llLp);
 
                 // update throttle slider top/bottom
 //                tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 //                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
                 int[] location = new int[2];
-                ov.getLocationOnScreen(location);
+                throttleOverlay.getLocationOnScreen(location);
                 int ovx = location[0];
                 int ovy = location[1];
 
@@ -1050,12 +1046,18 @@ public class throttle_switching_horizontal extends throttle {
         setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
     }
 
+    @Override
+    void adjustThrottleHeightsOnChange() {
+        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return;
+        adjustThrottleHeights();
+    }
 
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
         boolean[] directionButtonsVisible = {false, false, false, false, false, false};
         boolean[] functionButtonsVisible = {false, false, false, false, false, false};
+
         int height = getAvailableSceenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
@@ -1133,7 +1135,7 @@ public class throttle_switching_horizontal extends throttle {
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 // set height of each area
                 llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, throttleHeights[throttleIndex]);
-                llLp.bottomMargin = (int) (throttleMargin * (displayMetrics.densityDpi / 160.));
+//                llLp.bottomMargin = (int) (throttleMargin * (displayMetrics.densityDpi / 160.));
                 llThrottleLayouts[throttleIndex].setLayoutParams(llLp);
             }
         }
@@ -1156,9 +1158,9 @@ public class throttle_switching_horizontal extends throttle {
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
-        screenHeight -= throttleMargin * mainapp.numThrottles;
 
         double height = screenHeight;
+        LinearLayout.LayoutParams overlayParams;
         if(!webViewLocation.equals(web_view_location_type.NONE))     {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
@@ -1170,6 +1172,9 @@ public class throttle_switching_horizontal extends throttle {
             LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, fullScreenHeight - titleBar - screenHeight);
             webView.setLayoutParams(webViewParams);
         }
+        overlayParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, screenHeight  + titleBar);
+        throttleOverlay.setLayoutParams(overlayParams);
+
         return (int) height;
     }
 
