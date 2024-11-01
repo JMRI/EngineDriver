@@ -203,7 +203,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public static final int ACTIVITY_GAMEPAD_TEST = 4;
     public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
 
-    protected static final int throttleMargin = 8; // margin between the throttles in dp
+    protected static final int throttleMargin = 8; // forced margin between the horizontal throttles in dp
     protected int titleBar = 45; // estimate of lost screen height in dp
 
     // speed scale factors
@@ -320,7 +320,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected int[] sliderTopLeftY = {0, 0, 0, 0, 0, 0};
     protected int[] sliderBottomRightX = {0, 0, 0, 0, 0, 0};
     protected int[] sliderBottomRightY = {0, 0, 0, 0, 0, 0};
-    protected GestureOverlayView ov;    // screen coordinates for brake sliders, so we can ignore swipe on them
+    protected GestureOverlayView throttleOverlay;    // screen coordinates for brake sliders, so we can ignore swipe on them
     protected int[] brakeSliderTopLeftX = {0, 0, 0, 0, 0, 0};
     protected int[] brakeSliderTopLeftY = {0, 0, 0, 0, 0, 0};
     protected int[] brakeSliderBottomRightX = {0, 0, 0, 0, 0, 0};
@@ -2628,6 +2628,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
+    void adjustThrottleHeightsOnChange() {
+        // implemented in derived class, but called from this class
+    }
+
     private void clearVolumeAndGamepadAdditionalIndicators() {
         for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
             if (throttleIndex < bSels.length) {
@@ -2763,6 +2767,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     whichVolume = whichThrottle;
                     setVolumeIndicator();
                     setSelectedLocoAdditionalIndicator(whichThrottle, true);
+                    adjustThrottleHeightsOnChange();
                 }
             }
             mainapp.whichThrottleLastTouch = whichThrottle;
@@ -5775,9 +5780,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         screenBrightnessModeOriginal = getScreenBrightnessMode();
 
         // myGesture = new GestureDetector(this);
-        ov = findViewById(R.id.throttle_overlay);
-        ov.addOnGestureListener(this);
-        ov.setGestureVisible(false);
+        throttleOverlay = findViewById(R.id.throttle_overlay);
+        throttleOverlay.addOnGestureListener(this);
+        throttleOverlay.setGestureVisible(false);
 
         DirectionButtonTouchListener directionButtonTouchListener;
         FunctionButtonTouchListener functionButtonTouchListener;

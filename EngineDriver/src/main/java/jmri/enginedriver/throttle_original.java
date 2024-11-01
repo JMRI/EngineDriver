@@ -358,7 +358,7 @@ public class throttle_original extends throttle {
 //                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
                 int[] location = new int[2];
-                ov.getLocationOnScreen(location);
+                throttleOverlay.getLocationOnScreen(location);
                 int ovx = location[0];
                 int ovy = location[1];
 
@@ -391,17 +391,24 @@ public class throttle_original extends throttle {
 
     }
 
+    @Override
+    void adjustThrottleHeightsOnChange() {
+        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return;
+        adjustThrottleHeights();
+    }
+
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
         boolean[] directionButtonsVisible = {false, false, false, false, false, false};
         boolean[] functionButtonsVisible = {false, false, false, false, false, false};
-        int height = getAvailableSceenHeight();
+
+        double height = getAvailableSceenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
             if (mainapp.numThrottles == 1) {        // just one throttle
-                throttleHeights[0] = height;
+                throttleHeights[0] = (int) height;
                 directionButtonsVisible[0] = true;
                 functionButtonsVisible[0] = true;
             } else {
@@ -445,8 +452,9 @@ public class throttle_original extends throttle {
                     }
 
                 } else { // hide function buttons of non-selected throttle
+                    // one is always notionally 'active'
                     int semiActiveCount = (throttlesInUseCount == 0) ? 0 : (throttlesInUseCount - 1);
-                    int inactiveCount = (throttlesInUseCount == 0) ? mainapp.numThrottles : (mainapp.numThrottles - 1 - semiActiveCount);
+                    int inactiveCount = (throttlesInUseCount <= 1) ? (mainapp.numThrottles - 1)  : (mainapp.numThrottles - 1 - semiActiveCount);
                     semiActiveHeight = llLocoIdAndSpeedViewGroups[0].getHeight()
                             + llLocoDirectionButtonViewGroups[0].getHeight()
                             + llSetSpeedLayouts[0].getHeight();
@@ -469,12 +477,12 @@ public class throttle_original extends throttle {
                 if (throttlesInUseCount == 0) throttleHeights[0] = (int) activeHeight;
             }
 
-            LinearLayout.LayoutParams llLp;
+            LinearLayout.LayoutParams layoutParams;
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 // set height of each area
-                llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, throttleHeights[throttleIndex]);
-                llLp.bottomMargin = (int) (throttleMargin * (displayMetrics.densityDpi / 160.));
-                llThrottleLayouts[throttleIndex].setLayoutParams(llLp);
+                layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, throttleHeights[throttleIndex]);
+//                layoutParams.bottomMargin = (int) (throttleMargin * (displayMetrics.densityDpi / 160.));
+                llThrottleLayouts[throttleIndex].setLayoutParams(layoutParams);
             }
         }
     }
@@ -496,9 +504,10 @@ public class throttle_original extends throttle {
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
             //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
-        screenHeight -= throttleMargin * mainapp.numThrottles;
 
         double height = screenHeight;
+
+        LinearLayout.LayoutParams overlayParams;
         if(!webViewLocation.equals(web_view_location_type.NONE))     {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
@@ -510,6 +519,9 @@ public class throttle_original extends throttle {
             LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, fullScreenHeight - titleBar - screenHeight);
             webView.setLayoutParams(webViewParams);
         }
+        overlayParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, screenHeight  + titleBar);
+        throttleOverlay.setLayoutParams(overlayParams);
+
         return (int) height;
     }
 

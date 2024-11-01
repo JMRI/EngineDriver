@@ -407,7 +407,7 @@ public class throttle_vertical_left_or_right extends throttle {
 //            bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
             int[] location = new int[2];
-            ov.getLocationOnScreen(location);
+            throttleOverlay.getLocationOnScreen(location);
             int ovx = location[0];
             int ovy = location[1];
 

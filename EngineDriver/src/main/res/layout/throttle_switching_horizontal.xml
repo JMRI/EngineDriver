@@ -364,6 +364,7 @@
                         android:id="@+id/throttle_1"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -657,6 +658,7 @@
                         android:id="@+id/throttle_2"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
                         android:orientation="vertical">
 
                         <LinearLayout

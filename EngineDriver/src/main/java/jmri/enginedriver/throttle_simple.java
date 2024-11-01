@@ -338,7 +338,7 @@ public class throttle_simple extends throttle {
 //            bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
             int[] location = new int[2];
-            ov.getLocationOnScreen(location);
+            throttleOverlay.getLocationOnScreen(location);
             int ovx = location[0];
             int ovy = location[1];
 
