@@ -1606,6 +1606,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefLeftRightSwipeChangesSpeed = prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
                 getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
 
+        mainapp.prefSwipeSpeedChangeStep = threaded_application.getIntPrefValue(prefs, "prefSwipeSpeedChangeStep",
+                getApplicationContext().getResources().getString(R.string.prefSwipeSpeedChangeStepDefaultValue));
+
         mainapp.prefThrottleViewImmersiveModeHideToolbar = prefs.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
 
@@ -7597,9 +7600,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     } else {
                         if (mainapp.prefLeftRightSwipeChangesSpeed) {
                             if (deltaX < 0.0) {  // swipe right
-                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             } else {
-                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             }
                         }
                     }
@@ -7635,9 +7638,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             break;
                         case swipe_up_down_option_type.CHANGE_SPEED:
                             if (deltaY > 0.0) {  // swipe down
-                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                                decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             } else {
-                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 2);
+                                incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             }
                             break;
                     }

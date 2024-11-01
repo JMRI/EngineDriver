@@ -104,6 +104,16 @@
                     android:title="@string/prefLeftRightSwipeChangesSpeedTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <EditTextPreference
+                    android:defaultValue="@string/prefSwipeSpeedChangeStepDefaultValue"
+                    android:dialogTitle="@string/prefSwipeSpeedChangeStepTitle"
+                    android:key="prefSwipeSpeedChangeStep"
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:summary="@string/prefSwipeSpeedChangeStepSummary"
+                    android:title="@string/prefSwipeSpeedChangeStepTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
 
         </PreferenceScreen>
