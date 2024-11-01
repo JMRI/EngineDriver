@@ -659,7 +659,9 @@
     <string name="prefTickMarksOnSlidersSummary">Show tick marks on the background of the Speed Sliders</string>
 
     <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Hide function buttons on non-selected throttle?</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">If enabled, on the horizontal layouts the function buttons will be hidden for all bar the selected throttle, indicated by a \'v\'.\nClick on the speed value of a throttle to select it.</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">If enabled, on the horizontal layouts the function buttons will be hidden for all bar the selected \'Volume\' throttle, indicated by a \'v\'.
+        \nClick on the speed value of a throttle to select it.
+        \nSet the \'Volume keys follow touch\' preference to select a throttle on any touch.</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">Select a visual appearance for this app</string>
@@ -1425,8 +1427,13 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="prefFullScreenSwipeAreaTitle">Disable full screen Swipe?</string>
     <string name="prefFullScreenSwipeAreaSummary">If checked, only the toolbar can be swiped to change screens</string>
+
     <string name="prefLeftRightSwipeChangesSpeedTitle">Left/Right Swipe Changes Speed?</string>
     <string name="prefLeftRightSwipeChangesSpeedSummary">If checked, swipes on the main part of the screen will increase/decrease speed. Title Only swipe will be enabled for swipes between screens</string>
+
+    <string name="prefSwipeSpeedChangeStepTitle">Speed Step for Swipes (Up, Down or Left/Right)?</string>
+    <string name="prefSwipeSpeedChangeStepSummary">Speed Step amount to use the the Up, Down or Left/Right swipes are set to change speed</string>
+    <string name="prefSwipeSpeedChangeStepDefaultValue" translatable="false">8</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefLeftRightSwipePreferencesTitle">Left/Right Swipe Preferences</string>
     <string name="prefLeftRightSwipePreferencesSummary">Options for swipes to change screens</string>
