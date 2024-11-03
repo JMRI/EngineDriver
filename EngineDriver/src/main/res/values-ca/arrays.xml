@@ -208,6 +208,7 @@
         <item>Activació-desactivació temporal del mode inmersiu</item>
         <item>Canviar el diseny de la pantalla del controlador</item>
         <item >Increase/Decrease Loco Speed</item>
+        <item >Next Throttle (volume)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Cap</item>

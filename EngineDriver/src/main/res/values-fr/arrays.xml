@@ -191,6 +191,7 @@
         <item>Activation-désactivation provisoire du mode immersif</item>
         <item>Changement affichage régulateur</item>
         <item >Increase/Decrease Loco Speed</item>
+        <item >Next Throttle (volume)</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->

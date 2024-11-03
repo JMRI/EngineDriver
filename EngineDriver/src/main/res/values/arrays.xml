@@ -340,6 +340,7 @@
         <item >Immersive Mode</item>
         <item >Switch Layouts</item>
         <item >Speed Change X 2</item>
+        <item >Next Volume</item>
     </string-array>
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
         <item >None</item>
@@ -349,6 +350,7 @@
         <item >Immersive Mode temporarily enable-disable</item>
         <item >Switch Throttle Screen Layouts</item>
         <item >Increase/Decrease Loco Speed</item>
+        <item >Next Throttle (volume)</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

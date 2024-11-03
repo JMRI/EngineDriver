@@ -7653,6 +7653,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             }
                             break;
+                        case swipe_up_down_option_type.NEXT_VOLUME:
+                            setNextActiveThrottle(true);
+                            adjustThrottleHeights();
+                            break;
                     }
                 }
             } else {

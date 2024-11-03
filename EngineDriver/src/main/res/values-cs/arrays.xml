@@ -129,6 +129,7 @@
         <item >Působivý režim dočasně povolit-zakázat</item>
         <item >Přepnout Škrtící klapky rozvržení obrazovky</item>
         <item >Increase/Decrease Loco Speed</item>
+        <item >Next Throttle (volume)</item>
     </string-array>
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
