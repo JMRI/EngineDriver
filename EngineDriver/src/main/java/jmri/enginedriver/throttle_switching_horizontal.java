@@ -744,7 +744,7 @@ public class throttle_switching_horizontal extends throttle {
                     setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
 
-                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+                setActiveThrottle(whichThrottle, true);
 
             } else {
 //                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed);
@@ -1047,11 +1047,13 @@ public class throttle_switching_horizontal extends throttle {
     }
 
     @Override
-    void adjustThrottleHeightsOnChange() {
-        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return;
-        adjustThrottleHeights();
+    boolean canChangeVolumeIndicatorOnTouch(boolean isSpeedButtonOrSlider) {
+        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return false;
+        if (isSpeedButtonOrSlider) return false;
+        return true;
     }
 
+    @Override
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};

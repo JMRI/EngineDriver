@@ -2631,7 +2631,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    void adjustThrottleHeightsOnChange() {
+    boolean canChangeVolumeIndicatorOnTouch(boolean isSpeedButtonOrSlider) {
+        // implemented in derived class, but called from this class
+        return false;
+    }
+
+    void adjustThrottleHeights() {
         // implemented in derived class, but called from this class
     }
 
@@ -2764,13 +2769,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // if the preference is set, set the specific active throttle for the volume keys based on the throttle used
     protected void setActiveThrottle(int whichThrottle) {
+        setActiveThrottle(whichThrottle, false);
+    }
+    protected void setActiveThrottle(int whichThrottle, boolean isSpeedButtonOrSlider) {
         if (tvVols[0] != null) { // if it is null assume that the page is not fully drawn yet
             if (prefVolumeKeysFollowLastTouchedThrottle) {
-                if (whichVolume != whichThrottle) {
-                    whichVolume = whichThrottle;
-                    setVolumeIndicator();
-                    setSelectedLocoAdditionalIndicator(whichThrottle, true);
-                    adjustThrottleHeightsOnChange();
+                if (canChangeVolumeIndicatorOnTouch(isSpeedButtonOrSlider)) {
+                    if (whichVolume != whichThrottle) {
+                        whichVolume = whichThrottle;
+                        setVolumeIndicator();
+                        setSelectedLocoAdditionalIndicator(whichThrottle, true);
+                        adjustThrottleHeights();
+                    }
                 }
             }
             mainapp.whichThrottleLastTouch = whichThrottle;
@@ -4730,7 +4740,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mAutoDecrement[whichThrottle] = false;
                 decrementSpeed(whichThrottle, speed_commands_from_type.BUTTONS);
             }
-            setActiveThrottle(whichThrottle); // set the throttle the volmue keys control depending on the preference
+            setActiveThrottle(whichThrottle, true);
             mainapp.buttonVibration();
         }
 
@@ -4747,7 +4757,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     && mAutoDecrement[whichThrottle]) {
                 mAutoDecrement[whichThrottle] = false;
             }
-            setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+            setActiveThrottle(whichThrottle, true);
             return false;
         }
     }
@@ -5600,7 +5610,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
 
-                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+                setActiveThrottle(whichThrottle, true);
             } else {
                 if ((limitedJump[whichThrottle])
                         && (sliderType != slider_type.SWITCHING)) {
