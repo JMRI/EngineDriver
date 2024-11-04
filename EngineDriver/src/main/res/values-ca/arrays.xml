@@ -195,6 +195,7 @@
         <item>Atenua la pantalla</item>
         <item>Següent controlador -per botons de volum-</item>
         <item>Atura-ho tot</item>
+        <item>Parada d\'emergència</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>Cap</item>

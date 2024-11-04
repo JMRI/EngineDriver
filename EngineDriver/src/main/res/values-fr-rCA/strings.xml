@@ -947,4 +947,77 @@
     <string name="statusThreadedAppNotconnectedToWifi">Aucune connexion Wi-Fi</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">La recherche de serveur n\'est pas possible sans connexion Wi-Fi!</string>
     <string name="statusThreadedAppUnableToConnect" tools:ignore="TypographyEllipsis">Incapable de se connecter au serveur %1$s:%2$s à partir de %3$s.  Nouvelle tentative...</string>
+    <string name="steal_text">Subtiliser l\'adresse %1$s?</string>
+    <string name="steal_title">Subtiliser</string>
+
+    <string name="throttle">Régulateur</string>
+    <string name="throttle_name">Nom du régulateur: %1$</string>
+    <string name="throttleSwitchAction">Interchanger les écrans du régulateur</string>
+    <string name="throw_button">Ouvert</string>
+    <string name="timerDialogHint">Redémarrer ou Réinitialiser le mot de passe</string>
+    <string name="timerDialogMessage">Mot de passe:</string>
+    <string name="timerDialogTitle">Mot de passe de la minuterie</string>
+    <string name="toastAccelerometerNotFound">Accéléromètre introuvable ou inactf</string>
+    <string name="toastConnectConnected">Connexion au serveur: %%1%% Port: %%2%%</string>
+    <string name="toastConnectEnterAddress">Saisir ou sélectionner une adresse et un port de communication</string>
+    <string name="toastConnectErrorReadingRecentConnections">Erreur de lecture de la liste des connexions récentes:</string>
+    <string name="toastConnectErrorSavingRecentConnection">Erreur de sauvegarde de la liste des connexions récentes:</string>
+
+    <string name="toastConnectionsListHelp">Toucher pour Sélectionner.  Balayer vers la gauche ou la droite pour supprimer une entrée.</string>
+
+    <string name="toastConnectRemoveDemoHostError">Le serveur démo ne peut être supprimé que par une modification aux préférences.</string>
+    <string name="toastConnectUnableToLoadPref">Impossble de charger les préférences spécifiques.  Ce nom de serveur est introuvable.</string>
+    <string name="toastConnectUnableToSavePref">Impossible de sauvegarder les préférences spécifiquers de ce serveur.  Ce nom de serveur est introuvable.</string>
+    <string name="toastConsistEditHelp">Appuyer pour changer la direction de marche.  Défiler vers la gauche ou la droite pour supprimer une entrée.</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">Il est recommandé d\'accroître la taille de la zone des touches de fonctions sinon les fonctions sonores Cloche / Klaxon / Muet ne seront pas accessibles</string>
+    <string name="toastDirectionButtonsSwapped">Touches de direction de marche temporairement inversées.  Accéder aux préférences pour une inversion permanente, </string>
+    <string name="toastEsuMc2NoButtonPresses">Pression sur les touches n\'est pas autorisée: Mobile Control II actuellement en mode Arrêt</string>
+    <string name="toastEsuMc2NoLocoChange">Changement de locomotive n\'est pas autorisé: Mobile Control II actuellement en mode Arrêt</string>
+    <string name="toastEsuMc2NoThrottleChange">Changement de régulateur n\'est pas autorisé: Mobile Control II actuellement en mode Arrêt</string>
+    <string name="toastFlashlightOffFailed">Désolé!  Un problème est survenu à l\'extinction de la lampe de poche&#8230;</string>
+    <string name="toastFlashlightOnFailed">Désolé!  Un problème est survenu à l\'activation de la lampe de poche&#8230;</string>
+    <string name="toastImmersiveModeDisabled"> Mode immersif temporairement désactivé.  Accéder aux préférences pour une désactivation permanente.</string>
+
+    <string name="toastImportExportCannotImport">Importation des préférences impossible.  Aucune connexion vers un serveur.</string>
+    <string name="toastImportExportExportFailed">Exportation des préférences vers \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' a échoué!</string>
+    <string name="toastImportExportExportSucceeded">Exportation des préférences vers \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' réussie.</string>
+    <string name="toastImportExportImportFailed">Importation des préférences en provenance de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' a échoué!</string>
+    <string name="toastImportExportImportSucceeded">Importation des préférences en provenance de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' réussie.</string>
+    <string name="toastImportExportServerImportFailed">Les préférences en provenance de \'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' n\'ont pas été importées.  Il est possible que les préférences de ce serveur n\'aient pas encore été sauvegardées préalablement.</string>
+    <string name="toastInitialisingSounds">Initiaisation des sons de locomotives via le téléphone.</string>
+    <string name="toastLocoAlreadySelected">Locomotive \'%1$s\' déjà sélectionnée.</string>
+    <string name="toastLocoChangeNotAllowed">Changement de direction non-autorisé: \'Changement de direction de marche en déplacement\' est désactivé dans les préférences</string>
+    <string name="toastNumThrottles">Le type d\'affichage des régulateurs ne peut inclure autant de régulateurs.  Réduction à %1$s régulateur(s).</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">Changement d\'arrière plan réussi.</string>
+    <string name="toastPreferencesChangedForceWiFi">La préférence Wi-Fi forcée a été modifiée.</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">L\'importation automatique des préférences du serveur a réussi. (%1$s)</string>
+
+    <string name="toastPreferencesImportServerManualFailed">L\'importation des préférences du serveur a échoué.  Vërifier le nom du fichier. (%1$s)</string>
+    <string name="toastPreferencesImportServerManualSucceeded">L\'importation des préférences du serveur a réussi. (%1$s)</string>
+
+
+    <string name="toastPreferencesLocaleChangeSucceeded">Changement de langue réussi.</string>
+    <string name="toastPreferencesNotNumeric">La valeur inscrite n\'est pas numérique (%1$s-%2$s). Réinitialisation à %3$s.</string>
+    <string name="toastPreferencesOutsideLimits">La valeur inscrite est hors des balises autorisées (%1$s-%2$s). Réinitialisation à %3$s.</string>
+    <string name="toastPreferencesResetSucceeded">Préférences réinitialisées aux valeurs par défaut!</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">Balayage via l\'affichage web désactivé.</string>
+    <string name="toastPreferencesThemeChangeSucceeded">Changement de thème réussi.</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">Changement de disposition de l\'affichage du régulateur réussi.</string>
+    <string name="toastAddressExceedsMax">L\'adresse \'%1$s\' excède la valeur maximale autorisée (\'%2$s\')</string>
+    <string name="toastSortedByName">Tri par Nom</string>
+    <string name="toastSortedById">Tri par Adresse</string>
+    <string name="toastSortedByLastUsed">Tri par Date de dernière utilisation</string>
+    <string name="toastSortedByPosition">Tri par Position</string>
+    <string name="toastRecentCleared">Locomotive retirée de la liste</string>
+    <string name="toastRecentConsistCleared">Unité multiple retiré de la liste</string>
+    <string name="toastRecentConsistsHelp">Appuyer pour sélectionner.\nAppuyer longuement pour renommer (adresse) ou afficher les détails du catalogue JMRI (Roster).\nBalayer vers la gauche ou vers la droite pour retirer une entrée.</string>
+    <string name="toastRecentsHelp">Appuyer pour sélectionner.
+\nAppuyer longuement pour renommer.
+\nBalayer vers la gauche ou vers la droite pour retirer une entrée.</string>
+
+
+    <string name="toastRosterHelp">Appuyer pour sélectionner.
+\nAppuyer longuement pour les détails.</string>
+
+    <string name="toastSaveLogFile">Journalisation démarrée dans le fichier %1Ss.  La journalisation se poursuit jusqu\'à la fermeture de l\'application Engine Driver.</string>
 </resources>

@@ -1668,6 +1668,7 @@
         <item>Dim</item>
         <item>NextV</item>
         <item>AllStop</item>
+        <item>EStop</item>
     </string-array>
     <string-array name="prefAccelerometerShakeEntries">  <!-- display version -->
         <item>None</item>
@@ -1676,6 +1677,7 @@
         <item>Dim Screen</item>
         <item>Next Throttle -for volume buttons</item>
         <item>All Stop</item>
+        <item>Emergency Stop</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
