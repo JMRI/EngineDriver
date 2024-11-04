@@ -195,6 +195,7 @@
         <item>Bildschirm dimmen</item>
         <item>Nächster Fahrregler - für Lautstärkeknöpfe</item>
         <item>Alle stoppen</item>
+        <item>Not-Aus</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>Keine</item>

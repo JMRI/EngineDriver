@@ -176,6 +176,7 @@
         <item>薄暗い画面</item>
         <item>次のスロットル - 音量ボタン用</item>
         <item>オールストップ</item>
+        <item>非常停止</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>なし</item>

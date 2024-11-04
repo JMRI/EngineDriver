@@ -221,6 +221,7 @@
         <item>Diminuire brillantezza Schermo</item>
         <item>Prossimo Controllore - per pulsanti volume</item>
         <item>Ferma Tutto</item>
+        <item>Arresto di emergenza</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>Niente</item>

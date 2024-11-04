@@ -195,6 +195,7 @@
         <item>Atenua la pantalla</item>
         <item>Siguiente controlador -para botones de volúmen-</item>
         <item>Detiene todo</item>
+        <item>Parada de emergencia</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>Ninguno</item>
