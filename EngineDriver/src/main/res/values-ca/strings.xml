@@ -225,7 +225,7 @@
     <string name="prefEsuMc2StopButtonDelayTitle">Retard de la pulsació-llarga de la tecla d\'aturada</string>
     <string name="prefEsuMc2StopButtonDelaySummary">Com de llarga he de ser la \'pulsació-llarga\' de la tecla atura.\nUna \'pulsació-llarga\' atura tots els Controladors actius; una \'pulsació-breu\' atura el Controlador actual. \nUn valor petit l\'acció és mes ràpida</string>
 
-    <string name="prefEsuMc2StopButtonShortPressSummary">Una \\\'premsa curta\\\' posa en pausa la locomotora/consisteix controlada actualment.\\nRevertirà a la velocitat original quan es reprenguin les operacions.</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">Una \'premsa curta\' posa en pausa la locomotora/consisteix controlada actualment.\nRevertirà a la velocitat original quan es reprenguin les operacions.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opcions de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero de la tecla regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255</string>
@@ -418,6 +418,7 @@
     <string name="prefTickMarksOnSlidersTitle">Mostra marques de desplaçament en el control de velocitat</string>
     <string name="prefTickMarksOnSlidersSummary">Mostrar o amagar les marques de desplaçament de velocitat del control lliscant</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Si està activat, als dissenys horitzontals els botons de funció s\'amagaran per a totes les barres de l\'accelerador \'Volum\' seleccionat, indicat per una \'v\'.\nFeu clic al valor de velocitat d\'un accelerador per seleccionar-lo.\nDefiniu la preferència \'Les tecles de volum segueixen el toc\' per seleccionar l\'accelerador amb qualsevol toc (excepte la velocitat).</string>
     <string name="prefThemeTitle">Tema/Estil</string>
 
     <string name="prefThemeSummary">Tema de l\'App.</string>
@@ -717,7 +718,7 @@
     <string name="prefEsuMc2KnobButtonTitle">Mostra el botó de desactivació del botó</string>
     <string name="prefEsuMc2KnobButtonSummary">Permet que el botó de control es desactivi mitjançant un botó d\'acció a la pantalla de l\'accelerador.</string>
     <string name="EsuMc2KnobAction">Activa/desactiva el botó</string>
-    <string name="toastThreadedAppNotWIFI">L\'ús de la xarxa %1$s, no Wi-Fi.\\nComprovi la configuració de Wi-Fi.\n</string>
+    <string name="toastThreadedAppNotWIFI">L\'ús de la xarxa %1$s, no Wi-Fi.\nComprovi la configuració de Wi-Fi.\n</string>
     <string name="prefKidsTimerRestartPasswordTitle">Reinicia contrasenya</string>
     <string name="prefKidsTimerRestartPasswordSummary">Contrasenya per reiniciar els paràmetres actuals del temporitzador</string>
 
@@ -1125,5 +1126,10 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quin percentatge de fre per activar el número de funció alta</string>
     <string name="statusThreadedAppNotconnectedToWifi">No connectat a WiFi</string>
     <string name="app_name_withrottle_cv_programmer">Programa de CV a MAIN</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Amagar els botons de funció a l\'accelerador no seleccionat?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Lliscar cap a l\'esquerra/dreta canvia la velocitat?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Si està marcat, els lliscaments a la part principal de la pantalla augmentaran/disminuiran la velocitat. S\'habilitarà el lliscament només del títol per als lliscaments entre pantalles</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Pas de velocitat per a lliscars (amunt, avall o esquerra/dreta)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">La quantitat de pas de velocitat que s\'ha d\'utilitzar per als desplaçaments cap amunt, cap avall o cap a l\'esquerra/dreta està configurada per canviar la velocitat</string>
 
 </resources>

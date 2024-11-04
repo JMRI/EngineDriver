@@ -207,8 +207,8 @@
         <item>Bildschirm dimmen</item>
         <item>Immersiver Modus temporär ein-/ausschalten</item>
         <item >Schalten Drosselklappenbildschirmlayouts</item>
-        <item >Increase/Decrease Loco Speed</item>
-        <item >Next Throttle (volume)</item>
+        <item>Lokgeschwindigkeit erhöhen/verringern</item>
+        <item>Nächste Drossel (Volumen)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Keine</item>

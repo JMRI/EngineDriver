@@ -519,6 +519,7 @@
     <string name="prefTickMarksOnSlidersTitle">Zaškrtněte značky na posuvníku rychlosti</string>
     <string name="prefTickMarksOnSlidersSummary">Zobrazit nebo skrýt zašktnuté značky na pozadí posuvníků rychlosti.</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Pokud je tato možnost povolena, na vodorovném rozvržení budou funkční tlačítka skryta pro všechny vybrané škrticí klapky \'Hlasitost\', což je označeno \'v\'.\nKliknutím na hodnotu rychlosti plynu ji vyberte.\nNastavte předvolbu \'Tlačítka hlasitosti podle dotyku\' pro výběr plynu při jakémkoli dotyku (kromě rychlosti).</string>
     <string name="prefThemeTitle">Téma/Styl</string>
     <string name="prefThemeSummary">Téma aplikace.</string>
 
@@ -692,7 +693,7 @@
     <!--    Toast messages for the Select Loco Activity -->
 <!--    <string name="toastSelectLocoConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné lokomotivy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
 <!--    <string name="toastSelectConsistsConfirmClear">Potvrďte, že chcete odstranit celý seznam Nedávné soupravy OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
-    <string name="toastImportExportCouldNotParseAddress">Adresu se nepodařilo analyzovat\\n%1$s</string>
+    <string name="toastImportExportCouldNotParseAddress">Adresu se nepodařilo analyzovat\n%1$s</string>
     <string name="toastNumThrottles">Zvolený typ obrazovky nepodporuje tolik ovladačů. Omezuji na %1$s.</string>
     <string name="toastRecentsHelp">Dotykem vyberete položku Nedávný záznam,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování.\nPřetažením doprava odeberete položku.</string>
     <string name="toastRecentConsistsHelp">Dotykem vyberete položku záznam Soupravy,\nnebo změňte způsob zápisu.\nDlouhým stiskem pro přejmenování (pro zadané adresy) nebo zobrazte detaily Evidence.\nPřetažením doprava odeberte záznam.</string>
@@ -1210,5 +1211,10 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Jaká procentuální brzda pro aktivaci vysokého funkčního čísla</string>
     <string name="statusThreadedAppNotconnectedToWifi">Není připojeno k WiFi</string>
     <string name="app_name_withrottle_cv_programmer">CV Program na MAIN</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Skrýt funkční tlačítka na nezvoleném plynu?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Přejetí doleva/doprava Změní rychlost?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Pokud je zaškrtnuto, přejetí po hlavní části obrazovky zvýší/sníží rychlost. Přejetí pouze titulkem bude povoleno pro přejetí mezi obrazovkami</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Rychlostní krok pro přejetí (nahoru, dolů nebo doleva/doprava)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">Rychlost Počet kroků, které se mají použít pro tahy nahoru, dolů nebo doleva/doprava, jsou nastaveny na změnu rychlosti</string>
 
 </resources>

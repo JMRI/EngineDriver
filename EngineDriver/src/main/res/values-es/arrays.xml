@@ -207,8 +207,8 @@
         <item>Atenuar la pantalla</item>
         <item>Activación-desactivación temporal del modo inmersivo</item>
         <item>Cambiar el diseño de la pantalla del controlador</item>
-        <item >Increase/Decrease Loco Speed</item>
-        <item >Next Throttle (volume)</item>
+        <item>Aumentar/disminuir la velocidad locomotora</item>
+        <item>Siguiente acelerador (volumen)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Ninguno</item>

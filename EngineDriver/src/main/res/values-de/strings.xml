@@ -421,6 +421,9 @@
     <string name="prefTickMarksOnSlidersTitle">Show Tick Marks on Speed ​​Sliders</string>
     <string name="prefTickMarksOnSlidersSummary">Ein- oder Ausblenden von Markierungen auf dem Hintergrund der Geschwindigkeit Schieberegler.</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Wenn diese Option aktiviert ist, werden die Funktionstasten auf den horizontalen Layouts für alle ausgeblendet, mit Ausnahme des ausgewählten „Volumen“-Reglers, der durch ein „v“ angezeigt wird.
+        \nKlicken Sie auf den Geschwindigkeitswert eines Gashebels, um ihn auszuwählen.
+        \nStellen Sie die Einstellung „Lautstärketasten folgen Berührung“ ein, um bei jeder Berührung (außer Geschwindigkeit) einen Gashebel auszuwählen.</string>
     <string name="prefThemeTitle">Motiv/Stil</string>
 
     <string name="prefThemeSummary">App Motiv.</string>
@@ -1111,5 +1114,10 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Qual a Porcentagem de Freio para ativar o Número de Função Alto</string>
     <string name="statusThreadedAppNotconnectedToWifi">Nicht mit WLAN verbunden</string>
     <string name="app_name_withrottle_cv_programmer">CV-Programm auf MAIN</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Funktionstasten bei nicht ausgewähltem Gashebel ausblenden?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Ändert das Wischen nach links/rechts die Geschwindigkeit?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Wenn diese Option aktiviert ist, wird durch Wischen im Hauptteil des Bildschirms die Geschwindigkeit erhöht/verringert. Für das Wischen zwischen Bildschirmen wird „Nur Titel wischen“ aktiviert</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Geschwindigkeitsstufe für Wischbewegungen (nach oben, unten oder links/rechts)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">Der Geschwindigkeitsschrittwert, der für das Wischen nach oben, unten oder nach links/rechts verwendet werden soll, wird eingestellt, um die Geschwindigkeit zu ändern</string>
 
 </resources>

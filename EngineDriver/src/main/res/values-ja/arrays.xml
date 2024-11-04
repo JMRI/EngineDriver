@@ -188,8 +188,8 @@
         <item>薄暗い画面</item>
         <item>イマーシブ モードを一時的に有効/無効にする</item>
         <item>スロットル画面レイアウトの切り替え</item>
-        <item>Change Speed</item>
-        <item >Next Throttle (volume)</item>
+        <item>ロコの速度を増減する</item>
+        <item>次のスロットル (ボリューム)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>なし</item>

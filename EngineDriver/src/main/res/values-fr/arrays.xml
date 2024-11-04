@@ -190,8 +190,8 @@
         <item>Assombrir l écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
         <item>Changement affichage régulateur</item>
-        <item >Increase/Decrease Loco Speed</item>
-        <item >Next Throttle (volume)</item>
+        <item>Augmenter/diminuer la vitesse des locomotives</item>
+        <item>Prochaine manette des gaz (volume)</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
