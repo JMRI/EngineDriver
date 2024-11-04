@@ -443,6 +443,9 @@
     <string name="prefDirectionButtonLongPressDelayTitle">Ritardo prolungato del pulsante di direzione</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata per i pulsanti di direzione.</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Se abilitato, sui layout orizzontali i pulsanti funzione saranno nascosti per tutti tranne l\'acceleratore \'Volume\' selezionato, indicato da una \'v\'.
+        \nFai clic sul valore della velocità di un acceleratore per selezionarlo.
+        \nImposta la preferenza \'I tasti del volume seguono il tocco\' per selezionare l\'acceleratore con qualsiasi tocco (tranne la velocità).</string>
     <string name="prefThemeTitle">Tema/Stile</string>
     <string name="prefThemeSummary">Tema App.</string>
 
@@ -1059,5 +1062,10 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU: qué porcentaje de freno activar el número de función alto</string>
     <string name="statusThreadedAppNotconnectedToWifi">Non connesso al Wi-Fi</string>
     <string name="app_name_withrottle_cv_programmer">Programma CV su MAIN</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Nascondere i pulsanti funzione sull\'acceleratore non selezionato?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Lo scorrimento a sinistra/destra cambia la velocità?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Se selezionato, i passaggi sulla parte principale dello schermo aumenteranno/diminuiranno la velocità. Lo scorrimento solo titolo sarà abilitato per gli spostamenti tra le schermate</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Incremento della velocità per gli spostamenti (su, giù o sinistra/destra)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">La quantità di incremento di velocità da utilizzare per gli spostamenti verso l\'alto, verso il basso o verso sinistra/destra è impostata per modificare la velocità</string>
 
 </resources>

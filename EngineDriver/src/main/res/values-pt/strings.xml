@@ -442,6 +442,10 @@
     <string name="prefDirectionButtonLongPressDelayTitle">Atraso Pressão Prolongada Botão Direcional</string>
     <string name="prefDirectionButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo para os botões de direção.</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Ocultar botões de função em acelerador não selecionado?</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Se habilitado, nos layouts horizontais os botões de função ficarão ocultos em todas as barras do acelerador de \'Volume\' selecionado, indicado por um \'v\'.
+        \nClique no valor da velocidade de um acelerador para selecioná-lo.
+        \nDefina a preferência \'As teclas de volume seguem o toque\' para selecionar um acelerador em qualquer toque (exceto velocidade).</string>
     <string name="prefThemeTitle">Tema/Estilo</string>
     <string name="prefThemeSummary">Tema App.</string>
 
@@ -1064,5 +1068,9 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quel pourcentage de freinage pour activer le numéro de fonction élevé</string>
     <string name="statusThreadedAppNotconnectedToWifi">Não conectado ao Wi-Fi</string>
     <string name="app_name_withrottle_cv_programmer">Programa CV no MAIN</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Deslizar para a esquerda/direita altera a velocidade?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Se marcado, deslizar na parte principal da tela aumentará/diminuirá a velocidade. O deslizamento apenas do título será ativado para deslizar entre telas</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Passo rápido para deslizar (para cima, para baixo ou para esquerda/direita)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">Velocidade A quantidade de etapas a serem usadas para deslizar para cima, para baixo ou para a esquerda/direita é definida para alterar a velocidade</string>
 
 </resources>

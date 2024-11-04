@@ -821,6 +821,9 @@
 
 
     <string name="prefThemeSummary">このアプリの外観を選択してください</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">有効にすると、水平レイアウトでは、「v」で示される、選択した「ボリューム」スロットルを除くすべての機能ボタンが非表示になります。
+        \nスロットルの速度値をクリックして選択します。
+        \n「音量キーはタッチに従う」環境設定を設定して、任意のタッチ (速度を除く) でスロットルを選択します。</string>
     <string name="prefThemeTitle">テーマ/スタイル</string>
     <string name="prefThrottleAdditionalControlTitle">追加のスロットル コントロール ソース設定</string>
     <string name="prefThrottleImportExportSummary">インポート/エクスポート/設定のリセット</string>
@@ -1129,5 +1132,10 @@
     <string name="air_reservoir">空気リザーバー</string>
     <string name="toastImportExportCouldNotParseAddress">アドレスを解析できませんでした\n%1$s</string>
     <string name="app_name_withrottle_cv_programmer">MAIN の履歴書プログラム</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">選択されていないスロットルの機能ボタンを非表示にしますか?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">左右のスワイプで速度が変わりますか?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">チェックすると、画面の主要部分をスワイプする速度が増減します。タイトル 画面間のスワイプではスワイプのみが有効になります</string>
+    <string name="prefSwipeSpeedChangeStepTitle">スワイプの速度ステップ (上、下、または左/右)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">上、下、または左右のスワイプに使用する速度ステップ量を設定して速度を変更します</string>
 
 </resources>

@@ -415,6 +415,10 @@
     <string name="prefTickMarksOnSlidersTitle">Mostrar marcas de desplazamiento en el control de velocidad</string>
     <string name="prefTickMarksOnSlidersSummary">Mostrar u ocultar las marcas de desplazamiento en los deslizadores de velocidad</string>
 
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">¿Ocultar botones de función en el acelerador no seleccionado?</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Si está habilitado, en los diseños horizontales los botones de función estarán ocultos para todos excepto el acelerador de \'Volumen\' seleccionado, indicado por una \'v\'.
+        \nHaga clic en el valor de velocidad de un acelerador para seleccionarlo.
+        \nEstablezca la preferencia \'Las teclas de volumen siguen el toque\' para seleccionar un acelerador con cualquier toque (excepto la velocidad).</string>
     <string name="prefThemeTitle">Tema/estilo</string>
 
     <string name="prefThemeSummary">Tema de la App.</string>
@@ -1112,5 +1116,9 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU – Welcher Prozentsatz der Bremse, um die hohe Funktionsnummer zu aktivieren</string>
     <string name="statusThreadedAppNotconnectedToWifi">No conectado a WiFi</string>
     <string name="app_name_withrottle_cv_programmer">Programa de CV en PRINCIPAL</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">¿Deslizar hacia la izquierda/derecha cambia la velocidad?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Si está marcado, deslizar el dedo en la parte principal de la pantalla aumentará o disminuirá la velocidad. Se habilitará el deslizamiento de solo título para deslizar entre pantallas</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Paso de velocidad para deslizar (arriba, abajo o izquierda/derecha)</string>
+    <string name="prefSwipeSpeedChangeStepSummary">La cantidad de pasos de velocidad que se usará para deslizar hacia arriba, hacia abajo o hacia la izquierda/derecha está configurada para cambiar la velocidad</string>
 
 </resources>

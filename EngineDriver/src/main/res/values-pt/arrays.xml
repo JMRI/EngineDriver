@@ -208,8 +208,8 @@
         <item>Reduzir brilho da Tela</item>
         <item>Abilitação-disabilitação temporária do Modo Imersivo</item>
         <item >Mudar layouts de tela acelerador</item>
-        <item >Increase/Decrease Loco Speed</item>
-        <item >Next Throttle (volume)</item>
+        <item>Aumentar/diminuir a velocidade da locomotiva</item>
+        <item>Próximo Acelerador (volume)</item>
     </string-array>
 
     <string-array name="prefAccelerometerShakeEntries">
