@@ -392,11 +392,13 @@ public class throttle_original extends throttle {
     }
 
     @Override
-    void adjustThrottleHeightsOnChange() {
-        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return;
-        adjustThrottleHeights();
+    boolean canChangeVolumeIndicatorOnTouch(boolean isSpeedButtonOrSlider) {
+        if (!prefHideFunctionButtonsOfNonSelectedThrottle) return false;
+        if (isSpeedButtonOrSlider) return false;
+        return true;
     }
 
+    @Override
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};

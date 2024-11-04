@@ -25,6 +25,8 @@
  * Google Japanese Translations
  * New 'Neon Blue' theme
  * Improvements to the Original and Colorful themes
+ * On Horizontal slider layouts, preference to auto show/hide the function buttons of the non-active (volume) throtttle
+ * Added up/down swipe options to change the selected loco (volume) to the next available
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents

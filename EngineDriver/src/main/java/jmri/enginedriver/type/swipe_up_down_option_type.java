@@ -24,4 +24,5 @@ public interface swipe_up_down_option_type {
     String IMMERSIVE = "Immersive Mode";
     String SWITCH_LAYOUTS = "Switch Layouts";
     String CHANGE_SPEED = "Speed Change X 2";
+    String NEXT_VOLUME = "Next Volume";
 }

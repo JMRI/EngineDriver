@@ -189,6 +189,7 @@
         <item>イマーシブ モードを一時的に有効/無効にする</item>
         <item>スロットル画面レイアウトの切り替え</item>
         <item>Change Speed</item>
+        <item >Next Throttle (volume)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>なし</item>
