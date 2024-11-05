@@ -390,6 +390,7 @@
         <item>Ztlumit obrazovku</item>
         <item>Další ovladač - pro tlačítka hlasitost</item>
         <item>Vše zastavit</item>
+        <item>Nouzové zastavení</item>
     </string-array>
 
     <string-array name="prefTtsWhenEntries">  <!-- display version -->

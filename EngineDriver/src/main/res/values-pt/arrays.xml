@@ -219,6 +219,7 @@
         <item>Reduzir brilho da Tela</item>
         <item>Próximo Controlador - para botões volume</item>
         <item>Parar Tudo</item>
+        <item>Parada de Emergência</item>
     </string-array>
     <string-array name="prefTtsWhenEntries">
         <item>Nada</item>

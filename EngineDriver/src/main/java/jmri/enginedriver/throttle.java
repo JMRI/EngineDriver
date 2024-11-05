@@ -553,6 +553,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final String ACCELERATOROMETER_SHAKE_LOCK_DIM_SCREEN = "LockDim";
     private static final String ACCELERATOROMETER_SHAKE_WEB_VIEW = "Web";
     private static final String ACCELERATOROMETER_SHAKE_ALL_STOP = "AllStop";
+    private static final String ACCELERATOROMETER_SHAKE_E_STOP = "EStop";
     private String prefAccelerometerShake = ACCELERATOROMETER_SHAKE_NONE;
     private boolean accelerometerCurrent = false;
 
@@ -1424,7 +1425,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 break;
                             case ACCELERATOROMETER_SHAKE_ALL_STOP:
                                 GamepadFeedbackSound(false);
-                                speedUpdateAndNotify(0);         // update all three throttles
+                                speedUpdateAndNotify(0);         // update all throttles
+                            case ACCELERATOROMETER_SHAKE_E_STOP:
+                                GamepadFeedbackSound(false);
+                                mainapp.sendEStopMsg();
+                                speedUpdate(0);  // update all throttles
+                                applySpeedRelatedOptions();  // update all throttles
+                                if (IS_ESU_MCII) {
+                                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
+                                    setEsuThrottleKnobPosition(whichVolume, 0);
+                                }
                         }
                     }
                 });
@@ -7190,7 +7200,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (item.getItemId() == R.id.EmerStop) {
             mainapp.sendEStopMsg();
             speedUpdate(0);  // update all throttles
-            applySpeedRelatedOptions();  // update all three throttles
+            applySpeedRelatedOptions();  // update all throttles
             if (IS_ESU_MCII) {
                 Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
                 setEsuThrottleKnobPosition(whichVolume, 0);

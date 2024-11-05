@@ -176,6 +176,7 @@
         <item>Assombri Ecran</item>
         <item>Prochain régulateur -pour touches de volume</item>
         <item>Arret total</item>
+        <item>Arrêt d\'urgence</item>
     </string-array>
 
     <string-array name="prefTtsWhenEntries">
