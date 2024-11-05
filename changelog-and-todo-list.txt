@@ -1,16 +1,16 @@
-**Version 2.38.189
 **Version 2.38.188
  * Additional French Translations by Alain Carasso
  * Support DCC-EX remote drop of a loco (FORGET)
  * Fix for the change to the DCC-EX response/broadcast for AUTO Track Manager outputs
- * Fix for the DCC-EX AUTO track chnage command. MAIN is sent first
+ * Fix for the DCC-EX AUTO track change command. MAIN is sent first
  * Bug fixes for the Consist Follow Functions feature
  * Send heartbeat restart on reconnect
  * Bug fix for 'No' option for the DCC-EX protocol option
  * Linting
  * New Semi-Realistic Throttle layout
  * Additional Google translations
- * Added abiltiy to override the WiThrottle default Latching
+ * Added ability to override the WiThrottle default Latching
+ * Support for new gamepad type - Auvisio Android-B
  * Connect Screen - Disable the connect button if no IP/host name AND port
  * Bug fix for the Close button on the Function Defaults screen
  * Bug Fix for the Default theme on the Function Settings page
@@ -28,6 +28,7 @@
  * Improvements to the Original and Colorful themes
  * On Horizontal slider layouts, preference to auto show/hide the function buttons of the non-active (volume) throtttle
  * Added up/down swipe options to change the selected loco (volume) to the next available
+ * Added shake action option for Emergency Stop
 **Version 2.38.187
  * Preference to always show the Throw and Close buttons for Turnouts/Points
  * Improvement for non-roster locos saved to recents
