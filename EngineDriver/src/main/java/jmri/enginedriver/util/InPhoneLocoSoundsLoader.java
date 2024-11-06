@@ -71,7 +71,7 @@ public class InPhoneLocoSoundsLoader {
    } // end DoLocoSoundDelayed
 
 
-   @SuppressLint("ApplySharedPref")
+   @SuppressLint({"ApplySharedPref", "DiscouragedApi"})
    public boolean loadSounds() {
       Log.d("Engine_Driver", "loadSounds: (locoSound)");
       mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", context.getResources().getString(R.string.prefDeviceSoundsDefaultValue));
@@ -158,177 +158,42 @@ public class InPhoneLocoSoundsLoader {
             mainapp.soundsLocoSteps[throttleIndex] = iplsLocoSoundsCount;
 
          } else {
-            switch (mainapp.prefDeviceSounds[throttleIndex]) {
-               default:
-               case "steam":
-               case "steamSlow":
-               case "steamClass64":
-               case "diesel645turbo":
-               case "diesel7FDL":
-               case "dieselNW2":
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.bell_start);
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.bell_loop);
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.bell_end);
-                  break;
-               case "steamClass94":
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.bell_br_64_glocke_22_start);
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.bell_br_64_glocke_22_loop);
-                  loadSound(sounds_type.BELL, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.bell_br_64_glocke_22_end);
-                  break;
-            }
 
-            switch (mainapp.prefDeviceSounds[throttleIndex]) {
-               default:
-               case "steam":
-               case "steamSlow":
-//                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_start);
-//                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.whistle_loop);
-//                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.whistle_end);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.steam_horn_start3);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.steam_horn_loop3);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.steam_horn_end3);
-                  break;
-
-               case "diesel645turbo":
-               case "diesel7FDL":
-               case "dieselNW2":
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.horn_start);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.horn_loop);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.horn_end);
-                  break;
-
-               case "steamClass64":
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_class64_long_start);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.whistle_class64_long_mid);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.whistle_class64_long_end);
-                  break;
-
-               case "steamClass94":
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_start);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_LOOP, context, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_loop);
-                  loadSound(sounds_type.HORN, throttleIndex, sounds_type.BELL_HORN_END, context, R.raw.whistle_class94_pfiff_941538_b_nf_2_22_end);
-                  break;
-            }
-
-            switch (mainapp.prefDeviceSounds[throttleIndex]) {
-               default:
-               case "steam":
-               case "steamSlow":
-                  loadSound(sounds_type.HORN_SHORT, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_short);
-                  break;
-
-               case "diesel645turbo":
-               case "diesel7FDL":
-               case "dieselNW2":
-                  loadSound(sounds_type.HORN_SHORT, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.horn_short);
-                  break;
-
-               case "steamClass64":
-                  loadSound(sounds_type.HORN_SHORT, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_class64_short);
-                  break;
-
-               case "steamClass94":
-                  loadSound(sounds_type.HORN_SHORT, throttleIndex, sounds_type.BELL_HORN_START, context, R.raw.whistle_class94_pfiff_2_2);
-                  break;
-            }
+            int sound;
+            @SuppressLint("DiscouragedApi") int locoSoundsId = mainapp.getApplicationContext().getResources().getIdentifier("locoSounds_"+mainapp.prefDeviceSounds[throttleIndex], "array", context.getApplicationInfo().packageName);
+            @SuppressLint("DiscouragedApi") int locoSoundsHornId = mainapp.getApplicationContext().getResources().getIdentifier("locoSoundsHorn_"+mainapp.prefDeviceSounds[throttleIndex], "array", context.getApplicationInfo().packageName);
+            @SuppressLint("DiscouragedApi") int locoSoundsHornShortId = mainapp.getApplicationContext().getResources().getIdentifier("locoSoundsHornShort_"+mainapp.prefDeviceSounds[throttleIndex], "array", context.getApplicationInfo().packageName);
+            @SuppressLint("DiscouragedApi") int locoSoundsBellId = mainapp.getApplicationContext().getResources().getIdentifier("locoSoundsBell_"+mainapp.prefDeviceSounds[throttleIndex], "array", context.getApplicationInfo().packageName);
 
             mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = mainapp.prefDeviceSounds[throttleIndex];
-            switch (mainapp.prefDeviceSounds[throttleIndex]) {
-               default:
-               case "steam":
-               case "steamSlow":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.steam_loco_stationary_med);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.steam_piston_stroke3);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.steam_loop_30rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 3, context, R.raw.steam_loop_35rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 4, context, R.raw.steam_loop_40rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 5, context, R.raw.steam_loop_50rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 6, context, R.raw.steam_loop_60rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 7, context, R.raw.steam_loop_75rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 8, context, R.raw.steam_loop_90rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 9, context, R.raw.steam_loop_100rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 10, context, R.raw.steam_loop_125rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 11, context, R.raw.steam_loop_150rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 12, context, R.raw.steam_loop_175rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 13, context, R.raw.steam_loop_200rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 14, context, R.raw.steam_loop_250rpm);
-                  loadSound(sounds_type.LOCO, throttleIndex, 15, context, R.raw.steam_loop_300rpm);
-                  if (mainapp.prefDeviceSounds[throttleIndex].equals("steam")) {
-                     mainapp.soundsLocoSteps[throttleIndex] = 15;
-                  } else {
-                     mainapp.soundsLocoSteps[throttleIndex] = 7;
-                  }
-                  break;
 
-               case "diesel645turbo":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.diesel_645turbo_idle);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.diesel_645turbo_d1k);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.diesel_645turbo_d2);
-                  loadSound(sounds_type.LOCO, throttleIndex, 3, context, R.raw.diesel_645turbo_d3);
-                  loadSound(sounds_type.LOCO, throttleIndex, 4, context, R.raw.diesel_645turbo_d4);
-                  mainapp.soundsLocoSteps[throttleIndex] = 4;
-                  break;
-
-               case "diesel7FDL":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.diesel_7fdl_idle_1a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.diesel_7fdl_idle_2a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.diesel_7fdl_idle_3a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 3, context, R.raw.diesel_7fdl_idle_4a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 4, context, R.raw.diesel_7fdl_idle_5a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 5, context, R.raw.diesel_7fdl_idle_6a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 6, context, R.raw.diesel_7fdl_idle_7a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 7, context, R.raw.diesel_7fdl_idle_8a);
-                  mainapp.soundsLocoSteps[throttleIndex] = 7; // fast steam
-                  break;
-
-               case "dieselNW2":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.diesel_nw7_motor);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.diesel_nw7_motor_2);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.diesel_nw7_motor_1);
-                  mainapp.soundsLocoSteps[throttleIndex] = 2;
-                  break;
-
-               case "steamClass64":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.steam_class64_idle_sound);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.steam_class64_chuff1_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.steam_class64_chuff2_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 3, context, R.raw.steam_class64_chuff3_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 4, context, R.raw.steam_class64_chuff4_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 5, context, R.raw.steam_class64_chuff5_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 6, context, R.raw.steam_class64_chuff6_1_4);
-                  mainapp.soundsLocoSteps[throttleIndex] = 6;
-                  break;
-
-               case "steamClass94":
-                  loadSound(sounds_type.LOCO, throttleIndex, 0, context, R.raw.steam_class94_idle2a);
-                  loadSound(sounds_type.LOCO, throttleIndex, 1, context, R.raw.steam_class94_speed0a_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 2, context, R.raw.steam_class94_speed2g_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 3, context, R.raw.steam_class94_speed3g_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 4, context, R.raw.steam_class94_speed4g_1_4);
-                  loadSound(sounds_type.LOCO, throttleIndex, 5, context, R.raw.steam_class94_speed5g_1_4);
-                  mainapp.soundsLocoSteps[throttleIndex] = 5;
-                  break;
+            String[] locoSounds = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsId);
+            mainapp.soundsLocoSteps[throttleIndex] = 0;
+            for (int i=0; i<locoSounds.length; i++) {
+               if (!locoSounds[i].isEmpty()) {
+                  sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSounds[i], "raw", context.getApplicationInfo().packageName);
+                  loadSound(sounds_type.LOCO, throttleIndex, i, context, sound);
+                  if (i < sounds_type.STARTUP_INDEX) mainapp.soundsLocoSteps[throttleIndex] = i;
+               }
             }
 
-            switch (mainapp.prefDeviceSounds[throttleIndex]) {
-               default:
-                  mainapp.soundsLoco[throttleIndex][sounds_type.STARTUP_INDEX] = 0;
-                  mainapp.soundsLocoDuration[throttleIndex][sounds_type.STARTUP_INDEX] = 0;
-                  mainapp.soundsLoco[throttleIndex][sounds_type.SHUTDOWN_INDEX] = 0;
-                  mainapp.soundsLocoDuration[throttleIndex][sounds_type.SHUTDOWN_INDEX] = 0;
-                  break;
-               case "diesel645turbo":
-                  loadSound(sounds_type.LOCO, throttleIndex, sounds_type.STARTUP_INDEX, context, R.raw.diesel_645turbo_start);
-                  loadSound(sounds_type.LOCO, throttleIndex, sounds_type.SHUTDOWN_INDEX, context, R.raw.diesel_645turbo_shutdown);
-                  break;
+             String[] locoSoundsHorn = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsHornId);
+             for (int i=0; i<locoSoundsHorn.length; i++) {
+                 sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsHorn[i], "raw", context.getApplicationInfo().packageName);
+                 loadSound(sounds_type.HORN, throttleIndex, i, context, sound);
+             }
 
-               case "dieselNW2":
-                  loadSound(sounds_type.LOCO, throttleIndex, sounds_type.STARTUP_INDEX, context, R.raw.diesel_nw7_start_22050);
-                  loadSound(sounds_type.LOCO, throttleIndex, sounds_type.SHUTDOWN_INDEX, context, R.raw.diesel_nw7_stop_22050);
-                  break;
-
+            String[] locoSoundsHornShort = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsHornShortId);
+            for (int i=0; i<locoSoundsHornShort.length; i++) {
+               sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsHornShort[i], "raw", context.getApplicationInfo().packageName);
+               loadSound(sounds_type.HORN_SHORT, throttleIndex, i, context, sound);
             }
 
+            String[] locoSoundsBell = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsBellId);
+            for (int i=0; i<locoSoundsBell.length; i++) {
+               sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsBell[i], "raw", context.getApplicationInfo().packageName);
+               loadSound(sounds_type.BELL, throttleIndex, i, context, sound);
+            }
          }
       }
       mainapp.soundsReloadSounds = false;

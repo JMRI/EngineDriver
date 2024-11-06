@@ -189,7 +189,7 @@
         <item>薄暗い画面</item>
         <item>イマーシブ モードを一時的に有効/無効にする</item>
         <item>スロットル画面レイアウトの切り替え</item>
-        <item>ロコの速度を増減する</item>
+        <item>ロコ速度の増減</item>
         <item>次のスロットル (ボリューム)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
@@ -219,9 +219,9 @@
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Coincidencia simple de texto (original)</item>
         <item>複雑なテキスト マッチング - 先頭車両は常にアクティブ化され、トレイルは以下のルールに従います</item>
-        <item>特別に正確 - リードとすべてのトレイルが関数ラベルと正確に一致する場合にアクティブ化されます。</item>
-        <item>特別な部分 - リードとすべてのトレイルが機能ラベルと部分的に一致する場合にアクティブ化されます</item>
-        <item>特別な部分のみを含む - 関数ラベルにデフォルト ラベルが含まれる場合にアクティブ化されます。</item>
+        <item>特別正確 - ファンクションラベルと完全に一致する場合、リードとすべてのトレイルが有効になります。</item>
+        <item>特別部分的 - ファンクションラベルに部分的に一致する場合、リードとオールトレイルがアクティブになります。</item>
+        <item>特別な部分的包含のみ - ファンクションラベルにデフォルトラベルが含まれている場合に有効になります</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>リード ロコ - 部分一致</item>
@@ -233,9 +233,9 @@
     </string-array>
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>何もしない</item>
-        <item>先頭車両 - 同じ機能番号</item>
-        <item>Lead+Trail Locos - 同じ機能番号</item>
-        <item>すべての機関車 - 同じ機能番号</item>
+        <item>先頭車両 - 同じファンクション番号</item>
+        <item>先頭車+後続車 - 同じファンクション番号</item>
+        <item>すべての機関車 - 同じファンクション番号</item>
     </string-array>
     <string-array name="prefKidsTimerEntries">  <!-- display version -->
         <item>無効</item>
@@ -260,7 +260,7 @@
 
 
     <string-array name="prefGamePadFlydigiWee2Labels">
-        <item> </item>
+        <item>0</item>
         <item>ボタン選択アクション</item>
         <item>ボタン DPAD 上アクション</item>
         <item>ボタン DPAD 下アクション</item>
@@ -284,7 +284,7 @@
         <item>0</item>
     </string-array>
     <string-array name="prefGamePadMocuteLabels">
-        <item> </item>
+        <item>0</item>
         <item>ボタン (存在する場合) アクションを選択します</item>
         <item>DPAD アップアクション</item>
         <item>DPADダウンアクション</item>
@@ -332,7 +332,7 @@
         <item>0</item>
     </string-array>
     <string-array name="prefGamePadNoneLabels">
-        <item> </item>
+        <item>0</item>
         <item>ボタンが使用できません</item>
         <item>ボタンが使用できません</item>
         <item>ボタンが使用できません</item>
@@ -437,7 +437,7 @@
         <item>自動</item>
     </string-array>
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>フィット - 縮小/拡張</item>
+        <item>フィット - 縮小/拡大</item>
         <item>塗りつぶし - 1 つのエッジ ペアをトリミング</item>
         <item>中央 - スケーリングなし</item>
         <item>フィット - 縮小のみ</item>
@@ -445,7 +445,7 @@
     </string-array>
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>リードロコ</item>
-        <item>リード+トレイル ロコ</item>
+        <item>リード+トレイルロコ</item>
         <item>すべてのロコ</item>
         <item>トレイルロコ</item>
     </string-array>

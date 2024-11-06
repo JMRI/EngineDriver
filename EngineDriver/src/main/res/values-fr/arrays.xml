@@ -71,8 +71,8 @@
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item tools:ignore="TypographyDashes">Original - Téléphone ou Tablette (1-3)</item>
         <item tools:ignore="TypographyDashes">Vertical - Téléphone ou Tablette (1-2)</item>
-        <item tools:ignore="TypographyDashes">Big Buttons - Gauche (1)</item>
-        <item tools:ignore="TypographyDashes">Big Buttons - Droite (1)</item>
+        <item tools:ignore="TypographyDashes">Grandes touches - Gauche (1)</item>
+        <item tools:ignore="TypographyDashes">Grandes touches - Droite (1)</item>
         <item tools:ignore="TypographyDashes">Vertical - Gauche (1)</item>
         <item tools:ignore="TypographyDashes">Vertical - Droite (1)</item>
         <item tools:ignore="TypographyDashes">Switching - (2)</item>

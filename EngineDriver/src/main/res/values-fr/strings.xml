@@ -510,8 +510,7 @@
     <string name="toastLocoChangeNotAllowed">Changement de sens interdit: \'Le changement de sens en marche\' est desactivé dans les préférences.</string>
     <string name="toastDirectionButtonsSwapped">Les touches de sens de marche sont inversées temporairement. Pour les inverser de manière permanente, modifier les préférences.</string>
     <string name="toastImmersiveModeDisabled">Le mode immersif est temporairement désactivé. Pour le désactiver définitivement, modifier les préférences.</string>
-    <string name="toastThrottleScreenUnlocked">Si vous ne pouvez pas activer toutes les touches, changer le mode du Gamepad (voir notice) ou essayer un autre type de Gamepad (voir ci dessus).
-        \n Vous serez peut etre amener à tester à nouveau le Gamepad à la première utilisation via l écran du régulateur.</string>
+    <string name="toastThrottleScreenUnlocked">Écran déverouillé</string>
     <string name="toastShakeWebViewHidden">Vue Web cachée. Agiter à nouveau pour la rétablir. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastShakeWebViewUnavailable">La vue Web doit etre activée dans les préférences</string>
     <string name="toastShakeScreenLocked">Ecran verrouillé - Agiter à nouveau pour déverrouiller.</string>

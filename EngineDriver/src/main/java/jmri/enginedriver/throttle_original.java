@@ -394,7 +394,7 @@ public class throttle_original extends throttle {
     @Override
     boolean canChangeVolumeIndicatorOnTouch(boolean isSpeedButtonOrSlider) {
         if (!prefHideFunctionButtonsOfNonSelectedThrottle) return false;
-        if (isSpeedButtonOrSlider) return false;
+//        if (isSpeedButtonOrSlider) return false;
         return true;
     }
 
