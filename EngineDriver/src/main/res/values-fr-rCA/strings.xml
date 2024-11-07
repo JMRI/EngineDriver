@@ -1141,5 +1141,4 @@
     <string name="prefSwipeSpeedChangeStepTitle">Incrément applicable aux balayages horizontaux ou verticaux</string>
     <string name="prefSwipeSpeedChangeStepSummary">L\'incrément de vitesse pour les balayages horizontaux et verticaux sera appliqué aux changements de vitesse</string>
 
-
 </resources>

@@ -14,18 +14,19 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
+
     <string name="about">このアプリについて</string>
     <string name="about_page_url">file:///android_asset/about_page-ja.html</string>
     <string name="acquire_button">取得する</string>
-    <string name="app_description">エンジン ドライバー - Android スマートフォン用のスロットル。このアプリケーションは、JMRI、DCC-EX、MRC、または DigiTrax WiThrottle サーバーに接続し、機関車を制御できます。速度、方向、および最大 32 の DCC 機能が 1 台または 2 台の機関車でサポートされています。</string>
+    <string name="app_description">エンジン ドライバー - Android スマートフォン用のスロットル。このアプリケーションは、JMRI、DCC-EX、MRC、または DigiTrax WiThrottle サーバーに接続して、機関車を制御できます。速度、方向、および最大 32 個の DCC ファンクションが、1 台または 2 台の機関車でサポートされます。</string>
 
     <string name="app_name_about">このアプリについて</string>
     <string name="app_name_connect">サーバーに接続する</string>
-    <string name="app_name_consist_functions">コンシスト機能の設定</string>
-    <string name="app_name_ConsistEdit">コンシスト編集</string>
-    <string name="app_name_ConsistLightsEdit">コンシストライト編集</string>
+    <string name="app_name_consist_functions">編成ファンクションの設定</string>
+    <string name="app_name_ConsistEdit">編成の編集</string>
+    <string name="app_name_ConsistLightsEdit">編成ライト</string>
     <string name="app_name_device_sounds_settings">電話でのロコサウンド</string>
-    <string name="app_name_functions">デフォルトの機能設定</string>
+    <string name="app_name_functions">デフォルトファンクションの設定</string>
     <string name="app_name_gamepad_test">ゲームパッドテスト</string>
 
     <string name="app_name_log_viewer">ログビューア</string>
@@ -41,7 +42,7 @@
     <string name="app_name_throttle_kids_running">スロットル - %1$s 秒残り</string>
     <string name="app_name_throttle_short">スロットル</string>
     <string name="app_name_turnouts_short">分岐器</string>
-    <string name="app_name_turnouts">分岐器ーエンジンドライバー</string>
+    <string name="app_name_turnouts">分岐器 -エンジンドライバー</string>
     <string name="app_name_web">ウェブ</string>
     <string name="brake">ブレーキ</string>
     <string name="ca_recent_conn_notice">最近の接続は利用できません - SD カードが見つかりません。</string>
@@ -52,21 +53,21 @@
     <string name="connect_button">接続する</string>
     <string name="consist_help">機関車をクリックして、編成の前面に対する方向を変更します。ロコを長押しすると、編成から削除されます。完了したら、戻る矢印または閉じるを押します。</string>
     <string name="consist_lead_label">先頭機関車</string>
-    <string name="consist_list_label">コンシストの全てのロコ</string>
+    <string name="consist_list_label">編成中の全てのロコ</string>
     <string name="consist_trail_label">後続機関車</string>
     <string name="ConsistEditLabelLead">先頭</string>
     <string name="ConsistEditLabelTrail">後続</string>
-    <string name="consistLights_help">ロコをクリックして、そのロコのライトを「オフ」または「機能ボタンに従う」に切り替えます。 \n\n機関車を長押しすると、コマンドを機関車に送信せずに、ライトのステータスを強制的に「オフ」にします。(つまり、ED が混乱している場合)。 \n\n完了したら、戻る矢印を押してください。</string>
+    <string name="consistLights_help">ロコをクリックすると、そのロコのライトが \'オフ\' または \'ファンクションボタンに従う\' に切り替わります。\n\nロコを長押しすると、ロコにコマンドを送信せずに、ライトの状態を \'オフ\' に強制します (ED が混乱している場合など)。\n\n完了したら、戻る矢印を押します。</string>
     <string name="consistLocoFacingFront">前方</string>
     <string name="consistLocoFacingRear">後方</string>
-    <string name="copy_function_labels">名簿からラベルをコピー</string>
+    <string name="copy_function_labels">列車情報からラベルをコピー</string>
 
     <string name="cv29AddressSize2bit">アドレスサイズ: 2ビット(0-127)</string>
     <string name="cv29AddressSize4bit">アドレスサイズ: 4ビット(1-10239)</string>
     <string name="cv29AnalogueConversionOff">アナログ変換：OFF</string>
     <string name="cv29AnalogueConversionOn">アナログ変換：ON</string>
-    <string name="cv29DirectionForward">正方向：前進</string>
-    <string name="cv29DirectionReverse">正方向：後進</string>
+    <string name="cv29DirectionForward">正方向 : 前進</string>
+    <string name="cv29DirectionReverse">正方向 : 後進</string>
     <string name="cv29SpeedSteps14">速度ステップ: 14</string>
     <string name="cv29SpeedSteps28">速度ステップ: 28/128</string>
     <string name="cv29SpeedTableNo">速度テーブル: 未使用 (CV 2、5、6 を使用)</string>
@@ -81,11 +82,11 @@
     <string name="DCCEXcommonCvsLabel">NMRA 履歴書</string>
     <string name="DccexConnectionOptionTitle">接続プロトコル</string>
     <string name="DccexFailed">アクションが失敗しました</string>
-    <string name="dccExFunctionSettings">DCC-EX機能の設定</string>
+    <string name="dccExFunctionSettings">DCC-EX ファンクション設定</string>
     <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - メインでのプログラミング（動作モード）</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - プログラミングトラック (サービスモード)</string>
     <string name="DCCEXheadingTrackManager">DCC-EX-トラック/ディストリクトマネージャー</string>
-    <string name="functionLatchingSettings">機能ラッチ設定</string>
+    <string name="functionLatchingSettings">ファンクションラッチ 設定</string>
     <string name="DccexNextCommandButtonLabel">次</string>
     <string name="DccexPreviousCommandButtonLabel">前</string>
     <string name="DccexReadAddressButtonLabel">読む</string>
@@ -95,9 +96,9 @@
     <string name="DccexSendCommandButtonLabel">送信</string>
     <string name="DCCEXsetTrackButtonLabel">セット</string>
     <string name="DccexSucceeded">アクションが成功しました</string>
-    <string name="DCCEXturnoutClosed">定位（直進）</string>
+    <string name="DCCEXturnoutClosed">定位(直進)</string>
     <string name="DCCEXturnoutInconsistent">一貫性がない</string>
-    <string name="DCCEXturnoutThrown">反位（分岐）</string>
+    <string name="DCCEXturnoutThrown">反位(分岐)</string>
     <string name="DCCEXturnoutUnknown">不明</string>
     <string name="DccexWriteAddressButtonLabel">書込み</string>
     <string name="DccexWriteAddressLabel">DCCアドレス</string>
@@ -112,30 +113,30 @@
     <string name="dialogConfirmResetPreferencesTitle">環境設定のリセット</string>
     <string name="dialogImportPreferencesQuestion">設定をインポートすることを確認します。\n 現在の設定はすべて失われます。</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">最近の接続をすべて削除することを確認します</string>
-    <string name="dialogRecentConsistsConfirmClearQuestions">最近のコンシストをすべて削除することを確認します</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">最近の編成をすべて削除することを確認します</string>
     <string name="dialogRecentLocoConfirmClearQuestion">最近使用した機関車をすべて削除することを確認します</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">最近の分岐器をすべて削除することを確認します</string>
     <string name="dialogResetPreferencesQuestion">すべての設定をリセットすることを確認します。\n 現在の設定はすべて失われます。</string>
-    <string name="dialogDownloadRosterConfirmQuestion">すべての名簿エントリを最近の機関車リストにダウンロードすることを確認します</string>
+    <string name="dialogDownloadRosterConfirmQuestion">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します</string>
     <string name="prefHideInstructionalToastsTitle">説明のヒントを非表示にする</string>
     <string name="prefHideInstructionalToastsSummary">説明用の「トースト」ポップアップのヘルプ/ヒントを非表示にする</string>
 
     <string name="disabled">無効</string>
     <string name="discovered_services">検出されたサーバー (WiFi: %1$s)</string>
 
-    <string name="edit_consist_menu">\≡ 編集構成</string>
-    <string name="edit_consist_lights_throttle_1">コンシスト ライトスロットル 1 の編集</string>
-    <string name="edit_consist_lights_throttle_2">コンシスト ライト スロットル 2 の編集</string>
-    <string name="edit_consist_lights_throttle_3">コンシスト ライト スロットル 3 の編集</string>
-    <string name="edit_consist_lights_throttle_4">コンシスト ライト スロットル 4 の編集</string>
-    <string name="edit_consist_lights_throttle_5">コンシスト ライト スロットル 5 の編集</string>
-    <string name="edit_consist_lights_throttle_6">コンシスト ライト スロットル 6 の編集</string>
-    <string name="edit_consist_throttle_1">コンシスト スロットル 1 の編集</string>
-    <string name="edit_consist_throttle_2">コンシストスロットル 2 の編集</string>
-    <string name="edit_consist_throttle_3">コンシスト スロットル 3 の編集</string>
-    <string name="edit_consist_throttle_4">コンシスト スロットル 4 の編集</string>
-    <string name="edit_consist_throttle_5">コンシスト スロットル 5 の編集</string>
-    <string name="edit_consist_throttle_6">コンシスト スロットル 6 の編集</string>
+    <string name="edit_consist_menu">\≡ 編成の編集</string>
+    <string name="edit_consist_lights_throttle_1">編成ライト スロットル 1 の編集</string>
+    <string name="edit_consist_lights_throttle_2">編成ライト スロットル 2 の編集</string>
+    <string name="edit_consist_lights_throttle_3">編成ライト スロットル 3 の編集</string>
+    <string name="edit_consist_lights_throttle_4">編成ライト スロットル 4 の編集</string>
+    <string name="edit_consist_lights_throttle_5">編成ライト スロットル 5 の編集</string>
+    <string name="edit_consist_lights_throttle_6">編成ライト スロットル 5 の編集</string>
+    <string name="edit_consist_throttle_1">編成 スロットル 1 の編集</string>
+    <string name="edit_consist_throttle_2">編成 スロットル 2 の編集</string>
+    <string name="edit_consist_throttle_3">編成 スロットル 3 の編集</string>
+    <string name="edit_consist_throttle_4">編成 スロットル 4 の編集</string>
+    <string name="edit_consist_throttle_5">編成 スロットル 5 の編集</string>
+    <string name="edit_consist_throttle_6">編成 スロットル 6 の編集</string>
     <string name="editConsistButtonLabel">順序と方向の編集</string>
     <string name="editConsistLightsButtonLabel">ライトの編集</string>
     <string name="editConsistLocoFacingLabel">対面方向</string>
@@ -145,27 +146,27 @@
     <string name="exit">終了</string>
     <string name="exit_text">エンジンドライバーを終了しますか?</string>
     <string name="exit_title">終了</string>
-    <string name="fb_column_function">機能#</string>
+    <string name="fb_column_function">ファンクション#</string>
     <string name="fb_column_label">ラベル</string>
     <string name="fb_header">ファンクション編集</string>
-    <string name="fb_helptext">右側のリストにラベルとファンクション番号を入力します。ボタンを非表示にするには、ラベルを空白のままにします。これらは、名簿機能が利用できない場合に使用されます。</string>
+    <string name="fb_helptext">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します右側のリストにラベルとファンクション番号を入力します。ボタンを非表示にするには、ラベルを空白のままにします。これらは、列車情報ファンクションが使用できない場合に使用されます。</string>
 
     <string name="fbResetFunctionLabels">すべてリセット</string>
 
     <string name="FilterRosterListHint">含まれるもの…</string>
     <string name="FilterRosterListDownloadLabel">ダウンロード</string>
-    <string name="prefRosterOwnersFilterShowOptionTitle">名簿所有者によるフィルター</string>
-    <string name="prefRosterOwnersFilterShowOptionSummary">所有者ごとに名簿をフィルターするオプションを表示します</string>
+    <string name="prefRosterOwnersFilterShowOptionTitle">列車情報所有者によるフィルタリング</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">所有者別に列車情報をフィルタリングするオプションを表示する</string>
     <string name="prefRosterOwnersFilterDefaultOwner">全て</string>
     <string name="flashlightAction">懐中電灯</string>
     <string name="flashlightStateOff">懐中電灯がオフです</string>
     <string name="flashlightStateOn">懐中電灯がオンになっています</string>
-    <string name="forward">フォワード</string>
-    <string name="fs_edit_notice">警告: デフォルト機能への変更は終了時に失われます - SD カードが見つかりません。</string>
+    <string name="forward">前進</string>
+    <string name="fs_edit_notice">警告: デフォルトファンクション設定への変更は終了時に失われます - SD カードが見つかりません。</string>
 
-    <string name="functionButton00DefaultValue">ライト</string>
+    <string name="functionButton00DefaultValue">前照灯</string>
     <string name="functionButton01DefaultValue">ベル</string>
-    <string name="functionButton02DefaultValue">ホルン</string>
+    <string name="functionButton02DefaultValue">警笛</string>
 
 
 
@@ -195,17 +196,17 @@
 
 
 
-
+    <string name="functionButtonLookForBell">ベル</string>
     <string name="functionButtonLookForHead">前方</string>
-    <string name="functionButtonLookForHorn">警笛</string>
+    <string name="functionButtonLookForHorn">ホーン</string>
     <string name="functionButtonLookForLight">前照灯</string>
     <string name="functionButtonLookForRear">後方</string>
     <string name="functionButtonLookForWhistle">ホイッスル</string>
     <string name="functionConsistColumnLabel">ラベル</string>
     <string name="functionConsistColumnLatching">ラッチング</string>
     <string name="functionConsistColumnLocos">ロコ</string>
-    <string name="functionConsistHeader">ファンクションのアクションをコンシストする</string>
-    <string name="functionConsistHelpText">「特別」コンシストファンクションの次のオプションにのみ使用されます。コンシスト内の各車両のファンクションラベルで各ファンクションのテキストを検索する方法を選択します。</string>
+    <string name="functionConsistHeader">編成ファンクション動作</string>
+    <string name="functionConsistHelpText">「特別」編成ファンクションの次のオプションにのみ使用されます。編成内の各車両のファンクションラベルで各ファンクションのテキストを検索する方法を選択します。</string>
     <string name="functionConsistSettings">コンシストファンクションの設定</string>
     <string name="gamepad_test_reset">ゲームパッドのフルリセット</string>
     <string name="gamepad1_test">ゲームパッド 1 のテスト</string>
@@ -234,12 +235,11 @@
     <string name="gamepadTestCompleteLabel">テストステータス:\s\s</string>
     <string name="gamepadTestCompleteToast">ゲームパッドのテストが正常に完了しました</string>
 
-    <string name="gamepadTestFunctionLabel">機能:\s\s</string>
-    <string name="gamepadTestHelp">下にスクロールして完全な手順を確認してください…\n\nすべての Dpad と 4 つの主ボタンを押しないと、ゲームパッドは機能しません。\n\nすべてのボタンをアクティブにできない場合は、ゲームパッド モードを変更するか (ゲームパッドに付属の説明書を参照)、別のゲームパッド タイプ (上記) を試してください。\n\n\'BACK\' または \'CANCEL\' はテストを終了しますが、ゲームパッドは動作しません。\n「スキップ」するか、ゲームパッドの「速度を下げる」ボタンを 3 回押すと、ゲームパッドが正しく動作しない場合でも、テストに強制的に合格します。\n\'RESET\' を実行すると、ED はまだゲームパッドが使用されていないと判断します。\n「単純な」テストが選択されている場合は、「速度を下げる」ボタンを 1 回押すとテストがスキップされます。\n\nこのページに戻るには、「ゲームパッド テスト n」メニュー オプションを使用してください。</string>
+    <string name="gamepadTestFunctionLabel">ファンクション:\s\s</string>
+    <string name="gamepadTestHelp">下にスクロールして完全な手順を確認してください…\n\nすべての Dpad と 4 つの主ボタンを押しないと、ゲームパッドは機能しません。\n\nすべてのボタンをアクティブにできない場合は、ゲームパッド モードを変更するか (ゲームパッドに付属の説明書を参照)、別のゲームパッド タイプ (上記) を試してください。\n\n\'BACK\' または \'CANCEL\' はテストを終了しますが、ゲームパッドは動作しません。\n「スキップ」するか、ゲームパッドの「速度を下げる」ボタンを 3 回押すと、ゲームパッドが正常に動作しない場合でも、テストに強制的に合格します。\n\'RESET\' を実行すると、ED はまだゲームパッドが使用されていないと判断します。\n「単純な」テストが選択されている場合は、「速度を下げる」ボタンを 1 回押すとテストがスキップされます。\n\nこのページに戻るには、「ゲームパッド テスト n」メニュー オプションを使用してください。</string>
     <string name="gamepadTestHelpNonForced">すべてのボタンをアクティブにできない場合は、ゲームパッド モードを変更するか (デバイスに付属の説明書を参照)、別のゲームパッド タイプ (上記) を試してください。\n初めてスロットル画面からゲームパッドを使用するときは、再テストが必要な場合があります。</string>
     <string name="gamepadTestIncomplete">テストが不完全</string>
     <string name="gamepadTestInvalidKeycode">このモードには無効なキーコードです</string>
-
     <string name="gamepadTestKeycodeLabel">キーコード:\s\s</string>
 
     <string name="gamepadTestKeyCodesDownCode">DN</string>
@@ -304,12 +304,12 @@
     <string name="loco_direction_right_extra">\u00B7R\u00B7</string>
     <string name="locoPressToSelect">選択</string>
     <string name="LocoSelectMethodAddress">DCCアドレス</string>
-    <string name="LocoSelectMethodHelp">上に機関車の DCC アドレスを入力し、[取得] をクリックします。\n\n代わりに、JMRI の「名簿」から機関車を選択するか、無線機の 1 つをクリックして「最近」使用した機関車から選択します。上のボタン。</string>
+    <string name="LocoSelectMethodHelp">上記に機関車の DCC アドレスを入力し、[取得] をクリックします。\n\nまたは、JMRI の [列車情報] から機関車を選択するか、上記のラジオ ボタンのいずれかをクリックして [最近] 使用した機関車から選択します。</string>
     <string name="LocoSelectMethodIDNGo">ロコIDのリクエスト</string>
 
     <string name="LocoSelectMethodRecent">最近</string>
     <string name="LocoSelectMethodRecentConsist">最近のコンシスト</string>
-    <string name="LocoSelectMethodRoster">サーバー名簿</string>
+    <string name="LocoSelectMethodRoster">サーバー列車情報</string>
     <string name="logViewer">ログの表示</string>
     <string name="logviewerClose">閉じる</string>
     <string name="logviewerSave">ファイルへの記録を開始します</string>
@@ -332,7 +332,7 @@
 
 
 
-    <string name="permissionsConnectToServer">エンジン ドライバーには、最近の接続を保存するための STORAGE 権限と、通話中に操作を一時停止するための PHONE 権限が必要です。</string>
+    <string name="permissionsConnectToServer">エンジン ドライバーには、最近の接続を保存するための STORAGE アクセス許可と、通話中に操作を一時停止するための PHONE アクセス許可が必要です。</string>
 
 
     <string name="permissionsPOST_NOTIFICATIONS">エンジン ドライバーには、バックグラウンドにプッシュされたときに警告を表示する NOTIFICATION 権限が必要です。</string>
@@ -357,7 +357,7 @@
     <string name="permissionsWriteSettingsAdditional">- 下のボタンをクリックしてください。\n- 許可を与えます。\n- ここに戻るには、「戻る」をクリックしてください。</string>
     <string name="permissionsWriteSettingsAdditional2">エンジン ドライバーで明るさを変更する必要がない場合は、これを無視してください。</string>
     <string name="port">ポート</string>
-    <string name="power">力</string>
+    <string name="power">電源</string>
 
     <string name="power_control_label">コントロールレイアウトの電源設定</string>
     <string name="power_control_not_allowed">電源制御は許可されていません。サーバー上の環境設定/設定の変更。</string>
@@ -378,10 +378,10 @@
     <string name="prefActionBarShowServerDescriptionTitle">サーバーの説明を表示</string>
     <string name="prefAllowMobileDataSummary">デバイスがモバイル データ経由で JMRI に接続できるようにします。</string>
     <string name="prefAllowMobileDataTitle">モバイルデータ接続を許可する</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">名簿エントリのラベルの代わりに、デフォルトの関数ラベルを表示します。</string>
-    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">名簿エントリのラベルの代わりに、デフォルトの関数ラベルを表示します。                                                               \n「特別」のフォロー ルール スタイルを使用するには、これを有効にする必要があります。</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">列車情報エントリのラベルの代わりにデフォルトのファンクションラベルを表示します。</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">列車情報エントリのラベルの代わりに、デフォルトのファンクションラベルを表示します。\n「特別な」ルール スタイルに従うには、これを有効にする必要があります。</string>
     <string name="prefCenterDirectionButtonsShortDefaultValue">ノイ</string>
-    <string name="prefAlwaysUseFunctionsFromServerSummary">無効にすると、アドレス (名簿ではなく) によって選択された車両に EngineDriver のデフォルト ラベルが使用され、サーバーのデフォルト ラベルが無視されます。</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">無効にすると、サーバーのデフォルト ラベルを無視して、アドレス (列車情報ではない) で選択された機関車に EngineDriver のデフォルト ラベルを使用します。</string>
 
 
 
@@ -405,36 +405,36 @@
     <string name="prefConnectTitle">接続設定</string>
     <string name="PrefConnectToFirstServerSummary">最初に検出された WiThrottle サーバーに自動的に接続しますか?</string>
     <string name="PrefConnectToFirstServerTitle">最初の WiThrottle サーバーに自動接続しますか?</string>
-    <string name="prefConsistFollowAction1Summary">構成内のどの機関車が、見つかったヘッドライト機能に反応する必要があります。</string>
+    <string name="prefConsistFollowAction1Summary">編成内のどの機関車が、見つかったヘッドライトファンクションに反応するか。</string>
     <string name="prefConsistFollowAction1Title">ヘッドライト特有のアクション 1</string>
-    <string name="prefConsistFollowAction2Summary">構成内のどの車両が、見つかった機能に反応する必要があります。</string>
+    <string name="prefConsistFollowAction2Summary">編成内のどの機関車が、見つかったファンクションに反応するか。</string>
     <string name="prefConsistFollowAction2Title">文字列 2 のアクション</string>
-    <string name="prefConsistFollowAction3Summary">構成内のどの車両が、見つかった機能に反応する必要があります。</string>
+    <string name="prefConsistFollowAction3Summary">編成内のどの機関車が、見つかったファンクションに反応するか。</string>
     <string name="prefConsistFollowAction3Title">文字列 3 のアクション</string>
-    <string name="prefConsistFollowAction4Summary">構成内のどの車両が、見つかった機能に反応する必要があります。</string>
+    <string name="prefConsistFollowAction4Summary">編成内のどの機関車が、見つかったファンクションに反応するか。</string>
     <string name="prefConsistFollowAction4Title">文字列 4 のアクション</string>
-    <string name="prefConsistFollowAction5Summary">構成内のどの車両が、見つかった機能に反応する必要があります。</string>
+    <string name="prefConsistFollowAction5Summary">編成内のどの機関車が、見つかったファンクションに反応するか。</string>
     <string name="prefConsistFollowAction5Title">文字列 5 のアクション</string>
-    <string name="prefConsistFollowDefaultActionSummary">以下のルールがいずれも満たされない場合、編成内のどの機関車が機能ボタンに反応する必要があります。</string>
-    <string name="prefConsistFollowDefaultActionTitle">すべてが一致する場合 失敗アクション</string>
-    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">機能ボタンが押されたときに構成内でどのスタイルのルールに従うか。\n注: 「デフォルトの機能ラベルを使用」が有効になっている場合、「特別...」は先頭 (またはのみ) ロコにも適用されます。</string>
-    <string name="prefConsistFollowRuleStyleTitle">関数を構成する - ルールスタイルに従う</string>
+    <string name="prefConsistFollowDefaultActionSummary">以下のルールのいずれも満たされない場合、編成内のどの機関車がファンクションボタンに反応する必要があります。</string>
+    <string name="prefConsistFollowDefaultActionTitle">すべて一致する場合 失敗アクション</string>
+    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">ファンクションボタンが押されたときに編成内で従うルールのスタイル。\n注: \'デフォルトのファンクションラベルを使用する\' が有効になっている場合、\'特別...\' も先頭の (または唯一の) 機関車に適用されます。</string>
+    <string name="prefConsistFollowRuleStyleTitle">編成ファンクション - ルールスタイルに従う</string>
     <string name="prefConsistFollowString1DefaultValue">ライト</string>
-    <string name="prefConsistFollowString1Summary">「ヘッドライト」機能 (通常は F0) を認識するために、構成内の機関車の機能ラベルで検索するカンマ区切りの文字列。</string>
+    <string name="prefConsistFollowString1Summary">\'ヘッドライト\' ファンクション (通常は F0) を認識するために、編成内の機関車のファンクションラベルで検索するコンマ区切りの文字列。</string>
     <string name="prefConsistFollowString1Title">ヘッドライト専用ストリング1</string>
     <string name="prefConsistFollowString2DefaultValue">ホイッスル、ホーン、ベル</string>
-    <string name="prefConsistFollowString2Summary">同様の機能を認識するために、構成内の車両の機能ラベルで検索するカンマ区切りの文字列。</string>
+    <string name="prefConsistFollowString2Summary">同様のファンクションを認識するために、編成内の機関車のファンクションラベルで検索するコンマ区切りの文字列。</string>
     <string name="prefConsistFollowString2Title">文字列2</string>
-    <string name="prefConsistFollowString3Summary">同様の機能を認識するために、構成内の車両の機能ラベルで検索するカンマ区切りの文字列。</string>
+    <string name="prefConsistFollowString3Summary">同様のファンクションを認識するために、編成内の機関車のファンクションラベルで検索するコンマ区切りの文字列。</string>
     <string name="prefConsistFollowString3Title">文字列3</string>
-    <string name="prefConsistFollowString4Summary">同様の機能を認識するために、構成内の車両の機能ラベルで検索するカンマ区切りの文字列。</string>
+    <string name="prefConsistFollowString4Summary">同様のファンクションを認識するために、編成内の機関車のファンクションラベルで検索するコンマ区切りの文字列。</string>
     <string name="prefConsistFollowString4Title">文字列4</string>
-    <string name="prefConsistFollowString5Summary">同様の機能を認識するために、構成内の車両の機能ラベルで検索するカンマ区切りの文字列。</string>
+    <string name="prefConsistFollowString5Summary">同様のファンクションを認識するために、編成内の機関車のファンクションラベルで検索するコンマ区切りの文字列。</string>
     <string name="prefConsistFollowString5Title">文字列5</string>
-    <string name="prefConsistFollowSummary">Consist 内で関数がどのように動作するかに関するオプション。</string>
-    <string name="prefConsistFollowTitle">Consist 関数フォロー設定</string>
+    <string name="prefConsistFollowSummary">編成内でファンクションがどのように動作するかを指定するオプション。</string>
+    <string name="prefConsistFollowTitle">編成ファンクションのフォロー設定</string>
     <string name="prefConsistLightsLongClickSummary">[Loco Select] ボタンを長押しして、コンシスト内の個々の機関車のライトを変更します。</string>
-    <string name="prefConsistLightsLongClickTitle">長押しクリックでライトを構成します</string>
+    <string name="prefConsistLightsLongClickTitle">長押しで編成ライトをコントロール</string>
     <string name="prefDccexConnectionOptionSummary">接続画面で wiThrottle プロトコルと DCC-EX プロトコルを切り替えるオプションを表示します。</string>
     <string name="prefDccexConnectionOptionTitle">プロトコルオプションを表示</string>
     <string name="prefDccexPreferencesSummary">EX-CommandStation を使用するためのオプション</string>
@@ -446,15 +446,15 @@
 
     <string name="prefDefaultAddressLengthSummary">デフォルトのロコアドレス長 (桁数に基づいて自動で設定されます)。</string>
     <string name="prefDefaultAddressLengthTitle">デフォルトのアドレス長</string>
-    <string name="prefDefaultFunctionsSummary">デフォルトの関数ラベルがいつ、どのように表示されるか。</string>
-    <string name="prefDefaultFunctionsTitle">デフォルトの機能設定</string>
+    <string name="prefDefaultFunctionsSummary">デフォルトのファンクションラベルがいつ、どのように表示されるか。</string>
+    <string name="prefDefaultFunctionsTitle">デフォルトのファンクション設定</string>
 
     <string name="prefDelimiterSummary">分岐点名とルート名の場所部分の終わりを示す文字を設定します</string>
     <string name="prefDelimiterTitle">場所の区切り文字</string>
     <string name="prefDeviceSounds0Summary">電話機でスロットル 1 の基本的な機関車サウンドを再生する</string>
     <string name="prefDeviceSounds0Title">スロットル 1 ロコ音</string>
     <string name="prefDeviceSounds1Summary">Throttle 2 の電話機で基本的な機関車サウンドを再生する</string>
-    <string name="prefDeviceSounds1Title">スロットル 2 ロコサウンド</string>
+    <string name="prefDeviceSounds1Title">スロットル 2 ロコ音</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">電話機内ロコサウンドの追加設定</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">追加の設定</string>
 
@@ -464,7 +464,7 @@
     <string name="prefDeviceSoundsBellVolumeSummary">電話機のベル音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">電話機のベル音の音量</string>
     <string name="prefDeviceSoundsButtonSummary">電話のロコサウンドオプションを変更するためのアクションバーボタンを表示します</string>
-    <string name="prefDeviceSoundsButtonTitle">電話の音ボタンで</string>
+    <string name="prefDeviceSoundsButtonTitle">電話の音ボタン</string>
     <string name="prefDeviceSoundsCategoryTitle">電話中のロコ音の音量</string>
     <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1 と F2 も IPLS ベルとホーンを有効にします</string>
     <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1とF2はベルとホーンを起動しますか？</string>
@@ -472,7 +472,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">ミュートボタンを隠す</string>
     <string name="prefDeviceSoundsHornVolumeSummary">電話機のホーン/ホイッスル音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">電話のホーン/ホイッスル音の音量</string>
-    <string name="prefDeviceSoundsLocoVolumeSummary">電話機でのロコのエンジン音の音量 (1 ～ 100)</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary">携帯電話でのロコのエンジン音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">電話中のロコ音の音量</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">ステップを変更すると、ロコステップサウンドが最後まで再生されます。  運動量（上記）は最小時間のみとなります。</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">ロコステップ音をクリップしないでください</string>
@@ -491,7 +491,7 @@
     <string name="prefDisableVolumeKeysSummary">速度を制御する電話/タブレットのハードウェア音量キーを無効にします。注: 選択すると、「追加の選択されたロコ インジケーター」が上書きされます。</string>
     <string name="prefDisableVolumeKeysTitle">音量キーを無効にする</string>
 
-    <string name="prefDisplayClockSummary">スロットル画面と Web 画面での高速クロック表示の形式を設定します。</string>
+    <string name="prefDisplayClockSummary">スロットル画面と Web 画面での高速クロック表示のフォーマットを設定します。</string>
     <string name="prefDisplayClockTitle">高速クロック表示</string>
     <string name="prefDisplaySpeedArrowsSummary">ロコの速度を変更するために速度スライダーの横にボタンを表示しますか?</string>
     <string name="prefDisplaySpeedArrowsTitle">速度ボタンを表示しますか?</string>
@@ -518,11 +518,11 @@
     <string name="prefEsuMc2ButtonTLTitle">左上のボタンのアクション</string>
 
     <string name="prefEsuMc2ButtonTRSummary">ボタンを押したときの動作を選択します。</string>
-    <string name="prefEsuMc2ButtonTRTitle">右上のボタンのアクション</string>
+    <string name="prefEsuMc2ButtonTRTitle">右上ボタンのアクション</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">コントロールノブが反時計回りのエンドストップ位置にあるときに、ロコの方向を変更できるようにします。</string>
     <string name="prefEsuMc2EndStopDirectionChangeTitle">終点での方向変更</string>
     <string name="prefEsuMc2KnobButtonSummary">スロットル画面のアクション ボタンによってコントロール ノブを無効にできるようにします。</string>
-    <string name="prefEsuMc2KnobButtonTitle">ノブボタンの無効化を表示</string>
+    <string name="prefEsuMc2KnobButtonTitle">ノブボタンを無効にする</string>
     <string name="prefEsuMc2StopButtonCategoryTitle">デバイス停止ボタンのオプション</string>
 
     <string name="prefEsuMc2StopButtonDelaySummary">停止ボタンを「長押し」する時間。\n「長押し」すると、アクティブなスロットルがすべて停止します。 「短く押す」と現在のスロットルが一時停止されます。\n小さいほど高速になります。</string>
@@ -604,7 +604,7 @@
     <string name="prefHapticFeedbackButtonsSummary">ボタンを押すと触覚フィードバック (振動) が発生します。</string>
     <string name="prefHapticFeedbackButtonsTitle">ボタンを押したときの触覚フィードバック</string>
     <string name="prefHapticFeedbackDurationSummary">各振動の継続時間 (ミリ秒単位)。</string>
-    <string name="prefHapticFeedbackDurationTitle">触覚フィードバックの継続時間</string>
+    <string name="prefHapticFeedbackDurationTitle">触覚フィードバックの持続時間</string>
     <string name="prefHapticFeedbackSummary">速度変化に対する触覚フィードバック。</string>
 
     <string name="prefHapticFeedbackTitle">触覚フィードバック</string>
@@ -613,12 +613,12 @@
 
     <string name="prefHideDemoServerSummary">接続リストでデモ サーバー \'jmri.mstevetodd.com\' を非表示にします。</string>
     <string name="prefHideDemoServerTitle">デモサーバーを非表示にする</string>
-    <string name="prefHideIfNoUserNameSummary">ユーザー名が空の場合は、ターンアウト/ルートをリストから省略します。</string>
+    <string name="prefHideIfNoUserNameSummary">ユーザー名が空の場合は、分岐/ルートをリストから省略します。</string>
     <string name="prefHideIfNoUserNameTitle">ユーザー名がない場合は非表示にしますか?</string>
 
 
     <string name="prefHideSliderAndSpeedButtonsTitle">スライダーと速度ボタンを非表示にしますか?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">速度スライダーも速度ボタンも表示しません。\n注: 「スライダーを非表示にする」、「スライダーの高さ」、および「表示速度ボタン」のオプションをオーバーライドします。</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">速度スライダーも速度ボタンも表示しません。\n注: 「スライダーを非表示」、「スライダーの高さ」、および「表示速度ボタン」のオプションをオーバーライドします。</string>
     <string name="prefHideSliderSummary">速度スライダーを表示せず、代わりに速度ボタンを使用してください。</string>
     <string name="prefHideSliderTitle">スピードスライダーを非表示にしますか?</string>
     <string name="prefHideSystemRouteNamesSummary">ルート リストのスペースを節約するために使用される、ルートのシステム名を非表示にします。</string>
@@ -669,7 +669,7 @@
     <string name="prefKidsTimerRestartPasswordTitle">再起動パスワード</string>
     <string name="prefKidsTimerSummary">機関車の運行時間を制限します。例えばどの子どもにも平等な時間が与えられます。</string>
     <string name="prefKidsTimerTitle">時間制限のあるランニング</string>
-    <string name="prefLeftDirectionButtonsDefaultValue">フォワード</string>
+    <string name="prefLeftDirectionButtonsDefaultValue">前進</string>
     <string name="prefLeftDirectionButtonsShortDefaultValue">進む</string>
     <string name="prefLeftDirectionButtonsShortSummary">すべての左方向ボタンの短いラベル。通常の動作の場合は「Forward」を入力するか、空白を入力します。</string>
     <string name="prefLeftDirectionButtonsShortTitle">短い左方向ボタンのラベル</string>
@@ -698,36 +698,36 @@
     <string name="prefMaximumThrottleTitle">最大スロットルパーセンテージ</string>
 
 
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">機能ラベルのない JMRI 名簿エントリに表示される機能ラベルを制限します。</string>
-    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">名簿のデフォルト関数の数</string>
-    <string name="prefNumberOfDefaultFunctionLabelsSummary">JMRI 名簿から入手できない場合は、表示される関数ラベルを制限します。</string>
-    <string name="prefNumberOfDefaultFunctionLabelsTitle">デフォルト関数の数</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">ファンクションラベルのない JMRI 列車情報エントリに表示されるファンクションラベルを制限します。</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">列車情報のデフォルトファンクションの数</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">JMRI 列車情報から利用できない場合は、表示されるファンクションラベルを制限します。</string>
+    <string name="prefNumberOfDefaultFunctionLabelsTitle">デフォルトファンクションの数</string>
     <string name="prefNumOfThrottles">スロットルの数</string>
 
     <string name="prefNumOfThrottlesSummary">表示するスロットルの数を選択します。</string>
     <string name="prefPauseAlternateButtonSummary">「停止」ボタンの近くに代替の「一時停止」ボタンを表示します。 (縦型レイアウトのみ)</string>
     <string name="prefPauseAlternateButtonTitle">代替の「一時停止」ボタン</string>
     <string name="prefPauseSpeedButtonSummary">機関車を減速および停止するボタンを表示し、ボタンを放すと速度に戻ります。</string>
-    <string name="prefPauseSpeedButtonTitle">「一時停止」ボタンを表示する</string>
+    <string name="prefPauseSpeedButtonTitle">「一時停止」ボタンを表示</string>
     <string name="prefPauseSpeedRateSummary">一時停止アクションの速度ステップ変更間のミリ秒数。</string>
     <string name="prefPauseSpeedRateTitle">「一時停止」ボタンの割合</string>
     <string name="prefPauseSpeedStepSummary">一時停止アクションのステップ サイズが変更されます。</string>
     <string name="prefPauseSpeedStepTitle">「一時停止」ボタンステップ</string>
-    <string name="prefPowerButtonBarSummary">スロットル、ターンアウト、ルート画面に電源ボタンのレイアウトを表示しますか?</string>
+    <string name="prefPowerButtonBarSummary">スロットル、分岐、ルート画面にレイアウト電源ボタンを表示しますか?</string>
     <string name="prefPowerButtonBarTitle">レイアウトの電源ボタンを表示しますか?</string>
-    <string name="prefRightDirectionButtonsDefaultValue">逆行する</string>
-    <string name="prefRightDirectionButtonsShortDefaultValue">改訂版</string>
+    <string name="prefRightDirectionButtonsDefaultValue">後進</string>
+    <string name="prefRightDirectionButtonsShortDefaultValue">後進</string>
     <string name="prefRightDirectionButtonsShortSummary">すべての右方向ボタンの短いラベル。通常の動作の場合は「Reverse」を入力するか、空白を入力します。</string>
     <string name="prefRightDirectionButtonsShortTitle">短い右方向ボタンのラベル</string>
     <string name="prefRightDirectionButtonsSummary">すべての右方向ボタンのラベル。通常の動作の場合は「Reverse」を入力するか、空白を入力します。</string>
     <string name="prefRightDirectionButtonsTitle">右方向ボタンのラベル</string>
 
-    <string name="prefRosterFilterSummary" tools:ignore="TypographyEllipsis">... で始まる名簿エントリのみを含めます。</string>
-    <string name="prefRosterFilterTitle">フィルター名簿</string>
-    <string name="prefRosterRecentLocoNamesSummary">一致する住所が見つかった場合、名簿のロコ名を最近のリストに含めますか?</string>
-    <string name="prefRosterRecentLocoNamesTitle">最近のロコの名簿名?</string>
-    <string name="prefRosterRecentLocosSummary">名簿の選択を最近のリストに含めますか?</string>
-    <string name="prefRosterRecentLocosTitle">最近のロコの名簿?</string>
+    <string name="prefRosterFilterSummary" tools:ignore="TypographyEllipsis">... で始まる列車情報エントリのみを含めます。</string>
+    <string name="prefRosterFilterTitle">列車情報フィルター</string>
+    <string name="prefRosterRecentLocoNamesSummary">一致するアドレスが見つかった場合、最近のリストに列車情報の機関車名を含めますか?</string>
+    <string name="prefRosterRecentLocoNamesTitle">最近の機関車の列車情報に名前は載っていますか?</string>
+    <string name="prefRosterRecentLocosSummary">最近のリストに列車情報の選択を含めますか?</string>
+    <string name="prefRosterRecentLocosTitle">最近の機関車の列車情報は?</string>
 
     <string name="prefScreenBrightnessDimSummary">画面を暗くするときに使用する明るさの設定 (0% ～ 99%。設定されている場合、自動明るさ/適応明るさは自動的に無効になります。</string>
     <string name="prefScreenBrightnessDimTitle">画面の調光%値</string>
@@ -738,7 +738,7 @@
     <string name="prefSelectiveLeadSoundF1Title">F1 を常にサウンドとして扱います</string>
     <string name="prefSelectiveLeadSoundF2Summary">「選択的リードユニットサウンド」オプションの場合</string>
     <string name="prefSelectiveLeadSoundF2Title">F2 を常にサウンドとして扱います</string>
-    <string name="prefSelectiveLeadSoundSummary">EngineDriver 構成内の Lead ユニットのみに Horn/Bell 機能を送信します。  (ラベルの一部として「ベル」、「ホーン」、または「ホイッスル」を含む「ラベル」を持つ関数のみ。)</string>
+    <string name="prefSelectiveLeadSoundSummary">EngineDriver 編成内のリード ユニットにのみ、ホーン/ベル機能を送信します。(ラベルの一部として \'ベル\'、\'ホーン\'、または \'ホイッスル\' を含む \'ラベル\' を持つ機能のみ/任意の機能。)</string>
     <string name="prefSelectiveLeadSoundTitle">セレクティブリードユニットサウンド?</string>
     <string name="prefSelectLocoTitle">ロコの設定を選択します</string>
     <string name="prefSelLocoWhileMovingSummary">移動時にLocoボタンを有効にします。</string>
@@ -762,21 +762,21 @@
     <string name="prefSemiRealisticThrottleSummary">セミリアルスロットル画面に固有の設定</string>
     <string name="prefSemiRealisticThrottleTitle">半現実的なスロットル設定</string>
     <string name="prefShowAddressInsteadOfNameSummary">[スロットル] ページにロコ名の代わりにロコ DCC アドレスを表示します。</string>
-    <string name="prefShowAddressInsteadOfNameTitle">名前の代わりにロコの住所を表示しますか?</string>
+    <string name="prefShowAddressInsteadOfNameTitle">名前の代わりに ロコアドレスを表示しますか?</string>
     <string name="prefShowAdvancedPreferencesSummary">追加の設定を表示または非表示にします。</string>
     <string name="prefShowAdvancedPreferencesTitle">詳細設定を表示しますか?</string>
     <string name="prefShowTimeOnLogEntrySummary">ログ画面の各エントリの日時を表示します。</string>
     <string name="prefShowTimeOnLogEntryTitle">ログにタイムスタンプを表示</string>
-    <string name="prefSortOrderRosterTitle">名簿のソート順</string>
-    <string name="prefSortOrderRosterSummary">Engine Driver を起動するたびに、デフォルトで名簿エントリが表示されるように順序付けします。</string>
-    <string name="prefSortOrderTurnoutsTitle">投票率の並べ替え順序</string>
+    <string name="prefSortOrderRosterTitle">列車情報の並び順</string>
+    <string name="prefSortOrderRosterSummary">エンジンドライバーを起動するたびに、デフォルトで列車情報エントリが表示されるようにする</string>
+    <string name="prefSortOrderTurnoutsTitle">分岐器の並び順</string>
     <string name="prefSortOrderTurnoutsSummary">Engine Driver を起動するたびに、デフォルトで Turnouts エントリが表示される順序</string>
     <string name="prefSortOrderRoutesTitle">ルートの並べ替え順序</string>
     <string name="prefSortOrderRoutesSummary">デフォルトで、エンジン ドライバーを起動するたびにルート エントリが表示される順序</string>
     <string name="prefShowWitPomTitle">スロットル PoM ページを表示</string>
     <string name="prefShowWitPomSummary">MAIN (動作モード) メニューおよびページで WiThrottle CV プログラミングを使用できるようにするかどうかを選択します。</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">シンプルスロットルレイアウトに表示する機能ボタンの数 (0 ～ 4)。</string>
-    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">機能エリアサイズ（シンプルスロットルのみ）</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary">シンプル スロットル レイアウトに表示するファンクションボタンの数 (0 ～ 4)。</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">ファンクションエリアのサイズ（シンプルスロットルのみ）</string>
 
     <string name="prefSliderLeftMarginSummary">スロットル速度スライダーのマージンをオフセットするピクセル数。</string>
     <string name="prefSliderLeftMarginTitle">スロットルスピードスライダーマージン</string>
@@ -795,7 +795,7 @@
     <string name="prefStopOnDirectionChangeSummary">移動中に方向を変えると電車が止まります。</string>
     <string name="prefStopOnDirectionChangeTitle">方向転換で止まる？</string>
     <string name="prefStopOnPhonecallSummary">電話に応答または発信されたときに機関車を停止します</string>
-    <string name="prefStopOnPhonecallTitle">電話をやめますか?</string>
+    <string name="prefStopOnPhonecallTitle">電話で停止しますか?</string>
     <string name="prefStopOnReleaseSummary">スロットルから解放すると機関車を停止します</string>
     <string name="prefStopOnReleaseTitle">リリース時に停止しますか?</string>
     <string name="prefSummary">エンジンドライバーの設定</string>
@@ -807,8 +807,8 @@
     <string name="prefSwipeDownOptionTitle">スロットルビューで下にスワイプするアクションはありますか?</string>
     <string name="prefSwipeThroughRoutesSummary">画面間をスワイプするときにルート画面を含めます。</string>
     <string name="prefSwipeThroughRoutesTitle">ルートをスワイプしますか?</string>
-    <string name="prefSwipeThroughTurnoutsSummary">画面間をスワイプするときに投票画面を含めます。</string>
-    <string name="prefSwipeThroughTurnoutsTitle">投票結果をスワイプしますか?</string>
+    <string name="prefSwipeThroughTurnoutsSummary">画面間をスワイプするときに分岐器画面を含めます。</string>
+    <string name="prefSwipeThroughTurnoutsTitle">分岐器をスワイプしますか?</string>
     <string name="prefSwipeThroughWebSummary">画面間をスワイプするときに Web 画面を含めます。</string>
     <string name="prefSwipeThroughWebTitle">ウェブをスワイプしますか?</string>
     <string name="prefSwipeUpDownSummary">スロットル画面を上下にスワイプするためのオプション。</string>
@@ -875,9 +875,9 @@
     <string name="prefTtsWhenTitle">音声応答</string>
 
 
-    <string name="prefTurnoutsTitle">投票所とルートの設定</string>
-    <string name="prefTurnoutsShowThrowCloseButtonsSummary">ターンアウトには常に [スロー] ボタンと [閉じる] ボタンの両方を表示し、[トグル] ボタンは決して表示しないでください。</string>
-    <string name="prefTurnoutsShowThrowCloseButtonsTitle">常にスロー/クローズを表示しますか?</string>
+    <string name="prefTurnoutsTitle">分岐とルートの設定</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">分岐の「反位（分岐）」ボタンと「定位（直進）」ボタンの両方を常に表示し、「トグル」ボタンは表示しないでください。</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">反位（分岐）/定位（直進）を常に表示しますか?</string>
 
     <string name="prefVerticalStopButtonMarginSummary">速度ボタンと画面の下部から停止ボタンのマージンをオフセットするピクセル数。</string>
     <string name="prefVerticalStopButtonMarginTitle">停止ボタンの垂直マージン</string>
@@ -901,10 +901,10 @@
     <string name="prefWebViewTitle">Web ビューの設定</string>
     <string name="press_to_toggle">ボタンを押してレイアウトの電源状態を切り替えます</string>
     <string name="recent_connections">最近の接続</string>
-    <string name="recent_consists">最近の構成から選択</string>
+    <string name="recent_consists">最近の編成から選択</string>
     <string name="recent_engines">最近のロコから選択</string>
-    <string name="RecentConsistsNameEditText">構成の名前を入力します</string>
-    <string name="RecentConsistsNameEditTitle">最近のコンシス名</string>
+    <string name="RecentConsistsNameEditText">編成の名前を入力してください</string>
+    <string name="RecentConsistsNameEditTitle">最近の編成名</string>
     <string name="RecentsNameEditText">ロコの名前を入力してください</string>
     <string name="reconnect_help">自動的に再接続を試みます。再接続を待つか、「戻る」を押して終了します。</string>
     <string name="reconnect_label">再接続試行ステータス</string>
@@ -912,11 +912,11 @@
     <string name="release">リリース</string>
     <string name="releaseThrottleLocos">解放\n %1$s</string>
 
-    <string name="reverse">逆行する</string>
+    <string name="reverse">後進</string>
 
-    <string name="roster_list">名簿から選択 / エントリの構成</string>
-    <string name="rosterDetailsDialogTitle">名簿の詳細 </string>
-    <string name="rosterEmpty">サーバー名簿にエントリが見つかりません。\n\n代わりに「DCC アドレス」または「最近」オプションを使用してください。</string>
+    <string name="roster_list">列車情報から選択/編成エントリー</string>
+    <string name="rosterDetailsDialogTitle">列車情報の詳細</string>
+    <string name="rosterEmpty">サーバー列車情報にエントリが見つかりません。\n\n代わりに「DCC アドレス」または「最近」オプションを使用してください。</string>
     <string name="rosterEntryImageHelpText">ローカルに保存された画像のみ。  サーバーに機関車の画像がある場合、この選択は上書きされます。</string>
     <string name="rosterEntryImageRemoveButtonText">取り除く</string>
     <string name="rosterEntryImageSaveButtonText">保存</string>
@@ -929,12 +929,12 @@
     <string name="routes_location_label">場所でフィルタリングする</string>
     <string name="routes_route">ルートシステム名</string>
 
-    <string name="select_loco">取得する機関車の住所を入力してください</string>
-    <string name="select_loco_address">住所</string>
+    <string name="select_loco">取得する機関車のアドレスを入力してください</string>
+    <string name="select_loco_address">アドレス</string>
     <string name="select_loco_heading">ロコの取得、メソッド - スロットル %1$s</string>
     <string name="server_address">サーバーアドレス</string>
     <string name="set">セット</string>
-    <string name="functionDefaultSettings">関数のデフォルト</string>
+    <string name="functionDefaultSettings">ファンクションのデフォルト</string>
     <string name="sl_recent_engine_notice">最近のロコは利用できません - SD カードが見つかりません。</string>
     <string name="soundsButtonHornShortDefaultValue">ホーンショート</string>
 
@@ -945,12 +945,12 @@
     <string name="statusThreadedAppServerDiscoveryNotPossible">WiFi 接続がなければサーバー検出はできません。</string>
     <string name="statusThreadedAppUnableToConnect">%3$s から %1$s:%2$s のサーバーに接続できません。再試行中</string>
     <string name="steal_text">アドレス %1$s を盗みますか?</string>
-    <string name="steal_title">窃盗</string>
+    <string name="steal_title">スチール</string>
     <string name="stop">停止</string>
     <string name="throttle">スロットル</string>
     <string name="throttle_name">スロットル名: %1$s</string>
     <string name="throttleSwitchAction">スロットル画面の切り替え</string>
-    <string name="throw_button">投げる</string>
+    <string name="throw_button">反位（分岐）</string>
     <string name="timerDialogHint">再起動またはパスワードのリセット</string>
     <string name="timerDialogMessage">パスワード:</string>
     <string name="timerDialogTitle">タイマーパスワード</string>
@@ -966,7 +966,7 @@
     <string name="toastConnectUnableToLoadPref">ホスト固有の設定をロードできません。ホスト名を取得できません。</string>
     <string name="toastConnectUnableToSavePref">ホスト固有の設定を保存できません。ホスト名を取得できません。</string>
     <string name="toastConsistEditHelp">タッチすると方向が変わります。エントリを削除するには、左から右にスワイプします。</string>
-    <string name="toastDeviceSoundsSimpleLayoutWarning">機能ボタン領域のサイズを大きくすることをお勧めします。そうしないと、ベル/ホーン/ミュートサウンド機能にアクセスできなくなります。</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">ファンクションボタンエリアのサイズを大きくすることをお勧めします。そうしないと、ベル/ホーン/ミュートサウンドファンクションにアクセスできなくなります。</string>
     <string name="toastDirectionButtonsSwapped">方向ボタンが一時的に入れ替わりました。それらを永久に交換するには、環境設定を変更してください</string>
     <string name="toastEsuMc2NoButtonPresses">ボタンを押すことはできません: Mobile Control II は現在停止モードです</string>
     <string name="toastEsuMc2NoLocoChange">ロコ変更は許可されていません: Mobile Control II は現在停止モードです</string>
@@ -1002,12 +1002,12 @@
     <string name="toastPreferencesThrottleChangeSucceeded">スロットルレイアウトの変更に成功しました。</string>
     <string name="toastAddressExceedsMax">アドレス \'%1$s\' がサポートされる最大値 (\'%2$s\') を超えています</string>
     <string name="toastSortedByName">名前順に並べ替え</string>
-    <string name="toastSortedById">住所/ID順に並べ替え</string>
+    <string name="toastSortedById">アドレス/IDで並べ替え</string>
     <string name="toastSortedByLastUsed">最後に使用した時間順に並べ替え</string>
     <string name="toastSortedByPosition">ポジションごとに並べ替え</string>
     <string name="toastRecentCleared">ロコがリストから削除されました</string>
     <string name="toastRecentConsistCleared">リストから削除された内容</string>
-    <string name="toastRecentConsistsHelp">タッチして選択します。\n長押しして名前を変更するか (入力したアドレスの場合)、名簿の詳細を表示します。\nエントリを削除するには、左から右にスワイプします。</string>
+    <string name="toastRecentConsistsHelp">タップして選択します。\n長押しすると名前が変更されます (入力したアドレスの場合)。または列車情報の詳細が表示されます。\nエントリを削除するには左から右にスワイプします。</string>
     <string name="toastRecentsHelp">タッチして選択します。 \n 名前を変更するには長押しします。 \n エントリを削除するには、左から右にスワイプします。</string>
 
 
@@ -1051,7 +1051,7 @@
 
 
 
-    <string name="toastTurnoutInvalidNumber">無効な投票率番号です。</string>
+    <string name="toastTurnoutInvalidNumber">分岐番号が無効です。</string>
 
     <string name="toastDoubleBackButtonToExit">もう一度「戻る」を押してエンジンドライバーを終了します</string>
     <string name="toastUnableToSetBrightness">自動明るさ/適応明るさを設定できません。</string>
@@ -1080,15 +1080,15 @@
     <string name="TtsSpeed">スピード</string>
     <string name="TtsTargetSpeed">目標速度</string>
     <string name="TtsVolumeThrottle">スロットル</string>
-    <string name="turnouts">投票率</string>
-    <string name="turnouts_direct_entry_label">投票者番号または名前を入力してください</string>
+    <string name="turnouts">分岐器</string>
+    <string name="turnouts_direct_entry_label">分岐番号または名前を入力してください</string>
 
-    <string name="turnouts_list_label">投票率 (状態をクリックして切り替えます)</string>
+    <string name="turnouts_list_label">分岐器（状態をクリックして切り替えます）</string>
     <string name="turnouts_location_label">場所でフィルタリングする</string>
     <string name="turnouts_turnout">消す</string>
-    <string name="turnoutsRecentHeading">最近の投票者数</string>
-    <string name="turnoutsSelectionTypeAddress">住所/最近</string>
-    <string name="turnoutsSelectionTypeHeading">投票者の選定方法</string>
+    <string name="turnoutsRecentHeading">最近の分岐器</string>
+    <string name="turnoutsSelectionTypeAddress">アドレス/ 最近</string>
+    <string name="turnoutsSelectionTypeHeading">分岐選択の方法</string>
 
     <string name="turnoutsSelectionTypeRoster">%1$s が定義されました</string>
 
@@ -1106,7 +1106,7 @@
     <string name="yes">はい</string>
     <string name="order">選別</string>
     <string name="prefDoubleBackButtonToExitTitle">ダブルバックボタンを押して終了しますか?</string>
-    <string name="prefDoubleBackButtonToExitSummary">「スロットル」または「接続」画面で Android の「戻る」ボタンを 3 秒以内に 2 回押すと、エンジン ドライバーが終了します</string>
+    <string name="prefDoubleBackButtonToExitSummary">「スロットル」または「接続」画面で Android の「戻る」ボタンを 3 秒以内に 2 回押すと、エンジン ドライバーが終了します。</string>
     <string name="prefHeartbeatResponseFactorTitle">ハートビート応答係数</string>
     <string name="prefHeartbeatResponseFactorSummary">ハートビートを送信するタイミングのハートビート期間の割合 (50% ～ 90%)。次回の接続時に有効になります。</string>
     <string name="server">サーバ</string>
@@ -1114,25 +1114,26 @@
     <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">%1$s:%2$s からの DCC-EX「iDCCEX...」メッセージを待機中にタイムアウトになりました。切断中</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">デコーダブレーキの種類</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">デコーダのブレーキ機能を有効にします。</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">ESU 低機能番号</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">ESU 低ファンクション番号</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">ESU - 低いブレーキ値でどのデコーダ機能をアクティブにするか</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">ESU 中間機能番号</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">ESU 中間ファンクション番号</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">ESU - 中間ブレーキ値でどのデコーダ機能をアクティブにするか</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">ESU の高機能数</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">ESU 高ファンクション番号</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">ESU - 高いブレーキ値でどのデコーダ機能をアクティブにするか</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">ESU 低ブレーキ値 (パーセント)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU - 低機能番号をアクティブにするブレーキの割合</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU - 低ファンクション番号をアクティブにするブレーキのパーセンテージ</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">ESU ミッドブレーキ値 (パーセント)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - 中間機能番号をアクティブにするブレーキの割合</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - 中間ファンクション番号をアクティブにするブレーキのパーセンテージ</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU の高ブレーキ値 (パーセント)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - 高機能番号をアクティブにするブレーキの割合</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - 高ファンクション番号をアクティブにするブレーキのパーセンテージ</string>
     <string name="air_reservoir">空気リザーバー</string>
     <string name="toastImportExportCouldNotParseAddress">アドレスを解析できませんでした\n%1$s</string>
     <string name="app_name_withrottle_cv_programmer">MAIN の履歴書プログラム</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">選択されていないスロットルの機能ボタンを非表示にしますか?</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">有効にすると、水平レイアウトでは、「v」で示される、選択した「ボリューム」スロットルを除くすべての機能ボタンが非表示になります。         \nスロットルの速度値をクリックして選択します。         \n「音量キーはタッチに従う」環境設定を設定して、任意のタッチ (速度を除く) でスロットルを選択します。</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">選択されていないスロットルのファンクションボタンを非表示にしますか?</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">有効にすると、水平レイアウトでは、選択された \'音量\' スロットル (\'v\' で示される) 以外のすべてのファンクションボタンが非表示になります。\nスロットルの速度値をクリックして選択します。\n\'音量キーがタッチに従う\' 設定を設定すると、任意のタッチ (速度を除く) でスロットルが選択されます。</string>
     <string name="prefLeftRightSwipeChangesSpeedTitle">左右のスワイプで速度が変わりますか?</string>
     <string name="prefLeftRightSwipeChangesSpeedSummary">チェックすると、画面の主要部分をスワイプする速度が増減します。タイトル 画面間のスワイプではスワイプのみが有効になります</string>
     <string name="prefSwipeSpeedChangeStepTitle">スワイプの速度ステップ (上、下、または左/右)</string>
     <string name="prefSwipeSpeedChangeStepSummary">上、下、または左右のスワイプに使用する速度ステップ量を設定して速度を変更します</string>
+
 </resources>
