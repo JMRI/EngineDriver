@@ -15,28 +15,29 @@
       original translation by Alain Carasso
 -->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
-    <string name="about">À propos</string>
 
+    <string name="about">À propos</string>
+    <string name="about_page_url">file:///android_asset/about_page-fr-rCA.html</string>
 
     <string name="app_description">Engine Driver - Application pour Android. Cette application peut se connecter à un serveur JMRI, DCC-EX, MRC ou DigiTrax WiThrottle, et à son tour contrôler vos locomotives. La vitesse, la direction et jusqu\'à 32 fonctions DCC sont prises en charge pour une ou deux locomotives.</string>
 
     <string name="app_name_about">À propos</string>
-    <string name="app_name_connect">Connexion au Serveur - Engine Driver</string>
+    <string name="app_name_connect">Connexion au Serveur</string>
     <string name="app_name_consist_functions">Paramètres des fonctions d\'unités multiples</string>
     <string name="app_name_ConsistEdit">Édition des unités multipes</string>
     <string name="app_name_ConsistLightsEdit">Phares des unités multiples</string>
     <string name="app_name_device_sounds_settings">Sons des locomotives via le téléphone</string>
-    <string name="app_name_functions">Paramètres des fonctions par défaut - Engine Driver</string>
-    <string name="app_name_gamepad_test">Manette de jeu - Engine Driver</string>
+    <string name="app_name_functions">Paramètres des fonctions par défaut</string>
+    <string name="app_name_gamepad_test">Manette de jeu</string>
 
     <string name="app_name_log_viewer">Visionneuse du journal</string>
-    <string name="app_name_power_control">Contrôle de l\'alimentation - Engine Driver</string>
+    <string name="app_name_power_control">Contrôle de l\'alimentation</string>
 
     <string name="app_name_reconnect_status">État de la reconnexion</string>
     <string name="app_name_reconnect_status_long">État de la reconnexion - Engine Driver</string>
 
-    <string name="app_name_select_loco">Sélection / Libération de locomotive - Engine Driver</string>
-    <string name="app_name_throttle">Régulateur - Engine Driver</string>
+    <string name="app_name_select_loco">Sélection / Libération de locomotive</string>
+    <string name="app_name_throttle">Régulateur</string>
     <string name="app_name_throttle_kids_enabled">Régulateur - Minuterie prête</string>
     <string name="app_name_throttle_kids_ended">Régulateur - Minuterie terminée</string>
     <string name="app_name_throttle_kids_running">Régulateur - %1$s secondes restantes</string>
@@ -80,7 +81,6 @@
     <string name="DCCEXclearCommands">Effacer</string>
 
     <string name="DCCEXcommonCvsLabel">CV du NMRA</string>
-
 
     <string name="DccexFailed">Action échouée</string>
     <string name="dccExFunctionSettings">DCC-EX - Réglages des fonctions</string>
@@ -655,7 +655,7 @@
 
     <string name="prefInitialWebPageSummary">Page web initiale (tel que \'/panel/\')</string>
     <string name="prefInitialWebPageTitle">Page web initiale</string>
-    <string name="prefKidsHelpSummary">- Sélectionner préalablement la locomotive.\nLe minuteur se déclenchera au premier déplacement.\nUne fois le temps expiré, revenir à cet page de préférences pour réinitialiser le minuteur ou le supprimer.\n\nRecommandation - Désactivation des préférences ou éléments suivants:\n- Touches physiques de volume.\n- \'Balayage pour actionner les aiguillages\'.\n- \'Balayage pour les itinéraires\'.\n- Arrêt d\'urgence.</string>
+    <string name="prefKidsHelpSummary">- Sélectionner préalablement la locomotive.\nLe minuteur se déclenchera au premier déplacement.\nUne fois le temps expiré, revenir à cet page de préférences pour réinitialiser le minuteur ou le supprimer.\n\nRecommandation - Désactivation des préférences ou éléments suivants:\n- Boutons physiques de volume.\n- \'Balayage pour actionner les aiguillages\'.\n- \'Balayage pour les itinéraires\'.\n- Arrêt d\'urgence.</string>
     <string name="prefKidsHelpTitle">Instructions pour la minuterie:</string>
 
 
@@ -841,7 +841,6 @@
     <string name="prefThrottleSwitchButtonPreferencesTitle">Préférences bascul de dispositions de l\'affichage</string>
     <string name="prefThrottleSwitchButtonSummary">Afficher la touche de bascul de disposition de l\'affichage afin de permettre des changements rapides de dispositions.</string>
     <string name="prefThrottleSwitchButtonTitle">Touche de bascul de disposition de l\'écran</string>
-
     <string name="prefThrottleSwitchOption1Summary">La touche de bascul basculera entre cette disposition de l\'écran et la suivante.</string>
     <string name="prefThrottleSwitchOption1Title">Bascul vers la première disposition de l\'écran</string>
     <string name="prefThrottleSwitchOption2Summary">La touche de bascul basculera entre cette disposition de l\'écran et la précédente.</string>
@@ -951,7 +950,7 @@
     <string name="steal_title">Subtiliser</string>
 
     <string name="throttle">Régulateur</string>
-    <string name="throttle_name">Nom du régulateur: %1$</string>
+    <string name="throttle_name">Nom du régulateur: %1$s</string>
     <string name="throttleSwitchAction">Interchanger les écrans du régulateur</string>
     <string name="throw_button">Ouvert</string>
     <string name="timerDialogHint">Redémarrer ou Réinitialiser le mot de passe</string>
@@ -1020,4 +1019,126 @@
 \nAppuyer longuement pour les détails.</string>
 
     <string name="toastSaveLogFile">Journalisation démarrée dans le fichier %1Ss.  La journalisation se poursuit jusqu\'à la fermeture de l\'application Engine Driver.</string>
+
+
+    <string name="toastShakeScreenDimmed">Luminosité de l\'écran réduite - Secouer à nouveau pour rétablir la luminosité</string>
+    <string name="toastShakeScreenLocked">Écran verrouillé - Secouer à nouveau pour déverrouiller.</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée lorsque l\'écran est verrouillé.</string>
+    <string name="toastShakeWebViewHidden">Affichage web temporairement masqué.  Secouer pour l\'afficher de nouveau.  Accéder aux préférences pour masquer de façon permanente.</string>
+    <string name="toastShakeWebViewUnavailable">L\'affichage web doit préalablement être activé dans les préférences.</string>
+
+
+    <string name="toastSwipeUpViewHidden">Affichage web temporairement masqué.  Accéder aux préférences pour masquer de façon permanente.</string>
+    <string name="toastThreadedAppCantConnect">Connexion impossible à %1$s:%2$s de %3$s - %4$s\nVérifier les paramètres de WiThrottle ainsi que la configuration de votre réseautique.</string>
+
+    <string name="toastThreadedAppCantDetermineIp">Ne peut déterminer l\'adresse IP de %1$s</string>
+
+    <string name="toastThreadedAppErrorCreatingOutputStream">Erreur à la création du flux en sortie, IOException %1Ss</string>
+
+    <string name="toastThreadedAppErrorCreatingWiThrottle">Erreur à la création du \'zeroconf listener\' de WiThrottle, IOException:\n%1$s</string>
+
+    <string name="toastThreadedAppErrorInputStream">Erreur à la création du flux en entrée, IOException: %1$s</string>
+
+    <string name="toastThreadedAppErrorSleepingThread">Erreur de flux en atente, InterruptedException: %1$s</string>
+
+    <string name="toastThreadedAppErrorStartingSocket">Erreur au démarrage du flux du socket_WiT: %1$s</string>
+
+    <string name="toastThreadedAppNoLocalIp">Adresse IP locale introuvable.\nVérifier votre configuration WiFi.</string>
+
+    <string name="toastThreadedAppNotWIFI">Utilisation du réseau %1$s et non la connexion  WiFi.\nVérifier votre configuration WiFi.</string>
+    <string name="toastThreadedAppWiThrottleNotSupported">La version %1$s de WiThrottle n\'est pas supportée.</string>
+
+    <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s est en mode d\'arrêt d\'urgence (ESTOP)</string>
+
+    <string name="toastThrottleScreenUnlocked">Écran déverouillé</string>
+    <string name="toastTtsFailed">Désolé!  Échec de la reconnaissance vocale.</string>
+
+
+
+
+    <string name="toastTurnoutInvalidNumber">Numéro d\'aiguillage invalide.</string>
+
+    <string name="toastDoubleBackButtonToExit">Appuyer sur \'Retour\' pour quitter Engine Driver</string>
+    <string name="toastUnableToSetBrightness">Impossible d\'activer la luminosité automatique / adaptative.</string>
+    <string name="toggle_button">Bascul</string>
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="TtsGamepadTest">Vérification de la manette de jeu</string>
+    <string name="TtsGamepadTestComplete">Vérification réussie</string>
+    <string name="TtsGamepadTestFail">Vérification annulée</string>
+    <string name="TtsGamepadTestReset">Réinitialisation de la manette de jeu</string>
+    <string name="TtsGamepadTestSkipped">Validation ignorée</string>
+
+
+    <string name="TtsGamepadThrottle">Régulateur</string>
+
+
+
+
+    <string name="turnouts">Aiguillages</string>
+    <string name="turnouts_direct_entry_label">Inscrire le numéro ou le nom de l\'aiguillage</string>
+
+    <string name="turnouts_list_label">Aiguillages (toucher l\'état pour basculer)</string>
+
+    <string name="turnouts_turnout">Aiguillage</string>
+    <string name="turnoutsRecentHeading">Aiguillages récents</string>
+
+    <string name="turnoutsSelectionTypeHeading">Méthode de sélection des aiguillages</string>
+
+    <string name="turnoutsSelectionTypeRoster">%1$s défini</string>
+
+    <string name="useProtocolDCCEX">Protocole à utiliser?</string>
+    <string name="useProtocolDCCEXplusAutoHint">Protocole à utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
+    <string name="usingProtocolDCCEX">Utilisation du protocole DCC-EX.  Décocher \"Utilisation des commands DCC-EX natives\" dans les préférences afin d\'utiliser le protocole WiThrottle.</string>
+    <string name="web">Web</string>
+
+    <string name="webViewButtonBar">Touche pour l\'affichage web</string>
+
+    <string name="witHeadingCvProgrammerPoM">WiThrottle - Programmation sur voie principale (Mode d\'opération)</string>
+    <string name="witPomMaxValueWarning">La valeur \'%1$s\' excède la valeur maximele supportée (\"%2$s)</string>
+    <string name="witPomWarning">Notes:\n- Ceci ne fonctionnera pas sur certains systèmes DCC.\n- Le changement d\'adresse de la locomotive est empêché - CV 1, 17 &amp; 18 et le bit 5 du CV 29.\n\nUtiliser avec prudence.</string>
+
+
+    <string name="order">Tri</string>
+    <string name="prefDoubleBackButtonToExitTitle">Double pression de la touche Retour pour quitter?</string>
+    <string name="prefDoubleBackButtonToExitSummary">Appuyer 2 fois sur la touche \'Retour\' de votre appareil Android en mois de 3 secondes à l\'écran \'Régulateur\' ou \'Connexion\' entraînera la fermeture de Engine Driver</string>
+    <string name="prefHeartbeatResponseFactorTitle">Fréquence du témoin d\'activité</string>
+    <string name="prefHeartbeatResponseFactorSummary">Pourcentage de la période du témoin d\'activité parmi lequel l\'envoi du témoin d\'activité sera envoyé (50%-90%).  Prendra effet à la prochaine connexion.</string>
+
+    <string name="toastWaitingForConnection">Délai d\'attente du message \'VN\' de WiThrottle en provenance de %1$s:%2$s.  Déconnexion en cours</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Délai d\'attente du message \'IDCEX...\' de DCC-EX en provenance de %1$s:%2$s.  Déconnexion en cours</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Type de décodeur pour le freinage</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activation des fonctions de freinage sur le décodeur</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Numéro de fonction ESU pour freinage léger</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">ESU - Fonction du décodeur qui actionnera la valeur de freinage léger</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">Numéro de fonction ESU pour freinage moyen</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">ESU - Fonction du décodeur qui actionnera la valeur de freinage moyen</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">Numéro de fonction ESU pour freinage maximal</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">ESU - Fonction du décodeur qui actionnera la valeur de freinage maximal</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">Valeur du freinage ESU léger (pourcentage)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU - Pourcentage de frein à appliquer pour la fonction de freinsage léger</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">Valeur du freinage ESU moyen (pourcentage)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - Pourcentage de frein à appliquer pour la fonction de freinsage moyen</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Valeur du freinage ESU maximal (pourcentage)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Pourcentage de frein à appliquer pour la fonction de freinsage maximal</string>
+
+
+    <string name="app_name_withrottle_cv_programmer">Programmation CV sur voie principale (MAIN)</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Masquer les touches de fonctions sur les régulateurs non-sélectionnés?</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">Si activé, les touches de fonction sur les affichages horizontaux seront masquées de toutes les barres d\'outils \'Volume\' représentées par un \' v\'.\nToucher sur la valeur de vitesse d\'un régulateur pour le sélectionner.\nAjuster la préférence \'Synchronisation des touches physiques de volume\' pour sélectionner un régulateur peu importe la touche (sauf la  vitesse).</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Balayage horizontal affecte la vitesse?</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">Lorsque activé, un balayage horizontal dans la portion principale de l\'écran fera varier la vitesse.  Un balayage horizontal sur la barre de titre effectuera un bascul parmi les écrans.</string>
+    <string name="prefSwipeSpeedChangeStepTitle">Incrément applicable aux balayages horizontaux ou verticaux</string>
+    <string name="prefSwipeSpeedChangeStepSummary">L\'incrément de vitesse pour les balayages horizontaux et verticaux sera appliqué aux changements de vitesse</string>
+
 </resources>

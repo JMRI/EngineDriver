@@ -1630,12 +1630,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", getResources().getString(R.string.prefDeviceSoundsDefaultValue));
-        mainapp.prefDeviceSoundsMomentum = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsMomentum", getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue))));
+        mainapp.prefDeviceSoundsMomentum = threaded_application.getIntPrefValue(prefs, "prefDeviceSoundsMomentum", getResources().getString(R.string.prefDeviceSoundsMomentumDefaultValue));
         mainapp.prefDeviceSoundsMomentumOverride = prefs.getBoolean("prefDeviceSoundsMomentumOverride",
                 getResources().getBoolean(R.bool.prefDeviceSoundsMomentumOverrideDefaultValue));
-        mainapp.prefDeviceSoundsLocoVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsLocoVolume", "100")));
-        mainapp.prefDeviceSoundsBellVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsBellVolume", "100")));
-        mainapp.prefDeviceSoundsHornVolume = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefDeviceSoundsHornVolume", "100")));
+        mainapp.prefDeviceSoundsLocoVolume = threaded_application.getIntPrefValue(prefs, "prefDeviceSoundsLocoVolume", "100");
+        mainapp.prefDeviceSoundsBellVolume = threaded_application.getIntPrefValue(prefs, "prefDeviceSoundsBellVolume", "100");
+        mainapp.prefDeviceSoundsHornVolume = threaded_application.getIntPrefValue(prefs, "prefDeviceSoundsHornVolume", "100");
         mainapp.prefDeviceSoundsLocoVolume = mainapp.prefDeviceSoundsLocoVolume / 100;
         mainapp.prefDeviceSoundsBellVolume = mainapp.prefDeviceSoundsBellVolume / 100;
         mainapp.prefDeviceSoundsHornVolume = mainapp.prefDeviceSoundsHornVolume / 100;

@@ -500,7 +500,7 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Erreur creation flux de sortie, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Erreur attente de flux, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Utilisation réseau %1$s , pas de WIFI.\nVérifier vos paramètres WiFi.\n</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">La découverte de serveur n\'est pas possible sans connexion WiFi !</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">La découverte de serveur n\'est pas possible sans connexion WiFi!</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
@@ -510,8 +510,7 @@
     <string name="toastLocoChangeNotAllowed">Changement de sens interdit: \'Le changement de sens en marche\' est desactivé dans les préférences.</string>
     <string name="toastDirectionButtonsSwapped">Les touches de sens de marche sont inversées temporairement. Pour les inverser de manière permanente, modifier les préférences.</string>
     <string name="toastImmersiveModeDisabled">Le mode immersif est temporairement désactivé. Pour le désactiver définitivement, modifier les préférences.</string>
-    <string name="toastThrottleScreenUnlocked">Si vous ne pouvez pas activer toutes les touches, changer le mode du Gamepad (voir notice) ou essayer un autre type de Gamepad (voir ci dessus).
-        \n Vous serez peut etre amener à tester à nouveau le Gamepad à la première utilisation via l écran du régulateur.</string>
+    <string name="toastThrottleScreenUnlocked">Écran déverouillé</string>
     <string name="toastShakeWebViewHidden">Vue Web cachée. Agiter à nouveau pour la rétablir. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastShakeWebViewUnavailable">La vue Web doit etre activée dans les préférences</string>
     <string name="toastShakeScreenLocked">Ecran verrouillé - Agiter à nouveau pour déverrouiller.</string>

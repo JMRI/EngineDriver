@@ -18,13 +18,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="TypographyDashes, TypographyEllipsis">
 
     <string-array name="address_size_defaultsEntries">
-        <item>短い</item>
-        <item>長さ</item>
+        <item>ショート</item>
+        <item>ロング</item>
         <item>自動</item>
     </string-array>
     <string-array name="address_size">
-        <item>短い</item>
-        <item>長さ</item>
+        <item>ショート</item>
+        <item>ロング</item>
     </string-array>
     <string-array name="DisplaySpeedUnitsEntries">
         <item>パーセンテージ</item>
@@ -58,18 +58,18 @@
         <item>底</item>
     </string-array>
     <string-array name="OrientationEntries">
-        <item>肖像画</item>
-        <item>風景</item>
+        <item>縦長</item>
+        <item>横長</item>
         <item>自動回転</item>
         <item>自動ウェブ</item>
     </string-array>
     <string-array name="NumOfThrottlesEntries">
         <item>1つ</item>
-        <item>二</item>
-        <item>三つ</item>
-        <item>4</item>
-        <item>五</item>
-        <item>六</item>
+        <item>2つ</item>
+        <item>3つ</item>
+        <item>4つ</item>
+        <item>5つ</item>
+        <item>6つ</item>
     </string-array>
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
         <item>横型(1-3)</item>
@@ -100,46 +100,46 @@
     <string-array name="prefGamePadKeyEntries">
         <item>オールストップ</item>
         <item>停止</item>
-        <item>フォワード</item>
-        <item>逆行する</item>
-        <item>順方向/逆方向の切り替え</item>
+        <item>前進</item>
+        <item>後進</item>
+        <item>前進/後進 切り替え</item>
         <item>速度を上げる</item>
         <item>速度を下げる</item>
         <item>制限速度</item>
         <item>一時停止</item>
         <item>次のスロットル</item>
-        <item>機能00/ライト</item>
-        <item>機能01/ベル</item>
-        <item>機能02/ホーン</item>
-        <item>機能03</item>
-        <item>機能04</item>
-        <item>機能05</item>
-        <item>機能06</item>
-        <item>機能07</item>
-        <item>機能08</item>
-        <item>機能09</item>
-        <item>機能10</item>
-        <item>機能11</item>
-        <item>機能12</item>
-        <item>機能13</item>
-        <item>機能14</item>
-        <item>機能15</item>
-        <item>機能16</item>
-        <item>機能17</item>
-        <item>機能18</item>
-        <item>機能19</item>
-        <item>機能20</item>
-        <item>機能21</item>
-        <item>機能22</item>
-        <item>機能23</item>
-        <item>機能24</item>
-        <item>機能25</item>
-        <item>機能26</item>
-        <item>機能27</item>
-        <item>機能28</item>
-        <item>機能29</item>
-        <item>機能30</item>
-        <item>機能 31</item>
+        <item>ファンクション00/前照灯</item>
+        <item>ファンクション01</item>
+        <item>ファンクション02/警笛</item>
+        <item>ファンクション03</item>
+        <item>ファンクション04</item>
+        <item>ファンクション05</item>
+        <item>ファンクション06</item>
+        <item>ファンクション07</item>
+        <item>ファンクション08</item>
+        <item>ファンクション09</item>
+        <item>ファンクション10</item>
+        <item>ファンクション11</item>
+        <item>ファンクション12</item>
+        <item>ファンクション13</item>
+        <item>ファンクション14</item>
+        <item>ファンクション15</item>
+        <item>ファンクション16</item>
+        <item>ファンクション17</item>
+        <item>ファンクション18</item>
+        <item>ファンクション19</item>
+        <item>ファンクション20</item>
+        <item>ファンクション21</item>
+        <item>ファンクション22</item>
+        <item>ファンクション23</item>
+        <item>ファンクション24</item>
+        <item>ファンクション25</item>
+        <item>ファンクション26</item>
+        <item>ファンクション27</item>
+        <item>ファンクション28</item>
+        <item>ファンクション29</item>
+        <item>ファンクション30</item>
+        <item>ファンクション31</item>
         <item>ミュート (IPLS)</item>
         <item>ベル (IPLS)</item>
         <item>ホーン (IPLS)</item>
@@ -189,7 +189,7 @@
         <item>薄暗い画面</item>
         <item>イマーシブ モードを一時的に有効/無効にする</item>
         <item>スロットル画面レイアウトの切り替え</item>
-        <item>ロコの速度を増減する</item>
+        <item>ロコ速度の増減</item>
         <item>次のスロットル (ボリューム)</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
@@ -200,7 +200,7 @@
         <item>リセット</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
-        <item>電話機のグローバル設定を使用する</item>
+        <item>電話のグローバル設定を使用する</item>
         <item>英語 (米国) - エンジン ドライバーのデフォルト</item>
         <item>英語 (オーストラリア)</item>
         <item>英語 (カナダ)</item>
@@ -219,9 +219,9 @@
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>Coincidencia simple de texto (original)</item>
         <item>複雑なテキスト マッチング - 先頭車両は常にアクティブ化され、トレイルは以下のルールに従います</item>
-        <item>特別に正確 - リードとすべてのトレイルが関数ラベルと正確に一致する場合にアクティブ化されます。</item>
-        <item>特別な部分 - リードとすべてのトレイルが機能ラベルと部分的に一致する場合にアクティブ化されます</item>
-        <item>特別な部分のみを含む - 関数ラベルにデフォルト ラベルが含まれる場合にアクティブ化されます。</item>
+        <item>特別正確 - ファンクションラベルと完全に一致する場合、リードとすべてのトレイルが有効になります。</item>
+        <item>特別部分的 - ファンクションラベルに部分的に一致する場合、リードとオールトレイルがアクティブになります。</item>
+        <item>特別な部分的包含のみ - ファンクションラベルにデフォルトラベルが含まれている場合に有効になります</item>
     </string-array>
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
         <item>リード ロコ - 部分一致</item>
@@ -233,9 +233,9 @@
     </string-array>
     <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
         <item>何もしない</item>
-        <item>先頭車両 - 同じ機能番号</item>
-        <item>Lead+Trail Locos - 同じ機能番号</item>
-        <item>すべての機関車 - 同じ機能番号</item>
+        <item>先頭車両 - 同じファンクション番号</item>
+        <item>先頭車+後続車 - 同じファンクション番号</item>
+        <item>すべての機関車 - 同じファンクション番号</item>
     </string-array>
     <string-array name="prefKidsTimerEntries">  <!-- display version -->
         <item>無効</item>
@@ -260,7 +260,7 @@
 
 
     <string-array name="prefGamePadFlydigiWee2Labels">
-        <item> </item>
+        <item>0</item>
         <item>ボタン選択アクション</item>
         <item>ボタン DPAD 上アクション</item>
         <item>ボタン DPAD 下アクション</item>
@@ -284,7 +284,7 @@
         <item>0</item>
     </string-array>
     <string-array name="prefGamePadMocuteLabels">
-        <item> </item>
+        <item>0</item>
         <item>ボタン (存在する場合) アクションを選択します</item>
         <item>DPAD アップアクション</item>
         <item>DPADダウンアクション</item>
@@ -332,7 +332,7 @@
         <item>0</item>
     </string-array>
     <string-array name="prefGamePadNoneLabels">
-        <item> </item>
+        <item>0</item>
         <item>ボタンが使用できません</item>
         <item>ボタンが使用できません</item>
         <item>ボタンが使用できません</item>
@@ -376,44 +376,44 @@
         <item>(機能なし)</item>
         <item>オールストップ</item>
         <item>停止</item>
-        <item>フォワード</item>
-        <item>逆行する</item>
-        <item>順方向/逆方向の切り替え</item>
+        <item>前進</item>
+        <item>後進</item>
+        <item>前進/後進 切り替え</item>
         <item>速度を上げる</item>
         <item>速度を下げる</item>
         <item>次のスロットル</item>
-        <item>機能00/ライト</item>
-        <item>機能01/ベル</item>
-        <item>機能02/ホーン</item>
-        <item>機能03</item>
-        <item>機能04</item>
-        <item>機能05</item>
-        <item>機能06</item>
-        <item>機能07</item>
-        <item>機能08</item>
-        <item>機能09</item>
-        <item>機能10</item>
-        <item>機能11</item>
-        <item>機能12</item>
-        <item>機能13</item>
-        <item>機能14</item>
-        <item>機能15</item>
-        <item>機能16</item>
-        <item>機能17</item>
-        <item>機能18</item>
-        <item>機能19</item>
-        <item>機能20</item>
-        <item>機能21</item>
-        <item>機能22</item>
-        <item>機能23</item>
-        <item>機能24</item>
-        <item>機能25</item>
-        <item>機能26</item>
-        <item>機能27</item>
-        <item>機能28</item>
-        <item>機能29</item>
-        <item>機能30</item>
-        <item>機能 31</item>
+        <item>ファンクション00/前照灯</item>
+        <item>ファンクション01</item>
+        <item>ファンクション02/警笛</item>
+        <item>ファンクション03</item>
+        <item>ファンクション04</item>
+        <item>ファンクション05</item>
+        <item>ファンクション06</item>
+        <item>ファンクション07</item>
+        <item>ファンクション08</item>
+        <item>ファンクション09</item>
+        <item>ファンクション10</item>
+        <item>ファンクション11</item>
+        <item>ファンクション12</item>
+        <item>ファンクション13</item>
+        <item>ファンクション14</item>
+        <item>ファンクション15</item>
+        <item>ファンクション16</item>
+        <item>ファンクション17</item>
+        <item>ファンクション18</item>
+        <item>ファンクション19</item>
+        <item>ファンクション20</item>
+        <item>ファンクション21</item>
+        <item>ファンクション22</item>
+        <item>ファンクション23</item>
+        <item>ファンクション24</item>
+        <item>ファンクション25</item>
+        <item>ファンクション26</item>
+        <item>ファンクション27</item>
+        <item>ファンクション28</item>
+        <item>ファンクション29</item>
+        <item>ファンクション30</item>
+        <item>ファンクション31</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries"> <!-- display version -->
         <item>なし</item>
@@ -437,7 +437,7 @@
         <item>自動</item>
     </string-array>
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
-        <item>フィット - 縮小/拡張</item>
+        <item>フィット - 縮小/拡大</item>
         <item>塗りつぶし - 1 つのエッジ ペアをトリミング</item>
         <item>中央 - スケーリングなし</item>
         <item>フィット - 縮小のみ</item>
@@ -506,14 +506,14 @@
         <item>ディーゼル (EMD NW2)</item>
     </string-array>
     <string-array name="WebOrientationEntries">  <!-- display version -->
-        <item>肖像画</item>
-        <item>風景</item>
+        <item>縦長</item>
+        <item>横長</item>
         <item>自動回転</item>
     </string-array>
     <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
         <item>(機能なし)</item>
         <item>オールストップ</item>
-        <item>順方向/逆方向の切り替え</item>
+        <item>前進/後進 切り替え</item>
     </string-array>
     <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
         <item>なし</item>
@@ -534,5 +534,4 @@
         <item>ID</item>
         <item>位置</item>
     </string-array>
-
 </resources>
