@@ -49,7 +49,7 @@
     <string name="cancel">キャンセル</string>
     <string name="ClearConnList">最近のリストをクリア</string>
     <string name="clearLocoList">リストをクリア</string>
-    <string name="close_button">閉じる</string>
+    <string name="close_button">定位（直進）</string>
     <string name="connect_button">接続する</string>
     <string name="consist_help">機関車をクリックして、編成の前面に対する方向を変更します。ロコを長押しすると、編成から削除されます。完了したら、戻る矢印または閉じるを押します。</string>
     <string name="consist_lead_label">先頭機関車</string>
@@ -114,7 +114,7 @@
     <string name="dialogImportPreferencesQuestion">設定をインポートすることを確認します。\n 現在の設定はすべて失われます。</string>
     <string name="dialogRecentConnectionsConfirmClearQuestions">最近の接続をすべて削除することを確認します</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">最近の編成をすべて削除することを確認します</string>
-    <string name="dialogRecentLocoConfirmClearQuestion">最近使用した機関車をすべて削除することを確認します</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">最近の機関車をすべて削除することを確認します</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">最近の分岐器をすべて削除することを確認します</string>
     <string name="dialogResetPreferencesQuestion">すべての設定をリセットすることを確認します。\n 現在の設定はすべて失われます。</string>
     <string name="dialogDownloadRosterConfirmQuestion">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します</string>
@@ -165,7 +165,7 @@
     <string name="fs_edit_notice">警告: デフォルトファンクション設定への変更は終了時に失われます - SD カードが見つかりません。</string>
 
     <string name="functionButton00DefaultValue">前照灯</string>
-    <string name="functionButton01DefaultValue">ベル</string>
+
     <string name="functionButton02DefaultValue">警笛</string>
 
 
@@ -240,6 +240,7 @@
     <string name="gamepadTestHelpNonForced">すべてのボタンをアクティブにできない場合は、ゲームパッド モードを変更するか (デバイスに付属の説明書を参照)、別のゲームパッド タイプ (上記) を試してください。\n初めてスロットル画面からゲームパッドを使用するときは、再テストが必要な場合があります。</string>
     <string name="gamepadTestIncomplete">テストが不完全</string>
     <string name="gamepadTestInvalidKeycode">このモードには無効なキーコードです</string>
+
     <string name="gamepadTestKeycodeLabel">キーコード:\s\s</string>
 
     <string name="gamepadTestKeyCodesDownCode">DN</string>
@@ -442,7 +443,7 @@
     <string name="prefDccexSummary">すべての接続に wiThrottle の代わりにネイティブ DCC-EX コマンドを使用します。注: この機能は、エンジン ドライバーを再起動してサーバーに接続するまで有効になりません。</string>
     <string name="prefDccexTitle">ネイティブ DCC-EX コマンドを使用する</string>
     <string name="prefDecreaseLocoNumberHeightSummary">ロコの番号、速度、方向ボタンには小さいボタンを使用します。</string>
-    <string name="prefDecreaseLocoNumberHeightTitle">ロコ号の高さを減らす？</string>
+    <string name="prefDecreaseLocoNumberHeightTitle">ロコ番号の高さを減らす？</string>
 
     <string name="prefDefaultAddressLengthSummary">デフォルトのロコアドレス長 (桁数に基づいて自動で設定されます)。</string>
     <string name="prefDefaultAddressLengthTitle">デフォルトのアドレス長</string>
@@ -454,13 +455,13 @@
     <string name="prefDeviceSounds0Summary">電話機でスロットル 1 の基本的な機関車サウンドを再生する</string>
     <string name="prefDeviceSounds0Title">スロットル 1 ロコ音</string>
     <string name="prefDeviceSounds1Summary">Throttle 2 の電話機で基本的な機関車サウンドを再生する</string>
-    <string name="prefDeviceSounds1Title">スロットル 2 ロコ音</string>
+    <string name="prefDeviceSounds1Title">スロットル 2 ロコサウンド</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">電話機内ロコサウンドの追加設定</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">追加の設定</string>
 
 
     <string name="prefDeviceSoundsBellIsMomentarySummary">ベルボタンはモメンタリです。 (チェックを外すとラッチします。)</string>
-    <string name="prefDeviceSoundsBellIsMomentaryTitle">ベルボタン ラッチ式/モメンタリ式</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">ベルボタン ラッチング/モメンタリ</string>
     <string name="prefDeviceSoundsBellVolumeSummary">電話機のベル音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsBellVolumeTitle">電話機のベル音の音量</string>
     <string name="prefDeviceSoundsButtonSummary">電話のロコサウンドオプションを変更するためのアクションバーボタンを表示します</string>
@@ -472,7 +473,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">ミュートボタンを隠す</string>
     <string name="prefDeviceSoundsHornVolumeSummary">電話機のホーン/ホイッスル音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsHornVolumeTitle">電話のホーン/ホイッスル音の音量</string>
-    <string name="prefDeviceSoundsLocoVolumeSummary">携帯電話でのロコのエンジン音の音量 (1 ～ 100)</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary">電話機でのロコのエンジン音の音量 (1 ～ 100)</string>
     <string name="prefDeviceSoundsLocoVolumeTitle">電話中のロコ音の音量</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">ステップを変更すると、ロコステップサウンドが最後まで再生されます。  運動量（上記）は最小時間のみとなります。</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">ロコステップ音をクリップしないでください</string>
@@ -491,7 +492,7 @@
     <string name="prefDisableVolumeKeysSummary">速度を制御する電話/タブレットのハードウェア音量キーを無効にします。注: 選択すると、「追加の選択されたロコ インジケーター」が上書きされます。</string>
     <string name="prefDisableVolumeKeysTitle">音量キーを無効にする</string>
 
-    <string name="prefDisplayClockSummary">スロットル画面と Web 画面での高速クロック表示のフォーマットを設定します。</string>
+    <string name="prefDisplayClockSummary">スロットル画面と Web 画面での高速クロック表示の形式を設定します。</string>
     <string name="prefDisplayClockTitle">高速クロック表示</string>
     <string name="prefDisplaySpeedArrowsSummary">ロコの速度を変更するために速度スライダーの横にボタンを表示しますか?</string>
     <string name="prefDisplaySpeedArrowsTitle">速度ボタンを表示しますか?</string>
@@ -527,7 +528,7 @@
 
     <string name="prefEsuMc2StopButtonDelaySummary">停止ボタンを「長押し」する時間。\n「長押し」すると、アクティブなスロットルがすべて停止します。 「短く押す」と現在のスロットルが一時停止されます。\n小さいほど高速になります。</string>
     <string name="prefEsuMc2StopButtonDelayTitle">停止ボタンの長押しの遅延</string>
-    <string name="prefEsuMc2StopButtonShortPressSummary">「短押し」すると、現在制御されている機関車が一時停止します。\n運転が再開すると、元の速度に戻ります。</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">「短押し」すると、現在制御されている機関車が一時停止します。\n運転が再開されると元の速度に戻ります。</string>
     <string name="prefEsuMc2StopButtonShortPressTitle">短押しを有効にする</string>
     <string name="prefEsuMc2Summary">ESU MobileControl II オプションの選択</string>
 
@@ -580,7 +581,7 @@
     <string name="prefGamepadOnlyOneGamepadSummary">有効にすると、エンジン ドライバーは複数のゲームパッドをチェックしません。</string>
     <string name="prefGamepadOnlyOneGamepadTitle">ゲームパッドは1つだけですか？</string>
 
-    <string name="prefGamePadSpeedButtonsRepeatSummary">ゲームパッドの速度ボタンの繰り返し間隔の長さ。小さいほど高速です。</string>
+    <string name="prefGamePadSpeedButtonsRepeatSummary">ゲームパッドの速度ボタンの繰り返しの間隔。小さいほど高速です。</string>
     <string name="prefGamePadSpeedButtonsRepeatTitle">速度ボタンのリピート遅延</string>
 
     <string name="prefGamePadSpeedButtonsSpeedStepSummary">ゲームパッドのボタンがスロットル速度をどれだけジャンプさせるか。</string>
@@ -604,7 +605,7 @@
     <string name="prefHapticFeedbackButtonsSummary">ボタンを押すと触覚フィードバック (振動) が発生します。</string>
     <string name="prefHapticFeedbackButtonsTitle">ボタンを押したときの触覚フィードバック</string>
     <string name="prefHapticFeedbackDurationSummary">各振動の継続時間 (ミリ秒単位)。</string>
-    <string name="prefHapticFeedbackDurationTitle">触覚フィードバックの持続時間</string>
+    <string name="prefHapticFeedbackDurationTitle">触覚フィードバックの継続時間</string>
     <string name="prefHapticFeedbackSummary">速度変化に対する触覚フィードバック。</string>
 
     <string name="prefHapticFeedbackTitle">触覚フィードバック</string>
@@ -618,7 +619,7 @@
 
 
     <string name="prefHideSliderAndSpeedButtonsTitle">スライダーと速度ボタンを非表示にしますか?</string>
-    <string name="prefHideSliderAndSpeedButtonsSummary">速度スライダーも速度ボタンも表示しません。\n注: 「スライダーを非表示」、「スライダーの高さ」、および「表示速度ボタン」のオプションをオーバーライドします。</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">速度スライダーも速度ボタンも表示しません。\n注: 「スライダーを非表示にする」、「スライダーの高さ」、および「表示速度ボタン」のオプションをオーバーライドします。</string>
     <string name="prefHideSliderSummary">速度スライダーを表示せず、代わりに速度ボタンを使用してください。</string>
     <string name="prefHideSliderTitle">スピードスライダーを非表示にしますか?</string>
     <string name="prefHideSystemRouteNamesSummary">ルート リストのスペースを節約するために使用される、ルートのシステム名を非表示にします。</string>
@@ -801,7 +802,7 @@
     <string name="prefSummary">エンジンドライバーの設定</string>
     <string name="prefSwapForwardReverseButtonsLongPressSummary">いずれかの方向ボタンを長押しすると、2 つの方向ボタンを一時的に交換します。</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">長押しで方向ボタンを入れ替える</string>
-    <string name="prefSwapForwardReverseButtonsSummary">すべてのスロットルの 2 つの方向ボタンを永続的に交換します。</string>
+    <string name="prefSwapForwardReverseButtonsSummary">すべてのスロットルの 2 つの方向ボタンを永久に交換します。</string>
     <string name="prefSwapForwardReverseButtonsTitle">方向ボタンを入れ替える</string>
     <string name="prefSwipeDownOptionSummary">スロットル ビューを下にスワイプするとどうなるか。</string>
     <string name="prefSwipeDownOptionTitle">スロットルビューで下にスワイプするアクションはありますか?</string>
@@ -981,7 +982,7 @@
     <string name="toastImportExportImportFailed">\'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' からの環境設定のインポートに失敗しました。</string>
     <string name="toastImportExportImportSucceeded">\'\\Android\\data\\jmri.enginedriver\\files\\%1$s\' からの設定のインポートは成功しました。</string>
     <string name="toastImportExportServerImportFailed">設定は「\\Android\\data\\jmri.enginedriver\\files\\%1$s\」からインポートされていません。このホストの設定をまだ保存していない可能性があります。</string>
-    <string name="toastInitialisingSounds">電話機のロコサウンドで初期化中です。</string>
+    <string name="toastInitialisingSounds">電話機のロコサウンドで初期化しています。</string>
     <string name="toastLocoAlreadySelected">ロコ すでに選択されています \'%1$s\'</string>
     <string name="toastLocoChangeNotAllowed">ロコ変更は許可されていません: 「移動中の方向変更」は環境設定で無効になっています</string>
     <string name="toastNumThrottles">選択されたスロットル スクリーン タイプは、それほど多くのスロットルをサポートしていません。 %1$s に削減します。</string>
@@ -1100,13 +1101,13 @@
     <string name="webViewButtonBar">Webビューボタン</string>
     <string name="witActionTypeLabel">アクション</string>
     <string name="witHeadingCvProgrammerPoM">WiThrottle - メインでのプログラミング (動作モード)</string>
-    <string name="witPomMaxValueWarning">値 \'%1$s\' がサポートされる最大値 (\'%2$s\') を超えています</string>
+    <string name="witPomMaxValueWarning">値 \'%1$s\' がサポートされている最大値 (\'%2$s\') を超えています</string>
     <string name="witPomWarning">注: \n- これは一部の DCC システムでは機能しません。 \n- ロコアドレスの変更は禁止されています - CV 1、17、および18 と CV 29 のビット 5。\n\n注意して使用してください。</string>
     <string name="witWriteAddressLabel">DCCアドレス</string>
     <string name="yes">はい</string>
     <string name="order">選別</string>
     <string name="prefDoubleBackButtonToExitTitle">ダブルバックボタンを押して終了しますか?</string>
-    <string name="prefDoubleBackButtonToExitSummary">「スロットル」または「接続」画面で Android の「戻る」ボタンを 3 秒以内に 2 回押すと、エンジン ドライバーが終了します。</string>
+    <string name="prefDoubleBackButtonToExitSummary">「スロットル」または「接続」画面で Android の「戻る」ボタンを 3 秒以内に 2 回押すと、エンジン ドライバーが終了します</string>
     <string name="prefHeartbeatResponseFactorTitle">ハートビート応答係数</string>
     <string name="prefHeartbeatResponseFactorSummary">ハートビートを送信するタイミングのハートビート期間の割合 (50% ～ 90%)。次回の接続時に有効になります。</string>
     <string name="server">サーバ</string>

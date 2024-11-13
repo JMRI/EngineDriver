@@ -17,7 +17,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
 
     <string name="about">À propos</string>
-
+    <string name="about_page_url">file:///android_asset/about_page-fr-rCA.html</string>
 
     <string name="app_description">Engine Driver - Application pour Android. Cette application peut se connecter à un serveur JMRI, DCC-EX, MRC ou DigiTrax WiThrottle, et à son tour contrôler vos locomotives. La vitesse, la direction et jusqu\'à 32 fonctions DCC sont prises en charge pour une ou deux locomotives.</string>
 
@@ -950,7 +950,7 @@
     <string name="steal_title">Subtiliser</string>
 
     <string name="throttle">Régulateur</string>
-    <string name="throttle_name">Nom du régulateur: %1$</string>
+    <string name="throttle_name">Nom du régulateur: %1$s</string>
     <string name="throttleSwitchAction">Interchanger les écrans du régulateur</string>
     <string name="throw_button">Ouvert</string>
     <string name="timerDialogHint">Redémarrer ou Réinitialiser le mot de passe</string>

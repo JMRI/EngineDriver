@@ -200,7 +200,7 @@
         <item>リセット</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
-        <item>電話機のグローバル設定を使用する</item>
+        <item>電話のグローバル設定を使用する</item>
         <item>英語 (米国) - エンジン ドライバーのデフォルト</item>
         <item>英語 (オーストラリア)</item>
         <item>英語 (カナダ)</item>
@@ -445,7 +445,7 @@
     </string-array>
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>リードロコ</item>
-        <item>リード+トレイルロコ</item>
+        <item>リード+トレイル ロコ</item>
         <item>すべてのロコ</item>
         <item>トレイルロコ</item>
     </string-array>
@@ -534,5 +534,4 @@
         <item>ID</item>
         <item>位置</item>
     </string-array>
-
 </resources>

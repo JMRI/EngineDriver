@@ -18,6 +18,7 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <string-array name="address_size_defaultsEntries">
         <item>Court</item>
         <item>Long</item>

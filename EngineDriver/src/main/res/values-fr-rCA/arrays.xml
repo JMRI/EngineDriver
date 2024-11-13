@@ -17,7 +17,7 @@
       original translation by Alain Carasso
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <string-array name="OrientationEntries">
         <item>Portrait</item>
@@ -379,5 +379,111 @@
         <item>Fonction 30</item>
         <item>Fonction 31</item>
     </string-array>
+    <string-array name="prefAutoImportExportEntries"> <!-- display version -->
+        <item>Aucun</item>
+        <item>Importation/Exportation automatique lors de la connexion/déconnexion</item>
+        <item>Importation automatique sur connexion uniquement</item>
+    </string-array>
+    <string-array name="prefTtsThrottleResponseEntries"> <!-- display version -->
+        <item>Aucun</item>
+        <item>Régulateur</item>
+        <item>Régulateur + locomotive</item>
+        <item>Régulateur + Vitesse</item>
+        <item>Régulateur + Locomotive + Vitesse</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>Adapté - Contraction/Expansion</item>
+        <item>Remplir - Recadrer 2 côtés opposés</item>
+        <item>Centrer - Pas de mise à l\'échelle</item>
+        <item>Ajustement - Rétrécissement uniquement</item>
+        <item>Ajustement - Distortion si requis</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>Locomotive de tête</item>
+        <item>Locomotive de tête et de queue</item>
+        <item>Toutes les locomotives</item>
+        <item>Locomotive de queue</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>Verrouillage</item>
+        <item>Déverrouillage</item>
+    </string-array>
+    <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Curseur - Toutes les valeurs possibles</item>
+        <item>Curseur - Quelques valeurs escamotées dans les échelles 28, 100 et 128 crans</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>Voie de programmation (Mode service)</item>
+        <item>Programmation sur la voie principale (Mode opération)</item>
+        <item>Gestionnaire de voie/district</item>
+    </string-array>
+    <string-array name="dccExTrackTypeEntries">  <!-- display version -->
+        <item>AUCUN</item>
+        <item>DCC VOIE PRINCIPALE</item>
+        <item>DCC VOIE PRINCIPALE</item>
+        <item>DCC VOIE PRINCIPALE</item>
+        <item>DC - Inversion de la polarité</item>
+        <item>AUTO - DCC VOIE PRINCIPALE avec inversion automatique de la polarité</item>
+        <item>EXT (non disponible)</item>
+        <item>BOOST (non disponible)</item>
+    </string-array>
+
+
+
+
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Vapeur générique (rapide)</item>
+        <item>Vapeur générique (lent)</item>
+        <item>Vapeur (classe 64)</item>
+        <item>Vapeur (classe 94)</item>
+        <item>Diesel (EMD 645 Turbo)</item>
+        <item>Diesel (GE 7FDL)</item>
+        <item>Diesel (EMD NW2)</item>
+    </string-array>
+    <string-array name="WebOrientationEntries">  <!-- display version -->
+        <item>Portrait</item>
+        <item>Paysage</item>
+        <item>Rotation automatique</item>
+    </string-array>
+    <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
+        <item>(aucune fonction)</item>
+        <item>Arrêt complet</item>
+        <item>Bascul marche avant/arrière</item>
+    </string-array>
+    <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Zéro et Maximum</item>
+        <item>Zéro et (Maximum + vitesse)</item>
+    </string-array>
+
 
 </resources>
