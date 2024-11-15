@@ -10,6 +10,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
+import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
+
 @SuppressWarnings("UnnecessaryContinue")
 public class RosterEntry {
     // members to remember all the info
@@ -443,18 +446,30 @@ public class RosterEntry {
     //format a human-readable output of the values  TODO: figure out a way to loop thru properties instead
     public String toString() {
         String res = "";
-        if (!_dccAddress.equals("")) res += "DCC Address: " + _dccAddress + "\n";
-        if (!_roadName.equals("")) res += "Road Name: " + _roadName + "\n";
-        if (!_roadNumber.equals("")) res += "Road Number: " + _roadNumber + "\n";
-        if (!_owner.equals("")) res += "Owner: " + _owner + "\n";
-        if (!_model.equals("")) res += "Model: " + _model + "\n";
-        if (!_mfg.equals("")) res += "Mfg: " + _mfg + "\n";
+//        if (!_dccAddress.equals("")) res += "DCC Address: " + _dccAddress + "\n";
+//        if (!_roadName.equals("")) res += "Road Name: " + _roadName + "\n";
+//        if (!_roadNumber.equals("")) res += "Road Number: " + _roadNumber + "\n";
+//        if (!_owner.equals("")) res += "Owner: " + _owner + "\n";
+//        if (!_model.equals("")) res += "Model: " + _model + "\n";
+//        if (!_mfg.equals("")) res += "Mfg: " + _mfg + "\n";
+//        if (!_comment.equals(""))
+//            res += "Comment: " + _comment.replace("<?p?>", "\n") + "\n";  //clean up odd return encoding;
+//        if (!_decoderFamily.equals("")) res += "Decoder Family: " + _decoderFamily + "\n";
+//        if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
+//        if (!_decoderComment.equals(""))
+//            res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns
+        if (!_dccAddress.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + _dccAddress + "\n";
+        if (!_roadName.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoRoadName) + " " + _roadName + "\n";
+        if (!_roadNumber.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoRoadNumber) + " " +_roadNumber + "\n";
+        if (!_owner.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoOwner) + " " +_owner + "\n";
+        if (!_model.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoModel) + " " +_model + "\n";
+        if (!_mfg.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoManufacturer) + " " +_mfg + "\n";
         if (!_comment.equals(""))
-            res += "Comment: " + _comment.replace("<?p?>", "\n") + "\n";  //clean up odd return encoding;
-        if (!_decoderFamily.equals("")) res += "Decoder Family: " + _decoderFamily + "\n";
-        if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
+            res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoComment) + " " +_comment.replace("<?p?>", "\n") + "\n";  //clean up odd return encoding;
+        if (!_decoderFamily.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDecoderFamily) + " " +_decoderFamily + "\n";
+        if (!_decoderModel.equals("")) res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDecoderModel) + " " +_decoderModel + "\n";
         if (!_decoderComment.equals(""))
-            res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns
+            res += threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDecoderComment) + " " +_decoderComment.replace("<?p?>", "\n");  //clean up odd returns
         return res;
     }
 }

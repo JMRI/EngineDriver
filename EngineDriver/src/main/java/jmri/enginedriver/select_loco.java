@@ -2024,7 +2024,9 @@ public class select_loco extends AppCompatActivity {
         if (re != null) {
             res = re.toString();
         } else {
-            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
+//            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
+            res = "\n" + threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + rosterAddressString
+                    +"\n" + threaded_application.context.getResources().getString(R.string.rosterDecoderInfoRosterEntry) + " " +rosterNameString + "\n";
         }
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);

@@ -1115,10 +1115,22 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - Quale Freno Percentuale per attivare il Numero di Funzione Alto</string>
     <string name="statusThreadedAppNotconnectedToWifi">Non connecté au WiFi</string>
     <string name="app_name_withrottle_cv_programmer">Programme CV sur MAIN</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Masquer les boutons de fonction sur la manette des gaz non sélectionnée ?</string>
-    <string name="prefLeftRightSwipeChangesSpeedTitle">Le balayage gauche/droite change la vitesse ?</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Masquer les boutons de fonction sur la manette des gaz non sélectionnée?</string>
+    <string name="prefLeftRightSwipeChangesSpeedTitle">Le balayage gauche/droite change la vitesse?</string>
     <string name="prefLeftRightSwipeChangesSpeedSummary">Si cette case est cochée, les glissements sur la partie principale de l’écran augmenteront/diminueront la vitesse. Le balayage du titre uniquement sera activé pour les balayages entre les écrans</string>
     <string name="prefSwipeSpeedChangeStepTitle">Étape de vitesse pour les balayages (haut, bas ou gauche/droite)</string>
     <string name="prefSwipeSpeedChangeStepSummary">Le montant du pas de vitesse à utiliser pour les balayages haut, bas ou gauche/droite est défini pour changer la vitesse.</string>
+
+    <string name="rosterDecoderInfoDccAddress">Adresse DCC:</string>
+    <string name="rosterDecoderInfoRoadName">Nom de la route:</string>
+    <string name="rosterDecoderInfoRoadNumber">Numéro de route:</string>
+    <string name="rosterDecoderInfoOwner">Propriétaire:</string>
+    <string name="rosterDecoderInfoModel">Modèle:</string>
+    <string name="rosterDecoderInfoManufacturer">Fabricant:</string>
+    <string name="rosterDecoderInfoComment">Commentaire:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Famille de décodeurs:</string>
+    <string name="rosterDecoderInfoDecoderModel">Modèle de décodeur:</string>
+    <string name="rosterDecoderInfoDecoderComment">Commentaire du décodeur:</string>
+    <string name="rosterDecoderInfoRosterEntry">Entrée dans la liste</string>
 
 </resources>

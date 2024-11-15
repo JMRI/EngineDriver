@@ -1217,4 +1217,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">Rychlostní krok pro přejetí (nahoru, dolů nebo doleva/doprava)</string>
     <string name="prefSwipeSpeedChangeStepSummary">Rychlost Počet kroků, které se mají použít pro tahy nahoru, dolů nebo doleva/doprava, jsou nastaveny na změnu rychlosti</string>
 
+    <string name="rosterDecoderInfoDccAddress">Adresa DCC:</string>
+    <string name="rosterDecoderInfoRoadName">Název silnice:</string>
+    <string name="rosterDecoderInfoRoadNumber">Číslo silnice:</string>
+    <string name="rosterDecoderInfoOwner">Majitel:</string>
+    <string name="rosterDecoderInfoModel">Model:</string>
+    <string name="rosterDecoderInfoManufacturer">Výrobce:</string>
+    <string name="rosterDecoderInfoComment">Komentář:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Rodina dekodérů:</string>
+    <string name="rosterDecoderInfoDecoderModel">Model dekodéru:</string>
+    <string name="rosterDecoderInfoDecoderComment">Komentář k dekodéru:</string>
+    <string name="rosterDecoderInfoRosterEntry">Vstup na soupisku</string>
+
 </resources>

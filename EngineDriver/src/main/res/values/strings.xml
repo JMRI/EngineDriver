@@ -1518,5 +1518,17 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
 
     <string name="order">Sort</string>
 
+    <string name="rosterDecoderInfoDccAddress">DCC Address:</string>
+    <string name="rosterDecoderInfoRoadName">Road Name:</string>
+    <string name="rosterDecoderInfoRoadNumber">Road Number:</string>
+    <string name="rosterDecoderInfoOwner">Owner:</string>
+    <string name="rosterDecoderInfoModel">Model:</string>
+    <string name="rosterDecoderInfoManufacturer">Manufacturer:</string>
+    <string name="rosterDecoderInfoComment">Comment:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Decoder Family:</string>
+    <string name="rosterDecoderInfoDecoderModel">Decoder Model:</string>
+    <string name="rosterDecoderInfoDecoderComment">Decoder Comment:</string>
+    <string name="rosterDecoderInfoRosterEntry">Roster Entry:</string>
+
 </resources>
 

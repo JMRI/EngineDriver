@@ -1120,4 +1120,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">Geschwindigkeitsstufe für Wischbewegungen (nach oben, unten oder links/rechts)</string>
     <string name="prefSwipeSpeedChangeStepSummary">Der Geschwindigkeitsschrittwert, der für das Wischen nach oben, unten oder nach links/rechts verwendet werden soll, wird eingestellt, um die Geschwindigkeit zu ändern</string>
 
+    <string name="rosterDecoderInfoDccAddress">DCC-Adresse:</string>
+    <string name="rosterDecoderInfoRoadName">Straßenname:</string>
+    <string name="rosterDecoderInfoRoadNumber">Straßennummer:</string>
+    <string name="rosterDecoderInfoOwner">Eigentümer:</string>
+    <string name="rosterDecoderInfoModel">Modell:</string>
+    <string name="rosterDecoderInfoManufacturer">Hersteller:</string>
+    <string name="rosterDecoderInfoComment">Kommentar:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Decoder-Familie:</string>
+    <string name="rosterDecoderInfoDecoderModel">Decoder-Modell:</string>
+    <string name="rosterDecoderInfoDecoderComment">Decoder-Kommentar:</string>
+    <string name="rosterDecoderInfoRosterEntry">Dienstplaneintrag</string>
+
 </resources>
