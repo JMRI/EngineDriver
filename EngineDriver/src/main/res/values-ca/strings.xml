@@ -1132,4 +1132,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">Pas de velocitat per a lliscars (amunt, avall o esquerra/dreta)</string>
     <string name="prefSwipeSpeedChangeStepSummary">La quantitat de pas de velocitat que s\'ha d\'utilitzar per als desplaçaments cap amunt, cap avall o cap a l\'esquerra/dreta està configurada per canviar la velocitat</string>
 
+    <string name="rosterDecoderInfoDccAddress">Adreça DCC:</string>
+    <string name="rosterDecoderInfoRoadName">Nom de la carretera:</string>
+    <string name="rosterDecoderInfoRoadNumber">Número de carretera:</string>
+    <string name="rosterDecoderInfoOwner">Propietari:</string>
+    <string name="rosterDecoderInfoModel">Model:</string>
+    <string name="rosterDecoderInfoManufacturer">Fabricant:</string>
+    <string name="rosterDecoderInfoComment">Comentari:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Família de descodificadors:</string>
+    <string name="rosterDecoderInfoDecoderModel">Model de descodificador:</string>
+    <string name="rosterDecoderInfoDecoderComment">Comentari del descodificador:</string>
+    <string name="rosterDecoderInfoRosterEntry">Entrada de la llista</string>
+
 </resources>

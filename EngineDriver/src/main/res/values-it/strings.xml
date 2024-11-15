@@ -1068,4 +1068,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">Incremento della velocità per gli spostamenti (su, giù o sinistra/destra)</string>
     <string name="prefSwipeSpeedChangeStepSummary">La quantità di incremento di velocità da utilizzare per gli spostamenti verso l\'alto, verso il basso o verso sinistra/destra è impostata per modificare la velocità</string>
 
+    <string name="rosterDecoderInfoDccAddress">Indirizzo DCC:</string>
+    <string name="rosterDecoderInfoRoadName">Nome della strada:</string>
+    <string name="rosterDecoderInfoRoadNumber">Numero stradale:</string>
+    <string name="rosterDecoderInfoOwner">Proprietario:</string>
+    <string name="rosterDecoderInfoModel">Modello:</string>
+    <string name="rosterDecoderInfoManufacturer">Produttore:</string>
+    <string name="rosterDecoderInfoComment">Commento:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Famiglia di decodificatori:</string>
+    <string name="rosterDecoderInfoDecoderModel">Modello decodificatore:</string>
+    <string name="rosterDecoderInfoDecoderComment">Commento sul decodificatore:</string>
+    <string name="rosterDecoderInfoRosterEntry">Iscrizione all\'elenco</string>
+
 </resources>

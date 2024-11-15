@@ -1121,4 +1121,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">Paso de velocidad para deslizar (arriba, abajo o izquierda/derecha)</string>
     <string name="prefSwipeSpeedChangeStepSummary">La cantidad de pasos de velocidad que se usará para deslizar hacia arriba, hacia abajo o hacia la izquierda/derecha está configurada para cambiar la velocidad</string>
 
+    <string name="rosterDecoderInfoDccAddress">Dirección DCC:</string>
+    <string name="rosterDecoderInfoRoadName">Nombre de la carretera:</string>
+    <string name="rosterDecoderInfoRoadNumber">Número de carretera:</string>
+    <string name="rosterDecoderInfoOwner">Dueño:</string>
+    <string name="rosterDecoderInfoModel">Modelo:</string>
+    <string name="rosterDecoderInfoManufacturer">Fabricante:</string>
+    <string name="rosterDecoderInfoComment">Comentario:</string>
+    <string name="rosterDecoderInfoDecoderFamily">Familia de decodificadores:</string>
+    <string name="rosterDecoderInfoDecoderModel">Modelo de decodificador:</string>
+    <string name="rosterDecoderInfoDecoderComment">Comentario del decodificador:</string>
+    <string name="rosterDecoderInfoRosterEntry">Entrada a la lista</string>
+
 </resources>

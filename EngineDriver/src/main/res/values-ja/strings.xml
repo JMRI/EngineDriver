@@ -1137,4 +1137,16 @@
     <string name="prefSwipeSpeedChangeStepTitle">スワイプの速度ステップ (上、下、または左/右)</string>
     <string name="prefSwipeSpeedChangeStepSummary">上、下、または左右のスワイプに使用する速度ステップ量を設定して速度を変更します</string>
 
+    <string name="rosterDecoderInfoDccAddress">DCCアドレス:</string>
+    <string name="rosterDecoderInfoRoadName">道路名:</string>
+    <string name="rosterDecoderInfoRoadNumber">道路番号:</string>
+    <string name="rosterDecoderInfoOwner">所有者：</string>
+    <string name="rosterDecoderInfoModel">モデル：</string>
+    <string name="rosterDecoderInfoManufacturer">メーカー:</string>
+    <string name="rosterDecoderInfoComment">コメント：</string>
+    <string name="rosterDecoderInfoDecoderFamily">デコーダーファミリー:</string>
+    <string name="rosterDecoderInfoDecoderModel">デコーダーモデル:</string>
+    <string name="rosterDecoderInfoDecoderComment">デコーダーのコメント:</string>
+    <string name="rosterDecoderInfoRosterEntry">名簿エントリー</string>
+
 </resources>
