@@ -99,11 +99,26 @@
 
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>None</item>
-        <item>ESU (3 Brake Levels)</item>
+        <item>3 Decoder Brake Levels</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>esu</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <string-array name="prefSemiRealisticThrottleStopButtonActionEntries">  <!-- display version -->
+        <item>Throttle to Zero</item>
+        <item>Throttle to Zero + Full Brake</item>
+        <item>Speed to Zero</item>
+        <item>Speed to Zero + Brake to Zero</item>
+    </string-array>
+    <string-array name="prefSemiRealisticThrottleStopButtonActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>tz</item>
+        <item>tz+bf</item>
+        <item>sz</item>
+        <item>sz+bz</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

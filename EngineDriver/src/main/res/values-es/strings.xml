@@ -68,6 +68,7 @@
     <string name="forward">Adelante</string>
     <string name="reverse">Atrás</string>
     <string name="brake">Freno</string>
+    <string name="airLineShort">Línea aérea %d%%</string>
     <string name="load">Carga</string>
     <string name="none">Ninguna</string>
     <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco para esconder la tecla. Estos se utilizan cuando las funciones de la flota no están disponibles</string>
@@ -923,10 +924,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajustar el número de pasos en el control deslizante de freno</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Califica la actualización de los frenos de aire</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajuste la velocidad a la que los frenos de aire se actualizarán/recargarán (en milisegundos). Cuanto más pequeño es más rápido.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Deshabilitar el depósito de aire</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Si se marca, el estado de llenado del depósito de aire no afectará los frenos disponibles.</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Número de carga </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajustar el número de pasos en el control deslizante de carga</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentaje de carga</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste el efecto del control deslizante de carga en los cambios de velocidad. >100% = más carga</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentaje de carga</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste el efecto del control deslizante de carga en los cambios de velocidad. >100% = más carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferencias del Dispositivo</string>
     <string name="prefSortOrderRosterTitle">Orden de clasificación de la lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que las entradas de la lista aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
@@ -1132,5 +1135,10 @@
     <string name="rosterDecoderInfoDecoderModel">Modelo de decodificador:</string>
     <string name="rosterDecoderInfoDecoderComment">Comentario del decodificador:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrada a la lista</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Porcentaje máximo de frenado</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajuste el porcentaje máximo del control deslizante Cargar. (100-20000%) 100% = locomotora sola</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Porcentaje de carga máxima</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajuste el porcentaje máximo del control deslizante Cargar. (100-20000%) 100% = locomotora sola</string>
+    <string name="airReservoirShort">Res. aérea %d%%</string>
 
 </resources>

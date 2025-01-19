@@ -1,4 +1,8 @@
 **Version 2.38.190
+ * Bug fix for IPLS when linked to the F1 F2 DCC functions
+ * Added parnoid check for permissions that should be automatically granted
+ * Significant changes the to the Semi-Realistic Throttle, and in particualer the integration with decoders with assistance from John Geddes
+ * Significant re-write of the air brake system in the Semi-Realistic Throttle
 **Version 2.38.188
  * Additional French Translations by Alain Carasso
  * Support DCC-EX remote drop of a loco (FORGET)

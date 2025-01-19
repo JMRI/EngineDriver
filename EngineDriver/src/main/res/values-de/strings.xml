@@ -71,6 +71,7 @@
     <string name="reverse">Rückwärts</string>
     <string name="neutral">Neutral</string>
     <string name="brake">Bremse</string>
+    <string name="airLineShort">Luftlinie %d%%</string>
     <string name="load">Laden</string>
     <string name="none">Keine</string>
     <string name="fb_helptext">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen vom Lokverzeichnis nicht verfügbar sind.</string>
@@ -926,10 +927,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Passen Sie die Anzahl der Schritte im Bremsschieber an</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Bewerten Sie die Aktualisierung der Druckluftbremsen</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Passen Sie die Geschwindigkeit an, mit der die Druckluftbremsen aktualisiert/aufgefüllt werden (in Millisekunden). Kleiner ist schneller.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Deaktivieren Sie den Luftbehälter</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Wenn dies überprüft wird, hat der Füllstand des Luftbehälters keinen Einfluss auf die verfügbaren Bremsen</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Anzahl der Lasten </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Passen Sie die Anzahl der Schritte im Lastschieberegler an</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplikator für den Lastprozentsatz</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Passen Sie die Auswirkung des Lastreglers auf die Geschwindigkeitsänderungen an. &gt;100 % = mehr Last</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplikator für den Lastprozentsatz</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Passen Sie die Auswirkung des Lastreglers auf die Geschwindigkeitsänderungen an. &gt;100 % = mehr Last</string>-->
     <string name="prefCategoryDevicePageTitle">Geräteeinstellungen</string>
     <string name="prefSortOrderRosterTitle">Sortierreihenfolge des Dienstplans</string>
     <string name="prefSortOrderRosterSummary">Ordnen Sie an, dass die Dienstplaneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
@@ -960,6 +963,9 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Klicken Sie den Button. - die Erlaubnis erteilen. - Klicken Sie auf \'Zurück \\‘ hier zurückzukehren...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorieren Sie diese, wenn Sie don\'t Notwendigkeit Lokomotivführer, um die Helligkeit zu verändern.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver muss ACCESS_FINE_LOCATION Berechtigungen aktuelle WLAN SSID abzurufen.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver muss ACCESS_COARSE_LOCATION Berechtigungen aktuelle WLAN SSID abzurufen.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver muss ACCESS_WIFI_STATE Berechtigungen aktuelle WLAN SSID abzurufen.</string>
+    <string name="permissionsINTERNET">Engine Driver muss INTERNET Berechtigungen aktuelle WLAN SSID abzurufen.</string>
     <string name="prefKidsTimerButtonDefaultSummary">Standardzeit, wenn Sie die TOOLLBAR-Taste verwenden, um den Timer zu aktivieren.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Standard für Button.</string>
     <string name="prefKidsTimerButtonSummary">Zeigen Sie die Timer-Taste an, um den Timer zu aktivieren.</string>
@@ -1131,5 +1137,10 @@
     <string name="rosterDecoderInfoDecoderModel">Decoder-Modell:</string>
     <string name="rosterDecoderInfoDecoderComment">Decoder-Kommentar:</string>
     <string name="rosterDecoderInfoRosterEntry">Dienstplaneintrag</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximaler Bremsprozentsatz</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximaler Lastprozentsatz</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
+    <string name="airReservoirShort">Luftwiderstand %d%%</string>
 
 </resources>

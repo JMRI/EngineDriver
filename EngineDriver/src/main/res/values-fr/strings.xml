@@ -70,6 +70,7 @@
     <string name="reverse">Marche Arrière</string>
     <string name="neutral">Neutre</string>
     <string name="brake">Frein</string>
+    <string name="airLineShort">Compagnie aérienne %d%%</string>
     <string name="load">Charger</string>
     <string name="none">Aucun/Aucune</string>
     <string name="fb_helptext">Entrez les noms et les numéros de fonction sur le côté droit de la liste. Les libellés vides servent à masquer les boutons (utilisation des libellés par défaut si les fonctions de la locomotive ne sont pas définies).</string>
@@ -666,6 +667,9 @@
     <string name="permissionsWriteSettingsAdditional">- Cliquer sur le bouton ci dessous.\nAutoriser la permission.\n-Cliquer \'Arrière\' pour retourner ici.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorer ceci si vous ne voulez pas modifier la luminosité avec Engine Driver.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver nécessite l autorisation d acceder à une localisation précise pour récupere le SSID WiFi.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver nécessite l autorisation d acceder à une ACCESS_COARSE_LOCATION pour récupere le SSID WiFi.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver nécessite l autorisation d acceder à une ACCESS_WIFI_STATE pour récupere le SSID WiFi.</string>
+    <string name="permissionsINTERNET">Engine Driver nécessite l autorisation d acceder à une INTERNET pour récupere le SSID WiFi.</string>
     <string name="permissionsVIBRATE">Engine Driver nécessite la permission VIBREUR pour plus de feedback</string>
     <string name="permissionsConnectToServer">Engine Driver nécessite un accès au STOCKAGE pour sauver les connexions récentes et un accès TELEPHONE pour se mettre en pause lors de communications téléphoniques.</string>
 <!--    <string name="permissionsGotoAppSettings">Merci de valider ces permissions depuis le paramétrage APPLICATION</string>-->
@@ -921,10 +925,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajustez le nombre d\'étapes dans le curseur de frein</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Évaluez le rafraîchissement des freins pneumatiques</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajustez la fréquence de rafraîchissement/remplissage des freins pneumatiques (en millisecondes). Plus petit est plus rapide.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Désactiver le réservoir d\'air</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">S\'il est coché, l\'état de remplissage du réservoir d\'air n\'aura pas d\'impact sur les freins disponibles.</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Nombre de charge </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajustez le nombre d’étapes dans le curseur de charge</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicateur de pourcentage de charge</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustez l\'effet du curseur de charge sur les changements de vitesse. > 100 % = plus de charge</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicateur de pourcentage de charge</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustez l\'effet du curseur de charge sur les changements de vitesse. > 100 % = plus de charge</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
     <string name="prefSortOrderRosterTitle">Sens de tri de la liste de locos</string>
     <string name="prefSortOrderRosterSummary">Sens de tri préférentiel pour les locos à l ouverture d Engine Driver</string>
@@ -1132,5 +1138,10 @@
     <string name="rosterDecoderInfoDecoderModel">Modèle de décodeur:</string>
     <string name="rosterDecoderInfoDecoderComment">Commentaire du décodeur:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrée dans la liste</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Pourcentage de freinage maximum</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajustez le pourcentage maximum du curseur Charger. (100-20000%) 100% = locomotive seule</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Pourcentage de charge maximum</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajustez le pourcentage maximum du curseur Charger. (100-20000%) 100% = locomotive seule</string>
+    <string name="airReservoirShort">Rés. aérienne %d%%</string>
 
 </resources>

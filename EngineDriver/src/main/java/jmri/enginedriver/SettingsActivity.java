@@ -798,6 +798,52 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
+    protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+        Log.d("Engine_Driver", "Settings: limitIntArraryPrefValue()");
+
+        String prefValue = sharedPreferences.getString(key, defaultVal).trim();
+        String[] prefValues = threaded_application.splitByString(prefValue, " ");
+
+        int pass = 0; // all good
+
+        EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
+        for (int i = 0; i < prefValues.length; i++) {
+            try {
+                int newVal = Integer.parseInt(prefValues[i].trim());
+                if (newVal > maxVal) {
+                    pass = 1; // need to rewrite
+                    prefValues[i] = Integer.toString(maxVal);
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                            Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
+                } else if (newVal < minVal) {
+                    pass = 1; // need to rewrite
+                    prefValues[i] = Integer.toString(minVal);
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                            Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
+                }
+            } catch (NumberFormatException e) {
+                pass = 2; //fail
+            }
+        }
+
+        if (pass==1) {
+            StringBuilder newValue = new StringBuilder();
+            for (String value : prefValues) {
+                newValue.append(value);
+                newValue.append(" ");
+            }
+            sharedPreferences.edit().putString(key, newValue.toString().trim()).commit();
+            prefText.setText(newValue.toString().trim());
+
+        } else if (pass==2) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
+            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
     protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         Log.d("Engine_Driver", "Settings: limitFloatPrefValue()");
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
@@ -1976,24 +2022,32 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDisplaySemiRealisticThrottleDecoderBrakeType":
                         parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
                         break;
+                    case "prefSemiRealisticMaximumBrakePcnt":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "70");
+                        break;
+
+                    case "prefSemiRealisticThrottleMaxLoadPcnt":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 20000, "100");
+                        break;
+
                     case "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu":
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "4");
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "4");
                         break;
                     case "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu":
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "5");
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "5");
                         break;
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu":
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, MAX_FUNCTIONS-1, "6");
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "6");
                         break;
 
                     case "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu":
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "30");
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "30");
                         break;
                     case "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu":
-                    parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "60");
+                    parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "60");
                         break;
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "100");
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "100");
                         break;
                     case "prefLeftRightSwipeChangesSpeed":
                         sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();

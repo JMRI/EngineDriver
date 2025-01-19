@@ -785,6 +785,7 @@ public class connection_activity extends AppCompatActivity implements Permission
      * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
      */
     void getWifiInfo() {
+        Log.d("Engine_Driver", "c_a: NetworkRequest.getWifiInfo()");
         int intaddr;
         mainapp.client_address_inet4 = null;
         mainapp.client_address = null;
@@ -808,12 +809,29 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            }
 //<!-- needed for API 33 -->
 //            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+
                 if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
                     }
                 }
-//            } else {
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+                    }
+                }
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE);
+                    }
+                }
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.INTERNET)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.INTERNET);
+                    }
+                }
+
+                //            } else {
 //                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
 //                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES);
@@ -824,6 +842,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
             mainapp.client_ssid = wifiinfo.getSSID();
+            Log.d("Engine_Driver", "c_a: NetworkRequest.getWifiInfo(: SSID: " + mainapp.client_ssid);
             if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
                 mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
             }
