@@ -68,7 +68,7 @@ public class throttle_semi_realistic extends throttle {
     private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
-    private static final int SLIDER_PURPOSE_THROTTLE = 0;
+//    private static final int SLIDER_PURPOSE_THROTTLE = 0;
     private static final int SLIDER_PURPOSE_BRAKE = 1;
     private static final int SLIDER_PURPOSE_LOAD = 2;
     private static final int SLIDER_PURPOSE_SEMI_REALISTIC_THROTTLE = 3;
@@ -147,7 +147,7 @@ public class throttle_semi_realistic extends throttle {
 
         prefSemiRealisticThrottleNumberOfLoadSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfLoadSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue));
         prefSemiRealisticThrottleMaxLoadPcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleMaxLoadPcnt", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleMaxLoadPcntDefaultValue));
-        maxLoad = (double) prefSemiRealisticThrottleMaxLoadPcnt;
+        maxLoad = prefSemiRealisticThrottleMaxLoadPcnt;
 
         prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
         prefSemiRealisticThrottleDeceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDeceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
@@ -863,7 +863,7 @@ public class throttle_semi_realistic extends throttle {
             functionShouldBeOnOff[k] = -1; // -1 don't care, 1 = on, 0 = off
         }
 
-        double brakePcnt = (1 - getBrakeDecimalPcnt((double) getBrakeSliderPosition(whichThrottle), (double) prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake)) * 100;
+        double brakePcnt = (1 - getBrakeDecimalPcnt(getBrakeSliderPosition(whichThrottle), prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake)) * 100;
         int foundBrakeLevel = -1;
         for (int i = 0; i <= 2; i++) {  // cycle through the thresholds from low to high
             if (esuBrakeLevels[i] >= 0) {  // ignore it if it is set to -1
@@ -906,7 +906,7 @@ public class throttle_semi_realistic extends throttle {
     //Listeners for the load slider
     protected class LoadSliderListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
-        int lastLoadSliderPosition;
+//        int lastLoadSliderPosition;
 
         protected LoadSliderListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
@@ -1021,9 +1021,6 @@ public class throttle_semi_realistic extends throttle {
 
             } else if (arrowDirection.equals(speed_button_type.STOP)) {
                 switch (prefSemiRealisticThrottleStopButtonAction) {
-                    default:
-                    case stop_button_type.THROTTLE_STOP:
-                        break;
                     case (stop_button_type.THROTTLE_STOP_BRAKE_FULL):
                         setBrakeSliderPosition(whichThrottle, prefSemiRealisticThrottleNumberOfBrakeSteps);
                         break;
@@ -1033,6 +1030,9 @@ public class throttle_semi_realistic extends throttle {
                     case (stop_button_type.SPEED_ZERO_BRAKE_ZERO):
                         setBrakeSliderPosition(whichThrottle, 0);
                         setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
+                        break;
+                    default:
+                    case stop_button_type.THROTTLE_STOP:
                         break;
                 }
 
@@ -1358,9 +1358,9 @@ public class throttle_semi_realistic extends throttle {
         // air & brake
         double airLine = (double) 1 - ((double) getAirLineValue(whichThrottle) / 100);
         double airLineAsBrakeStep = Math.round( airLine * (double) prefSemiRealisticThrottleNumberOfBrakeSteps);
-        double airLineAsBrakePcnt = getBrakeDecimalPcnt(airLineAsBrakeStep, (double) prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake);
+        double airLineAsBrakePcnt = getBrakeDecimalPcnt(airLineAsBrakeStep, prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake);
 
-        double brakePcnt = getBrakeDecimalPcnt(brakeSliderPosition, (double) prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake);
+        double brakePcnt = getBrakeDecimalPcnt(brakeSliderPosition, prefSemiRealisticThrottleNumberOfBrakeSteps, maxBrake);
 
         double effectiveBrake = brakePcnt;
 
@@ -1404,10 +1404,10 @@ public class throttle_semi_realistic extends throttle {
 //        Log.d("Engine_Driver",String.format("srmt: X intermediateBrake: %.2f targetAccelleration: %.2f",intermediateBrake, targetAccelleration));
 
         // load
-        double intermediateLoad = 1;
+//        double intermediateLoad = 1;
         if  (loadSliderPosition > 0) {
             targetAccelleration = targetAccelleration
-                    * getLoadPcnt((double) loadSliderPosition, (double) prefSemiRealisticThrottleNumberOfLoadSteps, maxLoad);
+                    * getLoadPcnt(loadSliderPosition, prefSemiRealisticThrottleNumberOfLoadSteps, maxLoad);
         }
 
 //        Log.d("Engine_Driver",String.format("srmt: X 1 targetSpeed: %d targetAccelleration: %.2f",targetSpeed, targetAccelleration));

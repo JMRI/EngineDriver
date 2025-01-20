@@ -211,7 +211,7 @@
                                         android:enabled="false"
                                         android:text="0"
                                         android:textSize="10sp"
-                                        tools:ignore="HardcodedText" />
+                                        tools:ignore="HardcodedText,SmallSp" />
                                 </RelativeLayout>
 
                             </LinearLayout>
