@@ -751,7 +751,7 @@
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Vitesse de rafraîchissement des freins pneumatiques</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">Délai d\'attente entre les variations de réduction de vitesse (en millisecondes).  Une valeur réduite produira une réduction plus prononcée. </string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">Délai entre les variations de vitesse</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustement du multiplicateur de ratio de charge affectant les changements de vitesse..  &gt;100% = charge additionnelle.</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustement du multiplicateur de ratio de charge affectant les changements de vitesse..  &gt;100% = charge additionnelle.</string>-->
 
     <string name="prefSemiRealisticThrottleNotchesSummary">Ajustement de vitesse du régulateur en pourcentage ou par crans.</string>
     <string name="prefSemiRealisticThrottleNotchesTitle">Crans du levier de vitesse</string>
@@ -957,7 +957,7 @@
     <string name="timerDialogMessage">Mot de passe:</string>
     <string name="timerDialogTitle">Mot de passe de la minuterie</string>
     <string name="toastAccelerometerNotFound">Accéléromètre introuvable ou inactf</string>
-    <string name="toastConnectConnected">Connexion au serveur: %%1%% Port: %%2%%</string>
+    <string name="toastConnectConnected">Connexion au serveur: %1s Port: %2s</string>
     <string name="toastConnectEnterAddress">Saisir ou sélectionner une adresse et un port de communication</string>
     <string name="toastConnectErrorReadingRecentConnections">Erreur de lecture de la liste des connexions récentes:</string>
     <string name="toastConnectErrorSavingRecentConnection">Erreur de sauvegarde de la liste des connexions récentes:</string>

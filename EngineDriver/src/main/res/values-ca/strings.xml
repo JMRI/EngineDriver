@@ -69,6 +69,7 @@
     <string name="reverse">Enrere</string>
     <string name="neutral">Neutre</string>
     <string name="brake">Fre</string>
+    <string name="airLineShort">Línia aèria %d%%</string>
     <string name="load">Carrega</string>
     <string name="none">Cap</string>
     <string name="fb_helptext">Entra etiquetes i funcions a la llista de la dreta. Deixa-la en blanc  per amagar la tecla. Aquests s\'utilitzen quan les funcions de la flota no estan disponibles</string>
@@ -748,7 +749,10 @@
     <string name="permissionsWriteSettings">Engine Driver necessita permisos D\'ESRIPTURA per canviar la brillantor de la pantalla</string>
     <string name="permissionsWriteSettingsAdditional">- Fes clic en la tecla per concedir els permisos.\n- Fes clic \'Enrera\' per torna aquí</string>
     <string name="permissionsWriteSettingsAdditional2">Ignora-ho si no necessites que el Engine Driver modifiqui la brillantor de la pantalla del teu dispositiu</string>
-    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver necessita permisos GEOLOCALITZACIO per obtenir informació de la connexó wifi SSID</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver necessita permisos ACCESS_FINE_LOCATION per obtenir informació de la connexó wifi SSID</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver necessita permisos ACCESS_COARSE_LOCATION per obtenir informació de la connexó wifi SSID</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver necessita permisos ACCESS_WIFI_STATE per obtenir informació de la connexó wifi SSID</string>
+    <string name="permissionsINTERNET">Engine Driver necessita permisos INTERNET per obtenir informació de la connexó wifi SSID</string>
     <string name="permissionsVIBRATE">Engine Driver necessita permisos vibrar per proporcionar informació addicional</string>
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada</string>
 <!--    <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació</string>-->
@@ -925,10 +929,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajusteu el nombre de passos al control lliscant de fre</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Valoreu el refresc dels frens d\'aire</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajusteu la velocitat amb què els frens d\'aire s\'actualitzaran/ompliran (en mil·lisegons). Més petit és més ràpid.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Desactiveu el dipòsit d\'aire</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Si es marca, l\'estat d\'ompliment del dipòsit d\'aire no afectarà els frens disponibles</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Nombre de càrrega </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajusteu el nombre de passos al control lliscant de càrrega</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de percentatge de càrrega</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajusteu l\'efecte del control lliscant de càrrega sobre els canvis de velocitat. &gt;100% = més càrrega</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de percentatge de càrrega</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajusteu l\'efecte del control lliscant de càrrega sobre els canvis de velocitat. &gt;100% = més càrrega</string>-->
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
     <string name="prefSortOrderRosterTitle">Ordre d\'ordenació de la llista</string>
     <string name="prefSortOrderRosterSummary">Ordeneu que les entrades de la llista apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
@@ -1143,5 +1149,10 @@
     <string name="rosterDecoderInfoDecoderModel">Model de descodificador:</string>
     <string name="rosterDecoderInfoDecoderComment">Comentari del descodificador:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrada de la llista</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Percentatge màxim de fre</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentatge de càrrega màxima</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
+    <string name="airReservoirShort">Res a l\'aire %d%%</string>
 
 </resources>

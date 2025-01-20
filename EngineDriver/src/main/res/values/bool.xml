@@ -121,4 +121,6 @@
     <bool name="prefShowWitPomDefaultValue">false</bool>
     <bool name="prefTurnoutsShowThrowCloseButtonsDefaultValue">false</bool>
 
+    <bool name="prefSemiRealisticThrottleDisableAirDefaultValue">false</bool>
+
 </resources>

@@ -210,8 +210,8 @@
                                         android:layout_alignParentRight="true"
                                         android:enabled="false"
                                         android:text="0"
-                                        android:textSize="14sp"
-                                        tools:ignore="HardcodedText" />
+                                        android:textSize="10sp"
+                                        tools:ignore="HardcodedText,SmallSp" />
                                 </RelativeLayout>
 
                             </LinearLayout>
@@ -435,7 +435,7 @@
 
                             <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_weight="3"
+                                android:layout_weight="2.6"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:padding="0dp"
@@ -466,6 +466,33 @@
                                     android:layout_height="0dp"
                                     android:layout_centerInParent="true"
                                     android:layout_weight=".55"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginStart="3dp"
+                                    android:importantForAccessibility="no"
+                                    tools:ignore="NestedWeights,ObsoleteLayoutParam" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="fill_parent"
+                                android:layout_weight=".3"
+                                android:orientation="vertical"
+                                android:paddingTop="10dp"
+                                android:paddingRight="0dp"
+                                android:paddingBottom="5dp"
+                                android:weightSum="1.0">
+
+                                <ImageView
+                                    android:id="@+id/air_line_indicator_0"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_weight=".55"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginLeft="3dp"
+                                    android:layout_marginStart="3dp"
                                     android:importantForAccessibility="no"
                                     tools:ignore="NestedWeights,ObsoleteLayoutParam" />
 
@@ -487,7 +514,7 @@
                                     android:layout_height="0dp"
                                     android:layout_marginTop="3dp"
                                     android:layout_marginBottom="3dp"
-                                    android:layout_weight=".6"
+                                    android:layout_weight=".5"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
                                     android:paddingLeft="10dp"
@@ -500,8 +527,8 @@
                                     android:id="@+id/load_0"
                                     android:layout_width="fill_parent"
                                     android:layout_height="0dp"
-                                    android:layout_marginTop="40dp"
-                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginBottom="20dp"
                                     android:layout_weight=".3"
                                     android:maxHeight="9999dp"
                                     android:minHeight="9999dp"
@@ -510,25 +537,35 @@
                                     android:thumb="?attr/ed_vertical_thumb"
                                     android:progressDrawable="?attr/ed_progressBar" />
 
-                                <RelativeLayout
+                                <LinearLayout
                                     android:layout_width="fill_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight=".1"
+                                    android:layout_weight=".2"
                                     android:orientation="vertical"
                                     android:padding="0dp" >
+
+                                    <Button
+                                        android:id="@+id/button_air_0"
+                                        style="?attr/ed_normal_button2_style"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="40dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:text="@string/AirButton"
+                                        android:textSize="14sp" />
 
                                     <Button
                                         android:id="@+id/button_e_stop_0"
                                         style="?attr/ed_stop_button_style"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentBottom="true"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
                                         android:text="@string/EmergencyStop"
                                         android:textSize="14sp" />
 
-                                </RelativeLayout>
+                                </LinearLayout>
 
                             </LinearLayout>
 

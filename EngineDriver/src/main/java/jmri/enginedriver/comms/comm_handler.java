@@ -61,15 +61,22 @@ public class comm_handler extends Handler {
          case message_type.SET_LISTENER:
             if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
+               Log.d("Engine_Driver", "comm_handler.handleMessage: DCCEX SSID found");
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
                mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
                        || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO));
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
+               Log.d("Engine_Driver", "comm_handler.handleMessage: LnWi SSID found");
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "12090", "LnWi");
             } else {
+               if (mainapp.client_ssid == null)
+                  Log.d("Engine_Driver", "comm_handler.handleMessage: SSID is Null!");
+               else
+                  Log.d("Engine_Driver", "comm_handler.handleMessage: SSID: " + mainapp.client_ssid);
+
                //arg1= 1 to turn on, arg1=0 to turn off
                if (msg.arg1 == 0) {
                   commThread.endJmdns();

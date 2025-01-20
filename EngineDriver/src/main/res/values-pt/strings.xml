@@ -66,6 +66,7 @@
     <string name="forward">Frente</string>
     <string name="reverse">Reverso</string>
     <string name="brake">Freio</string>
+    <string name="airLineShort">Companhia Aérea %d%%</string>
     <string name="load">Carregar</string>
     <string name="none">Nada</string>
     <string name="fb_helptext">Inserir etiquetas e n. funções na lista a direita. Deixar em branco para esconder o botão. Estes são usados quando as funções de lista não estão disponíveis.</string>
@@ -865,10 +866,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Ajuste o número de etapas no controle deslizante do freio</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Avalie a atualização dos freios a ar</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajuste a taxa de atualização/reabastecimento dos freios a ar (em milissegundos). Menor é mais rápido.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Desative o reservatório de ar</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Se verificado, o estado de enchimento do reservatório de ar não afetará os freios disponíveis</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Número de carga</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Ajuste o número de etapas no Load Slider</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentagem de carga</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste o efeito do controle deslizante de carga nas mudanças de velocidade. >100% = mais carga</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentagem de carga</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste o efeito do controle deslizante de carga nas mudanças de velocidade. >100% = mais carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
     <string name="prefSortOrderRosterTitle">Ordem de classificação da lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que as entradas da lista apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
@@ -899,6 +902,9 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Clique no botão abaixo - Conceder a permissão - Clique em \'Voltar\' para voltar aqui...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorar esta se você don\'t \'Engine Driver necessidade do motor para alterar o brilho.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver do motor precisa de permissões ACCESS_FINE_LOCATION para recuperar SSID wi-fi atual.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver do motor precisa de permissões ACCESS_COARSE_LOCATION para recuperar SSID wi-fi atual.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver do motor precisa de permissões ACCESS_WIFI_STATE para recuperar SSID wi-fi atual.</string>
+    <string name="permissionsINTERNET">Engine Driver do motor precisa de permissões INTERNET para recuperar SSID wi-fi atual.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir inverso</string>
     <string name="prefKidsTimerEnableReverseSummary">Ative o botão inverso.</string>
     <string name="prefKidsTimerButtonTitle">Mostrar o botão do temporizador?</string>
@@ -1084,4 +1090,9 @@
     <string name="rosterDecoderInfoDecoderModel">Modelo de decodificador:</string>
     <string name="rosterDecoderInfoDecoderComment">Comentário do decodificador:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrada na lista</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Porcentagem máxima de freio</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Porcentagem máxima de carga</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
+    <string name="airReservoirShort">Res. Ar %d%%</string>
 </resources>

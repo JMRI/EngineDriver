@@ -297,6 +297,7 @@
     <string name="lightsTextOff">オフ</string>
     <string name="lightsTextUnknown">不明</string>
     <string name="limitSpeedButtonLabel">制限速度</string>
+    <string name="airLineShort">空気リザーバー %d%%</string>
     <string name="load">ロード</string>
     <string name="location_all">すべての場所</string>
     <string name="loco">ロコ：</string>
@@ -329,6 +330,9 @@
     <string name="pauseSpeedButtonLabel">一時停止</string>
 
     <string name="permissionsACCESS_FINE_LOCATION">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための ACCESS_FINE_LOCATION 権限が必要です。</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための ACCESS_COARSE_LOCATION 権限が必要です。</string>
+    <string name="permissionsACCESS_WIFI_STATE">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための ACCESS_WIFI_STATE 権限が必要です。</string>
+    <string name="permissionsINTERNET">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための INTERNET 権限が必要です。</string>
     <string name="permissionsAppSettingsButton">アプリの設定</string>
 
 
@@ -750,13 +754,15 @@
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">エアブレーキのリフレッシュを評価する</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">減速速度ステップを繰り返す間隔 (ミリ秒単位)。小さいほど高速です。</string>
     <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">減速速度 ステップリピート遅延</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">速度変化に対する負荷スライダーの効果を調整します。 >100% = 負荷が増加</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">負荷パーセンテージ乗数</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">速度変化に対する負荷スライダーの効果を調整します。 >100% = 負荷が増加</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">負荷パーセンテージ乗数</string>-->
     <string name="prefSemiRealisticThrottleNotchesSummary">スロットルをパーセンテージで、または特定のステップ/ノッチ数で調整します</string>
     <string name="prefSemiRealisticThrottleNotchesTitle">スロットルノッチ</string>
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">ブレーキスライダーの段数を調整します</string>
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">ブレーキステップ数</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">ロードスライダーでステップ数を調整します</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">空気リザーバーを無効にする</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">チェックすると、空気リザーバーの充填状態は利用可能なブレーキに影響を与えません。</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">積載数 </string>
     <string name="prefSemiRealisticThrottleSpeedStepSummary">実際の速度が各ステップで目標速度までどれだけジャンプするか。  大きいほど速いです。</string>
     <string name="prefSemiRealisticThrottleSpeedStepTitle">スピードステップ </string>
@@ -956,7 +962,7 @@
     <string name="timerDialogMessage">パスワード:</string>
     <string name="timerDialogTitle">タイマーパスワード</string>
     <string name="toastAccelerometerNotFound">加速度センサーが見つからないか、無効になっています</string>
-    <string name="toastConnectConnected">サーバーに接続しました: %%1%% ポート: %%2%%</string>
+    <string name="toastConnectConnected">サーバーに接続しました: %1s ポート: %2s</string>
     <string name="toastConnectEnterAddress">アドレスとポートを入力または選択します</string>
     <string name="toastConnectErrorReadingRecentConnections">最近の接続リストの読み取り中にエラーが発生しました:</string>
     <string name="toastConnectErrorSavingRecentConnection">最近の接続を保存中にエラーが発生しました:</string>
@@ -1148,5 +1154,10 @@
     <string name="rosterDecoderInfoDecoderModel">デコーダーモデル:</string>
     <string name="rosterDecoderInfoDecoderComment">デコーダーのコメント:</string>
     <string name="rosterDecoderInfoRosterEntry">名簿エントリー</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">最大ブレーキ率</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大負荷パーセンテージ</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
+    <string name="airReservoirShort">空気抵抗 %d%%</string>
 
 </resources>

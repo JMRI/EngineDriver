@@ -52,7 +52,10 @@ public class PermissionsHelper {
 //            NEARBY_WIFI_DEVICES,
             READ_MEDIA_IMAGES,
             READ_MEDIA_VISUAL_USER_SELECTED,
-            POST_NOTIFICATIONS
+            POST_NOTIFICATIONS,
+            ACCESS_COARSE_LOCATION,
+            ACCESS_WIFI_STATE,
+            INTERNET
     })
     public @interface RequestCodes {}
 
@@ -85,6 +88,10 @@ public class PermissionsHelper {
 //<!-- needed for API 34 -->
     public static final int READ_MEDIA_VISUAL_USER_SELECTED = 52;
 //<!-- needed for API 34 -->
+
+    public static final int ACCESS_COARSE_LOCATION = 53;
+    public static final int ACCESS_WIFI_STATE = 54;
+    public static final int INTERNET = 55;
 
     private boolean isDialogOpen = false;
     private static PermissionsHelper instance = null;
@@ -190,6 +197,13 @@ public class PermissionsHelper {
             case POST_NOTIFICATIONS:
                 return context.getResources().getString(R.string.permissionsPOST_NOTIFICATIONS);
 //<!-- needed for API 33 -->
+
+            case ACCESS_COARSE_LOCATION:
+                return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
+            case ACCESS_WIFI_STATE:
+                return context.getResources().getString(R.string.permissionsACCESS_WIFI_STATE);
+            case INTERNET:
+                return context.getResources().getString(R.string.permissionsINTERNET);
 
             default:
                 return "Unknown permission request: " + requestCode;
@@ -305,6 +319,26 @@ public class PermissionsHelper {
                     Log.d("Engine_Driver", "Requesting POST_NOTIFICATIONS permissions");
                     break;
 //<!-- needed for API 33 -->
+
+                case ACCESS_COARSE_LOCATION:
+                    Log.d("Engine_Driver", "Requesting ACCESS_FINE_LOCATION permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.ACCESS_COARSE_LOCATION},
+                            requestCode);
+                    break;
+                case ACCESS_WIFI_STATE:
+                    Log.d("Engine_Driver", "Requesting ACCESS_WIFI_STATE permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.ACCESS_WIFI_STATE},
+                            requestCode);
+                    break;
+                case INTERNET:
+                    Log.d("Engine_Driver", "Requesting INTERNET permissions");
+                    activity.requestPermissions(new String[]{
+                                    Manifest.permission.INTERNET},
+                            requestCode);
+                    break;
+
 
             }
         } else {
@@ -457,6 +491,13 @@ public class PermissionsHelper {
                 }
 //<!-- needed for API 33 -->
 
+            case ACCESS_COARSE_LOCATION :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
+            case ACCESS_WIFI_STATE :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_WIFI_STATE ) == PackageManager.PERMISSION_GRANTED;
+            case INTERNET :
+                return ContextCompat.checkSelfPermission(context, Manifest.permission.INTERNET ) == PackageManager.PERMISSION_GRANTED;
+
             default:
                 return false;
         }
@@ -511,6 +552,13 @@ public class PermissionsHelper {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS);
                 }
+
+            case ACCESS_COARSE_LOCATION:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+            case ACCESS_WIFI_STATE:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_WIFI_STATE);
+            case INTERNET:
+                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.INTERNET);
 
             default:
                 return false;

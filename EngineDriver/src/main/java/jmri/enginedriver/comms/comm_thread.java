@@ -883,8 +883,8 @@ public class comm_thread extends Thread {
     @SuppressLint("DefaultLocale")
     protected static void sendRequestSpeedAndDir(int whichThrottle) {
         if (!mainapp.isDCCEX) { // not DCC-EX
-            wifiSend(String.format("M%sA*<;>qV\nM%sA*<;>qR",
-                    mainapp.throttleIntToString(whichThrottle), mainapp.throttleIntToString(whichThrottle)));
+            wifiSend(String.format("M%sA*<;>qV", mainapp.throttleIntToString(whichThrottle)));
+            wifiSend(String.format("M%sA*<;>qR", mainapp.throttleIntToString(whichThrottle)));
 
         } else { //DCC-EX
             Consist con = mainapp.consists[whichThrottle];
@@ -2473,13 +2473,13 @@ public class comm_thread extends Thread {
                 String status;
                 if (mainapp.client_address == null) {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
-                    Log.d("Engine_Driver", "comm_thread.send(): WiT send reconnection attempt.");
+                    Log.d("Engine_Driver", "comm_thread.send(): Not Connected: WiT send reconnection attempt.");
                 } else if (inboundTimeout) {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval());
-                    Log.d("Engine_Driver", "comm_thread.send(): WiT receive reconnection attempt.");
+                    Log.d("Engine_Driver", "comm_thread.send(): No Response: WiT receive reconnection attempt.");
                 } else {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                    Log.d("Engine_Driver", "comm_thread.send(): WiT send reconnection attempt.");
+                    Log.d("Engine_Driver", "comm_thread.send(): Unable to connect: WiT send reconnection attempt.");
                 }
                 socketGood = false;
 

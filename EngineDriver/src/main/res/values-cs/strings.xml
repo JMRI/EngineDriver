@@ -75,6 +75,7 @@
     <string name="reverse">Vzad</string>
     <string name="neutral">Neutrální</string>
     <string name="brake">Brzda</string>
+    <string name="airLineShort">Letecká linka %d%%</string>
     <string name="load">Zatížení</string>
     <string name="none">Nic</string>
     <string name="fb_helptext">Zadejte štítky a funkce v seznamu. Pro skrytí tlačítka ponechte prázdné. Použijte v případě, že funkce v evidenci nejsou k dispozici.</string>
@@ -869,6 +870,9 @@
     <string name="permissionsWriteSettingsAdditional">– Klikněte na tlačítko níže.\n– Udělit oprávnění.\n– Klikněte \'Zpět\' pro návrat sem.</string>
     <string name="permissionsWriteSettingsAdditional2">Toto ignorujte pokud nepotřebujete aby Engine Driver měnil jas.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_FINE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver potřebuje oprávnění ACCESS_COARSE_LOCATION k načtení aktuálního SSID sítě WiFi.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver potřebuje oprávnění ACCESS_WIFI_STATE k načtení aktuálního SSID sítě WiFi.</string>
+    <string name="permissionsINTERNET">Engine Driver potřebuje oprávnění INTERNET k načtení aktuálního SSID sítě WiFi.</string>
     <string name="permissionsVIBRATE">Engine Driver potřebuje oprávnění VIBRATE aby poskytl další zpětnou vazbu.</string>
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
 <!--    <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>-->
@@ -983,10 +987,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Upravte počet kroků na jezdci brzdy</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Ohodnoťte osvěžení vzduchových brzd</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Upravte rychlost, jakou se budou vzduchové brzdy obnovovat/doplňovat (v milisekundách). Menší je rychlejší.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Deaktivujte vzduchovou nádrž</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Při kontrole stavu naplnění vzduchového zásobníku neovlivní dostupné brzdy</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Počet zatížení </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Upravte počet kroků na posuvníku zatížení</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Násobitel procenta zatížení</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Upravte účinek jezdce zatížení na změny rychlosti. >100 % = větší zatížení</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Násobitel procenta zatížení</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Upravte účinek jezdce zatížení na změny rychlosti. >100 % = větší zatížení</string>-->
     <string name="prefCategoryDevicePageTitle">Předvolby zařízení</string>
     <string name="prefPauseSpeedButtonTitle">Show \'Pause\' Tlačítko</string>
     <string name="prefPauseSpeedButtonSummary">Zobrazovat tlačítko pro zpomalení a zastavení lokomotivy, pak se vrátí do rychlosti na propuštění.</string>
@@ -1228,5 +1234,10 @@
     <string name="rosterDecoderInfoDecoderModel">Model dekodéru:</string>
     <string name="rosterDecoderInfoDecoderComment">Komentář k dekodéru:</string>
     <string name="rosterDecoderInfoRosterEntry">Vstup na soupisku</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximální brzdné procento</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Upravte maximální procento posuvníku Load. (100-20000 %) 100 % = samotná lokomotiva</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximální procento zatížení</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Upravte maximální procento posuvníku Load. (100-20000 %) 100 % = samotná lokomotiva</string>
+    <string name="airReservoirShort">Rozlišení vzduchu %d%%</string>
 
 </resources>

@@ -95,6 +95,8 @@
     <string name="neutral">Neutral</string>
     <string name="brake">Brake</string>
     <string name="air_reservoir">Air Reservoir</string>
+    <string name="airReservoirShort">Air Res %d%%</string>
+    <string name="airLineShort">Air Line %d%%</string>
     <string name="load">Load</string>
     <string name="none">None</string>
     <string name="fb_helptext">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>
@@ -375,7 +377,7 @@
 
     <string name="prefMaximumThrottleTitle">Maximum throttle Percentage</string>
     <string name="prefMaximumThrottleDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefMaximumThrottleSummary">Maximum Allowed throttle slider value in % in ALL sliders</string>
+    <string name="prefMaximumThrottleSummary">Maximum allowed slider value in % in ALL throttle sliders</string>
     <string name="prefMaximumThrottleChangeTitle">Maximum throttle Change</string>
     <string name="prefMaximumThrottleChangeDefaultValue" translatable="false">25</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumThrottleChangeSummary">Maximum allowed throttle change in %</string>
@@ -521,6 +523,7 @@
     <string name="prefEmerStopSummary">Show loco Emergency Stop button in action bar</string>
     <string name="EStop">Estop</string>
     <string name="EmergencyStop">Emergency Stop</string>
+    <string name="AirButton">Air Brakes</string>
     <string name="PowerButtonBar">power_button</string>
     <string name="prefPowerButtonBarTitle">Layout Power button?</string>
     <string name="prefPowerButtonBarSummary">Show Layout Power button in action bar</string>
@@ -1167,6 +1170,9 @@
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
     <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COURSE_LOCATION permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver needs ACCESS_WIFI_STATE permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsINTERNET">Engine Driver needs INTERNET permissions to retrieve current wifi SSID.</string>
     <string name="permissionsVIBRATE">Engine Driver needs VIBRATE permissions to provide additional feedback.</string>
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver needs CHANGE_NETWORK_STATE permissions to turn mobile data on or off.</string>-->
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
@@ -1327,6 +1333,9 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Adjust the rate that the Air brakes will refresh/refill (in milliseconds). Smaller is faster.</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateDefaultValue" translatable="false">2000</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Disable the Air Reservoir</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">If checked the fill state of the air reservoir will not impact available brakes</string>
+
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Number Of Load Steps</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Adjust the number of steps in the Load Slider</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
@@ -1335,29 +1344,37 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake fucnctions on the decoder</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">ESU Low Functon Number</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">ESU - Which Decoder Function to activate at Low Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Decoder Low Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">Which Decoder Function(s) to activate at Low Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">ESU Mid Functon Number</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">ESU - Which Decoder Function to activate at Mid Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">Decoder Mid Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">Which Decoder Function(s) to activate at Mid Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">ESU High Functon Number</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">ESU - Which Decoder Function to activate at High Brake Value</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">Decoder High Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">Which Decoder Function(s) to activate at High Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue" translatable="false">6</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">ESU Low Brake Value (Percent)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">ESU - What Percentage Brake to activate the Low Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">Decoder Low Brake Value (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">What Percentage Brake to activate the Low Function(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue" translatable="false">30</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">ESU Mid Brake alue (Percent)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - What Percentage Brake to activate the Mid Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">Decoder Mid Brake Value (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">What Percentage Brake to activate the Mid Function(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue" translatable="false">60</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU High Brake Value (Percent)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - What Percentage Brake to activate the High Function Number</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Decoder High Brake Value (Percent)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">What Percentage Brake to activate the High Function(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Load Percentage multiplier</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Adjust the effect of the load slider on the speed changes. &gt;100% = more load</string>
-    <string name="prefSemiRealisticThrottleLoadPcntDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximum Load Percentage</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Adjust the maximum percentage of the Load slider. (100-20000%) 100% = loco alone</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntDefaultValue" translatable="false">1000</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximum Brake Percentage</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Adjust the maximum percentage of the Brake slider. (5-100%) 100% = immediate zero</string>
+    <string name="prefSemiRealisticMaximumBrakePcntDefaultValue" translatable="false">70</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Stop Button Action</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Choose what the Stop button does</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionDefaultValue" translatable="false">tz</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefCategoryDevicePageTitle">Device Preferences</string>
 

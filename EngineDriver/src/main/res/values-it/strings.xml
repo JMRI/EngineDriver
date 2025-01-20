@@ -67,6 +67,7 @@
     <string name="forward">Avanti</string>
     <string name="reverse">Indietro</string>
     <string name="brake">Freno</string>
+    <string name="airLineShort">Ris. aria %d%%</string>
     <string name="load">Carico</string>
     <string name="none">Niente</string>
     <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
@@ -860,10 +861,12 @@
     <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">Regola il numero di passaggi nel cursore del freno</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateTitle">Valuta l\'aggiornamento dei freni ad aria compressa</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Regola la velocità con cui i freni ad aria compressa si aggiorneranno/riempiranno (in millisecondi). Più piccolo è più veloce.</string>
+    <string name="prefSemiRealisticThrottleDisableAirTitle">Disabilitare il serbatoio dell\'aria</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">Se selezionato, lo stato di riempimento del serbatoio dell\'aria non avrà alcun impatto sui freni disponibili</string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">Numero di carico </string>
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">Regola il numero di passaggi nel cursore Carica</string>
-    <string name="prefSemiRealisticThrottleLoadPcntTitle">Moltiplicatore percentuale di carico</string>
-    <string name="prefSemiRealisticThrottleLoadPcntSummary">Regola l\'effetto del cursore del carico sulle variazioni di velocità. &gt;100% = carico maggiore</string>
+<!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Moltiplicatore percentuale di carico</string>-->
+<!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Regola l\'effetto del cursore del carico sulle variazioni di velocità. &gt;100% = carico maggiore</string>-->
     <string name="prefCategoryDevicePageTitle">preferenze dei dispositivi</string>
     <string name="prefSortOrderRosterTitle">Ordinamento degli elenchi</string>
     <string name="prefSortOrderRosterSummary">Ordina che le voci dell\'elenco vengano visualizzate, per impostazione predefinita, ogni volta che avvii Engine Driver</string>
@@ -894,6 +897,9 @@
     <string name="permissionsWriteSettingsAdditional" tools:ignore="TypographyEllipsis">- Fare clic sul pulsante qui sotto - Concedere l\'autorizzazione - Clicca \'Indietro\' di tornare qui...</string>
     <string name="permissionsWriteSettingsAdditional2">Ignorare questo se si don \\ \'t bisogno Engine Driver di modificare la luminosità.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver ha bisogno di autorizzazioni ACCESS_FINE_LOCATION recuperare SSID corrente della connessione Wi-Fi.</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver ha bisogno di autorizzazioni ACCESS_COARSE_LOCATION recuperare SSID corrente della connessione Wi-Fi.</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver ha bisogno di autorizzazioni ACCESS_WIFI_STATE recuperare SSID corrente della connessione Wi-Fi.</string>
+    <string name="permissionsINTERNET">Engine Driver ha bisogno di autorizzazioni INTERNET recuperare SSID corrente della connessione Wi-Fi.</string>
     <string name="prefKidsTimerButtonDefaultSummary">Tempo predefinito Se si utilizza il pulsante TOOLLBAR per attivare il timer.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Predefinito per il pulsante</string>
     <string name="prefKidsTimerButtonSummary">Visualizza il pulsante TIMER per attivare il timer.</string>
@@ -1079,5 +1085,10 @@
     <string name="rosterDecoderInfoDecoderModel">Modello decodificatore:</string>
     <string name="rosterDecoderInfoDecoderComment">Commento sul decodificatore:</string>
     <string name="rosterDecoderInfoRosterEntry">Iscrizione all\'elenco</string>
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">Percentuale massima di frenata</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentuale di carico massima</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
+    <string name="airReservoirShort">Linea aerea %d%%</string>
 
 </resources>

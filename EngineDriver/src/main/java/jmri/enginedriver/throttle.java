@@ -286,6 +286,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected static int[] prevLoads = {0, 0, 0, 0, 0, 0};
     protected static int[] targetDirections = {1, 1, 1, 1, 1, 1};
     protected static double[] targetAccelerations = {0, 0, 0, 0, 0, 0};  /// -4=full brake  +1=normal acceleration  0=at target speed
+    protected static String[] targetAccelerationsForDisplay = {"", "", "", "", "", ""};  /// -4=full brake  +1=normal acceleration  0=at target speed
 
     protected Handler[] semiRealisticTargetSpeedUpdateHandlers = {null, null, null, null, null, null};
     protected Handler[] semiRealisticSpeedButtonUpdateHandlers = {null, null, null, null, null, null};
@@ -293,10 +294,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected int[] mSemiRealisticSpeedButtonsAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
     protected boolean semiRealisticSpeedButtonLongPressActive = false;
     protected ImageView[] airIndicators = {null, null, null, null, null, null};
+    protected ImageView[] airLineIndicators = {null, null, null, null, null, null};
     protected int[] airValues = {100, 100, 100, 100, 100, 100};
+    protected int[] airLineValues = {100, 100, 100, 100, 100, 100};
     protected boolean isAirRechaging = false;
+    protected boolean isAirLineRechaging = false;
     protected int[] previousBrakePosition = {0, 0, 0, 0, 0, 0};
     protected Handler[] semiRealisticAirUpdateHandlers = {null, null, null, null, null, null};
+    protected Handler[] semiRealisticAirLineUpdateHandlers = {null, null, null, null, null, null};
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIdAndSpeedViewGroups;
@@ -1021,16 +1026,29 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                                     && (!mainapp.prefDeviceSounds[whichThrottle].equals("none"))
                                                     && (mainapp.prefDeviceSoundsF1F2ActivateBellHorn)) {
                                                 if (function == 1) {
-                                                    if ((action == 0) && ((!bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()))) {
-                                                    } else {
-                                                        handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_BELL, sounds_type.BELL,
-                                                                (action == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
+                                                    if (action == 0) { // up
+                                                        if (bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()) {
+                                                            handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_BELL, sounds_type.BELL,
+                                                                    MotionEvent.ACTION_UP);
+                                                        } // else do nothing
+                                                    } else { // down
+                                                        if (!bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle].isSelected()) {
+                                                            handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_BELL, sounds_type.BELL,
+                                                                    MotionEvent.ACTION_DOWN);
+                                                        } // else do nothing
                                                     }
+
                                                 } else {
-                                                    if ((action == 0) && ((!bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()))) {
-                                                    } else {
-                                                        handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_HORN, sounds_type.HORN,
-                                                                (action == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_DOWN);
+                                                    if (action == 0) {
+                                                        if (bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()) {
+                                                            handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_HORN, sounds_type.HORN,
+                                                                    MotionEvent.ACTION_UP);
+                                                        } // else do nothing
+                                                    } else { // down
+                                                        if (!bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle].isSelected()) {
+                                                            handleDeviceButtonAction(whichThrottle, sounds_type.BUTTON_HORN, sounds_type.HORN,
+                                                                    MotionEvent.ACTION_DOWN);
+                                                        } // else do nothing
                                                     }
                                                 }
                                             }
@@ -7377,6 +7395,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
 
                 redrawVerticalSliders();
+                redrawSliders();
                 soundsShowHideAllMuteButtons();
                 break;
             }
@@ -8013,6 +8032,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.comm_msg_handler.sendMessage(msg);
     }
 
+
+    // implemented in derived class, but called from this class
+    protected void redrawSliders() {
+
+    }
     private void redrawVerticalSliders() {
         if (vsbSpeeds != null) {
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
