@@ -195,15 +195,15 @@ public class VerticalSeekBar extends SeekBar {
         if (prefTickMarksOnSliders) {
 
             int startSize = 10;
-            float endSize = width/2 - 30;
+            float endSize = width/ (float) 2 - 30;
             if (width < 150) {
                 startSize = 2;
-                endSize = width/2 - 15;
+                endSize = width/ (float) 2 - 15;
             } else if ( (endSize) > startSize * 9) {
                 endSize = startSize * 9;
             }
 
-            gridMiddle = width / 2;
+            gridMiddle = width / (float) 2;
 
             if (tickMarkType == tick_type.TICK_0_100) {
                 gridBottom = height - paddingLeft;
@@ -259,7 +259,7 @@ public class VerticalSeekBar extends SeekBar {
             } else {
                 if (width < 150) {
                     startSize = 2;
-                    endSize = width/2 - 15;
+                    endSize = width/ (float) 2 - 15;
                 } else if ( (endSize) > startSize * 6) {
                     endSize = startSize * 6;
                 }

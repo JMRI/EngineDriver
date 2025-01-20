@@ -571,7 +571,7 @@ public class throttle_semi_realistic extends throttle {
             bTargetStops[throttleIndex].setLayoutParams(stopButtonParams);
         }
 
-        int lowerButtonsHeight = findViewById(R.id.loco_buttons_group_0).getHeight();
+//        int lowerButtonsHeight = findViewById(R.id.loco_buttons_group_0).getHeight();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             svFnBtns[throttleIndex].requestLayout();
@@ -1031,8 +1031,8 @@ public class throttle_semi_realistic extends throttle {
                         setBrakeSliderPosition(whichThrottle, 0);
                         setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
                         break;
-                    default:
                     case stop_button_type.THROTTLE_STOP:
+                    default:
                         break;
                 }
 
@@ -1373,7 +1373,7 @@ public class throttle_semi_realistic extends throttle {
 //        Log.d("Engine_Driver",String.format("srmt: X airLine: %.2f airLineAsBrakeStep: %.2f airLineAsBrakePcnt: %.2f brakePcnt: %.2f targetSpeed: %d effectiveBrake: %.2f",
 //        airLine, airLineAsBrakeStep, airLineAsBrakePcnt, brakePcnt, targetSpeed, effectiveBrake));
 
-        double intermediateBrake = 0;
+        double intermediateBrake;
         // brake and/or air
         if (effectiveBrake == 1) { // no brake.  always use the slider speed as the target speed
             targetSpeed = sliderSpeed;
