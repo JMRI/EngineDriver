@@ -6805,8 +6805,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 && mainapp.function_labels[whichThrottle].size() > 0) {
                             function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                         } else { // roster function list is deliberately empty
-                            if (mainapp.consists[whichThrottle].isLeadFromRoster()
-                                    && mainapp.consists[whichThrottle].isLeadServerSuppliedFunctionLabels()) {
+                            if (mainapp.consists[whichThrottle].isLeadFromRoster()) {
+//                            if (mainapp.consists[whichThrottle].isLeadFromRoster()
+//                                    && mainapp.consists[whichThrottle].isLeadServerSuppliedFunctionLabels()) {
                                 function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                             }
                         }

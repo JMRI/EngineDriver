@@ -3,6 +3,7 @@
  * Added parnoid check for permissions that should be automatically granted
  * Significant changes the to the Semi-Realistic Throttle, and in particualer the integration with decoders with assistance from John Geddes
  * Significant re-write of the air brake system in the Semi-Realistic Throttle
+ * Bug fix for DCC-EX roster entries with no functions
 **Version 2.38.188
  * Additional French Translations by Alain Carasso
  * Support DCC-EX remote drop of a loco (FORGET)

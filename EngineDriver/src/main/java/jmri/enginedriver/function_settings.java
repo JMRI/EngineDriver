@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -80,6 +82,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private String originalPrefNumberOfDefaultFunctionLabelsForRoster = "4";
     private Spinner alwaysUseDefaultFunctionLabelsSspinner;
     private Spinner overrideWiThrottlesFunctionLatchingSpinner;
+    private TextView overrideWiThrottlesFunctionLatchingLabel;
 
     SharedPreferences prefs;
 
@@ -169,7 +172,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         overrideWiThrottlesFunctionLatchingSpinner.setOnItemSelectedListener(new OverrideWithrottlesFunctionLatchingSpinnerListener());
 
         findViewById(R.id.fb_override_withrottles_function_latching_label).setEnabled(!mainapp.isDCCEX);
-        overrideWiThrottlesFunctionLatchingSpinner.setEnabled(!mainapp.isDCCEX);
+//        overrideWiThrottlesFunctionLatchingSpinner.setEnabled(!mainapp.isDCCEX);
+        overrideWiThrottlesFunctionLatchingSpinner.setVisibility(mainapp.isDCCEX ? GONE : VISIBLE);
+
+        overrideWiThrottlesFunctionLatchingLabel = findViewById(R.id.fb_override_withrottles_function_latching_label);
+        overrideWiThrottlesFunctionLatchingLabel.setVisibility(mainapp.isDCCEX ? GONE : VISIBLE);
 
         mainapp.set_default_function_labels(true);
         move_settings_to_view();            //copy settings array to view
