@@ -1,3 +1,4 @@
+**Version 2.38.192
 **Version 2.38.190
  * Bug fix for IPLS when linked to the F1 F2 DCC functions
  * Added parnoid check for permissions that should be automatically granted
