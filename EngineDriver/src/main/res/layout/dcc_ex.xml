@@ -394,7 +394,7 @@
             <LinearLayout
                 android:id="@+id/dexc_DccexTrackLinearLayout"
                 android:layout_width="fill_parent"
-                android:layout_height="120sp"
+                android:layout_height="240sp"
                 android:layout_margin="0sp"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
@@ -423,7 +423,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -484,7 +485,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -545,7 +547,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -606,7 +609,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -667,7 +671,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -728,7 +733,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -789,7 +795,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
@@ -850,7 +857,8 @@
                             android:layout_marginTop="0sp"
                             android:background="#00000000"
                             android:orientation="horizontal"
-                            android:paddingBottom="4dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
                             android:weightSum="1">
 
                             <TextView
