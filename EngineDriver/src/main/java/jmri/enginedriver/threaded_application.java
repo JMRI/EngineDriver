@@ -355,6 +355,7 @@ public class threaded_application extends Application {
     public boolean prefAlwaysUseDefaultFunctionLabels = false;
     public String prefConsistFollowRuleStyle = "original";
     public boolean prefOverrideWiThrottlesFunctionLatching = false;
+    public boolean prefOverrideRosterWithNoFunctionLabels = false;
 
     public boolean prefShowTimeOnLogEntry = false;
     public String logSaveFilename = "";

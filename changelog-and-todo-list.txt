@@ -1,10 +1,12 @@
 **Version 2.38.192
+ * Update to Gradle 8.8.0
+ * Additional preference to override the bug fix for roster entries with no functions
 **Version 2.38.190
  * Bug fix for IPLS when linked to the F1 F2 DCC functions
  * Added parnoid check for permissions that should be automatically granted
  * Significant changes the to the Semi-Realistic Throttle, and in particualer the integration with decoders with assistance from John Geddes
  * Significant re-write of the air brake system in the Semi-Realistic Throttle
- * Bug fix for DCC-EX roster entries with no functions
+ * Bug fix for roster entries with no functions. Was previously not possible to have no functions show for a roster entry
  * Increase DCC-EX Track Manager layout size
 **Version 2.38.188
  * Additional French Translations by Alain Carasso

@@ -83,6 +83,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private Spinner alwaysUseDefaultFunctionLabelsSspinner;
     private Spinner overrideWiThrottlesFunctionLatchingSpinner;
     private TextView overrideWiThrottlesFunctionLatchingLabel;
+    private Spinner overrideRosterWithNoFunctionLabelsSpinner;
 
     SharedPreferences prefs;
 
@@ -120,6 +121,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         originalPrefNumberOfDefaultFunctionLabelsForRoster = prefNumberOfDefaultFunctionLabelsForRoster;
         mainapp.prefAlwaysUseDefaultFunctionLabels = prefs.getBoolean("prefAlwaysUseDefaultFunctionLabels", getResources().getBoolean(R.bool.prefAlwaysUseDefaultFunctionLabelsDefaultValue));
         mainapp.prefOverrideWiThrottlesFunctionLatching = prefs.getBoolean("prefOverrideWiThrottlesFunctionLatching", getResources().getBoolean(R.bool.prefOverrideWiThrottlesFunctionLatchingDefaultValue));
+        mainapp.prefOverrideRosterWithNoFunctionLabels = prefs.getBoolean("prefOverrideRosterWithNoFunctionLabels", getResources().getBoolean(R.bool.prefOverrideRosterWithNoFunctionLabelsDefaultValue));
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -170,6 +172,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
         overrideWiThrottlesFunctionLatchingSpinner = findViewById(R.id.fb_override_withrottles_function_latching);
         overrideWiThrottlesFunctionLatchingSpinner.setOnItemSelectedListener(new OverrideWithrottlesFunctionLatchingSpinnerListener());
+        overrideRosterWithNoFunctionLabelsSpinner = findViewById(R.id.fb_override_roster_with_no_function_labels);
+        overrideRosterWithNoFunctionLabelsSpinner.setOnItemSelectedListener(new OverrideRosterWithNoFunctionLabelsSpinnerListener());
 
         findViewById(R.id.fb_override_withrottles_function_latching_label).setEnabled(!mainapp.isDCCEX);
 //        overrideWiThrottlesFunctionLatchingSpinner.setEnabled(!mainapp.isDCCEX);
@@ -363,6 +367,12 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             overrideWiThrottlesFunctionLatchingSpinner.setSelection(1);
         }
 
+        if (mainapp.prefOverrideRosterWithNoFunctionLabels) {
+            overrideRosterWithNoFunctionLabelsSpinner.setSelection(0);
+        } else {
+            overrideRosterWithNoFunctionLabelsSpinner.setSelection(1);
+        }
+
         et.setText(prefNumberOfDefaultFunctionLabels);
         etForRoster.setText(prefNumberOfDefaultFunctionLabelsForRoster);
     }
@@ -470,6 +480,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
             mainapp.prefAlwaysUseDefaultFunctionLabels = false;
             mainapp.prefOverrideWiThrottlesFunctionLatching = false;
+            mainapp.prefOverrideRosterWithNoFunctionLabels = false;
             prefNumberOfDefaultFunctionLabels = threaded_application.MAX_FUNCTIONS_TEXT;
             prefNumberOfDefaultFunctionLabelsForRoster = "4";
             move_settings_to_view();
@@ -543,6 +554,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
         prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", mainapp.prefAlwaysUseDefaultFunctionLabels).commit();
         prefs.edit().putBoolean("prefOverrideWiThrottlesFunctionLatching", mainapp.prefOverrideWiThrottlesFunctionLatching).commit();
+        prefs.edit().putBoolean("prefOverrideRosterWithNoFunctionLabels", mainapp.prefOverrideRosterWithNoFunctionLabels).commit();
     }
 
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
@@ -612,6 +624,29 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
             mainapp.prefOverrideWiThrottlesFunctionLatching = overrideWithrottlesFunctionLatchingSpinnerListenerIndex == 0;
             prefs.edit().putBoolean("prefOverrideWiThrottlesFunctionLatching", mainapp.prefOverrideWiThrottlesFunctionLatching).commit();  //reset the preference
+
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if ((imm != null) && (view != null)) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    }
+
+    public class OverrideRosterWithNoFunctionLabelsSpinnerListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            int overrideRosterWithNoFunctionLabelsSpinnerListenerIndex =  overrideRosterWithNoFunctionLabelsSpinner.getSelectedItemPosition();
+
+            mainapp.prefOverrideRosterWithNoFunctionLabels = overrideRosterWithNoFunctionLabelsSpinnerListenerIndex == 0;
+            prefs.edit().putBoolean("prefOverrideRosterWithNoFunctionLabels", mainapp.prefOverrideRosterWithNoFunctionLabels).commit();  //reset the preference
 
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

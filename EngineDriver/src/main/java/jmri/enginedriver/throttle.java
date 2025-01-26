@@ -1578,6 +1578,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefNumberOfDefaultFunctionLabels = Integer.parseInt(prefs.getString("prefNumberOfDefaultFunctionLabels", getResources().getString(R.string.prefNumberOfDefaultFunctionLabelsDefaultValue)));
 
         mainapp.prefOverrideWiThrottlesFunctionLatching = prefs.getBoolean("prefOverrideWiThrottlesFunctionLatching", getResources().getBoolean(R.bool.prefOverrideWiThrottlesFunctionLatchingDefaultValue));
+        mainapp.prefOverrideRosterWithNoFunctionLabels = prefs.getBoolean("prefOverrideRosterWithNoFunctionLabels", getResources().getBoolean(R.bool.prefOverrideRosterWithNoFunctionLabelsDefaultValue));
 
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 
@@ -6808,7 +6809,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if (mainapp.consists[whichThrottle].isLeadFromRoster()) {
 //                            if (mainapp.consists[whichThrottle].isLeadFromRoster()
 //                                    && mainapp.consists[whichThrottle].isLeadServerSuppliedFunctionLabels()) {
-                                function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
+                                if (!mainapp.prefOverrideRosterWithNoFunctionLabels)
+                                    function_labels_temp = new LinkedHashMap<>(mainapp.function_labels[whichThrottle]);
                             }
                         }
                     } else {
