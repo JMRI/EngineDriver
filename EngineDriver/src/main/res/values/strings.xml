@@ -361,6 +361,8 @@
 
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locs, rather that the defaults provided by WiThrottle</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use Defaults for Roster Entries With No Functions</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Use Engine Driver\'s default Functions for roster entries with no function labels</string>
 
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Use smaller buttons for the Loco Number, Speed and Direction buttons</string>

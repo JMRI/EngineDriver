@@ -417,6 +417,15 @@
                     android:title="@string/prefOverrideWiThrottlesFunctionLatchingTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <CheckBoxPreference
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:defaultValue="@bool/prefOverrideRosterWithNoFunctionLabelsDefaultValue"
+                    android:key="prefOverrideRosterWithNoFunctionLabels"
+                    android:summary="@string/prefOverrideRosterWithNoFunctionLabelsSummary"
+                    android:title="@string/prefOverrideRosterWithNoFunctionLabelsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
                 <EditTextPreference
                     android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
                     android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"

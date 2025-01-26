@@ -46,6 +46,7 @@
     <bool name="prefThrottleViewImmersiveModeHideToolbarDefaultValue">false</bool>
     <bool name="prefAlwaysUseDefaultFunctionLabelsDefaultValue">false</bool>
     <bool name="prefOverrideWiThrottlesFunctionLatchingDefaultValue">false</bool>
+    <bool name="prefOverrideRosterWithNoFunctionLabelsDefaultValue">false</bool>
     <bool name="prefConsistLightsLongClickDefaultValue">false</bool>
 <!--    <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>-->
     <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
