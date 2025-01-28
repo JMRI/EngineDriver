@@ -250,6 +250,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override con blocco della funzione acceleratore</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilizza il blocco predefinito di Engine Driver per le posizioni non del roster, anziché i valori predefiniti forniti da WiThrottle</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Visualizza le etichette delle funzioni predefinite invece delle etichette delle voci dell\'elenco.\nQuesto DEVE essere abilitato per utilizzare gli stili di regola di seguito \'Speciale\'.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Utilizzare le funzioni predefinite del driver del motore per le voci dell\'elenco senza etichette di funzione</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Diminuire altezza numero Locomotiva?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Usare pulsanti minori per Numero locomotiva, velocità e pulsanti di direzione.</string>
     <string name="prefNumOfThrottles">Numero di Controllori</string>
@@ -346,6 +347,7 @@
     <string name="prefEmerStopSummary">Mostrate Pulsante Fermata di Emergenza della locomotiva nella barra di azione?</string>
     <string name="EStop">Estop</string>
     <string name="EmergencyStop">Arresto di emergenza</string>
+    <string name="AirButton">Freni ad aria compressa</string>
     <string name="PowerButtonBar">pulsante_energia</string>
     <string name="prefPowerButtonBarTitle">Mostrare puls. energia plastico?</string>
     <string name="prefPowerButtonBarSummary">Mostrare pulsante energia negli schermi Controllore, Scambi e Rotte?</string>
@@ -743,6 +745,7 @@
     <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
     <string name="infoSaveLogFile">Accesso a: %s</string>
+    <string name="toastDccexInvalidRosterId">ID elenco non valido \'%1$s\'. È probabile che l\'intero elenco di elenchi, scambi e percorsi non venga caricato.</string>
     <string name="RecentsNameEditTitle">Recenti Nome Loco</string>
     <string name="rosterDetailsDialogTitle">Selezionare tra Roster / Consistono Entries </string>
     <string name="toastRecentCleared">Loco rimosso dalla lista</string>
@@ -1090,5 +1093,8 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentuale di carico massima</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
     <string name="airReservoirShort">Linea aerea %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilizza impostazioni predefinite per le voci dell\'elenco senza funzioni</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Interrompi l\'azione del pulsante</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Scegli cosa fa il pulsante Interrompi</string>
 
 </resources>

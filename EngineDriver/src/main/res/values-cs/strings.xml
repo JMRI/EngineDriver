@@ -298,6 +298,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Překonání blokování funkce WiThrottle</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Použijte výchozí blokování ovladače motoru pro lokace bez rozpisu, spíše než výchozí nastavení poskytované WiThrottle</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Zobrazte výchozí popisky funkcí namísto popisků z položek seznamu.\nToto MUSÍ být povoleno, chcete-li používat \'Speciální\' Styly podle pravidel.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Pro položky seznamu bez popisků funkcí použijte výchozí funkce ovladače motoru</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Změnšit výšku lokomotivy č.?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Použít menší tlačítko pro lokomotivu číslo, tlačítka rychlosti a směru.</string>
     <string name="prefNumOfThrottles">Počet ovladačů</string>
@@ -412,6 +413,7 @@
     <string name="prefEmerStopSummary">Zobrazit tlačítko nouzového zastavení lokomotivy v liště akcí?</string>
     <string name="EStop">EStop</string>
     <string name="EmergencyStop">Nouzové zastavení</string>
+    <string name="AirButton">Vzduchové brzdy</string>
     <string name="PowerButtonBar">Tlačítko napájení</string>
     <string name="prefPowerButtonBarTitle">Zobrazit tlačítko napájení kolejiště?</string>
     <string name="prefPowerButtonBarSummary">Zobrazit tlačítk napájení v obrazovce ovladače, výhybek a tras?</string>
@@ -721,6 +723,7 @@
 <!--    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>-->
 
     <string name="infoSaveLogFile">Přihlašování do: %s</string>
+    <string name="toastDccexInvalidRosterId">Neplatné ID seznamu \'%1$s\'. Pravděpodobně se nepodaří načíst celý seznam, výhybky a seznamy tras.</string>
     <string name="RecentsNameEditTitle">Název nedávné lokomotivy</string>
     <string name="RecentsNameEditText">Zadejte název lokomotivy</string>
 
@@ -1239,5 +1242,8 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximální procento zatížení</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Upravte maximální procento posuvníku Load. (100-20000 %) 100 % = samotná lokomotiva</string>
     <string name="airReservoirShort">Rozlišení vzduchu %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Použít výchozí hodnoty pro záznamy seznamu bez funkcí</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Akce tlačítka Stop</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Vyberte, co dělá tlačítko Stop</string>
 
 </resources>

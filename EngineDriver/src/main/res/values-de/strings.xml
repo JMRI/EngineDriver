@@ -247,6 +247,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Überschreiben Sie die Sperrung der WiThrottle-Funktion</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Verwenden Sie die Standardverriegelung von Engine Driver für Nicht-Dienstplanloks und nicht die von WiThrottle bereitgestellten Standardeinstellungen</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Zeigen Sie die standardmäßigen Funktionsbezeichnungen anstelle der Bezeichnungen aus Dienstplaneinträgen an.\nDies MUSS aktiviert sein, um die „Speziellen“ Folgeregelstile zu verwenden.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Verwenden Sie die Standardfunktionen von Engine Driver für Dienstplaneinträge ohne Funktionsbezeichnungen</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Verkleinere Loknummernhöhe?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Verwende kleinere Knöpfe für Loknummer, Geschwindigkeit und Fahrrichtung.</string>
     <string name="prefNumOfThrottles">Anzahl der Fahrregler</string>
@@ -333,6 +334,7 @@
     <string name="prefEmerStopSummary">Zeige Lok Not-Stop Knopf in Aktionszeile?</string>
     <string name="EStop">Not-Stop</string>
     <string name="EmergencyStop">Not-Aus</string>
+    <string name="AirButton">Druckluftbremsen</string>
     <string name="PowerButtonBar">Stromknopf</string>
     <string name="prefPowerButtonBarTitle">Zeige Knopf für Anlagenstrom?</string>
     <string name="prefPowerButtonBarSummary">Zeige Knopf für Anlagenstrom in Fahrregler-, Weichen- und Fahrstraßenanzeigen?</string>
@@ -810,6 +812,7 @@
     <string name="RecentConsistsNameEditText">Geben Sie einen Namen für den Consist</string>
     <string name="RecentConsistsNameEditTitle">Aktuelle Consist-Name</string>
     <string name="RecentsNameEditText">Geben Sie einen Namen für die Loco</string>
+    <string name="toastDccexInvalidRosterId">Ungültige Roster-ID \'%1$s\'. Gesamte Dienstplan, Weichen und Routenlisten werden wahrscheinlich nicht geladen.</string>
     <string name="RecentsNameEditTitle">Aktuelle Lokname</string>
     <string name="rosterDetailsDialogTitle">Wählen Sie aus Roster / Consist Einträge </string>
     <string name="toastRecentCleared">Loco entfernt von der Liste</string>
@@ -1142,5 +1145,8 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximaler Lastprozentsatz</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
     <string name="airReservoirShort">Luftwiderstand %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Verwenden Sie Standardeinstellungen für Dienstplaneinträge ohne Funktionen</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Aktion der Stopptaste</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Wählen Sie aus, was die Schaltfläche „Stopp“ bewirken soll</string>
 
 </resources>

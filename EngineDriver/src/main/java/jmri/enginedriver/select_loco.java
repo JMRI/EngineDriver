@@ -1271,6 +1271,8 @@ public class select_loco extends AppCompatActivity {
                     clearRecentListItem(position);
                 }
             } else {  //no swipe
+                if (mainapp.consists==null) return; // attempt to catch NPEs
+
                 locoAddress = importExportPreferences.recentLocoAddressList.get(position);
                 locoAddressSize = importExportPreferences.recentLocoAddressSizeList.get(position);
                 locoSource = importExportPreferences.recentLocoSourceList.get(position);
@@ -1316,6 +1318,8 @@ public class select_loco extends AppCompatActivity {
                     clearRecentConsistsListItem(position);
                 }
             } else {  //no swipe
+                if (mainapp.consists==null) return; // attempt to catch NPEs
+
                 overrideThrottleName = importExportPreferences.consistNameList.get(position);
 
                 for (int i = 0; i < importExportPreferences.consistEngineAddressList.get(position).size(); i++) {

@@ -239,6 +239,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anul·lació del bloqueig de la funció de l\'accelerador</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilitzeu el bloqueig predeterminat del controlador del motor per a blocs que no són de la llista, en lloc dels valors predeterminats proporcionats per WiThrottle</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la llista.\nAixò HA d\'estar activat per utilitzar els estils de regles de seguiment \'Especials\'.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Utilitzeu les funcions predeterminades del controlador del motor per a les entrades de la llista sense etiquetes de funció</string>
     <string name="prefDecreaseLocoNumberHeightTitle">Disminueix l\'Alçada del número de Locomotora?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilitza tecles mes petits per al número de Locomotora, velocitat i tecles de direcció</string>
     <string name="prefNumOfThrottles">Número de Controladors</string>
@@ -324,6 +325,7 @@
     <string name="prefEmerStopSummary">Mostra la tecla d\'aturada d\'emergència de la Locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
     <string name="EmergencyStop">Parada d\'emergència</string>
+    <string name="AirButton">Frens d\'aire</string>
     <string name="PowerButtonBar">Botó de corrent</string>
     <string name="prefPowerButtonBarTitle">Mostra la tecla de corrent de via?</string>
     <string name="prefPowerButtonBarSummary">Mostra la tecla de corrent de via a la pantalla de Controlador, agulles i rutes?</string>
@@ -813,6 +815,7 @@
     <string name="RecentConsistsNameEditTitle">Nom recent de la Tracció Múltiple</string>
     <string name="RecentsNameEditText">Introduïu un nom per a la Locomotora</string>
     <string name="infoSaveLogFile">Inici de sessió a: %s</string>
+    <string name="toastDccexInvalidRosterId">L\'identificador de la llista \'%1$s\' no és vàlid. Probablement no es carregaran les llistes completes de la llista, els desviaments i les rutes.</string>
     <string name="RecentsNameEditTitle">Nom recent de la Locomotora</string>
     <string name="prefLimitSpeedButtonSummary">Opció per mostrar una tecla que limita la velocitat màxima d\'una Locomotora</string>
     <string name="prefLimitSpeedButtonTitle">Mostra la tecla de \'Límit de velocitat\'</string>
@@ -1154,5 +1157,8 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentatge de càrrega màxima</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
     <string name="airReservoirShort">Res a l\'aire %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilitzeu els valors per defecte per a les entrades de la llista sense funcions</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acció del botó Stop</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Trieu què fa el botó Atura</string>
 
 </resources>

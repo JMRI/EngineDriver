@@ -105,4 +105,6 @@
     <string name="roster_list">Select from Roster / Consist (MU) Entries</string>
     <string name="toastRecentConsistCleared">Consist (MU) removed from list</string>
     <!--    <string name="toastSelectConsistsConfirmClear">Confirm that you want remove all the Recent Consists (MUs) by pressing the 'Clear List' button AGAIN.</string>-->
+    <string name="toastDccexInvalidRosterId">Invalid Roster id \'%1$s\'. Entire Roster, Points, Routes lists will likely fail to load.</string>
+
 </resources>

@@ -148,7 +148,7 @@ public class comm_thread extends Thread {
             hm.put("ssid", mainapp.client_ssid);
             hm.put("service_type", event.getInfo().getType().toString());
 
-            String key = ""+ip_address+":"+port;
+            String key = ip_address+":"+port;
             mainapp.knownDCCEXserverIps.put(key, serverType);
 
             Message service_message = Message.obtain();
@@ -255,7 +255,7 @@ public class comm_thread extends Thread {
         hm.put("service_type",(serverType.equals("DCC-EX") ? mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP : mainapp.JMDNS_SERVICE_WITHROTTLE) );
 
 //        mainapp.knownDCCEXserverIps.put(server_addr, serverType);
-        String key = ""+server_addr+":"+entryPort;
+        String key = server_addr+":"+entryPort;
         mainapp.knownDCCEXserverIps.put(key, serverType);
 
         Message service_message = Message.obtain();
@@ -1657,9 +1657,13 @@ public class comm_thread extends Thread {
                     mainapp.dccexRosterLocoFunctions = new String[args.length - 1];
                     mainapp.dccexRosterDetailsReceived = new boolean[args.length - 1];
                     for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        mainapp.dccexRosterIDs[i] = Integer.parseInt(args[i + 1]);
-                        mainapp.dccexRosterDetailsReceived[i] = false;
-                        wifiSend("<JR " + args[i + 1] + ">");
+                        try {
+                            mainapp.dccexRosterIDs[i] = Integer.parseInt(args[i + 1]);
+                            mainapp.dccexRosterDetailsReceived[i] = false;
+                            wifiSend("<JR " + args[i + 1] + ">");
+                        } catch (Exception e) {
+                            threaded_application.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+                        }
                     }
                 }
             } else {  // individual loco

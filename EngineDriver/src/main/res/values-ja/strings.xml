@@ -366,6 +366,7 @@
 
     <string name="power_control_label">コントロールレイアウトの電源設定</string>
     <string name="power_control_not_allowed">電源制御は許可されていません。サーバー上の環境設定/設定の変更。</string>
+    <string name="AirButton">エアブレーキ</string>
     <string name="PowerButtonBar">電源ボタン</string>
     <string name="powerWillNotWork">JMRI では、wiThrottle 電源制御設定がオフになっています。\n電源アイコンを削除します。\nJMRI 設定がオンの場合、再度表示されます。</string>
     <string name="powerWillNotWorkTitle">うまくいきません!</string>
@@ -447,6 +448,7 @@
     <string name="prefDccexSummary">すべての接続に wiThrottle の代わりにネイティブ DCC-EX コマンドを使用します。注: この機能は、エンジン ドライバーを再起動してサーバーに接続するまで有効になりません。</string>
     <string name="prefDccexTitle">ネイティブ DCC-EX コマンドを使用する</string>
     <string name="prefDecreaseLocoNumberHeightSummary">ロコの番号、速度、方向ボタンには小さいボタンを使用します。</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">関数ラベルのない名簿エントリにはエンジン ドライバーのデフォルト関数を使用する</string>
     <string name="prefDecreaseLocoNumberHeightTitle">ロコ番号の高さを減らす？</string>
 
     <string name="prefDefaultAddressLengthSummary">デフォルトのロコアドレス長 (桁数に基づいて自動で設定されます)。</string>
@@ -1159,5 +1161,9 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大負荷パーセンテージ</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
     <string name="airReservoirShort">空気抵抗 %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">機能のない名簿エントリにデフォルトを使用する</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">停止ボタンの動作</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">「停止」ボタンの動作を選択します</string>
+    <string name="toastDccexInvalidRosterId">無効な名簿 ID \'%1$s\'。名簿、投票所、ルートのリスト全体がロードできない可能性があります。</string>
 
 </resources>

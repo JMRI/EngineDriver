@@ -236,6 +236,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anular con el bloqueo de la función del acelerador</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Utilice el bloqueo predeterminado de Engine Driver para ubicaciones que no pertenecen a la lista, en lugar de los valores predeterminados proporcionados por WiThrottle</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Muestra las etiquetas de función predeterminadas en lugar de las etiquetas de las entradas de la lista.\nEsto DEBE estar habilitado para usar los estilos de regla de seguimiento \'especiales\'.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Utilice las funciones predeterminadas de Engine Driver para entradas de lista sin etiquetas de función</string>
     <string name="prefDecreaseLocoNumberHeightTitle">¿Disminuye la altura del número de Locomotora?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utiliza teclas pequeñas para el número de Locomotora, velocidad y teclas de dirección</string>
     <string name="prefNumOfThrottles">Número de Controladores</string>
@@ -321,6 +322,7 @@
     <string name="prefEmerStopSummary">¿Muestra la tecla de parada de emergencia de la Locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
     <string name="EmergencyStop">Parada de emergencia</string>
+    <string name="AirButton">Frenos de aire</string>
     <string name="PowerButtonBar">Tecla de tensión de vía</string>
     <string name="prefPowerButtonBarTitle">¿Muestra la tecla de tensión de vía?</string>
     <string name="prefPowerButtonBarSummary">¿Muestra la tecla de tensión de vía en la pantalla de Ccntrolador, desvíos y rutas?</string>
@@ -808,6 +810,7 @@
     <string name="RecentConsistsNameEditTitle">Nombres recientes de Tracciones Múltiples</string>
     <string name="RecentsNameEditText">Introduzca un nombre para una Locomotora</string>
     <string name="infoSaveLogFile">Iniciando sesión en: %s</string>
+    <string name="toastDccexInvalidRosterId">ID de lista no válido \'%1$s\'. Es probable que no se carguen todas las listas de listas, desvíos y rutas.</string>
     <string name="RecentsNameEditTitle">Nombres recientes de Locomotoras</string>
     <string name="rosterDetailsDialogTitle">Detalles de la flota para </string>
     <string name="toastRecentCleared">Locomotora eliminada de la lista</string>
@@ -1140,5 +1143,8 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Porcentaje de carga máxima</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajuste el porcentaje máximo del control deslizante Cargar. (100-20000%) 100% = locomotora sola</string>
     <string name="airReservoirShort">Res. aérea %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Usar valores predeterminados para entradas de lista sin funciones</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acción del botón Detener</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Elija lo que hace el botón Detener</string>
 
 </resources>

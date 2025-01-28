@@ -250,6 +250,7 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Substituir o travamento da função WiThrottle</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use o travamento padrão do Engine Driver para locais não escalados, em vez dos padrões fornecidos pelo WiThrottle</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Exiba os rótulos de função padrão em vez dos rótulos das entradas da lista.\nIsso DEVE ser habilitado para usar os estilos de regras de acompanhamento \'Especial\'.</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Use as funções padrão do Engine Driver para entradas de lista sem rótulos de função</string>
     <string name="prefDecreaseLocoNumberHeightTitle" tools:ignore="Typos">Diminuir altura numero Locomotiva?</string>
     <string name="prefDecreaseLocoNumberHeightSummary">Utilizar botões menores para o Número da locomotiva, velocidade e botões de direção.</string>
     <string name="prefNumOfThrottles">Número de Controladores</string>
@@ -346,6 +347,7 @@
     <string name="prefEmerStopSummary">Mostrar Botão Parada de Emergência da locomotiva na barra de ação?</string>
     <string name="EStop">Estop</string>
     <string name="EmergencyStop">Parada de Emergência</string>
+    <string name="AirButton">Freios a ar</string>
     <string name="PowerButtonBar">botão_energia</string>
     <string name="prefPowerButtonBarTitle">Mostrar botão energia maquete?</string>
     <string name="prefPowerButtonBarSummary">Mostrar botão de energia nas telas Controlador, Desvios e Rotas?</string>
@@ -744,6 +746,7 @@
     <string name="RecentConsistsNameEditTitle">Recentes Consistem Nome</string>
     <string name="RecentsNameEditText">Digite um nome para o Loco</string>
     <string name="infoSaveLogFile">Registrando em: %s</string>
+    <string name="toastDccexInvalidRosterId">ID de lista inválido \'%1$s\'. Listas inteiras de listas, comparecimentos e rotas provavelmente não serão carregadas.</string>
     <string name="RecentsNameEditTitle">Recentes Nome Loco</string>
     <string name="rosterDetailsDialogTitle">Seleccione a partir Roster / Consistem Entradas</string>
     <string name="toastRecentCleared">Loco removido da lista</string>
@@ -1095,4 +1098,7 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Porcentagem máxima de carga</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
     <string name="airReservoirShort">Res. Ar %d%%</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use padrões para entradas de lista sem funções</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">Ação do botão Parar</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">Escolha o que o botão Parar faz</string>
 </resources>

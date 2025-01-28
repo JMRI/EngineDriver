@@ -117,7 +117,7 @@
     <string name="web">Web</string>
 
     <string name="about_page_url">file:///android_asset/about_page.html</string>
-    <string name="blank_page_url">file:///android_asset/blank_page.html</string>
+    <string name="blank_page_url" translatable="false">file:///android_asset/blank_page.html</string>
 <!--
     <string name="feature_not_available_page_url">file:///android_asset/feature_not_available.html</string>
     <string name="web_not_available_page_url">file:///android_asset/web_not_available.html</string>
@@ -978,6 +978,9 @@
 <!--    <string name="toastRecentTurnoutCleared">Turnout removed from list</string>-->
 <!--    <string name="toastRecentTurnoutsConfirmClear">Confirm that you want remove all the Recent Turnouts by pressing the \'Clear List\' button AGAIN.</string>-->
 <!--    <string name="toastTurnoutsRecentsHelp">Long press to remove an entry.</string>-->
+
+    <!--    Toast messages for the DCC-EX -->
+    <string name="toastDccexInvalidRosterId">Invalid Roster id \'%1$s\'. Entire Roster, Turnouts, Routes lists will likely fail to load.</string>
 
     <string name="RecentsNameEditTitle">Recent Loco Name</string>
     <string name="RecentsNameEditText">Enter a name for the Loco</string>
