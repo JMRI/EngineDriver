@@ -76,14 +76,14 @@
         <item tools:ignore="TypographyDashes">Grandes touches - Droite (1)</item>
         <item tools:ignore="TypographyDashes">Vertical - Gauche (1)</item>
         <item tools:ignore="TypographyDashes">Vertical - Droite (1)</item>
-        <item tools:ignore="TypographyDashes">Switching - (2)</item>
+        <item tools:ignore="TypographyDashes">Switching vertical (2)</item>
         <item tools:ignore="TypographyDashes">Switching - Gauche (1)</item>
         <item tools:ignore="TypographyDashes">Switching - Droite (1)</item>
-        <item tools:ignore="TypographyDashes">Switching - horizontale (1-3)</item>
+        <item tools:ignore="TypographyDashes">Switching horizontal (1-3)</item>
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
-        <item >Semi-Realistic Left (1)</item>
+        <item tools:ignore="TypographyDashes">Semi-réaliste - Gauche (1)</item>
     </string-array>
 
     <string-array name="DisplayClockEntries">
@@ -141,10 +141,10 @@
         <item>Klaxon court (IPLS)</item>
         <item>Annonce vitesse actuelle</item>
         <item>Neutre</item>
-        <item>Augmenter le frein</item>
-        <item>Diminuer le frein</item>
+        <item>Augmenter freinage</item>
+        <item>Reduire freinage</item>
         <item>Augmenter la charge</item>
-        <item>Diminuer la charge</item>
+        <item>Reduire la charge</item>
     </string-array>
 
 <!--
@@ -161,7 +161,7 @@
         <item>Fort contraste avec bords</item>
         <item>Thème foncé</item>
         <item>Thème en couleurs</item>
-        <item>Bleu Néon</item>
+        <item>Bleu Electrique</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">
@@ -177,7 +177,7 @@
         <item>Assombri Ecran</item>
         <item>Prochain régulateur -pour touches de volume</item>
         <item>Arret total</item>
-        <item>Arrêt d\'urgence</item>
+        <item>Arret d urgence</item>
     </string-array>
 
     <string-array name="prefTtsWhenEntries">
@@ -192,8 +192,8 @@
         <item>Assombrir l écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
         <item>Changement affichage régulateur</item>
-        <item>Augmenter/diminuer la vitesse des locomotives</item>
-        <item>Prochaine manette des gaz (volume)</item>
+        <item>Augmneter reduire vitesse de la locomotive</item>
+        <item>Prochaine manette (volume)</item>
     </string-array>
 
     <string-array name="prefImportExportEntries">  <!-- display version -->
@@ -226,7 +226,7 @@
         <item>Correspondance exacte du texte - loco de tete toujours active, les autres locos suivent les règles suivantes</item>
         <item>Correspondance complete - Fonctions appliquees a toutes les locos en cas de correspondance exacte des libelles</item>
         <item>Correspondance partielle - Fonctions appliquees a toutes les locos en cas de correspondance partielle des libelles</item>
-        <item>Le partiel spécial contient uniquement - Activé si l\'étiquette de fonction contient l\'étiquette par défaut</item>
+        <item>Si actif, affichage si existant du libellé par defaut de la touche de fonction</item>
     </string-array>
 
     <string-array name="prefConsistFollowEntries">  <!-- display version -->
@@ -291,12 +291,12 @@
         <item>Touche DPAD Action Y</item>
         <item>Touche DPAD Action A</item>
         <item>Touche DPAD Action B</item>
-        <item>Epaulement Gauche</item>
-        <item>Epaulement Droit</item>
-        <item>Gachette Gauche</item>
-        <item>Gachette Droite</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>Bouton non disponible</item>
+        <item>Bouton non disponible</item>
+        <item>Bouton non disponible</item>
+        <item>Bouton non disponible</item>
+        <item>Bouton non disponible</item> //not used
+        <item>Bouton non disponible</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
@@ -316,12 +316,12 @@
         <item>Touche DPAD Action D</item>
         <item>Touche DPAD Action A</item>
         <item>Touche DPAD Action B</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
@@ -341,12 +341,12 @@
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
+        <item>Bouton indisponible</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
@@ -492,12 +492,53 @@
 
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Aucun</item>
-        <item>Arrêt d\'urgence</item>
+        <item>Arret d urgence</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->
         <item>Nom</item>
-        <item>ID</item>
+        <item>Identifiant</item>
         <item>Position</item>
     </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>Pourcentage</item>
+        <item>2 etapes</item>
+        <item>3 etapes</item>
+        <item>4 etapes</item>
+        <item>5 etapes</item>
+        <item>6 etapes</item>
+        <item>7 etapes</item>
+        <item>8 etapes</item>
+        <item>9 etapes</item>
+    </string-array>
+
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>3 niveaux de freinage</item>
+    </string-array>
+
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Vapeur générique (rapide)</item>
+        <item>Vapeur générique (lent)</item>
+        <item>Vapeur (classe 64)</item>
+        <item>Vapeur (classe 94)</item>
+        <item>Diesel (EMD 645 Turbo)</item>
+        <item>Diesel (GE 7FDL)</item>
+        <item>Diesel (EMD NW2)</item>
+    </string-array>
+
+    <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
+        <item>Aucune fonction</item>
+        <item>Arret complet</item>
+        <item>Changement de sens de marche</item>
+    </string-array>
+
+    <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
+        <item>Aucun</item>
+        <item>Zéro et Maximum</item>
+        <item>Zéro et (Maximum + vitesse)</item>
+    </string-array>
+
 </resources>

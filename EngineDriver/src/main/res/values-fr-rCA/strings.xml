@@ -19,10 +19,7 @@
     <string name="about">À propos</string>
     <string name="about_page_url">file:///android_asset/about_page-fr-rCA.html</string>
 
-    <string name="app_description">Engine Driver - Application pour Android. Cette application peut se connecter à un serveur JMRI, DCC-EX, MRC ou DigiTrax WiThrottle, et à son tour contrôler vos locomotives. La vitesse, la direction et jusqu\'à 32 fonctions DCC sont prises en charge pour une ou deux locomotives.</string>
-
     <string name="app_name_about">À propos</string>
-    <string name="app_name_connect">Connexion au Serveur</string>
     <string name="app_name_consist_functions">Paramètres des fonctions d\'unités multiples</string>
     <string name="app_name_ConsistEdit">Édition des unités multipes</string>
     <string name="app_name_ConsistLightsEdit">Phares des unités multiples</string>
@@ -1105,7 +1102,7 @@
     <string name="webViewButtonBar">Touche pour l\'affichage web</string>
 
     <string name="witHeadingCvProgrammerPoM">WiThrottle - Programmation sur voie principale (Mode d\'opération)</string>
-    <string name="witPomMaxValueWarning">La valeur \'%1$s\' excède la valeur maximele supportée (\"%2$s)</string>
+    <string name="witPomMaxValueWarning">La valeur \'%1$s\' excède la valeur maximele supportée (\'%2$s\')</string>
     <string name="witPomWarning">Notes:\n- Ceci ne fonctionnera pas sur certains systèmes DCC.\n- Le changement d\'adresse de la locomotive est empêché - CV 1, 17 &amp; 18 et le bit 5 du CV 29.\n\nUtiliser avec prudence.</string>
 
 
