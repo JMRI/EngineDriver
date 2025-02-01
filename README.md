@@ -15,5 +15,4 @@ for one to six locomotives or consists. You can create and edit consists (softwa
 You can also control layout power, turnouts, routes, and access <a href="http://jmri.org/help/en/html/web/">JMRI web</a> panels and windows.
 
 For more details, visit <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.<br />
-For detailed instructions for usage see the <a href="https://flash62au.github.io/EngineDriver_Home/" target="_blank">Engine Driver Documentation</a><br />
 For screenshots, click <a href="https://enginedriver.mstevetodd.com/screenshots" target="_blank">[here]</a>.
