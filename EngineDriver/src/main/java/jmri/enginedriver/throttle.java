@@ -477,7 +477,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private float externalGamepadxAxis2;
     private float externalGamepadyAxis2;
 
-    protected MediaPlayer _mediaPlayer;
+//    protected MediaPlayer _mediaPlayer;
 
     // Gamepad Button preferences
     private final String[] prefGamePadButtons = {"Next Throttle", "Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
@@ -4132,25 +4132,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     void gamepadBeep(int whichBeep) {
         {
-            if (_mediaPlayer != null) {
-                _mediaPlayer.reset();     // reset stops and release on any state of the player
+            if (mainapp._mediaPlayer != null) {
+                mainapp._mediaPlayer.reset();     // reset stops and release on any state of the player
             }
             switch (whichBeep) {
                 default:
                 case 1:
-                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_1);
+                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_1);
                     break;
                 case 10:
-                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_1a);
+                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_1a);
                     break;
                 case 2:
-                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_2);
+                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_2);
                     break;
                 case 20:
-                    _mediaPlayer = MediaPlayer.create(this, R.raw.beep_2a);
+                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_2a);
                     break;
             }
-            _mediaPlayer.start();
+            mainapp._mediaPlayer.start();
         }
     }
 

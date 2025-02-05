@@ -307,7 +307,7 @@
 
 <!--    <string name="LocoSelectMethodQuestion">Metodo: </string>-->
     <string name="LocoSelectMethodAddress">DCC Indirizzo</string>
-    <string name="LocoSelectMethodRoster">JMRI Elenco</string>
+    <string name="LocoSelectMethodRoster">Elenco</string>
     <string name="LocoSelectMethodRecent">Recenti</string>
 
     <string name="prefMaximumRecentLocosSummary">Massimo di Locomotive Recenti per mostrare nella lista</string>
