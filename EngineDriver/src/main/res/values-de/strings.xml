@@ -636,7 +636,7 @@
     <string name="prefRosterOwnersFilterShowOptionSummary">Zeigen Sie eine Option zum Filtern des Dienstplans nach Besitzer an</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Alle</string>
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
-    <string name="LocoSelectMethodRoster">JMRI Lokverzeichnis</string>
+    <string name="LocoSelectMethodRoster">Lokverzeichnis</string>
     <string name="LocoSelectMethodRecent">Kürzlich verwendete</string>
     <string name="LocoSelectMethodHelp">Gebe die DCC Adresse deiner Lok oben ein und klicke auf \Übernehmen\'.\n\nWähle alternativ eine Lok aus dem JMRI \'Lokverzeichnis\' oder aus deiner Liste \'Kürzlich verwendete\' durch anklicken obiger Knöpfe.</string>
     <string name="toastAddressExceedsMax">Adresse „%1$s“ überschreitet den maximal unterstützten Wert (‚%2$s‘)</string>

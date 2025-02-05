@@ -74,7 +74,7 @@
     <string name="load">Chargement</string>
     <string name="none">Aucun/Aucune</string>
     <string name="fb_helptext">Entrez les noms et les numéros de fonction sur le côté droit de la liste. Les libellés vides servent à masquer les boutons (utilisation des libellés par défaut si les fonctions de la locomotive ne sont pas définies).</string>
-    <string name="copy_function_labels">Copier les libellés à partir du catalogue JMRI (roster)</string>
+    <string name="copy_function_labels">Copier les libellés à partir du catalogue (Roster)</string>
     <string name="fb_header">Editer/Modifier les fonctions</string>
     <string name="consist_help">Choisir une locomotive pour définir son sens de marche en fonction du sens de la locomotive de tête. Un appui long supprime la locomotive de l UM. Faire un retour arrière une fois terminé.</string>
     <string name="about">A propos</string>
@@ -637,7 +637,7 @@
     <string name="prefRosterOwnersFilterShowOptionSummary">Afficher l\'option de filtrer par propriétaires du catalogue</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Tous</string>
     <string name="LocoSelectMethodAddress">Adresse DCC</string>
-    <string name="LocoSelectMethodRoster">Catalogue (roster) JMRI</string>
+    <string name="LocoSelectMethodRoster">Catalogue (roster)</string>
     <string name="LocoSelectMethodRecent">Récent</string>
     <string name="LocoSelectMethodHelp">Entrer l adresse DCC de la locomotive et cliquer sur \'Acquérir\'.
 \nOu la choisir dans le répertoire JMRI,

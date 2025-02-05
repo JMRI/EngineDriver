@@ -45,7 +45,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -230,6 +233,8 @@ public class threaded_application extends Application {
     public final static int DCCEX_MAX_TRACKS = 8;
     public boolean dccexJoined = false;
 
+//    public boolean dccexRosterFullyReceived = false;
+//    public boolean dccexRosterRequested = false;
     public String dccexRosterString = ""; // used to process the roster list
     public int [] dccexRosterIDs;  // used to process the roster list
     public String [] dccexRosterLocoNames;  // used to process the roster list
@@ -243,6 +248,8 @@ public class threaded_application extends Application {
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
     public boolean dccexTurnoutsBeingProcessed = false;
+//    public boolean dccexTurnoutsRequested = false;
+//    public boolean dccexTurnoutsFullyReceived = false;
     public String dccexTurnoutString = ""; // used to process the turnout list
     public int [] dccexTurnoutIDs;  // used to process the turnout list
     public String [] dccexTurnoutNames;  // used to process the turnout list
@@ -250,6 +257,8 @@ public class threaded_application extends Application {
     public boolean [] dccexTurnoutDetailsReceived;  // used to process the turnout list
 
     public boolean dccexRoutesBeingProcessed = false;
+//    public boolean dccexRoutesRequested = false;
+//    public boolean dccexRoutesFullyReceived = false;
     public String dccexRouteString = ""; // used to process the route list
     public int [] dccexRouteIDs;  // used to process the route list
     public String [] dccexRouteNames;  // used to process the route list
@@ -381,6 +390,9 @@ public class threaded_application extends Application {
 //    public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+
+    private ToneGenerator tg;
+    protected MediaPlayer _mediaPlayer;
 
     public SoundPool soundPool;
 
@@ -1076,7 +1088,19 @@ public class threaded_application extends Application {
         mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
         DccexVersion = "";
+
         DCCEXlistsRequested = -1;
+//        dccexRosterRequested = false;
+//        dccexRosterFullyReceived = false;
+
+        dccexTurnoutsBeingProcessed = false;
+//        dccexTurnoutsRequested = false;
+//        dccexTurnoutsFullyReceived = false;
+
+        dccexRoutesBeingProcessed = false;
+//        dccexRoutesRequested = false;
+//        dccexRoutesFullyReceived = false;
+
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
@@ -2071,6 +2095,12 @@ public class threaded_application extends Application {
         return newValue;
     }
 
+    public void playTone(int tone) {
+        if (tg==null) {
+            tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,100);
+        }
+        tg.startTone(tone);
+    }
 
     public void vibrate(int duration) {
         //we need vibrate permissions, otherwise do nothing

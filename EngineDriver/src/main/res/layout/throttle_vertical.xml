@@ -256,6 +256,7 @@
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal"
+                            android:paddingBottom="5dp"
                             android:weightSum="1">
 
                             <LinearLayout
@@ -327,7 +328,7 @@
                                 android:paddingLeft="5dp"
                                 android:paddingRight="0dp"
                                 android:paddingTop="10dp"
-                                android:paddingBottom="10dp">
+                                android:paddingBottom="0dp">
 
                                 <include layout="@layout/part_function_buttons_vertical_one_column_0" />
 
@@ -523,6 +524,7 @@
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal"
+                            android:paddingBottom="5dp"
                             android:weightSum="1">
 
                             <LinearLayout
@@ -533,7 +535,7 @@
                                 android:paddingLeft="0dp"
                                 android:paddingRight="5dp"
                                 android:paddingTop="10dp"
-                                android:paddingBottom="10dp">
+                                android:paddingBottom="0dp">
 
                                 <include layout="@layout/part_function_buttons_vertical_one_column_1" />
 

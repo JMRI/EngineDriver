@@ -626,7 +626,7 @@
     <string name="prefRosterOwnersFilterShowOptionSummary">Mostra una opció per filtrar la llista per propietari</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Tots</string>
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
-    <string name="LocoSelectMethodRoster">JMRI flota</string>
+    <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Recent</string>
     <string name="LocoSelectMethodHelp">Entra adalt l\'adreça DCC de la Locomotora i fes clic en \'Adquereix\'.\n\nAlternativament, pots seleccionar una Locomotora de la  \'Flota\' del JMRI o selecciona entre les Locomotores utilitzades \'Recents\' fent clic en una de les opcions que apareixen adalt</string>
     <string name="toastAddressExceedsMax">L\'adreça %1$s\' supera el màxim admès (\'%2$s\')</string>

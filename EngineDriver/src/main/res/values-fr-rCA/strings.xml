@@ -58,7 +58,7 @@
     <string name="consistLights_help">Cliquer sur une locomotive pour alterner les phares entre \'Off\' et \'Selon la touche de fonction\'.\n\nUn clic prolongé sur une locomotive force l\'état des phares à \'Off\' sans envoyer la commande vers la locomotive (ie: si Engine Driver est confus par exemple).\n\nAppuyer sur la flèche de retour une fois terminé.</string>
 
 
-    <string name="copy_function_labels">Copier les libellés à partir du catalogue (JMRI roster)</string>
+    <string name="copy_function_labels">Copier les libellés à partir du catalogue (Roster)</string>
 
     <string name="cv29AddressSize2bit">Adresse courte: 2 bits (0-127)</string>
     <string name="cv29AddressSize4bit">Adresse longue: 4 bits (1-10239)</string>
@@ -115,7 +115,7 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmer la suppression de toutes les locomotives récemment utilisées</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression de tous les aiguillages récemment utilisés</string>
     <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES les préférences actuelles seront perdues.</string>
-    <string name="dialogDownloadRosterConfirmQuestion">Confirmer le souhait de télécharger tout le catalogue JMRI (Roster) vers la liste des locomotives récemment utilisées</string>
+    <string name="dialogDownloadRosterConfirmQuestion">Confirmer le souhait de télécharger tout le catalogue (Roster) vers la liste des locomotives récemment utilisées</string>
 
 
 
@@ -308,7 +308,7 @@
 
 
     <string name="LocoSelectMethodRecentConsist">Unités multiples récentes</string>
-    <string name="LocoSelectMethodRoster">Catalogue JMRI (Roster)</string>
+    <string name="LocoSelectMethodRoster">Catalogue (Roster)</string>
     <string name="logViewer">Affichage du journal</string>
 
     <string name="logviewerSave">Débuter l\'enregistrement du fichier</string>

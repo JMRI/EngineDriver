@@ -18,9 +18,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.comms;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -192,7 +195,7 @@ public class comm_thread extends Thread {
             }
         } catch (Exception except) {
             Log.e("Engine_Driver", "comm_thread.startJmdns - Error creating withrottle listener: " + except.getMessage());
-            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), Toast.LENGTH_SHORT);
+            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), LENGTH_SHORT);
         }
     }
 
@@ -329,6 +332,8 @@ public class comm_thread extends Thread {
             if (mainapp.DCCEXlistsRequested < 0) { // if we haven't received all the lists go ask for them
                 wifiSend("<s>");
                 sendRequestRoster();
+
+//                // these request are now delayed and sen only when the previous list is complete
                 sendRequestTurnouts();
                 sendRequestRoutes();
                 sendRequestTracks();
@@ -590,22 +595,30 @@ public class comm_thread extends Thread {
         if (mainapp.isDCCEX) { // DCC-EX only
             String msgTxt = "<JR>";
             wifiSend(msgTxt);
+//            mainapp.dccexRosterRequested = true;
+//            mainapp.dccexRosterFullyReceived = false;
 //            Log.d("Engine_Driver", "comm_thread.sendRequestRoster DCC-EX: " + msgTxt);
         }
     }
 
     protected static void sendRequestTurnouts() {
         if (mainapp.isDCCEX) { // DCC-EX only
+            mainapp.dccexTurnoutsBeingProcessed = false;
             String msgTxt = "<JT>";
             wifiSend(msgTxt);
+//            mainapp.dccexTurnoutsRequested = true;
+//            mainapp.dccexTurnoutsFullyReceived = false;
 //            Log.d("Engine_Driver", "comm_thread.sendRequestTurnouts DCC-EX: " + msgTxt);
         }
     }
 
     protected static void sendRequestRoutes() {
         if (mainapp.isDCCEX) { // DCC-EX only
+            mainapp.dccexRoutesBeingProcessed = false;
             String msgTxt = "<JA>";
             wifiSend(msgTxt);
+//            mainapp.dccexRoutesRequested = true;
+//            mainapp.dccexRoutesFullyReceived = false;
 //            Log.d("Engine_Driver", "comm_thread.sendRequestRoutes DCC-EX: " + msgTxt);
         }
     }
@@ -1076,7 +1089,7 @@ public class comm_thread extends Thread {
 //                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: version already set to " + mainapp.withrottle_version + ", ignoring");
                             }
                         } else {
-                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), Toast.LENGTH_SHORT);
+                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), LENGTH_SHORT);
                             socketWiT.disconnect(false);
                         }
                     } else {
@@ -1090,6 +1103,8 @@ public class comm_thread extends Thread {
                     } else if (responseStr.charAt(1) == 't') { //server description string "HtMy Server Details go here"
                         mainapp.setServerDescription(responseStr.substring(2)); //store the description
                     } else if (responseStr.charAt(1) == 'M') { //alert message sent from server to throttle
+                        mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+                        mainapp.vibrate(new long[]{1000, 500, 1000, 500});
                         threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
                         if ((responseStr.contains("Turnout")) || (responseStr.contains("create not allowed"))) {
@@ -1358,7 +1373,9 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             break;
 
-                        case 'm': //info message sent from server to throttle
+                        case 'm': // alert / info message sent from server to throttle
+                            mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+                            mainapp.vibrate(new long[]{1000, 500, 1000, 500});
                             threaded_application.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
                             break;
                     }
@@ -1636,7 +1653,7 @@ public class comm_thread extends Thread {
                     mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[1]);  //send response to running activities
                 }
             }  else {// else {} did not succeed
-                threaded_application.safeToast(R.string.DCCEXrequestLocoIdFailed, Toast.LENGTH_SHORT);
+                threaded_application.safeToast(R.string.DCCEXrequestLocoIdFailed, LENGTH_SHORT);
             }
 
         } else {
@@ -1699,6 +1716,11 @@ public class comm_thread extends Thread {
                             mainapp.DCCEXlistsRequested++;
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
                             Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
+
+//                            mainapp.dccexRosterFullyReceived = true;
+                            mainapp.safeToastInstructional(R.string.LocoSelectMethodRoster, LENGTH_SHORT);
+//                            // now ask for the Turnouts
+//                            sendRequestTurnouts();
                         }
                     }
 
@@ -1858,6 +1880,11 @@ public class comm_thread extends Thread {
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
                     Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts complete. Count: " + count);
                     mainapp.dccexTurnoutsBeingProcessed = false;
+
+//                    mainapp.dccexTurnoutsFullyReceived = true;
+                    mainapp.safeToastInstructional(R.string.turnouts, LENGTH_SHORT);
+//                    // now ask for the Routes
+//                    sendRequestRoutes();
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
@@ -1952,6 +1979,11 @@ public class comm_thread extends Thread {
                     int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
                     Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes complete. Count: " + count);
                     mainapp.dccexRoutesBeingProcessed = false;
+
+//                    mainapp.dccexRoutesFullyReceived = true;
+                    mainapp.safeToastInstructional(R.string.routes, LENGTH_SHORT);
+//                    //now ask for the Tracks
+//                    sendRequestTracks();
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
@@ -2337,7 +2369,7 @@ public class comm_thread extends Thread {
                     host_address = InetAddress.getByName(mainapp.host_ip);
                 } catch (UnknownHostException except) {
 //                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), Toast.LENGTH_SHORT);
+                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
                     socketOk = false;
                 }
             }
@@ -2372,7 +2404,7 @@ public class comm_thread extends Thread {
                 try {
                     inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 } catch (IOException except) {
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), Toast.LENGTH_SHORT);
+                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), LENGTH_SHORT);
                     socketOk = false;
                 }
             }
@@ -2385,7 +2417,7 @@ public class comm_thread extends Thread {
                         this.start();
                     } catch (IllegalThreadStateException except) {
                         //ignore "already started" errors
-                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), Toast.LENGTH_SHORT);
+                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), LENGTH_SHORT);
                     }
                 }
             }
@@ -2398,7 +2430,7 @@ public class comm_thread extends Thread {
                         socketOk = false;
                     }
                 } catch (IOException e) {
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), Toast.LENGTH_SHORT);
+                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), LENGTH_SHORT);
                     socketOk = false;
                 }
             }
@@ -2420,7 +2452,7 @@ public class comm_thread extends Thread {
                         try {
                             Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
-                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), Toast.LENGTH_SHORT);
+                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), LENGTH_SHORT);
                         }
                     }
                 }

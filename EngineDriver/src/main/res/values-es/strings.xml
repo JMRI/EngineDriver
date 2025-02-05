@@ -618,7 +618,7 @@
     <string name="FilterRosterListHint">Contiene&#8230;</string>
 
     <string name="LocoSelectMethodAddress">Dirección DCC</string>
-    <string name="LocoSelectMethodRoster">JMRI flota</string>
+    <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Reciente</string>
     <string name="LocoSelectMethodHelp">Ingrese arriba la dirección DCC de su Locomotora y haga clic en \'Adquirir\'.\n\nAlternativamente, seleccione una Locomotora de la \'Flota\' del JMRI o seleccione entre sus Locomotoras usadas \'Recientes\' haciendo clic en uno de las opciones que aparecen arriba</string>
     <string name="toastAddressExceedsMax">La dirección \'%1$s\' excede el máximo admitido (\'%2$s\')</string>
