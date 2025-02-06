@@ -68,6 +68,7 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.requested_received_type;
 import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.heartbeat_interval_type;
 
@@ -332,8 +333,6 @@ public class comm_thread extends Thread {
             if (mainapp.DCCEXlistsRequested < 0) { // if we haven't received all the lists go ask for them
                 wifiSend("<s>");
                 sendRequestRoster();
-
-//                // these request are now delayed and sen only when the previous list is complete
                 sendRequestTurnouts();
                 sendRequestRoutes();
                 sendRequestTracks();
@@ -1719,8 +1718,6 @@ public class comm_thread extends Thread {
 
 //                            mainapp.dccexRosterFullyReceived = true;
                             mainapp.safeToastInstructional(R.string.LocoSelectMethodRoster, LENGTH_SHORT);
-//                            // now ask for the Turnouts
-//                            sendRequestTurnouts();
                         }
                     }
 
@@ -1857,7 +1854,7 @@ public class comm_thread extends Thread {
                         }
                     }
                 }
-                if (ready) {
+                if ((ready) && (!mainapp.dccexTurnoutsFullyReceived) ) {
                     mainapp.dccexTurnoutString = "PTL";
                     if (!noTurnouts) {
                         for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
@@ -1881,10 +1878,8 @@ public class comm_thread extends Thread {
                     Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts complete. Count: " + count);
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
-//                    mainapp.dccexTurnoutsFullyReceived = true;
+                    mainapp.dccexTurnoutsFullyReceived = true;
                     mainapp.safeToastInstructional(R.string.turnouts, LENGTH_SHORT);
-//                    // now ask for the Routes
-//                    sendRequestRoutes();
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
@@ -1982,8 +1977,6 @@ public class comm_thread extends Thread {
 
 //                    mainapp.dccexRoutesFullyReceived = true;
                     mainapp.safeToastInstructional(R.string.routes, LENGTH_SHORT);
-//                    //now ask for the Tracks
-//                    sendRequestTracks();
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty

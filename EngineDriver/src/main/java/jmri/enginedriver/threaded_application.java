@@ -249,7 +249,7 @@ public class threaded_application extends Application {
 
     public boolean dccexTurnoutsBeingProcessed = false;
 //    public boolean dccexTurnoutsRequested = false;
-//    public boolean dccexTurnoutsFullyReceived = false;
+    public boolean dccexTurnoutsFullyReceived = false;
     public String dccexTurnoutString = ""; // used to process the turnout list
     public int [] dccexTurnoutIDs;  // used to process the turnout list
     public String [] dccexTurnoutNames;  // used to process the turnout list
@@ -1095,7 +1095,7 @@ public class threaded_application extends Application {
 
         dccexTurnoutsBeingProcessed = false;
 //        dccexTurnoutsRequested = false;
-//        dccexTurnoutsFullyReceived = false;
+        dccexTurnoutsFullyReceived = false;
 
         dccexRoutesBeingProcessed = false;
 //        dccexRoutesRequested = false;
