@@ -8,6 +8,7 @@
  * fix bug where the bottom of the last function was chopped off in the scroll region
  * play a tone and vibrate when a system alert/message is received.
  * fix bug where DCC-EX Routes and Turnouts may not load if ED is not removed from memory by Android
+ * attempt to address anomaly where JMRI sends the DCC-EX turnouts/points before they are actually requested
 **Version 2.38.190
  * Bug fix for IPLS when linked to the F1 F2 DCC functions
  * Added parnoid check for permissions that should be automatically granted
