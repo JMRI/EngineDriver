@@ -1398,7 +1398,7 @@ public class threaded_application extends Application {
         boolean rslt = false;
         if (web_server_port > 0) {
             rslt = true;
-        } else if (defaultWebViewURL.toLowerCase().startsWith("http")) {
+        } else if (defaultWebViewURL != null && defaultWebViewURL.toLowerCase().startsWith("http")) {
             rslt = true;
         }
         return rslt;
