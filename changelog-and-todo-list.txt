@@ -1,6 +1,7 @@
 **Version 2.38.192
  * Update to Gradle 8.8.0
  * Additional preference to override the bug fix for roster entries with no functions
+ * Avoid a few crashes reported to Play Store
  * avoid crash when DCC-EX roster entry is invalid
  * avoid NPEs when selcting from recent locos and recent consists
  * Additional French Translations by Alain Carasso

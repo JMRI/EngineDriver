@@ -474,7 +474,7 @@ public class comm_thread extends Thread {
 
         } else { //  DCC-EX   no equivalent to a "Q" so just drop all the locos to be tidy
             Consist con;
-            if (mainapp.consists.length > 0) {
+            if (mainapp.consists != null && mainapp.consists.length > 0) {
                 for (int i = 0; i < mainapp.consists.length; i++) {
                     con = mainapp.consists[i];
                     for (Consist.ConLoco l : con.getLocos()) {
@@ -521,8 +521,9 @@ public class comm_thread extends Thread {
                 }
             } else {   // no roster entry. go look at the DCC-EX/consist defaults
                 isLatching = mainapp.function_consist_latching.get(fn);
-                if (isLatching == null) isLatching = LATCHING_DEFAULT;
             }
+
+            if (isLatching == null) isLatching = LATCHING_DEFAULT;
 
             if (!force) {
                 if ((isLatching.equals(LATCHING_DEFAULT)) || (isLatching.equals(LATCHING_DEFAULT_ENGLISH))) {
@@ -1556,7 +1557,11 @@ public class comm_thread extends Thread {
         String responseStr;
 
         int dir = 0;
-        int speed = Integer.parseInt(args[3]);
+        int speed = 0;
+        try {
+            speed = Integer.parseInt(args[3]);
+        } catch (NumberFormatException ignore) {}
+
         if (speed >= 128) {
             speed = speed - 128;
             dir = 1;
