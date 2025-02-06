@@ -68,7 +68,6 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
-import jmri.enginedriver.type.requested_received_type;
 import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.heartbeat_interval_type;
 
