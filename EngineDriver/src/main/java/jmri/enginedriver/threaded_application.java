@@ -234,7 +234,7 @@ public class threaded_application extends Application {
     public boolean dccexJoined = false;
 
 //    public boolean dccexRosterFullyReceived = false;
-//    public boolean dccexRosterRequested = false;
+    public boolean dccexRosterRequested = false;
     public String dccexRosterString = ""; // used to process the roster list
     public int [] dccexRosterIDs;  // used to process the roster list
     public String [] dccexRosterLocoNames;  // used to process the roster list
@@ -248,7 +248,7 @@ public class threaded_application extends Application {
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
     public boolean dccexTurnoutsBeingProcessed = false;
-//    public boolean dccexTurnoutsRequested = false;
+    public boolean dccexTurnoutsRequested = false;
     public boolean dccexTurnoutsFullyReceived = false;
     public String dccexTurnoutString = ""; // used to process the turnout list
     public int [] dccexTurnoutIDs;  // used to process the turnout list
@@ -1090,11 +1090,11 @@ public class threaded_application extends Application {
         DccexVersion = "";
 
         DCCEXlistsRequested = -1;
-//        dccexRosterRequested = false;
+        dccexRosterRequested = false;
 //        dccexRosterFullyReceived = false;
 
         dccexTurnoutsBeingProcessed = false;
-//        dccexTurnoutsRequested = false;
+        dccexTurnoutsRequested = false;
         dccexTurnoutsFullyReceived = false;
 
         dccexRoutesBeingProcessed = false;

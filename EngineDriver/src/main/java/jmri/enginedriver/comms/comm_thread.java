@@ -480,7 +480,9 @@ public class comm_thread extends Thread {
                     }
                 }
             }
-            wifiSend("<U DISCONNECT>");  // this is not a real command.  just a placeholder that will be ignored by the CS
+            if (mainapp.getServerType().equals("IoTT")) {
+                comm_thread.wifiSend("<U DISCONNECT>");  // special command to disconnect IoTT clients
+            }
             shutdown(true);
         }
     }
@@ -591,23 +593,23 @@ public class comm_thread extends Thread {
     }
 
     protected static void sendRequestRoster() {
-        if (mainapp.isDCCEX) { // DCC-EX only
+        if (mainapp.isDCCEX && !mainapp.dccexRosterRequested) { // only once, should not change
+            mainapp.dccexRosterRequested = true;
             String msgTxt = "<JR>";
             wifiSend(msgTxt);
-//            mainapp.dccexRosterRequested = true;
-//            mainapp.dccexRosterFullyReceived = false;
-//            Log.d("Engine_Driver", "comm_thread.sendRequestRoster DCC-EX: " + msgTxt);
+//          mainapp.dccexRosterFullyReceived = false;
+//          Log.d("Engine_Driver", "comm_thread.sendRequestRoster DCC-EX: " + msgTxt);
         }
     }
 
     protected static void sendRequestTurnouts() {
-        if (mainapp.isDCCEX) { // DCC-EX only
+        if (mainapp.isDCCEX && !mainapp.dccexTurnoutsRequested) { // only once, should not change
+            mainapp.dccexTurnoutsRequested = true;
             mainapp.dccexTurnoutsBeingProcessed = false;
             String msgTxt = "<JT>";
             wifiSend(msgTxt);
-//            mainapp.dccexTurnoutsRequested = true;
-//            mainapp.dccexTurnoutsFullyReceived = false;
-//            Log.d("Engine_Driver", "comm_thread.sendRequestTurnouts DCC-EX: " + msgTxt);
+//          mainapp.dccexTurnoutsFullyReceived = false;
+//          Log.d("Engine_Driver", "comm_thread.sendRequestTurnouts DCC-EX: " + msgTxt);
         }
     }
 
@@ -1290,8 +1292,13 @@ public class comm_thread extends Thread {
                             }
 
                             mainapp.withrottle_version = 4.0;  // fudge it
+                            String serverDesc = responseStr.substring(2, responseStr.length() - 1);
                             mainapp.setServerType("DCC-EX");
-                            mainapp.setServerDescription(responseStr.substring(2, responseStr.length() - 1)); //store the description
+                            mainapp.setServerDescription(serverDesc); //store the description
+                            Pattern p = Pattern.compile(".*IoTT WiThServer.*");
+                            if (p.matcher(serverDesc).matches()) { //identify IoTT Server
+                                mainapp.setServerType("IoTT");
+                            }
 
                             skipAlert = true;
                             mainapp.heartbeatInterval = 20000; // force a heartbeat period
@@ -2538,6 +2545,7 @@ public class comm_thread extends Thread {
                         Log.d("Engine_Driver", "comm_thread.send(): WiT reconnection successful.");
                         clearInboundTimeout();
                         heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
+                        mainapp.DCCEXlistsRequested = -1; //invalidate the lists
                     }
                 } catch (Exception e) {
                     Log.d("Engine_Driver", "comm_thread.send(): WiT xmtr error.");
@@ -2551,7 +2559,7 @@ public class comm_thread extends Thread {
         }
 
         // Attempt to determine if the socket connection is still good.
-        // unfortunatley isConnected returns true if the Socket was disconnected other than by calling close()
+        // unfortunately isConnected returns true if the Socket was disconnected other than by calling close()
         // so on signal loss it still returns true.
         // Eventually we just try to send and handle the IOException if the socket was disconnected.
         boolean SocketCheck() {

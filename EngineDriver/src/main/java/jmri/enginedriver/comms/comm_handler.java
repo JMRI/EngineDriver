@@ -235,8 +235,8 @@ public class comm_handler extends Handler {
                if (!mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
                   commThread.shutdown(false);
                }
-               if (mainapp.isDCCEX) {
-                  comm_thread.wifiSend("<U DISCONNECT>");  // this is not a real command.  just a placeholder that will be ignored by the CS
+               if (mainapp.getServerType().equals("IoTT")) {
+                  comm_thread.wifiSend("<U DISCONNECT>");  // special command to disconnect IoTT clients
                }
             }
 
