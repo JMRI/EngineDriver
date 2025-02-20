@@ -1,10 +1,12 @@
 **Version 2.39.194
+ * send additional resync requests after EX reconnect
+ * identify serverType IoTT and send <U DISCONNECT>
 **Version 2.38.192
  * Update to Gradle 8.8.0
  * Additional preference to override the bug fix for roster entries with no functions
  * Avoid a few crashes reported to Play Store
  * avoid crash when DCC-EX roster entry is invalid
- * avoid NPEs when selcting from recent locos and recent consists
+ * avoid NPEs when selecting from recent locos and recent consists
  * Additional French Translations by Alain Carasso
  * fix bug where the bottom of the last function was chopped off in the scroll region
  * play a tone and vibrate when a system alert/message is received.
@@ -12,8 +14,8 @@
  * attempt to address anomaly where JMRI sends the DCC-EX turnouts/points before they are actually requested
 **Version 2.38.190
  * Bug fix for IPLS when linked to the F1 F2 DCC functions
- * Added parnoid check for permissions that should be automatically granted
- * Significant changes the to the Semi-Realistic Throttle, and in particualer the integration with decoders with assistance from John Geddes
+ * Added paranoid check for permissions that should be automatically granted
+ * Significant changes the to the Semi-Realistic Throttle, and in particular the integration with decoders with assistance from John Geddes
  * Significant re-write of the air brake system in the Semi-Realistic Throttle
  * Bug fix for roster entries with no functions. Was previously not possible to have no functions show for a roster entry
  * Increase DCC-EX Track Manager layout size
