@@ -84,7 +84,7 @@ public class throttle_simple extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
                     break;
                 case 1:
@@ -93,7 +93,7 @@ public class throttle_simple extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_1);
                     break;
                 case 2:
@@ -102,7 +102,7 @@ public class throttle_simple extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_2);
                     break;
                 case 3:
@@ -111,7 +111,7 @@ public class throttle_simple extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_3);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_3);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_3);
                     break;
                 case 4:
@@ -120,7 +120,7 @@ public class throttle_simple extends throttle {
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_4);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_4);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_4);
                     break;
                 case 5:
@@ -128,7 +128,7 @@ public class throttle_simple extends throttle {
                     Separators[throttleIndex] = findViewById(R.id.separator5);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_5);
                     break;
@@ -326,7 +326,7 @@ public class throttle_simple extends throttle {
             bStops[throttleIndex].setLayoutParams(stopButtonParams);
 
             if ( (prefSimpleThrottleLayoutShowFunctionButtonCount > 0) && (lLowersHeight > 0) )  {
-                llSetSpeedLayouts[throttleIndex].getLayoutParams().height
+                llSetSpeeds[throttleIndex].getLayoutParams().height
                         = lLowersHeight - (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * functionButtonViewGroupHeight + 20 * denScale);
                 svFnBtns[throttleIndex].getLayoutParams().height = (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * functionButtonViewGroupHeight + 20 * denScale);
             }

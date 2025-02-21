@@ -94,8 +94,10 @@
     <string name="release">Rilasciare</string>
 <!--    <string name="releaseThrottleNumber">Rilasciare Acceleratore %1$s</string>-->
     <string name="releaseThrottleLocos">Rilasciare\n%1$s</string>
+    <string name="roster_available">Elenco - disponibile</string>
     <string name="turnouts">Scambi</string>
 <!--    <string name="turnouts_label">Controllo Scambi</string>-->
+    <string name="turnouts_available">Scambi - Disponibili</string>
     <string name="turnouts_direct_entry_label">Inserire n. Scambio</string>
     <string name="turnouts_location_label">Filtrare per Localizzazione</string>
     <string name="turnouts_list_label">Scambi (cliccare per cambiare direzione)</string>
@@ -103,6 +105,7 @@
     <string name="location_all">TUTTI I LOCALI</string>
     <string name="routes">Rotte</string>
 <!--    <string name="routes_label">Controllo Rotte</string>-->
+    <string name="routes_available">Rotte - Disponibili</string>
     <string name="routes_direct_entry_label">Inserire Nome Rotta di Sistema</string>
     <string name="routes_location_label">Filtrare per Localizzazione</string>
     <string name="routes_list_label">Rotta (cliccare per attivare)</string>

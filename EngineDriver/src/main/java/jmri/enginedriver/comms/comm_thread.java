@@ -1728,7 +1728,7 @@ public class comm_thread extends Thread {
                             Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
 //                            mainapp.dccexRosterFullyReceived = true;
-//                            mainapp.safeToastInstructional(R.string.LocoSelectMethodRoster, LENGTH_SHORT);
+                            mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
                         }
                     }
 
@@ -1890,7 +1890,7 @@ public class comm_thread extends Thread {
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
-//                    mainapp.safeToastInstructional(R.string.turnouts, LENGTH_SHORT);
+                    mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
@@ -1943,6 +1943,7 @@ public class comm_thread extends Thread {
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
                         if (!mainapp.dccexRouteDetailsReceived[i]) {
                             ready = false;
+                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
                             break;
                         }
                     }
@@ -1987,7 +1988,7 @@ public class comm_thread extends Thread {
                     mainapp.dccexRoutesBeingProcessed = false;
 
 //                    mainapp.dccexRoutesFullyReceived = true;
-//                    mainapp.safeToastInstructional(R.string.routes, LENGTH_SHORT);
+                    mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty

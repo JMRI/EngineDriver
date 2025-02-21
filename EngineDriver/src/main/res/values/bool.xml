@@ -76,6 +76,7 @@
 
     <bool name="prefFlashlightButtonDefaultValue">false</bool>
     <bool name="prefThrottleSwitchButtonDefaultValue">false</bool>
+    <bool name="prefThrottleSwitchButtonCycleAllDefaultValue">false</bool>
     <bool name="prefWebViewButtonDefaultValue">false</bool>
 
     <bool name="prefImportServerAutoDefaultValue">true</bool>

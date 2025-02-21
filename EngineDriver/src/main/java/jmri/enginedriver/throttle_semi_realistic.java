@@ -65,7 +65,6 @@ public class throttle_semi_realistic extends throttle {
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
     private LinearLayout[] lLowers;
-    private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
 //    private static final int SLIDER_PURPOSE_THROTTLE = 0;
@@ -273,7 +272,7 @@ public class throttle_semi_realistic extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbSemiRealisticThrottles = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
@@ -286,7 +285,7 @@ public class throttle_semi_realistic extends throttle {
             lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
             lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
             lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-            lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+            llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
 
             SemiRealisticDirectionButtonTouchListener directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_FORWARD, throttleIndex);
             bTargetFwds[throttleIndex].setOnTouchListener(directionButtonTouchListener);
@@ -491,7 +490,7 @@ public class throttle_semi_realistic extends throttle {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
-            lSpeeds[throttleIndex].requestLayout();
+            llSetSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area

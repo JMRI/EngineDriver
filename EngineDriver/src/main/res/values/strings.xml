@@ -134,7 +134,9 @@
     <string name="release">Release</string>
 <!--    <string name="releaseThrottleNumber">Release Throttle %1$s</string>-->
     <string name="releaseThrottleLocos">Release\n%1$s</string>
+    <string name="roster_available">Server Roster - Available</string>
     <string name="turnouts">Turnouts</string>
+    <string name="turnouts_available">Turnouts - Available</string>
 <!--    <string name="turnouts_label">Control Turnouts</string>-->
     <string name="turnouts_direct_entry_label">Enter Turnout # or name</string>
     <string name="turnouts_location_label">Filter by Location</string>
@@ -142,6 +144,7 @@
     <string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
+    <string name="routes_available">Routes - Available</string>
 <!--    <string name="routes_label">Control Routes</string>-->
     <string name="routes_direct_entry_label">Enter Route System Name</string>
     <string name="routes_location_label">Filter by Location</string>
@@ -1302,6 +1305,8 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefThrottleSwitchButtonPreferencesTitle">Layout Switch Button Preferences</string>
     <string name="prefThrottleSwitchButtonTitle">Show Layout Switch button?</string>
     <string name="prefThrottleSwitchButtonSummary">Show the Throttle Layout Switch button in the Throttle Screen action bar to allow quick changing of Throttle Layouts</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Cycle Through All Layouts?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Layout Switch Button will cycle through every Layout, not just the two below</string>
 
     <string name="prefThrottleSwitchOption1Title">First Screen Layout</string>
     <string name="prefThrottleSwitchOption1Summary">Layout Switch Button will switch between this throttle layout and the next preference</string>

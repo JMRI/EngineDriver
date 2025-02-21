@@ -79,13 +79,15 @@
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal"
+                            android:paddingBottom="6dp"
                             android:weightSum="1.0">
 
                             <RelativeLayout
                                 android:id="@+id/loco_cell_0"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
-                                android:layout_marginTop="2dp"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="0dp"
                                 android:layout_weight=".40">
 
                                 <Button
@@ -93,8 +95,10 @@
                                     style="?attr/ed_loco_select_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="0dp"
+                                    android:layout_marginTop="0dp"
                                     android:text="@string/none"
-                                    tools:ignore="RtlHardcoded" />
+                                    tools:ignore="RtlHardcoded,DuplicateSpeakableTextCheck" />
 
                                 <TextView
                                     android:id="@+id/loco_label_0"
@@ -116,6 +120,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:enabled="false"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginBottom="0dp"
                                 android:text="@string/stop"
                                 android:layout_weight=".30" />
 
@@ -147,8 +153,8 @@
                                     android:enabled="false"
                                     android:text="126"
                                     android:textSize="28sp"
-                                    android:paddingRight="6px"
-                                    tools:ignore="RtlHardcoded, HardcodedText" />
+                                    android:paddingRight="6dp"
+                                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/direction_indicator_forward_0"
@@ -206,87 +212,83 @@
 
                         </LinearLayout>
 
-                        <TableLayout
+                        <LinearLayout
                             android:id="@+id/dir_buttons_table_0"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:stretchColumns="0,1,2"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
                             android:visibility="gone">
 
-                            <TableRow
+                            <RelativeLayout
+                                android:id="@+id/direction_left_cell_0"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:baselineAligned="false">
+                                android:layout_height="wrap_content">
 
-                                <RelativeLayout
-                                    android:id="@+id/direction_left_cell_0"
+                                <Button
+                                    android:id="@+id/button_fwd_0"
+                                    style="?attr/ed_large_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/forward"
+                                    tools:ignore="TooDeepLayout" />
+
+                                <TextView
+                                    android:id="@+id/loco_left_direction_indication_0"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_fwd_0"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/stop_cell_0"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/direction_right_cell_0"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Button
+                                    android:id="@+id/button_rev_0"
+                                    style="?attr/ed_large_button_style"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/reverse" />
 
-                                    <Button
-                                        android:id="@+id/button_fwd_0"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/forward"
-                                        tools:ignore="TooDeepLayout" />
+                                <TextView
+                                    android:id="@+id/loco_right_direction_indication_0"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_rev_0"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
 
-                                    <TextView
-                                        android:id="@+id/loco_left_direction_indication_0"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_fwd_0"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/stop_cell_0"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/direction_right_cell_0"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <Button
-                                        android:id="@+id/button_rev_0"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/reverse" />
-
-                                    <TextView
-                                        android:id="@+id/loco_right_direction_indication_0"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_rev_0"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-                            </TableRow>
-                        </TableLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/throttle_0_SetSpeed"
                             android:layout_width="fill_parent"
                             android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            tools:ignore="TextSizeCheck">
 
                             <Button
                                 android:id="@+id/left_speed_button_0"
@@ -295,6 +297,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
@@ -306,9 +310,9 @@
                                 android:maxHeight="80dp"
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
-                                android:thumb="?attr/ed_thumb"
                                 android:progressDrawable="@android:color/transparent"
-                                android:visibility="gone"  />
+                                android:thumb="?attr/ed_thumb"
+                                android:visibility="gone" />
 
                             <jmri.enginedriver.util.HorizontalSeekBar
                                 android:id="@+id/speed_switching_0"
@@ -319,8 +323,8 @@
                                 android:paddingLeft="8dp"
                                 android:paddingRight="8dp"
                                 android:progress="50"
-                                android:thumb="?attr/ed_thumb"
-                                android:progressDrawable="@android:color/transparent" />
+                                android:progressDrawable="@android:color/transparent"
+                                android:thumb="?attr/ed_thumb" />
 
                             <Button
                                 android:id="@+id/right_speed_button_0"
@@ -329,8 +333,11 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/RightButton"
-                                android:textSize="30sp" />
+                                android:textSize="30sp"
+                                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -352,12 +359,6 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/separator"
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:background="#888888"
-                            android:orientation="vertical" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -365,6 +366,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
+                        android:paddingTop="6dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -373,6 +375,7 @@
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal"
+                            android:paddingBottom="6dp"
                             android:weightSum="1.0">
 
                             <RelativeLayout
@@ -386,6 +389,8 @@
                                     style="?attr/ed_loco_select_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="0dp"
+                                    android:layout_marginTop="0dp"
                                     android:text="@string/none"
                                     tools:ignore="RtlHardcoded" />
 
@@ -409,6 +414,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:enabled="false"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/stop"
                                 android:layout_weight=".30"/>
 
@@ -463,8 +470,8 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
-                                    android:paddingRight="6px"
-                                    tools:ignore="RtlHardcoded, HardcodedText" />
+                                    android:paddingRight="6dp"
+                                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_1"
@@ -498,83 +505,75 @@
                             </RelativeLayout>
                         </LinearLayout>
 
-                        <TableLayout
+                        <LinearLayout
                             android:id="@+id/dir_buttons_table_1"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:stretchColumns="0,1,2"
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
                             android:visibility="gone">
 
-                            <TableRow
+                            <RelativeLayout
+                                android:id="@+id/direction_left_cell_1"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:baselineAligned="false">
+                                android:layout_height="wrap_content">
 
-                                <RelativeLayout
-                                    android:id="@+id/direction_left_cell_1"
+                                <Button
+                                    android:id="@+id/button_fwd_1"
+                                    style="?attr/ed_large_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/forward" />
+
+                                <TextView
+                                    android:id="@+id/loco_left_direction_indication_1"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_fwd_1"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/stop_cell_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/direction_right_cell_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Button
+                                    android:id="@+id/button_rev_1"
+                                    style="?attr/ed_large_button_style"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/reverse" />
 
-                                    <Button
-                                        android:id="@+id/button_fwd_1"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/forward" />
+                                <TextView
+                                    android:id="@+id/loco_right_direction_indication_1"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_rev_1"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
 
-                                    <TextView
-                                        android:id="@+id/loco_left_direction_indication_1"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_fwd_1"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/stop_cell_1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/direction_right_cell_1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <Button
-                                        android:id="@+id/button_rev_1"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/reverse" />
-
-                                    <TextView
-                                        android:id="@+id/loco_right_direction_indication_1"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_rev_1"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-
-                            </TableRow>
-
-                        </TableLayout>
-
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/throttle_1_SetSpeed"
@@ -589,6 +588,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
@@ -623,6 +624,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/RightButton"
                                 android:textSize="30sp" />
                         </LinearLayout>
@@ -646,12 +649,6 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/separator2"
-                            android:layout_width="fill_parent"
-                            android:layout_height="2dp"
-                            android:background="#888888"
-                            android:orientation="vertical" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -659,6 +656,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
+                        android:paddingTop="6dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -667,6 +665,7 @@
                             android:layout_height="wrap_content"
                             android:baselineAligned="false"
                             android:orientation="horizontal"
+                            android:paddingBottom="6dp"
                             android:weightSum="1.0">
 
                             <RelativeLayout
@@ -680,6 +679,8 @@
                                     style="?attr/ed_loco_select_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="0dp"
+                                    android:layout_marginTop="0dp"
                                     android:text="@string/none"
                                     tools:ignore="RtlHardcoded" />
 
@@ -703,6 +704,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:enabled="false"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/stop"
                                 android:layout_weight=".30" />
 
@@ -757,8 +760,8 @@
                                     android:enabled="false"
                                     android:text="0"
                                     android:textSize="28sp"
-                                    android:paddingRight="6px"
-                                    tools:ignore="RtlHardcoded, HardcodedText" />
+                                    android:paddingRight="6dp"
+                                    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
                                 <TextView
                                     android:id="@+id/volume_indicator_2"
@@ -773,7 +776,7 @@
                                     android:paddingTop="2dp"
                                     android:text=""
                                     android:textSize="12sp"
-                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                                    tools:ignore="RelativeOverlap,RtlHardcoded,TooManyViews" />
 
                                 <TextView
                                     android:id="@+id/gamepad_indicator_2"
@@ -792,81 +795,76 @@
                             </RelativeLayout>
                         </LinearLayout>
 
-                        <TableLayout
+                        <LinearLayout
                             android:id="@+id/dir_buttons_table_2"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:stretchColumns="0,1,2"
-                            android:visibility="gone">
+                            android:layout_height="0dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            tools:ignore="TooManyViews">
 
-                            <TableRow
+                            <RelativeLayout
+                                android:id="@+id/direction_left_cell_2"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:baselineAligned="false">
+                                android:layout_height="wrap_content">
 
-                                <RelativeLayout
-                                    android:id="@+id/direction_left_cell_2"
+                                <Button
+                                    android:id="@+id/button_fwd_2"
+                                    style="?attr/ed_large_button_style"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/forward" />
+
+                                <TextView
+                                    android:id="@+id/loco_left_direction_indication_2"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_fwd_2"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/stop_cell_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/direction_right_cell_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Button
+                                    android:id="@+id/button_rev_2"
+                                    style="?attr/ed_large_button_style"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                                    android:layout_height="wrap_content"
+                                    android:enabled="false"
+                                    android:text="@string/reverse" />
 
-                                    <Button
-                                        android:id="@+id/button_fwd_2"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/forward" />
+                                <TextView
+                                    android:id="@+id/loco_right_direction_indication_2"
+                                    style="?attr/ed_loco_label_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignRight="@+id/button_rev_2"
+                                    android:paddingLeft="0dp"
+                                    android:paddingRight="6dp"
+                                    android:paddingTop="2dp"
+                                    android:text="@string/none"
+                                    tools:ignore="RtlHardcoded" />
+                            </RelativeLayout>
 
-                                    <TextView
-                                        android:id="@+id/loco_left_direction_indication_2"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_fwd_2"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/stop_cell_2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:id="@+id/direction_right_cell_2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                    <Button
-                                        android:id="@+id/button_rev_2"
-                                        style="?attr/ed_large_button_style"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:enabled="false"
-                                        android:text="@string/reverse" />
-
-                                    <TextView
-                                        android:id="@+id/loco_right_direction_indication_2"
-                                        style="?attr/ed_loco_label_style"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_alignRight="@+id/button_rev_2"
-                                        android:paddingLeft="0dp"
-                                        android:paddingRight="6dp"
-                                        android:paddingTop="2dp"
-                                        android:text="@string/none"
-                                        tools:ignore="RtlHardcoded" />
-                                </RelativeLayout>
-
-                            </TableRow>
-                        </TableLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/throttle_2_SetSpeed"
@@ -881,6 +879,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/LeftButton"
                                 android:textSize="30sp" />
 
@@ -915,6 +915,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.15"
                                 android:padding="0dp"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="0dp"
                                 android:text="@string/RightButton"
                                 android:textSize="30sp" />
                         </LinearLayout>

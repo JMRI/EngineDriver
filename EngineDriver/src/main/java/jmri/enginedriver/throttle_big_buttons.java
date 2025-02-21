@@ -46,7 +46,6 @@ public class throttle_big_buttons extends throttle {
     private LinearLayout[] lThrottles;
 //    private LinearLayout[] lUppers;
 //    private LinearLayout[] lLowers;
-    private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
     protected void removeLoco(int whichThrottle) {
@@ -89,12 +88,12 @@ public class throttle_big_buttons extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
         lThrottles[0] = findViewById(R.id.throttle_0);
-        lSpeeds[0] = findViewById(R.id.throttle_0_SetSpeed);
+        llSetSpeeds[0] = findViewById(R.id.throttle_0_SetSpeed);
         vsbSpeeds[0] = findViewById(R.id.speed_0);
         svFnBtns[0] = findViewById(R.id.function_buttons_scroller_0);
         bPauses[0] = findViewById(R.id.button_pause_0);
@@ -233,8 +232,8 @@ public class throttle_big_buttons extends throttle {
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
-            lSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
-            lSpeeds[throttleIndex].requestLayout();
+            llSetSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
+            llSetSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area

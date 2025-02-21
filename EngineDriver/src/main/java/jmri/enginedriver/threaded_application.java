@@ -2225,6 +2225,60 @@ public class threaded_application extends Application {
         return throttle;
     }
 
+    public String getNextThrottleLayout() {
+        Intent throttle;
+        appIsFinishing = false;
+        String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        switch (prefThrottleScreenType) {
+            case "Simple":
+                prefThrottleScreenType = "Vertical";
+                break;
+            case "Vertical":
+                prefThrottleScreenType = "Vertical Left";
+                break;
+            case "Vertical Left":
+                prefThrottleScreenType = "Vertical Right";
+                break;
+            case "Vertical Right":
+                prefThrottleScreenType = "Tablet Vertical Left";
+                break;
+            case "Tablet Vertical Left":
+                prefThrottleScreenType = "Switching";
+                break;
+            case "Switching":
+                prefThrottleScreenType = "Switching Left";
+                break;
+            case "Switching Left":
+                prefThrottleScreenType = "Switching Right";
+                break;
+            case "Switching Right":
+                prefThrottleScreenType = "Tablet Switching Left";
+                break;
+            case "Tablet Switching Left":
+                prefThrottleScreenType = "Switching Horizontal";
+                break;
+            case "Switching Horizontal":
+                prefThrottleScreenType = "Big Left";
+                break;
+            case "Big Left":
+                prefThrottleScreenType = "Big Right";
+                break;
+            case "Big Right":
+                prefThrottleScreenType = "Semi Realistic Left";
+                break;
+            case "Semi Realistic Left":
+                prefThrottleScreenType = "Default";
+                break;
+            case "Default":
+            default:
+                prefThrottleScreenType = "Simple";
+                break;
+        }
+        return prefThrottleScreenType;
+    }
+
+
+
     public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX) {
         prefSwipeThoughTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
                 getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));

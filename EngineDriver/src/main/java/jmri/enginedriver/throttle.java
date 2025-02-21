@@ -257,7 +257,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected TextView[] tvGamePads;
 
     protected LinearLayout[] llThrottleLayouts; // throttles
-    protected LinearLayout[] llSetSpeedLayouts;
+    protected LinearLayout[] llSetSpeeds;
 
     protected HorizontalSeekBar[] sbSpeeds = {};
     protected VerticalSeekBar[] vsbSpeeds;
@@ -6523,7 +6523,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
         llThrottleLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llSetSpeedLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llLocoIdAndSpeedViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llLocoDirectionButtonViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
@@ -8058,6 +8058,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     protected void switchThrottleScreenType() {
+        boolean prefThrottleSwitchButtonCycleAll = prefs.getBoolean("prefThrottleSwitchButtonCycleAll", getApplicationContext().getResources().getBoolean(R.bool.prefThrottleSwitchButtonCycleAllDefaultValue));
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 
@@ -8065,10 +8066,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             showHideWebView("");
         }
 
-        if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
-            prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
+        if (!prefThrottleSwitchButtonCycleAll) {
+            if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
+                prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
+            } else {
+                prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption1).commit();
+            }
         } else {
-            prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption1).commit();
+            prefs.edit().putString("prefThrottleScreenType", mainapp.getNextThrottleLayout()).commit();
         }
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();

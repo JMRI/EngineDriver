@@ -93,8 +93,10 @@
     <string name="release">Soltar</string>
 <!--    <string name="releaseThrottleNumber">Soltar Acelerador %1$s</string>-->
     <string name="releaseThrottleLocos">Soltar\n%1$s</string>
+    <string name="roster_available">Lista - disponível</string>
     <string name="turnouts">Desvios</string>
 <!--    <string name="turnouts_label">Controle Desvios</string>-->
+    <string name="turnouts_available">Desvios - Disponíveis</string>
     <string name="turnouts_direct_entry_label">Inserir n. Desvio</string>
     <string name="turnouts_location_label">Filtrar por Local</string>
     <string name="turnouts_list_label">Desvios (clicar para alterar direção)</string>
@@ -102,6 +104,7 @@
     <string name="location_all">TODOS OS LOCAIS</string>
     <string name="routes">Rotas</string>
 <!--    <string name="routes_label">Controle Rotas</string>-->
+    <string name="routes_available">Rotas - Disponíveis</string>
     <string name="routes_direct_entry_label">Inserir Nome Rota de Sistema</string>
     <string name="routes_location_label">Filtrar por Local</string>
     <string name="routes_list_label">Rota (clicar para ativar)</string>
