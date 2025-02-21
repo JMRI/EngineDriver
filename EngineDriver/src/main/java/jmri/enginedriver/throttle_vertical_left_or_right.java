@@ -50,7 +50,6 @@ public class throttle_vertical_left_or_right extends throttle {
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
     private LinearLayout[] lLowers;
-    private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
     protected void removeLoco(int whichThrottle) {
@@ -118,7 +117,7 @@ public class throttle_vertical_left_or_right extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -131,7 +130,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_0);
@@ -140,7 +139,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_1);
@@ -149,7 +148,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_2);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_2);
@@ -158,7 +157,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_3);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_3);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_3);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_3);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_3);
@@ -167,7 +166,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_4);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_4);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_4);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_4);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_4);
@@ -176,7 +175,7 @@ public class throttle_vertical_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_5);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_5);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_5);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
                     bPauses[throttleIndex] = findViewById(R.id.button_pause_5);
@@ -319,7 +318,7 @@ public class throttle_vertical_left_or_right extends throttle {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
-            lSpeeds[throttleIndex].requestLayout();
+            llSetSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area

@@ -27,6 +27,7 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,13 +52,17 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceGroup;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -65,6 +70,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -925,6 +931,65 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+
+    @SuppressLint("ApplySharedPref")
+    void setSharedPreferenceValueString(PreferenceScreen prefScreen, String key, String val) {
+        ListPreference prefList = (ListPreference) prefScreen.findPreference(key);
+        prefList.setValue(val);
+        prefs.edit().putString(key, val).commit();
+    }
+
+    void showThrottleNumberPreferenceDialog(PreferenceScreen prefScreen) {
+//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));  // currentValue
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+
+        int index = getThrottleScreenTypeArrayIndex(prefs);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
+
+        if (index < 0) return; //bail if no matches .  should never happen
+        if (fixed[index] == 1 ) return;  // can't be altered
+
+        if (numThrottles > max[index]) numThrottles = max[index]; // probably has not had a chance to refresh yet.
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.num_throttle_dialog);
+        List<String> entryList=new ArrayList<>();
+        List<String> entryValueList=new ArrayList<>();
+        int size = this.getResources().getStringArray(R.array.NumOfThrottlesEntries).length;
+        for (int i=0; i<size && i<max[index]; i++) {
+            entryList.add(this.getResources().getStringArray(R.array.NumOfThrottlesEntries)[i]);
+            entryValueList.add(this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues)[i]);
+        }
+
+        int radioButtonPadding = (int) (40 * getResources().getDisplayMetrics().density);
+        RadioGroup rGroup = dialog.findViewById(R.id.radio_group);
+        for(int i=0;i<size && i<max[index];i++){
+            RadioButton radioButton=new RadioButton(this); // dynamically creating RadioButton and adding to RadioGroup.
+            radioButton.setText(entryList.get(i));
+            radioButton.setPadding(0,radioButtonPadding,0,radioButtonPadding);
+            radioButton.setChecked(i == numThrottles-1);
+            rGroup.addView(radioButton);
+        }
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ApplySharedPref")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int childCount = group.getChildCount();
+                for (int x = 0; x < childCount; x++) {
+                    RadioButton btn = (RadioButton) group.getChildAt(x);
+                    if (btn.getId() == checkedId) {
+                        Log.e("selected RadioButton->",btn.getText().toString());
+                        setSharedPreferenceValueString(prefScreen, "NumThrottle", entryValueList.get(x));
+                    }
+                }
+                dialog.cancel();
+            }
+        });
+        dialog.show();
+    }
+
     boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
         Log.d("Engine_Driver", "Settings: throttleScreenTypeSupportsWebView()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
@@ -1375,9 +1440,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                            && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
                            && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
                               || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
-//                            Toast.makeText(context, R.string.toastDeviceSoundsSimpleLayoutWarning, Toast.LENGTH_LONG).show();
                             threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastDeviceSoundsSimpleLayoutWarning), Toast.LENGTH_LONG);
                         }
+                        parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
+
                     case "NumThrottle":
                         showHideThrottleNumberPreference(sharedPreferences);
                         if (!parentActivity.ignoreThisThrottleNumChange) {

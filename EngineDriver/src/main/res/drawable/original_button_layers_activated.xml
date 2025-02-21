@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:top="0px" android:left="0px"
@@ -59,7 +60,8 @@
     <item android:gravity="bottom"
         android:top="40dp" android:height="7dp"
         android:left="12px" android:right="10px"
-        android:bottom="6px">
+        android:bottom="6px"
+        tools:targetApi="m">
         <shape android:shape="rectangle">
             <corners
                 android:radius="3dp" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
@@ -50,7 +51,8 @@
 
     <item android:gravity="bottom"
         android:top="40dp" android:height="5dp"
-        android:left="34px" android:right="32px"  android:bottom="8px" >
+        android:left="34px" android:right="32px"  android:bottom="8px"
+        tools:targetApi="m">
         <shape android:shape="rectangle">
             <corners
                 android:radius="3dp" />

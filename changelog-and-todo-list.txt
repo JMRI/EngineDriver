@@ -1,4 +1,8 @@
 **Version 2.39.194
+ * Toast message when the Roster, Turnouts/Points & Routes each have finished loading for DCC-EX (can be disabled with the Informational Toast preference)
+ * When you chnage throttle layouts, and the new layout supports a range of throttles, ask for the number.
+ * Linting. Primarily the Horizontal Throttle layouts
+ * Cleanup of the Horizontal Throttle layouts. Fixing some height issues
  * send additional resync requests after EX reconnect
  * identify serverType IoTT and send <U DISCONNECT>
 **Version 2.38.192

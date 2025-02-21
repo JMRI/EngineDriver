@@ -937,7 +937,7 @@
     <string name="sl_recent_engine_notice">Locomotives récemment utilisées sont indisponibles - Aucune carte SD détectée.</string>
     <string name="soundsButtonHornShortDefaultValue">Klaxon bref</string>
 
-    <string name="statusThreadedAppNoResponse" tools:ignore="TypographyEllipsis">Aucune réponse du serveur %1$s:%2$s depuis %3$s secondes.  Vérifier le bon fonctionnement du serveur WiThrottle.  Nouvelle tentative...</string>
+    <string name="statusThreadedAppNoResponse" tools:ignore="TypographyEllipsis">Aucune réponse du serveur %1$s:%2$s depuis %3$dms secondes.  Vérifier le bon fonctionnement du serveur WiThrottle.  Nouvelle tentative...</string>
 
     <string name="statusThreadedAppNotConnected" tools:ignore="TypographyEllipsis">Aucune connexion réseau.  Vérifier les paramètres Wi-Fi.  Nouvelle tentative...</string>
     <string name="statusThreadedAppNotconnectedToWifi">Aucune connexion Wi-Fi</string>
@@ -1083,6 +1083,7 @@
 
 
     <string name="turnouts">Aiguillages</string>
+    <string name="turnouts_available">Aiguillages - Disponible</string>
     <string name="turnouts_direct_entry_label">Inscrire le numéro ou le nom de l\'aiguillage</string>
 
     <string name="turnouts_list_label">Aiguillages (toucher l\'état pour basculer)</string>

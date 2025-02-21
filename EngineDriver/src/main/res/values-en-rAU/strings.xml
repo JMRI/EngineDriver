@@ -19,6 +19,7 @@
 
     <string name="turnouts">Points</string>
 <!--    <string name="turnouts_label">Control Points</string>-->
+    <string name="turnouts_available">Points - Available</string>
     <string name="turnouts_direct_entry_label">Enter Point#</string>
     <string name="turnouts_list_label">Points (click state to toggle)</string>
     <string name="turnouts_turnout">Point</string>
@@ -60,7 +61,7 @@
     <string name="app_name_consist_functions">Consist (MU) Function Settings</string>
     <string name="app_name_ConsistEdit">Consist (MU) Edit</string>
     <string name="app_name_ConsistLightsEdit">Consist (MU) Lights</string>
-    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist (MU). Long press a loco to remove it from the consist (MU). Press Back Arrow or Close when done.</string>
+    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist (MU). Swipe Right on a loco to remove it from the consist (MU). Press Back Arrow or Close when done.</string>
     <string name="consist_list_label">All Locos in Consist (MU)</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists (MUs)</string>
 

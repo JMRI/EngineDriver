@@ -257,7 +257,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected TextView[] tvGamePads;
 
     protected LinearLayout[] llThrottleLayouts; // throttles
-    protected LinearLayout[] llSetSpeedLayouts;
+    protected LinearLayout[] llSetSpeeds;
 
     protected HorizontalSeekBar[] sbSpeeds = {};
     protected VerticalSeekBar[] vsbSpeeds;
@@ -6523,7 +6523,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         tvDirectionIndicatorReverses = new TextView[mainapp.maxThrottlesCurrentScreen];
 
         llThrottleLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llSetSpeedLayouts = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llLocoIdAndSpeedViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llLocoDirectionButtonViewGroups = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 

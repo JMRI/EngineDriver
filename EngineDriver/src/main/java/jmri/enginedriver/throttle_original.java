@@ -140,21 +140,21 @@ public class throttle_original extends throttle {
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     bPauses[throttleIndex] = null;
 
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
                     break;
                 case 1:
                     functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     bPauses[throttleIndex] = null;
 
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
                     break;
                 case 2:
                     functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
                     sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     bPauses[throttleIndex] = null;
 
-                    llSetSpeedLayouts[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
                     break;
             }
             sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
@@ -308,13 +308,13 @@ public class throttle_original extends throttle {
 
             //set height of slider areas
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
-            llSetSpeedLayouts[throttleIndex].setLayoutParams(llLp);
+            llSetSpeeds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
             int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
-            llSetSpeedLayouts[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
+            llSetSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
 
             sbs[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
             if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
@@ -334,7 +334,7 @@ public class throttle_original extends throttle {
 //                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
-                llSetSpeedLayouts[throttleIndex].setVisibility(View.GONE);
+                llSetSpeeds[throttleIndex].setVisibility(View.GONE);
             }
 
             int additionalPadding = (sbs[throttleIndex].getWidth() > 400 ? 40 : 20);
@@ -402,8 +402,8 @@ public class throttle_original extends throttle {
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
-        boolean[] directionButtonsVisible = {false, false, false, false, false, false};
-        boolean[] functionButtonsVisible = {false, false, false, false, false, false};
+//        boolean[] directionButtonsVisible = {false, false, false, false, false, false};
+//        boolean[] functionButtonsVisible = {false, false, false, false, false, false};
 
         double height = getAvailableSceenHeight();
 
@@ -411,8 +411,8 @@ public class throttle_original extends throttle {
 
             if (mainapp.numThrottles == 1) {        // just one throttle
                 throttleHeights[0] = (int) height;
-                directionButtonsVisible[0] = true;
-                functionButtonsVisible[0] = true;
+//                directionButtonsVisible[0] = true;
+//                functionButtonsVisible[0] = true;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
@@ -459,7 +459,7 @@ public class throttle_original extends throttle {
                     int inactiveCount = (throttlesInUseCount <= 1) ? (mainapp.numThrottles - 1)  : (mainapp.numThrottles - 1 - semiActiveCount);
                     semiActiveHeight = llLocoIdAndSpeedViewGroups[0].getHeight()
                             + llLocoDirectionButtonViewGroups[0].getHeight()
-                            + llSetSpeedLayouts[0].getHeight();
+                            + llSetSpeeds[0].getHeight() + 6 * displayMetrics.density;  // 6 is for the padding
                     activeHeight = height - (semiActiveHeight * semiActiveCount) - (inactiveHeight * inactiveCount);
 
                     for (int i = 0; i < mainapp.numThrottles; i++) {

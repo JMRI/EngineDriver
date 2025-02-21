@@ -92,8 +92,10 @@
     <string name="release">Freigeben</string>
 <!--    <string name="releaseThrottleNumber">Fahrregler %1$s freigeben</string>-->
     <string name="releaseThrottleLocos">\n%1$s freigeben</string>
+    <string name="roster_available">Serverliste – Verfügbar</string>
     <string name="turnouts">Weichen</string>
 <!--    <string name="turnouts_label">Weichen steuern</string>-->
+    <string name="turnouts_available">Weichen – Verfügbar</string>
     <string name="turnouts_direct_entry_label">Weichennummer eingeben</string>
     <string name="turnouts_location_label">Filtern nach Ort</string>
     <string name="turnouts_list_label">Weichen (anklicken für Richtungsänderung)</string>
@@ -101,6 +103,7 @@
     <string name="location_all">ALLE ORTE</string>
     <string name="routes">Fahrstraßen</string>
 <!--    <string name="routes_label">Fahrstraßen steuern</string>-->
+    <string name="routes_available">Routen – Verfügbar</string>
     <string name="routes_direct_entry_label">Systemname für Fahrstraße eingeben</string>
     <string name="routes_location_label">Filtern nach Ort</string>
     <string name="routes_list_label">Fahrstraße (anklicken zum Aktivieren)</string>

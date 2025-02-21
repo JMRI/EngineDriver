@@ -90,8 +90,10 @@
     <string name="release">Libera</string>
 <!--    <string name="releaseThrottleNumber">Libera Controlador %1$s</string>-->
     <string name="releaseThrottleLocos">Libera\n %1$s</string>
+    <string name="roster_available">Flota - disponible</string>
     <string name="turnouts">Desvíos</string>
 <!--    <string name="turnouts_label">Control de desvío</string>-->
+    <string name="turnouts_available">Desvíos - Disponibles</string>
     <string name="turnouts_direct_entry_label">Entra desvío#</string>
     <string name="turnouts_location_label">Filtra por localización</string>
     <string name="turnouts_list_label">Desvíos (pulsa para cambiar)</string>
@@ -99,6 +101,7 @@
     <string name="location_all">TODAS LAS LOCALIZACIONES</string>
     <string name="routes">Rutas</string>
 <!--    <string name="routes_label">Control de rutas</string>-->
+    <string name="routes_available">Rutas - Disponibles</string>
     <string name="routes_direct_entry_label">Entra el nombre de la ruta</string>
     <string name="routes_location_label">Filtra por localización</string>
     <string name="routes_list_label">Ruta (pulsa para cambiar)</string>

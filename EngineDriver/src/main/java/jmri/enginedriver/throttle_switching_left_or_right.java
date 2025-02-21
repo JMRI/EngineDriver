@@ -53,7 +53,6 @@ public class throttle_switching_left_or_right extends throttle {
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
     private LinearLayout[] lLowers;
-    private LinearLayout[] lSpeeds;
     private ScrollView[] svFnBtns;
 
     private final int[] throttleMidPointZero = {0,0,0,0,0,0};
@@ -173,7 +172,7 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbSwitchingSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
@@ -187,7 +186,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
@@ -196,7 +195,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_1);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
@@ -205,7 +204,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_2);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_2);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
@@ -214,7 +213,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_3);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_3);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_3);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_3_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_3);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_3);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_3);
@@ -223,7 +222,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_4);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_4);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_4);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_4_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_4);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_4);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_4);
@@ -232,7 +231,7 @@ public class throttle_switching_left_or_right extends throttle {
                     lThrottles[throttleIndex] = findViewById(R.id.throttle_5);
                     lUppers[throttleIndex] = findViewById(R.id.loco_upper_5);
                     lLowers[throttleIndex] = findViewById(R.id.loco_lower_5);
-                    lSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
+                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_5_SetSpeed);
                     vsbSpeeds[throttleIndex] = findViewById(R.id.speed_5);
                     vsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_5);
                     svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_5);
@@ -436,7 +435,7 @@ public class throttle_switching_left_or_right extends throttle {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
-            lSpeeds[throttleIndex].requestLayout();
+            llSetSpeeds[throttleIndex].requestLayout();
         }
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area

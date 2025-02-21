@@ -43,7 +43,7 @@
     <string name="app_name_throttle_short">スロットル</string>
     <string name="app_name_turnouts_short">分岐器</string>
     <string name="app_name_turnouts">分岐器 -エンジンドライバー</string>
-    <string name="app_name_web">ウェブ</string>
+<!--    <string name="app_name_web">ウェブ</string>-->
     <string name="brake">ブレーキ</string>
     <string name="ca_recent_conn_notice">最近の接続は利用できません - SD カードが見つかりません。</string>
     <string name="cancel">キャンセル</string>
@@ -932,6 +932,7 @@
     <string name="rosterEntryImageSelectButtonText">新しい画像</string>
     <string name="rosterEntryImageServerImageHelpText">サーバーには機関車の画像があります。ローカル イメージはサーバー上のイメージによって自動的に上書きされるため、変更することはできません。</string>
     <string name="routes">ルート</string>
+    <string name="routes_available">ルート - 利用可能</string>
     <string name="routes_direct_entry_label">ルート システム名を入力してください</string>
 
     <string name="routes_list_label">ルート (状態をクリックしてアクティブ化します)</string>
@@ -947,7 +948,7 @@
     <string name="sl_recent_engine_notice">最近のロコは利用できません - SD カードが見つかりません。</string>
     <string name="soundsButtonHornShortDefaultValue">ホーンショート</string>
 
-    <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$s 秒間応答がありませんでした。 WiThrottle サーバーが実行されていることを確認します。再試行中</string>
+    <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$dms 秒間応答がありませんでした。 WiThrottle サーバーが実行されていることを確認します。再試行中</string>
 
     <string name="statusThreadedAppNotConnected">ネットワークに接続されていません。 WiFi設定を確認してください。再試行中</string>
     <string name="statusThreadedAppNotconnectedToWifi">WiFiに接続されていません</string>
@@ -1089,7 +1090,9 @@
     <string name="TtsSpeed">スピード</string>
     <string name="TtsTargetSpeed">目標速度</string>
     <string name="TtsVolumeThrottle">スロットル</string>
+    <string name="roster_available">サーバー名簿 - 利用可能</string>
     <string name="turnouts">分岐器</string>
+    <string name="turnouts_available">分岐器 - 利用可能</string>
     <string name="turnouts_direct_entry_label">分岐番号または名前を入力してください</string>
 
     <string name="turnouts_list_label">分岐器（状態をクリックして切り替えます）</string>

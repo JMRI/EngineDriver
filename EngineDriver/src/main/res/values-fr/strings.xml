@@ -90,8 +90,10 @@
     <string name="release">Déselection</string>
 <!--    <string name="releaseThrottleNumber">Déselection Commande %1$s</string>-->
     <string name="releaseThrottleLocos">Déselection\n %1$s</string>
+    <string name="roster_available">Catalogue (Roster) - Disponible</string>
     <string name="turnouts">Aiguilles</string>
 <!--    <string name="turnouts_label">Commande des aiguilles</string>-->
+    <string name="turnouts_available">Aiguilles - Disponible</string>
     <string name="turnouts_direct_entry_label">Entrer le numéro de l aiguille</string>
     <string name="turnouts_location_label">Filtrer par emplacement</string>
     <string name="turnouts_list_label">Aiguille (Cliquer pour changement état)</string>
@@ -99,6 +101,7 @@
     <string name="location_all">TOUS EMPLACEMENTS</string>
     <string name="routes">Itinéraires</string>
 <!--    <string name="routes_label">Controle des itinéraires</string>-->
+    <string name="routes_available">Itinéraires - Disponibles</string>
     <string name="routes_direct_entry_label">Entrer le nom Système de l itinéraire</string>
     <string name="routes_location_label">Filtrer par emplacement</string>
     <string name="routes_list_label">itinéraire (cliquer pour activation)</string>

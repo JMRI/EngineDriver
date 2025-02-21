@@ -93,7 +93,6 @@
     <string name="about">O aplikaci</string>
 
     <string name="about_page_url">file:///android_asset/about_page-cs.html</string>
-    <string name="blank_page_url">file:///android_asset/blank_page-cs.html</string>
 <!--
         <string name="feature_not_available_page_url">file:///android_asset/feature_not_available-cs.html</string>
         <string name="web_not_available_page_url">file:///android_asset/web_not_available-cs.html</string>
@@ -110,8 +109,10 @@
     <string name="release">Propustit</string>
 <!--    <string name="releaseThrottleNumber">Propustit ovladač %1$s</string>-->
     <string name="releaseThrottleLocos">Propustit\n%1$s</string>
+    <string name="roster_available">Evidence serveru – k dispozici</string>
     <string name="turnouts">Výhybky</string>
 <!--    <string name="turnouts_label">Ovládání výhybek</string>-->
+    <string name="turnouts_available">Výhybky - k dispozici</string>
     <string name="turnouts_direct_entry_label">Zadejte číslo výhybky nebo název</string>
     <string name="turnouts_location_label">Filtrovat podle umístění</string>
     <string name="turnouts_list_label">Výhybky (klikem na stav přepnete)</string>
@@ -119,6 +120,7 @@
     <string name="location_all">VŠECHNA UMÍSTĚNÍ</string>
     <string name="routes">Trasy</string>
 <!--    <string name="routes_label">Ovládání tras</string>-->
+    <string name="routes_available">Trasy - k dispozici</string>
     <string name="routes_direct_entry_label">Zadejte systémový název trasy</string>
     <string name="routes_location_label">Filtrovat podle umístění</string>
     <string name="routes_list_label">Trasa (klikem na stav aktivujete)</string>
