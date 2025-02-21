@@ -962,7 +962,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             entryValueList.add(this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues)[i]);
         }
 
-        int radioButtonPadding = (int) (40 * getResources().getDisplayMetrics().density);
+        int radioButtonPadding = (int) (15 * getResources().getDisplayMetrics().density);
         RadioGroup rGroup = dialog.findViewById(R.id.radio_group);
         for(int i=0;i<size && i<max[index];i++){
             RadioButton radioButton=new RadioButton(this); // dynamically creating RadioButton and adding to RadioGroup.
