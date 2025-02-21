@@ -1305,6 +1305,8 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefThrottleSwitchButtonPreferencesTitle">Layout Switch Button Preferences</string>
     <string name="prefThrottleSwitchButtonTitle">Show Layout Switch button?</string>
     <string name="prefThrottleSwitchButtonSummary">Show the Throttle Layout Switch button in the Throttle Screen action bar to allow quick changing of Throttle Layouts</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Cycle Through All Layouts?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Layout Switch Button will cycle through every Layout, not just the two below</string>
 
     <string name="prefThrottleSwitchOption1Title">First Screen Layout</string>
     <string name="prefThrottleSwitchOption1Summary">Layout Switch Button will switch between this throttle layout and the next preference</string>

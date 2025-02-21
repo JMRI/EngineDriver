@@ -52,10 +52,8 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceGroup;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,6 +137,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private int prefDisplaySemiRealisticThrottleNotchesOriginal = 100;
     protected boolean prefBackgroundImage = false;
     boolean prefThrottleSwitchButtonDisplay = false;
+    boolean prefThrottleSwitchButtonCycleAll = false;
     protected boolean prefHideSlider = false;
 
     private String prefConsistFollowRuleStyle = "original";
@@ -1122,10 +1121,17 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 && prefPauseSpeedButton;
         enableDisablePreference(prefScreen, "prefPauseAlternateButton", enable);
     }
+
     private void showHideBackgroundImagePreferences(PreferenceScreen prefScreen) {
         boolean enable = !prefBackgroundImage;
         enableDisablePreference(prefScreen, "prefBackgroundImageFileNameImagePicker", !enable);
         enableDisablePreference(prefScreen, "prefBackgroundImagePosition", !enable);
+    }
+
+    private void showHideprefprefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
+        boolean enable = !prefThrottleSwitchButtonCycleAll;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
     }
 
     private void showHideWebSwipePreferences(PreferenceScreen prefScreen) {
@@ -1809,6 +1815,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
             parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
+            parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
+            parentActivity.showHideprefprefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
             parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
             parentActivity.showHideTTSPreferences(getPreferenceScreen());
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
@@ -2118,6 +2126,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefLeftRightSwipeChangesSpeed":
                         sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
                         showHideLeftRightSwipePreferences();
+                        break;
+                    case "prefThrottleSwitchButtonCycleAll":
+                        parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
+                        parentActivity.showHideprefprefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
                         break;
                 }
             }

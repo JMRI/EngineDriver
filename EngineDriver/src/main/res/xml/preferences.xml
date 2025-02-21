@@ -921,6 +921,13 @@
                     android:summary="@string/prefThrottleSwitchButtonSummary"
                     android:title="@string/prefThrottleSwitchButtonTitle" />
 
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefThrottleSwitchButtonCycleAllDefaultValue"
+                    android:key="prefThrottleSwitchButtonCycleAll"
+                    android:layout="@layout/checkbox_no_icon"
+                    android:summary="@string/prefThrottleSwitchButtonCycleAllSummary"
+                    android:title="@string/prefThrottleSwitchButtonCycleAllTitle" />
+
                 <ListPreference
                     android:defaultValue="@string/prefThrottleSwitchOption1DefaultValue"
                     android:entries="@array/prefThrottleScreenTypeEntries"
