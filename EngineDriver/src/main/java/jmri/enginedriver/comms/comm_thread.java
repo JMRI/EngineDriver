@@ -503,8 +503,8 @@ public class comm_thread extends Thread {
     protected void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean force) {
 
         if (!mainapp.isDCCEX) { // not DCC-EX
-            if (addr.length() == 0) addr = "*";
-            wifiSend(String.format("M%1$dA%2$s<;>F%3$d%4$02d", whichThrottle, addr, fState, fn));
+            if (addr.isEmpty()) addr = "*";
+            wifiSend(String.format("M%1$dA%2$s<;>F%3$d%4$d", whichThrottle, addr, fState, fn));
 
         } else { //DCC-EX
             String msgTxt;
@@ -561,7 +561,7 @@ public class comm_thread extends Thread {
             }
 
             if (newfState >= 0) {
-                if ((addr.length() == 0) || (addr.equals("*"))) { // all on the throttle
+                if ((addr.isEmpty()) || (addr.equals("*"))) { // all on the throttle
                     Consist con = mainapp.consists[whichThrottle];
                     for (Consist.ConLoco l : con.getLocos()) {
                         msgTxt = String.format("<F %s %d %d>", l.getAddress().substring(1), fn, newfState);
@@ -584,8 +584,8 @@ public class comm_thread extends Thread {
     @SuppressLint("DefaultLocale")
     protected void sendForceFunction(int whichThrottle, String addr, int fn, int fState) {
         if (!mainapp.isDCCEX) { // not DCC-EX
-            if (addr.length() == 0) addr = "*";
-            wifiSend(String.format("M%1$dA%2$s<;>f%3$d%4$02d", whichThrottle, addr, fState, fn));
+            if (addr.isEmpty()) addr = "*";
+            wifiSend(String.format("M%1$dA%2$s<;>f%3$d%4$d", whichThrottle, addr, fState, fn));
 
         } else { //DCC-EX
             sendFunction(whichThrottle, addr, fn, fState, true);
@@ -735,7 +735,7 @@ public class comm_thread extends Thread {
                 String whichLoco;
 //                int type = -1;
                 whichLoco = mainapp.getConsist(mainapp.whichThrottleLastTouch).getLeadAddr();
-                if (whichLoco.length()>0) {
+                if (!whichLoco.isEmpty()) {
                     String routeType = "";
                     int routeId = Integer.parseInt(systemName);
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
@@ -811,7 +811,7 @@ public class comm_thread extends Thread {
 
         } else { //DCC-EX
             String msgTxt;
-            if ((addr.length() == 0) || (addr.equals("*"))) { // all on the throttle
+            if ((addr.isEmpty()) || (addr.equals("*"))) { // all on the throttle
                 Consist con = mainapp.consists[whichThrottle];
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
@@ -1749,7 +1749,7 @@ public class comm_thread extends Thread {
                                 mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
                                 responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
                                 for (int i = 0; i < fnArgs.length; i++) {
-                                    if (fnArgs[i].length() == 0) {
+                                    if (fnArgs[i].isEmpty()) {
                                         mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
                                     } else {
                                         if (fnArgs[i].charAt(0) == '*') { // is NOT latching
@@ -1799,7 +1799,7 @@ public class comm_thread extends Thread {
                             StringBuilder responseStrBuilder = new StringBuilder("");
                             responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
                             for (int i = 0; i < fnArgs.length; i++) {
-                                if (fnArgs[i].length() > 0) {
+                                if (!fnArgs[i].isEmpty()) {
                                     responseStrBuilder.append(fnArgs[i]);
                                 }
                                 if (i < fnArgs.length-1) {
@@ -2483,7 +2483,7 @@ public class comm_thread extends Thread {
                 if (socketGood) {        //skip read when the socket is down
                     try {
                         if ((str = inputBR.readLine()) != null) {
-                            if (str.length() > 0) {
+                            if (!str.isEmpty()) {
                                 heart.restartInboundInterval();
                                 clearInboundTimeout();
                                 processWifiResponse(str);
