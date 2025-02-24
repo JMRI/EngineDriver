@@ -6899,7 +6899,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // screen elements
 
     protected void set_labels() {
-         Log.d("Engine_Driver","throttle: set_labels() starting");
+//         Log.d("Engine_Driver","throttle: set_labels() starting");
 
         if (mainapp.appIsFinishing) {
             return;

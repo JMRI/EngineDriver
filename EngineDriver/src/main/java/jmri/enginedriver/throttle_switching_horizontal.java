@@ -236,7 +236,7 @@ public class throttle_switching_horizontal extends throttle {
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
-        Log.d("Engine_Driver","throttle_switching_horizontal: set_labels() starting");
+//        Log.d("Engine_Driver","throttle_switching_horizontal: set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) { return;}

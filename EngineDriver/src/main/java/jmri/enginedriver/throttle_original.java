@@ -182,7 +182,7 @@ public class throttle_original extends throttle {
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
-        Log.d("Engine_Driver", "throttle_original: set_labels() starting");
+//        Log.d("Engine_Driver", "throttle_original: set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) {

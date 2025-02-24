@@ -325,7 +325,7 @@ public class throttle_switching_left_or_right extends throttle {
 
 
     protected void set_labels() {
-        Log.d("Engine_Driver","throttle_switching_left_or_right: set_labels() starting");
+//        Log.d("Engine_Driver","throttle_switching_left_or_right: set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) { return;}
