@@ -3,10 +3,13 @@
  * When you change throttle layouts, and the new layout supports a range of throttles, ask for the number.
  * Linting. Primarily the Horizontal Throttle layouts
  * Cleanup of the Horizontal Throttle layouts. Fixing some height issues
+ * Preference to change the Layout Toggle button to cycle through all layouts
  * send additional resync requests after EX reconnect
- * identify serverType IoTT and send <U DISCONNECT>
- * some linting in comm_thread, disabled set-labels start logging
- * removed leading zero from FKey id when sending
+ * Identify serverType IoTT and send <U DISCONNECT>
+ * Bug fix for Immersive mode. Particularly the button to show/hide the throttle web view.
+ * Some linting in comm_thread, disabled set-labels start logging
+ * Removed leading zero from FKey id when sending
+ * Added option to sequence the loading of items on DCC-EX
 **Version 2.38.192
  * Update to Gradle 8.8.0
  * Additional preference to override the bug fix for roster entries with no functions

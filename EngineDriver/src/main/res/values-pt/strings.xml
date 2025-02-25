@@ -798,6 +798,8 @@
     <string name="prefThrottleSwitchButtonSummary">Mostrar a botão do interruptor do acelerador na tela do acelerador para permitir a rápida mudança de tipos de tela do acelerador.</string>
     <string name="prefThrottleSwitchButtonTitle">Botão do interruptor do acelerador</string>
     <string name="prefThrottleSwitchOption1Summary">Mudar acelerador botão alterna entre este tipo de tela e na próxima preferência.</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Percorrer todos os layouts?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">O botão de troca de layout percorrerá todos os layouts, não apenas os dois abaixo</string>
     <string name="prefThrottleSwitchOption1Title">Acelerador Tipo de interruptor Primeira Tela</string>
     <string name="prefThrottleSwitchOption2Summary">Mudar acelerador botão irá alternar entre o tipo de ecrã na preferência anterior e este.</string>
     <string name="prefThrottleSwitchOption2Title">Acelerador Tipo de interruptor segunda tela</string>
@@ -993,6 +995,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Solicitações de itens sequenciados</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Aguarde até que todos os itens de um tipo (Roster, Turnouts, Routes e Tracks) sejam recuperados antes de solicitar todos os itens do próximo tipo.</string>
     <string name="prefDccexConnectionOptionTitle">Mostrar opção de protocolo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar botão na barra de ação para acessar a tela DCC-EX. (Somente para conexões nativas do DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botão dcc-ex?</string>

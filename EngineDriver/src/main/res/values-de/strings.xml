@@ -864,6 +864,8 @@
     <string name="prefThrottleSwitchButtonSummary">Zeigen Sie den Drosselklappenschalter-Knopf in der Drossel Bildschirm schnell zu ermöglichen, der Drosselklappen Siebtypen ändern.</string>
     <string name="prefThrottleSwitchButtonTitle">Drosselklappenschalter-Knopf</string>
     <string name="prefThrottleSwitchOption1Summary">Drosselklappenschalter-Knopf schaltet zwischen diesem Bildschirmtyp und der nächsten Präferenz.</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Durch alle Layouts blättern?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Mit der Schaltfläche „Layout wechseln“ können Sie durch alle Layouts blättern, nicht nur durch die beiden folgenden</string>
     <string name="prefThrottleSwitchOption1Title">Drosselklappenschalter Erster Bildschirmtyp</string>
     <string name="prefThrottleSwitchOption2Summary">Drosselklappenschalter-Knopf schaltet zwischen dem Bildschirmtyp in der vorherige Präferenz und dieser.</string>
     <string name="prefThrottleSwitchOption2Title">Drosselklappenschalter Zweiten Bildschirmtyp</string>
@@ -1048,6 +1050,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Sequenzierte Artikelanfragen</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Warten Sie, bis alle Elemente eines Typs (Dienstplan, Weichen, Routen und Gleise) abgerufen wurden, bevor Sie nach allen Elementen des nächsten Typs fragen.</string>
     <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
     <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den DCC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>

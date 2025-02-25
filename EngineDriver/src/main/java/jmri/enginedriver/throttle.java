@@ -1321,7 +1321,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ((prefThrottleViewImmersiveMode) || (forceOn)) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 immersiveModeIsOn = true;
-                webView.setSystemUiVisibility(
+                if (webView!=null)
+                    webView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    );
+                View windowView = getWindow().getDecorView();
+                windowView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -1344,7 +1354,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if ((prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set use Immersive mode
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                webView.setSystemUiVisibility(
+                if (webView!=null)
+                    webView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_VISIBLE);
+                View windowView = getWindow().getDecorView();
+                windowView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_VISIBLE);
             }
             screenNameLine.setVisibility(VISIBLE);
@@ -1743,7 +1757,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void reloadWeb() {
-        if (webView == null) return;
+        if ( (webView == null) || (!mainapp.currentScreenSupportsWebView) ) return;
         webView.stopLoading();
         load_webview(); // reload
     }
@@ -1754,7 +1768,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         reloadWeb();
     }
 
-    // used for the swipe up option and the shake, to show or hide the web view at the bottom of the throttle page
+    // used for the swipe up option and the shake, to show or hide the web view on the throttle page
     private void showHideWebView(String toastMsg) {
         if (!(keepWebViewLocation.equals(web_view_location_type.NONE))) { // show/hide the web view if the preference is set
             if (!webViewIsOn) {

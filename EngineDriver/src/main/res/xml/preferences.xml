@@ -2142,6 +2142,13 @@
                     android:title="@string/prefDccexConnectionOptionTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefDccexSequenceItemRequestsDefaultValue"
+                    android:key="prefDccexSequenceItemRequests"
+                    android:summary="@string/prefDccexSequenceItemRequestsSummary"
+                    android:title="@string/prefDccexSequenceItemRequestsTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
             </PreferenceCategory>
 
         </PreferenceScreen>
