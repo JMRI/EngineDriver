@@ -4,10 +4,10 @@
  * Linting. Primarily the Horizontal Throttle layouts
  * Cleanup of the Horizontal Throttle layouts. Fixing some height issues
  * Preference to change the Layout Toggle button to cycle through all layouts
- * send additional resync requests after EX reconnect
+ * send additional resync requests after DCC-EX reconnect
  * Identify serverType IoTT and send <U DISCONNECT>
  * Bug fix for Immersive mode. Particularly the button to show/hide the throttle web view.
- * Some linting in comm_thread, disabled set-labels start logging
+ * Some linting in comm_thread, disabled set_labels start logging
  * Removed leading zero from FKey id when sending
  * Added option to sequence the loading of items on DCC-EX
 **Version 2.38.192
