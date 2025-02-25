@@ -972,6 +972,8 @@
     <string name="prefThrottleSwitchButtonTitle">Tlačíto přepínání rozvržení</string>
     <string name="prefThrottleSwitchButtonSummary">Zobrazit tlačítko přepínání rozvržení ovladače na obrazovce ovladače a umožnit tak rychlou změnu rozvržení ovladače.</string>
 
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Procházet všemi rozvrženími?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Tlačítko Layout Switch bude cyklicky procházet každým rozložením, nejen dvěma níže uvedenými</string>
     <string name="prefThrottleSwitchOption1Title"> Přepínač rozvržení Rozvržení první obrazovky</string>
     <string name="prefThrottleSwitchOption1Summary">Tlačítko přepínání rozvržení přepne mezi tímto rozvržením ovladače a dalším předvoleným.</string>
 
@@ -1143,6 +1145,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Protokol, který chcete použít?\n<small><small>(\'Auto\' hledá \"DCCEX\", \"DCC-EX\" nebo port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Sekvenční požadavky na položky</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Počkejte, než se načtou všechny položky jednoho typu (rozpiska, výhybky, cesty a stopy), než se zeptáte na všechny další typy.</string>
     <string name="prefDccexConnectionOptionTitle">Zobrazit možnost protokolu</string>
     <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku DCC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>

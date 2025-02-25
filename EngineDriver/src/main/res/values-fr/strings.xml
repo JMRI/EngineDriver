@@ -860,6 +860,8 @@
     <string name="prefThrottleSwitchButtonSummary">Affichage du bouton pour changement rapide de l affichage du régulateur</string>
     <string name="prefThrottleSwitchButtonTitle">Bouton changement affichage du régulateur</string>
     <string name="prefThrottleSwitchOption1Summary">Bascule vers l affichage du prochain régulateur préféré</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Parcourez toutes les mises en page ?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Le bouton de commutation de mise en page parcourt chaque mise en page, pas seulement les deux ci-dessous.</string>
     <string name="prefThrottleSwitchOption1Title">Bascule vers le premier type d écran régulateur</string>
     <string name="prefThrottleSwitchOption2Summary">Retour vers l affichage du précédent régulateur préféré</string>
     <string name="prefThrottleSwitchOption2Title">Bascule vers le 2eme type d affichage</string>
@@ -1036,6 +1038,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Protocole a utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Afficher l option pour basculer entre les protocoles WiThrottle ou DCC-EX sur l ecran de connexion.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Demandes d\'articles séquencés</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Attendez que tous les éléments d\'un type (Liste, Aiguillages, Itinéraires et Pistes) soient récupérés avant de demander tous les types suivants.</string>
     <string name="prefDccexConnectionOptionTitle">Afficher les choix de protocoles</string>
     <string name="prefActionBarShowDccExButtonSummary">Afficher le bouton pour acceder a l ecran DCC-EX (uniquement pour connexions natives DCC-EX)</string>
     <string name="prefActionBarShowDccExButtonTitle">Bouton DCC-EX ?</string>

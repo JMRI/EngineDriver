@@ -442,6 +442,8 @@
     <string name="prefConsistLightsLongClickSummary">[Loco Select] ボタンを長押しして、コンシスト内の個々の機関車のライトを変更します。</string>
     <string name="prefConsistLightsLongClickTitle">長押しで編成ライトをコントロール</string>
     <string name="prefDccexConnectionOptionSummary">接続画面で wiThrottle プロトコルと DCC-EX プロトコルを切り替えるオプションを表示します。</string>
+    <string name="prefDccexSequenceItemRequestsTitle">連続したアイテムリクエスト</string>
+    <string name="prefDccexSequenceItemRequestsSummary">あるタイプのアイテム (名簿、投票所、ルート、トラック) がすべて取得されるまで待ってから、次のタイプをすべて要求します。</string>
     <string name="prefDccexConnectionOptionTitle">プロトコルオプションを表示</string>
     <string name="prefDccexPreferencesSummary">EX-CommandStation を使用するためのオプション</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation の設定</string>
@@ -849,6 +851,8 @@
     <string name="prefThrottleSwitchButtonSummary">スロットル画面にスロットルスイッチボタンを表示し、スロットル画面の種類を素早く変更できます。</string>
     <string name="prefThrottleSwitchButtonTitle">スロットルスイッチボタン</string>
     <string name="prefThrottleSwitchOption1Summary">スロットル スイッチ ボタンは、この画面タイプと次の設定を切り替えます。</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">すべてのレイアウトを循環しますか?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">レイアウト切り替えボタンは、以下の 2 つだけでなく、すべてのレイアウトを循環します。</string>
     <string name="prefThrottleSwitchOption1Title">スロットルスイッチファーストスクリーンタイプ</string>
     <string name="prefThrottleSwitchOption2Summary">スロットル スイッチ ボタンは、前の設定の画面タイプと今回の画面タイプを切り替えます。</string>
     <string name="prefThrottleSwitchOption2Title">スロットルスイッチセカンドスクリーンタイプ</string>

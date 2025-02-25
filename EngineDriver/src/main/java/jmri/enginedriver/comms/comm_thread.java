@@ -332,9 +332,12 @@ public class comm_thread extends Thread {
             if (mainapp.DCCEXlistsRequested < 0) { // if we haven't received all the lists go ask for them
                 wifiSend("<s>");
                 sendRequestRoster();
-                sendRequestTurnouts();
-                sendRequestRoutes();
-                sendRequestTracks();
+                if (!prefs.getBoolean("prefDccexSequenceItemRequests", false)) {
+                    sendRequestTurnouts();
+                    sendRequestTurnouts();
+                    sendRequestRoutes();
+                    sendRequestTracks();
+                }
                 mainapp.DCCEXlistsRequested = 0;  // don't ask again
             } else {
                 wifiSend("<#>");
@@ -1675,142 +1678,149 @@ public class comm_thread extends Thread {
     private static boolean processDccexRoster(String [] args) {
         boolean skipAlert = true;
 
-        if ( (args!=null) && (args.length>1)) {
-            if ( (args.length<3) || (args[2].charAt(0) != '"') ) {  // loco list
-                if (mainapp.dccexRosterString.equals("")) {
-                    mainapp.dccexRosterString = "";
-                    mainapp.dccexRosterIDs = new int[args.length - 1];
-                    mainapp.dccexRosterLocoNames = new String[args.length - 1];
-                    mainapp.dccexRosterLocoFunctions = new String[args.length - 1];
-                    mainapp.dccexRosterDetailsReceived = new boolean[args.length - 1];
-                    for (int i = 0; i < args.length - 1; i++) { // first will be blank
-                        try {
-                            mainapp.dccexRosterIDs[i] = Integer.parseInt(args[i + 1]);
-                            mainapp.dccexRosterDetailsReceived[i] = false;
-                            wifiSend("<JR " + args[i + 1] + ">");
-                        } catch (Exception e) {
-                            threaded_application.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+        if (args != null) {
+            if (args.length == 0) { // empty roster
+                if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
+                    sendRequestTurnouts();
+            } else {
+                if ((args.length < 3) || (args[2].charAt(0) != '"')) {  // loco list
+                    if (mainapp.dccexRosterString.equals("")) {
+                        mainapp.dccexRosterString = "";
+                        mainapp.dccexRosterIDs = new int[args.length - 1];
+                        mainapp.dccexRosterLocoNames = new String[args.length - 1];
+                        mainapp.dccexRosterLocoFunctions = new String[args.length - 1];
+                        mainapp.dccexRosterDetailsReceived = new boolean[args.length - 1];
+                        for (int i = 0; i < args.length - 1; i++) { // first will be blank
+                            try {
+                                mainapp.dccexRosterIDs[i] = Integer.parseInt(args[i + 1]);
+                                mainapp.dccexRosterDetailsReceived[i] = false;
+                                wifiSend("<JR " + args[i + 1] + ">");
+                            } catch (Exception e) {
+                                threaded_application.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+                            }
                         }
                     }
-                }
-            } else {  // individual loco
-                if (mainapp.DCCEXlistsRequested < 3) {
-                    if (mainapp.dccexRosterIDs != null) {
-                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
-                            if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
-                                mainapp.dccexRosterLocoNames[i] = args[2].substring(1, args[2].length() - 1);  // stip the quotes
-                                mainapp.dccexRosterLocoFunctions[i] = args[3]; // ignore this
-                                mainapp.dccexRosterDetailsReceived[i] = true;
-                                break;
-                            }
-                        }
-
-                        // check if we have all of them
-                        boolean ready = true;
-                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
-                            if (!mainapp.dccexRosterDetailsReceived[i]) {
-                                ready = false;
-                                break;
-                            }
-                        }
-                        if (ready) {
-                            mainapp.dccexRosterString = "RL" + mainapp.dccexRosterIDs.length;
+                } else {  // individual loco
+                    if (mainapp.DCCEXlistsRequested < 3) {
+                        if (mainapp.dccexRosterIDs != null) {
                             for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
-                                mainapp.dccexRosterString = mainapp.dccexRosterString
-                                        + "]\\[" + mainapp.dccexRosterLocoNames[i]
-                                        + "}|{" + mainapp.dccexRosterIDs[i]
-                                        + "}|{" + (mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L");
+                                if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
+                                    mainapp.dccexRosterLocoNames[i] = args[2].substring(1, args[2].length() - 1);  // stip the quotes
+                                    mainapp.dccexRosterLocoFunctions[i] = args[3]; // ignore this
+                                    mainapp.dccexRosterDetailsReceived[i] = true;
+                                    break;
+                                }
                             }
-                            processRosterList(mainapp.dccexRosterString);
-                            mainapp.dccexRosterString = "";
-                            mainapp.DCCEXlistsRequested++;
-                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
-                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
+
+                            // check if we have all of them
+                            boolean ready = true;
+                            for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                                if (!mainapp.dccexRosterDetailsReceived[i]) {
+                                    ready = false;
+                                    break;
+                                }
+                            }
+                            if (ready) {
+                                mainapp.dccexRosterString = "RL" + mainapp.dccexRosterIDs.length;
+                                for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                                    mainapp.dccexRosterString = mainapp.dccexRosterString
+                                            + "]\\[" + mainapp.dccexRosterLocoNames[i]
+                                            + "}|{" + mainapp.dccexRosterIDs[i]
+                                            + "}|{" + (mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L");
+                                }
+                                processRosterList(mainapp.dccexRosterString);
+                                mainapp.dccexRosterString = "";
+                                mainapp.DCCEXlistsRequested++;
+                                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
+                                Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
 //                            mainapp.dccexRosterFullyReceived = true;
-                            mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
+                                mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
+                                if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
+                                    sendRequestTurnouts();
+                            }
                         }
-                    }
 
-                } else { // this a request for details on a specific loco - not part of the main roster request
+                    } else { // this a request for details on a specific loco - not part of the main roster request
 
-                    String addr_str = args[1];
-                    addr_str = ((Integer.parseInt(args[1]) <= 127) ? "S" : "L") + addr_str;
+                        String addr_str = args[1];
+                        addr_str = ((Integer.parseInt(args[1]) <= 127) ? "S" : "L") + addr_str;
 
-                    boolean found = false;
-                    for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {  //loco may be the lead on more that one throttle
-                        StringBuilder responseStrBuilder = new StringBuilder("");
+                        boolean found = false;
+                        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {  //loco may be the lead on more that one throttle
+                            StringBuilder responseStrBuilder = new StringBuilder("");
 
-                        int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
-                        if (whichThrottle >= 0) {
+                            int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
+                            if (whichThrottle >= 0) {
 
-                            if ( (args.length!=4) || (!args[2].equals("\"\"")) || (!args[2].equals("\"\"")) ) {
-                                String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                                for (int i = 0; i < fnArgs.length; i++) {
-                                    if (fnArgs[i].isEmpty()) {
-                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                    } else {
-                                        if (fnArgs[i].charAt(0) == '*') { // is NOT latching
-                                            responseStrBuilder.append(fnArgs[i].substring(1));
+                                if ((args.length != 4) || (!args[2].equals("\"\"")) || (!args[2].equals("\"\""))) {
+                                    String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
+                                    responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                    for (int i = 0; i < fnArgs.length; i++) {
+                                        if (fnArgs[i].isEmpty()) {
                                             mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
                                         } else {
-                                            responseStrBuilder.append(fnArgs[i]);
-                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                            if (fnArgs[i].charAt(0) == '*') { // is NOT latching
+                                                responseStrBuilder.append(fnArgs[i].substring(1));
+                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                            } else {
+                                                responseStrBuilder.append(fnArgs[i]);
+                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                            }
                                         }
+                                        if (i < fnArgs.length - 1) {
+                                            responseStrBuilder.append("]\\[");
+                                        }
+                                    }
+                                }
+
+                                found = true;
+                                String lead = mainapp.consists[whichThrottle].getLeadAddr();
+                                if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
+                                    if ((mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer)) { // only process the functions if the lead engine from the roster or the override preference is set
+                                        if (args[3].length() > 2) {
+                                            processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
+                                            mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString());
+                                            skipAlert = false;
+                                        } else {
+                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
+                                        }
+                                    }
+                                }
+
+                                Consist con = mainapp.consists[whichThrottle];
+                                if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
+                                    con.setConfirmed(addr_str);
+                                    con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
+                                    con.setFunctionLabels(addr_str, mainapp.parseFunctionLabels(responseStrBuilder.toString()));
+
+                                    mainapp.addLocoToRecents(con.getLoco(addr_str), mainapp.parseFunctionLabels(responseStrBuilder.toString()));  //DCC-EX
+                                }
+
+                                throttleIndex = whichThrottle; // skip ahead
+                            }
+                        }
+
+                        if (!found) {  // we got the request but it is not on a throttle
+                            if (args[3].length() > 2) {
+                                String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                StringBuilder responseStrBuilder = new StringBuilder("");
+                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                for (int i = 0; i < fnArgs.length; i++) {
+                                    if (!fnArgs[i].isEmpty()) {
+                                        responseStrBuilder.append(fnArgs[i]);
                                     }
                                     if (i < fnArgs.length - 1) {
                                         responseStrBuilder.append("]\\[");
                                     }
                                 }
+                                // save them in recents regardless
+                                Consist.ConLoco conLoco = new Consist.ConLoco(addr_str);
+                                conLoco.setIsFromRoster(true);
+                                conLoco.setRosterName(args[2].substring(1, args[2].length() - 1)); // strip the quotes
+                                mainapp.addLocoToRecents(conLoco, mainapp.parseFunctionLabels(responseStrBuilder.toString())); //DCC-EX
                             }
-
-                            found = true;
-                            String lead = mainapp.consists[whichThrottle].getLeadAddr();
-                            if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
-                                if ( (mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // only process the functions if the lead engine from the roster or the override preference is set
-                                    if (args[3].length() > 2) {
-                                        processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
-                                        mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString());
-                                        skipAlert = false;
-                                    } else {
-                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
-                                    }
-                                }
-                            }
-
-                            Consist con = mainapp.consists[whichThrottle];
-                            if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
-                                con.setConfirmed(addr_str);
-                                con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
-                                con.setFunctionLabels(addr_str, mainapp.parseFunctionLabels(responseStrBuilder.toString()));
-
-                                mainapp.addLocoToRecents(con.getLoco(addr_str), mainapp.parseFunctionLabels(responseStrBuilder.toString()));  //DCC-EX
-                            }
-
-                            throttleIndex = whichThrottle; // skip ahead
-                        }
-                    }
-
-                    if (!found) {  // we got the request but it is not on a throttle
-                        if (args[3].length() > 2) {
-                            String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                            StringBuilder responseStrBuilder = new StringBuilder("");
-                            responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                            for (int i = 0; i < fnArgs.length; i++) {
-                                if (!fnArgs[i].isEmpty()) {
-                                    responseStrBuilder.append(fnArgs[i]);
-                                }
-                                if (i < fnArgs.length-1) {
-                                    responseStrBuilder.append("]\\[");
-                                }
-                            }
-                            // save them in recents regardless
-                            Consist.ConLoco conLoco = new Consist.ConLoco(addr_str);
-                            conLoco.setIsFromRoster(true);
-                            conLoco.setRosterName(args[2].substring(1, args[2].length() - 1)); // strip the quotes
-                            mainapp.addLocoToRecents(conLoco, mainapp.parseFunctionLabels(responseStrBuilder.toString())); //DCC-EX
                         }
                     }
                 }
@@ -1844,6 +1854,8 @@ public class comm_thread extends Thread {
 
                 if ( args.length == 1) { // no turnouts
                     noTurnouts = true;
+                    if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
+                        sendRequestRoutes();
                 } else {
                     for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
                         if (mainapp.dccexTurnoutIDs[i] == Integer.parseInt(args[1])) {
@@ -1891,6 +1903,8 @@ public class comm_thread extends Thread {
 
                     mainapp.dccexTurnoutsFullyReceived = true;
                     mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
+                    if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
+                        sendRequestRoutes();
                 }
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
@@ -1929,6 +1943,8 @@ public class comm_thread extends Thread {
 
                 if ( args.length == 1) { // no Routes
                     noRoutes = true;
+                    if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
+                        sendRequestTracks();
                 } else {
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
                         if (mainapp.dccexRouteIDs[i] == Integer.parseInt(args[1])) {
@@ -1989,6 +2005,8 @@ public class comm_thread extends Thread {
 
 //                    mainapp.dccexRoutesFullyReceived = true;
                     mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
+                    if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
+                        sendRequestTracks();
                 }
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty

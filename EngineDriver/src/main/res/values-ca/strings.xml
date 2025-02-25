@@ -873,6 +873,8 @@
     <string name="prefThrottleSwitchButtonSummary">Visualitzar la tecla en la pantalla del Controlador per permetre el canvi ràpid de tipus de disseny</string>
     <string name="prefThrottleSwitchButtonTitle">Tecla per canviar de disseny</string>
     <string name="prefThrottleSwitchOption1Summary">La tecla que modifica el disseny canviarà entre aquest disseny i el següent</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Recorreu tots els dissenys?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">El botó de commutació de disseny circularà per tots els dissenys, no només els dos següents</string>
     <string name="prefThrottleSwitchOption1Title">Canvia de disseny al primer disseny de pantalla</string>
     <string name="prefThrottleSwitchOption2Summary">La tecla que modifica el disseny es canviarà entre la disposició del regulador de la preferència anterior i aquesta</string>
     <string name="prefThrottleSwitchOption2Title">Canvia de disseny al segon disseny de pantalla</string>
@@ -1056,6 +1058,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Protocol a utilitzar?\n<small><small>(\'Automàtic\' cerca \"DCCEX\", \"DCC-EX\" o el port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Sol·licituds d\'elements seqüenciades</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Espereu que es recuperin tots els elements d\'un tipus (Llista, desviacions, rutes i pistes) abans de demanar el següent tipus.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opció de protocol</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra el botó a la barra d’acció per accedir a la pantalla DCC-EX. (Només per a connexions natives DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>

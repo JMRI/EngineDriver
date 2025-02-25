@@ -797,6 +797,8 @@
     <string name="prefThrottleSwitchButtonSummary">Visualizzare il pulsante interruttore della valvola a farfalla nella schermata di gas per consentire un rapido cambiamento dei tipi di schermo della valvola a farfalla.</string>
     <string name="prefThrottleSwitchButtonTitle">Button Switch Throttle</string>
     <string name="prefThrottleSwitchOption1Summary">Button Switch Throttle passerà tra questo tipo di schermo e la prossima preferenza.</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">Scorrere tutti i layout?</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">Il pulsante Cambia layout scorrerà attraverso ogni layout, non solo i due seguenti</string>
     <string name="prefThrottleSwitchOption1Title">Acceleratore Tipo di interruttore Prima schermata</string>
     <string name="prefThrottleSwitchOption2Summary">Button Switch Throttle passerà tra il tipo di schermo nella preferenza precedente e questo.</string>
     <string name="prefThrottleSwitchOption2Title">Acceleratore Tipo di interruttore seconda schermata</string>
@@ -987,6 +989,8 @@
     <string name="useProtocolDCCEXplusAutoHint">Protocollo da utilizzare?\n<small><small>(\'Auto\' cerca \"DCCEX\", \"DCC-EX\" o porta 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
+    <string name="prefDccexSequenceItemRequestsTitle">Richieste di articoli in sequenza</string>
+    <string name="prefDccexSequenceItemRequestsSummary">Attendere che tutti gli elementi di un tipo (Elenchi, Scambi, Percorsi e Tracciati) vengano recuperati prima di richiedere tutti quelli del tipo successivo.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opzione protocollo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo DCC-EX. (Solo per connessioni DCC-Ex native.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
