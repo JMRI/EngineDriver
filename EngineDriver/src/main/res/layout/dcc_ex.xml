@@ -56,10 +56,10 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="47dp"
+                        android:layout_width="42dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingLeft="5dp"
+                        android:paddingLeft="3dp"
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
                         android:textSize="10sp"
@@ -85,9 +85,9 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="47dp"
+                        android:layout_width="42dp"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
+                        android:paddingLeft="3dp"
                         android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerPoM"
                         android:layout_gravity="center"
@@ -115,9 +115,9 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="47dp"
+                        android:layout_width="63dp"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
+                        android:paddingLeft="3dp"
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonTrackManager"
                         android:layout_gravity="center"
@@ -145,10 +145,10 @@
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="47dp"
+                        android:layout_width="55dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:paddingLeft="5dp"
+                        android:paddingLeft="3dp"
                         android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonDefaultFunctions"
                         android:textSize="10sp"

@@ -1096,7 +1096,7 @@
     <string name="cv29DirectionForward">Normale Richtung: Vorwärts</string>
     <string name="cv29DirectionReverse">Normale Richtung: Rückwärts</string>
     <string name="DCCEXbuttonTrackManager">Track Mgr</string>
-    <string name="DCCEXbuttonDefaultFunctions">Standard-Fns</string>
+    <string name="DCCEXbuttonDefaultFunctions">Standard Fns</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX – Programmiergleis (Servicemodus)</string>
     <string name="DCCEXheadingCvProgrammerPoM">DCC-EX – Programmierung auf der Hauptplatine (Betriebsmodus)</string>
     <string name="DCCEXheadingTrackManager">DCC-EX – Strecken-/Bezirksmanager</string>
