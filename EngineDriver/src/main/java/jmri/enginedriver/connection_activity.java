@@ -149,6 +149,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     TextView dccexConnectionOptionLabel;
     Spinner dccexConnectionOptionSpinner;
     String [] dccexConnectionOptionEntriesArray;
+    String [] dccexConnectionOptionEntryValuesArray;
     TextView discoveredServersHeading;
     TextView discoveredServersWarning;
 
@@ -648,6 +649,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         });
 
         dccexConnectionOptionEntriesArray = this.getResources().getStringArray(R.array.prefYesNoAutoEntries);
+        dccexConnectionOptionEntryValuesArray = this.getResources().getStringArray(R.array.prefYesNoAutoEntryValues);
 
         dccexConnectionOptionLabel = findViewById(R.id.cons_DccexConnectionOption_Label);
         dccexConnectionOptionSpinner = findViewById(R.id.cons_DccexConnectionOption);
@@ -1230,7 +1232,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 
             Spinner spinner = findViewById(R.id.cons_DccexConnectionOption);
             int spinnerPosition = spinner.getSelectedItemPosition();
-            mainapp.prefUseDccexProtocol = dccexConnectionOptionEntriesArray[spinnerPosition];
+//            mainapp.prefUseDccexProtocol = dccexConnectionOptionEntriesArray[spinnerPosition];
+            mainapp.prefUseDccexProtocol = dccexConnectionOptionEntryValuesArray[spinnerPosition];
             prefs.edit().putString("prefUseDccexProtocol", mainapp.prefUseDccexProtocol).commit();  //set the preference
 
             if ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
