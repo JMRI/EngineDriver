@@ -73,6 +73,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -266,7 +267,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                                 TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
                                 String rowUserName = unv.getText().toString();
 
-                                if (username.equals(rowUserName)) {
+                                if (Objects.equals(username, rowUserName)) {
                                     Button b = vg.findViewById(R.id.to_current_state_desc);
                                     Button bt = vg.findViewById(R.id.turnout_throw);
                                     Button bc = vg.findViewById(R.id.turnout_close);

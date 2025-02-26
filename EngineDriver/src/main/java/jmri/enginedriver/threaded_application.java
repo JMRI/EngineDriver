@@ -2638,8 +2638,8 @@ public class threaded_application extends Application {
     }
 
     public String getTurnoutState(String turnoutSystemName) {
-        String state = turnout_states.get(turnoutSystemName);
-        return state;
+        if (turnout_states==null) return ""; //avoid npe
+        return turnout_states.get(turnoutSystemName);
     }
 
     public void putTurnoutState(String turnoutName, String newState) {
@@ -3090,6 +3090,7 @@ public class threaded_application extends Application {
 
     @SuppressLint("DefaultLocale")
     static public String formatNumberInName (String name) {
+        if (name==null) return ""; //avoid npe
         String tempName = name;
         String tempNo = "";
         //noinspection UnusedAssignment
