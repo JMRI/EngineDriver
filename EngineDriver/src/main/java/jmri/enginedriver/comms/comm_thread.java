@@ -1341,10 +1341,12 @@ public class comm_thread extends Thread {
                                     break;
                                 case 'A': // automations/routes
                                     processDccexRoutes(args);
+                                    mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
                                     break;
                                 case 'B': // automation/route update (Inactive, Active, Hidden, Caption)
                                     processDccexRouteUpdate(args);
-                                    responseStr = "PRA";
+//                                    responseStr = "PRA";
+                                    mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
                                     skipAlert = false;
                                     break;
                                 case 'R': // roster
@@ -2221,8 +2223,14 @@ public class comm_thread extends Thread {
                 break;
             }
         }
-        if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found, update to new value
-            mainapp.routeStates[pos] = newState;
+        if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found
+            if (!newState.equals(mainapp.routeStates[pos])) { //route state is changed
+//                Log.d("Engine_Driver", "comm_thread.processRouteChange(" + responseStr + ") CHANGED");
+                mainapp.routeStates[pos] = newState;
+                mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
+//            } else {
+//                Log.d("Engine_Driver", "comm_thread.processRouteChange(" + responseStr + ") NOT CHANGED");
+            }
         }
     }  //end of processRouteChange
 
@@ -2257,6 +2265,7 @@ public class comm_thread extends Thread {
             }  //end if i>0
             i++;
         }  //end for
+        mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
 
     }
 

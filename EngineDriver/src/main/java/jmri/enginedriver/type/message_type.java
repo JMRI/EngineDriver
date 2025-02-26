@@ -98,4 +98,5 @@ public interface message_type {
     int FORCE_THROTTLE_RELOAD = 76;
     int DCCEX_JOIN_TRACKS = 77;
     int DCCEX_UNJOIN_TRACKS = 78;
+    int ROUTE_LIST_CHANGED = 79;
 }
