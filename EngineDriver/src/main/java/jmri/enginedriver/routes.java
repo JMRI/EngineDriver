@@ -294,18 +294,24 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
 
         public void handleMessage(Message msg) {
-//            Log.d("Engine_Driver", "routes: routes_handler: handleMessage");
+            Log.d("Engine_Driver", "routes_handler: handleMessage("+msg.obj.toString()+")");
 
             switch (msg.what) {
+                case message_type.WIT_CON_RECONNECT:
+                case message_type.ROUTE_LIST_CHANGED:
+                    refresh_route_view();
+                    break;
                 case message_type.RESPONSE: {
                     String response_str = msg.obj.toString();
 
                     if (response_str.length() >= 3) {
                         String com1 = response_str.substring(0, 3);
-                        //refresh routes if any have changed state or if route list changed
-                        if ("PRA".equals(com1) || "PRL".equals(com1)) {
-                            refresh_route_view();
-                        }
+//                        //refresh routes if any have changed sta
+//                        if ("PRL".equals(com1)) { //handle new route list
+//                            refresh_route_view();
+//                        } else if ("PRA".equals(com1)) { //handle change to individual route entry
+//                            refresh_route_view();
+//                        }
                         //update power icon
                         if ("PPA".equals(com1)) {
                             mainapp.setPowerStateButton(RMenu);
@@ -315,9 +321,6 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 break;
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
-                    break;
-                case message_type.WIT_CON_RECONNECT:
-                    refresh_route_view();
                     break;
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
