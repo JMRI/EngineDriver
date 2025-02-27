@@ -117,6 +117,9 @@
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
+
+        <item name="EDRadioButton">@style/EDRadioButton</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton</item>
     </style>
 
     <!-- appears as 'high contrast' theme' -->
@@ -216,6 +219,8 @@
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
+        <item name="EDRadioButton">@style/EDRadioButton_black</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
     </style>
 
     <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
@@ -311,6 +316,8 @@
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
+        <item name="EDRadioButton">@style/EDRadioButton_black</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -414,6 +421,8 @@
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
+        <item name="EDRadioButton">@style/EDRadioButton_black</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -631,6 +640,7 @@
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/neon_blue</item>
 
+        <item name="android:radioButtonStyle">@style/EDRadioButton_neon</item>
     </style>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

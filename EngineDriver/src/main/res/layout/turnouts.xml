@@ -44,7 +44,8 @@
                     android:theme="?attr/EDRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
                     android:text="@string/turnoutsSelectionTypeAddress"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
@@ -55,6 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_gravity="center"
                     android:text="@string/turnoutsSelectionTypeRoster"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
@@ -91,18 +93,20 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="4dp" >
+                    android:padding="4dp"
+                    android:weightSum="1">
                     <TextView
                         android:id="@+id/turnout_prefix"
                         style="?attr/floating_text_style"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.04"
                         android:text="" />
                     <EditText
                         android:id="@+id/turnout_entry"
-                        android:layout_width="80sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
+                        android:layout_weight="0.21"
                         android:hint="@string/turnouts_turnout"
                         android:inputType="textCapCharacters"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
@@ -113,31 +117,40 @@
                     <TextView
                         android:id="@+id/turnout_entry_static"
                         style="?attr/floating_text_style"
-                        android:layout_weight="0.25"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="0.21"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/turnouts_turnout"
                         android:visibility="gone"/>
                     <Button
                         android:id="@+id/turnout_throw"
                         style="?attr/ed_normal_button_style"
-                        android:layout_width="60sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:padding="0dp"
                         android:text="@string/throw_button" />
                     <Button
                         android:id="@+id/turnout_close"
                         style="?attr/ed_normal_button_style"
-                        android:layout_width="60sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:padding="0dp"
                         android:text="@string/close_button" />
                     <Button
                         android:id="@+id/turnout_toggle"
                         style="?attr/ed_normal_button_style"
-                        android:layout_width="60sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.25"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:padding="0dp"
                         android:text="@string/toggle_button" />
                 </LinearLayout>
             </LinearLayout>
