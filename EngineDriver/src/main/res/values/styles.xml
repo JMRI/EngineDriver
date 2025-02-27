@@ -183,7 +183,7 @@
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
   </style>
-  <style name="EDRadioButton" parent="floating_text_style">
+  <style name="EDRadioButton" parent="radio_button_style">
     <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
     <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
   </style>
@@ -221,6 +221,15 @@
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
+  </style>
+  <style name="radio_button_style" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:shadowColor">#FF000000</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+    <item name="android:paddingLeft">0dp</item>
+    <item name="android:paddingStart">0dp</item>
   </style>
   <style name="list_item_style" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#FFFFFF</item>
@@ -343,7 +352,7 @@
     <item name="android:shadowRadius">4</item>
   </style>
 
-  <style name="EDRadioButton_black" parent="floating_text_style_black">
+  <style name="EDRadioButton_black" parent="radio_button_style_black">
     <!--    <item name="colorControlNormal">@color/neon_blue</item>-->
     <!--    <item name="colorControlActivated">@color/neon_blue</item>-->
   </style>
@@ -560,6 +569,13 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+  <style name="radio_button_style_black" parent="radio_button_style">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
   <style name="edit_label_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
   </style>
@@ -721,6 +737,13 @@
   </style>
 
   <style name="floating_text_style_outline" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">@color/solidWhite</item>
+    <item name="android:shadowColor">@color/black</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+  <style name="radion_button_style_outline" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:shadowColor">@color/black</item>
     <item name="android:shadowDx">2</item>
@@ -953,7 +976,7 @@
     <item name="android:colorBackground">@color/transparent</item>
   </style>
 
-  <style name="EDRadioButton_colorful" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+  <style name="EDRadioButton_colorful" parent="radio_button_style">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:textSize">12sp</item>
     <item name="android:background">@color/transparent</item>
@@ -1132,6 +1155,13 @@
   </style>
 
   <style name="floating_text_style_colorful" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:shadowColor">@color/windowBackground_colorful</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+  <style name="radio_button_style_colorful" parent="radio_button_style">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:shadowColor">@color/windowBackground_colorful</item>
     <item name="android:shadowDx">2</item>
@@ -1338,7 +1368,7 @@
     <item name="android:shadowRadius">4</item>
   </style>
 
-  <style name="EDRadioButton_neon" parent="floating_text_style">
+  <style name="EDRadioButton_neon" parent="radio_button_style">
     <item name="colorControlNormal">@color/neon_blue</item>
     <item name="colorControlActivated">@color/neon_yellow</item>
   </style>

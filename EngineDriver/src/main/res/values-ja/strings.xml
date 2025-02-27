@@ -166,6 +166,7 @@
 
     <string name="functionButton00DefaultValue">前照灯</string>
 
+    <string name="functionButton01DefaultValue">ベル</string>
     <string name="functionButton02DefaultValue">警笛</string>
 
 
@@ -384,6 +385,7 @@
     <string name="prefActionBarShowServerDescriptionTitle">サーバーの説明を表示</string>
     <string name="prefAllowMobileDataSummary">デバイスがモバイル データ経由で JMRI に接続できるようにします。</string>
     <string name="prefAllowMobileDataTitle">モバイルデータ接続を許可する</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsTitle">デフォルトの関数ラベルを使用しますか?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">列車情報エントリのラベルの代わりにデフォルトのファンクションラベルを表示します。</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">列車情報エントリのラベルの代わりに、デフォルトのファンクションラベルを表示します。\n「特別な」ルール スタイルに従うには、これを有効にする必要があります。</string>
     <string name="prefCenterDirectionButtonsShortDefaultValue">ノイ</string>
@@ -918,6 +920,7 @@
     <string name="recent_engines">最近のロコから選択</string>
     <string name="RecentConsistsNameEditText">編成の名前を入力してください</string>
     <string name="RecentConsistsNameEditTitle">最近の編成名</string>
+    <string name="RecentsNameEditTitle">最近のロコ名</string>
     <string name="RecentsNameEditText">ロコの名前を入力してください</string>
     <string name="reconnect_help">自動的に再接続を試みます。再接続を待つか、「戻る」を押して終了します。</string>
     <string name="reconnect_label">再接続試行ステータス</string>
@@ -1168,9 +1171,11 @@
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大負荷パーセンテージ</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
     <string name="airReservoirShort">空気抵抗 %d%%</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">WiThrottle によって提供されるデフォルトではなく、非ロスター ロックに対してエンジン ドライバーのデフォルト ラッチを使用します。</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">機能のない名簿エントリにデフォルトを使用する</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">停止ボタンの動作</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">「停止」ボタンの動作を選択します</string>
     <string name="toastDccexInvalidRosterId">無効な名簿 ID \'%1$s\'。名簿、投票所、ルートのリスト全体がロードできない可能性があります。</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">スロットル機能ラッチをオーバーライドする</string>
 
 </resources>
