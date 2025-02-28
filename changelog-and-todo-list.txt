@@ -1,4 +1,4 @@
-**Version 2.39.196
+**Version 2.40.196
  * only redraw Route list if actually changed
  * avoid a few crashes reported to Play Store
  * bug fix for non-English auto protocol option
@@ -35,6 +35,8 @@
  * Increase DCC-EX Track Manager layout size
 **Version 2.38.188
  * Additional French Translations by Alain Carasso
+ * Japanese translations by Futoshi Yanagi
+ * French Canadian translations by Yvéric Patry
  * Support DCC-EX remote drop of a loco (FORGET)
  * Fix for the change to the DCC-EX response/broadcast for AUTO Track Manager outputs
  * Fix for the DCC-EX AUTO track change command. MAIN is sent first
