@@ -956,6 +956,7 @@ public class ImportExportPreferences {
         }
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean deleteFile(String filename) {
         Log.d("Engine_Driver", "deleteRecentTurnoutsListFile: ImportExportPreferences: delete file");
 

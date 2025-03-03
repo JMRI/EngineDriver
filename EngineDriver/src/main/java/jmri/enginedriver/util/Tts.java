@@ -2,7 +2,6 @@ package jmri.enginedriver.util;
 
 import android.content.SharedPreferences;
 import android.speech.tts.TextToSpeech;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -28,9 +27,8 @@ public class Tts {
     private boolean prefTtsGamepadTestComplete;
     private boolean prefTtsGamepadTestKeys;
 
-    private SharedPreferences prefs;
-    private ImageView image;
-    private threaded_application mainapp;
+    private final SharedPreferences prefs;
+    private final threaded_application mainapp;
 
     public Tts(SharedPreferences myPrefs, threaded_application myMainapp) {
         prefs = myPrefs;
@@ -95,44 +93,36 @@ public class Tts {
                 switch (msgNo) {
                     case tts_msg_type.VOLUME_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_NONE)) {
-                            int displaySpeedFromCurrentSliderPosition = argInt1; //getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
-                            String consistAddressString = argString; // getConsistAddressString(whichThrottle);
-
                             if (whichLastVolume != whichThrottle) {
                                 result = true;
                                 whichLastVolume = whichThrottle;
                                 speech = mainapp.getResources().getString(R.string.TtsVolumeThrottle) + " " + (whichThrottle + 1);
                             }
                             if ((prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsLoco) + " " + (consistAddressString);
+                                speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsLoco) + " " + (argString); // consistAddressString
                             }
                             if ((prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsSpeed) + " "
-                                        + (displaySpeedFromCurrentSliderPosition);
+                                        + (argInt1);  // displaySpeedFromCurrentSliderPosition
                             }
                         }
                         break;
                     case tts_msg_type.GAMEPAD_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_NONE)) {
-                            int whichLastGamepad1 = argInt1;
-                            int speed = argInt2; // getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
-                            int targetSpeed = argInt4; // getDisplaySpeedFromCurrentSliderPosition(whichThrottle,true)
-                            String consistAddressString = argString; // getConsistAddressString(whichThrottle)
-
-                            if ((whichLastGamepad1 != whichThrottle) || (force)) {
+                            if ((argInt1 != whichThrottle) || (force)) { // whichLastGamepad1
                                 result = true;
-                                whichLastGamepad1 = whichThrottle;
+//                                whichLastGamepad1 = whichThrottle;
                                 speech = mainapp.getResources().getString(R.string.TtsGamepadThrottle) + " " + (whichThrottle + 1);
                             }
                             if ((prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO)) || (prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO_SPEED))) {
-                                speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsLoco) + " " + (consistAddressString);
+                                speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsLoco) + " " + (argString); // consistAddressString
                             }
                             if ((prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_SPEED)) || (prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_LOCO_SPEED))) {
                                 speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsSpeed) + " "
-                                        + (speed);
+                                        + (argInt2); // speed
                                 if (isSemiRealisticThrottle) {
                                     speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsTargetSpeed) + " "
-                                            + (targetSpeed);
+                                            + (argInt4); // targetSpeed
                                 }
                             }
                         }
@@ -175,24 +165,19 @@ public class Tts {
                         break;
                     case tts_msg_type.GAMEPAD_THROTTLE_SPEED:
                         if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
-                            int maxSpd = argInt1; // getMaxSpeed(whichThrottle);
-                            int spd = argInt2;    // getSpeedFromCurrentSliderPosition(whichThrottle,false)
-                            int speed = argInt3;    // getSpeedFromCurrentSliderPosition(whichThrottle,true)
-                            int targetSpeed = argInt4;    // getSpeedFromCurrentSliderPosition(whichThrottle,true)
-
-                            if (spd == 0) {
+                                if (argInt2 == 0) {
                                 result = true;
                                 speech = mainapp.getResources().getString(R.string.TtsGamepadTestSpeedZero);
-                            } else if (spd == maxSpd) {
+                            } else if (argInt2 == argInt1) { // spd == maxSpd
                                 result = true;
                                 speech = mainapp.getResources().getString(R.string.TtsGamepadTestSpeedMax);
                                 if ((prefTtsThrottleSpeed.equals("Zero + Max + speed"))) {
-                                    speech = speech + " " + speed;
+                                    speech = speech + " " + argInt3; // speed
                                 }
                             }
                             if (isSemiRealisticThrottle) {
                                 speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsTargetSpeed) + " "
-                                        + (targetSpeed);
+                                        + (argInt4); // targetSpeed
                             }
                         }
                         break;

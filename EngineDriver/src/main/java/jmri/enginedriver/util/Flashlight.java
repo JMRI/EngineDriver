@@ -91,6 +91,7 @@ public abstract class Flashlight {
             // No specific teardown needed - do nothing
         }
 
+        /** @noinspection deprecation*/
         @Override
         public boolean setFlashlightOn(Activity activity) {
             try {
@@ -110,6 +111,7 @@ public abstract class Flashlight {
             }
         }
 
+        /** @noinspection deprecation*/
         @Override
         public void setFlashlightOff() {
             try {

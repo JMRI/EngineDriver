@@ -139,6 +139,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
 
+    /** @noinspection SameParameterValue*/
     void GamepadFeedbackSound(boolean invalidAction) {
         if (invalidAction)
             tg.startTone(ToneGenerator.TONE_PROP_NACK);
@@ -324,6 +325,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
     }
 
+    /** @noinspection UnusedReturnValue*/
     private boolean isTestComplete(int keyIndex) {
         gamepadButtonsChecked[keyIndex] = true;
 

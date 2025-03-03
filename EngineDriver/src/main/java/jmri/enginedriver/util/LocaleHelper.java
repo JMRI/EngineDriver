@@ -41,7 +41,6 @@ public class LocaleHelper {
 
 //    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
     public static String languageCountry = "";  // will contain the default language at launch
-    private static String prefLocale ="";
 
     // needs to be called from each activity other than mainapp
     public static Context onAttach(Context context) {
@@ -51,7 +50,7 @@ public class LocaleHelper {
 
     // called once from the mainapp activity
     public static Context onAttach(Context context, String defaultLanguage) {
-        if (languageCountry.equals("")) {
+        if (languageCountry.isEmpty()) {
             languageCountry = defaultLanguage; // set the initial value
         }
         String lang = getLanguagePreference(context);
@@ -73,7 +72,7 @@ public class LocaleHelper {
     private static String getLanguagePreference(Context context) {
         SharedPreferences prefs;
         prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefLocale = prefs.getString("prefLocale", context.getResources().getString(R.string.prefLocaleDefaultValue));
+        String prefLocale = prefs.getString("prefLocale", context.getResources().getString(R.string.prefLocaleDefaultValue));
 
         if (prefLocale.equals("Default")) {
             prefLocale = languageCountry;
