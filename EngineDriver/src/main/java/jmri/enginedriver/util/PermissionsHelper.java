@@ -151,7 +151,7 @@ public class PermissionsHelper {
      *
      * @param context the requesting Activity's context
      * @param requestCode the permissions request code
-     * @return
+     * @return message
      */
     private String getMessage(final Context context, @RequestCodes final int requestCode) {
         // Get the relevant rationale message based on request code
@@ -216,6 +216,7 @@ public class PermissionsHelper {
      * @param activity the requesting Activity
      * @param requestCode the permissions request code
      */
+    @SuppressLint("ObsoleteSdkInt")
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void requestNecessaryPermissions(final Activity activity, @RequestCodes final int requestCode) {
         // Request the necessary permissions based on request code

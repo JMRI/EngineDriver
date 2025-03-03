@@ -557,6 +557,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         prefs.edit().putBoolean("prefOverrideRosterWithNoFunctionLabels", mainapp.prefOverrideRosterWithNoFunctionLabels).commit();
     }
 
+    /** @noinspection SameParameterValue, SameParameterValue */
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
         String sVal = defaultVal;
         boolean isValid = true;

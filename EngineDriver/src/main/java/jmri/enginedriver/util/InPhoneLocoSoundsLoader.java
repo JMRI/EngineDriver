@@ -61,11 +61,11 @@ public class InPhoneLocoSoundsLoader {
 
       @Override
       public void run() {
-         Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run: (locoSound)");
+         Log.d("Engine_Driver", "IPLS loader: LoadSoundCompleteDelayed.run: (locoSound)");
          mainapp.soundsSoundsAreBeingReloaded = false;
          mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START, "", 0);
 //            Toast.makeText(getApplicationContext(), "Sounds loaded. Delay: " + loadDelay, Toast.LENGTH_SHORT).show();
-         Log.d("Engine_Driver", "LoadSoundCompleteDelayed.run. Delay: " + loadDelay);
+         Log.d("Engine_Driver", "IPLS loader: LoadSoundCompleteDelayed.run. Delay: " + loadDelay);
 
       }
    } // end DoLocoSoundDelayed
@@ -73,7 +73,7 @@ public class InPhoneLocoSoundsLoader {
 
    @SuppressLint({"ApplySharedPref", "DiscouragedApi"})
    public boolean loadSounds() {
-      Log.d("Engine_Driver", "loadSounds: (locoSound)");
+      Log.d("Engine_Driver", "IPLS loader: loadSounds: (locoSound)");
       mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", context.getResources().getString(R.string.prefDeviceSoundsDefaultValue));
       mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", context.getResources().getString(R.string.prefDeviceSoundsDefaultValue));
 
@@ -90,7 +90,7 @@ public class InPhoneLocoSoundsLoader {
       }
 
       mainapp.soundsSoundsAreBeingReloaded = true;
-//        Log.d("Engine_Driver", "loadSounds: (locoSound): sounds really do need to be reloaded");
+//        Log.d("Engine_Driver", "IPLS loader: loadSounds: (locoSound): sounds really do need to be reloaded");
 
       if (mainapp.soundPool!=null) {
          mainapp.stopAllSounds();
@@ -122,7 +122,7 @@ public class InPhoneLocoSoundsLoader {
          @Override
          public void onLoadComplete(SoundPool soundPool, int i, int i2) {
             if (i==soundsCountOfSoundBeingLoaded) {
-               Log.d("Engine_Driver", "loadSounds: Sounds confirmed loaded.");
+               Log.d("Engine_Driver", "IPLS loader: loadSounds: Sounds confirmed loaded.");
                if (mainapp.throttle_msg_handler!=null) {
                   mainapp.throttle_msg_handler.postDelayed(
                           new LoadSoundCompleteDelayed(1000), 1000);
@@ -137,7 +137,7 @@ public class InPhoneLocoSoundsLoader {
          if (mainapp.prefDeviceSounds[throttleIndex].toLowerCase(Locale.ROOT).contains(".ipls")) {
             // load the custom sounds
             getIplsDetails(mainapp.prefDeviceSounds[throttleIndex]);
-            if (!iplsFileName.equals("")) {
+            if (!iplsFileName.isEmpty()) {
                for (int j = 0; j <= 2; j++) {
                   loadSoundFromFile(sounds_type.BELL, throttleIndex, j, context, iplsBellSoundsFileName[j]);
                   loadSoundFromFile(sounds_type.HORN, throttleIndex, j, context, iplsHornSoundsFileName[j]);
@@ -228,47 +228,42 @@ public class InPhoneLocoSoundsLoader {
          duration = player.getDuration();
       soundsCountOfSoundBeingLoaded ++;
       switch (soundType) {
-         default:
-         case sounds_type.LOCO: // loco
-            mainapp.soundsLoco[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
-            mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-            break;
          case sounds_type.BELL: // bell
          case sounds_type.HORN: // horn
          case sounds_type.HORN_SHORT: // horn short
             mainapp.soundsExtras[soundType-1][whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
             mainapp.soundsExtrasDuration[soundType-1][whichThrottle][soundNo] = duration;
             break;
+
+         case sounds_type.LOCO: // loco
+         default:
+            mainapp.soundsLoco[whichThrottle][soundNo] = mainapp.soundPool.load(context, resId, 1);
+            mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
+            break;
       }
    } // end loadSound()
 
    void loadSoundFromFile(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
-//        Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file: '" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo);
+//        Log.d("Engine_Driver", "IPLS loader: loadSoundFromFile (locoSound): file: '" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo);
       int duration;
 
-      if (fileName.length() > 0) {
+      if (!fileName.isEmpty()) {
          File file = new File(context.getExternalFilesDir(null), fileName);
 
          if(!file.exists()) {
-            Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - File can't be found");
-            loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
+            Log.d("Engine_Driver", "IPLS loader: loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - File can't be found");
+            loadSoundFromFileFailed(soundType, whichThrottle, soundNo, fileName);
          } else {
 
             MediaPlayer player = MediaPlayer.create(context, Uri.fromFile(file));
             if (player == null) {
-               Log.d("Engine_Driver", "loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - Can't determine duration");
-               loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
+               Log.d("Engine_Driver", "IPLS loader: loadSoundFromFile (locoSound): file:'" + file.getPath() + "/" + fileName + "' - Can't determine duration");
+               loadSoundFromFileFailed(soundType, whichThrottle, soundNo, fileName);
             } else {
                duration = player.getDuration();
                soundsCountOfSoundBeingLoaded++;
 
                switch (soundType) {
-                  default:
-                  case sounds_type.LOCO: // loco
-                     mainapp.soundsLoco[whichThrottle][soundNo]
-                             = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
-                     mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
-                     break;
                   case sounds_type.BELL: // bell
                   case sounds_type.HORN: // horn
                   case sounds_type.HORN_SHORT: // horn short
@@ -276,16 +271,23 @@ public class InPhoneLocoSoundsLoader {
                              = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
                      mainapp.soundsExtrasDuration[soundType - 1][whichThrottle][soundNo] = duration;
                      break;
+
+                  case sounds_type.LOCO: // loco
+                  default:
+                     mainapp.soundsLoco[whichThrottle][soundNo]
+                             = mainapp.soundPool.load(context.getExternalFilesDir(null) + "/" + fileName, 1);
+                     mainapp.soundsLocoDuration[whichThrottle][soundNo] = duration;
+                     break;
                }
-               Log.d("Engine_Driver", "loadSoundFromFile (locoSound) : file loaded: '" + file.getPath() + "/" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo + " Duration: " + duration);
+               Log.d("Engine_Driver", "IPLS loader: loadSoundFromFile (locoSound) : file loaded: '" + file.getPath() + "/" + fileName + "' wt: " + whichThrottle + " sNo: " + soundNo + " Duration: " + duration);
             }
          }
       } else {
-         loadSoundFromFileFailed(soundType, whichThrottle, soundNo, context, fileName);
+         loadSoundFromFileFailed(soundType, whichThrottle, soundNo, fileName);
       }
    } // end loadSoundsFromFile()
 
-   void loadSoundFromFileFailed(int soundType, int whichThrottle, int soundNo, Context context, String fileName) {
+   void loadSoundFromFileFailed(int soundType, int whichThrottle, int soundNo, String fileName) {
       switch (soundType) {
          case sounds_type.BELL: // bell
          case sounds_type.HORN: // horn
@@ -299,32 +301,40 @@ public class InPhoneLocoSoundsLoader {
             mainapp.soundsLocoDuration[whichThrottle][soundNo] = 0;
             break;
       }
+      Log.d("Engine_Driver", "IPLS loader: loadSoundFromFileFailed: " + fileName);
    }
 
    public void getIplsList() { // In Phone Loco Sounds
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
 
-        File dir = new File(context.getExternalFilesDir(null).getPath());
-        File [] filesList = dir.listFiles();
-        for (File file : filesList) {
-            String fileName = file.getName();
-            String lowercaseFileName = file.getName().toLowerCase();
-            if (lowercaseFileName.endsWith(".ipls")) {
-                getIplsDetails(fileName);
-                if (!iplsName.equals("")) { // if we didn't fine a name, ignore it
-                   mainapp.iplsFileNames.add(fileName);
-                   mainapp.iplsNames.add("♫  " + iplsName);
-                }
+        try {
+           File dir = new File(context.getExternalFilesDir(null).getPath());
+           File[] filesList = dir.listFiles();
+            if (filesList != null) {
+                for (File file : filesList) {
+                    String fileName = file.getName();
+                    String lowercaseFileName = file.getName().toLowerCase();
+                    if (lowercaseFileName.endsWith(".ipls")) {
+                        getIplsDetails(fileName);
+                        if (!iplsName.isEmpty()) { // if we didn't fine a name, ignore it
+                            mainapp.iplsFileNames.add(fileName);
+                            mainapp.iplsNames.add("♫  " + iplsName);
 
-                Log.d("Engine_Driver", "getIplsList: Found: " + fileName);
+                           Log.d("Engine_Driver", "IPLS loader: getIplsList: Found: " + fileName);
+                        }
+                    }
+                }
             }
+        } catch (Exception e) {
+           Log.d("Engine_Driver", "IPLS loader: getIplsList: Error trying to find ipls files");
         }
     }
 
    public void getIplsDetails(String fileName) {
       String name = "";
       String cmd;
+      String cmdValueFull;
       int num;
       iplsLocoSoundsCount =-1;
 
@@ -340,6 +350,12 @@ public class InPhoneLocoSoundsLoader {
                   int splitPos = line.indexOf(':');
                   if (splitPos > 0) {
                      cmd = line.substring(0, 1).toLowerCase();
+                     try {
+                        cmdValueFull = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                     } catch (IndexOutOfBoundsException e) {
+                        cmdValueFull = "";
+                     }
+
                      num = -1;
                      switch (cmd) {
                         case "/": // comment line
@@ -364,7 +380,7 @@ public class InPhoneLocoSoundsLoader {
                               }
                            }
                            if ((num >= 0) && (num <= sounds_type.SHUTDOWN_INDEX)) {
-                              iplsLocoSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                              iplsLocoSoundsFileName[num] = cmdValueFull;
                               if ( (num > iplsLocoSoundsCount) && (num < sounds_type.STARTUP_INDEX) ) {  // don't count the Startup and shutdown sounds
                                  iplsLocoSoundsCount = num;
                               }
@@ -385,7 +401,7 @@ public class InPhoneLocoSoundsLoader {
                               }
                            }
                            if ((num >= 0) && (num <= 2)) {
-                              iplsBellSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                              iplsBellSoundsFileName[num] = cmdValueFull;
                            }
                            break;
                         case "h":
@@ -394,13 +410,13 @@ public class InPhoneLocoSoundsLoader {
                                  num = Integer.decode(line.substring(1, splitPos));
                               } catch (NumberFormatException e) {
                                  if (line.substring(1, splitPos).equals("+")) {  // startup sound
-                                    iplsHornShortSoundsFileName = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                                    iplsHornShortSoundsFileName = cmdValueFull;
                                  }
                                  break;
                               }
                            }
                            if ((num >= 0) && (num <= 2)) {
-                              iplsHornSoundsFileName[num] = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
+                              iplsHornSoundsFileName[num] = cmdValueFull;
                            }
                            break;
 
@@ -414,16 +430,16 @@ public class InPhoneLocoSoundsLoader {
             iplsName = name;
 
          } catch (IOException except) {
-            Log.e("Engine_Driver", "addToIplsList: Error reading .ipls file. "
+            Log.e("Engine_Driver", "IPLS loader: addToIplsList: Error reading .ipls file. "
                     + except.getMessage());
          }
 
       }
-      Log.d("Engine_Driver", "loadRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
+      Log.d("Engine_Driver", "IPLS loader: loadRecentLocosListFromFile: ImportExportPreferences: Read recent locos list from file complete successfully");
    }
 
    public void clearAllSounds() {
-      Log.d("Engine_Driver", "iplsLoader - clearAllSounds (locoSounds)");
+      Log.d("Engine_Driver", "IPLS loader: clearAllSounds (locoSounds)");
       for (int soundType = 0; soundType < 3; soundType++) {
          for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
             for (int mSound = 0; mSound < mainapp.soundsExtrasStreamId[soundType][throttleIndex].length; mSound++) {

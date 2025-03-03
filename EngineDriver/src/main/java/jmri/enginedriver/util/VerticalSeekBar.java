@@ -158,7 +158,7 @@ public class VerticalSeekBar extends SeekBar {
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
             prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", "7");
-            prefSemiRealisticMaximumBrakePcnt = (double) threaded_application.getIntPrefValue(prefs, "prefSemiRealisticMaximumBrakePcnt", "70");
+            prefSemiRealisticMaximumBrakePcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticMaximumBrakePcnt", "70");
             prefSemiRealisticThrottleNumberOfLoadSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfLoadSteps", "5");
             prefSemiRealisticThrottleMaxLoadPcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleMaxLoadPcnt", "1000");
 
@@ -236,13 +236,13 @@ public class VerticalSeekBar extends SeekBar {
 
             } else if (tickMarkType == tick_type.TICK_0_100_0) {
                 int tempSteps = steps / 2;
-                gridBottom = height / 2 - paddingLeft;
+                gridBottom = (float) height / 2 - paddingLeft;
                 tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
                 sizeIncrease = endSize / (tempSteps * tempSteps);
 
                 for (int i = -1; i < tempSteps; i++) {
                     j = (tempSteps - i);
-                    d = gridBottom + (height / 2) + (i * tickSpacing);
+                    d = gridBottom + ((float) height / 2) + (i * tickSpacing);
                     l = gridMiddle - startSize - (sizeIncrease) * j * j;
                     r = gridMiddle + startSize + (sizeIncrease) * j * j;
                     c.drawLine(d, l, d, r, tickPaint);
@@ -371,7 +371,7 @@ public class VerticalSeekBar extends SeekBar {
 
     @SuppressLint("DefaultLocale")
     String getTickMarkText(int totalSteps, int step, int sliderPurpose) {
-        String tickMarkText = "";
+        String tickMarkText;
         if (sliderPurpose == SLIDER_PURPOSE_BRAKE) {
 //            double effectiveBrake = (double) (totalSteps - step) / (double) prefSemiRealisticThrottleNumberOfBrakeSteps;
 //            double intermediateBrake = effectiveBrake * effectiveBrake * prefSemiRealisticMaximumBrakePcnt;

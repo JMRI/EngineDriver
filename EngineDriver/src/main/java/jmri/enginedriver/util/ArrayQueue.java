@@ -55,13 +55,12 @@ public final class ArrayQueue {
                             enqueue(i);
                         }
                     }
-                    rslt = true;
                 } else {
                     queue[rear] = data;
                     rear++;
                     lastValueAdded = data;
-                    rslt = true;
                 }
+                rslt = true;
             } else {
                 if ( (data>0) && (directionChange) ) {
                     for (int i = data - 1; i >= 0; i--) {
@@ -71,7 +70,7 @@ public final class ArrayQueue {
                         enqueue(i);
                     }
                     rslt = true;
-                } else {
+//                } else {
 //                Log.d("Engine_Driver", "ArrayQueue: enqueueWithIntermediateSteps: Queue already contains value: "+data);
                 }
             }
@@ -117,9 +116,9 @@ public final class ArrayQueue {
             return "Queue is Empty";
         }
         // traverse front to rear and print elements
-        String rslt = "";
+        StringBuilder rslt = new StringBuilder();
         for (i = front; i < rear; i++) {
-            rslt += i + ":" + queue[i] + ", ";
+            rslt.append(i).append(":").append(queue[i]).append(", ");
         }
         return " count: " + queueCount() +" queue: " + rslt;
     }

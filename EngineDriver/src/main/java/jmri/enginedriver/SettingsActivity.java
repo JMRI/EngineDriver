@@ -393,6 +393,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         reload();
     }
 
+    /** @noinspection SameParameterValue*/
     private void loadSharedPreferencesFromFileDialog(final SharedPreferences sharedPreferences, final String exportedPreferencesFileName, final String deviceId, final int forceRestartReason) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
@@ -802,6 +803,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    /** @noinspection SameParameterValue, SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         Log.d("Engine_Driver", "Settings: limitIntArraryPrefValue()");
@@ -848,6 +850,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         Log.d("Engine_Driver", "Settings: limitFloatPrefValue()");
@@ -931,6 +934,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
 
+    /** @noinspection SameParameterValue*/
     @SuppressLint("ApplySharedPref")
     void setSharedPreferenceValueString(PreferenceScreen prefScreen, String key, String val) {
         ListPreference prefList = (ListPreference) prefScreen.findPreference(key);

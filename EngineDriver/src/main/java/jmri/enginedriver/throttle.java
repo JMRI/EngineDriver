@@ -141,7 +141,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
@@ -1881,6 +1880,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return getThrottleSlider(whichThrottle).getMax();
     }
 
+    /** @noinspection SameReturnValue, SameReturnValue */
     int getMinSpeed(int whichThrottle) {
         return 0;
     }
@@ -2953,7 +2953,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    //
+    /** @noinspection UnusedReturnValue*/ //
     private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;

@@ -12,20 +12,18 @@ import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
 public class BackgroundImageLoader {
-    private String prefBackgroundImageFileName;
-    private String prefBackgroundImagePosition;
-    private boolean prefBackgroundImage;
-    private SharedPreferences prefs;
-    private ImageView image;
-    private threaded_application mainapp;
+    private final String prefBackgroundImageFileName;
+    private final String prefBackgroundImagePosition;
+    private final boolean prefBackgroundImage;
+    private final ImageView image;
+    private final threaded_application mainapp;
 
     public BackgroundImageLoader(SharedPreferences myPrefs, threaded_application myMainapp, ImageView myImage) {
-        prefs = myPrefs;
         image = myImage;
         mainapp = myMainapp;
-        prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
-        prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", mainapp.getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
-        prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", mainapp.getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
+        prefBackgroundImage = myPrefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
+        prefBackgroundImageFileName = myPrefs.getString("prefBackgroundImageFileName", mainapp.getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
+        prefBackgroundImagePosition = myPrefs.getString("prefBackgroundImagePosition", mainapp.getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
     }
 
     public void loadBackgroundImage() {

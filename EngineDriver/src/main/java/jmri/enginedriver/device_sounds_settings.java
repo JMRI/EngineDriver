@@ -95,6 +95,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 //        return myGesture.onTouchEvent(event);
 //    }
 
+    /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
     @SuppressLint("ApplySharedPref")
     private String limitIntEditValue(String key, EditText et, int minVal, int maxVal, String defaultVal) {
         String sVal = defaultVal;

@@ -259,6 +259,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         routes_list_adapter.notifyDataSetChanged();  //update the list
     }
 
+    /** @noinspection UnusedReturnValue*/
     private int updateRouteEntry() {
 //        Log.d("Engine_Driver", "routes: updateRouteEntry()");
 

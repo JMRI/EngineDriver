@@ -223,8 +223,7 @@ public class select_loco extends AppCompatActivity {
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
-                for (String rostername : rns) //noinspection ExtractMethodRecommender
-                {
+                for (String rostername : rns) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
                     hm.put("roster_name", rostername);
@@ -760,7 +759,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
-    //write the recent locos to a file
+    /** @noinspection SameParameterValue*/ //write the recent locos to a file
     void saveRecentLocosList(boolean bUpdateList) {
 
         //if not updating list or no SD Card present then nothing else to do
@@ -2300,7 +2299,8 @@ public class select_loco extends AppCompatActivity {
         hasLocalRosterImage = foundSavedImage;
 
         if ((iconURL != null) && (!iconURL.isEmpty())) {
-            mainapp.imageDownloader.download(iconURL, imageView);
+//            mainapp.imageDownloader.download(iconURL, imageView);
+            mainapp.imageDownloader.requestImage(iconURL, imageView);
         } else {
             if (!foundSavedImage) {
                 imageView.setVisibility(GONE);

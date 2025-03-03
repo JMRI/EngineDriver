@@ -171,6 +171,7 @@ public class threaded_application extends Application {
 //    private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> rosterJmriWeb;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
 //    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
+//    ImageDownloader imageDownloader = new ImageDownloader();
     ImageDownloader imageDownloader = new ImageDownloader();
     public String power_state;
 
@@ -1571,18 +1572,22 @@ public class threaded_application extends Application {
         }
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsg(Handler h, int msgType) {
         return sendMsgDelay(h, 0, msgType, "", 0, 0);
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsg(Handler h, int msgType, String msgBody) {
         return sendMsgDelay(h, 0, msgType, msgBody, 0, 0);
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1) {
         return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, 0);
     }
 
+    /** @noinspection UnusedReturnValue*/
     public boolean sendMsg(Handler h, int msgType, String msgBody, int msgArg1, int msgArg2) {
         return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
@@ -2162,6 +2167,7 @@ public class threaded_application extends Application {
     public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
         return safeToastInstructionalShowOnce(context.getResources().getString(resourceId), length, shownBefore);
     }
+    /** @noinspection SameReturnValue*/
     public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
         if ((!prefHideInstructionalToasts) && (!shownBefore)) {
             safeToast(msg_txt, length);
