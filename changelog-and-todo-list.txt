@@ -1,9 +1,10 @@
 **Version 2.40.196
- * only redraw Route list if actually changed
- * avoid a few crashes reported to Play Store
- * bug fix for non-English auto protocol option
- * improve non-English layout of the DCC-EX screen
+ * Only redraw Route list if actually changed
+ * Avoid a few crashes reported to Play Store
+ * Bug fix for non-English 'Auto' protocol option
+ * Improve non-English layout of the DCC-EX screen
  * Replace the deprecated functions in ImageDownloader
+ * Replace the deprecated AsyncTask in LogViewer
  * Linting. Primarily in all the util classes
 **Version 2.39.194
  * Toast message when the Roster, Turnouts/Points & Routes each have finished loading for DCC-EX (can be disabled with the Informational Toast preference)

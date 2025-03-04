@@ -5,7 +5,6 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
@@ -49,7 +49,7 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 /** @noinspection CallToPrintStackTrace*/
 public class LogViewerActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    private ArrayAdapter adaptor = null;
+    private ArrayAdapter<String> adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -105,7 +105,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         logReaderTask = new LogReaderTask();
 
-        logReaderTask.execute();
+//        logReaderTask.execute();
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
@@ -115,7 +115,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
 
             SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -222,7 +222,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
 
         public void handleMessage(Message msg) {
-            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -234,6 +233,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         }
                     }
                     break;
+                }
+                case message_type.LOG_ENTRY_RECEIVED: {
+                    String s = msg.obj.toString();
+                    addLogEntryToView(s);
                 }
                 default:
                     break;
@@ -252,7 +255,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         File logFile = new File(context.getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
 
         try {
-            Process process = Runtime.getRuntime().exec("logcat -c");
+            Runtime.getRuntime().exec("logcat -c");
             Runtime.getRuntime().exec("logcat -f " + logFile);
 //            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
@@ -268,7 +271,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     void showHideSaveButton() {
-        if (mainapp.logSaveFilename.length()>0) {
+        if (!mainapp.logSaveFilename.isEmpty()) {
             saveButton.setVisibility(View.GONE);
             saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
             saveInfoTV.setVisibility(View.VISIBLE);
@@ -334,13 +337,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             return ((null != objects) ? objects.get(position) : null);
         }
 
-        @SuppressLint("InflateParams")
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = convertView;
 
             if (null == view) {
                 LayoutInflater vi = (LayoutInflater) LogViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = vi.inflate(R.layout.logitem, null);
+                view = vi.inflate(R.layout.logitem, parent, false);
             }
 
             String data = objects.get(position);
@@ -362,11 +365,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         msg = data.substring(msgStart + 3);
                     }
                 }
-                if (!msg.substring(0,6).equals("<span>")) {
+                if (!msg.startsWith("<span>")) {
                     msg = msg.replaceAll("&", "&amp;");
                     msg = msg.replaceAll("<", "&lt;");
                     msg = msg.replaceAll(">", "&gt;");
-                    if (msg.indexOf("About: ") < 0) {
+                    if (!msg.contains("About: ")) {
                         if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
                             msg = "<span style=\"color: #404040\">" + msg;
                         } else {
@@ -387,34 +390,30 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 return view;
             }
             return null;
-
         }
     }
 
-    /** @noinspection CallToPrintStackTrace*/
-    private class LogReaderTask extends AsyncTask<Void, String, Void> {
+    public class LogReaderTask implements Runnable{
         private final String[] LOGCAT_CMD = new String[]{"logcat", "Engine_Driver:D", "*:S"};
-        //		private final int BUFFER_SIZE = 1024;
-
-        private boolean isRunning = true;
+        private boolean isRunning;
         private Process logprocess = null;
         private BufferedReader reader = null;
-        private String line = "";
-        //		private String lastLine = "";
+
+        public LogReaderTask() {
+            isRunning = true;
+            new Thread(this).start();
+        }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        public void run() {
             try {
                 logprocess = Runtime.getRuntime().exec(LOGCAT_CMD);
             } catch (IOException e) {
                 e.printStackTrace();
-
                 isRunning = false;
             }
 
             try {
-                //				reader = new BufferedReader(new InputStreamReader(
-                //						logprocess.getInputStream()),BUFFER_SIZE);
                 reader = new BufferedReader(new InputStreamReader(
                         logprocess.getInputStream()));
             } catch (IllegalArgumentException e) {
@@ -423,51 +422,31 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 isRunning = false;
             }
 
-            line = "";
-            //			lastLine = new String;
+            String line;
 
             try {
+                logprocess = Runtime.getRuntime().exec(LOGCAT_CMD);
+
                 while (isRunning) {
                     line = reader.readLine();
-                    publishProgress(line);
+                    mainapp.alert_activities(message_type.LOG_ENTRY_RECEIVED, line);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-
+            } catch (Exception e) {
                 isRunning = false;
             }
-            finally {
-                if(reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            //			if ((values[0] != null) && !values[0].equals(lastLine)) {
-            if ((values[0] != null)) {
-                adaptor.add(values[0]);
-                adaptor.notifyDataSetChanged();
-            }
-            //			lastLine = values[0];
         }
 
         public void stopTask() {
             isRunning = false;
-            if (logprocess != null) logprocess.destroy();
+        }
+    }
+
+    void addLogEntryToView(String line) {
+        try {
+            adaptor.add(line);
+            adaptor.notifyDataSetChanged();
+        } catch (Exception e) {
+            Log.d("Engine_Driver", "LogViewerActivity: addLine: exception: " + e);
         }
     }
 }
