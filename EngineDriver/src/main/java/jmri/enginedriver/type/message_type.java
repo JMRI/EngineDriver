@@ -99,4 +99,5 @@ public interface message_type {
     int DCCEX_JOIN_TRACKS = 77;
     int DCCEX_UNJOIN_TRACKS = 78;
     int ROUTE_LIST_CHANGED = 79;
+    int LOG_ENTRY_RECEIVED = 80;
 }
