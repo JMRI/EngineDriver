@@ -207,7 +207,7 @@
         <item>Bildschirm blockieren und dimmen</item>
         <item>Bildschirm dimmen</item>
         <item>Immersiver Modus temporär ein-/ausschalten</item>
-        <item >Schalten Drosselklappenbildschirmlayouts</item>
+        <item>Schalten Drosselklappenbildschirmlayouts</item>
         <item>Lokgeschwindigkeit erhöhen/verringern</item>
         <item>Nächste Drossel (Volumen)</item>
     </string-array>
@@ -288,9 +288,9 @@
     </string-array>
 
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
-        <item>Programmierstrack (Service -Modus)</item>
-        <item>Programm auf dem Hauptmodus (Betriebsmodus)</item>
-        <item>Spur/Bezirksleiter</item>
+        <item>Programmiergleismodus (Service-Modus)</item>
+        <item>Programmierung Hauptgleismodus (POM)</item>
+        <item>Spur-/TrackManager</item>
     </string-array>
 
     <string-array name="prefYesNoEntries"> <!-- display version -->
