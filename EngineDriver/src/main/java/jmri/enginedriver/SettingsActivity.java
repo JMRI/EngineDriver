@@ -1936,7 +1936,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);
         }
 
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
+        @SuppressLint("ApplySharedPref")
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if ((key != null) && !prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.

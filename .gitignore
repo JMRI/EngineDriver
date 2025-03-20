@@ -28,3 +28,6 @@ EngineDriver.iml
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+#other file types
+*.hprof
