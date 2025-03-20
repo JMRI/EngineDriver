@@ -47,6 +47,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -454,7 +455,11 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             mainapp.displayEStop(WMenu);
         }
         resumeWebView();
-        CookieSyncManager.getInstance().startSync();
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+        }
+        cookieManager.setAcceptCookie(true);
 
         // enable swipe/fling detection if enabled in Prefs
         ov = findViewById(R.id.web_overlay);
@@ -477,7 +482,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         Log.d("Engine_Driver", "web_activity.onPause() called");
         super.onPause();
         pauseWebView();
-        CookieSyncManager.getInstance().stopSync();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.getInstance().stopSync();
+        }
         if (webView != null) {
             webView.saveState(webBundle);           // save locally for use if finishing
         }

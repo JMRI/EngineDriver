@@ -38,6 +38,7 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
+import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -709,12 +710,12 @@ public class throttle_switching_horizontal extends throttle {
                     if (speed <= 0) {
                         if (jumpSpeed == 0) { hitJumpSpeed = true; }
                     } else // speed > 0
-                        if (dir==DIRECTION_FORWARD) {
+                        if (dir == direction_type.FORWARD) {
                             if (((mAutoIncrement[whichThrottle]) && (speed >= tempJumpSpeed))
                                || ((mAutoDecrement[whichThrottle]) && (speed <= tempJumpSpeed))) {
                                 hitJumpSpeed = true;
                             }
-                    } else if (dir==DIRECTION_REVERSE) {
+                    } else if (dir == direction_type.REVERSE) {
                         if (((mAutoDecrement[whichThrottle]) && (speed >= tempJumpSpeed))
                                 || ((mAutoIncrement[whichThrottle]) && (speed <= tempJumpSpeed))) {
                             hitJumpSpeed = true;
@@ -772,7 +773,7 @@ public class throttle_switching_horizontal extends throttle {
         int speed;
 //        int lastSpeed;
 
-        if (getDirection(whichThrottle)==DIRECTION_REVERSE) {  // treat negative as positive
+        if (getDirection(whichThrottle)==direction_type.REVERSE) {  // treat negative as positive
             change = change * -1;
         }
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - change: " + change + " lastSliderPosition: " + lastSliderPosition);
@@ -787,7 +788,7 @@ public class throttle_switching_horizontal extends throttle {
 
 //        Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
-            int dir = getDirection(whichThrottle) == DIRECTION_FORWARD ? DIRECTION_REVERSE : DIRECTION_FORWARD;
+            int dir = getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD;
 //            Log.d("Engine_Driver", "throttle_switching_left_or_right - speedChange - auto Reverse - dir:" + dir);
             dirs[whichThrottle] = dir;
             setEngineDirection(whichThrottle, dir, false);
@@ -919,11 +920,11 @@ public class throttle_switching_horizontal extends throttle {
         int dir;
 
         if (sliderPosition >= (throttleMidPointDeadZoneUpper[whichThrottle])) { //forward
-            dir = DIRECTION_FORWARD;
+            dir = direction_type.FORWARD;
         } else if (sliderPosition <= (throttleMidPointDeadZoneLower[whichThrottle])) { // reverse
-            dir = DIRECTION_REVERSE;
+            dir = direction_type.REVERSE;
         } else { // zero - deadzone
-            dir = DIRECTION_FORWARD;
+            dir = direction_type.FORWARD;
         }
         return dir;
     }
@@ -944,7 +945,7 @@ public class throttle_switching_horizontal extends throttle {
         if (speed==0) {
             newSliderPosition = throttleMidPointZero[whichThrottle];
         } else {
-            if (getDirection(whichThrottle) == DIRECTION_FORWARD) {
+            if (getDirection(whichThrottle) == direction_type.FORWARD) {
                 newSliderPosition = throttleMidPointDeadZoneUpper[whichThrottle] + (int) Math.round( speed / scale );
             } else {
                 newSliderPosition = throttleMidPointDeadZoneLower[whichThrottle] - (int) Math.round( speed / scale );

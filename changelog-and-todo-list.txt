@@ -3,7 +3,7 @@
  * Avoid a few crashes reported to Play Store
  * Bug fix for non-English 'Auto' protocol option
  * Improve non-English layout of the DCC-EX screen
- * Replace the deprecated functions in ImageDownloader
+ * Replace the deprecated functions in ImageDownloader, Throttle, ImportExportConnectionsList and LogViewerActivity
  * Replace the deprecated AsyncTask in LogViewer
  * Linting. Primarily in all the util classes
 **Version 2.39.194

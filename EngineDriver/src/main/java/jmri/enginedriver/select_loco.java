@@ -91,6 +91,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
@@ -105,6 +106,8 @@ import jmri.enginedriver.type.address_type;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.type.direction_type;
+import jmri.enginedriver.type.sub_activity_type;
 
 public class select_loco extends AppCompatActivity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
@@ -129,9 +132,6 @@ public class select_loco extends AppCompatActivity {
     int rosterOwnersFilterIndex = 0;
     private RosterSimpleAdapter rosterListAdapter;
     private RecentSimpleAdapter recentListAdapter;
-
-    private static final int DIRECTION_FORWARD = 0;
-    private static final int DIRECTION_BACKWARD = 1;
 
     public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
     public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;
@@ -231,7 +231,7 @@ public class select_loco extends AppCompatActivity {
                     hm.put("roster_entry_type", "loco");
                     String owner = "";
                     if ((mainapp.rosterJmriWeb!=null) && (mainapp.rosterJmriWeb.get(rostername)!=null)) {
-                        owner = mainapp.rosterJmriWeb.get(rostername).getOwner();
+                        owner = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rostername)).getOwner();
                         boolean foundOwner = false;
                         for (int j=0;j< rosterOwnersList.size(); j++) {
                             if (rosterOwnersList.get(j).equals(owner)) {
@@ -271,8 +271,9 @@ public class select_loco extends AppCompatActivity {
                         //add icon if url set
                         if (mainapp.rosterJmriWeb != null) {
                             if (mainapp.rosterJmriWeb.get(rostername) != null) {
-                                if (mainapp.rosterJmriWeb.get(rostername).getIconPath() != null) {
-                                    hm.put("roster_icon", mainapp.rosterJmriWeb.get(rostername).getIconPath() + "?maxHeight=52");  //include sizing instructions
+                                String iconPath = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rostername)).getIconPath();
+                                if (iconPath != null) {
+                                    hm.put("roster_icon", iconPath + "?maxHeight=52");  //include sizing instructions
                                 } else {
                                     Log.d("Engine_Driver", "select_loco: refreshRosterList(): xml roster entry " + rostername + " found, but no icon specified.");
                                 }
@@ -313,11 +314,6 @@ public class select_loco extends AppCompatActivity {
                     String s0;
                     String s1;
                     switch (mainapp.rosterOrder) {
-                        case sort_type.NAME:
-                        default:
-                            s0 = arg0.get("roster_name").replaceAll("_", " ").toLowerCase();
-                            s1 = arg1.get("roster_name").replaceAll("_", " ").toLowerCase();
-                            break;
                         case sort_type.ID:
                             s0 = threaded_application.formatNumberInName(arg0.get("roster_address"));
                             s1 = threaded_application.formatNumberInName(arg1.get("roster_address"));
@@ -325,6 +321,13 @@ public class select_loco extends AppCompatActivity {
                         case sort_type.POSITION:
                             s0 = threaded_application.formatNumberInName(arg0.get("roster_position"));
                             s1 = threaded_application.formatNumberInName(arg1.get("roster_position"));
+                            break;
+                        case sort_type.NAME:
+                        default:
+                            s0 = arg0.get("roster_name");
+                            s1 = arg1.get("roster_name");
+                            s0 = (s0 != null) ? s0.replaceAll("_", " ").toLowerCase() : "";
+                            s1 = (s1 != null) ? s1.replaceAll("_", " ").toLowerCase() : "";
                             break;
                     }
                     rslt = s0.compareTo(s1);
@@ -335,7 +338,7 @@ public class select_loco extends AppCompatActivity {
 
             rosterListAdapter.notifyDataSetChanged();
             View v = findViewById(R.id.roster_list_heading);
-            if (prefSelectLocoMethod == which_method.ROSTER) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
+            if (prefSelectLocoMethod.equals(which_method.ROSTER)) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
             v = findViewById(R.id.filter_roster_text);
             v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list);
@@ -632,7 +635,7 @@ public class select_loco extends AppCompatActivity {
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
 
                 if (numberInConsist < 0) { // don't show the Consist edit screen.  Only used for Recent Consists
-                    startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
+                    startActivityForResult(consistEdit, sub_activity_type.CONSIST);
                     connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
@@ -663,7 +666,7 @@ public class select_loco extends AppCompatActivity {
     //handle return from ConsistEdit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case throttle.ACTIVITY_CONSIST: // edit consist
+            case sub_activity_type.CONSIST: // edit consist
                 if (newEngine) {
 //                    saveRecentLocosList(saveUpdateList);
                     updateRecentConsists(saveUpdateList);
@@ -679,9 +682,11 @@ public class select_loco extends AppCompatActivity {
                     // Get the Image from data
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+                    if (selectedImage == null) break;
 
                     // Get the cursor
                     Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    if (cursor == null) break;
                     cursor.moveToFirst();
 
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -975,7 +980,7 @@ public class select_loco extends AppCompatActivity {
                 tempConsistEngineAddressList_inner.add(l.getIntAddress());
                 tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
                 String addr = importExportPreferences.locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
-                tempConsistDirectionList_inner.add((consist.isBackward(addr) ? DIRECTION_BACKWARD : DIRECTION_FORWARD));
+                tempConsistDirectionList_inner.add((consist.isBackward(addr) ? direction_type.BACKWARD : direction_type.FORWARD));
                 String rosterName = "";
                 if (l.getRosterName() != null) {
                     rosterName = l.getRosterName();
@@ -1120,7 +1125,7 @@ public class select_loco extends AppCompatActivity {
             consistEdit.putExtra("saveConsistsFile", 'Y');
 
             hideSoftKeyboard(v);
-            startActivityForResult(consistEdit, throttle.ACTIVITY_CONSIST);
+            startActivityForResult(consistEdit, sub_activity_type.CONSIST);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
         }
@@ -1140,7 +1145,7 @@ public class select_loco extends AppCompatActivity {
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
             hideSoftKeyboard(v);
-            startActivityForResult(consistLightsEdit, throttle.ACTIVITY_CONSIST_LIGHTS);
+            startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
         }
@@ -1328,7 +1333,7 @@ public class select_loco extends AppCompatActivity {
                     sAddr = importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true);
                     locoSource = importExportPreferences.consistSourceList.get(position).get(i);
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, false), false);
-                    if ((locoSource != source_type.ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).equals(""))) {
+                    if ((locoSource != source_type.ADDRESS) && (!importExportPreferences.consistRosterNameList.get(position).get(i).isEmpty())) {
                         locoName = importExportPreferences.consistRosterNameList.get(position).get(i);
                     }
                     sWhichThrottle = tempsWhichThrottle
@@ -1339,7 +1344,7 @@ public class select_loco extends AppCompatActivity {
                     Consist consist = mainapp.consists[whichThrottle];
 
                     dir = importExportPreferences.consistDirectionList.get(position).get(i);
-                    if (dir == DIRECTION_BACKWARD) {
+                    if (dir == direction_type.BACKWARD) {
                         consist.setBackward(sAddr, true);
                     }
 
@@ -2080,7 +2085,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        if ((iconURL != null) && (!iconURL.equals(""))) {
+        if ((iconURL != null) && (!iconURL.isEmpty())) {
             buttonSelectRosterImage.setVisibility(GONE);
             TextView rosterEntryImageHelpText = dialog.findViewById(R.id.rosterEntryImageHelpText);
             rosterEntryImageHelpText.setText(getString(R.string.rosterEntryImageServerImageHelpText));

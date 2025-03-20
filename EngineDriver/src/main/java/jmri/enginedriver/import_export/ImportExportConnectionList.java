@@ -3,7 +3,6 @@ package jmri.enginedriver.import_export;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ import jmri.enginedriver.threaded_application;
 public class ImportExportConnectionList {
     public ArrayList<HashMap<String, String>> connections_list;
     private final SharedPreferences prefs;
-    private boolean prefHideDemoServer;
+    private final boolean prefHideDemoServer;
     public boolean foundDemoHost = false;
 
     private static final String demo_host = "jmri.mstevetodd.com";
@@ -60,8 +59,8 @@ public class ImportExportConnectionList {
                     String ip_address;
                     String host_name;
                     String port_str;
-                    Integer port = 0;
-                    String ssid_str = "";
+                    int port = 0;
+                    String ssid_str;
                     String service_type = "";
                     List<String> parts = Arrays.asList(line.split(":", 5)); //split record from file, max of 4 parts
                     if (parts.size() > 1) {  //skip if not split
@@ -91,11 +90,11 @@ public class ImportExportConnectionList {
                             port = Integer.decode(port_str);
                         } catch (Exception ignored) {
                         }
-                        if (!(ip_address.equals(addressToRemove)) || !(port.toString().equals(portToRemove))) {
+                        if (!(ip_address.equals(addressToRemove)) || !(Integer.toString(port).equals(portToRemove))) {
                             if (port > 0) {  //skip if port not converted to integer
 
                                 boolean includeThisHost = true;
-                                if (host_name.equals(demo_host) && port.toString().equals(demo_port)) {
+                                if (host_name.equals(demo_host) && Integer.toString(port).equals(demo_port)) {
                                     foundDemoHost = true;
                                     if (prefHideDemoServer) includeThisHost = false;
                                 }
@@ -103,7 +102,7 @@ public class ImportExportConnectionList {
                                     HashMap<String, String> hm = new HashMap<>();
                                     hm.put("ip_address", ip_address);
                                     hm.put("host_name", host_name);
-                                    hm.put("port", port.toString());
+                                    hm.put("port", Integer.toString(port));
                                     hm.put("ssid", ssid_str);
                                     hm.put("service_type", service_type);
                                     if (!connections_list.contains(hm)) {    // suppress dups
@@ -139,10 +138,10 @@ public class ImportExportConnectionList {
     }
 
     public void saveConnectionsListExecute(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName, String serviceType) {
-        new saveConnectionsList(myApp, ip, name, port, wsName, ssidName, serviceType).execute();
+        new SaveConnectionsList(myApp, ip, name, port, wsName, ssidName, serviceType);
     }
 
-    class saveConnectionsList extends AsyncTask<Void, Void, String> {
+    class SaveConnectionsList implements Runnable{
 
         public threaded_application mainapp;  // hold pointer to mainapp
 
@@ -153,7 +152,7 @@ public class ImportExportConnectionList {
         private final String connected_ssid;
         private final String serviceType;
 
-        public saveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName, String sserviceType) {
+        public SaveConnectionsList(threaded_application myApp, String ip, String name, int port, String wsName, String ssidName, String sserviceType) {
             mainapp = myApp;
             connected_hostip = ip;
             connected_hostname = name;
@@ -161,14 +160,15 @@ public class ImportExportConnectionList {
             connected_ssid = ssidName;
             webServerName = wsName;
             serviceType = sserviceType;
+
+            new Thread(this).start();
         }
 
-        @Override
-        protected String doInBackground(Void... params) {
 
+        public void run() {
             String errMsg = "";
             //exit if values not set, avoid NPE reported to Play Store
-            if (connected_hostip == null || connected_port == 0) return errMsg;
+            if (connected_hostip == null || connected_port == 0)  return;
 
             foundDemoHost = false;
             boolean isBlankOrDemo = false;
@@ -177,14 +177,15 @@ public class ImportExportConnectionList {
                 isDemo = true;
                 foundDemoHost = true;
             }
-            if ( ((webServerName.isEmpty()) || (connected_hostname.equals(webServerName)))
-                    || (isDemo) ) {
+            if (((webServerName.isEmpty()) || (connected_hostname.equals(webServerName)))
+                    || (isDemo)) {
                 isBlankOrDemo = true;
             }
 
             //if no SD Card present then nothing to do
-            if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-                return errMsg;
+            if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+                return;
+            }
             try {
                 File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
@@ -199,7 +200,7 @@ public class ImportExportConnectionList {
                 }
 
                 String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
-                if (smrc.equals("")) { //if no value or entry removed, set to default
+                if (smrc.isEmpty()) { //if no value or entry removed, set to default
                     smrc = mainapp.getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
                 }
                 int mrc = 10;
@@ -210,19 +211,23 @@ public class ImportExportConnectionList {
                 int clEntries = Math.min(connections_list.size(), mrc);  //don't keep more entries than specified in preference
                 for (int i = 0; i < clEntries; i++) {  //loop thru entries from connections list, up to max in prefs
                     HashMap<String, String> t = connections_list.get(i);
-                    String li = t.get("ip_address");
-                    String lh = t.get("host_name");
-                    Integer lp = Integer.valueOf(t.get("port"));
-                    String ssid = t.get("ssid");
+                    String sIpAddress = t.get("ip_address");
+                    String sHostName = t.get("host_name");
+                    String sPort = t.get("port");
+                    String sSsid = t.get("ssid");
                     String sType = t.get("service_type");
+                    
+                    if ( (sIpAddress!=null) &&  (sHostName!=null) &&(sPort!=null) &&  (sSsid!=null) &&  (sType!=null) ) {
+                        Integer port = Integer.valueOf(sPort);
 
-                    boolean doWrite = !connected_hostip.equals(li) || (connected_port.intValue() != lp.intValue());
-                    //don't write it out if same as selected
-                    if ( li.equals(demo_host) && lp.toString().equals(demo_port) && (foundDemoHost) ) {
-                        doWrite = false;
-                    }
-                    if (doWrite) {
-                        list_output.format("%s:%s:%d:%s:%s\n", lh, li, lp, ssid, sType);
+                        boolean doWrite = !connected_hostip.equals(sIpAddress) || (connected_port.intValue() != port.intValue());
+                        //don't write it out if same as selected
+                        if (sIpAddress.equals(demo_host) && port.toString().equals(demo_port) && (foundDemoHost)) {
+                            doWrite = false;
+                        }
+                        if (doWrite) {
+                            list_output.format("%s:%s:%d:%s:%s\n", sHostName, sIpAddress, port, sSsid, sType);
+                        }
                     }
                 }
                 list_output.flush();
@@ -241,15 +246,7 @@ public class ImportExportConnectionList {
                     File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);
                     FileWriter fileWriter = new FileWriter(connections_log_file , true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter, 1024);
-                    PrintWriter log_output = new PrintWriter(bufferedWriter);
-
-                    if (isBlankOrDemo) {
-                        log_output.format("%s:%s:%d:%s:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
-                    } else {
-                        log_output.format("%s:%s:%d:%s:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
-                    }
-
-                    log_output.flush();
+                    PrintWriter log_output = getPrintWriter(bufferedWriter, isBlankOrDemo, currentDateAndTime);
                     log_output.close();
                     bufferedWriter.close();
                     fileWriter.close();
@@ -257,14 +254,24 @@ public class ImportExportConnectionList {
                     errMsg = except.getMessage();
                 }
             }
-
-            return errMsg;
+            if (errMsg != null) displayError(errMsg);
         }
 
-        @Override
-        protected void onPostExecute(String errMsg) {
-            if (errMsg.length() > 0)
-//                Toast.makeText(mainapp, mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT).show();
+        private PrintWriter getPrintWriter(BufferedWriter bufferedWriter, boolean isBlankOrDemo, String currentDateAndTime) {
+            PrintWriter log_output = new PrintWriter(bufferedWriter);
+
+            if (isBlankOrDemo) {
+                log_output.format("%s:%s:%d:%s:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
+            } else {
+                log_output.format("%s:%s:%d:%s:%s:%s\n", webServerName, connected_hostip, connected_port, connected_ssid, serviceType, currentDateAndTime);
+            }
+
+            log_output.flush();
+            return log_output;
+        }
+
+        protected void displayError(String errMsg) {
+            if (!errMsg.isEmpty())
                 threaded_application.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
         }
     }

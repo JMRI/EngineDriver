@@ -48,6 +48,7 @@ import android.widget.TextView;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
+import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
@@ -287,11 +288,11 @@ public class throttle_semi_realistic extends throttle {
             lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
             llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
 
-            SemiRealisticDirectionButtonTouchListener directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_FORWARD, throttleIndex);
+            SemiRealisticDirectionButtonTouchListener directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.FORWARD, throttleIndex);
             bTargetFwds[throttleIndex].setOnTouchListener(directionButtonTouchListener);
-            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_REVERSE, throttleIndex);
+            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.REVERSE, throttleIndex);
             bTargetRevs[throttleIndex].setOnTouchListener(directionButtonTouchListener);
-            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(DIRECTION_NEUTRAL, throttleIndex);
+            directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.NEUTRAL, throttleIndex);
             bTargetNeutrals[throttleIndex].setOnTouchListener(directionButtonTouchListener);
 
             vsbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
@@ -1245,7 +1246,7 @@ public class throttle_semi_realistic extends throttle {
         int currentDirection = getDirection(whichThrottle);
         boolean result = false;
 
-        if (direction == DIRECTION_NEUTRAL) {
+        if (direction == direction_type.NEUTRAL) {
             targetDirections[whichThrottle] = direction;
             result = true;
         } else if ( (speed == 0) || (currentDirection == direction) ) {
@@ -1348,7 +1349,7 @@ public class throttle_semi_realistic extends throttle {
         double loadSliderPosition = getLoadSliderPosition(whichThrottle);
         int speed = getSpeed(whichThrottle);
 
-        if (targetDirection == DIRECTION_NEUTRAL) {
+        if (targetDirection == direction_type.NEUTRAL) {
             targetSpeed = 0;
             sliderSpeed = 0;
             targetAccelleration = -1;
@@ -1513,13 +1514,13 @@ public class throttle_semi_realistic extends throttle {
         int scaleSpeed = (int) Math.round(targetSpeed * speedScale);
         try {
             switch (targetDirection) {
-                case DIRECTION_FORWARD:
+                case direction_type.FORWARD:
                     result = scaleSpeed + " ↑";
                     break;
-                case DIRECTION_REVERSE:
+                case direction_type.REVERSE:
                     result = scaleSpeed + " ↓";
                     break;
-                case DIRECTION_NEUTRAL:
+                case direction_type.NEUTRAL:
                 default:
                     result = Integer.toString(scaleSpeed);
                     break;
@@ -1783,26 +1784,26 @@ public class throttle_semi_realistic extends throttle {
             bNeutral.setSelected(false);
             bNeutral.setTypeface(null, Typeface.NORMAL);
 
-            if (targetDirections[whichThrottle] == DIRECTION_FORWARD) {
+            if (targetDirections[whichThrottle] == direction_type.FORWARD) {
                 bFwd.setSelected(true);
                 bFwd.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
                 bFwd.setEnabled(true);
 
-            } else if (targetDirections[whichThrottle] == DIRECTION_REVERSE) {
+            } else if (targetDirections[whichThrottle] == direction_type.REVERSE) {
                 bRev.setSelected(true);
                 bRev.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
                 bRev.setEnabled(true);
-            } else if (targetDirections[whichThrottle] == DIRECTION_NEUTRAL) {
+            } else if (targetDirections[whichThrottle] == direction_type.NEUTRAL) {
                 bNeutral.setSelected(true);
                 bNeutral.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
                 bNeutral.setEnabled(true);
 
 
                 int currentDirection = getDirection(whichThrottle);
-                if ( (speed == 0) || (currentDirection == DIRECTION_FORWARD) ) {
+                if ( (speed == 0) || (currentDirection == direction_type.FORWARD) ) {
                     bFwd.setEnabled(true);
                 }
-                if ( (speed == 0) || (currentDirection == DIRECTION_REVERSE) ) {
+                if ( (speed == 0) || (currentDirection == direction_type.REVERSE) ) {
                     bRev.setEnabled(true);
                 }
             }
@@ -1854,14 +1855,14 @@ public class throttle_semi_realistic extends throttle {
             mainapp.exitDoubleBackButtonInitiated = 0;
 
             switch (this.direction) {
-                case DIRECTION_FORWARD:
-                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_FORWARD);
+                case direction_type.FORWARD:
+                    result = changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
                     break;
-                case DIRECTION_REVERSE:
-                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_REVERSE);
+                case direction_type.REVERSE:
+                    result = changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
                     break;
-                case DIRECTION_NEUTRAL: {
-                    result = changeTargetDirectionIfAllowed(whichThrottle, DIRECTION_NEUTRAL);
+                case direction_type.NEUTRAL: {
+                    result = changeTargetDirectionIfAllowed(whichThrottle, direction_type.NEUTRAL);
                         break;
                 }
             }

@@ -69,6 +69,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -595,7 +596,12 @@ public class threaded_application extends Application {
                 set_default_function_labels(false);
             }
         }, "DefaultFunctionLabels").start();
-        CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+        }
+        cookieManager.setAcceptCookie(true);
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));

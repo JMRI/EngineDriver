@@ -20,6 +20,8 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver.intro;
 
+import static jmri.enginedriver.threaded_application.context;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,10 +45,9 @@ import jmri.enginedriver.util.PermissionsHelper;
 public class intro_activity extends AppIntro2 {
     private boolean introComplete = false;
     private SharedPreferences prefs;
-    private String prefTheme  = "";
-    private String prefThrottleType  = "";
+    //    private String prefThrottleType  = "";
     private String originalPrefTheme  = "";
-    private String originalPrefThrottleType  = "";
+//    private String originalPrefThrottleType  = "";
 
     private threaded_application mainapp;    //pointer back to application
 
@@ -60,7 +62,7 @@ public class intro_activity extends AppIntro2 {
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         originalPrefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+//        originalPrefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         mainapp.getFakeDeviceId(true); // force getting a new ID
 
@@ -82,7 +84,7 @@ public class intro_activity extends AppIntro2 {
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsPOST_NOTIFICATIONS));
                 sliderPage.setImageDrawable(R.drawable.icon_vector);
-                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+                sliderPage.setBgColor(ContextCompat.getColor(context, R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
                 askForPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, slideNumber);
@@ -123,7 +125,7 @@ public class intro_activity extends AppIntro2 {
                 sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
                 sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
                 sliderPage.setImageDrawable(R.drawable.icon_vector);
-                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+                sliderPage.setBgColor(ContextCompat.getColor(context, R.color.intro_background));
                 addSlide(AppIntroFragment.newInstance(sliderPage));
                 slideNumber = slideNumber + 1;
                 askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}, slideNumber);
@@ -240,15 +242,17 @@ public class intro_activity extends AppIntro2 {
         SharedPreferences prefsNoBackup = mainapp.getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
         prefsNoBackup.edit().putString("prefRunIntro", threaded_application.INTRO_VERSION).commit();
 
-        prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        String prefTheme = prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+//        prefThrottleType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if (!prefTheme.equals(originalPrefTheme))  {
             // the theme has changed so need to restart the app.
             Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            if (intent != null ) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
             finish();
 //            Runtime.getRuntime().exit(0); // really force the kill
         }

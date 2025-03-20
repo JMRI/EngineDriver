@@ -987,7 +987,7 @@ public class ImportExportPreferences {
                     String line = list_reader.readLine();
                     int splitPos = line.indexOf(':');
                     if (splitPos > 0) {
-                        Integer source = 0;
+                        Integer source;
                         String addr, turnoutName ="", turnoutServer = "";
                         try {
                              addr = line.substring(0, splitPos);
@@ -1010,7 +1010,7 @@ public class ImportExportPreferences {
                             turnoutName = "";
                             source = -1;
                         }
-                        if (addr.length() > 0) {
+                        if (!addr.isEmpty()) {
                             recentTurnoutAddressList.add(addr);
                             recentTurnoutNameList.add(turnoutName);
                             recentTurnoutSourceList.add(source);
@@ -1068,7 +1068,7 @@ public class ImportExportPreferences {
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
-            if (ras[0].length() > 0) {  //only process if address found
+            if (!ras[0].isEmpty()) {  //only process if address found
                 locoAddressSize = (ras[1].charAt(0) == 'L') ? address_type.LONG : address_type.SHORT;   // convert S/L to 0/1
                 try {
                     locoAddress = Integer.parseInt(ras[0]);   // convert address to int
