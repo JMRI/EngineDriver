@@ -671,7 +671,7 @@
 <!--    <string name="permissionsGotoAppSettings">Si prega di abilitare queste autorizzazioni dalle impostazioni dell\'app.</string>-->
     <string name="permissionsAppSettingsButton">Impostazioni dell\'app</string>
     <string name="permissionsRetryButton">Riprova</string>
-    <string name="permissionsRequestTitle">Autorizzazioni richieste</string>
+    <string name="permissionsRequestTitle">Autorizzazioni</string>
     <string name="permissionsRetryTitle">Autorizzazioni rifiutate</string>
 
     <string name="introWelcomeTitle">Benvenuto in\nEngine Driver</string>
@@ -951,7 +951,7 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell pulsante chiaggiatore / momentatore</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Il pulsante Bell è momentaneo. (Chiusura se non controllata.)</string>
 <!--    <string name="permissionsReadLegacyFiles">Il driver del motore ha bisogno di autorizzazioni di archiviazione per caricare le impostazioni legacy (Posizione vecchia).</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.</string>
+    <string name="permissionsReadPhoneState">Engine Driver ha bisogno di autorizzazioni telefoniche per mettere in pausa le operazioni quando su una chiamata.\n\nSe non è necessario, disabilita la preferenza "Interrompi alla chiamata?".</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Ulteriori preferenze</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Ulteriori preferenze del telefono dei suoni del telefono</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Loco Step Sounds giocherà fino alla fine quando cambiano il passaggio. L\'importo dello slancio (sopra) diventa solo un tempo minimo.</string>

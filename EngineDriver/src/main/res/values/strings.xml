@@ -432,7 +432,7 @@
     <string name="prefSelectiveLeadSoundF1Summary">For the \'Selective Lead Unit Sound\' option</string>
     <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound?</string>
     <string name="prefSelectiveLeadSoundF2Summary">For the \'Selective Lead Unit Sound\' option</string>
-    <string name="prefStopOnPhonecallTitle">Stop on Phonecall?</string>
+    <string name="prefStopOnPhonecallTitle">Stop on Phone Call?</string>
     <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
     <string name="prefStopOnReleaseTitle">Stop on Release?</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
@@ -1171,7 +1171,7 @@
 <!--    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>-->
 <!--    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver needs PHONE permissions to pause operations when on a call.</string>
+    <string name="permissionsReadPhoneState">Engine Driver needs the PHONE permission to stop your locos when on a call.\n\nIf not required, Disable the \'Stop on Phone Call?\` preference.</string>
 <!--    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>-->
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
@@ -1196,7 +1196,7 @@
     <string name="permissionsAppSettingsButton">App settings</string>
     <string name="permissionsSystemSettingsButton">System settings</string>
     <string name="permissionsRetryButton">Retry</string>
-    <string name="permissionsRequestTitle">Permissions Required</string>
+    <string name="permissionsRequestTitle">Permissions</string>
     <string name="permissionsRetryTitle">Permissions Declined</string>
 
 

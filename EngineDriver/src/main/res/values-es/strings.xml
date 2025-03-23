@@ -752,7 +752,7 @@
 <!--    <string name="permissionsGotoAppSettings">Por favor habilite estos permisos desde la configuración de la aplicación</string>-->
     <string name="permissionsAppSettingsButton">Ajustes de aplicacion</string>
     <string name="permissionsRetryButton">Procesar de nuevo</string>
-    <string name="permissionsRequestTitle">Permisos requeridos</string>
+    <string name="permissionsRequestTitle">Permisos</string>
     <string name="permissionsRetryTitle">Permisos rechazados</string>
 
     <!-- Introduction / Setup Wizard -->
@@ -1009,7 +1009,7 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Botón de campana Latching / Momenty</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botón de campana es momentáneo. (Enganchando si no se controla).</string>
 <!--    <string name="permissionsReadLegacyFiles">El controlador del motor necesita permisos de almacenamiento para cargar la configuración de Legacy (antigua ubicación).</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver necesita permisos telefónicos para pausar las operaciones cuando se llame.</string>
+    <string name="permissionsReadPhoneState">Engine Driver necesita permisos telefónicos para pausar las operaciones cuando se llame.\n\nSi no es necesario, deshabilite la preferencia \"¿Detener en llamada telefónica?\".</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferencias adicionales</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Adicional en teléfono loco sonidas preferencias</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Los sonidos del paso de Loco jugarán hasta su final al cambiar el paso. La cantidad de impulso (arriba) se convierte en un tiempo mínimo solamente.</string>

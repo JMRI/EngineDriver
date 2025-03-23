@@ -347,10 +347,10 @@
 
 
 
-    <string name="permissionsReadPhoneState">エンジン ドライバーには、通話中に操作を一時停止するには PHONE 権限が必要です。</string>
+    <string name="permissionsReadPhoneState">エンジン ドライバーには、通話中に操作を一時停止するには PHONE 権限が必要です。\n\n必要がない場合は、「通話時に停止しますか?」設定を無効にします。</string>
 
 
-    <string name="permissionsRequestTitle">必要な権限</string>
+    <string name="permissionsRequestTitle">権限</string>
     <string name="permissionsRetryButton">リトライ</string>
     <string name="permissionsRetryTitle">権限が拒否されました</string>
 

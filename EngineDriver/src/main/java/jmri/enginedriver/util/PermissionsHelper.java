@@ -41,7 +41,7 @@ public class PermissionsHelper {
 //            READ_FUNCTION_SETTINGS,
 //            STORE_FUNCTION_SETTINGS,
 //            STORE_LOG_FILES,
-            CONNECT_TO_SERVER,
+//            CONNECT_TO_SERVER,
             WRITE_SETTINGS,
             ACCESS_FINE_LOCATION,
 //            STORE_SERVER_AUTO_PREFERENCES,
@@ -70,7 +70,7 @@ public class PermissionsHelper {
 //    public static final int STORE_PREFERENCES = 37;
 //    public static final int READ_FUNCTION_SETTINGS = 38;
 //    public static final int STORE_FUNCTION_SETTINGS = 39;
-    public static final int CONNECT_TO_SERVER = 40;
+//    public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
     public static final int ACCESS_FINE_LOCATION = 42;
 //    public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
@@ -180,8 +180,8 @@ public class PermissionsHelper {
 //                return context.getResources().getString(R.string.permissionsStoreFunctionSettings);
 //            case READ_FUNCTION_SETTINGS:
 //                return context.getResources().getString(R.string.permissionsReadFunctionSettings);
-            case CONNECT_TO_SERVER:
-                return context.getResources().getString(R.string.permissionsConnectToServer);
+//            case CONNECT_TO_SERVER:
+//                return context.getResources().getString(R.string.permissionsConnectToServer);
             case WRITE_SETTINGS:
                 return context.getResources().getString(R.string.permissionsWriteSettings);
             case ACCESS_FINE_LOCATION:
@@ -259,17 +259,12 @@ public class PermissionsHelper {
                                     Manifest.permission.ACCESS_FINE_LOCATION},
                             requestCode);
                     break;
-                case CONNECT_TO_SERVER:
-//                    Log.d("Engine_Driver", "Requesting PHONE and STORAGE permissions");
-                    Log.d("Engine_Driver", "Requesting PHONE permission");
+//                case CONNECT_TO_SERVER:
+//                    Log.d("Engine_Driver", "Requesting PHONE permission");
 //                    activity.requestPermissions(new String[]{
-//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    requestCode);
-                    activity.requestPermissions(new String[]{
-                                    Manifest.permission.READ_PHONE_STATE},
-                            requestCode);
-                    break;
+//                                    Manifest.permission.READ_PHONE_STATE},
+//                            requestCode);
+//                    break;
                 case WRITE_SETTINGS:
                     Log.d("Engine_Driver", "Requesting WRITE_SETTINGS permissions");
                     if (Build.VERSION.SDK_INT < 23) {
@@ -459,7 +454,7 @@ public class PermissionsHelper {
             case READ_IMAGES:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
             case READ_PHONE_STATE:
-            case CONNECT_TO_SERVER:
+//            case CONNECT_TO_SERVER:
                 return  ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
             case ACCESS_FINE_LOCATION :
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION ) == PackageManager.PERMISSION_GRANTED;
@@ -532,7 +527,7 @@ public class PermissionsHelper {
             case READ_IMAGES:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
             case READ_PHONE_STATE:
-            case CONNECT_TO_SERVER:
+//            case CONNECT_TO_SERVER:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
             case ACCESS_FINE_LOCATION:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION);

@@ -340,10 +340,10 @@
 
 
 
-    <string name="permissionsReadPhoneState">Engine Driver nécessite la permission PHONE pour suspendre l\'application à la réception d\'un appel.</string>
+    <string name="permissionsReadPhoneState">Engine Driver nécessite la permission PHONE pour suspendre l\'application à la réception d\'un appel.\n\nSi cela n\'est pas nécessaire, désactivez la préférence «Arrêter sur appel téléphonique?».</string>
 
 
-    <string name="permissionsRequestTitle">Permissions requises</string>
+    <string name="permissionsRequestTitle">Permissions</string>
 
 
 
