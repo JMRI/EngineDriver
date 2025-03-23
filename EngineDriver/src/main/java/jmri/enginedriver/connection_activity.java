@@ -688,6 +688,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
 
         getWifiInfo();
+        getPhoneInfo();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
@@ -782,6 +783,29 @@ public class connection_activity extends AppCompatActivity implements Permission
                     "");
         }
     }
+
+    void getPhoneInfo() {
+        Log.d("Engine_Driver", "c_a: NetworkRequest.getPhoneInfo()");
+
+        PermissionsHelper phi = PermissionsHelper.getInstance();
+        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
+            if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // how many times have we asked for this before?
+                    int count = prefs.getInt("prefStopOnPhonecallCount", 0);
+                    if (count < 5) {  // this is effectively counted twice each startup
+                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.READ_PHONE_STATE);
+                        count++;
+                    } else {
+                        prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
+                        count = 0;
+                    }
+                    prefs.edit().putInt("prefStopOnPhonecallCount", count).apply();
+                }
+            }
+        }
+    }
+
 
     /**
      * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
@@ -1166,8 +1190,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
-            //noinspection SwitchStatementWithTooFewBranches
-            switch (requestCode) {
+//            switch (requestCode) {
 //                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
 //                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
 //                        clearConnectionsListImpl();
@@ -1184,16 +1207,16 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
 //                        loadSharedPreferencesFromFileImpl();
 //                        break;
-                case PermissionsHelper.CONNECT_TO_SERVER:
-                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
-//                    connectImpl();
-                    checkIfDccexServerName(connected_hostname, connected_port);
-                    connect();
-                    break;
-                default:
+//                case PermissionsHelper.CONNECT_TO_SERVER:
+//                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+////                    connectImpl();
+//                    checkIfDccexServerName(connected_hostname, connected_port);
+//                    connect();
+//                    break;
+//                default:
                     // do nothing
                     Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
-            }
+//            }
         }
     }
 

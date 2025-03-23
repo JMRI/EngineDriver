@@ -681,7 +681,7 @@
     <string name="permissionsAppSettingsButton">Paramètres APPLICATION</string>
     <string name="permissionsSystemSettingsButton">Paramètres Système</string>
     <string name="permissionsRetryButton">Recommencer</string>
-    <string name="permissionsRequestTitle">Permissions nécessaires</string>
+    <string name="permissionsRequestTitle">Permissions</string>
     <string name="permissionsRetryTitle">Permissions refusées</string>
     <string name="introWelcomeTitle">Bienvenue sur \nEngine Driver</string>
     <string name="introWelcomeSummary">Cette application peut se connecter à un serveur WiThrottle JMRI, MRC ou DigiTrax pour controler vos locomotives et accessoires DCC. Les pages suivantes vous guideront pour le paramétrage initial.</string>
@@ -1005,7 +1005,7 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Bouton Cloche temporaire (sinon verrouillé)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Verrouillage de bouton de cloche / momentané</string>
 <!--    <string name="permissionsReadLegacyFiles">Engine Driver nécessite accès au STOCKAGE pour charger les anciens paramètres..</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver nécessite accès au TELEPHONE pour se mettre en pause si appel telephoniques.</string>
+    <string name="permissionsReadPhoneState">Engine Driver nécessite accès au TELEPHONE pour se mettre en pause si appel telephoniques.\n\nSi cela n\'est pas nécessaire, désactivez la préférence «Arrêter sur appel téléphonique?».</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Préférences supplémentaires</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Préférences supplémentaires pour les sons via le telephone.</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Les sons liés a la vitesse de la loco joués en entier au changement de vitesse, le délai défini devient un minimum.</string>

@@ -676,7 +676,7 @@
 <!--    <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>-->
     <string name="permissionsAppSettingsButton">Configurações do aplicativo</string>
     <string name="permissionsRetryButton">Tente novamente</string>
-    <string name="permissionsRequestTitle">Permissões necessárias</string>
+    <string name="permissionsRequestTitle">Permissões</string>
     <string name="permissionsRetryTitle">Permissões recusadas</string>
 
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
@@ -956,7 +956,7 @@
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Botão de sino travamento / momentâneo</string>
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botão Bell é momentâneo. (Travamento se desmarcado.)</string>
 <!--    <string name="permissionsReadLegacyFiles">O driver do motor precisa de permissões de armazenamento para carregar as configurações legadas (local de localização).</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver precisa de permissões de telefone para pausar as operações quando estiver em uma chamada.</string>
+    <string name="permissionsReadPhoneState">Engine Driver precisa de permissões de telefone para pausar as operações quando estiver em uma chamada.\n\nSe não for necessário, desative a preferência \'Parar na chamada telefônica?\'.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferências adicionais</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Preferências adicionais em Telefone Loco Sounds</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Os sons de passo de loco jogarão até o fim ao mudar de passo. A quantidade de momentum (acima) se torna apenas um tempo mínimo.</string>

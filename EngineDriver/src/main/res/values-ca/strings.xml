@@ -764,7 +764,7 @@
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
     <string name="permissionsSystemSettingsButton">Configuració del sistema</string>
     <string name="permissionsRetryButton">Torneu a provar</string>
-    <string name="permissionsRequestTitle">Permisos necessaris</string>
+    <string name="permissionsRequestTitle">Permisos</string>
     <string name="permissionsRetryTitle">Permisos rebutjats</string>
 
     <!-- Introduction / Setup Wizard -->
@@ -1012,7 +1012,7 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Botó de campana és momentània. (Bloqueig si no està marcat.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bouth Button Botó / momentània</string>
 <!--    <string name="permissionsReadLegacyFiles">El controlador de motor necessita permisos d\'emmagatzematge per carregar la configuració del llegat (ubicació antiga).</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver necessita permisos de telèfon per aturar les operacions en una trucada.</string>
+    <string name="permissionsReadPhoneState">Engine Driver necessita permisos de telèfon per aturar les operacions en una trucada.\n\nSi no és necessari, desactiveu la preferència \"Aturar la trucada telefònica?\".</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Preferències addicionals</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Addicionals al telèfon Loco sona les preferències</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Els sons de pas de loco jugaran fins al final en canviar de pas. La quantitat d\'impuls (a dalt) només es converteix en un temps mínim.</string>

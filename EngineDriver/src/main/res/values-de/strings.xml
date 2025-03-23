@@ -720,7 +720,7 @@
 <!--    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>-->
     <string name="permissionsAppSettingsButton">App Einstellungen</string>
     <string name="permissionsRetryButton">Wiederholen</string>
-    <string name="permissionsRequestTitle">Erforderliche Berechtigungen</string>
+    <string name="permissionsRequestTitle">Berechtigungen</string>
     <string name="permissionsRetryTitle">Berechtigungen abgelehnt</string>
 
     <string name="introWelcomeTitle">Willkommen bei\nEngine Driver</string>
@@ -1017,7 +1017,7 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Die Bell-Taste ist momentan. (Verriegelung, wenn nicht markiert.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Glockenknopfverriegelung / momentan</string>
 <!--    <string name="permissionsReadLegacyFiles">Der Engine-Treiber benötigt Speicherberechtigungen, um die Einstellungen der Alt- (alten Standort-) zu laden.</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver benötigt Telefonberechtigungen, um den Betrieb bei einem Anruf anzuhalten.</string>
+    <string name="permissionsReadPhoneState">Engine Driver benötigt Telefonberechtigungen, um den Betrieb bei einem Anruf anzuhalten.\n\nFalls nicht erforderlich, deaktivieren Sie die Einstellung „Beim Telefonanruf stoppen?“.</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Zusätzliche Präferenzen</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Zusätzlich in Telefon Loco Sounds-Vorlieben</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Loco-Step-Sounds spielen bis zum Ende, wenn Sie den Schritt ändern. Der Momentummenge (oben) wird nur zu einer Mindestzeit.</string>

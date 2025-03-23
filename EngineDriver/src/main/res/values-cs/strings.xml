@@ -884,7 +884,7 @@
     <string name="permissionsAppSettingsButton">Nastavení aplikace</string>
     <string name="permissionsSystemSettingsButton">Nastavení systému</string>
     <string name="permissionsRetryButton">Opakovat</string>
-    <string name="permissionsRequestTitle">Oprávnění vyžadováno</string>
+    <string name="permissionsRequestTitle">Oprávnění</string>
     <string name="permissionsRetryTitle">Oprávnění odmítnuta</string>
 
     <!-- Introduction / Setup Wizard -->
@@ -1114,7 +1114,7 @@
     <string name="prefDeviceSoundsBellIsMomentarySummary">Tlačítko Bell je momentální. (Zabezpečení, pokud není zaškrtnuto.)</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">Bell Tlačítko Latching / Momentary</string>
 <!--    <string name="permissionsReadLegacyFiles">Ovladač motoru potřebuje oprávnění pro ukládání dat pro nastavení starší (staré umístění).</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.</string>
+    <string name="permissionsReadPhoneState">Engine Driver potřebuje oprávnění PHONE pro pozastavení provozu během hovoru.\n\nPokud to není vyžadováno, deaktivujte předvolbu \'Zastavit hovor?\'</string>
     <string name="prefDeviceSoundsAdditionalPreferencesTitle">Další preference</string>
     <string name="prefDeviceSoundsAdditionalPreferencesSummary">Další v telefonu Loco Sounds Preferences</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">Zuny Loco Step bude hrát až do jejich konce při změně kroku. Částka hybnosti (výše) se stává minimálním časem.</string>
