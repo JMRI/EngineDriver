@@ -880,6 +880,8 @@
     <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings and Preferences.\n</string>
     <string name="statusThreadedAppNotconnectedToWifi">Not connected to WiFi</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery is not possible without a WiFi connection!</string>
+    <string name="statusThreadedAppNoLocationService">Can\'t access SSID</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">\'Use Location\' Android system setting is disabled. Network name (SSID) is unavailable and Server Discovery may be limited.</string>
     <string name="statusThreadedAppNotConnected">Not connected to a network.  Check WiFi settings.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">No response from server %1$s:%2$s for %3$dms. Check that the WiThrottle Server is running.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Unable to connect to server at %1$s:%2$s from %3$s.  Retrying</string>

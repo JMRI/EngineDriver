@@ -980,6 +980,7 @@
     <string name="prefTtsThrottleSpeedSummary">Quando a velocidade atinge certas velocidades ao usar um gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">A descoberta de servidor não é possível sem uma conexão WiFi!</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">A configuração do sistema Android \"Usar localização\" está desativada. O nome da rede (SSID) não está disponível e a descoberta do servidor pode ser limitada.</string>
     <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi.\n\n nova tentativa</string>
     <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
     <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$dms segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
@@ -1108,4 +1109,5 @@
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use padrões para entradas de lista sem funções</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Ação do botão Parar</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Escolha o que o botão Parar faz</string>
+    <string name="statusThreadedAppNoLocationService">Não consigo acessar o SSID</string>
 </resources>
