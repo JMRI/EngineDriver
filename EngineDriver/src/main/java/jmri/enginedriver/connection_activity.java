@@ -767,12 +767,23 @@ public class connection_activity extends AppCompatActivity implements Permission
         v.setText(String.format(getString(R.string.throttle_name), throttleName));
 
         String ssid = mainapp.client_ssid;
-        if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) ) {
-            if ( (mainapp.clientLocationServiceEnabled) || (mainapp.client_type.equals("MOBILE")) ) {
+        StringBuilder warningTextBuilder = new StringBuilder("");
+        if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) || (ssid.equals("Can't access SSID")) ) {
+            if (mainapp.client_type.equals("MOBILE")) {
                 ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
             } else {
                 ssid = getString(R.string.statusThreadedAppNoLocationService);
-                discoveredServersWarning.setText(R.string.statusThreadedAppServerDiscoveryNoLocationService);
+                if (!mainapp.clientLocationServiceEnabled) {
+                    warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoveryNoLocationService));
+                    warningTextBuilder.append("  ");
+                }
+                PermissionsHelper phi = PermissionsHelper.getInstance();
+                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
+                    warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoveryAccessFineLocationNotGranted));
+                    warningTextBuilder.append("  ");
+                }
+                warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
+                discoveredServersWarning.setText(warningTextBuilder.toString());
             }
             discoveredServersWarning.setVisibility(VISIBLE);
         } else {
@@ -839,38 +850,22 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
 //                }
 //            }
-//<!-- needed for API 33 -->
-//            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
-                    }
-                }
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
-                    }
-                }
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE);
-                    }
-                }
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.INTERNET)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.INTERNET);
-                    }
-                }
-
-                //            } else {
-//                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES)) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.NEARBY_WIFI_DEVICES);
-//                    }
+//            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
 //                }
 //            }
-//<!-- needed for API 33 -->
+            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE);
+                }
+            }
+            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.INTERNET)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.INTERNET);
+                }
+            }
+
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
             mainapp.client_ssid = wifiinfo.getSSID();
@@ -1237,6 +1232,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults, true)) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
             Log.d("Engine_Driver", "Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);

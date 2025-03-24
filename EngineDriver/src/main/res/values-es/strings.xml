@@ -1035,7 +1035,9 @@
     <string name="FilterRosterListDownloadLabel">Descargar</string>
     <string name="rosterEmpty">No se puede encontrar ninguna entrada en la lista de servidores.\n\nUtilice en su lugar la opción \'Dirección DCC\' o \'Reciente\'.</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">¡Server Discovery no es posible sin una conexión WiFi!</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuración del sistema Android Usar ubicación está deshabilitada. El nombre de la red (SSID) no está disponible y la detección del servidor puede estar limitada.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuración del sistema Android \'Usar ubicación\' está deshabilitada.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Permiso ACCESS_FINE_LOCATION no concedido.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nombre de red inaccesible. El descubrimiento del servidor puede ser limitado.</string>
     <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
     <string name="toastImportExportCouldNotParseAddress">No se pudo analizar la dirección\n%1$s</string>
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
@@ -1082,7 +1084,7 @@
     <string name="DccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorar acciones de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccione esto si tiene problemas con el DPAD que produce códigos clave y eventos de joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.\n\nEngine Driver funcionará sin él.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necesita permisos READ_MEDIA_VISUAL_USER_SELECTED para cargar imágenes de fondo.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necesita permisos cercanos_wifi_devices para recuperar el SSID WiFi actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necesita permisos de notificación para advertirle cuando empuje en el fondo.</string>

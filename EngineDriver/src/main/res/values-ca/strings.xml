@@ -1041,7 +1041,9 @@
     yh<string name="rosterEmpty">No es pot trobar cap entrada a la llista del servidor.\n\nUtilitzeu l\'opció "Adreça DCC" o "Recent".</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">El descobriment del servidor no és possible sense connexió WiFi!</string>
     <string name="statusThreadedAppNoLocationService">No es pot accedir al SSID</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuració del sistema Android d\'Utilitzar la ubicació està desactivada. El nom de xarxa (SSID) no està disponible i la descoberta del servidor pot estar limitada.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuració del sistema Android "Utilitza la ubicació" està desactivada.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">No s\'ha concedit el permís ACCESS_FINE_LOCATION.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nom de xarxa inaccessible. El descobriment del servidor pot ser limitat.</string>
     <string name="statusThreadedAppNotConnected">No està connectat a una xarxa. Comproveu la configuració de Wi-Fi. \n\nReintentant</string>
     <string name="toastImportExportCouldNotParseAddress">No s\'ha pogut analitzar l\'adreça\n%1$s</string>
     <string name="toastNumThrottles">El tipus de pantalla de l\'acceleració escollit no admet tants acceleradors. Reduint al %1$s.</string>
@@ -1092,7 +1094,7 @@
     <string name="DccexWriteCvValueLabel">Valorar</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.\n\nEngine Driver funcionarà sense ell.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita els permisos READ_MEDIA_VISUAL_USER_SELECTED per carregar imatges de fons.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>

@@ -777,7 +777,9 @@
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Ohne WLAN-Verbindung ist eine Servererkennung nicht möglich!</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">Die Android-Systemeinstellung „Standort verwenden“ ist deaktiviert. Der Netzwerkname (SSID) ist nicht verfügbar und die Servererkennung ist möglicherweise eingeschränkt.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">Die Android-Systemeinstellung „Standort verwenden“ ist deaktiviert.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">ACCESS_FINE_LOCATION-Berechtigung nicht erteilt.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Auf den Netzwerknamen kann nicht zugegriffen werden. Die Servererkennung kann eingeschränkt sein.</string>
     <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\n\nNeuer Versuch</string>
     <string name="prefConsistFollowDefaultActionTitle">Wenn Alle Spiele Fail-Aktion</string>
     <string name="prefConsistFollowDefaultActionSummary">Welche locos im bestehen sollte auf die Funktionstasten reagieren, wenn keine der folgenden Regeln treffen sind.</string>
@@ -1084,7 +1086,7 @@
     <string name="DccexWriteCvValueLabel">Wert</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorieren Sie Joystick -Handlungen</string>
     <string name="prefGamePadIgnoreJoystickSummary">Wählen Sie dies aus, wenn Sie Probleme mit dem DPAD haben, der sowohl Schlüsselcodes als auch Joystick -Ereignisse erstellt</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.\n\nEngine Driver funktioniert auch ohne.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver benötigt READ_MEDIA_VISUAL_USER_SELECTED -Berechtigungen, um Hintergrundbilder zu laden.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver benötigt die Berechtigungen in der Nähe_WIFI_Devices, um die aktuelle WLAN -SSID abzurufen.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>

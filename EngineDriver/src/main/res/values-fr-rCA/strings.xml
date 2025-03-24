@@ -335,7 +335,7 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver nécessite la permission NOTIFICATION pour vous aviser avec des notifications lorsque l\'application est basculée en arrière plan.</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver nécessite la permission READ_MEDIA_IMAGES pour afficher les images en arrière plan.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver nécessite la permission READ_MEDIA_IMAGES pour afficher les images en arrière plan.\n\nEngine Driver fonctionnera sans lui.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver nécessite la permission READ_MEDIA_VISUAL_USER_SELECTED pour afficher les images en arrière plan.</string>
 
 

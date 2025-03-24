@@ -342,7 +342,7 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">エンジン ドライバーには、バックグラウンドにプッシュされたときに警告を表示する NOTIFICATION 権限が必要です。</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。\n\nEngineDriver はこれなしでも動作します。</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_VISUAL_USER_SELECTED 権限が必要です。</string>
 
 
@@ -957,7 +957,9 @@
 
     <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$dms 秒間応答がありませんでした。 WiThrottle サーバーが実行されていることを確認します。再試行中</string>
 
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">「位置情報を使用」の Android システム設定が無効になっています。ネットワーク名 (SSID) が利用できないため、サーバー検出が制限されている可能性があります。</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">「位置情報を使用する」Android システム設定が無効になっています。</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">ACCESS_FINE_LOCATION 権限が付与されていません。</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">ネットワーク名にアクセスできません。サーバー検出が制限される場合があります。</string>
     <string name="statusThreadedAppNotConnected">ネットワークに接続されていません。 WiFi設定を確認してください。再試行中</string>
     <string name="statusThreadedAppNotconnectedToWifi">WiFiに接続されていません</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">WiFi 接続がなければサーバー検出はできません。</string>
