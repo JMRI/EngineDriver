@@ -975,7 +975,9 @@
     <string name="prefTtsThrottleSpeedSummary">Quando la velocità colpisce determinate velocità quando si utilizza un gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Su velocità di gamepad</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Il Server Discovery non è possibile senza una connessione WiFi!</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">L\'impostazione del sistema Android Usa posizione è disabilitata. Il nome di rete (SSID) non è disponibile e l\'individuazione del server potrebbe essere limitata.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">L\'impostazione del sistema Android "Usa posizione" è disabilitata.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Autorizzazione ACCESS_FINE_LOCATION non concessa.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nome della rete inaccessibile. Il rilevamento del server potrebbe essere limitato.</string>
     <string name="statusThreadedAppNotConnected">Non connesso a una rete. Controllare le impostazioni WiFi.\n\n ReTring</string>
     <string name="statusThreadedAppUnableToConnect">Impossibile connettersi al server a %1$s:%2$s da %3$s. Riprovare</string>
     <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server Withrottle sia in esecuzione. Riprovare</string>

@@ -629,7 +629,9 @@
     <string name="toastThreadedAppNotWIFI">Používáte síť %1$s, není WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery není možný bez WiFi připojení!</string>
     <string name="statusThreadedAppNoLocationService">Nelze získat přístup k SSID</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">Systémové nastavení systému Android Použít polohu je zakázáno. Název sítě (SSID) není k dispozici a zjišťování serveru může být omezeno.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">Nastavení systému Android „Použít polohu“ je zakázáno.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Oprávnění ACCESS_FINE_LOCATION nebylo uděleno.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Název sítě je nedostupný. Zjišťování serveru může být omezené.</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
     <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>

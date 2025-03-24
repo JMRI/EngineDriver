@@ -32,23 +32,12 @@ public class PermissionsHelper {
      */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
-//            CLEAR_CONNECTION_LIST,
-//            READ_CONNECTION_LIST,
-//            STORE_CONNECTION_LIST,
             READ_PHONE_STATE,
-//            READ_PREFERENCES,
-//            STORE_PREFERENCES,
-//            READ_FUNCTION_SETTINGS,
-//            STORE_FUNCTION_SETTINGS,
-//            STORE_LOG_FILES,
-//            CONNECT_TO_SERVER,
+///            CONNECT_TO_SERVER,
             WRITE_SETTINGS,
             ACCESS_FINE_LOCATION,
-//            STORE_SERVER_AUTO_PREFERENCES,
-//            READ_SERVER_AUTO_PREFERENCES,
             VIBRATE,
             READ_IMAGES,
-//            READ_LEGACY_FILES,
 //            NEARBY_WIFI_DEVICES,
             READ_MEDIA_IMAGES,
             READ_MEDIA_VISUAL_USER_SELECTED,
@@ -62,23 +51,12 @@ public class PermissionsHelper {
     /**
      * List of possible permission request codes
      */
-//    public static final int CLEAR_CONNECTION_LIST = 32;
-//    public static final int READ_CONNECTION_LIST = 33;
-//    public static final int STORE_CONNECTION_LIST = 34;
     public static final int READ_PHONE_STATE = 35;
-//    public static final int READ_PREFERENCES = 36;
-//    public static final int STORE_PREFERENCES = 37;
-//    public static final int READ_FUNCTION_SETTINGS = 38;
-//    public static final int STORE_FUNCTION_SETTINGS = 39;
 //    public static final int CONNECT_TO_SERVER = 40;
     public static final int WRITE_SETTINGS = 41;
     public static final int ACCESS_FINE_LOCATION = 42;
-//    public static final int STORE_SERVER_AUTO_PREFERENCES = 43;
-//    public static final int READ_SERVER_AUTO_PREFERENCES = 44;
-//    public static final int STORE_LOG_FILES = 45;
     public static final int VIBRATE = 46;
     public static final int READ_IMAGES = 47;
-//    public static final int READ_LEGACY_FILES = 48;
 
 //<!-- needed for API 33 -->
 //    public static final int NEARBY_WIFI_DEVICES = 49;
@@ -161,29 +139,10 @@ public class PermissionsHelper {
         // Get the relevant rationale message based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-//            case READ_CONNECTION_LIST:
-//                return context.getResources().getString(R.string.permissionsReadRecentConnections);
-//            case CLEAR_CONNECTION_LIST:
-//                return context.getResources().getString(R.string.permissionsClearRecentConnections);
-//            case STORE_CONNECTION_LIST:
-//                return context.getResources().getString(R.string.permissionsStoreRecentConnections);
-//            case READ_PREFERENCES:
-//                return context.getResources().getString(R.string.permissionsReadPreferences);
             case READ_IMAGES:
                 return context.getResources().getString(R.string.permissionsREAD_IMAGES);
-//            case READ_LEGACY_FILES:
-//                return context.getResources().getString(R.string.permissionsReadLegacyFiles);
-//            case STORE_PREFERENCES:
-//            case STORE_SERVER_AUTO_PREFERENCES:
-//            case READ_SERVER_AUTO_PREFERENCES:
-//            case STORE_LOG_FILES:
-//                return context.getResources().getString(R.string.permissionsStorePreferences);
             case READ_PHONE_STATE:
                 return context.getResources().getString(R.string.permissionsReadPhoneState);
-//            case STORE_FUNCTION_SETTINGS:
-//                return context.getResources().getString(R.string.permissionsStoreFunctionSettings);
-//            case READ_FUNCTION_SETTINGS:
-//                return context.getResources().getString(R.string.permissionsReadFunctionSettings);
 //            case CONNECT_TO_SERVER:
 //                return context.getResources().getString(R.string.permissionsConnectToServer);
             case WRITE_SETTINGS:
@@ -227,50 +186,29 @@ public class PermissionsHelper {
         // All possible request codes should be considered
         Log.d("Engine_Driver", "isDialogOpen at requestNecessaryPermissions? " + isDialogOpen);
         if (!isDialogOpen) {
+            Log.d("Engine_Driver", "Requesting " + getManifestPermissionId(requestCode)+ " permissions");
             switch (requestCode) {
-//                case READ_CONNECTION_LIST:
-//                case CLEAR_CONNECTION_LIST:
-//                case STORE_CONNECTION_LIST:
-//                case READ_PREFERENCES:
-//                case STORE_PREFERENCES:
-//                case STORE_FUNCTION_SETTINGS:
-//                case STORE_LOG_FILES:
-//                case READ_FUNCTION_SETTINGS:
-//                case STORE_SERVER_AUTO_PREFERENCES:
-//                case READ_SERVER_AUTO_PREFERENCES:
-//                    Log.d("Engine_Driver", "Requesting STORAGE permissions");
-//                    activity.requestPermissions(new String[]{
-//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//                                    Manifest.permission.READ_EXTERNAL_STORAGE},
-//                            requestCode);
-//                    break;
-//                case READ_LEGACY_FILES:
                 case READ_IMAGES:
-                    Log.d("Engine_Driver", "Requesting STORAGE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.READ_EXTERNAL_STORAGE},
                             requestCode);
 //                    break;
                 case READ_PHONE_STATE:
-                    Log.d("Engine_Driver", "Requesting PHONE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.READ_PHONE_STATE},
                             requestCode);
                     break;
                 case ACCESS_FINE_LOCATION:
-                    Log.d("Engine_Driver", "Requesting ACCESS_FINE_LOCATION permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.ACCESS_FINE_LOCATION},
                             requestCode);
                     break;
 //                case CONNECT_TO_SERVER:
-//                    Log.d("Engine_Driver", "Requesting PHONE permission");
 //                    activity.requestPermissions(new String[]{
 //                                    Manifest.permission.READ_PHONE_STATE},
 //                            requestCode);
 //                    break;
                 case WRITE_SETTINGS:
-                    Log.d("Engine_Driver", "Requesting WRITE_SETTINGS permissions");
                     if (Build.VERSION.SDK_INT < 23) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.WRITE_SETTINGS},
@@ -282,14 +220,12 @@ public class PermissionsHelper {
                     }
                     break;
                 case VIBRATE:
-                    Log.d("Engine_Driver", "Requesting VIBRATE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.VIBRATE},
                             requestCode);
                     break;
 
                 case READ_MEDIA_IMAGES: // needed for API 33
-                    Log.d("Engine_Driver", "Requesting READ_MEDIA_IMAGES permissions");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.READ_MEDIA_IMAGES},
@@ -297,7 +233,6 @@ public class PermissionsHelper {
                     }
                     break;
                 case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-                    Log.d("Engine_Driver", "Requesting READ_MEDIA_VISUAL_USER_SELECTED permissions");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
@@ -316,31 +251,26 @@ public class PermissionsHelper {
                                         Manifest.permission.POST_NOTIFICATIONS},
                                 requestCode);
                     }
-                    Log.d("Engine_Driver", "Requesting POST_NOTIFICATIONS permissions");
                     break;
 //<!-- needed for API 33 -->
 
                 case ACCESS_COARSE_LOCATION:
-                    Log.d("Engine_Driver", "Requesting ACCESS_COURSE_LOCATION permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.ACCESS_COARSE_LOCATION},
                             requestCode);
                     break;
                 case ACCESS_WIFI_STATE:
-                    Log.d("Engine_Driver", "Requesting ACCESS_WIFI_STATE permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.ACCESS_WIFI_STATE},
                             requestCode);
                     break;
                 case INTERNET:
-                    Log.d("Engine_Driver", "Requesting INTERNET permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.INTERNET},
                             requestCode);
                     break;
-
-
             }
+
         } else {
             Log.d("Engine_Driver", "Permissions dialog is opened - don't ask yet...");
         }
@@ -449,19 +379,6 @@ public class PermissionsHelper {
         // Determine which permissions to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-//            case READ_CONNECTION_LIST:
-//            case CLEAR_CONNECTION_LIST:
-//            case STORE_CONNECTION_LIST:
-//            case READ_PREFERENCES:
-//            case STORE_PREFERENCES:
-//            case STORE_FUNCTION_SETTINGS:
-//            case STORE_LOG_FILES:
-//            case READ_FUNCTION_SETTINGS:
-//            case STORE_SERVER_AUTO_PREFERENCES:
-//            case READ_SERVER_AUTO_PREFERENCES:
-//                return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
-//                        ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
-//            case READ_LEGACY_FILES:
             case READ_IMAGES:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
             case READ_PHONE_STATE:
@@ -522,19 +439,6 @@ public class PermissionsHelper {
         // Determine which permission rationales to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-//            case READ_CONNECTION_LIST:
-//            case CLEAR_CONNECTION_LIST:
-//            case STORE_CONNECTION_LIST:
-//            case READ_PREFERENCES:
-//            case STORE_PREFERENCES:
-//            case STORE_FUNCTION_SETTINGS:
-//            case STORE_LOG_FILES:
-//            case READ_FUNCTION_SETTINGS:
-//            case STORE_SERVER_AUTO_PREFERENCES:
-//            case READ_SERVER_AUTO_PREFERENCES:
-//                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
-//                        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//            case READ_LEGACY_FILES:
             case READ_IMAGES:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
             case READ_PHONE_STATE:

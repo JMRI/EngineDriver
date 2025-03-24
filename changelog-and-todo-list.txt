@@ -9,6 +9,7 @@
  * Make the PHONE permission more clearly optional
  * Separate warning when the 'Use Location' service is disabled (as different to no WiFi)
  * Rewrite of the App Intro permissions request screen to better re-ask for permissions that were not initally granted under Android 14+
+ * Don't ask for the location permissions in the Connection screen
 **Version 2.39.194
  * Toast message when the Roster, Turnouts/Points & Routes each have finished loading for DCC-EX (can be disabled with the Informational Toast preference)
  * When you change throttle layouts, and the new layout supports a range of throttles, ask for the number.

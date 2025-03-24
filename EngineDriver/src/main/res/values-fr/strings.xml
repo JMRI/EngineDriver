@@ -507,7 +507,9 @@
     <string name="toastThreadedAppErrorSleepingThread">Erreur attente de flux, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Utilisation réseau %1$s , pas de WIFI.\nVérifier vos paramètres WiFi.\n</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Impossible de trouver le serveur sans connexion WiFi</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">Le paramètre système Android Utiliser la localisation est désactivé. Le nom du réseau (SSID) n\'est pas disponible et la découverte du serveur peut être limitée.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">Le paramètre système Android «Utiliser la localisation» est désactivé.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Autorisation ACCESS_FINE_LOCATION non accordée.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nom du réseau inaccessible. La découverte du serveur peut être limitée.</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
     <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>

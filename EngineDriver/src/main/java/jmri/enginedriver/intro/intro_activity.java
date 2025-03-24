@@ -39,7 +39,7 @@ import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 
-public class intro_activity extends AppIntro2 {
+public class intro_activity extends AppIntro2 implements PermissionsHelper.PermissionsHelperGrantedCallback {
     private boolean introComplete = false;
     private SharedPreferences prefs;
     //    private String prefThrottleType  = "";
@@ -86,7 +86,7 @@ public class intro_activity extends AppIntro2 {
 //                slideNumber = slideNumber + 1;
 //                askForPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, slideNumber);
 //            }
-//        }
+//        }=
 ////<!-- needed for API 33 -->
 //
 ////<!-- needed for API 33 -->
@@ -296,10 +296,23 @@ public class intro_activity extends AppIntro2 {
         setWizardMode(true);
     }
 
+
+    @SuppressLint("SwitchIntDef")
+    public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
+        Log.d("Engine_Driver", "introActivity: navigateToHandler:" + requestCode);
+        if (!PermissionsHelper.getInstance().isPermissionGranted(this, requestCode)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PermissionsHelper.getInstance().requestNecessaryPermissions(this, requestCode);
+            }
+        } else {
+            // do nothing
+            Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);
+        }
+    }
     @Override
     public void onRequestPermissionsResult(@PermissionsHelper.RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d("Engine_Driver", "introActivity: Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

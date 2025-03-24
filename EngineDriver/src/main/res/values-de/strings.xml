@@ -777,7 +777,9 @@
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">Ohne WLAN-Verbindung ist eine Servererkennung nicht möglich!</string>
-    <string name="statusThreadedAppServerDiscoveryNoLocationService">Die Android-Systemeinstellung „Standort verwenden“ ist deaktiviert. Der Netzwerkname (SSID) ist nicht verfügbar und die Servererkennung ist möglicherweise eingeschränkt.</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">Die Android-Systemeinstellung „Standort verwenden“ ist deaktiviert.</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">ACCESS_FINE_LOCATION-Berechtigung nicht erteilt.</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">Auf den Netzwerknamen kann nicht zugegriffen werden. Die Servererkennung kann eingeschränkt sein.</string>
     <string name="statusThreadedAppNotConnected">Nicht mit einem Netzwerk verbunden. Überprüfen Sie WLAN-Einstellungen.\n\nNeuer Versuch</string>
     <string name="prefConsistFollowDefaultActionTitle">Wenn Alle Spiele Fail-Aktion</string>
     <string name="prefConsistFollowDefaultActionSummary">Welche locos im bestehen sollte auf die Funktionstasten reagieren, wenn keine der folgenden Regeln treffen sind.</string>
