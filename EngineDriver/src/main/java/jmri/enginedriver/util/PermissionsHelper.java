@@ -133,7 +133,11 @@ public class PermissionsHelper {
             } else if (grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
                 Log.d("Engine_Driver", "Permission denied - showRetryDialog");
-                showRetryDialog(activity, requestCode);
+                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    showRetryDialog(activity, requestCode);
+                } else {
+                    showAppSettingsDialog(activity, requestCode, true);
+                }
                 break;
             } else {
                 isRecognised = true;
@@ -317,7 +321,7 @@ public class PermissionsHelper {
 //<!-- needed for API 33 -->
 
                 case ACCESS_COARSE_LOCATION:
-                    Log.d("Engine_Driver", "Requesting ACCESS_FINE_LOCATION permissions");
+                    Log.d("Engine_Driver", "Requesting ACCESS_COURSE_LOCATION permissions");
                     activity.requestPermissions(new String[]{
                                     Manifest.permission.ACCESS_COARSE_LOCATION},
                             requestCode);
@@ -350,15 +354,22 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      */
     private void showAppSettingsDialog(final Context context, @RequestCodes final int requestCode) {
+        showAppSettingsDialog(context, requestCode, false);
+    }
+    private void showAppSettingsDialog(final Context context, @RequestCodes final int requestCode, boolean retry) {
         String positiveButtonLabel;
+        String title = context.getResources().getString(R.string.permissionsRequestTitle);
         if (requestCode != WRITE_SETTINGS) {
             positiveButtonLabel = context.getResources().getString(R.string.permissionsAppSettingsButton);
         } else {
             positiveButtonLabel = context.getResources().getString(R.string.permissionsSystemSettingsButton);
         }
+        if (!retry) {
+            title = context.getResources().getString(R.string.permissionsRetryTitle);
+        }
         isDialogOpen = true;
         new AlertDialog.Builder(context)
-                .setTitle(context.getResources().getString(R.string.permissionsRequestTitle))
+                .setTitle(title)
                 .setMessage(getMessage(context, requestCode))
                 .setPositiveButton(positiveButtonLabel, new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
@@ -560,6 +571,46 @@ public class PermissionsHelper {
                 return false;
         }
     }
+
+    // don't know why but the isDialogOpen variable can get stuck on true
+    // use this to initialise it
+    public void setIsDialogOpen(boolean isOpen) {
+        isDialogOpen = isOpen;
+    }
+
+    static public String getManifestPermissionId(@RequestCodes final int requestCode) {
+        switch (requestCode) {
+            case READ_IMAGES:
+                return Manifest.permission.READ_EXTERNAL_STORAGE;
+            case READ_PHONE_STATE:
+                return Manifest.permission.READ_PHONE_STATE;
+            case ACCESS_FINE_LOCATION:
+                return Manifest.permission.ACCESS_FINE_LOCATION;
+            case WRITE_SETTINGS:
+                return Manifest.permission.WRITE_SETTINGS;
+            case READ_MEDIA_IMAGES:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return Manifest.permission.READ_MEDIA_IMAGES;
+                } else { return "";}
+            case READ_MEDIA_VISUAL_USER_SELECTED:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    return Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
+                } else { return "";}
+            case POST_NOTIFICATIONS:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    return Manifest.permission.POST_NOTIFICATIONS;
+                } else { return "";}
+            case ACCESS_COARSE_LOCATION:
+                return Manifest.permission.ACCESS_COARSE_LOCATION;
+            case ACCESS_WIFI_STATE:
+                return Manifest.permission.ACCESS_WIFI_STATE;
+            case INTERNET:
+                return Manifest.permission.INTERNET;
+            default:
+                return "";
+        }
+    }
+
 
     /**
      * Callback interface to be implemented by any calling Activity

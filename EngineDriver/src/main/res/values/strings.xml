@@ -1168,18 +1168,18 @@
 <!--    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>-->
 <!--    <string name="permissionsClearRecentConnections">Engine Driver needs STORAGE permissions to clear recent connections.</string>-->
 <!--    <string name="permissionsReadPreferences">Engine Driver needs STORAGE permissions to read preferences.</string>-->
-    <string name="permissionsREAD_IMAGES">Engine Driver needs STORAGE permissions to load background images.</string>
+    <string name="permissionsREAD_IMAGES">Engine Driver needs STORAGE permissions to load background images.\n\nEngine Driver will work without it.</string>
 <!--    <string name="permissionsReadLegacyFiles">Engine Driver needs STORAGE permissions to load legacy (old location) settings.</string>-->
 <!--    <string name="permissionsStorePreferences">Engine Driver needs STORAGE permissions to store preferences.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver needs STORAGE permissions to store and read preferences.</string>-->
 <!--    <string name="permissionsClearPreferences">Engine Driver needs STORAGE permissions to clear preferences.</string>-->
-    <string name="permissionsReadPhoneState">Engine Driver needs the PHONE permission to stop your locos when on a call.\n\nIf not required, Disable the \'Stop on Phone Call?\` preference.</string>
+    <string name="permissionsReadPhoneState">Engine Driver needs the PHONE permission to stop your locos when on a call.\n\nEngine Driver will work without it. If not required, Disable the \'Stop on Phone Call?\` preference.</string>
 <!--    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>-->
 <!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
     <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
-    <string name="permissionsWriteSettingsAdditional2">Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
-    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.</string>
+    <string name="permissionsWriteSettingsAdditional2">Engine Driver will work without it. Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.\n\nEngine Driver will work without it, but Server Discovery may be limited.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COURSE_LOCATION permissions to retrieve current wifi SSID.</string>
     <string name="permissionsACCESS_WIFI_STATE">Engine Driver needs ACCESS_WIFI_STATE permissions to retrieve current wifi SSID.</string>
     <string name="permissionsINTERNET">Engine Driver needs INTERNET permissions to retrieve current wifi SSID.</string>
@@ -1188,7 +1188,7 @@
     <string name="permissionsConnectToServer">Engine Driver needs STORAGE permissions to store recent connections and PHONE permissions to pause operations when on a call.</string>
 
 <!-- needed for API 33 -->
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver needs READ_MEDIA_IMAGES permissions to load background images.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver needs READ_MEDIA_IMAGES permissions to load background images.\n\nEngine Driver will work without it.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver needs READ_MEDIA_VISUAL_USER_SELECTED permissions to load background images.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver needs NOTIFICATION permissions to warn you when push into background.</string>

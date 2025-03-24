@@ -1072,7 +1072,7 @@
     <string name="DccexWriteCvValueLabel">Valeur</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions du joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">A selectionner en cas de probleme si le DPAD cree des codes cles et des evenements Joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessite la permission d acces aux IMAGES pour charger celles-ci en arriere plan.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessite la permission d acces aux IMAGES pour charger celles-ci en arriere plan.\n\nEngine Driver fonctionnera sans lui.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessite la permission d acces aux READ_MEDIA_VISUAL_USER_SELECTED pour charger celles-ci en arriere plan.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessite la permission d acces aux reseaux WiFi proches pour detecter le SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>

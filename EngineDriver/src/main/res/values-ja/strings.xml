@@ -342,7 +342,7 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">エンジン ドライバーには、バックグラウンドにプッシュされたときに警告を表示する NOTIFICATION 権限が必要です。</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。\n\nEngineDriver はこれなしでも動作します。</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_VISUAL_USER_SELECTED 権限が必要です。</string>
 
 

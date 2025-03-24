@@ -1023,7 +1023,7 @@
     <string name="DccexWriteCvValueLabel">Valore</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora le azioni del joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleziona questo se hai problemi con il DPAD che produce sia i codici chiave che gli eventi del joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita di READ_MEDIA_IMAGES autorizzazioni per caricare le immagini di sfondo.</string>
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita di READ_MEDIA_IMAGES autorizzazioni per caricare le immagini di sfondo.\n\nEngine Driver funzionerà senza di esso.</string>
     <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita di READ_MEDIA_VISUAL_USER_SELECTED autorizzazioni per caricare le immagini di sfondo.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver ha bisogno di vicinanze_wifi_devices autorizzazioni per recuperare l\'attuale SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver ha bisogno di autorizzazioni di notifica per avvertirti quando si spinge in background.</string>
