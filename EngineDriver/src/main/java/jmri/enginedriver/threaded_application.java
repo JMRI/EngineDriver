@@ -214,6 +214,7 @@ public class threaded_application extends Application {
     public Inet4Address client_address_inet4; //inet4 value of the client address
     public String client_ssid = "UNKNOWN";    //string of the connected SSID
     public String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
+    public boolean clientLocationServiceEnabled = false;
 
     public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
 

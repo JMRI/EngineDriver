@@ -1035,6 +1035,7 @@
     <string name="FilterRosterListDownloadLabel">Descargar</string>
     <string name="rosterEmpty">No se puede encontrar ninguna entrada en la lista de servidores.\n\nUtilice en su lugar la opción \'Dirección DCC\' o \'Reciente\'.</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">¡Server Discovery no es posible sin una conexión WiFi!</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuración del sistema Android Usar ubicación está deshabilitada. El nombre de la red (SSID) no está disponible y la detección del servidor puede estar limitada.</string>
     <string name="statusThreadedAppNotConnected">No conectado a una red. Verifique la configuración de WiFi.\n\n volver a intentar</string>
     <string name="toastImportExportCouldNotParseAddress">No se pudo analizar la dirección\n%1$s</string>
     <string name="toastNumThrottles">El tipo de pantalla de acelerador elegido no admite tantos aceleradores. Reduciendo a %1$s.</string>
@@ -1153,5 +1154,6 @@
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Usar valores predeterminados para entradas de lista sin funciones</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acción del botón Detener</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Elija lo que hace el botón Detener</string>
+    <string name="statusThreadedAppNoLocationService">No puedo acceder al SSID</string>
 
 </resources>

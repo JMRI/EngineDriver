@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -767,7 +768,12 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         String ssid = mainapp.client_ssid;
         if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) ) {
-            ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
+            if ( (mainapp.clientLocationServiceEnabled) || (mainapp.client_type.equals("MOBILE")) ) {
+                ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
+            } else {
+                ssid = getString(R.string.statusThreadedAppNoLocationService);
+                discoveredServersWarning.setText(R.string.statusThreadedAppServerDiscoveryNoLocationService);
+            }
             discoveredServersWarning.setVisibility(VISIBLE);
         } else {
             discoveredServersWarning.setVisibility(GONE);
@@ -872,6 +878,15 @@ public class connection_activity extends AppCompatActivity implements Permission
             if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
                 mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
             }
+
+            // determine if the location service is enabled
+            LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+            try {
+                mainapp.clientLocationServiceEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception except) {
+                Log.d("Engine_Driver", "c_a: unable to determine if the location service is enabled");
+            }
+
             //determine if currently using mobile connection or wifi
             final ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo nInfo = cm.getActiveNetworkInfo();

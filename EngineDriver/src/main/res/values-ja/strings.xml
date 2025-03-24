@@ -957,6 +957,7 @@
 
     <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$dms 秒間応答がありませんでした。 WiThrottle サーバーが実行されていることを確認します。再試行中</string>
 
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">「位置情報を使用」の Android システム設定が無効になっています。ネットワーク名 (SSID) が利用できないため、サーバー検出が制限されている可能性があります。</string>
     <string name="statusThreadedAppNotConnected">ネットワークに接続されていません。 WiFi設定を確認してください。再試行中</string>
     <string name="statusThreadedAppNotconnectedToWifi">WiFiに接続されていません</string>
     <string name="statusThreadedAppServerDiscoveryNotPossible">WiFi 接続がなければサーバー検出はできません。</string>
@@ -1177,5 +1178,6 @@
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">「停止」ボタンの動作を選択します</string>
     <string name="toastDccexInvalidRosterId">無効な名簿 ID \'%1$s\'。名簿、投票所、ルートのリスト全体がロードできない可能性があります。</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">スロットル機能ラッチをオーバーライドする</string>
+    <string name="statusThreadedAppNoLocationService">SSIDにアクセスできない</string>
 
 </resources>

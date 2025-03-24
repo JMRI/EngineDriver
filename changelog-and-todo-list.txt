@@ -7,6 +7,7 @@
  * Replace the deprecated AsyncTask in LogViewer
  * Linting. Primarily in all the util classes
  * Make the PHONE permission more clearly optional
+ * Separate warning from when the 'Use Location' service is disabled (as different to no WiFi)
 **Version 2.39.194
  * Toast message when the Roster, Turnouts/Points & Routes each have finished loading for DCC-EX (can be disabled with the Informational Toast preference)
  * When you change throttle layouts, and the new layout supports a range of throttles, ask for the number.
