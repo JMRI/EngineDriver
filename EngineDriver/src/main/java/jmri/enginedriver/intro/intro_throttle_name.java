@@ -31,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -48,18 +50,18 @@ public class intro_throttle_name extends Fragment {
         Log.d("Engine_Driver", "intro_throttle_name");
 
         super.onActivityCreated(savedInstanceState);
-        mainapp = (threaded_application) this.getActivity().getApplication();
+        mainapp = (threaded_application) Objects.requireNonNull(this.getActivity()).getApplication();
         prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
-        throttleNameView = getView().findViewById(R.id.intro_throttle_name_value);
+        throttleNameView = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_name_value);
         throttleNameView.setText(currentValue);
 
         throttleNameView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+                    currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", Objects.requireNonNull(getActivity()).getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
                     throttleNameView.setText(currentValue);
                 }
             }
@@ -74,7 +76,6 @@ public class intro_throttle_name extends Fragment {
 
 
     @SuppressLint("ApplySharedPref")
-    @Nullable
     @Override
     public void onDestroyView() {
         prefs.edit().putString("throttle_name_preference", throttleNameView.getText().toString()).commit();

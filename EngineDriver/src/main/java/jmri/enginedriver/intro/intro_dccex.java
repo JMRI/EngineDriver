@@ -30,7 +30,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+
+import java.util.Objects;
 
 import jmri.enginedriver.R;
 
@@ -41,23 +42,21 @@ import jmri.enginedriver.R;
 public class intro_dccex extends Fragment {
 
     private SharedPreferences prefs;
-    private TextView v;
-    private boolean prefDccexConnectionOption;
     private boolean dccexYes;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_dccex");
         super.onActivityCreated(savedInstanceState);
-        prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
+        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        boolean prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
 
-        v = getView().findViewById(R.id.intro_dccex_no);
+//        TextView v = getView().findViewById(R.id.intro_dccex_no);
 //        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
-        v = getView().findViewById(R.id.intro_dccex_yes);
+//        v = getView().findViewById(R.id.intro_dccex_yes);
 //        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
 
-        RadioGroup radioGroup = getView().findViewById(R.id.intro_dccex_radio_group);
+        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_dccex_radio_group);
 
         radioGroup.clearCheck();
         if (!prefDccexConnectionOption) {radioGroup.check(R.id.intro_dccex_no); }

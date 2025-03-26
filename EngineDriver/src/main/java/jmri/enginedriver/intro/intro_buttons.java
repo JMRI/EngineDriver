@@ -32,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.R;
 
 /**
@@ -41,9 +43,6 @@ import jmri.enginedriver.R;
 public class intro_buttons extends Fragment {
 
     private SharedPreferences prefs;
-    private TextView v;
-    private boolean prefDisplaySpeedButtons;
-    private boolean prefHideSlider;
     private boolean displaySpeedButtons = false;
     private boolean hideSlider = false;
 
@@ -51,11 +50,11 @@ public class intro_buttons extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_buttons");
         super.onActivityCreated(savedInstanceState);
-        prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefDisplaySpeedButtons = prefs.getBoolean("display_speed_arrows_buttons", false);
-        prefHideSlider = prefs.getBoolean("hide_slider_preference", false);
+        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        boolean prefDisplaySpeedButtons = prefs.getBoolean("display_speed_arrows_buttons", false);
+        boolean prefHideSlider = prefs.getBoolean("hide_slider_preference", false);
 
-        v = getView().findViewById(R.id.intro_buttons_slider_name);
+        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_buttons_slider_name);
         v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
         v = getView().findViewById(R.id.intro_buttons_slider_and_buttons_name);
         v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));

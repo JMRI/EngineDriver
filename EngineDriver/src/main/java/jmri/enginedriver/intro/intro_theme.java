@@ -32,18 +32,14 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.R;
 
 
 public class intro_theme extends Fragment {
 
     private SharedPreferences prefs;
-    private String currentValue = "";
-//    private String defaultName = "";
-    private TextView v;
-//    private Spinner spinner;
-//    private int introThemeValueIndex = 1;
-    private String[] nameEntries;
     private String[] nameEntryValues;
 
     @Override
@@ -51,12 +47,15 @@ public class intro_theme extends Fragment {
         Log.d("Engine_Driver", "intro_theme");
 
         super.onActivityCreated(savedInstanceState);
-        prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        currentValue = prefs.getString("prefTheme", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String currentValue = prefs.getString("prefTheme", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
 
-        nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
+        //    private Spinner spinner;
+        //    private int introThemeValueIndex = 1;
+        String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntryValues);
-        v = getView().findViewById(R.id.intro_theme_default_name);
+        //    private String defaultName = "";
+        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_theme_default_name);
         v.setText(nameEntries[0]);
         v = getView().findViewById(R.id.intro_theme_black_name);
         v.setText(nameEntries[1]);
@@ -85,13 +84,15 @@ public class intro_theme extends Fragment {
           @SuppressLint("ApplySharedPref")
           @Override
           public void onCheckedChanged(RadioGroup group, int checkedId) {
-              int Choice = 0;
+              int Choice;
               if (checkedId == R.id.intro_theme_default_name) { Choice = 0; }
               else if (checkedId == R.id.intro_theme_black_name) { Choice = 1; }
               else if (checkedId == R.id.intro_theme_outline_name) { Choice = 2; }
               else if (checkedId == R.id.intro_theme_ultra_name) { Choice = 3; }
               else if (checkedId == R.id.intro_theme_colorful_name) { Choice = 4; }
               else if (checkedId == R.id.intro_theme_neon_name) { Choice = 5; }
+              else { Choice = 0;}
+
               prefs.edit().putString("prefTheme", nameEntryValues[Choice]).commit();
           }
         });
