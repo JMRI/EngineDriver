@@ -7,27 +7,19 @@
     android:background="@color/intro_background"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
+    android:paddingLeft="10dp"
     android:paddingTop="4dp"
-    android:paddingRight="16dp"
+    android:paddingRight="10dp"
     android:paddingBottom="4dp">
 
-    <LinearLayout
-        android:id="@+id/intro_throttle_name_title0"
+    <TextView
+        android:id="@+id/intro_throttle_name_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/intro_throttle_name_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/prefThrottleNameTitle"
-            android:textColor="@color/solidWhite"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+        android:text="@string/prefThrottleNameTitle"
+        android:textColor="@color/solidWhite"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/line0"
@@ -43,18 +35,21 @@
             android:paddingTop="10dp"
             android:text="@string/introThrottleNameSummary"
             android:textColor="@color/solidWhite"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:ignore="TextContrastCheck"  />
 
         <EditText
             android:id="@+id/intro_throttle_name_value"
             style="?attr/edit_label_style"
-            android:layout_width="600sp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/solidBlack"
             android:maxLength="255"
             android:singleLine="true"
             android:text="@string/prefThrottleNameDefaultValue"
             android:textSize="18sp"
+            android:layout_margin="5dp"
+            android:padding="3dp"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
         <TextView
@@ -64,7 +59,8 @@
             android:paddingTop="5dp"
             android:text="@string/introThrottleNameSummary1"
             android:textColor="@color/solidWhite"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            tools:ignore="TextContrastCheck"  />
 
     </LinearLayout>
 

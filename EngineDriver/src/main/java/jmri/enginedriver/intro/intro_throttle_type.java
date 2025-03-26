@@ -32,28 +32,27 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.R;
 
 public class intro_throttle_type extends Fragment {
 
     private SharedPreferences prefs;
-    private String currentValue = "";
-    private TextView v;
-//    private Spinner spinner;
-//    private int introThrottleTypeValueIndex = 1;
-    private String[] nameEntries;
     private String[] nameEntryValues;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d("Engine_Driver", "intro_throttle_type");
         super.onActivityCreated(savedInstanceState);
-        prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        currentValue = prefs.getString("prefThrottleScreenType", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String currentValue = prefs.getString("prefThrottleScreenType", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
+        //    private Spinner spinner;
+        //    private int introThrottleTypeValueIndex = 1;
+        String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
-        v = getView().findViewById(R.id.intro_throttle_type_default_name);
+        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_type_default_name);
         v.setText(nameEntries[0]);
         v = getView().findViewById(R.id.intro_throttle_type_vertical_name);
         v.setText(nameEntries[1]);
@@ -101,7 +100,7 @@ public class intro_throttle_type extends Fragment {
             @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int Choice = 0;
+                int Choice;
                 if (checkedId == R.id.intro_throttle_type_default_name) { Choice = 0; }
                 else if (checkedId == R.id.intro_throttle_type_vertical_name) { Choice = 1; }
                 else if (checkedId == R.id.intro_throttle_type_big_left_name) { Choice = 2; }
@@ -114,6 +113,8 @@ public class intro_throttle_type extends Fragment {
                 else if (checkedId == R.id.intro_throttle_type_switching_horizontal_name) { Choice = 9; }
                 else if (checkedId == R.id.intro_throttle_type_simple_name) { Choice = 10; }
                 else if (checkedId == R.id.intro_throttle_type_tablet_switching_left_name) { Choice = 11; }
+                else { Choice = 0; }
+
                 prefs.edit().putString("prefThrottleScreenType", nameEntryValues[Choice]).commit();
          }
         });

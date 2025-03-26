@@ -306,7 +306,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             }
         } else {
             // do nothing
-            Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);
+            Log.d("Engine_Driver", "introActivity: Unrecognised permissions request code: " + requestCode);
         }
     }
     @Override
@@ -367,7 +367,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "intro_activity.onDestroy() called");
+        Log.d("Engine_Driver", "intro_activity: onDestroy() called");
 
         mainapp.introIsRunning = false;
         if (!introComplete) {

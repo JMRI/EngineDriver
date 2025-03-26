@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:text="@string/introDccexTitle"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded, TextContrastCheck"  />
 
     </LinearLayout>
 
@@ -47,7 +48,8 @@
                 android:paddingBottom="5dp"
                 android:text="@string/introDccexSummary"
                 android:textColor="@color/solidWhite"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                tools:ignore="RtlHardcoded, TextContrastCheck"  />
 
             <RadioGroup
                 android:id="@+id/intro_dccex_radio_group"
@@ -59,23 +61,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:text="@string/introDccexQuestionNo"
                     android:textSize="16sp"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
 
                 <RadioButton
                     android:id="@+id/intro_dccex_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="5dp"
+                    android:padding="10dp"
                     android:text="@string/introDccexQuestionYes"
                     android:textSize="16sp"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
 
             </RadioGroup>
-
 
             <ImageView
                 android:id="@+id/imageView"
@@ -84,7 +85,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:contentDescription="@string/app_name"
-                app:srcCompat="@drawable/original_toolbar_button_dcc_ex" />
+                app:srcCompat="@drawable/original_toolbar_button_dcc_ex"
+                tools:ignore="ImageContrastCheck"  />
 
         </LinearLayout>
 

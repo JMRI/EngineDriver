@@ -1193,7 +1193,7 @@
 
 <!-- needed for API 33 -->
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver needs READ_MEDIA_IMAGES permissions to load background images.\n\nEngine Driver will work without it.</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver needs READ_MEDIA_VISUAL_USER_SELECTED permissions to load background images.</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver needs READ_MEDIA_VISUAL_USER_SELECTED permissions to load background images.\n\nEngine Driver will work without it.</string>
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver needs NEARBY_WIFI_DEVICES permissions to retrieve current wifi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver needs NOTIFICATION permissions to warn you when push into background.</string>
 <!-- needed for API 33 -->

@@ -7,26 +7,20 @@
     android:baselineAligned="false"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
+    android:paddingLeft="10dp"
     android:paddingTop="4dp"
-    android:paddingRight="16dp"
+    android:paddingRight="10dp"
     android:paddingBottom="80dp">
 
-    <LinearLayout
-        android:id="@+id/intro_throttle_type_title0"
+    <TextView
+        android:id="@+id/intro_throttle_type_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:text="@string/prefThrottleScreenTypeTitle"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded, TextContrastCheck" />
 
-        <TextView
-            android:id="@+id/intro_throttle_type_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/prefThrottleScreenTypeTitle"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -45,7 +39,8 @@
                 android:paddingBottom="5dp"
                 android:text="@string/introThrottleTypeSummary"
                 android:textColor="@color/solidWhite"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:ignore="RtlHardcoded, TextContrastCheck" />
             <TextView
                 android:id="@+id/intro_throttle_type_summary2"
                 android:layout_width="match_parent"
@@ -54,7 +49,8 @@
                 android:paddingBottom="5dp"
                 android:text="@string/introThrottleTypeSummary2"
                 android:textColor="@color/solidWhite"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:ignore="RtlHardcoded, TextContrastCheck" />
 
 
             <RadioGroup
@@ -64,20 +60,63 @@
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_default_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_default"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded, TextContrastCheck,DuplicateSpeakableTextCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_vertical_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_vertical"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_big_left_name"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_big_left"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_big_right_name"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_big_right"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_vertical_left_name"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_vertical_left"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
@@ -85,88 +124,75 @@
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
-                    android:id="@+id/intro_throttle_type_big_left_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_throttle_type_big_left"
-                    android:gravity="center"
-                    android:text="@string/prefThrottleScreenTypeDefault"
-                    android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
-
-                <RadioButton
-                    android:id="@+id/intro_throttle_type_big_right_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_throttle_type_big_right"
-                    android:gravity="center"
-                    android:text="@string/prefThrottleScreenTypeDefault"
-                    android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
-
-                <RadioButton
-                    android:id="@+id/intro_throttle_type_vertical_left_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_throttle_type_vertical_left"
-                    android:gravity="center"
-                    android:text="@string/prefThrottleScreenTypeDefault"
-                    android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
-
-                <RadioButton
                     android:id="@+id/intro_throttle_type_vertical_right_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_vertical_right"
                     android:gravity="center"
+                    android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_switching_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_switching"
                     android:gravity="center"
+                    android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_switching_left_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_switching_left"
                     android:gravity="center"
+                    android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_switching_right_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_switching_right"
                     android:gravity="center"
+                    android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_switching_horizontal_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_switching_horizontal"
                     android:gravity="center"
+                    android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"
                     android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_simple_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_simple"
                     android:gravity="center"
@@ -177,7 +203,9 @@
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_tablet_switching_left_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_throttle_type_tablet_left"
                     android:gravity="center"
