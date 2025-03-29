@@ -886,6 +886,7 @@
     <string name="permissionsConnectToServer">Engine Driver potřebuje oprávnění STORAGE pro uložení nedávných připojení a oprávnění PHONE pro pozastavení provozu během hovoru.</string>
 <!--    <string name="permissionsGotoAppSettings">Prosím povolte tato oprávnění z nastavení aplikace.</string>-->
     <string name="permissionsAppSettingsButton">Nastavení aplikace</string>
+    <string name="permissionsDeclineButton">Pokles</string>
     <string name="permissionsSystemSettingsButton">Nastavení systému</string>
     <string name="permissionsRetryButton">Opakovat</string>
     <string name="permissionsRequestTitle">Oprávnění</string>

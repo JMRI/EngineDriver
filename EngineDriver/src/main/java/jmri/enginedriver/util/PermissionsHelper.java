@@ -317,7 +317,7 @@ public class PermissionsHelper {
                         isDialogOpen = false;
                     }
                 })
-                .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton(context.getResources().getString(R.string.permissionsDeclineButton), new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         isDialogOpen = false;
                     }

@@ -751,6 +751,7 @@
     <string name="permissionsConnectToServer">Engine Driver necesita permisos de ALMACENAMIENTO para almacenar conexiones recientes y permisos de TELÉFONO para pausar las operaciones durante una llamada</string>
 <!--    <string name="permissionsGotoAppSettings">Por favor habilite estos permisos desde la configuración de la aplicación</string>-->
     <string name="permissionsAppSettingsButton">Ajustes de aplicacion</string>
+    <string name="permissionsDeclineButton">Rechazar</string>
     <string name="permissionsRetryButton">Procesar de nuevo</string>
     <string name="permissionsRequestTitle">Permisos</string>
     <string name="permissionsRetryTitle">Permisos rechazados</string>

@@ -682,6 +682,7 @@
     <string name="permissionsConnectToServer">Engine Driver nécessite un accès au STOCKAGE pour sauver les connexions récentes et un accès TELEPHONE pour se mettre en pause lors de communications téléphoniques.</string>
 <!--    <string name="permissionsGotoAppSettings">Merci de valider ces permissions depuis le paramétrage APPLICATION</string>-->
     <string name="permissionsAppSettingsButton">Paramètres APPLICATION</string>
+    <string name="permissionsDeclineButton">Déclin</string>
     <string name="permissionsSystemSettingsButton">Paramètres Système</string>
     <string name="permissionsRetryButton">Recommencer</string>
     <string name="permissionsRequestTitle">Permissions</string>

@@ -761,6 +761,7 @@
     <string name="permissionsConnectToServer">Engine Driver necessita permisos D\'EMMAGATZEMATGE per emmagatzemar les connexions recents i els permisos del TELÈFON per aturar les operacions en una trucada</string>
 <!--    <string name="permissionsGotoAppSettings">Permet aquests permisos de la configuració de l\'aplicació</string>-->
     <string name="permissionsAppSettingsButton">Configuració de l\'aplicació</string>
+    <string name="permissionsDeclineButton">Declinar</string>
     <string name="permissionsSystemSettingsButton">Configuració del sistema</string>
     <string name="permissionsRetryButton">Torneu a provar</string>
     <string name="permissionsRequestTitle">Permisos</string>

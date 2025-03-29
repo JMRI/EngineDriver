@@ -20,6 +20,7 @@ Derived from the samples for AppIntro at https://github.com/paolorotolo/AppIntro
 
 package jmri.enginedriver.intro;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Objects;
+
 import jmri.enginedriver.R;
+import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_finish extends Fragment {
 
@@ -44,4 +48,16 @@ public class intro_finish extends Fragment {
         return inflater.inflate(R.layout.intro_finish, container, false);
     }
 
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            PermissionsHelper phi = PermissionsHelper.getInstance();
+            if (!phi.isPermissionGranted(this.getActivity(), PermissionsHelper.READ_PHONE_STATE)) {
+                SharedPreferences prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+                prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
+            }
+        }
+    }
 }

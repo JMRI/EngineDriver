@@ -1358,7 +1358,7 @@ public class comm_thread extends Thread {
                             }
                             break;
 
-                        case 'H': //Turnout change
+                        case 'H': // Turnout/points change
                             if (args.length==3) {
                                 responseStr = "PTA" + (((args[2].equals("T")) || (args[2].equals("1"))) ? 4 : 2) + args[1];
                                 processTurnoutChange(responseStr);

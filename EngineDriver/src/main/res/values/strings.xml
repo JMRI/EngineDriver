@@ -1200,6 +1200,7 @@
 
 <!--    <string name="permissionsGotoAppSettings">Please enable these permissions from the app settings.</string>-->
     <string name="permissionsAppSettingsButton">App settings</string>
+    <string name="permissionsDeclineButton">Decline</string>
     <string name="permissionsSystemSettingsButton">System settings</string>
     <string name="permissionsRetryButton">Retry</string>
     <string name="permissionsRequestTitle">Permissions</string>

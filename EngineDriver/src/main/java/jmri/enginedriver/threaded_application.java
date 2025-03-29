@@ -1016,11 +1016,17 @@ public class threaded_application extends Application {
         sHtml += String.format("<small>, DeviceID: </small><b>%s</b>", getFakeDeviceId());
         s += String.format(", DeviceID: %s", getFakeDeviceId());
 
+        String ssid = client_ssid;
+        PermissionsHelper phi = PermissionsHelper.getInstance();
+        if ( (!mainapp.clientLocationServiceEnabled) || (!phi.isPermissionGranted(this, PermissionsHelper.ACCESS_FINE_LOCATION))) {
+            ssid = "[DECLINED]";
+        }
+
         if (client_address_inet4 != null) {
             sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
-            sHtml += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", client_ssid, client_type);
+            sHtml += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", ssid, client_type);
             s += String.format(", IP: %s", client_address_inet4.toString().replaceAll("/", ""));
-            s += String.format(", SSID: %s Net: %s", client_ssid, client_type);
+            s += String.format(", SSID: %s Net: %s", ssid, client_type);
         }
 
         // ED version info

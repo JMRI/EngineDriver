@@ -719,6 +719,7 @@
     <string name="permissionsConnectToServer">Engine Driver benötigt STORAGE-Berechtigungen zum Speichern der letzten Verbindungen und PHONE-Berechtigungen, um Vorgänge während eines Anrufs anzuhalten.</string>
 <!--    <string name="permissionsGotoAppSettings">Bitte aktivieren Sie diese Berechtigungen in den App-Einstellungen.</string>-->
     <string name="permissionsAppSettingsButton">App Einstellungen</string>
+    <string name="permissionsDeclineButton">Abfall</string>
     <string name="permissionsRetryButton">Wiederholen</string>
     <string name="permissionsRequestTitle">Berechtigungen</string>
     <string name="permissionsRetryTitle">Berechtigungen abgelehnt</string>
