@@ -251,11 +251,11 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         }
 
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.WRITE_SETTINGS)) {
-            args = new Bundle();
-            args.putString("id", Integer.toString(PermissionsHelper.WRITE_SETTINGS));
-            args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsWriteSettings));
-            fragment = new intro_permissions();
-            fragment.setArguments(args);
+//            args = new Bundle();
+//            args.putString("id", Integer.toString(PermissionsHelper.WRITE_SETTINGS));
+//            args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsWriteSettings));
+            fragment = new intro_write_settings();
+//            fragment.setArguments(args);
             addSlide(fragment);
         }
 

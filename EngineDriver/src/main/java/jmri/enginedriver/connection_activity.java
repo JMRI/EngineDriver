@@ -689,7 +689,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
 
         getWifiInfo();
-        getPhoneInfo();
+//        getPhoneInfo();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
@@ -785,7 +785,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
                 discoveredServersWarning.setText(warningTextBuilder.toString());
             }
-            discoveredServersWarning.setVisibility(VISIBLE);
+            threaded_application.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
+//            discoveredServersWarning.setVisibility(VISIBLE);
         } else {
             discoveredServersWarning.setVisibility(GONE);
         }
@@ -801,27 +802,27 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    void getPhoneInfo() {
-        Log.d("Engine_Driver", "c_a: NetworkRequest.getPhoneInfo()");
-
-        PermissionsHelper phi = PermissionsHelper.getInstance();
-        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
-            if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    // how many times have we asked for this before?
-                    int count = prefs.getInt("prefStopOnPhonecallCount", 0);
-                    if (count < 5) {  // this is effectively counted twice each startup
-                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.READ_PHONE_STATE);
-                        count++;
-                    } else {
-                        prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
-                        count = 0;
-                    }
-                    prefs.edit().putInt("prefStopOnPhonecallCount", count).apply();
-                }
-            }
-        }
-    }
+//    void getPhoneInfo() {
+//        Log.d("Engine_Driver", "c_a: NetworkRequest.getPhoneInfo()");
+//
+//        PermissionsHelper phi = PermissionsHelper.getInstance();
+//        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
+//            if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    // how many times have we asked for this before?
+//                    int count = prefs.getInt("prefStopOnPhonecallCount", 0);
+//                    if (count < 5) {  // this is effectively counted twice each startup
+//                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.READ_PHONE_STATE);
+//                        count++;
+//                    } else {
+//                        prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
+//                        count = 0;
+//                    }
+//                    prefs.edit().putInt("prefStopOnPhonecallCount", count).apply();
+//                }
+//            }
+//        }
+//    }
 
 
     /**

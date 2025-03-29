@@ -670,6 +670,7 @@
     <string name="permissionsConnectToServer">Engine Driver ha bisogno delle autorizzazioni di STORAGE per memorizzare le connessioni recenti e le autorizzazioni PHONE per mettere in pausa le operazioni durante una chiamata.</string>
 <!--    <string name="permissionsGotoAppSettings">Si prega di abilitare queste autorizzazioni dalle impostazioni dell\'app.</string>-->
     <string name="permissionsAppSettingsButton">Impostazioni dell\'app</string>
+    <string name="permissionsDeclineButton">Declino</string>
     <string name="permissionsRetryButton">Riprova</string>
     <string name="permissionsRequestTitle">Autorizzazioni</string>
     <string name="permissionsRetryTitle">Autorizzazioni rifiutate</string>

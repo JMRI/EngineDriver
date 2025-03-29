@@ -335,7 +335,7 @@
     <string name="permissionsACCESS_WIFI_STATE">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための ACCESS_WIFI_STATE 権限が必要です。</string>
     <string name="permissionsINTERNET">エンジン ドライバーには、現在の Wi-Fi SSID を取得するための INTERNET 権限が必要です。</string>
     <string name="permissionsAppSettingsButton">アプリの設定</string>
-
+    <string name="permissionsDeclineButton">衰退</string>
 
 
     <string name="permissionsConnectToServer">エンジン ドライバーには、最近の接続を保存するための STORAGE アクセス許可と、通話中に操作を一時停止するための PHONE アクセス許可が必要です。</string>

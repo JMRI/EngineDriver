@@ -675,6 +675,7 @@
     <string name="permissionsConnectToServer">Engine Driver precisa de permissões STORAGE para armazenar conexões recentes e permissões PHONE para pausar operações quando em uma chamada.</string>
 <!--    <string name="permissionsGotoAppSettings">Por favor ative estas permissões nas configurações do aplicativo.</string>-->
     <string name="permissionsAppSettingsButton">Configurações do aplicativo</string>
+    <string name="permissionsDeclineButton">Declínio</string>
     <string name="permissionsRetryButton">Tente novamente</string>
     <string name="permissionsRequestTitle">Permissões</string>
     <string name="permissionsRetryTitle">Permissões recusadas</string>
