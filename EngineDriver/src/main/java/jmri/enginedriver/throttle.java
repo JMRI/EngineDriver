@@ -4306,6 +4306,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
             }
         }
+
+        @Override
+        public void onPhysicalSliderPositionChanged(int i) {
+            // TODO implement this
+        }
     };
 
     // Callback for ESU MCII stop button
