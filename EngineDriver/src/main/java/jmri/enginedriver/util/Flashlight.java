@@ -8,10 +8,11 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.Surface;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;

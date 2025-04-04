@@ -42,9 +42,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -991,6 +993,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     //handle return from menu items
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //only one activity with results here
+        super.onActivityResult(requestCode, resultCode, data);
         set_labels();
     }
 
