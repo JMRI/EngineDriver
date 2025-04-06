@@ -436,7 +436,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
                 while (isRunning) {
                     line = reader.readLine();
-                    mainapp.alert_activities(message_type.LOG_ENTRY_RECEIVED, line);
+                    mainapp.sendMsg(mainapp.logviewer_msg_handler, message_type.LOG_ENTRY_RECEIVED, line);
                 }
             } catch (Exception e) {
                 isRunning = false;

@@ -296,7 +296,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
 
         public void handleMessage(Message msg) {
-            Log.d("Engine_Driver", "routes_handler: handleMessage("+msg.obj.toString()+")");
+//            Log.d("Engine_Driver", "routes_handler: handleMessage("+msg.obj.toString()+")");
 
             switch (msg.what) {
                 case message_type.WIT_CON_RECONNECT:
@@ -338,6 +338,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     disconnect();
+                    break;
+                default:
+                    // do nothing
                     break;
             }
         }
