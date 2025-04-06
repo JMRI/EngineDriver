@@ -67,6 +67,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -326,6 +327,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.ROUTES)
+                        reopenThrottlePage();
+                    break;
+
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
@@ -548,6 +555,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.ROUTES;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -940,5 +948,10 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 mainapp.routesOrder = sort_type.POSITION;
                 break;
         }
+    }
+
+    void reopenThrottlePage() {
+        Intent in = mainapp.getThrottleIntent();
+        startACoreActivity(this, in, false, 0);
     }
 }

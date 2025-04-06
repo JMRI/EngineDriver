@@ -41,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
@@ -71,6 +72,11 @@ public class reconnect_status extends AppCompatActivity {
                         reconnected();              // RETRY/RECONNECT sequence was over before this Screen came up, so just resume normal ops.
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    // ignore
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     retryFirst = true;
                     refresh_reconnect_status(msg.obj.toString());
@@ -184,6 +190,7 @@ public class reconnect_status extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.RECONNECT_STATUS;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;

@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
@@ -146,6 +147,11 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 case message_type.WRITE_DIRECT_DCC_COMMAND_ECHO:  // informational response
                     displayCommands(msg.obj.toString(), false);
                     refreshWitCommandsView();
+                    break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.WITHROTTLE_CV_PROGRAMMER)
+                        finish();
                     break;
 
                 case message_type.WIT_CON_RETRY:
@@ -586,6 +592,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.WITHROTTLE_CV_PROGRAMMER;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;

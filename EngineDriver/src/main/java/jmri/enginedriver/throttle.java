@@ -149,6 +149,7 @@ import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
@@ -1197,6 +1198,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         setTargetSpeed(whichThrottle, 0);
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    // ignore
+                    break;
             }
         }
     }
@@ -1663,6 +1668,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.stopAllSounds();
         }
 
+        mainapp.prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
         mainapp.prefActionBarShowDccExButton = prefs.getBoolean("prefActionBarShowDccExButton",
                 getResources().getBoolean(R.bool.prefActionBarShowDccExButtonDefaultValue));
     }
@@ -6376,6 +6382,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public void onResume() {
         Log.d("Engine_Driver", "throttle: onResume(): called");
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.THROTTLE;
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
             this.finish();

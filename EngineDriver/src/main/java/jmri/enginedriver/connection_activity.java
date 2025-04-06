@@ -84,6 +84,7 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.dccex_protocol_option_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
@@ -475,6 +476,10 @@ public class connection_activity extends AppCompatActivity implements Permission
                     start_throttle_activity();
                     break;
 
+                case message_type.REOPEN_THROTTLE:
+                    //ignore
+                    break;
+
                 case message_type.RESTART_APP:
                     startNewConnectionActivity();
                     break;
@@ -679,6 +684,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.CONNECTION;
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }

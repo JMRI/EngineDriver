@@ -1,14 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
 //    buildToolsVersion '33.0.0'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "jmri.enginedriver"
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
-        // also Steve's Kyocera Event requires 15
         minSdkVersion 16
         compileSdkVersion 34
         targetSdk 34

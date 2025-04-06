@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.type.message_type;
@@ -211,6 +212,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.FUNCTION_SETTINGS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -304,6 +306,12 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                     }
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.FUNCTION_SETTINGS)
+                        reopenThrottlePage();
+                    break;
+
                 default:
                     break;
             }
@@ -714,5 +722,17 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 saveSettings();         //save function labels to file
             finish();
         }
+    }
+
+    void reopenThrottlePage() {
+        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
+        prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
+
+        move_view_to_settings();        //sync settings array to view
+        if ((!settingsCurrent)
+                || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
+                || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
+            saveSettings();         //save function labels to file
+        finish();  //end this activity
     }
 }

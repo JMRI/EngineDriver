@@ -58,6 +58,7 @@ import android.widget.LinearLayout;
 import java.lang.reflect.Method;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -250,6 +251,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.WEB)
+                        reopenThrottlePage();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -434,6 +441,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.WEB;
 
         setActivityTitle();
 
@@ -786,4 +794,10 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
         }
-    }}
+    }
+
+    void reopenThrottlePage() {
+        Intent in = mainapp.getThrottleIntent();
+        startACoreActivity(this, in, false, 0);
+    }
+}

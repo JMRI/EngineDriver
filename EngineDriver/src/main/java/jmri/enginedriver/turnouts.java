@@ -78,6 +78,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.screen_swipe_index_type;
@@ -380,6 +381,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         }
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.TURNOUTS)
+                        reopenThrottlePage();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -801,6 +808,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.TURNOUTS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -1522,5 +1530,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.turnoutsOrder = sort_type.POSITION;
                 break;
         }
+    }
+
+    void reopenThrottlePage() {
+        Intent in = mainapp.getThrottleIntent();
+        startACoreActivity(this, in, false, 0);
     }
 }

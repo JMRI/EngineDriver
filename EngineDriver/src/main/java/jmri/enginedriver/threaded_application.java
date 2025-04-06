@@ -218,6 +218,8 @@ public class threaded_application extends Application {
 
     public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
 
+    public String prefAppIconAction = "throttle";
+
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public String prefUseDccexProtocol = "Auto";
@@ -301,6 +303,8 @@ public class threaded_application extends Application {
     // for handling control of camera flash
     public static Flashlight flashlight;
     public boolean flashState = false;
+
+    static public int currentActivity = 0;
 
     //these constants are used for onFling
     public static final int SWIPE_MIN_DISTANCE = 120;
@@ -2728,7 +2732,7 @@ public class threaded_application extends Application {
             TextView mClock = toolbar.findViewById(R.id.toolbar_clock);
             mClock.setText(clockText);
 
-            String prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
+            prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
             if (!prefAppIconAction.equals("None")) {
                 LinearLayout llToolbarIconLayout = toolbar.findViewById(R.id.toolbar_icon_layout);
                 app_icon_button_listener AppIconButtonListener = new app_icon_button_listener();
@@ -2741,8 +2745,12 @@ public class threaded_application extends Application {
 
     public class app_icon_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            // at the moment there is only the e-stop option, otherwise check the preference to see what to do
-            sendEStopMsg();
+            // check the preference to see what to do
+            if (prefAppIconAction.equals("estop")) {
+                sendEStopMsg();
+            } else if (prefAppIconAction.equals("throttle")) {
+                mainapp.alert_activities(message_type.REOPEN_THROTTLE, "");
+            }
             buttonVibration();
         }
     }

@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.LocaleHelper;
@@ -135,6 +136,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.LOG_VIEWER;
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
         }
@@ -237,7 +239,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 case message_type.LOG_ENTRY_RECEIVED: {
                     String s = msg.obj.toString();
                     addLogEntryToView(s);
+                    break;
                 }
+                case message_type.REOPEN_THROTTLE:
+                    finish();
+                    break;
+
                 default:
                     break;
             }

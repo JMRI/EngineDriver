@@ -51,6 +51,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 
@@ -158,6 +159,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.FUNCTION_CONSIST_SETTINGS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -240,7 +242,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
 
         public void handleMessage(Message msg) {
-            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -253,6 +254,12 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                     }
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.FUNCTION_CONSIST_SETTINGS)
+                        reopenThrottlePage();
+                    break;
+
                 default:
                     break;
 
@@ -525,5 +532,12 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 saveSettings();         //save function settings to the file
             finish();
         }
+    }
+
+    void reopenThrottlePage() {
+        move_view_to_settings();        //sync settings array to view
+        if (!settingsCurrent)
+            saveSettings();         //save function settings to the file
+        finish();  //end this activity
     }
 }
