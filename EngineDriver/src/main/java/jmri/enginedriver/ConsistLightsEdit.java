@@ -53,6 +53,7 @@ import java.util.HashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
@@ -158,6 +159,12 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                         }
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.CONSIST_LIGHTS_EDIT)
+                        finish();  //end this activity
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -327,6 +334,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.CONSIST_LIGHTS_EDIT;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;

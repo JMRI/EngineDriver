@@ -75,6 +75,7 @@ import java.util.Objects;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.import_export_option_type;
@@ -217,6 +218,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected void onResume() {
         Log.d("Engine_Driver", "Settings: onResume()");
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.SETTINGS;
 
         Log.d("Engine_Driver", "settings.onResume() called");
 //        try {
@@ -553,6 +555,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                             prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
                             Toast.LENGTH_LONG);
                     reload();
+                    break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.SETTINGS)
+                        finish();  //end this activity
                     break;
 
             }
@@ -1346,6 +1353,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public void onResume() {
             Log.d("Engine_Driver", "Settings: SettingsFragment onResume()");
             super.onResume();
+            threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);
@@ -1857,6 +1865,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public void onResume() {
             Log.d("Engine_Driver", "Settings: SettingsFragment onResume()");
             super.onResume();
+            threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
                     .registerOnSharedPreferenceChangeListener(this);

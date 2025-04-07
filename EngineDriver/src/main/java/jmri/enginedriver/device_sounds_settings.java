@@ -52,6 +52,7 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -406,6 +407,11 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_device_sounds_settings),
+                    "");
         }
 
     } // end onCreate
@@ -413,6 +419,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.DEVICE_SOUNDS_SETTINGS;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         if (DSSMenu != null) {
             mainapp.displayEStop(DSSMenu);
@@ -499,7 +506,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         }
 
         public void handleMessage(Message msg) {
-            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -512,6 +518,12 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                     }
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.DEVICE_SOUNDS_SETTINGS)
+                        finish();  //end this activity
+                    break;
+
                 default:
                     break;
             }

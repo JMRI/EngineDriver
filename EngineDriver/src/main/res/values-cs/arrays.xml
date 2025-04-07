@@ -504,6 +504,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Žádný</item>
         <item>Nouzové zastavení</item>
+        <item>Stránka plynu</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->

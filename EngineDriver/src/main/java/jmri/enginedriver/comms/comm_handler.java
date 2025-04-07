@@ -548,6 +548,10 @@ public class comm_handler extends Handler {
          case message_type.VOLUME_BUTTON_ACTION:
             mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.VOLUME_BUTTON_ACTION, msg.obj.toString());
             break;
+
+         case message_type.REOPEN_THROTTLE:
+            mainapp.alert_activities(msg.what, "");
+            break;
       }
    }
 }

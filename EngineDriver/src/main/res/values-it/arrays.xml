@@ -324,6 +324,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Nessuno</item>
         <item>Arresto di emergenza</item>
+        <item>Pagina dell\'acceleratore</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->

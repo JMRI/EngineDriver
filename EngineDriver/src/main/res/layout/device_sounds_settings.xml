@@ -9,7 +9,8 @@
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
-    <include layout="@layout/toolbar_status_line" />
+    <include layout="@layout/toolbar_status_line"
+        tools:ignore="DuplicateIncludedIds" />
 
     <LinearLayout
         android:id="@+id/logviewer_screen"

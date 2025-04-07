@@ -33,6 +33,7 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 
 public class about_page extends AppCompatActivity {
@@ -86,6 +87,7 @@ public class about_page extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.ABOUT;
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
             return;
@@ -159,7 +161,6 @@ public class about_page extends AppCompatActivity {
         }
 
         public void handleMessage(Message msg) {
-            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -172,10 +173,15 @@ public class about_page extends AppCompatActivity {
                     }
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.ABOUT)
+                        finish();  //end this activity
+                    break;
+
                 default:
                     break;
             }
         }
     }
-
 }

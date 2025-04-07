@@ -96,6 +96,7 @@ import java.util.Objects;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.Loco;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
@@ -522,6 +523,12 @@ public class select_loco extends AppCompatActivity {
                     break;
                 case message_type.ROSTER_UPDATE:
                     Log.d("Engine_Driver", "select_loco: SelectLocoHandler(): ROSTER_UPDATE");
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.SELECT_LOCO)
+                        reopenThrottlePage();
+                    break;
+
                 case message_type.WIT_CON_RECONNECT:
                     Log.d("Engine_Driver", "select_loco: SelectLocoHandler(): WIT_CON_RECONNECT");
                     rosterListAdapter.notifyDataSetChanged();
@@ -1871,6 +1878,7 @@ public class select_loco extends AppCompatActivity {
     public void onResume() {
         Log.d("Engine_Driver", "select_loco: onResume():");
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.SELECT_LOCO;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -2568,5 +2576,9 @@ public class select_loco extends AppCompatActivity {
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
         }
+    }
+
+    void reopenThrottlePage() {
+        endThisActivity();
     }
 }

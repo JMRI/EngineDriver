@@ -55,6 +55,7 @@ import java.util.HashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
@@ -179,6 +180,12 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         }
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.CONSIST_EDIT)
+                        reopenThrottlePage();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -329,6 +336,8 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.CONSIST_EDIT;
+
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
             return;
@@ -508,5 +517,13 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             finish();  //end this activity
             connection_activity.overridePendingTransition(_consistEditActivity, R.anim.fade_in, R.anim.fade_out);
         }
+    }
+
+    void reopenThrottlePage() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+        setResult(result, resultIntent);
+        finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 }

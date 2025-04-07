@@ -2262,10 +2262,12 @@
     <string-array name="prefAppIconActionEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>None</item>
         <item>estop</item>
+        <item>throttle</item>
     </string-array>
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>None</item>
         <item>Emergency Stop</item>
+        <item>Throttle Page</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

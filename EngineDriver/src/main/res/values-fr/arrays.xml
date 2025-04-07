@@ -493,6 +493,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>Arret d urgence</item>
+        <item>Page de limitation</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->

@@ -40,6 +40,7 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
@@ -79,6 +80,12 @@ public class power_control extends AppCompatActivity {
                         refreshDccexTracksView();
                     }
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.POWER_CONTROL)
+                        finish();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -313,6 +320,7 @@ public class power_control extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.POWER_CONTROL;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;

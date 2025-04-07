@@ -93,10 +93,6 @@
         <item>24時間形式</item>
     </string-array>
 
-
-
-
-
     <string-array name="prefGamePadKeyEntries">
         <item>オールストップ</item>
         <item>停止</item>
@@ -151,10 +147,6 @@
         <item>負荷を増やす</item>
         <item>負荷を軽減する</item>
     </string-array>
-
-
-
-
 
     <string-array name="prefThemeEntries">
         <item>オリジナル（チェッカープレート）</item>
@@ -217,7 +209,7 @@
         <item>日本語</item>
     </string-array>
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
-        <item>Coincidencia simple de texto (original)</item>
+        <item>単純なテキストマッチング（オリジナル）</item>
         <item>複雑なテキスト マッチング - 先頭車両は常にアクティブ化され、トレイルは以下のルールに従います</item>
         <item>特別正確 - ファンクションラベルと完全に一致する場合、リードとすべてのトレイルが有効になります。</item>
         <item>特別部分的 - ファンクションラベルに部分的に一致する場合、リードとオールトレイルがアクティブになります。</item>
@@ -245,19 +237,6 @@
         <item>10分</item>
         <item>実行が完了しました</item>
     </string-array>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <string-array name="prefGamePadFlydigiWee2Labels">
         <item>0</item>
@@ -356,22 +335,6 @@
         <item>0</item>
     </string-array>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->
         <item>(機能なし)</item>
         <item>オールストップ</item>
@@ -459,23 +422,6 @@
         <item>スライダー - 28、100、128 ステップで一部をスキップ</item>
     </string-array>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>プログラミングトラック（サービスモード）</item>
         <item>メインプログラム（動作モード）</item>
@@ -528,6 +474,7 @@
     <string-array name="prefAppIconActionEntries">
         <item>なし</item>
         <item>非常停止</item>
+        <item>スロットルページ</item>
     </string-array>
     <string-array name="prefSortOrderEntries">  <!-- display version -->
         <item>名前</item>

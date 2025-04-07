@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -714,6 +715,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         if (GPTMenu != null) {
             mainapp.displayEStop(GPTMenu);
@@ -811,6 +813,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     }
                     break;
                 }
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.GAMEPAD_TEST)
+                        finish();
+                    break;
 
             }
         }

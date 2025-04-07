@@ -37,6 +37,7 @@ import com.github.paolorotolo.appintro.model.SliderPage;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_activity extends AppIntro2 implements PermissionsHelper.PermissionsHelperGrantedCallback {
@@ -358,6 +359,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @Override
     public void onResume() {
+        threaded_application.currentActivity = activity_id_type.INTRO;
         super.onResume();
 //        if (this.isFinishing()) {        //if finishing, expedite it
 //            return;

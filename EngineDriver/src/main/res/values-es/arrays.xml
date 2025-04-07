@@ -305,6 +305,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Ninguno</item>
         <item>Parada de emergencia</item>
+        <item>Página del acelerador</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->

@@ -56,6 +56,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
@@ -227,6 +228,12 @@ public class dcc_ex extends AppCompatActivity {
                 case message_type.RECEIVED_TRACKS:
                     refreshDccexTracksView();
                     break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.DCC_EX)
+                        finish();  //end this activity
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
@@ -1000,6 +1007,7 @@ public class dcc_ex extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.currentActivity = activity_id_type.DCC_EX;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
             return;

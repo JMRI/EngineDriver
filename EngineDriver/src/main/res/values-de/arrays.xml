@@ -306,6 +306,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Keiner</item>
         <item>Not-Aus</item>
+        <item>Drosselseite</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->
