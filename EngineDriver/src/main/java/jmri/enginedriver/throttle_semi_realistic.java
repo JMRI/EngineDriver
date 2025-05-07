@@ -94,7 +94,7 @@ public class throttle_semi_realistic extends throttle {
     boolean prefSemiRealisticThrottleDisableAir = true;
     boolean airEnabled = true;
     int prefSemiRealisticThrottleAcceleratonRepeat = 300;
-    int prefSemiRealisticThrottleDeceleratonRepeat = 600;
+    int prefSemiRealisticThrottleDecelerationRepeat = 600;
     boolean useNotches = false;
     Button [] bEStops;
     Button [] bAirs;
@@ -150,7 +150,7 @@ public class throttle_semi_realistic extends throttle {
         maxLoad = prefSemiRealisticThrottleMaxLoadPcnt;
 
         prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
-        prefSemiRealisticThrottleDeceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDeceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
+        prefSemiRealisticThrottleDecelerationRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecelerationRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
 
         prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
         useEsuDecoderBrakes = (prefDisplaySemiRealisticThrottleDecoderBrakeType.equals("esu"));
@@ -1973,7 +1973,7 @@ public class throttle_semi_realistic extends throttle {
             if (mSemiRealisticAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
                 repeatDelay = prefSemiRealisticThrottleAcceleratonRepeat;
             } else {
-                repeatDelay = prefSemiRealisticThrottleDeceleratonRepeat;
+                repeatDelay = prefSemiRealisticThrottleDecelerationRepeat;
             }
         }
         return repeatDelay;

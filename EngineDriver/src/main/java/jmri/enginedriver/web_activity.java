@@ -56,6 +56,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
@@ -427,7 +428,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
         }
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",

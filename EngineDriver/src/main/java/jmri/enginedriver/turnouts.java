@@ -764,7 +764,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
         }
 
         turnoutsView = findViewById(R.id.select_turnout_screen);

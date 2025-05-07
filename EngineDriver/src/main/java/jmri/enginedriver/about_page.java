@@ -33,6 +33,8 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 
@@ -40,10 +42,6 @@ public class about_page extends AppCompatActivity {
 
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
-
-    private LinearLayout screenNameLine;
-    private Toolbar toolbar;
-    private LinearLayout statusLine;
 
     /**
      * Called when the activity is first created.
@@ -69,12 +67,12 @@ public class about_page extends AppCompatActivity {
         //put pointer to this activity's handler in main app's shared variable
         mainapp.about_page_msg_handler = new about_page_handler(Looper.getMainLooper());
 
-        screenNameLine = findViewById(R.id.screen_name_line);
-        toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
