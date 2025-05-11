@@ -23,8 +23,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import jmri.enginedriver.type.source_type;
-
 //
 //EngineDriver simple Consist
 //
@@ -166,7 +164,7 @@ public final class Consist {
     public Boolean isBackward(String address) {
         ConLoco l = con.get(address);
         if (l == null)
-            return null;
+            return false;
         return l.backward;
     }
 

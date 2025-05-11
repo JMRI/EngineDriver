@@ -1010,7 +1010,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Stummschalttaste ausblenden</string>
     <string name="prefDeviceSoundsButtonSummary">Zeigen Sie eine Action-Bar-Taste, um die Lok-Sounds in Telefon-Look zu ändern</string>
     <string name="prefDeviceSoundsButtonTitle">Im Telefon Sounds-Taste</string>
-    <string name="deviceSoundsMenu">Loco-Sounds</string>
+    <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">In Telefon-Lok-Sounds</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Empfehlen Sie, dass Sie die Funktionsgröße der Funktionstasten erhöhen, oder Sie können nicht auf die Soundfunktionen von Bell / Horn / Mute-Sound-Funktionen zugreifen</string>
     <string name="pauseSpeedButtonLabel">Pause</string>

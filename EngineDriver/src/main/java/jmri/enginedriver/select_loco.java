@@ -220,6 +220,7 @@ public class select_loco extends AppCompatActivity {
             }
 
             int position = -1;
+            boolean includeInList;
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
@@ -248,8 +249,7 @@ public class select_loco extends AppCompatActivity {
                     position++;
                     hm.put("roster_position", String.format("%04d",position));
 
-
-                    boolean includeInList = false;
+                    includeInList = false;
                     if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
                         includeInList = true;
                     } else if ((!prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0)) {
@@ -377,15 +377,10 @@ public class select_loco extends AppCompatActivity {
             if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (engineName.isEmpty()) {
-                        if (mainapp.roster_entries.get(rostername).equals(engineAddress)) {
-                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
-                            if (rosterentry == null) return "";
-                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
-                            if (iconPath == null) return "";
-                            return iconPath;
-                        }
-                    } else { // if there is a name as well, confirm they match (for entries with the same address)
-                        if (rostername.equals(engineName)) {
+                        String rosterEntryRosterName = mainapp.roster_entries.get(rostername);
+                        if (rosterEntryRosterName == null) return "";
+
+                        if (rosterEntryRosterName.equals(engineAddress)) {
                             RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
                             if (rosterentry == null) return "";
                             String iconPath = rosterentry.getIconPath();  //if found, return the icon url
@@ -393,6 +388,15 @@ public class select_loco extends AppCompatActivity {
                             return iconPath;
                         }
 
+                    } else { // if there is a name as well, confirm they match (for entries with the same address)
+
+                        if (rostername.equals(engineName)) {
+                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
+                            if (rosterentry == null) return "";
+                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
+                            if (iconPath == null) return "";
+                            return iconPath;
+                        }
                     }
                 }
             }
@@ -730,7 +734,10 @@ public class select_loco extends AppCompatActivity {
                             options.inSampleSize = Math.max(inWidth/150, inHeight/150);
                             // decode full image
                             Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
-
+                            if (roughBitmap == null) {
+                                imageFileFoundButCannotBeLoaded();
+                                return;
+                            }
                             // calc exact destination size
                             Matrix m = new Matrix();
                             RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
@@ -763,12 +770,15 @@ public class select_loco extends AppCompatActivity {
                             buttonRemoveRosterImage.setVisibility(VISIBLE);
                             buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
                         } catch (Exception e) {
-                            Log.d("Engine_Driver", "select_loco: onActivityResult(): load image - image file found but could not loaded");
+                            imageFileFoundButCannotBeLoaded();
                         }
                     }
                 }
                 break;
         }
+    }
+    private void imageFileFoundButCannotBeLoaded() {
+        Log.d("Engine_Driver", "select_loco: onActivityResult(): load image - image file found but could not loaded");
     }
 
     /** @noinspection SameParameterValue*/ //write the recent locos to a file
@@ -866,23 +876,29 @@ public class select_loco extends AppCompatActivity {
                     @Override
                     public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
                         int rslt;
-                        String s0;
-                        String s1;
+                        String s0 = "";
+                        String s1 = "";
                         switch (mainapp.recentLocosOrder) {
                             case sort_type.NAME: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("engine").replaceAll("_", " ").toLowerCase());
-                                s1 = threaded_application.formatNumberInName(arg1.get("engine").replaceAll("_", " ").toLowerCase());
+                                if (arg0.get("engine") != null)
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("engine")).replaceAll("_", " ").toLowerCase());
+                                if (arg1.get("engine") != null)
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("engine")).replaceAll("_", " ").toLowerCase());
                                 break;
                             }
                             case sort_type.ID: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("locoAddress"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("locoAddress"));
+                                if (arg0.get("locoAddress") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("locoAddress"));
+                                if (arg1.get("locoAddress") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("locoAddress"));
                                 break;
                             }
                             case sort_type.LAST_USED:
                             default: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                                if (arg0.get("last_used") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                if (arg1.get("last_used") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
                             }
                         }
                         rslt = s0.compareTo(s1);
@@ -929,23 +945,29 @@ public class select_loco extends AppCompatActivity {
                     @Override
                     public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
                         int rslt;
-                        String s0;
-                        String s1;
+                        String s0 = "";
+                        String s1 = "";
                         switch (mainapp.recentConsistsOrder) {
                             case sort_type.NAME: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("consist").replaceAll("_", " ").toLowerCase());
-                                s1 = threaded_application.formatNumberInName(arg1.get("consist").replaceAll("_", " ").toLowerCase());
+                                if (arg0.get("consist") != null)
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("consist")).replaceAll("_", " ").toLowerCase());
+                                if (arg1.get("consist") != null)
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("consist")).replaceAll("_", " ").toLowerCase());
                                 break;
                             }
                             case sort_type.ID: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("consist_name"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("consist_name"));
+                                if (arg0.get("consist_name") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("consist_name"));
+                                if (arg1.get("consist_name") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("consist_name"));
                                 break;
                             }
                             case sort_type.LAST_USED:
                             default: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                                if (arg0.get("last_used") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                if (arg1.get("last_used") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
                             }
                         }
                         rslt = s0.compareTo(s1);
@@ -1448,7 +1470,7 @@ public class select_loco extends AppCompatActivity {
                     }
                 }
             }
-            String rosterEntryOwner = hm.get("roster_owner");
+//            String rosterEntryOwner = hm.get("roster_owner");
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
@@ -1640,7 +1662,8 @@ public class select_loco extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             sWhichThrottle = extras.getString("sWhichThrottle");
-            whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
+            if (sWhichThrottle != null)
+                whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         }
 
         button = findViewById(R.id.Sl_release);
@@ -1798,14 +1821,6 @@ public class select_loco extends AppCompatActivity {
         rbIDnGo.setChecked(false);
 
         switch (whichMethod) {
-            default:
-            case which_method.ADDRESS: {
-                rlAddress.setVisibility(View.VISIBLE);
-                rlAddressHelp.setVisibility(View.VISIBLE);
-                rbAddress.setChecked(true);
-                hideSoftKeyboard(rlAddress);
-                break;
-            }
             case which_method.ROSTER: {
                 rlRosterHeading.setVisibility(View.VISIBLE);
                 rlRosterHeaderGroup.setVisibility(View.VISIBLE);
@@ -1841,6 +1856,14 @@ public class select_loco extends AppCompatActivity {
                 rlIDnGo.setVisibility(View.VISIBLE);
                 rbIDnGo.setChecked(true);
                 hideSoftKeyboard(rbAddress);
+                break;
+            }
+            case which_method.ADDRESS:
+            default: {
+                rlAddress.setVisibility(View.VISIBLE);
+                rlAddressHelp.setVisibility(View.VISIBLE);
+                rbAddress.setChecked(true);
+                hideSoftKeyboard(rlAddress);
                 break;
             }
         }
@@ -2083,7 +2106,7 @@ public class select_loco extends AppCompatActivity {
         buttonRemoveRosterImage = dialog.findViewById(R.id.removeRosterEntryImage);
         buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (deleteLocoImageFile(rosterNameString, detailsRosterImageView)) {
+                if (deleteLocoImageFile(rosterNameString)) {
                     detailsRosterImageView.setVisibility(GONE);
                     buttonRemoveRosterImage.setVisibility(GONE);
                     LocalRosterImageRemoved = true;
@@ -2218,6 +2241,7 @@ public class select_loco extends AppCompatActivity {
         }
 
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position < 0 || position >= rosterList.size())
                 return convertView;
@@ -2226,29 +2250,32 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
 
-            String engineName = hm.get("roster_name");
-            if (engineName != null) {
-                TextView name = view.findViewById(R.id.roster_name_label);
-                name.setText(engineName);
-            }
+                String engineName = hm.get("roster_name");
+                if (engineName != null) {
+                    TextView name = view.findViewById(R.id.roster_name_label);
+                    name.setText(engineName);
+                }
 
-            String engineNo = hm.get("roster_address");
-            if (engineNo != null) {
-                TextView secondLine = view.findViewById(R.id.roster_address_label);
-                secondLine.setText(engineNo);
-            }
+                String engineNo = hm.get("roster_address");
+                if (engineNo != null) {
+                    TextView secondLine = view.findViewById(R.id.roster_address_label);
+                    secondLine.setText(engineNo);
+                }
 
-            ImageView imageView = view.findViewById(R.id.roster_icon_image);
-            String iconURL = hm.get("roster_icon");
-            loadRosterOrRecentImage(engineName, imageView, iconURL);
+                ImageView imageView = view.findViewById(R.id.roster_icon_image);
+                String iconURL = hm.get("roster_icon");
+                loadRosterOrRecentImage(engineName, imageView, iconURL);
 
-            String owner = hm.get("roster_owner");
-            if (owner != null) {
-                TextView secondLine = view.findViewById(R.id.roster_owner_label);
-                secondLine.setText(owner);
+                String owner = hm.get("roster_owner");
+                if (owner != null) {
+                    TextView secondLine = view.findViewById(R.id.roster_owner_label);
+                    secondLine.setText(owner);
+                }
             }
 
             return view;
@@ -2266,6 +2293,7 @@ public class select_loco extends AppCompatActivity {
             cont = context;
         }
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position > recentEngineList.size())
                 return convertView;
@@ -2274,24 +2302,27 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
 
-            String str = hm.get("engine_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.engine_name_label);
-                name.setText(Html.fromHtml(str));
+                String str = hm.get("engine_name");
+                if (str != null) {
+                    TextView name = view.findViewById(R.id.engine_name_label);
+                    name.setText(Html.fromHtml(str));
+                }
+
+                String engineName = hm.get("engine");
+                if (engineName != null) {
+                    TextView secondLine = view.findViewById(R.id.engine_item_label);
+                    secondLine.setText(engineName);
+                }
+
+                ImageView imageView = view.findViewById(R.id.engine_icon_image);
+                String iconURL = hm.get("engine_icon");
+                loadRosterOrRecentImage(engineName, imageView, iconURL);
             }
-
-            String engineName = hm.get("engine");
-            if (engineName != null) {
-                TextView secondLine = view.findViewById(R.id.engine_item_label);
-                secondLine.setText(engineName);
-            }
-
-            ImageView imageView = view.findViewById(R.id.engine_icon_image);
-            String iconURL = hm.get("engine_icon");
-            loadRosterOrRecentImage(engineName, imageView, iconURL);
 
             return view;
         }
@@ -2322,6 +2353,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
         private final Context cont;
 
@@ -2333,6 +2365,7 @@ public class select_loco extends AppCompatActivity {
             cont = context;
         }
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position > recent_consists_list.size())
                 return convertView;
@@ -2341,19 +2374,22 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
 
-            String str = hm.get("consist_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.consist_name_label);
-                name.setText(Html.fromHtml(str));
-            }
+                String str = hm.get("consist_name");
+                if (str != null) {
+                    TextView name = view.findViewById(R.id.consist_name_label);
+                    name.setText(Html.fromHtml(str));
+                }
 
-            str = hm.get("consist");
-            if (str != null) {
-                TextView secondLine = view.findViewById(R.id.consist_item_label);
-                secondLine.setText(Html.fromHtml(str));
+                str = hm.get("consist");
+                if (str != null) {
+                    TextView secondLine = view.findViewById(R.id.consist_item_label);
+                    secondLine.setText(Html.fromHtml(str));
+                }
             }
 
             return view;
@@ -2482,10 +2518,20 @@ public class select_loco extends AppCompatActivity {
     private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
-            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            if (!dir.exists()) {
+                if (!dir.mkdir()) { // in case the folder does not already exist
+                    unableToSaveLocoImage();
+                    return false;
+                }
+            }
             String imgFileName = mainapp.fixFilename(rosterNameString) + ".png";
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            if (dir.exists()) imageFile.delete(); // delete the old version if it exists
+            if (imageFile.exists()) {
+                if (!imageFile.delete()) { // delete the old version if it exists
+                    unableToSaveLocoImage();
+                    return false;
+                }
+            }
             FileOutputStream fileOutputStream =
                     new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             Bitmap bitmap = viewToBitmap(imageView, 52);   //52dp
@@ -2494,23 +2540,41 @@ public class select_loco extends AppCompatActivity {
             fileOutputStream.close();
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "select_loco: writeLocoImageToFile(): Unable to save roster loco image");
+            unableToSaveLocoImage();
             return false;
         }
     }
 
-    private boolean deleteLocoImageFile(String rosterNameString, ImageView imageView) {
+    private void unableToSaveLocoImage() {
+        Log.d("Engine_Driver", "select_loco: writeLocoImageToFile(): Unable to save roster loco image");
+    }
+
+    private boolean deleteLocoImageFile(String rosterNameString) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
-            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            if (!dir.exists()) {
+                if(!dir.mkdir()) { // in case the folder does not already exist
+                    unableToDeleteLocoImage();
+                    return false;
+                }
+            }
             String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            if (dir.exists()) imageFile.delete();
+            if (imageFile.exists()) {
+                if (!imageFile.delete()) {
+                    unableToDeleteLocoImage();
+                    return false;
+                }
+            }
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "select_loco: deleteLocoImageFile(): Unable to delete roster loco image");
+            unableToDeleteLocoImage();
             return false;
         }
+    }
+
+    private void unableToDeleteLocoImage() {
+        Log.d("Engine_Driver", "select_loco: deleteLocoImageFile(): Unable to delete roster loco image");
     }
 
 //    private void cropLocoImage() {

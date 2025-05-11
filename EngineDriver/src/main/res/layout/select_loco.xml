@@ -57,48 +57,62 @@
 
                     <RadioButton
                         android:id="@+id/select_loco_method_address_button"
-                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="48dp"
                         android:text="@string/LocoSelectMethodAddress"
                         android:textSize="18sp"
-                        android:enabled="true" />
+                        android:theme="?attr/EDRadioButton" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_roster_button"
-                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRoster"
                         android:textSize="18sp"
-                        android:enabled="true" />
+                        android:theme="?attr/EDRadioButton"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_recent_button"
-                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRecent"
                         android:textSize="18sp"
-                        android:enabled="true" />
+                        android:theme="?attr/EDRadioButton"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
                         android:id="@+id/select_consists_method_recent_button"
-                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRecentConsist"
                         android:textSize="18sp"
-                        android:enabled="true" />
+                        android:theme="?attr/EDRadioButton"
+                        tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_idngo"
-                        android:theme="?attr/EDRadioButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodIDNGo"
                         android:textSize="18sp"
-                        android:enabled="true" />
+                        android:theme="?attr/EDRadioButton"
+                        tools:ignore="TouchTargetSizeCheck" />
                 </RadioGroup>
 
             </RelativeLayout>
@@ -107,9 +121,11 @@
                 android:id="@+id/LL_loco"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
+                android:layout_marginStart="1dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginRight="1dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginEnd="3dp"
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
@@ -128,10 +144,12 @@
                 <LinearLayout
                     android:id="@+id/LL_options"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="1dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
                     android:weightSum="1">
@@ -139,71 +157,84 @@
                     <LinearLayout
                         android:id="@+id/LL_edit_consist"
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginLeft="1dp"
+                        android:layout_weight="0.65"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginLeft="0dp"
                         android:layout_marginRight="1dp"
+                        android:layout_marginEnd="1dp"
                         android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.7"
-                        android:weightSum="1">
+                        android:orientation="vertical"
+                        android:weightSum="1"
+                        tools:ignore="UselessParent">
 
                         <Button
                             android:id="@+id/Sl_edit_consist"
-                            style="?attr/ed_small_button_style"
-                            android:layout_width="0dp"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.6"
                             android:baselineAligned="false"
+                            android:minHeight="30dp"
                             android:paddingLeft="4dp"
                             android:paddingRight="4dp"
                             android:text="@string/editConsistButtonLabel"
                             android:textAlignment="center"
-                            android:textSize="10sp"
-                            tools:ignore="NestedWeights,SmallSp" />
+                            android:textSize="11sp"
+                            tools:ignore="NestedWeights,SmallSp,TouchTargetSizeCheck" />
 
                         <Button
                             android:id="@+id/Sl_edit_consist_lights"
-                            style="?attr/ed_small_button_style"
-                            android:layout_width="0dp"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.4"
+                            android:layout_marginTop="6dp"
                             android:baselineAligned="false"
+                            android:minHeight="30dp"
                             android:paddingLeft="4dp"
                             android:paddingRight="4dp"
                             android:text="@string/editConsistLightsButtonLabel"
                             android:textAlignment="center"
-                            android:textSize="10sp"
-                            tools:ignore="SmallSp" />
+                            android:textSize="11sp"
+                            tools:ignore="SmallSp,TouchTargetSizeCheck" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="1dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:layout_weight="0.3">
-                    <Button
-                        android:id="@+id/Sl_device_sounds"
-                        style="?attr/ed_small_button_style"
-                        android:layout_width="match_parent"
+                        android:layout_weight="0.35"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:minHeight="60dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginEnd="0dp"
                         android:baselineAligned="false"
-                        android:paddingLeft="4dp"
-                        android:paddingRight="4dp"
-                        android:text="@string/deviceSoundsMenu"
-                        android:textAlignment="center"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Sl_device_sounds"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="match_parent"
+                            android:maxWidth="150dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:layout_gravity="center_horizontal"
+                            android:baselineAligned="false"
+                            android:text="@string/deviceSoundsMenu"
+                            android:textAlignment="center"
+                            android:textSize="11sp"
+                            tools:ignore="SmallSp" />
                     </LinearLayout>
 
                 </LinearLayout>
+
 
             </LinearLayout>
 
@@ -255,14 +286,16 @@
             android:layout_below="@+id/select_loco_label"
             android:layout_alignBottom="@id/loco_address"
             android:layout_toRightOf="@id/loco_address"
-            tools:ignore="RtlHardcoded"
-            android:ellipsize = "none"
-            android:text="@string/prefDefaultAddressLengthDefaultValue" />
+            android:ellipsize="none"
+            android:minWidth="48dp"
+            android:text="@string/prefDefaultAddressLengthDefaultValue"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/acquire_button"
             style="?attr/ed_normal_button_style"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
+            android:maxWidth="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/select_loco_label"
             android:layout_alignBottom="@id/address_length"
@@ -354,13 +387,13 @@
 
         <Button
             android:id="@+id/roster_sort"
-            style="?attr/ed_small_button_style"
+            style="?attr/ed_small_button_condensed_text_style"
             android:layout_width="wrap_content"
             android:layout_height="24sp"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
             android:text="@string/order"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/roster_list_filter_by_label"
@@ -386,20 +419,20 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="6dp"
             android:layout_toRightOf="@+id/roster_list_filter_by_label"
-            android:paddingTop="2dp"
-            android:paddingBottom="0dp"
             android:hint="@string/FilterRosterListHint"
             android:imeOptions="actionDone"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:maxLength="10"
+            android:paddingTop="2dp"
+            android:paddingBottom="0dp"
             android:shadowColor="#FFFFFFFF"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true"
             android:textSize="14sp"
-            android:importantForAutofill="no"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/roster_list_filter_owner_label"
@@ -421,27 +454,29 @@
             android:id="@+id/roster_filter_owner"
             android:layout_width="90sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="0dp"
             android:layout_marginTop="6dp"
+            android:layout_marginRight="0dp"
             android:layout_toRightOf="@+id/roster_list_filter_owner_label"
-            android:paddingRight="12sp"
+            android:contentDescription="@string/FilterRosterListFilterOwnerLabel"
             android:ellipsize="end"
+            android:paddingRight="12sp"
             android:singleLine="true"
             android:text=""
             android:textSize="14sp"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            tools:ignore="RtlHardcoded,RtlSymmetry,TouchTargetSizeCheck" />
 
 
         <Button
             android:id="@+id/roster_download"
-            style="?attr/ed_small_button_style"
+            style="?attr/ed_small_button_condensed_text_style"
             android:layout_width="wrap_content"
             android:layout_height="24sp"
-            android:layout_marginTop="8dp"
-            android:padding="2sp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:padding="2sp"
             android:text="@string/FilterRosterListDownloadLabel"
-            tools:ignore="RelativeOverlap,RtlHardcoded" />
+            tools:ignore="RelativeOverlap,RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
 
 
     </RelativeLayout>
@@ -508,25 +543,25 @@
 
             <Button
                 android:id="@+id/recent_engines_sort"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_small_button_condensed_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="24sp"
-                android:layout_alignParentTop="true"
                 android:layout_below="@+id/clear_Loco_List_button"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="6dp"
                 android:text="@string/order"
-                tools:ignore="RtlHardcoded" />
+                tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/clear_Loco_List_button"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_small_button_condensed_text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="24sp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:text="@string/clearLocoList"
-                tools:ignore="RelativeOverlap" />
+                tools:ignore="RelativeOverlap,TextSizeCheck,TouchTargetSizeCheck" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -575,24 +610,24 @@
 
                 <Button
                     android:id="@+id/recent_consists_sort"
-                    style="?attr/ed_small_button_style"
+                    style="?attr/ed_small_button_condensed_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="24sp"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="6dp"
                     android:text="@string/order"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
 
                 <Button
                     android:id="@+id/clear_consists_list_button"
-                    style="?attr/ed_small_button_style"
+                    style="?attr/ed_small_button_condensed_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="24sp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/clearLocoList"
-                    tools:ignore="RelativeOverlap" />
+                    tools:ignore="RelativeOverlap,TextSizeCheck,TouchTargetSizeCheck" />
 
             </RelativeLayout>
 

@@ -95,6 +95,10 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="small_button_condensed_text_style" parent="small_button_style">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
+  </style>
+
   <style name="fn_button_style" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">16sp</item>
@@ -517,6 +521,9 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
+  <style name="small_button_condensed_text_style_black" parent="small_button_style_black">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
+  </style>
 
   <style name="fn_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
@@ -687,6 +694,10 @@
     <item name="android:layout_height">fill_parent</item>
     <item name="android:ellipsize">end</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_condensed_text_style_outline" parent="small_button_style_outline">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
   </style>
 
   <style name="small_button_hover_style" parent="small_button_style_outline">
@@ -866,6 +877,10 @@
     <item name="android:layout_height">fill_parent</item>
     <item name="android:ellipsize">end</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_condensed_text_style_ultra" parent="small_button_style_ultra">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
   </style>
 
   <style name="fn_button_style_ultra" parent="@android:style/Widget.Button">
@@ -1100,6 +1115,11 @@
     <item name="android:ellipsize">end</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
+
+  <style name="small_button_condensed_text_style_colorful" parent="small_button_style_colorful">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
+  </style>
+
 
   <style name="fn_button_style_colorful" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/colorful_fn_btn_text_states</item>
@@ -1443,6 +1463,10 @@
     <item name="android:layout_height">fill_parent</item>
     <item name="android:ellipsize">end</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_condensed_text_style_neon" parent="small_button_style_neon">
+    <item name="android:fontFamily">sans-serif-condensed</item>>
   </style>
 
   <style name="fn_button_style_neon" parent="@android:style/Widget.Button">
