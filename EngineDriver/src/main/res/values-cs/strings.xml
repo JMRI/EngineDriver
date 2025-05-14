@@ -59,6 +59,7 @@
     <string name="connect_button">Připojit</string>
     <string name="recent_connections">Nedávná připojení</string>
     <string name="select_loco_heading">Získat lokomotivu, Způsob – Ovladač %1$s</string>
+    <string name="select_loco_current_locos_heading">Aktuálně vybrané lokomotivy – plyn %1$s</string>
     <string name="select_loco">Zadejte adresu pro získání lokomotivy</string>
     <string name="select_loco_address">Adresa</string>
     <string name="acquire_button">Získat</string>
@@ -362,6 +363,8 @@
     <string name="prefRosterOwnersFilterShowOptionTitle">Filtr podle vlastníka seznamu</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Zobrazit možnost filtrovat seznam podle vlastníka</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Všechno</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">Vyberte vzhled metody lokomotivy</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Namísto obrázkových tlačítek zobrazit textový seznam metod</string>
     <string name="LocoSelectMethodAddress">DCC adresa</string>
     <string name="LocoSelectMethodRoster">Evidence serveru</string>
     <string name="LocoSelectMethodRecent">Nedávné Lokomotivy</string>

@@ -51,6 +51,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
@@ -406,7 +407,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),

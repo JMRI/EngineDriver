@@ -78,6 +78,7 @@
     <string name="connect_button">Connect</string>
     <string name="recent_connections">Recent Servers</string>
     <string name="select_loco_heading">Acquire Loco, Method - Throttle %1$s</string>
+    <string name="select_loco_current_locos_heading">Currently Selected Locos - Throttle %1$s</string>
     <string name="select_loco">Enter Locomotive Address to Acquire</string>
     <string name="select_loco_address">Address</string>
     <string name="acquire_button">Acquire</string>
@@ -465,7 +466,10 @@
     <string name="prefRosterOwnersFilterShowOptionSummary">Show an option to Filter the Roster by Owner</string>
     <string name="prefRosterOwnersFilterDefaultOwner">All</string>
 
-<!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
+    <string name="prefSelectLocoByRadioButtonsTitle">Select loco method appearance</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Show a text list of methods instead of image buttons</string>
+
+    <!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
     <string name="LocoSelectMethodAddress">DCC Address</string>
     <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>

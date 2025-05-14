@@ -83,6 +83,7 @@ import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.dccex_protocol_option_type;
@@ -669,7 +670,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
@@ -1152,7 +1153,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
-            if (mainapp.connectedHostName != null) {
+            if (!mainapp.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
@@ -1182,7 +1183,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         if ((prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT))
                 || (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
-            if (mainapp.connectedHostName != null) {
+            if (!mainapp.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {

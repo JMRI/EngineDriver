@@ -309,6 +309,7 @@ public class power_control extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_power_control),

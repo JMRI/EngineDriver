@@ -50,10 +50,12 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -137,7 +139,8 @@ public class comm_thread extends Thread {
             String serverType = event.getInfo().getPropertyString("jmri") == null ? "" : "JMRI";
 
             String host_name = event.getInfo().getName();
-            if (event.getInfo().getType().toString().equals(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP)) {
+//            if (event.getInfo().getType().toString().equals(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP)) {
+            if (event.getInfo().getType().equals(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP)) {
                 host_name = host_name + " [DCC-EX]";
             }
             Inet4Address[] ip_addresses = event.getInfo().getInet4Addresses();  //only get ipV4 address
@@ -149,7 +152,8 @@ public class comm_thread extends Thread {
             hm.put("port", ((Integer) port).toString());
             hm.put("host_name", host_name);
             hm.put("ssid", mainapp.client_ssid);
-            hm.put("service_type", event.getInfo().getType().toString());
+//            hm.put("service_type", event.getInfo().getType().toString());
+            hm.put("service_type", event.getInfo().getType());
 
             String key = ip_address+":"+port;
             mainapp.knownDCCEXserverIps.put(key, serverType);
@@ -167,7 +171,8 @@ public class comm_thread extends Thread {
                 service_message.recycle();
 
             Log.d("Engine_Driver", String.format("comm_thread.serviceResolved - %s(%s):%d -- %s",
-                    host_name, ip_address, port, event.toString().replace(System.getProperty("line.separator"), " ")));
+                    host_name, ip_address, port,
+                    event.toString().replace(Objects.requireNonNull(System.getProperty("line.separator")), " ")));
 
         }
     }
@@ -349,7 +354,8 @@ public class comm_thread extends Thread {
     /* ask for specific loco to be added to a throttle
          input addr is formatted "L37<;>CSX37" or "S96" (if no roster name)
          msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
-    static void sendAcquireLoco(String addr, int whichThrottle, int interval) {
+//    static void sendAcquireLoco(String addr, int whichThrottle, int interval) {
+    static void sendAcquireLoco(String addr, int whichThrottle) {
         String rosterName;
         String address;
         String[] as = threaded_application.splitByString(addr, "<;>");
@@ -386,7 +392,7 @@ public class comm_thread extends Thread {
                     wifiSend(msgTxt);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
 
-                    String lead = mainapp.consists[whichThrottle].getLeadAddr();
+//                    String lead = mainapp.consists[whichThrottle].getLeadAddr();
                     sendRequestRosterLocoDetails(address); // get the CS to resend the Loco details so we can get the functions
 
                     if (heart.getInboundInterval() > 0 && mainapp.withrottle_version > 0.0 && !heart.isHeartbeatSent()) {
@@ -426,11 +432,13 @@ public class comm_thread extends Thread {
     }
 
     //release all locos for throttle using '*', or a single loco using address
-    protected void sendReleaseLoco(String addr, int whichThrottle, long interval) {
+//    protected void sendReleaseLoco(String addr, int whichThrottle, long interval) {
+    protected void sendReleaseLoco(String addr, int whichThrottle) {
         String msgTxt;
         if (!mainapp.isDCCEX) { // not DCC-EX
-            msgTxt = String.format("M%s-%s<;>r", mainapp.throttleIntToString(whichThrottle), (!addr.equals("") ? addr : "*"));
-            mainapp.sendMsgDelay(mainapp.comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
+            msgTxt = String.format("M%s-%s<;>r", mainapp.throttleIntToString(whichThrottle), (!addr.isEmpty() ? addr : "*"));
+//            mainapp.sendMsgDelay(mainapp.comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
+            mainapp.sendMsgDelay(mainapp.comm_msg_handler, 0, message_type.WIFI_SEND, msgTxt);
 
         }  // else  // DCC-EX has no equivalent
     }
@@ -448,8 +456,9 @@ public class comm_thread extends Thread {
                 String roster_name = l.getRosterName();
                 if (roster_name != null)  // add roster selection info if present
                     addr += "<;>" + roster_name;
-//                    sendAcquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
-                sendAcquireLoco(addr, whichThrottle, 0); //ask for next loco, with 0 or more delays
+//                sendAcquireLoco(addr, whichThrottle, delays * WITHROTTLE_SPACING_INTERVAL); //ask for next loco, with 0 or more delays
+//                sendAcquireLoco(addr, whichThrottle, 0); //ask for next loco, with 0 or more delays
+                sendAcquireLoco(addr, whichThrottle); //ask for next loco, with 0 or more delays
 //                delays++;
             }
         }
@@ -479,7 +488,8 @@ public class comm_thread extends Thread {
                 for (int i = 0; i < mainapp.consists.length; i++) {
                     con = mainapp.consists[i];
                     for (Consist.ConLoco l : con.getLocos()) {
-                        sendReleaseLoco(l.getAddress(), i, 0);
+//                        sendReleaseLoco(l.getAddress(), i, 0);
+                        sendReleaseLoco(l.getAddress(), i);
                     }
                 }
             }
@@ -494,13 +504,13 @@ public class comm_thread extends Thread {
         sendFunction(mainapp.throttleCharToInt(cWhichThrottle), addr, fn, fState, false);
     }
 
-    protected void sendFunction(char cWhichThrottle, String addr, int fn, int fState, boolean force) {
-        sendFunction(mainapp.throttleCharToInt(cWhichThrottle), addr, fn, fState);
-    }
+//    protected void sendFunction(char cWhichThrottle, String addr, int fn, int fState, boolean force) {
+//        sendFunction(mainapp.throttleCharToInt(cWhichThrottle), addr, fn, fState);
+//    }
 
-    protected void sendFunction(int whichThrottle, String addr, int fn, int fState) {
-        sendFunction(whichThrottle, addr, fn, fState, false);
-    }
+//    protected void sendFunction(int whichThrottle, String addr, int fn, int fState) {
+//        sendFunction(whichThrottle, addr, fn, fState, false);
+//    }
 
     @SuppressLint("DefaultLocale")
     protected void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean force) {
@@ -537,10 +547,11 @@ public class comm_thread extends Thread {
                     }
 
                     if (fn < 10) { // special case for attached keyboards keys 0-9
-                        if (mainapp.numericKeyIsPressed[fn] == 0) {  // key down
+//                        if (mainapp.numericKeyIsPressed[fn] == 0) {  // key down
 //                        newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn]==0) ? 1 : 0;
                             // do nothing
-                        } else if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
+//                        } else if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
+                        if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
                             newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn] == 0) ? 1 : 0;
                             mainapp.numericKeyIsPressed[fn] = -1;
                             mainapp.numericKeyFunctionStateAtTimePressed[fn] = -1;
@@ -631,7 +642,7 @@ public class comm_thread extends Thread {
         if (mainapp.isDCCEX) { // DCC-EX only
             float vn = 4;
             try {
-                vn = Float.valueOf(mainapp.DccexVersion);
+                vn = Float.parseFloat(mainapp.DccexVersion);
             } catch (Exception ignored) { } // invalid version
 
             if (vn >= 04.002007) {  /// need to remove the track manager option
@@ -819,14 +830,14 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    String fmt = ( (Float.valueOf(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                    String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                     msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
 //                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
                 }
             } else {
-                String fmt = ( (Float.valueOf(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, addr.substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], dir);
                 wifiSend(msgTxt);
                 if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
@@ -854,7 +865,7 @@ public class comm_thread extends Thread {
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                String fmt = ( (Float.valueOf(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 wifiSend(msgTxt);
 //                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
@@ -1017,7 +1028,7 @@ public class comm_thread extends Thread {
                             conLoco.setFunctionLabelDefaults(mainapp, whichThrottle);
                             //look for RosterEntry which matches address returned
                             String rn = mainapp.getRosterNameFromAddress(conLoco.getFormatAddress(), true);
-                            if (!rn.equals("")) {
+                            if (!rn.isEmpty()) {
                                 conLoco.setIsFromRoster(true);
                                 conLoco.setRosterName(rn);
                             }
@@ -1054,7 +1065,7 @@ public class comm_thread extends Thread {
                         // save them in recents regardless
                         if (mainapp.consists[whichThrottle].getLoco(addr) != null) {
                             Consist.ConLoco loco = mainapp.consists[whichThrottle].getLoco(addr);
-                            LinkedHashMap<Integer, String> functonMap =  mainapp.parseFunctionLabels("RF29}|{1234(L)" + ls[1]);
+                            LinkedHashMap<Integer, String> functonMap =  threaded_application.parseFunctionLabels("RF29}|{1234(L)" + ls[1]);
                             mainapp.addLocoToRecents(loco, functonMap); // WiT
                             loco.setFunctionLabels("RF29}|{1234(L)" + ls[1]);
                         }
@@ -1257,12 +1268,12 @@ public class comm_thread extends Thread {
                             String [] vn2 = vn1[1].split("\\.");
                             String vn = "4.";
                             try {
-                                vn = String.format("%02d.", Integer.parseInt(vn2[0]), Integer.parseInt(vn2[1]));
+                                vn = String.format("%02d.", Integer.parseInt(vn2[0]));
                             } catch (Exception e) {
                                 Log.d("Engine_Driver", "comm_thread.processWifiResponse: Invalid Version " + mainapp.DccexVersion + ", ignoring");
                             }
-                            if (vn.length()>=2) {
-                                try { vn = vn +String.format("%02d",Integer.parseInt(vn2[2]));
+                            if (vn2.length>=2) {
+                                try { vn = vn +String.format("%02d",Integer.parseInt(vn2[1]));
                                 } catch (Exception ignored) {
                                     // try to pull a partial number
                                     String pn = "0";
@@ -1274,8 +1285,8 @@ public class comm_thread extends Thread {
                                     vn = vn +String.format("%03d", Integer.parseInt(pn));
                                 }
                             }
-                            if (vn.length()>=3) {
-                                try { vn = vn +String.format("%03d",Integer.parseInt(vn2[2]));
+                            if (vn2.length>=3) {
+                                try { vn = vn + String.format("%03d",Integer.parseInt(vn2[2]));
                                 } catch (Exception ignored) {
                                     // try to pull a partial number
                                     String pn = "0";
@@ -1516,30 +1527,30 @@ public class comm_thread extends Thread {
             type = "AUTO";
         }
 
-        if (args.length>=2) {
-            trackNo = args[1].charAt(0)-65;
-            if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
-                int trackTypeIndex = -1
+//        if (args.length>=2) {
+        trackNo = args[1].charAt(0)-65;
+        if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
+            int trackTypeIndex = -1
 ;               boolean needsId = false;
-                for (int i=0; i<TRACK_TYPES.length; i++) {
-                    if (type.equals(TRACK_TYPES[i])) {
-                        trackTypeIndex = i;
-                        needsId = TRACK_TYPES_NEED_ID[i];
-                        break;
-                    }
+            for (int i=0; i<TRACK_TYPES.length; i++) {
+                if (type.equals(TRACK_TYPES[i])) {
+                    trackTypeIndex = i;
+                    needsId = TRACK_TYPES_NEED_ID[i];
+                    break;
                 }
-
-                if (trackTypeIndex>=0) {
-                    mainapp.dccexTrackType[trackNo] = trackTypeIndex;
-                    mainapp.dccexTrackId[trackNo] = "";
-                }
-                if ( (needsId) && (args.length>=3) ) {
-                    mainapp.dccexTrackId[trackNo] = args[3];
-                }
-                mainapp.dccexTrackAvailable[trackNo] = true;
             }
-            mainapp.alert_activities(message_type.RECEIVED_TRACKS, type);  //send response to running activities
+
+            if (trackTypeIndex>=0) {
+                mainapp.dccexTrackType[trackNo] = trackTypeIndex;
+                mainapp.dccexTrackId[trackNo] = "";
+            }
+            if ( (needsId) && (args.length>=3) ) {
+                mainapp.dccexTrackId[trackNo] = args[3];
+            }
+            mainapp.dccexTrackAvailable[trackNo] = true;
         }
+        mainapp.alert_activities(message_type.RECEIVED_TRACKS, type);  //send response to running activities
+//        }
     }
 
     private static void forceDropDccexLoco(String [] args) {
@@ -1588,7 +1599,7 @@ public class comm_thread extends Thread {
         } else {
             addressStr = "L" + addressStr;
         }
-        Long timeSinceLastCommand;
+        long timeSinceLastCommand;
 
         for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {   //loco may be the lead on more that one throttle
             int whichThrottle = mainapp.getWhichThrottleFromAddress(addressStr, throttleIndex);
@@ -1651,7 +1662,7 @@ public class comm_thread extends Thread {
                     conLoco.setFunctionLabelDefaults(mainapp, requestLocoIdForWhichThrottleDCCEX);
                     //look for RosterEntry which matches address returned
                     String rn = mainapp.getRosterNameFromAddress(conLoco.getFormatAddress(), true);
-                    if (!rn.equals("")) {
+                    if (!rn.isEmpty()) {
                         conLoco.setIsFromRoster(true);
                         conLoco.setRosterName(rn);
                     }
@@ -1660,7 +1671,8 @@ public class comm_thread extends Thread {
                     con.setConfirmed(addrStr);
                     mainapp.addLocoToRecents(conLoco); //DCC-EX
 
-                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
+//                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
+                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX);
                     sendJoinDCCEX();
                     mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
 
@@ -1686,7 +1698,7 @@ public class comm_thread extends Thread {
                     sendRequestTurnouts();
             } else {
                 if ((args.length < 3) || (args[2].charAt(0) != '"')) {  // loco list
-                    if (mainapp.dccexRosterString.equals("")) {
+                    if (mainapp.dccexRosterString.isEmpty()) {
                         mainapp.dccexRosterString = "";
                         mainapp.dccexRosterIDs = new int[args.length - 1];
                         mainapp.dccexRosterLocoNames = new String[args.length - 1];
@@ -1723,14 +1735,9 @@ public class comm_thread extends Thread {
                                 }
                             }
                             if (ready) {
-                                mainapp.dccexRosterString = "RL" + mainapp.dccexRosterIDs.length;
-                                for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
-                                    mainapp.dccexRosterString = mainapp.dccexRosterString
-                                            + "]\\[" + mainapp.dccexRosterLocoNames[i]
-                                            + "}|{" + mainapp.dccexRosterIDs[i]
-                                            + "}|{" + (mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L");
-                                }
+                                mainapp.dccexRosterString = getRosterString();
                                 processRosterList(mainapp.dccexRosterString);
+
                                 mainapp.dccexRosterString = "";
                                 mainapp.DCCEXlistsRequested++;
                                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
@@ -1750,7 +1757,7 @@ public class comm_thread extends Thread {
 
                         boolean found = false;
                         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {  //loco may be the lead on more that one throttle
-                            StringBuilder responseStrBuilder = new StringBuilder("");
+                            StringBuilder responseStrBuilder = new StringBuilder();
 
                             int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                             if (whichThrottle >= 0) {
@@ -1795,9 +1802,9 @@ public class comm_thread extends Thread {
                                 if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
                                     con.setConfirmed(addr_str);
                                     con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
-                                    con.setFunctionLabels(addr_str, mainapp.parseFunctionLabels(responseStrBuilder.toString()));
+                                    con.setFunctionLabels(addr_str, threaded_application.parseFunctionLabels(responseStrBuilder.toString()));
 
-                                    mainapp.addLocoToRecents(con.getLoco(addr_str), mainapp.parseFunctionLabels(responseStrBuilder.toString()));  //DCC-EX
+                                    mainapp.addLocoToRecents(con.getLoco(addr_str), threaded_application.parseFunctionLabels(responseStrBuilder.toString()));  //DCC-EX
                                 }
 
                                 throttleIndex = whichThrottle; // skip ahead
@@ -1807,21 +1814,13 @@ public class comm_thread extends Thread {
                         if (!found) {  // we got the request but it is not on a throttle
                             if (args[3].length() > 2) {
                                 String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                                StringBuilder responseStrBuilder = new StringBuilder("");
-                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                                for (int i = 0; i < fnArgs.length; i++) {
-                                    if (!fnArgs[i].isEmpty()) {
-                                        responseStrBuilder.append(fnArgs[i]);
-                                    }
-                                    if (i < fnArgs.length - 1) {
-                                        responseStrBuilder.append("]\\[");
-                                    }
-                                }
+                                String responseStr = getResponseStr(fnArgs);
+
                                 // save them in recents regardless
                                 Consist.ConLoco conLoco = new Consist.ConLoco(addr_str);
                                 conLoco.setIsFromRoster(true);
                                 conLoco.setRosterName(args[2].substring(1, args[2].length() - 1)); // strip the quotes
-                                mainapp.addLocoToRecents(conLoco, mainapp.parseFunctionLabels(responseStrBuilder.toString())); //DCC-EX
+                                mainapp.addLocoToRecents(conLoco, threaded_application.parseFunctionLabels(responseStr)); //DCC-EX
                             }
                         }
                     }
@@ -1831,6 +1830,35 @@ public class comm_thread extends Thread {
         return skipAlert;
     } // end processDccexRoster()
 
+    private static String getResponseStr(String [] fnArgs) {
+        StringBuilder responseStrBuilder = new StringBuilder();
+        responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+        for (int i = 0; i < fnArgs.length; i++) {
+            if (!fnArgs[i].isEmpty()) {
+                responseStrBuilder.append(fnArgs[i]);
+            }
+            if (i < fnArgs.length - 1) {
+                responseStrBuilder.append("]\\[");
+            }
+        }
+        return responseStrBuilder.toString();
+    }
+
+    private static String getRosterString() {
+        StringBuilder rosterStringBuilder = new StringBuilder();
+        rosterStringBuilder.append("RL");
+        rosterStringBuilder.append(mainapp.dccexRosterIDs.length);
+        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+            rosterStringBuilder.append("]\\[");
+            rosterStringBuilder.append(mainapp.dccexRosterLocoNames[i]);
+            rosterStringBuilder.append("}|{");
+            rosterStringBuilder.append(mainapp.dccexRosterIDs[i]);
+            rosterStringBuilder.append("}|{");
+            rosterStringBuilder.append((mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L"));
+        }
+        return rosterStringBuilder.toString();
+    }
+
     private static void processDccexFastClock(String [] args) {
         if (args!=null)  {
             if (args.length == 3) { // <jC mmmm ss>
@@ -1839,7 +1867,7 @@ public class comm_thread extends Thread {
                     mainapp.fastClockSeconds = Long.parseLong(args[1]) * 60;
                     mainapp.alert_activities(message_type.TIME_CHANGED, "");     //tell activities the time has changed
                 } catch (NumberFormatException e) {
-                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + args + "'");
+                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + Arrays.toString(args) + "'");
                 }
             }
         }
@@ -1880,15 +1908,8 @@ public class comm_thread extends Thread {
                     }
                 }
                 if ((ready) && (!mainapp.dccexTurnoutsFullyReceived) ) {
-                    mainapp.dccexTurnoutString = "PTL";
-                    if (!noTurnouts) {
-                        for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
-                            mainapp.dccexTurnoutString = mainapp.dccexTurnoutString
-                                    + "]\\[" + mainapp.dccexTurnoutIDs[i]
-                                    + "}|{" + mainapp.dccexTurnoutNames[i]
-                                    + "}|{" + (mainapp.dccexTurnoutStates[i].equals("T") ? 4 : 2);
-                        }
-                    }
+                    mainapp.dccexTurnoutString = getTurnoutsString(noTurnouts);
+                    
                     processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
@@ -1914,7 +1935,7 @@ public class comm_thread extends Thread {
                 Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received.");
                 if (!mainapp.dccexTurnoutsBeingProcessed) {
                     mainapp.dccexTurnoutsBeingProcessed = true;
-                    if (mainapp.dccexTurnoutString.equals("")) {
+                    if (mainapp.dccexTurnoutString.isEmpty()) {
                         mainapp.dccexTurnoutString = "";
                         mainapp.dccexTurnoutIDs = new int[args.length - 1];
                         mainapp.dccexTurnoutNames = new String[args.length - 1];
@@ -1934,6 +1955,19 @@ public class comm_thread extends Thread {
         }
     } // end processDccexTurnouts()
 
+    private static String getTurnoutsString(boolean noTurnouts) {
+        StringBuilder turnoutsStringBuilder = new StringBuilder();
+        turnoutsStringBuilder.append("PTL");
+        if (!noTurnouts) {
+            for (int i = 0; i < mainapp.dccexTurnoutIDs.length; i++) {
+                turnoutsStringBuilder.append("]\\["); turnoutsStringBuilder.append(mainapp.dccexTurnoutIDs[i]);
+                turnoutsStringBuilder.append("}|{"); turnoutsStringBuilder.append(mainapp.dccexTurnoutNames[i]);
+                turnoutsStringBuilder.append("}|{"); turnoutsStringBuilder.append((mainapp.dccexTurnoutStates[i].equals("T") ? 4 : 2));
+            }
+        }
+        return turnoutsStringBuilder.toString();
+    }
+    
     private static void processDccexRoutes(String [] args) {
         if (args != null)  {
             if ( (args.length == 1)  // no Routes <jA>
@@ -1967,15 +2001,8 @@ public class comm_thread extends Thread {
                     }
                 }
                 if (ready) {
-                    mainapp.dccexRouteString = "PRL";
-                    if (!noRoutes) {
-                        for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
-                            mainapp.dccexRouteString = mainapp.dccexRouteString
-                                    + "]\\[" + mainapp.dccexRouteIDs[i]
-                                    + "}|{" + mainapp.dccexRouteNames[i]
-                                    + "}|{" + (mainapp.dccexRouteTypes[i].equals("R") ? 2 : 4);  //2=Route 4=Automation
-                        }
-                    }
+                    mainapp.dccexRouteString = getRoutesString(noRoutes);
+                    
                     processRouteTitles("PRT]\\[Routes}|{Route]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
@@ -2016,7 +2043,7 @@ public class comm_thread extends Thread {
                 Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received.");
                 if (!mainapp.dccexRoutesBeingProcessed) {
                     mainapp.dccexRoutesBeingProcessed = true;
-                    if (mainapp.dccexRouteString.equals("")) {
+                    if (mainapp.dccexRouteString.isEmpty()) {
                         mainapp.dccexRouteString = "";
                         mainapp.dccexRouteIDs = new int[args.length - 1];
                         mainapp.dccexRouteNames = new String[args.length - 1];
@@ -2037,7 +2064,20 @@ public class comm_thread extends Thread {
             }
         }
     } // end processDccexRoutes()
-
+    
+    private static String getRoutesString(boolean noRoutes) {
+        StringBuilder routesStringBuilder = new StringBuilder();
+        routesStringBuilder.append("PRL");
+        if (!noRoutes) {
+            for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+                routesStringBuilder.append("]\\["); routesStringBuilder.append(mainapp.dccexRouteIDs[i]);
+                routesStringBuilder.append("}|{"); routesStringBuilder.append(mainapp.dccexRouteNames[i]);
+                routesStringBuilder.append("}|{"); routesStringBuilder.append((mainapp.dccexRouteTypes[i].equals("R") ? 2 : 4));  //2=Route 4=Automation
+            }
+        }
+        return routesStringBuilder.toString();
+    }
+    
     static void processDccexRouteUpdate(String [] args) {
         if (args != null) {
             int pos = -1;
@@ -2059,7 +2099,7 @@ public class comm_thread extends Thread {
                 }
             }
             if (!foundInMainList) { // received a value before the main route list has been built. need to save them for later.
-                int routeId = Integer.valueOf(args[1]);
+                int routeId = Integer.parseInt(args[1]);
                 for (int i=0; i<mainapp.dccexRouteIDs.length;i++) {
                     if (mainapp.dccexRouteIDs[i]==routeId) {
                         if (args[2].charAt(0) != '"') { // <jB id "stuff">
@@ -2079,7 +2119,7 @@ public class comm_thread extends Thread {
 
     static void processRosterFunctionString(String responseStr, int whichThrottle) {
         Log.d("Engine_Driver", "comm_thread.processRosterFunctionString: processing function labels for " + mainapp.throttleIntToString(whichThrottle));
-        LinkedHashMap<Integer, String> functionLabelsMap = mainapp.parseFunctionLabels(responseStr);
+        LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels(responseStr);
         mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
 
@@ -2117,12 +2157,11 @@ public class comm_thread extends Thread {
         //initialize app arrays (skipping first)
         int i = 0;
         for (String ts : ta) {
+            String[] tv = threaded_application.splitByString(ts, "}|{");  //split header chunk into header, address and name
             if (i == 0) { //first chunk is a "header"
-                String[] tv = threaded_application.splitByString(ts, "}|{");  //split header chunk into header, address and name
                 consist_addr = tv[1];
                 consist_name = tv[2];
             } else {  //list of locos in consist
-                String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into loco address and direction
                 consist_desc.append(plus).append(tv[0]);
                 plus = "+";
             }  //end if i==0
@@ -2357,7 +2396,10 @@ public class comm_thread extends Thread {
 
     public void run() {
         Looper.prepare();
-        mainapp.comm_msg_handler = new comm_handler(mainapp, prefs, this);
+//        mainapp.comm_msg_handler = new comm_handler(mainapp, prefs, this);
+        Looper threadLooper = Looper.myLooper();
+        mainapp.comm_msg_handler = new comm_handler(threadLooper);
+        mainapp.comm_msg_handler.initialise(mainapp, prefs, this);
         Looper.loop();
         Log.d("Engine_Driver", "comm_thread.run() exit");
     }
@@ -2402,6 +2444,9 @@ public class comm_thread extends Thread {
                 } catch (UnknownHostException except) {
 //                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
+                    socketOk = false;
+                } catch (Exception except) {
+                    Log.d("Engine_Driver", "comm_thread.connect(): Unknown error.");
                     socketOk = false;
                 }
             }
@@ -2604,10 +2649,10 @@ public class comm_thread extends Thread {
             boolean haveConnectedMobile = false;
             mainapp.prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
-            final ConnectivityManager cm = (ConnectivityManager) mainapp.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-            for (NetworkInfo ni : netInfo) {
-                if ("WIFI".equalsIgnoreCase(ni.getTypeName()))
+            final ConnectivityManager connectivityManager = (ConnectivityManager) mainapp.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo[] netInfo = connectivityManager.getAllNetworkInfo();
+            for (NetworkInfo networkInfo : netInfo) {
+                if ("WIFI".equalsIgnoreCase(networkInfo.getTypeName()))
 
                     if (!mainapp.prefAllowMobileData) {
                         // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
@@ -2618,13 +2663,13 @@ public class comm_thread extends Thread {
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
-                            cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
+                            connectivityManager.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
                                 @Override
                                 public void onAvailable(Network network) {
                                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                                         ConnectivityManager.setProcessDefaultNetwork(network);
                                     } else {
-                                        cm.bindProcessToNetwork(network);  //API23+
+                                        connectivityManager.bindProcessToNetwork(network);  //API23+
                                     }
                                 }
                             });
@@ -2632,7 +2677,7 @@ public class comm_thread extends Thread {
                         }
                     }
 
-                if (ni.isConnected()) {
+                if (isNetworkAvailable()) {
                     haveConnectedWifi = true;
                 } else {
                     // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
@@ -2640,12 +2685,25 @@ public class comm_thread extends Thread {
                         haveConnectedWifi = true;
                     }
                 }
-                if ("MOBILE".equalsIgnoreCase(ni.getTypeName()))
-                    if ((ni.isConnected()) && (mainapp.prefAllowMobileData)) {
+                if ("MOBILE".equalsIgnoreCase(networkInfo.getTypeName()))
+                    if ((isNetworkAvailable()) && (mainapp.prefAllowMobileData)) {
                         haveConnectedMobile = true;
                     }
             }
             return haveConnectedWifi || haveConnectedMobile;
+        }
+
+        private Boolean isNetworkAvailable() {
+            ConnectivityManager connectivityManager = (ConnectivityManager) mainapp.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Network nw = connectivityManager.getActiveNetwork();
+                if (nw == null) return false;
+                NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
+                return actNw != null && (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH));
+            } else {
+                NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+                return nwInfo != null && nwInfo.isConnected();
+            }
         }
 
         boolean SocketGood() {
@@ -2801,7 +2859,7 @@ public class comm_thread extends Thread {
                     // prior to JMRI 4.20 there were cases where WiT might not respond to
                     // speed and direction request.  If inboundTimeout handling is in progress
                     // then we always send the Throttle Name to ensure a response
-                    if (!anySent || (mainapp.getServerType().equals("") && socketWiT.inboundTimeoutRecovery)) {
+                    if (!anySent || (mainapp.getServerType().isEmpty() && socketWiT.inboundTimeoutRecovery)) {
                         sendThrottleName(false);    //send message that will get a response
                     }
                     mainapp.comm_msg_handler.postDelayed(this, heartbeatOutboundInterval);   //set next beat

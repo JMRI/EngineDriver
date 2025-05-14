@@ -57,6 +57,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -200,7 +201,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         statusLine = (LinearLayout) findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_functions),

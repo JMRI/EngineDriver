@@ -1834,6 +1834,13 @@
             android:title="@string/prefSelLocoWhileMovingTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefSelectLocoByRadioButtonsDefaultValue"
+            android:key="prefSelectLocoByRadioButtons"
+            android:summary="@string/prefSelectLocoByRadioButtonsSummary"
+            android:title="@string/prefSelectLocoByRadioButtonsTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <ListPreference
             android:defaultValue="@string/prefDefaultAddressLengthDefaultValue"
             android:entries="@array/address_size_defaultsEntries"

@@ -32,6 +32,7 @@ import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
 import static android.view.KeyEvent.KEYCODE_DPAD_UP;
 import static android.view.KeyEvent.KEYCODE_EQUALS;
 import static android.view.KeyEvent.KEYCODE_F;
+import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_F1;
 import static android.view.KeyEvent.KEYCODE_F10;
 import static android.view.KeyEvent.KEYCODE_H;
@@ -141,6 +142,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
@@ -3635,6 +3637,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (action == ACTION_DOWN) {
                 keyboardString = "F";
             }
+        } else if (keyCode == KEYCODE_G) {  // Start of a Forced Function command
+            if (action == ACTION_DOWN) {
+                keyboardString = "G";
+            }
         } else if (keyCode == KEYCODE_S) {  // Start of a speed command
             if (action == ACTION_DOWN) {
                 keyboardString = "S";
@@ -3663,7 +3669,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 if (keyboardString.length() == 3) {  // have a two digit function number now
                     int fKey = Integer.parseInt(keyboardString.substring(1, 3));
-                    if(fKey<MAX_FUNCTIONS) {
+                    if (fKey < MAX_FUNCTIONS) {
                         if (action == ACTION_DOWN) {
                             doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
                         } else {
@@ -3672,6 +3678,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         }
                     }
                 }
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'G')) {  // Forced Latching Function
+                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                        keyboardString = keyboardString + num;
+                    }
+                    if (keyboardString.length() == 3) {  // have a two digit function number now
+                        int fKey = Integer.parseInt(keyboardString.substring(1, 3));
+                        if(fKey<MAX_FUNCTIONS) {
+                            if (action == ACTION_DOWN) {
+                                doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
+                            } else {
+                                doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
+                                resetKeyboardString();
+                            }
+                        }
+                    }
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'S')) {  // speed
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
@@ -3724,7 +3745,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
                 doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt);
-                resetKeyboardString();
+                if (action == ACTION_UP) {
+                    resetKeyboardString();
+                }
             }
         }
     }
@@ -3736,6 +3759,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt) {
+        doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, false);
+    }
+    void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt, boolean forceIsLatching) {
         Log.d("Engine_Driver", "throttle: doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
@@ -3766,16 +3792,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
 
             int isLatching = setFunctionButtonState(whichThrottle, fKey, true);  //special handling for when using the default function labels, and one of 'Special' function following options
+            if (forceIsLatching) isLatching = consist_function_latching_type.YES; // overide if commanded
+
             if (action == ACTION_DOWN) {
                 GamepadFeedbackSound(false);
-//                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.DOWN, leadOnly, trailOnly, followLeadFunction, consist_function_latching_type.NA);
-                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.DOWN, leadOnly, trailOnly, followLeadFunction, isLatching);
+                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.DOWN, leadOnly, trailOnly, followLeadFunction, isLatching, false, forceIsLatching);
             } else {
-//                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.UP, leadOnly, trailOnly, followLeadFunction, consist_function_latching_type.NA);
-                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.UP, leadOnly, trailOnly, followLeadFunction, isLatching);
+                sendFunctionToConsistLocos(whichThrottle, fKey, lab, button_press_message_type.UP, leadOnly, trailOnly, followLeadFunction, isLatching, false,  forceIsLatching);
             }
         }
-
     }
 
     // listener for the joystick events
@@ -4912,14 +4937,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching) {
-        sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, false);
+        sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, false, false);
     }
-    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean force) {
+    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic) {
+        sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, forceSemiRealistic, false);
+    }
+    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic, boolean forceIsLatching) {
         Consist con;
         con = mainapp.consists[whichThrottle];
 
         String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
-        // if there is only one loco and we are not forcing the use f the Defult Functions, then revert back to the ORIGINAL style
+        // if there is only one loco and we are not forcing the use of the Default Functions, then revert back to the ORIGINAL style
         if (((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
                 || (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)))
                 && (con.size() == 1)
@@ -4928,45 +4956,34 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             tempPrefConsistFollowRuleStyle = consist_function_rule_style_type.ORIGINAL;
         }
 
-        if (force) { // only used for the Sem-Realistic Throttle - ESU Decoder Brakes
+        if (forceSemiRealistic) { // only used for the Sem-Realistic Throttle - ESU Decoder Brakes
             int newFnState = (buttonPressMessageType == button_press_message_type.UP) ? 0 : 1;
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + "*", function, newFnState);
 
         } else if (tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL)) {
 
             String addr = "";
-//            if ( (leadOnly) || (mainapp.prefOverrideWiThrottlesFunctionLatching) )
             if (leadOnly)
                 addr = con.getLeadAddr();
 
             if (buttonPressMessageType == button_press_message_type.TOGGLE) {
                 mainapp.toggleFunction(mainapp.throttleIntToString(whichThrottle) + addr, function);
             } else {
-                if (!mainapp.prefOverrideWiThrottlesFunctionLatching) {
+                if ( (!mainapp.prefOverrideWiThrottlesFunctionLatching) && (!forceIsLatching) ) {
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
                 } else {
-//                    boolean isLatch = mainapp.function_consist_latching.get(function).equals(FUNCTION_CONSIST_LATCHING); // ignore what we were sent
-//                    if (isLatch) {
                     boolean fnState = mainapp.function_states[whichThrottle][function];
                     int oldFnState = fnState ? 1 : 0;
                     int newFnState = fnState ? 0 : 1;
 
                     if (isLatching == consist_function_latching_type.YES) {
                         if (buttonPressMessageType == button_press_message_type.UP) {
-//                            int newState = (mainapp.function_states[whichThrottle][function]) ? button_press_message_type.DOWN : button_press_message_type.UP;
-//                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newState);
-
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, oldFnState);
                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
-//                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
                             mainapp.function_states[whichThrottle][function] = (newFnState==1);
                         }
                     } else {
-//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, buttonPressMessageType);
-//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, oldFnState);
-
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
-//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + addr, function, newFnState);
                         mainapp.function_states[whichThrottle][function] = (newFnState==1);
                     }
                 }
@@ -6372,7 +6389,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
         }
 
     } // end of onCreate()

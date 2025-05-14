@@ -319,5 +319,14 @@
         <item>ID</item>
         <item>Posició</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Adreça DCC</item>
+        <item>Llista de servidors</item>
+        <item>Locos recents</item>
+        <item>Consisteix recentment</item>
+        <item>Sol·licitar ID de Loco</item>
+    </string-array>
+
 </resources>
 

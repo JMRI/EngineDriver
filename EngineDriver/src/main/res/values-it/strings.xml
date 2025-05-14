@@ -54,6 +54,7 @@
     <string name="connect_button">Collegamento</string>
     <string name="recent_connections">Connessioni Recenti</string>
     <string name="select_loco_heading">Acquisisci Loco, Metodo - Controllo %1$s</string>
+    <string name="select_loco_current_locos_heading">Locomotive attualmente selezionate - Accelerazione %1$s</string>
     <string name="select_loco">Inserire Indirizzo Locomotiva da Acquisire</string>
     <string name="select_loco_address">Indirizzo</string>
     <string name="acquire_button">Acquisire</string>
@@ -309,6 +310,7 @@
     <string name="LocoSelectMethodHelp">Inserisci sopra  l\'indirizzo DCC della tua locomotiva  e fai clic su \'Acquisisci\'.\n\nAlterntivamente, seleziona una loco \'dall\'Elenco\' JMRI  o selezionala fra quelle usate \'Recentemente\' facendo clic su uno dei pulsanti.</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Metodo: </string>-->
+    <string name="prefSelectLocoByRadioButtonsSummary">Mostra un elenco di metodi di testo invece dei pulsanti immagine</string>
     <string name="LocoSelectMethodAddress">DCC Indirizzo</string>
     <string name="LocoSelectMethodRoster">Elenco</string>
     <string name="LocoSelectMethodRecent">Recenti</string>
@@ -1108,5 +1110,6 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Interrompi l\'azione del pulsante</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Scegli cosa fa il pulsante Interrompi</string>
     <string name="statusThreadedAppNoLocationService">Impossibile accedere all\'SSID</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">Seleziona l\'aspetto del metodo loco</string>
 
 </resources>

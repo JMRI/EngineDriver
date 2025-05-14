@@ -314,4 +314,13 @@
         <item>Ausweis</item>
         <item>Position</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>DCC-Adresse</item>
+        <item>Serverliste</item>
+        <item>Aktuelle Loks</item>
+        <item>Aktuelle besteht</item>
+        <item>Lok-ID anfordern</item>
+    </string-array>
+
 </resources>

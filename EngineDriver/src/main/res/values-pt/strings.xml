@@ -53,6 +53,7 @@
     <string name="connect_button">Conectar</string>
     <string name="recent_connections">Conexões Recentes</string>
     <string name="select_loco_heading">Adquira Loco, Método - Controlador %1$s</string>
+    <string name="select_loco_current_locos_heading">Locomotivas Atualmente Selecionadas - Acelerador %1$s</string>
     <string name="select_loco">Inserir Endereço Locomotiva a Adquirir</string>
     <string name="select_loco_address">Endereço</string>
     <string name="acquire_button">Adquirir</string>
@@ -309,6 +310,8 @@
     <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
 
 <!--    <string name="LocoSelectMethodQuestion">Método: </string>-->
+    <string name="prefSelectLocoByRadioButtonsTitle">Selecione a aparência do método loco</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Mostrar uma lista de texto de métodos em vez de botões de imagem</string>
     <string name="LocoSelectMethodAddress">DCC Endereço</string>
     <string name="LocoSelectMethodRoster">Lista</string>
     <string name="LocoSelectMethodRecent">Recente</string>

@@ -126,4 +126,6 @@
 
     <bool name="prefSemiRealisticThrottleDisableAirDefaultValue">false</bool>
 
+    <bool name="prefSelectLocoByRadioButtonsDefaultValue">false</bool>
+
 </resources>

@@ -17,6 +17,7 @@
     <attr name="ed_normal_button2_style" format="reference" />
     <attr name="ed_loco_select_button_style" format="reference" />
     <attr name="ed_small_button_style" format="reference" />
+    <attr name="ed_small_button_condensed_text_style" format="reference" />
     <attr name="ed_hover_button_style" format="reference" />
     <attr name="ed_stop_button_style" format="reference" />
     <attr name="ed_fn_button_style" format="reference" />
@@ -65,4 +66,16 @@
     <attr name="ed_progressBar" format="reference" />
     <attr name="ed_progressBarBackground" format="reference" />
     <attr name="ed_progressBarSelected" format="reference" />
+
+    <attr name="ed_select_loco_glyph_dcc_address" format="reference" />
+    <attr name="ed_select_loco_glyph_roster" format="reference" />
+    <attr name="ed_select_loco_glyph_recent_loco" format="reference" />
+    <attr name="ed_select_loco_glyph_recent_consist" format="reference" />
+    <attr name="ed_select_loco_glyph_idngo" format="reference" />
+
+    <attr name="ed_select_loco_glyph_release" format="reference" />
+
+    <attr name="ed_select_loco_glyph_consist_order" format="reference" />
+    <attr name="ed_select_loco_glyph_consist_lights" format="reference" />
+    <attr name="ed_select_loco_glyph_ipls" format="reference" />
 </resources>

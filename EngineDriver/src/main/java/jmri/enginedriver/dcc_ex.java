@@ -51,9 +51,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
@@ -809,9 +807,7 @@ public class dcc_ex extends AppCompatActivity {
         closeButton.setOnClickListener(closeButtonListener);
 
         dccCvsEntryValuesArray = this.getResources().getStringArray(R.array.dccCvsEntryValues);
-//        final List<String> dccCvsValuesList = new ArrayList<>(Arrays.asList(dccCvsEntryValuesArray));
         dccCvsEntriesArray = this.getResources().getStringArray(R.array.dccCvsEntries); // display version
-//        final List<String> dccCvsEntriesList = new ArrayList<>(Arrays.asList(dccCvsEntriesArray));
 
         dccCvsIndex = 0;
         dccexCommonCvsSpinner = findViewById(R.id.dexc_dcc_cv_list);
@@ -851,8 +847,8 @@ public class dcc_ex extends AppCompatActivity {
             dccexActionTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExActionTypeEntryValues);
             dccexActionTypeEntriesArray = this.getResources().getStringArray(R.array.dccExActionTypeEntries); // display version
         }
-        final List<String> dccActionTypeValuesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntryValuesArray));
-        final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntriesArray));
+//        final List<String> dccActionTypeValuesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntryValuesArray));
+//        final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntriesArray));
 
 //        mainapp.dccexActionTypeIndex = PROGRAMMING_TRACK;
         dccActionTypeSpinner = findViewById(R.id.dexc_action_type_list);
@@ -906,13 +902,6 @@ public class dcc_ex extends AppCompatActivity {
 
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             switch (i) {
-                default:
-                case 0:
-                    dccexTrackTypeLayout[0] = findViewById(R.id.dexc_DccexTrack0layout);
-                    dccexTrackPowerButton[0] = findViewById(R.id.dccex_power_control_button_0);
-                    dccexTrackTypeSpinner[0] = findViewById(R.id.dexc_track_type_0_list);
-                    dccexTrackTypeIdEditText[0] = findViewById(R.id.dexc_track_0_value);
-                    break;
                 case 1:
                     dccexTrackTypeLayout[1] = findViewById(R.id.dexc_DccexTrack1layout);
                     dccexTrackPowerButton[1] = findViewById(R.id.dccex_power_control_button_1);
@@ -955,6 +944,14 @@ public class dcc_ex extends AppCompatActivity {
                     dccexTrackTypeSpinner[7] = findViewById(R.id.dexc_track_type_7_list);
                     dccexTrackTypeIdEditText[7] = findViewById(R.id.dexc_track_7_value);
                     break;
+
+                case 0:
+                default:
+                    dccexTrackTypeLayout[0] = findViewById(R.id.dexc_DccexTrack0layout);
+                    dccexTrackPowerButton[0] = findViewById(R.id.dccex_power_control_button_0);
+                    dccexTrackTypeSpinner[0] = findViewById(R.id.dexc_track_type_0_list);
+                    dccexTrackTypeIdEditText[0] = findViewById(R.id.dexc_track_0_value);
+                    break;
             }
             ArrayAdapter<?> track_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExTrackTypeEntries, android.R.layout.simple_spinner_item);
             track_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -994,6 +991,7 @@ public class dcc_ex extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_dcc_ex),

@@ -50,6 +50,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
@@ -144,14 +145,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             toolbar.showOverflowMenu();
-            try {
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
-                mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
-                        getApplicationContext().getResources().getString(R.string.app_name),
-                        getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
-                        "");
-            } catch (Exception ignored) {
-            }
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_consist_functions),
+                    "");
         }
 
     } //end onCreate

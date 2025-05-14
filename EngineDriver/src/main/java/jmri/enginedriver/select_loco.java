@@ -66,6 +66,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -98,6 +99,7 @@ import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
+import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.util.SwipeDetector;
@@ -113,16 +115,7 @@ import jmri.enginedriver.type.sub_activity_type;
 public class select_loco extends AppCompatActivity {
     static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
 
-
-    interface which_method {
-        String FIRST = "0"; // first time the app has been used
-        String ADDRESS = "1";
-        String ROSTER = "2";
-        String RECENT_LOCOS = "3";
-        String RECENT_CONSISTS = "4";
-        String IDNGO = "5";
-    }
-    String prefSelectLocoMethod = which_method.FIRST;
+    String prefSelectLocoMethod = select_loco_method_type.FIRST;
 
     private static final String RECENT_LOCO_DIR = "recent_engine_list";
 
@@ -179,7 +172,7 @@ public class select_loco extends AppCompatActivity {
     RelativeLayout rlAddressHelp;
     TextView rlRosterHeading;
     RelativeLayout rlRosterHeaderGroup;
-    RelativeLayout rlRosterEmpty;
+    TextView rlRosterEmpty;
     LinearLayout llRoster;
     LinearLayout rlRecentHeader;
     LinearLayout llRecent;
@@ -201,6 +194,17 @@ public class select_loco extends AppCompatActivity {
 
     String overrideThrottleName;
 
+    Integer selectLocoMethodIndex;
+    String[] selectLocoMethodEntryValuesArray;
+    String[] selectLocoMethodEntriesArray;
+    Spinner selectLocoMethodSpinner;
+    ImageButton[] selectMethodButton = new ImageButton[5];
+    LinearLayout[] selectMethodButtonLayout = new LinearLayout[5];
+    boolean prefSelectLocoByRadioButtons = false;
+
+    LinearLayout selectLocoMethodButtonsLayout;
+    RadioGroup selectLocoMethodRadioButtonsGroup;
+
     private int maxAddr = 9999;
 
     // populate the on-screen roster view from global hashmap
@@ -220,6 +224,7 @@ public class select_loco extends AppCompatActivity {
             }
 
             int position = -1;
+            boolean includeInList;
 
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
@@ -248,8 +253,7 @@ public class select_loco extends AppCompatActivity {
                     position++;
                     hm.put("roster_position", String.format("%04d",position));
 
-
-                    boolean includeInList = false;
+                    includeInList = false;
                     if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
                         includeInList = true;
                     } else if ((!prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0)) {
@@ -339,7 +343,7 @@ public class select_loco extends AppCompatActivity {
 
             rosterListAdapter.notifyDataSetChanged();
             View v = findViewById(R.id.roster_list_heading);
-            if (prefSelectLocoMethod.equals(which_method.ROSTER)) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
+            if (prefSelectLocoMethod.equals(select_loco_method_type.ROSTER)) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
             v = findViewById(R.id.filter_roster_text);
             v.setVisibility(View.VISIBLE);
             v = findViewById(R.id.roster_list);
@@ -377,15 +381,10 @@ public class select_loco extends AppCompatActivity {
             if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
                 for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (engineName.isEmpty()) {
-                        if (mainapp.roster_entries.get(rostername).equals(engineAddress)) {
-                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
-                            if (rosterentry == null) return "";
-                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
-                            if (iconPath == null) return "";
-                            return iconPath;
-                        }
-                    } else { // if there is a name as well, confirm they match (for entries with the same address)
-                        if (rostername.equals(engineName)) {
+                        String rosterEntryRosterName = mainapp.roster_entries.get(rostername);
+                        if (rosterEntryRosterName == null) return "";
+
+                        if (rosterEntryRosterName.equals(engineAddress)) {
                             RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
                             if (rosterentry == null) return "";
                             String iconPath = rosterentry.getIconPath();  //if found, return the icon url
@@ -393,6 +392,15 @@ public class select_loco extends AppCompatActivity {
                             return iconPath;
                         }
 
+                    } else { // if there is a name as well, confirm they match (for entries with the same address)
+
+                        if (rostername.equals(engineName)) {
+                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
+                            if (rosterentry == null) return "";
+                            String iconPath = rosterentry.getIconPath();  //if found, return the icon url
+                            if (iconPath == null) return "";
+                            return iconPath;
+                        }
                     }
                 }
             }
@@ -404,13 +412,13 @@ public class select_loco extends AppCompatActivity {
     protected void setLabels() {
 
         refreshRosterList();
-        if (prefSelectLocoMethod.equals(which_method.FIRST)) {
+        if (prefSelectLocoMethod.equals(select_loco_method_type.FIRST)) {
             if ((mainapp.rosterJmriWeb != null) && (!mainapp.rosterJmriWeb.isEmpty())) {
-                prefSelectLocoMethod = which_method.ROSTER;
-                showMethod(which_method.ROSTER);
+                prefSelectLocoMethod = select_loco_method_type.ROSTER;
+                showMethod(select_loco_method_type.ROSTER);
             } else {
-                prefSelectLocoMethod = which_method.ADDRESS;
-                showMethod(which_method.ADDRESS);
+                prefSelectLocoMethod = select_loco_method_type.ADDRESS;
+                showMethod(select_loco_method_type.ADDRESS);
             }
         }
 
@@ -421,31 +429,59 @@ public class select_loco extends AppCompatActivity {
         final int conNomTextSize = 16;
         final double minTextScale = 0.8;
 
-        Button bR = findViewById(R.id.Sl_release);
-        LinearLayout llThrottle = findViewById(R.id.LL_loco);
-        LinearLayout llEditConsist = findViewById(R.id.LL_edit_consist);
+        LinearLayout [] currentLocosLayout = new LinearLayout[2];
+        currentLocosLayout[0] = findViewById(R.id.current_locos_layout0);
+        currentLocosLayout[1] = findViewById(R.id.current_locos_layout1);
+
+        Button releaseButton0 = findViewById(R.id.release_button0);
+        releaseButton0.setVisibility(View.GONE);
+        ImageButton releaseButton1 = findViewById(R.id.release_button1);
+        releaseButton1.setVisibility(View.GONE);
+
+        LinearLayout [] consistOptionsLayout = new LinearLayout[2];
+        consistOptionsLayout[0] = findViewById(R.id.currentl_locos_options_layout0);
+        consistOptionsLayout[1] = findViewById(R.id.currentl_locos_options_layout1);
+
+        LinearLayout [] llEditConsist = new LinearLayout[2];
+        llEditConsist[0] = findViewById(R.id.edit_consist_layout0);
+        llEditConsist[1] = findViewById(R.id.edit_consist_layout1);
 
         TextView tvSelectLocoHeading = findViewById(R.id.select_loco_heading);
         tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_heading).replace("%1$s", Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0)) + 1)));
+        tvSelectLocoHeading = findViewById(R.id.select_loco_current_locos_heading);
+        tvSelectLocoHeading.setText(this.getResources().getString(R.string.select_loco_current_locos_heading).replace("%1$s", Integer.toString(mainapp.throttleCharToInt(sWhichThrottle.charAt(0)) + 1)));
 
-        bR.setVisibility(View.VISIBLE);
-        llThrottle.setVisibility(View.VISIBLE);
-        llEditConsist.setVisibility(GONE);
+        for (int i = 0; i < 2; i++) {
+            currentLocosLayout[i].setVisibility(GONE);
+            consistOptionsLayout[i].setVisibility(View.GONE);
+            llEditConsist[i].setVisibility(GONE);
+        }
+
+        int showIndex = prefSelectLocoByRadioButtons ? 0 : 1;
+
+        if (showIndex == 0 ) releaseButton0.setVisibility(View.VISIBLE);
+        else releaseButton1.setVisibility(View.VISIBLE);
+
+        consistOptionsLayout[showIndex].setVisibility(View.VISIBLE);
 
         if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
+            currentLocosLayout[showIndex].setVisibility(VISIBLE);
+
             if (mainapp.consists[whichThrottle].size() > 1) {
-                llEditConsist.setVisibility(View.VISIBLE);
+                llEditConsist[showIndex].setVisibility(View.VISIBLE);
             }
             String vLabel = mainapp.consists[whichThrottle].toString();
             if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
                 vLabel = mainapp.consists[whichThrottle].formatConsistAddr();
             }
-            bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
+
+            // original release button
+            releaseButton0.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
 
             // scale text if required to fit the button
             double textScale = 1.0;
-            int bWidth = bR.getWidth();
-            double textWidth = bR.getPaint().measureText(vLabel);
+            int bWidth = releaseButton0.getWidth();
+            double textWidth = releaseButton0.getPaint().measureText(vLabel);
 
             if (bWidth == 0) { // screen has probably not rendered yet
                 final DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -460,21 +496,51 @@ public class select_loco extends AppCompatActivity {
                     textScale = minTextScale;
             }
             int textSize = (int) (conNomTextSize * textScale);
-            bR.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+            releaseButton0.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 
             selectLocoRendered = true;
-            bR.setText(this.getResources().getString(R.string.releaseThrottleLocos).replace("%1$s", vLabel));
-            bR.setEnabled(true);
+            releaseButton0.setText(this.getResources().getString(R.string.releaseThrottleLocos).replace("%1$s", vLabel));
+
+            // new release button
+
+            TextView textView = findViewById(R.id.current_locos_text);
+            textView.setText(vLabel);
+
+            // the widths are not known at this point in time, so this generally won't work.  see onWindowFocusChanged()
+            adjustCurrentLocosListTextViewWidth();
+
+            // both release buttons
+
+            releaseButton0.setEnabled(true);
+            releaseButton1.setEnabled(true);
+
+
         } else {
-            bR.setEnabled(false);
-            bR.setVisibility(GONE);
-            llThrottle.setVisibility(GONE);
+            releaseButton0.setEnabled(false);
+            releaseButton0.setVisibility(GONE);
+            releaseButton1.setEnabled(false);
+            releaseButton1.setVisibility(GONE);
+
+            for (int i = 0; i < 2; i++) {
+            consistOptionsLayout[i].setVisibility(GONE);
+            }
         }
 
         if (SMenu != null) {
             mainapp.displayEStop(SMenu);
         }
 
+    }
+
+    void adjustCurrentLocosListTextViewWidth() {
+        TextView textView = findViewById(R.id.current_locos_text);
+        LinearLayout consistButtonlayout = findViewById(R.id.consist_buttons_layout1);
+        LinearLayout consistOptionsLayout = findViewById(R.id.currentl_locos_options_layout1);
+        int bWidth = consistButtonlayout.getWidth() - consistOptionsLayout.getWidth();
+        if (bWidth>0) {
+            textView.getLayoutParams().width = bWidth;
+            textView.requestLayout();
+        }
     }
 
     // Handle messages from the communication thread back to this thread
@@ -649,7 +715,7 @@ public class select_loco extends AppCompatActivity {
         }
 
         // see if we can get the functions for the recent locos list
-        if ( (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)) && (!mainapp.isDCCEX) ) {
+        if ( (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)) && (!mainapp.isDCCEX) ) {
             int position = mainapp.findLocoInRecents(locoAddress ,locoAddressSize ,locoName);
             if (position>0) {
                 if (mainapp.prefAlwaysUseFunctionsFromServer) { // unless overridden by the preference
@@ -730,7 +796,10 @@ public class select_loco extends AppCompatActivity {
                             options.inSampleSize = Math.max(inWidth/150, inHeight/150);
                             // decode full image
                             Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
-
+                            if (roughBitmap == null) {
+                                imageFileFoundButCannotBeLoaded();
+                                return;
+                            }
                             // calc exact destination size
                             Matrix m = new Matrix();
                             RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
@@ -763,12 +832,15 @@ public class select_loco extends AppCompatActivity {
                             buttonRemoveRosterImage.setVisibility(VISIBLE);
                             buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
                         } catch (Exception e) {
-                            Log.d("Engine_Driver", "select_loco: onActivityResult(): load image - image file found but could not loaded");
+                            imageFileFoundButCannotBeLoaded();
                         }
                     }
                 }
                 break;
         }
+    }
+    private void imageFileFoundButCannotBeLoaded() {
+        Log.d("Engine_Driver", "select_loco: onActivityResult(): load image - image file found but could not loaded");
     }
 
     /** @noinspection SameParameterValue*/ //write the recent locos to a file
@@ -866,23 +938,29 @@ public class select_loco extends AppCompatActivity {
                     @Override
                     public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
                         int rslt;
-                        String s0;
-                        String s1;
+                        String s0 = "";
+                        String s1 = "";
                         switch (mainapp.recentLocosOrder) {
                             case sort_type.NAME: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("engine").replaceAll("_", " ").toLowerCase());
-                                s1 = threaded_application.formatNumberInName(arg1.get("engine").replaceAll("_", " ").toLowerCase());
+                                if (arg0.get("engine") != null)
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("engine")).replaceAll("_", " ").toLowerCase());
+                                if (arg1.get("engine") != null)
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("engine")).replaceAll("_", " ").toLowerCase());
                                 break;
                             }
                             case sort_type.ID: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("locoAddress"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("locoAddress"));
+                                if (arg0.get("locoAddress") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("locoAddress"));
+                                if (arg1.get("locoAddress") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("locoAddress"));
                                 break;
                             }
                             case sort_type.LAST_USED:
                             default: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                                if (arg0.get("last_used") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                if (arg1.get("last_used") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
                             }
                         }
                         rslt = s0.compareTo(s1);
@@ -929,23 +1007,29 @@ public class select_loco extends AppCompatActivity {
                     @Override
                     public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
                         int rslt;
-                        String s0;
-                        String s1;
+                        String s0 = "";
+                        String s1 = "";
                         switch (mainapp.recentConsistsOrder) {
                             case sort_type.NAME: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("consist").replaceAll("_", " ").toLowerCase());
-                                s1 = threaded_application.formatNumberInName(arg1.get("consist").replaceAll("_", " ").toLowerCase());
+                                if (arg0.get("consist") != null)
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("consist")).replaceAll("_", " ").toLowerCase());
+                                if (arg1.get("consist") != null)
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("consist")).replaceAll("_", " ").toLowerCase());
                                 break;
                             }
                             case sort_type.ID: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("consist_name"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("consist_name"));
+                                if (arg0.get("consist_name") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("consist_name"));
+                                if (arg1.get("consist_name") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("consist_name"));
                                 break;
                             }
                             case sort_type.LAST_USED:
                             default: {
-                                s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
-                                s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
+                                if (arg0.get("last_used") != null)
+                                    s0 = threaded_application.formatNumberInName(arg0.get("last_used"));
+                                if (arg1.get("last_used") != null)
+                                    s1 = threaded_application.formatNumberInName(arg1.get("last_used"));
                             }
                         }
                         rslt = s0.compareTo(s1);
@@ -1448,7 +1532,7 @@ public class select_loco extends AppCompatActivity {
                     }
                 }
             }
-            String rosterEntryOwner = hm.get("roster_owner");
+//            String rosterEntryOwner = hm.get("roster_owner");
 
             // parse address and length from string, e.g. 2591(L)
             String[] ras = threaded_application.splitByString(rosterAddressString, "(");
@@ -1640,11 +1724,14 @@ public class select_loco extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             sWhichThrottle = extras.getString("sWhichThrottle");
-            whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
+            if (sWhichThrottle != null)
+                whichThrottle = mainapp.throttleCharToInt(sWhichThrottle.charAt(0));
         }
 
-        button = findViewById(R.id.Sl_release);
+        button = findViewById(R.id.release_button0);
         button.setOnClickListener(new ReleaseButtonListener(whichThrottle));
+        ImageButton imageButton = findViewById(R.id.release_button1);
+        imageButton.setOnClickListener(new ReleaseButtonListener(whichThrottle));
 
         EditText la = findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
@@ -1670,38 +1757,86 @@ public class select_loco extends AppCompatActivity {
         });
 
         // consist edit button
-        button = findViewById(R.id.Sl_edit_consist);
+        button = findViewById(R.id.edit_consist_button0);
         button.setOnClickListener(new EditConsistButtonListener(whichThrottle, this));
+        imageButton = findViewById(R.id.edit_consist_button1);
+        imageButton.setOnClickListener(new EditConsistButtonListener(whichThrottle, this));
 
         // consist lights edit button
-        button = findViewById(R.id.Sl_edit_consist_lights);
+        button = findViewById(R.id.edit_consist_lights_button0);
         button.setOnClickListener(new EditConsistLightsButtonListener(whichThrottle, this));
+        imageButton = findViewById(R.id.edit_consist_lights_button1);
+        imageButton.setOnClickListener(new EditConsistLightsButtonListener(whichThrottle, this));
 
         // loco sounds button
-        button = findViewById(R.id.Sl_device_sounds);
+        button = findViewById(R.id.device_sounds_button0);
         button.setOnClickListener(new DeviceSoundsButtonListener(this));
-//        if ( (mainapp.prefDeviceSounds[0].equals("none")) && (mainapp.prefDeviceSounds[1].equals("none")) ) {
-//            button.setVisibility(GONE);
-//        }
+        imageButton = findViewById(R.id.device_sounds_button1);
+        imageButton.setOnClickListener(new DeviceSoundsButtonListener(this));
 
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
         rbRecentConsists = findViewById(R.id.select_consists_method_recent_button);
         rbIDnGo = findViewById(R.id.select_loco_method_idngo);
 
-        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", which_method.FIRST);
+//*********  Buttons and Spinner
+
+        selectMethodButtonLayout[0] = findViewById(R.id.select_loco_glyph_dcc_address_layout);
+        selectMethodButton[0] = findViewById(R.id.select_loco_glyph_dcc_address_button);
+        SelectMethodButtonListener selectMethodButtonListener = new SelectMethodButtonListener(select_loco_method_type.ADDRESS);
+        selectMethodButton[0].setOnClickListener(selectMethodButtonListener);
+
+        selectMethodButtonLayout[1] = findViewById(R.id.select_loco_glyph_roster_layout);
+        selectMethodButton[1] = findViewById(R.id.select_loco_glyph_roster_button);
+        selectMethodButtonListener = new SelectMethodButtonListener(select_loco_method_type.ROSTER);
+        selectMethodButton[1].setOnClickListener(selectMethodButtonListener);
+
+        selectMethodButtonLayout[2] = findViewById(R.id.select_loco_glyph_recent_loco_layout);
+        selectMethodButton[2] = findViewById(R.id.select_loco_glyph_recent_loco_button);
+        selectMethodButtonListener = new SelectMethodButtonListener(select_loco_method_type.RECENT_LOCOS);
+        selectMethodButton[2].setOnClickListener(selectMethodButtonListener);
+
+        selectMethodButtonLayout[3] = findViewById(R.id.select_loco_glyph_recent_consist_layout);
+        selectMethodButton[3] = findViewById(R.id.select_loco_glyph_recent_consist_button);
+        selectMethodButtonListener = new SelectMethodButtonListener(select_loco_method_type.RECENT_CONSISTS);
+        selectMethodButton[3].setOnClickListener(selectMethodButtonListener);
+
+        selectMethodButtonLayout[4] = findViewById(R.id.select_loco_glyph_idngo_layout);
+        selectMethodButton[4] = findViewById(R.id.select_loco_glyph_idngo_button);
+        selectMethodButtonListener = new SelectMethodButtonListener(select_loco_method_type.IDNGO);
+        selectMethodButton[4].setOnClickListener(selectMethodButtonListener);
+
+
+        selectLocoMethodEntryValuesArray = this.getResources().getStringArray(R.array.selectLocoMethodEntryValues);
+        selectLocoMethodEntriesArray = this.getResources().getStringArray(R.array.selectLocoMethodEntries); // display version
+
+        selectLocoMethodIndex = 0;
+        selectLocoMethodSpinner = findViewById(R.id.select_loco_method_spinner);
+        spinner_adapter = ArrayAdapter.createFromResource(this, R.array.selectLocoMethodEntries, android.R.layout.simple_spinner_item);
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectLocoMethodSpinner.setAdapter(spinner_adapter);
+        selectLocoMethodSpinner.setOnItemSelectedListener(new SelectLocoMethodIndexSpinnerListener());
+        selectLocoMethodSpinner.setSelection(selectLocoMethodIndex);
+
+        selectLocoMethodButtonsLayout = findViewById(R.id.select_loco_method_buttons_layout);
+        selectLocoMethodRadioButtonsGroup = findViewById(R.id.select_loco_method_radio_button_group);
+
+//*********
+
+        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", select_loco_method_type.FIRST);
         // make sure the radio button will be pointing to something valid
-        if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_CONSISTS)))
-                | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(which_method.RECENT_LOCOS)))
-                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(which_method.IDNGO))) {
-            prefSelectLocoMethod = which_method.ADDRESS;
+        if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_CONSISTS)))
+                | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)))
+                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(select_loco_method_type.IDNGO))) {
+            prefSelectLocoMethod = select_loco_method_type.ADDRESS;
         }
 
         rlAddress = findViewById(R.id.enter_loco_group);
         rlAddressHelp = findViewById(R.id.enter_loco_group_help);
         rlRosterHeading = findViewById(R.id.roster_list_heading);
         rlRosterHeaderGroup = findViewById(R.id.roster_list_header_group);
-        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
+//        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
+        rlRosterEmpty = findViewById(R.id.roster_list_empty);
         llRoster = findViewById(R.id.roster_list_group);
         rlRecentHeader = findViewById(R.id.engine_list_header_group);
         llRecent = findViewById(R.id.engine_list_wrapper);
@@ -1727,26 +1862,27 @@ public class select_loco extends AppCompatActivity {
         SortRecentConsistsButtonListener sortRecentConsistsButtonListener = new SortRecentConsistsButtonListener();
         b.setOnClickListener(sortRecentConsistsButtonListener);
 
-        showMethod(prefSelectLocoMethod);
-
-        RadioGroup rgLocoSelect = findViewById(R.id.select_loco_method_address_button_radio_group);
-        rgLocoSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        selectLocoMethodRadioButtonsGroup = findViewById(R.id.select_loco_method_radio_button_group);
+        selectLocoMethodRadioButtonsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.select_loco_method_roster_button) {
-                    showMethod(which_method.ROSTER);
+                    showMethod(select_loco_method_type.ROSTER);
                 } else if (checkedId == R.id.select_loco_method_recent_button) {
-                    showMethod(which_method.RECENT_LOCOS);
+                    showMethod(select_loco_method_type.RECENT_LOCOS);
                 } else if (checkedId == R.id.select_loco_method_address_button) {
-                        showMethod(which_method.ADDRESS);
+                        showMethod(select_loco_method_type.ADDRESS);
                 } else if (checkedId == R.id.select_consists_method_recent_button) {
-                        showMethod(which_method.RECENT_CONSISTS);
+                        showMethod(select_loco_method_type.RECENT_CONSISTS);
                 } else if (checkedId == R.id.select_loco_method_idngo) {
-                    showMethod(which_method.IDNGO);
+                    showMethod(select_loco_method_type.IDNGO);
                 }
             }
         });
+
+        prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
+
+        showMethod(prefSelectLocoMethod);
 
         if (mainapp.isDCCEX) maxAddr = 10239;  // DCC-EX supports the full range
 
@@ -1761,7 +1897,8 @@ public class select_loco extends AppCompatActivity {
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_select_loco),
@@ -1777,6 +1914,27 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
+
+        selectLocoMethodRadioButtonsGroup.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
+        selectLocoMethodButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
+//        selectLocoMethodSpinner.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
+
+
+        if (mainapp.supportsIDnGo()) {
+            rbIDnGo.setVisibility(View.VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(View.VISIBLE);
+        } else {
+            rbIDnGo.setVisibility(GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(View.GONE);
+        }
+        if (mainapp.supportsRoster()) {
+            rbRoster.setVisibility(View.VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.VISIBLE);
+        } else {
+            rbRoster.setVisibility(GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.GONE);
+        }
+
         // hide everything by default then show only what is actually needed
         rlAddress.setVisibility(View.GONE);
         rlAddressHelp.setVisibility(View.GONE);
@@ -1796,21 +1954,18 @@ public class select_loco extends AppCompatActivity {
         rbRecentConsists.setChecked(false);
         rbIDnGo.setChecked(false);
 
+        for (int i=0; i<5; i++) {
+            selectMethodButton[i].setSelected(false);
+        }
+
         switch (whichMethod) {
-            default:
-            case which_method.ADDRESS: {
-                rlAddress.setVisibility(View.VISIBLE);
-                rlAddressHelp.setVisibility(View.VISIBLE);
-                rbAddress.setChecked(true);
-                hideSoftKeyboard(rlAddress);
-                break;
-            }
-            case which_method.ROSTER: {
+            case select_loco_method_type.ROSTER: {
                 rlRosterHeading.setVisibility(View.VISIBLE);
                 rlRosterHeaderGroup.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
-                rlRosterEmpty.setVisibility(View.VISIBLE);
+                rlRosterEmpty.setVisibility(!mainapp.rosterFullList.isEmpty() ? View.GONE : View.VISIBLE);
                 rbRoster.setChecked(true);
+                selectMethodButton[1].setSelected(true);
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
 
                 if (!mainapp.shownToastRoster) { // only show it once
@@ -1820,32 +1975,50 @@ public class select_loco extends AppCompatActivity {
                 hideSoftKeyboard(rbAddress);
                 break;
             }
-            case which_method.RECENT_LOCOS: {
+            case select_loco_method_type.RECENT_LOCOS: {
                 rlRecentHeader.setVisibility(View.VISIBLE);
                 llRecent.setVisibility(View.VISIBLE);
                 rbRecent.setChecked(true);
+                selectMethodButton[2].setSelected(true);
                 mainapp.shownToastRecentLocos = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentLocos);
                 hideSoftKeyboard(rbAddress);
                 break;
             }
-            case which_method.RECENT_CONSISTS: {
+            case select_loco_method_type.RECENT_CONSISTS: {
                 rlRecentConsistsHeader.setVisibility(View.VISIBLE);
                 llRecentConsists.setVisibility(View.VISIBLE);
                 rbRecentConsists.setChecked(true);
+                selectMethodButton[3].setSelected(true);
                 mainapp.shownToastRecentConsists = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentConsistsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentConsists);
                 hideSoftKeyboard(rbAddress);
                 break;
             }
-            case which_method.IDNGO: {
+            case select_loco_method_type.IDNGO: {
                 rlIDnGo.setVisibility(View.VISIBLE);
                 rbIDnGo.setChecked(true);
+                selectMethodButton[4].setSelected(true);
                 hideSoftKeyboard(rbAddress);
                 break;
             }
+            case select_loco_method_type.ADDRESS:
+            default: {
+                rlAddress.setVisibility(View.VISIBLE);
+                rlAddressHelp.setVisibility(View.VISIBLE);
+                rbAddress.setChecked(true);
+                selectMethodButton[0].setSelected(true);
+                hideSoftKeyboard(rlAddress);
+                break;
+            }
         }
+
+        if (selectLocoMethodSpinner != null) { // may not be found yet
+            selectLocoMethodIndex = Integer.parseInt(whichMethod)-1;
+            selectLocoMethodSpinner.setSelection(selectLocoMethodIndex);
+        }
+
         prefSelectLocoMethod = whichMethod;
         prefs.edit().putString("prefSelectLocoMethod", whichMethod).commit();
-    }  // enf showMethod()
+    }  // end showMethod()
 
     //Clears recent connection list of locos
     public void clearList() {
@@ -1892,16 +2065,7 @@ public class select_loco extends AppCompatActivity {
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        if (mainapp.supportsIDnGo()) {
-            rbIDnGo.setVisibility(View.VISIBLE);
-        } else {
-            rbIDnGo.setVisibility(GONE);
-        }
-        if (mainapp.supportsRoster()) {
-            rbRoster.setVisibility(View.VISIBLE);
-        } else {
-            rbRoster.setVisibility(GONE);
-        }
+        prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
 
         if (SMenu != null) {
             mainapp.displayFlashlightMenuButton(SMenu);
@@ -1909,6 +2073,15 @@ public class select_loco extends AppCompatActivity {
             mainapp.displayPowerStateMenuButton(SMenu);
             mainapp.setPowerStateButton(SMenu);
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // adjust the current locos list if needed
+        // the widths are generally not known until this point in time
+        adjustCurrentLocosListTextViewWidth();
     }
 
     @Override
@@ -2082,7 +2255,7 @@ public class select_loco extends AppCompatActivity {
         buttonRemoveRosterImage = dialog.findViewById(R.id.removeRosterEntryImage);
         buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (deleteLocoImageFile(rosterNameString, detailsRosterImageView)) {
+                if (deleteLocoImageFile(rosterNameString)) {
                     detailsRosterImageView.setVisibility(GONE);
                     buttonRemoveRosterImage.setVisibility(GONE);
                     LocalRosterImageRemoved = true;
@@ -2217,6 +2390,7 @@ public class select_loco extends AppCompatActivity {
         }
 
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position < 0 || position >= rosterList.size())
                 return convertView;
@@ -2225,29 +2399,32 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.roster_list_item, null, false);
 
-            String engineName = hm.get("roster_name");
-            if (engineName != null) {
-                TextView name = view.findViewById(R.id.roster_name_label);
-                name.setText(engineName);
-            }
+                String engineName = hm.get("roster_name");
+                if (engineName != null) {
+                    TextView name = view.findViewById(R.id.roster_name_label);
+                    name.setText(engineName);
+                }
 
-            String engineNo = hm.get("roster_address");
-            if (engineNo != null) {
-                TextView secondLine = view.findViewById(R.id.roster_address_label);
-                secondLine.setText(engineNo);
-            }
+                String engineNo = hm.get("roster_address");
+                if (engineNo != null) {
+                    TextView secondLine = view.findViewById(R.id.roster_address_label);
+                    secondLine.setText(engineNo);
+                }
 
-            ImageView imageView = view.findViewById(R.id.roster_icon_image);
-            String iconURL = hm.get("roster_icon");
-            loadRosterOrRecentImage(engineName, imageView, iconURL);
+                ImageView imageView = view.findViewById(R.id.roster_icon_image);
+                String iconURL = hm.get("roster_icon");
+                loadRosterOrRecentImage(engineName, imageView, iconURL);
 
-            String owner = hm.get("roster_owner");
-            if (owner != null) {
-                TextView secondLine = view.findViewById(R.id.roster_owner_label);
-                secondLine.setText(owner);
+                String owner = hm.get("roster_owner");
+                if (owner != null) {
+                    TextView secondLine = view.findViewById(R.id.roster_owner_label);
+                    secondLine.setText(owner);
+                }
             }
 
             return view;
@@ -2265,6 +2442,7 @@ public class select_loco extends AppCompatActivity {
             cont = context;
         }
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position > recentEngineList.size())
                 return convertView;
@@ -2273,24 +2451,27 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
 
-            String str = hm.get("engine_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.engine_name_label);
-                name.setText(Html.fromHtml(str));
+                String str = hm.get("engine_name");
+                if (str != null) {
+                    TextView name = view.findViewById(R.id.engine_name_label);
+                    name.setText(Html.fromHtml(str));
+                }
+
+                String engineName = hm.get("engine");
+                if (engineName != null) {
+                    TextView secondLine = view.findViewById(R.id.engine_item_label);
+                    secondLine.setText(engineName);
+                }
+
+                ImageView imageView = view.findViewById(R.id.engine_icon_image);
+                String iconURL = hm.get("engine_icon");
+                loadRosterOrRecentImage(engineName, imageView, iconURL);
             }
-
-            String engineName = hm.get("engine");
-            if (engineName != null) {
-                TextView secondLine = view.findViewById(R.id.engine_item_label);
-                secondLine.setText(engineName);
-            }
-
-            ImageView imageView = view.findViewById(R.id.engine_icon_image);
-            String iconURL = hm.get("engine_icon");
-            loadRosterOrRecentImage(engineName, imageView, iconURL);
 
             return view;
         }
@@ -2321,6 +2502,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+
     public class RecentConsistsSimpleAdapter extends SimpleAdapter {
         private final Context cont;
 
@@ -2332,6 +2514,7 @@ public class select_loco extends AppCompatActivity {
             cont = context;
         }
 
+        @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
             if (position > recent_consists_list.size())
                 return convertView;
@@ -2340,19 +2523,22 @@ public class select_loco extends AppCompatActivity {
             if (hm == null)
                 return convertView;
 
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+            RelativeLayout view = (RelativeLayout) convertView;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
 
-            String str = hm.get("consist_name");
-            if (str != null) {
-                TextView name = view.findViewById(R.id.consist_name_label);
-                name.setText(Html.fromHtml(str));
-            }
+                String str = hm.get("consist_name");
+                if (str != null) {
+                    TextView name = view.findViewById(R.id.consist_name_label);
+                    name.setText(Html.fromHtml(str));
+                }
 
-            str = hm.get("consist");
-            if (str != null) {
-                TextView secondLine = view.findViewById(R.id.consist_item_label);
-                secondLine.setText(Html.fromHtml(str));
+                str = hm.get("consist");
+                if (str != null) {
+                    TextView secondLine = view.findViewById(R.id.consist_item_label);
+                    secondLine.setText(Html.fromHtml(str));
+                }
             }
 
             return view;
@@ -2481,10 +2667,20 @@ public class select_loco extends AppCompatActivity {
     private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
-            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            if (!dir.exists()) {
+                if (!dir.mkdir()) { // in case the folder does not already exist
+                    unableToSaveLocoImage();
+                    return false;
+                }
+            }
             String imgFileName = mainapp.fixFilename(rosterNameString) + ".png";
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            if (dir.exists()) imageFile.delete(); // delete the old version if it exists
+            if (imageFile.exists()) {
+                if (!imageFile.delete()) { // delete the old version if it exists
+                    unableToSaveLocoImage();
+                    return false;
+                }
+            }
             FileOutputStream fileOutputStream =
                     new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             Bitmap bitmap = viewToBitmap(imageView, 52);   //52dp
@@ -2493,23 +2689,41 @@ public class select_loco extends AppCompatActivity {
             fileOutputStream.close();
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "select_loco: writeLocoImageToFile(): Unable to save roster loco image");
+            unableToSaveLocoImage();
             return false;
         }
     }
 
-    private boolean deleteLocoImageFile(String rosterNameString, ImageView imageView) {
+    private void unableToSaveLocoImage() {
+        Log.d("Engine_Driver", "select_loco: writeLocoImageToFile(): Unable to save roster loco image");
+    }
+
+    private boolean deleteLocoImageFile(String rosterNameString) {
         try {
             File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
-            if (!dir.exists()) dir.mkdir(); // in case the folder does not already exist
+            if (!dir.exists()) {
+                if(!dir.mkdir()) { // in case the folder does not already exist
+                    unableToDeleteLocoImage();
+                    return false;
+                }
+            }
             String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
             File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            if (dir.exists()) imageFile.delete();
+            if (imageFile.exists()) {
+                if (!imageFile.delete()) {
+                    unableToDeleteLocoImage();
+                    return false;
+                }
+            }
             return true;
         } catch (Exception e)  {
-            Log.d("Engine_Driver", "select_loco: deleteLocoImageFile(): Unable to delete roster loco image");
+            unableToDeleteLocoImage();
             return false;
         }
+    }
+
+    private void unableToDeleteLocoImage() {
+        Log.d("Engine_Driver", "select_loco: deleteLocoImageFile(): Unable to delete roster loco image");
     }
 
 //    private void cropLocoImage() {
@@ -2575,6 +2789,32 @@ public class select_loco extends AppCompatActivity {
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class SelectLocoMethodIndexSpinnerListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            selectLocoMethodIndex = selectLocoMethodSpinner.getSelectedItemPosition();
+//            selectLocoMethodSpinner.setSelection(selectLocoMethodIndex);
+            showMethod(Integer.toString(selectLocoMethodIndex+1));
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    public class SelectMethodButtonListener implements View.OnClickListener {
+        final String myMethod;
+
+        SelectMethodButtonListener(String method) {
+            myMethod = method;
+        }
+
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            showMethod(myMethod);
+            mainapp.hideSoftKeyboard(v);
         }
     }
 

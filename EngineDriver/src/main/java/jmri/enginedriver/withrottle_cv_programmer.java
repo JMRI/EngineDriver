@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -32,7 +31,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +42,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,20 +71,18 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private EditText etWitAddressValue;
 
 
-    private String witInfoStr = "";
+//    private String witInfoStr = "";
 
-    private String witSendCommandValue = "";
-    private EditText etWitSendCommandValue;
+//    private String witSendCommandValue = "";
+//    private EditText etWitSendCommandValue;
 
-    private LinearLayout witWriteInfoLayout;
-    private TextView witWriteInfoLabel;
+//    private LinearLayout witWriteInfoLayout;
+//    private TextView witWriteInfoLabel;
 
 //    private TextView witResponsesLabel;
     private TextView witSendsLabel;
-    private String witResponsesStr = "";
+//    private String witResponsesStr = "";
     private String witSendsStr = "";
-//    private ScrollView witResponsesScrollView;
-    private ScrollView witSendsScrollView;
 
     ArrayList<String> witResponsesListHtml = new ArrayList<>();
     ArrayList<String> witSendsListHtml = new ArrayList<>();
@@ -126,10 +121,9 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private LinearLayout statusLine;
 
 
-    private String defaultAddressLength;
-    private int maxAddr = 10239;
-    private int maxCv = 1024;
-    private int maxCvValue = 255;
+    static int maxAddr = 10239;
+    static int maxCv = 1024;
+    static int maxCvValue = 255;
 
     //**************************************
 
@@ -145,7 +139,8 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case message_type.WRITE_DIRECT_DCC_COMMAND_ECHO:  // informational response
-                    displayCommands(msg.obj.toString(), false);
+//                    displayCommands(msg.obj.toString(), false);
+                    displayCommands(msg.obj.toString());
                     refreshWitCommandsView();
                     break;
 
@@ -182,62 +177,59 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
     public class write_cv_button_listener implements View.OnClickListener {
         public void onClick(View v) {
-            witInfoStr = "";
+//            witInfoStr = "";
             String cvStr = etWitCv.getText().toString();
             String cvValueStr = etWitCvValue.getText().toString();
             String addrStr = etWitAddressValue.getText().toString();
 
             try {
-                Integer cv = Integer.decode(cvStr);
+                int cv = Integer.decode(cvStr);
                 int cvValue = Integer.decode(cvValueStr);
                 int addr = Integer.decode(addrStr);
                 if ((addr > 2) && (addr <= 10239) && (cv > 0)) {
                     mainapp.witAddress = Integer.toString(addr);
-                    mainapp.witCv = cv.toString();
+                    mainapp.witCv = Integer.toString(cv);
                     mainapp.witCvValue = Integer.toString(cvValue);
                     mainapp.buttonVibration();
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_POM_CV, witCv + " " + witCvValue, addr);
 
                     Integer[] segments = new Integer[6];
                     int noSegments = 0;
-                    String directCmd = "";
-                    String bits = "";
+//                    String directCmd;
+                    String bits;
 
                     int addressSize = addressSpinner.getSelectedItemPosition();
 
                     if (addressSize==0) {  // short
                         bits = "0" + num2binStr(addr,7);
-                        segments[noSegments] = str2Bin(bits);
-                        noSegments++;
-                        directCmd = bits + " ";
+//                        directCmd = bits + " ";
                     } else {
                         String addrBits = num2binStr(addr,14);
                         bits = "11" + addrBits.substring(0,6);
                         segments[noSegments] = str2Bin(bits);
                         noSegments++;
-                        directCmd = bits  + " ";
-
+//                        directCmd = bits  + " ";
                         bits = addrBits.substring(6);
-                        segments[noSegments] = str2Bin(bits);
-                        noSegments++;
-                        directCmd = directCmd + bits  + " ";
+//                        directCmd = directCmd + bits  + " ";
                     }
+                    segments[noSegments] = str2Bin(bits);
+                    noSegments++;
                     String cvBits = num2binStr(cv - 1,10);
 
                     bits = "111011" + cvBits.substring(0,2);
                     segments[noSegments] = str2Bin(bits);
                     noSegments++;
-                    directCmd = directCmd + bits + " ";
+//                    directCmd = directCmd + bits + " ";
 
                     bits = cvBits.substring(2);
                     segments[noSegments] = str2Bin(bits);
                     noSegments++;
-                    directCmd = directCmd + bits + " ";
+//                    directCmd = directCmd + bits + " ";
 
                     bits = num2binStr(cvValue,8);
                     segments[noSegments] = str2Bin(bits);
                     noSegments++;
-                    directCmd = directCmd + bits + " ";
+//                    directCmd = directCmd + bits + " ";
 
                     int xOr = segments[0];
                     for (int i=1; i<noSegments; i++) {
@@ -247,9 +239,9 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     bits = num2binStr(xOr,8);
                     segments[noSegments] = str2Bin(bits);
                     noSegments++;
-                    directCmd = directCmd + bits;
+//                    directCmd = directCmd + bits;
 
-                    String msg = "";
+                    String msg;
                     if (noSegments==5) {
                         msg= String.format("%02x %02x %02x %02x %02x", segments[0], segments[1], segments[2], segments[3], segments[4]);
                     } else {
@@ -272,7 +264,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         public void onClick(View v) {
             witResponsesListHtml.clear();
             witSendsListHtml.clear();
-            witResponsesStr = "";
+//            witResponsesStr = "";
             witSendsStr = "";
             refreshWitView();
         }
@@ -303,8 +295,8 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     private void readTextField(int which) {
-        String txt = "";
-        int txtLen = 0;
+        String txt;
+        int txtLen;
         int addr = -1;
 
         switch (which) {
@@ -332,7 +324,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 }
 
 
-                defaultAddressLength = prefs.getString("default_address_length", this
+                String defaultAddressLength = prefs.getString("default_address_length", this
                         .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
                 // set address length
                 if (defaultAddressLength.equals("Long") ||
@@ -356,10 +348,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     }
 
                     if (addr>maxCv) {
-                        addr = -1;
-//                        Toast.makeText(getApplicationContext(),
-//                                getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxCv))
-//                                , Toast.LENGTH_LONG).show();
+//                        addr = -1;
                         threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxCv))
                                 , Toast.LENGTH_LONG);
                         etWitCv.setText(""); //clear the bad entry
@@ -380,10 +369,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     }
 
                     if (addr>maxCvValue) {
-                        addr = -1;
-//                        Toast.makeText(getApplicationContext(),
-//                                getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxCvValue))
-//                                , Toast.LENGTH_LONG).show();
+//                        addr = -1;
                         threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax), txt, Integer.toString(maxCvValue))
                                 , Toast.LENGTH_LONG);
                         etWitCvValue.setText(""); //clear the bad entry
@@ -401,10 +387,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         witProgrammingAddressLayout.setVisibility(View.VISIBLE);
         witProgrammingCvLayout.setVisibility(View.VISIBLE);
-        witWriteInfoLayout.setVisibility(View.VISIBLE);
+//        witWriteInfoLayout.setVisibility(View.VISIBLE);
 
         boolean rslt = true;
-        if (mainapp.witAddress.length()>0) {
+        if (!mainapp.witAddress.isEmpty()) {
             int addressValue = Integer.parseInt(mainapp.witAddress);
             if (addressValue < 2) rslt = false;
 
@@ -413,7 +399,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             }
         }
         if (rslt) {
-            rslt = ((mainapp.witCv.length() != 0) && (mainapp.witCvValue.length() != 0) && (mainapp.witAddress.length() != 0));
+            rslt = ((!mainapp.witCv.isEmpty()) && (!mainapp.witCvValue.isEmpty()) && (!mainapp.witAddress.isEmpty()));
         }
         if (rslt) {
             if ((mainapp.witCv.equals("1")) || (mainapp.witCv.equals("17")) || (mainapp.witCv.equals("18"))) rslt = false;
@@ -426,7 +412,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
     public void refreshWitView() {
 
-        witWriteInfoLabel.setText(witInfoStr);
+//        witWriteInfoLabel.setText(witInfoStr);
         etWitCv.setText(mainapp.witCv);
         etWitCvValue.setText(mainapp.witCvValue);
 
@@ -444,15 +430,16 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witSendsLabel.setText(Html.fromHtml(witSendsStr));
     }
 
-    void displayCommands(String msg, boolean inbound) {
+//    void displayCommands(String msg, boolean inbound) {
+    void displayCommands(String msg) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         String currentTime = sdf.format(new Date());
 
-        if (inbound) {
-            witResponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + Html.escapeHtml(msg) + "</b><br />");
-        } else {
+//        if (inbound) {
+//            witResponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + Html.escapeHtml(msg) + "</b><br />");
+//        } else {
             witSendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : <i>" + Html.escapeHtml(msg) + "</i><br />");
-        }
+//        }
         if (witResponsesListHtml.size() > 40) {
             witResponsesListHtml.remove(0);
         }
@@ -460,17 +447,35 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             witSendsListHtml.remove(0);
         }
 
-        witResponsesStr = "<p>";
-        for (int i = 0; i < witResponsesListHtml.size(); i++) {
-            witResponsesStr = witResponsesListHtml.get(i) + witResponsesStr;
-        }
-        witResponsesStr = witResponsesStr + "</p>";
+//        witResponsesStr = "<p>";
+//        for (int i = 0; i < witResponsesListHtml.size(); i++) {
+//            witResponsesStr = witResponsesListHtml.get(i) + witResponsesStr;
+//        }
+//        witResponsesStr = witResponsesStr + "</p>";
 
-        witSendsStr = "<p>";
-        for (int i=0; i < witSendsListHtml.size(); i++) {
-            witSendsStr = witSendsListHtml.get(i) + witSendsStr;
+//        StringBuilder witResponsesStrBldr = new StringBuilder();
+//        witResponsesStrBldr.append("<p>");
+//        for (int i = witResponsesListHtml.size() - 1; i>=0; i--) {
+//            witResponsesStrBldr.append(witResponsesListHtml.get(i));
+//        }
+//        witResponsesStrBldr.append("</p>");
+//        witResponsesStr = witResponsesStrBldr.toString();
+
+
+//        witSendsStr = "<p>";
+//        for (int i=0; i < witSendsListHtml.size(); i++) {
+//            witSendsStr = witSendsListHtml.get(i) + witSendsStr;
+//        }
+//        witSendsStr = witSendsStr + "</p>";
+
+        StringBuilder witSendsStrBldr = new StringBuilder();
+        witSendsStrBldr.append("<p>");
+        for (int i=witSendsListHtml.size()-1; i>=0; i--) {
+            witSendsStrBldr.append(witSendsListHtml.get(i));
         }
-        witSendsStr = witSendsStr + "</p>";
+        witSendsStrBldr.append("</p>");
+        witSendsStr = witSendsStrBldr.toString();
+
     }
 
     // ************************************************************************************************************* //
@@ -530,9 +535,9 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        witWriteInfoLayout = findViewById(R.id.witWriteInfoLayout);
-        witWriteInfoLabel = findViewById(R.id.witWriteInfoLabel);
-        witWriteInfoLabel.setText("");
+//        witWriteInfoLayout = findViewById(R.id.witWriteInfoLayout);
+//        witWriteInfoLabel = findViewById(R.id.witWriteInfoLabel);
+//        witWriteInfoLabel.setText("");
 
 //        witResponsesLabel = findViewById(R.id.wit_WitResponsesLabel);
 //        witResponsesLabel.setText("");
@@ -558,7 +563,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         vn = 4;
         try {
-            vn = Float.valueOf(mainapp.DccexVersion);
+            vn = Float.parseFloat(mainapp.DccexVersion);
         } catch (Exception ignored) { } // invalid version
 
         witProgrammingCommonCvsLayout = findViewById(R.id.wit_programmingCommonCvsLayout);
@@ -567,7 +572,8 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
 
 //        witResponsesScrollView = findViewById(R.id.wit_WitResponsesScrollView);
-        witSendsScrollView = findViewById(R.id.wit_WitSendsScrollView);
+//        private ScrollView witResponsesScrollView;
+//        ScrollView witSendsScrollView = findViewById(R.id.wit_WitSendsScrollView);
 
         clearCommandsButton = findViewById(R.id.wit_WitClearCommandsButton);
         clear_commands_button_listener clearCommandsClickListener = new clear_commands_button_listener();
@@ -579,6 +585,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_withrottle_cv_programmer),
@@ -752,7 +759,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             }
             dccCvsIndex = 0;
             witCommonCvsSpinner.setSelection(dccCvsIndex);
-            witInfoStr = "";
+//            witInfoStr = "";
 
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -771,7 +778,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     void checkCv29(String cv, String cvValueStr) {
-        if (cv.equals("29") && cvValueStr.length()>0) {
+        if (cv.equals("29") && !cvValueStr.isEmpty()) {
             try {
                 String rslt = "";
                 int cvValue = Integer.parseInt(cvValueStr);
@@ -831,7 +838,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
     boolean checkCv29addressUnchanged() {
         boolean rslt = true;
-        if (mainapp.witCv.equals("29") && mainapp.witCvValue.length()>0) {
+        if (mainapp.witCv.equals("29") && !mainapp.witCvValue.isEmpty()) {
             int cvValue = Integer.parseInt(mainapp.witCvValue);
 
             int addressSize = addressSpinner.getSelectedItemPosition();
@@ -845,47 +852,47 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         return rslt;
     }
 
-    void setPowerButton(Button btn, int powerState) {
-        TypedValue outValue = new TypedValue();
-        if (powerState == 1) {
-            mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-        } else if (powerState == 0) {
-            mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-        } else {
-            if (!mainapp.isDCCEX) {
-                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-            } else {
-                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-            }
-        }
-        Drawable img = getResources().getDrawable(outValue.resourceId);
-        btn.setBackground(img);
-    }
+//    void setPowerButton(Button btn, int powerState) {
+//        TypedValue outValue = new TypedValue();
+//        if (powerState == 1) {
+//            mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
+//        } else if (powerState == 0) {
+//            mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
+//        } else {
+//            if (!mainapp.isDCCEX) {
+//                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+//            } else {
+//                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+//            }
+//        }
+//        Drawable img = getResources().getDrawable(outValue.resourceId);
+//        btn.setBackground(img);
+//    }
 
    String num2binStr(int val, int bits) { // bits = number of bits to return - dictates the max val allowed
-       String rslt = "";
-       Double tempVal = (double) val;
+       StringBuilder rslt = new StringBuilder();
+       double tempVal = val;
        for (int i = bits; i >= 0; i--) {
            if (tempVal >= Math.pow(2, i)) {
-               rslt = rslt + "1";
+               rslt.append("1");
                tempVal = tempVal - Math.pow(2, i);
            } else {
-               rslt = rslt + "0";
+               rslt.append("0");
            }
        }
        while (rslt.length() > bits) {
-           rslt = rslt.substring(1);  // remove the leading 0
+           rslt = new StringBuilder(rslt.substring(1));  // remove the leading 0
        }
-       return rslt;
+       return rslt.toString();
    }
 
    int str2Bin(String val) {
-       Double rslt = 0.0;
+       double rslt = 0.0;
         for (int i=0; i<val.length(); i++) {
             if (val.charAt(i)=='1') {
                 rslt = rslt + Math.pow(2,val.length()-1-i);
             }
         }
-       return rslt.intValue();
+       return (int) rslt;
    }
 }

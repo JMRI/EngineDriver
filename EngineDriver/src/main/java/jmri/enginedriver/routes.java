@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Objects;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
@@ -528,7 +529,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
         }
 
         routesView = findViewById(R.id.routes_screen);

@@ -2454,7 +2454,7 @@ public class threaded_application extends Application {
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
-            if (this.connectedHostName != null) {
+            if (!this.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = this.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
@@ -2596,7 +2596,7 @@ public class threaded_application extends Application {
 
         if ((prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT))
                 || (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
-            if (connectedHostName != null) {
+            if (!connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                 importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);

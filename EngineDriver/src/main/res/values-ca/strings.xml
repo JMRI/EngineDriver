@@ -54,6 +54,7 @@
     <string name="connect_button">Connectar</string>
     <string name="recent_connections">Connexions recents</string>
     <string name="select_loco_heading">Adquirir Locomotora, mètode - Controlador %1$s</string>
+    <string name="select_loco_current_locos_heading">Locos seleccionats actualment - Accelerador %1$s</string>
     <string name="select_loco">Entra l\'adreça de la Locomotora</string>
     <string name="select_loco_address">Adreça</string>
     <string name="acquire_button">Adquirir</string>
@@ -627,6 +628,8 @@
     <string name="prefRosterOwnersFilterShowOptionTitle">Filtra per propietari de la llista</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Mostra una opció per filtrar la llista per propietari</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Tots</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">Seleccioneu l\'aspecte del mètode locomotor</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Mostra una llista de text de mètodes en lloc de botons d\'imatge</string>
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
     <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Recent</string>

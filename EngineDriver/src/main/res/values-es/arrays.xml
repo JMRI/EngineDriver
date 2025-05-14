@@ -313,4 +313,13 @@
         <item>ID</item>
         <item>Posición</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Dirección DCC</item>
+        <item>Lista de servidores</item>
+        <item>Locos recientes</item>
+        <item>Consta reciente</item>
+        <item>Solicitar identificación de locomotora</item>
+    </string-array>
+
 </resources>
