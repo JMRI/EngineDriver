@@ -331,4 +331,13 @@
         <item>EU IA</item>
         <item>Posição</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Endereço DCC</item>
+        <item>Lista de servidores</item>
+        <item>Locos recentes</item>
+        <item>Consistes Recentes</item>
+        <item>Solicitar ID Loco</item>
+    </string-array>
+
 </resources>

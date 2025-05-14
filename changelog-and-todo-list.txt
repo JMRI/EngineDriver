@@ -14,7 +14,7 @@
  * Replace the deprecated functions in ImageDownloader, Throttle, ImportExportConnectionsList and LogViewerActivity
  * Replace the deprecated AsyncTask in LogViewer
  * Linting. Primarily in all the util classes and intro screens
- * Make the PHONE permission more clearly optional.  Phone call preference is automatically disable if rejected a few times
+ * Make the PHONE permission more clearly optional.  Phone call preference is automatically disabled if rejected a few times
  * Separate warning when the 'Use Location' service is disabled (as different to no WiFi)
  * Rewrite of the App Intro permissions request screen to better re-ask for permissions that were not initally granted under Android 14+
  * Don't forcibly ask for the location permissions in the Connection screen

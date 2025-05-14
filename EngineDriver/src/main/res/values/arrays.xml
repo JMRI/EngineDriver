@@ -2284,6 +2284,23 @@
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <string-array name="selectLocoMethodEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>DCC Address</item>
+        <item>Server Roster</item>
+        <item>Recent Locos</item>
+        <item>Recent Consists</item>
+        <item>Request Loco ID</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- The following preferences will only appear if the 'Advanced' preference options is enabled. -->
 

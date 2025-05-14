@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.webkit.WebView;
@@ -40,19 +41,33 @@ import jmri.enginedriver.type.dccex_protocol_option_type;
 public class comm_handler extends Handler {
    //All of the work of the communications thread is initiated from this function.
 
+   private boolean initialised = false;
    protected threaded_application mainapp;  // hold pointer to mainapp
    protected SharedPreferences prefs;
    protected comm_thread commThread;
 
-   public comm_handler(threaded_application myApp, SharedPreferences myPrefs, comm_thread myCommThread) {
+//   public comm_handler(threaded_application myApp, SharedPreferences myPrefs, comm_thread myCommThread) {
+//      mainapp = myApp;
+//      prefs = myPrefs;
+//      commThread = myCommThread;
+//   }
+
+   public comm_handler(Looper looper) {
+      super(looper);
+   }
+
+   public void initialise(threaded_application myApp, SharedPreferences myPrefs, comm_thread myCommThread) {
       mainapp = myApp;
       prefs = myPrefs;
       commThread = myCommThread;
+      initialised = true;
    }
 
    @SuppressLint({"DefaultLocale", "ApplySharedPref", "WebViewApiAvailability"})
    public void handleMessage(Message msg) {
 //                Log.d("Engine_Driver", "comm_handler.handleMessage: message: " +msg.what);
+      if (!initialised) return;
+
       switch (msg.what) {
          // note: if the Throttle is sent in arg1, it is always expected to be a int
          // if it is sent in arg0, it will be a string
@@ -161,7 +176,7 @@ public class comm_handler extends Handler {
 //            int delays = 0;
             String addr = msg.obj.toString();
             final int whichThrottle = msg.arg1;
-            final boolean releaseAll = (addr.length() == 0);
+            final boolean releaseAll = (addr.isEmpty());
 
             if (releaseAll || mainapp.consists[whichThrottle].isEmpty()) {
                addr = "";
@@ -174,8 +189,9 @@ public class comm_handler extends Handler {
 //               delays++;
             }
 
-//                        sendReleaseLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
-            commThread.sendReleaseLoco(addr, whichThrottle, 0);
+//            sendReleaseLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
+//            commThread.sendReleaseLoco(addr, whichThrottle, 0);
+            commThread.sendReleaseLoco(addr, whichThrottle);
             break;
          }
 
@@ -208,9 +224,11 @@ public class comm_handler extends Handler {
             mainapp.alert_activities(message_type.RELAUNCH_APP, "");
 
             Intent intent = mainapp.getBaseContext().getPackageManager().getLaunchIntentForPackage(mainapp.getBaseContext().getPackageName());
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mainapp.startActivity(intent);
+             if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mainapp.startActivity(intent);
+             }
             Runtime.getRuntime().exit(0); // really force the kill
             break;
          }
@@ -257,16 +275,20 @@ public class comm_handler extends Handler {
             final int whichThrottle = msg.arg1;
             if (prefs.getBoolean("drop_on_acquire_preference",
                     mainapp.getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
-               commThread.sendReleaseLoco("*", whichThrottle, 0);
+//               commThread.sendReleaseLoco("*", whichThrottle, 0);
+               commThread.sendReleaseLoco("*", whichThrottle);
+
 //                            delays++;
             }
 //                        sendAcquireLoco(addr, whichThrottle, delays * WiThrottle_Msg_Interval);
-            comm_thread.sendAcquireLoco(addr, whichThrottle, 0);
+//            comm_thread.sendAcquireLoco(addr, whichThrottle, 0);
+            comm_thread.sendAcquireLoco(addr, whichThrottle);
             break;
          }
 
          case message_type.REQUEST_DECODER_ADDRESS: { // DCC-EX only
-            comm_thread.sendAcquireLoco("*", -1, 0);
+//            comm_thread.sendAcquireLoco("*", -1, 0);
+            comm_thread.sendAcquireLoco("*", -1);
             break;
          }
          case message_type.RECEIVED_DECODER_ADDRESS: {
@@ -531,7 +553,7 @@ public class comm_handler extends Handler {
 
          case message_type.HTTP_SERVER_NAME_RECEIVED:
             String retrievedServerName = msg.obj.toString();
-            if (mainapp.connectedHostName != null &&
+            if (!mainapp.connectedHostName.isEmpty() &&
                     !retrievedServerName.equals(mainapp.connectedHostName) &&
                     !mainapp.connectedHostName.equals(threaded_application.demo_host)) {
                mainapp.updateConnectionList(retrievedServerName);

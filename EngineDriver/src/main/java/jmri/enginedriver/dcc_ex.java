@@ -807,9 +807,7 @@ public class dcc_ex extends AppCompatActivity {
         closeButton.setOnClickListener(closeButtonListener);
 
         dccCvsEntryValuesArray = this.getResources().getStringArray(R.array.dccCvsEntryValues);
-//        final List<String> dccCvsValuesList = new ArrayList<>(Arrays.asList(dccCvsEntryValuesArray));
         dccCvsEntriesArray = this.getResources().getStringArray(R.array.dccCvsEntries); // display version
-//        final List<String> dccCvsEntriesList = new ArrayList<>(Arrays.asList(dccCvsEntriesArray));
 
         dccCvsIndex = 0;
         dccexCommonCvsSpinner = findViewById(R.id.dexc_dcc_cv_list);

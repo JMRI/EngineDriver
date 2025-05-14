@@ -481,4 +481,13 @@
         <item>ID</item>
         <item>位置</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>DCCアドレス</item>
+        <item>サーバー名簿</item>
+        <item>最近のロコ</item>
+        <item>最近の構成</item>
+        <item>ロコIDのリクエスト</item>
+    </string-array>
+
 </resources>

@@ -55,6 +55,7 @@
     <string name="connect_button">Conectar</string>
     <string name="recent_connections">Conexiones recientes</string>
     <string name="select_loco_heading">Adquirir Locomotora, método - Controlador %1$s</string>
+    <string name="select_loco_current_locos_heading">Locomotoras actualmente seleccionadas - Acelera %1$s</string>
     <string name="select_loco">Entra la dirección de la Locomotora</string>
     <string name="select_loco_address">Dirección</string>
     <string name="acquire_button">Adquirir</string>
@@ -620,6 +621,8 @@
 <!--    <string name="FilterRosterList">Filtro</string>-->
     <string name="FilterRosterListHint">Contiene&#8230;</string>
 
+    <string name="prefSelectLocoByRadioButtonsTitle">Seleccionar apariencia del método loco</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Mostrar una lista de texto de métodos en lugar de botones de imagen</string>
     <string name="LocoSelectMethodAddress">Dirección DCC</string>
     <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Reciente</string>

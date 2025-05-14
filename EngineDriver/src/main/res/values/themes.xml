@@ -112,6 +112,17 @@
         <item name="ed_dccex_button_track_manager">@drawable/original_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
 
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
+
         <item name="ed_icon">@drawable/icon_vector</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
@@ -217,6 +228,17 @@
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
+
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
@@ -314,6 +336,17 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/outline_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
+
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -419,6 +452,17 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/ultra_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/ultra_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/ultra_dccex_button_function_defaults</item>
+
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -526,6 +570,17 @@
 
         <item name="ed_advanced_preferences">@drawable/black_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector</item>
+
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/original_dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
@@ -640,6 +695,17 @@
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/neon_dccex_button_cv_programmer_prog_track</item>
         <item name="ed_dccex_button_track_manager">@drawable/neon_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/neon_dccex_button_function_defaults</item>
+
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
 
         <item name="ed_progressBar">@drawable/neon_progress_bar</item>
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>

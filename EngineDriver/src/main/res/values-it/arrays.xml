@@ -332,4 +332,13 @@
         <item>ID</item>
         <item>Posizione</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Indirizzo DCC</item>
+        <item>Elenco dei server</item>
+        <item>Locomotive recenti</item>
+        <item>Consiste recenti</item>
+        <item>Richiedi l\'ID della locomotiva</item>
+    </string-array>
+
 </resources>

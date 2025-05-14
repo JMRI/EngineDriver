@@ -542,4 +542,12 @@
         <item>Zéro et (Maximum + vitesse)</item>
     </string-array>
 
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Adresse DCC</item>
+        <item>Liste des serveurs</item>
+        <item>Locos récents</item>
+        <item>Composés récents</item>
+        <item>Demander l ID de la loco</item>
+    </string-array>
+
 </resources>

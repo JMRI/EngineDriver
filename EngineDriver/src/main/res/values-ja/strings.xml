@@ -306,6 +306,7 @@
     <string name="loco_direction_left_extra">\u00B7F\u00B7</string>
     <string name="loco_direction_right_extra">\u00B7R\u00B7</string>
     <string name="locoPressToSelect">選択</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">画像ボタンの代わりにメソッドのテキストリストを表示します</string>
     <string name="LocoSelectMethodAddress">DCCアドレス</string>
     <string name="LocoSelectMethodHelp">上記に機関車の DCC アドレスを入力し、[取得] をクリックします。\n\nまたは、JMRI の [列車情報] から機関車を選択するか、上記のラジオ ボタンのいずれかをクリックして [最近] 使用した機関車から選択します。</string>
     <string name="LocoSelectMethodIDNGo">ロコIDのリクエスト</string>
@@ -946,6 +947,7 @@
     <string name="routes_location_label">場所でフィルタリングする</string>
     <string name="routes_route">ルートシステム名</string>
 
+    <string name="select_loco_current_locos_heading">現在選択されている機関車 - スロットル %1$s</string>
     <string name="select_loco">取得する機関車のアドレスを入力してください</string>
     <string name="select_loco_address">アドレス</string>
     <string name="select_loco_heading">ロコの取得、メソッド - スロットル %1$s</string>
@@ -1181,5 +1183,6 @@
     <string name="toastDccexInvalidRosterId">無効な名簿 ID \'%1$s\'。名簿、投票所、ルートのリスト全体がロードできない可能性があります。</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">スロットル機能ラッチをオーバーライドする</string>
     <string name="statusThreadedAppNoLocationService">SSIDにアクセスできない</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">ロコメソッドの外観を選択</string>
 
 </resources>

@@ -512,4 +512,13 @@
         <item>ID</item>
         <item>Pozice</item>
     </string-array>
+
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>Adresa DCC</item>
+        <item>Seznam serverů</item>
+        <item>Nedávné Locos</item>
+        <item>Nedávné Sestává</item>
+        <item>Vyžádejte si Loco ID</item>
+    </string-array>
+
 </resources>

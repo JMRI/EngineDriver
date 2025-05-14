@@ -57,6 +57,7 @@
     <string name="connect_button">Verbinden</string>
     <string name="recent_connections">Letzte Verbindungen</string>
     <string name="select_loco_heading">Lokübernahme, Methode - Fahrregler %1$s</string>
+    <string name="select_loco_current_locos_heading">Derzeit ausgewählte Loks – Drossel %1$s</string>
     <string name="select_loco">Lokadresse eingeben zum Übernehmen</string>
     <string name="select_loco_address">Adresse</string>
     <string name="acquire_button">Übernehmen</string>
@@ -638,6 +639,7 @@
     <string name="prefRosterOwnersFilterShowOptionTitle">Filtern Sie nach Dienstplanbesitzer</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Zeigen Sie eine Option zum Filtern des Dienstplans nach Besitzer an</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Alle</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Zeigt eine Textliste mit Methoden anstelle von Bildschaltflächen an</string>
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
     <string name="LocoSelectMethodRoster">Lokverzeichnis</string>
     <string name="LocoSelectMethodRecent">Kürzlich verwendete</string>
@@ -1160,5 +1162,6 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Aktion der Stopptaste</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Wählen Sie aus, was die Schaltfläche „Stopp“ bewirken soll</string>
     <string name="statusThreadedAppNoLocationService">Auf die SSID kann nicht zugegriffen werden</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">Wählen Sie das Erscheinungsbild der Lokmethode aus</string>
 
 </resources>

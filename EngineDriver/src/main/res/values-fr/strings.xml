@@ -642,6 +642,8 @@
     <string name="prefRosterOwnersFilterShowOptionTitle">Filtrer par propriétaires du catalogue</string>
     <string name="prefRosterOwnersFilterShowOptionSummary">Afficher l\'option de filtrer par propriétaires du catalogue</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Tous</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">Sélectionnez l\'apparence de la méthode de locomotive</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">Afficher une liste de textes de méthodes au lieu de boutons d\'image</string>
     <string name="LocoSelectMethodAddress">Adresse DCC</string>
     <string name="LocoSelectMethodRoster">Catalogue (roster)</string>
     <string name="LocoSelectMethodRecent">Récent</string>

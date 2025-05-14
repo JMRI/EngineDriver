@@ -216,7 +216,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //        }
 //    }
 
-    @SuppressLint("HandlerLeak")
     class logviewer_handler extends Handler {
 
         public logviewer_handler(Looper looper) {

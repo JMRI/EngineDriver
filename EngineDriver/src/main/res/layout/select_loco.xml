@@ -11,6 +11,216 @@
     <include layout="@layout/toolbar_status_line" />
 
     <LinearLayout
+        android:id="@+id/current_locos_layout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp">
+
+            <TextView
+                android:id="@+id/select_loco_current_locos_heading"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                android:text="@string/select_loco_current_locos_heading"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/consist_buttons_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/current_locos_text"
+                style="?attr/floating_text_style"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="8sp" />
+
+            <LinearLayout
+                android:id="@+id/currentl_locos_options_layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginEnd="0dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/release_button1"
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/LocoSelectMethodAddress"
+                        android:src="?attr/ed_select_loco_glyph_release" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_gravity="center"
+                        android:text="@string/release"
+                        android:textSize="8sp"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_consist_layout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    tools:ignore="UselessParent">
+
+                    <LinearLayout
+                        android:layout_width="52dp"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/edit_consist_button1"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/LocoSelectMethodAddress"
+                            android:src="?attr/ed_select_loco_glyph_consist_order" />
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_gravity="center"
+                            android:text="@string/editConsistButtonLabel"
+                            android:textSize="8sp"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="52dp"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/edit_consist_lights_button1"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/LocoSelectMethodAddress"
+                            android:src="?attr/ed_select_loco_glyph_consist_lights" />
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_gravity="center"
+                            android:text="@string/editConsistLightsButtonLabel"
+                            android:textSize="8sp"
+                            tools:ignore="SmallSp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="52dp"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/device_sounds_button1"
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/LocoSelectMethodAddress"
+                        android:src="?attr/ed_select_loco_glyph_ipls" />
+
+                    <TextView
+                        style="?attr/floating_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_gravity="center"
+                        android:text="@string/deviceSoundsMenu"
+                        android:textSize="8sp"
+                        tools:ignore="SmallSp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/current_locos_group_w_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -32,24 +242,213 @@
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </RelativeLayout>
 
+
         <LinearLayout
-            android:id="@+id/current_locos_row"
+            android:id="@+id/select_loco_method_buttons_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:layout_marginTop="5dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/select_loco_glyph_dcc_address_layout"
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select_loco_glyph_dcc_address_button"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/LocoSelectMethodAddress"
+                    android:src="?attr/ed_select_loco_glyph_dcc_address" />
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/LocoSelectMethodAddress"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_loco_glyph_roster_layout"
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select_loco_glyph_roster_button"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/LocoSelectMethodAddress"
+                    android:src="?attr/ed_select_loco_glyph_roster"/>
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/LocoSelectMethodRoster"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_loco_glyph_recent_loco_layout"
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select_loco_glyph_recent_loco_button"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/LocoSelectMethodAddress"
+                    android:src="?attr/ed_select_loco_glyph_recent_loco"/>
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/LocoSelectMethodRecent"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_loco_glyph_recent_consist_layout"
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select_loco_glyph_recent_consist_button"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/LocoSelectMethodAddress"
+                    android:src="?attr/ed_select_loco_glyph_recent_consist"/>
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/LocoSelectMethodRecentConsist"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_loco_glyph_idngo_layout"
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/select_loco_glyph_idngo_button"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/LocoSelectMethodAddress"
+                    android:src="?attr/ed_select_loco_glyph_idngo"/>
+
+                <TextView
+                    style="?attr/floating_text_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_gravity="center"
+                    android:text="@string/LocoSelectMethodIDNGo"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/acquire_and_currnt_locos_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/select_loco_method_group"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:paddingTop="2dp"
-                android:paddingBottom="2dp">
+                android:paddingBottom="2dp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
 
                 <RadioGroup
-                    android:id="@+id/select_loco_method_address_button_radio_group"
+                    android:id="@+id/select_loco_method_radio_button_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -64,7 +463,7 @@
                         android:minHeight="48dp"
                         android:text="@string/LocoSelectMethodAddress"
                         android:textSize="18sp"
-                        android:theme="?attr/EDRadioButton" />
+                        style = "@style/EDRadioButton" />
 
                     <RadioButton
                         android:id="@+id/select_loco_method_roster_button"
@@ -75,7 +474,7 @@
                         android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRoster"
                         android:textSize="18sp"
-                        android:theme="?attr/EDRadioButton"
+                        style = "@style/EDRadioButton"
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
@@ -87,7 +486,7 @@
                         android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRecent"
                         android:textSize="18sp"
-                        android:theme="?attr/EDRadioButton"
+                        style = "@style/EDRadioButton"
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
@@ -99,7 +498,7 @@
                         android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodRecentConsist"
                         android:textSize="18sp"
-                        android:theme="?attr/EDRadioButton"
+                        style = "@style/EDRadioButton"
                         tools:ignore="TouchTargetSizeCheck" />
 
                     <RadioButton
@@ -111,26 +510,38 @@
                         android:minHeight="38dp"
                         android:text="@string/LocoSelectMethodIDNGo"
                         android:textSize="18sp"
-                        android:theme="?attr/EDRadioButton"
+                        style = "@style/EDRadioButton"
                         tools:ignore="TouchTargetSizeCheck" />
                 </RadioGroup>
 
-            </RelativeLayout>
+            </LinearLayout>
+
+            <!--            spinner is implmented but not shown -->
+            <Spinner
+                android:id="@+id/select_loco_method_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="none"
+                android:entries="@array/selectLocoMethodEntries"
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded" />
 
             <LinearLayout
-                android:id="@+id/LL_loco"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:id="@+id/current_locos_layout0"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="3dp"
                 android:layout_marginEnd="3dp"
-                android:layout_weight="0.5"
+                android:layout_weight=".5"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/Sl_release"
+                    android:id="@+id/release_button0"
                     style="?attr/ed_normal_button_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -142,7 +553,7 @@
                     android:textAlignment="center" />
 
                 <LinearLayout
-                    android:id="@+id/LL_options"
+                    android:id="@+id/currentl_locos_options_layout0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -155,7 +566,7 @@
                     android:weightSum="1">
 
                     <LinearLayout
-                        android:id="@+id/LL_edit_consist"
+                        android:id="@+id/edit_consist_layout0"
                         android:layout_width="0dp"
                         android:layout_weight="0.65"
                         android:layout_height="wrap_content"
@@ -170,7 +581,7 @@
                         tools:ignore="UselessParent">
 
                         <Button
-                            android:id="@+id/Sl_edit_consist"
+                            android:id="@+id/edit_consist_button0"
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
@@ -186,7 +597,7 @@
                             tools:ignore="NestedWeights,SmallSp,TouchTargetSizeCheck" />
 
                         <Button
-                            android:id="@+id/Sl_edit_consist_lights"
+                            android:id="@+id/edit_consist_lights_button0"
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
@@ -217,7 +628,7 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/Sl_device_sounds"
+                            android:id="@+id/device_sounds_button0"
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="match_parent"
                             android:maxWidth="150dp"
@@ -235,10 +646,10 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -481,12 +892,12 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/roster_list_empty_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp">
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/roster_list_empty_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="2dp"-->
+<!--        android:paddingBottom="2dp">-->
 
         <TextView
             android:id="@+id/roster_list_empty"
@@ -497,7 +908,7 @@
             android:padding="8sp"
             android:text="@string/rosterEmpty" />
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
     <LinearLayout
         android:id="@+id/roster_list_group"
@@ -511,7 +922,8 @@
             android:id="@+id/roster_list"
             style="?attr/EDListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.44"
             android:animateLayoutChanges="true" />
     </LinearLayout>
 
