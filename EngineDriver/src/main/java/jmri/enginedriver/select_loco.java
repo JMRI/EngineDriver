@@ -1963,7 +1963,7 @@ public class select_loco extends AppCompatActivity {
                 rlRosterHeading.setVisibility(View.VISIBLE);
                 rlRosterHeaderGroup.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.VISIBLE);
-                rlRosterEmpty.setVisibility(View.VISIBLE);
+                rlRosterEmpty.setVisibility(!mainapp.rosterFullList.isEmpty() ? View.GONE : View.VISIBLE);
                 rbRoster.setChecked(true);
                 selectMethodButton[1].setSelected(true);
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
