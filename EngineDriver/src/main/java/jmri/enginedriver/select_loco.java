@@ -168,8 +168,8 @@ public class select_loco extends AppCompatActivity {
     private String prefRosterFilter = "";
     EditText filterRosterText;
 
-    RelativeLayout rlAddress;
-    RelativeLayout rlAddressHelp;
+    RelativeLayout dccAddressLayout;
+    TextView dccAddressHelpText;
     TextView rlRosterHeading;
     RelativeLayout rlRosterHeaderGroup;
     TextView rlRosterEmpty;
@@ -408,19 +408,32 @@ public class select_loco extends AppCompatActivity {
         return "";
     }
 
+    @SuppressLint("ApplySharedPref")
+    void checkValidMethod(String whichMethod) {
+        prefSelectLocoMethod = whichMethod;
+
+        if (prefSelectLocoMethod.equals(select_loco_method_type.FIRST)) {
+            if ((mainapp.rosterJmriWeb != null) && (!mainapp.rosterJmriWeb.isEmpty())) {
+                prefSelectLocoMethod = select_loco_method_type.ROSTER;
+            } else {
+                prefSelectLocoMethod = select_loco_method_type.ADDRESS;
+            }
+        }
+
+        if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_CONSISTS)))
+                | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)))
+                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(select_loco_method_type.IDNGO))) {
+            prefSelectLocoMethod = select_loco_method_type.ADDRESS;
+        }
+
+        prefs.edit().putString("prefSelectLocoMethod", prefSelectLocoMethod).commit();
+    } // end checkValidMethod()
+
     // lookup and set values of various text labels
     protected void setLabels() {
 
         refreshRosterList();
-        if (prefSelectLocoMethod.equals(select_loco_method_type.FIRST)) {
-            if ((mainapp.rosterJmriWeb != null) && (!mainapp.rosterJmriWeb.isEmpty())) {
-                prefSelectLocoMethod = select_loco_method_type.ROSTER;
-                showMethod(select_loco_method_type.ROSTER);
-            } else {
-                prefSelectLocoMethod = select_loco_method_type.ADDRESS;
-                showMethod(select_loco_method_type.ADDRESS);
-            }
-        }
+        showMethod(prefSelectLocoMethod);
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName",
                 getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
@@ -589,12 +602,13 @@ public class select_loco extends AppCompatActivity {
                     break;
                 case message_type.ROSTER_UPDATE:
                     Log.d("Engine_Driver", "select_loco: SelectLocoHandler(): ROSTER_UPDATE");
-
+                    setLabels();
+                    showMethod(prefSelectLocoMethod);
+                    break;
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.SELECT_LOCO)
                         reopenThrottlePage();
                     break;
-
                 case message_type.WIT_CON_RECONNECT:
                     Log.d("Engine_Driver", "select_loco: SelectLocoHandler(): WIT_CON_RECONNECT");
                     rosterListAdapter.notifyDataSetChanged();
@@ -1823,16 +1837,9 @@ public class select_loco extends AppCompatActivity {
 
 //*********
 
-        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", select_loco_method_type.FIRST);
-        // make sure the radio button will be pointing to something valid
-        if (((recent_consists_list.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_CONSISTS)))
-                | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)))
-                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(select_loco_method_type.IDNGO))) {
-            prefSelectLocoMethod = select_loco_method_type.ADDRESS;
-        }
+        dccAddressLayout = findViewById(R.id.dcc_address_layout);
+        dccAddressHelpText = findViewById(R.id.dcc_address_help_text);
 
-        rlAddress = findViewById(R.id.enter_loco_group);
-        rlAddressHelp = findViewById(R.id.enter_loco_group_help);
         rlRosterHeading = findViewById(R.id.roster_list_heading);
         rlRosterHeaderGroup = findViewById(R.id.roster_list_header_group);
 //        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
@@ -1866,22 +1873,24 @@ public class select_loco extends AppCompatActivity {
         selectLocoMethodRadioButtonsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.select_loco_method_roster_button) {
-                    showMethod(select_loco_method_type.ROSTER);
-                } else if (checkedId == R.id.select_loco_method_recent_button) {
-                    showMethod(select_loco_method_type.RECENT_LOCOS);
-                } else if (checkedId == R.id.select_loco_method_address_button) {
+                if (prefSelectLocoByRadioButtons) { // otherwise ignore any cheges to these
+                    if (checkedId == R.id.select_loco_method_roster_button) {
+                        showMethod(select_loco_method_type.ROSTER);
+                    } else if (checkedId == R.id.select_loco_method_recent_button) {
+                        showMethod(select_loco_method_type.RECENT_LOCOS);
+                    } else if (checkedId == R.id.select_loco_method_address_button) {
                         showMethod(select_loco_method_type.ADDRESS);
-                } else if (checkedId == R.id.select_consists_method_recent_button) {
+                    } else if (checkedId == R.id.select_consists_method_recent_button) {
                         showMethod(select_loco_method_type.RECENT_CONSISTS);
-                } else if (checkedId == R.id.select_loco_method_idngo) {
-                    showMethod(select_loco_method_type.IDNGO);
+                    } else if (checkedId == R.id.select_loco_method_idngo) {
+                        showMethod(select_loco_method_type.IDNGO);
+                    }
                 }
             }
         });
 
         prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
-
+        prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", select_loco_method_type.FIRST);
         showMethod(prefSelectLocoMethod);
 
         if (mainapp.isDCCEX) maxAddr = 10239;  // DCC-EX supports the full range
@@ -1914,6 +1923,7 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
+        checkValidMethod(whichMethod);
 
         selectLocoMethodRadioButtonsGroup.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
         selectLocoMethodButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
@@ -1927,6 +1937,7 @@ public class select_loco extends AppCompatActivity {
             rbIDnGo.setVisibility(GONE);
             selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(View.GONE);
         }
+
         if (mainapp.supportsRoster()) {
             rbRoster.setVisibility(View.VISIBLE);
             selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.VISIBLE);
@@ -1935,9 +1946,12 @@ public class select_loco extends AppCompatActivity {
             selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.GONE);
         }
 
+        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_LOCOS)-1].setVisibility(!importExportPreferences.recentLocoAddressList.isEmpty() ? View.VISIBLE : View.GONE);
+        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_CONSISTS)-1].setVisibility(!recent_consists_list.isEmpty() ? View.VISIBLE : View.GONE);
+
         // hide everything by default then show only what is actually needed
-        rlAddress.setVisibility(View.GONE);
-        rlAddressHelp.setVisibility(View.GONE);
+        dccAddressLayout.setVisibility(View.GONE);
+        dccAddressHelpText.setVisibility(View.GONE);
         rlRosterHeading.setVisibility(GONE);
         rlRosterHeaderGroup.setVisibility(GONE);
         llRoster.setVisibility(GONE);
@@ -1958,7 +1972,7 @@ public class select_loco extends AppCompatActivity {
             selectMethodButton[i].setSelected(false);
         }
 
-        switch (whichMethod) {
+        switch (prefSelectLocoMethod) {
             case select_loco_method_type.ROSTER: {
                 rlRosterHeading.setVisibility(View.VISIBLE);
                 rlRosterHeaderGroup.setVisibility(View.VISIBLE);
@@ -2002,22 +2016,20 @@ public class select_loco extends AppCompatActivity {
             }
             case select_loco_method_type.ADDRESS:
             default: {
-                rlAddress.setVisibility(View.VISIBLE);
-                rlAddressHelp.setVisibility(View.VISIBLE);
+                dccAddressLayout.setVisibility(View.VISIBLE);
+                dccAddressHelpText.setVisibility(View.VISIBLE);
                 rbAddress.setChecked(true);
                 selectMethodButton[0].setSelected(true);
-                hideSoftKeyboard(rlAddress);
+                hideSoftKeyboard(dccAddressLayout);
                 break;
             }
         }
 
         if (selectLocoMethodSpinner != null) { // may not be found yet
-            selectLocoMethodIndex = Integer.parseInt(whichMethod)-1;
+            selectLocoMethodIndex = Integer.parseInt(prefSelectLocoMethod)-1;
             selectLocoMethodSpinner.setSelection(selectLocoMethodIndex);
         }
 
-        prefSelectLocoMethod = whichMethod;
-        prefs.edit().putString("prefSelectLocoMethod", whichMethod).commit();
     }  // end showMethod()
 
     //Clears recent connection list of locos
