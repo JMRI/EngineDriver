@@ -74,8 +74,13 @@
     <attr name="ed_select_loco_glyph_idngo" format="reference" />
 
     <attr name="ed_select_loco_glyph_release" format="reference" />
-
     <attr name="ed_select_loco_glyph_consist_order" format="reference" />
     <attr name="ed_select_loco_glyph_consist_lights" format="reference" />
     <attr name="ed_select_loco_glyph_ipls" format="reference" />
+
+    <attr name="ed_sort_glyph" format="reference" />
+    <attr name="ed_download_glyph" format="reference" />
+    <attr name="ed_clear_list_glyph" format="reference" />
+    <attr name="ed_tick_glyph_large" format="reference" />
+
 </resources>

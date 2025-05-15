@@ -156,7 +156,11 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/clearLocoList" />
+            android:text="@string/clearLocoList"
+            android:drawableLeft="?attr/ed_clear_list_glyph"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
     </RelativeLayout>
 

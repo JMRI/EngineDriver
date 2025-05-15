@@ -918,7 +918,7 @@ public class select_loco extends AppCompatActivity {
         //if no SD Card present then there is no recent locos list
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             //alert user that recent locos list requires SD Card
-            TextView v = findViewById(R.id.recent_engines_heading);
+            TextView v = findViewById(R.id.recent_locos_heading);
             v.setText(getString(R.string.sl_recent_engine_notice));
             rbRecent.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
@@ -1845,7 +1845,7 @@ public class select_loco extends AppCompatActivity {
 //        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
         rlRosterEmpty = findViewById(R.id.roster_list_empty);
         llRoster = findViewById(R.id.roster_list_group);
-        rlRecentHeader = findViewById(R.id.engine_list_header_group);
+        rlRecentHeader = findViewById(R.id.recent_locos_list_header_group);
         llRecent = findViewById(R.id.engine_list_wrapper);
         rlRecentConsistsHeader = findViewById(R.id.consists_list_header_group);
         llRecentConsists = findViewById(R.id.consists_list_wrapper);
@@ -1975,7 +1975,7 @@ public class select_loco extends AppCompatActivity {
         switch (prefSelectLocoMethod) {
             case select_loco_method_type.ROSTER: {
                 rlRosterHeading.setVisibility(View.VISIBLE);
-                rlRosterHeaderGroup.setVisibility(View.VISIBLE);
+                rlRosterHeaderGroup.setVisibility(!mainapp.rosterFullList.isEmpty() ? VISIBLE : View.GONE);
                 llRoster.setVisibility(View.VISIBLE);
                 rlRosterEmpty.setVisibility(!mainapp.rosterFullList.isEmpty() ? View.GONE : View.VISIBLE);
                 rbRoster.setChecked(true);
