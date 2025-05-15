@@ -873,21 +873,23 @@
         android:padding="8sp"
         android:text="@string/rosterEmpty" />
 
-    <LinearLayout
-        android:id="@+id/roster_list_group"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.44"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/roster_list_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="0.44"-->
+<!--        android:orientation="vertical">-->
 
 <!--        <jmri.enginedriver.util.TransparentListView-->
         <ListView
             android:id="@+id/roster_list"
             style="?attr/EDListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.44"
             android:animateLayoutChanges="true" />
-    </LinearLayout>
+
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/recent_locos_list_header_group"
