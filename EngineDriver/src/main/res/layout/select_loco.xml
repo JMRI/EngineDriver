@@ -17,21 +17,16 @@
         android:baselineAligned="false"
         android:orientation="vertical" >
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/select_loco_current_locos_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:paddingTop="2dp"
-            android:paddingBottom="2dp">
-
-            <TextView
-                android:id="@+id/select_loco_current_locos_heading"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
-                android:text="@string/select_loco_current_locos_heading"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-        </RelativeLayout>
+            android:paddingBottom="2dp"
+            android:text="@string/select_loco_current_locos_heading"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <LinearLayout
             android:id="@+id/consist_buttons_layout1"
@@ -226,21 +221,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/select_loco_heading"
+            style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
             android:paddingTop="2dp"
-            android:paddingBottom="2dp">
-
-            <TextView
-                android:id="@+id/select_loco_heading"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
-                android:text="@string/select_loco_heading"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-        </RelativeLayout>
+            android:paddingBottom="2dp"
+            android:text="@string/select_loco_heading"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
 
         <LinearLayout
@@ -438,8 +428,8 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <LinearLayout
-                android:id="@+id/select_loco_method_group"
+            <RadioGroup
+                android:id="@+id/select_loco_method_radio_button_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingTop="2dp"
@@ -447,74 +437,70 @@
                 android:layout_weight=".5"
                 android:orientation="vertical">
 
-                <RadioGroup
-                    android:id="@+id/select_loco_method_radio_button_group"
+                <RadioButton
+                    android:id="@+id/select_loco_method_address_button"
                     android:layout_width="match_parent"
+                    android:maxWidth="400dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    tools:ignore="UselessParent">
+                    android:enabled="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:minHeight="48dp"
+                    android:text="@string/LocoSelectMethodAddress"
+                    android:textSize="18sp"
+                    style = "@style/EDRadioButton" />
 
-                    <RadioButton
-                        android:id="@+id/select_loco_method_address_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:minHeight="48dp"
-                        android:text="@string/LocoSelectMethodAddress"
-                        android:textSize="18sp"
-                        style = "@style/EDRadioButton" />
+                <RadioButton
+                    android:id="@+id/select_loco_method_roster_button"
+                    android:layout_width="match_parent"
+                    android:maxWidth="400dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:minHeight="38dp"
+                    android:text="@string/LocoSelectMethodRoster"
+                    android:textSize="18sp"
+                    style = "@style/EDRadioButton"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-                    <RadioButton
-                        android:id="@+id/select_loco_method_roster_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:minHeight="38dp"
-                        android:text="@string/LocoSelectMethodRoster"
-                        android:textSize="18sp"
-                        style = "@style/EDRadioButton"
-                        tools:ignore="TouchTargetSizeCheck" />
+                <RadioButton
+                    android:id="@+id/select_loco_method_recent_button"
+                    android:layout_width="match_parent"
+                    android:maxWidth="400dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:minHeight="38dp"
+                    android:text="@string/LocoSelectMethodRecent"
+                    android:textSize="18sp"
+                    style = "@style/EDRadioButton"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-                    <RadioButton
-                        android:id="@+id/select_loco_method_recent_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:minHeight="38dp"
-                        android:text="@string/LocoSelectMethodRecent"
-                        android:textSize="18sp"
-                        style = "@style/EDRadioButton"
-                        tools:ignore="TouchTargetSizeCheck" />
+                <RadioButton
+                    android:id="@+id/select_consists_method_recent_button"
+                    android:layout_width="match_parent"
+                    android:maxWidth="400dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:minHeight="38dp"
+                    android:text="@string/LocoSelectMethodRecentConsist"
+                    android:textSize="18sp"
+                    style = "@style/EDRadioButton"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-                    <RadioButton
-                        android:id="@+id/select_consists_method_recent_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:minHeight="38dp"
-                        android:text="@string/LocoSelectMethodRecentConsist"
-                        android:textSize="18sp"
-                        style = "@style/EDRadioButton"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <RadioButton
-                        android:id="@+id/select_loco_method_idngo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:minHeight="38dp"
-                        android:text="@string/LocoSelectMethodIDNGo"
-                        android:textSize="18sp"
-                        style = "@style/EDRadioButton"
-                        tools:ignore="TouchTargetSizeCheck" />
-                </RadioGroup>
-
-            </LinearLayout>
+                <RadioButton
+                    android:id="@+id/select_loco_method_idngo"
+                    android:layout_width="match_parent"
+                    android:maxWidth="400dp"
+                    android:layout_height="wrap_content"
+                    android:enabled="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:minHeight="38dp"
+                    android:text="@string/LocoSelectMethodIDNGo"
+                    android:textSize="18sp"
+                    style = "@style/EDRadioButton"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </RadioGroup>
 
             <!--            spinner is implmented but not shown -->
             <Spinner
@@ -544,6 +530,7 @@
                     android:id="@+id/release_button0"
                     style="?attr/ed_normal_button_style"
                     android:layout_width="match_parent"
+                    android:maxWidth="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:baselineAligned="false"
@@ -570,7 +557,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.65"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="0dp"
                         android:layout_marginStart="0dp"
                         android:layout_marginLeft="0dp"
                         android:layout_marginRight="1dp"
@@ -584,6 +571,7 @@
                             android:id="@+id/edit_consist_button0"
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="fill_parent"
+                            android:maxWidth="200dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="0.6"
@@ -600,6 +588,7 @@
                             android:id="@+id/edit_consist_lights_button0"
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="fill_parent"
+                            android:maxWidth="200dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_weight="0.4"
@@ -614,35 +603,24 @@
                             tools:ignore="SmallSp,TouchTargetSizeCheck" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <Button
+                        android:id="@+id/device_sounds_button0"
+                        style="?attr/ed_small_button_condensed_text_style"
                         android:layout_width="0dp"
                         android:layout_weight="0.35"
+                        android:maxWidth="150dp"
                         android:layout_height="wrap_content"
-                        android:minHeight="60dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginRight="0dp"
-                        android:layout_marginEnd="0dp"
+                        android:minHeight="48dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:paddingTop="6dp"
+                        android:layout_margin="0dp"
+                        android:layout_gravity="center_horizontal"
                         android:baselineAligned="false"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/device_sounds_button0"
-                            style="?attr/ed_small_button_condensed_text_style"
-                            android:layout_width="match_parent"
-                            android:maxWidth="150dp"
-                            android:layout_height="wrap_content"
-                            android:minHeight="48dp"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
-                            android:layout_gravity="center_horizontal"
-                            android:baselineAligned="false"
-                            android:text="@string/deviceSoundsMenu"
-                            android:textAlignment="center"
-                            android:textSize="11sp"
-                            tools:ignore="SmallSp" />
-                    </LinearLayout>
+                        android:text="@string/deviceSoundsMenu"
+                        android:textAlignment="center"
+                        android:textSize="11sp"
+                        tools:ignore="SmallSp" />
 
                 </LinearLayout>
 
@@ -706,6 +684,7 @@
             android:id="@+id/acquire_button"
             style="?attr/ed_normal_button_style"
             android:layout_width="wrap_content"
+            android:minWidth="110dp"
             android:maxWidth="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/select_loco_label"
@@ -755,6 +734,7 @@
             android:id="@+id/idngo_button"
             style="?attr/ed_normal_button_style"
             android:layout_width="wrap_content"
+            android:maxWidth="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/idngo_help"
             android:layout_centerInParent="true"
@@ -765,8 +745,6 @@
 
     </RelativeLayout>
 
-
-
     <TextView
         android:id="@+id/roster_list_heading"
         style="?android:attr/listSeparatorTextViewStyle"
@@ -774,6 +752,7 @@
         android:paddingLeft="4dp"
         android:paddingStart="4dp"
         android:paddingTop="2dp"
+        android:layout_marginTop="2dp"
         android:text="@string/roster_list"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -793,7 +772,10 @@
             android:layout_marginLeft="6dp"
             android:layout_marginTop="8dp"
             android:text="@string/order"
-            tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
+            android:drawableLeft="?attr/ed_sort_glyph"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/roster_list_filter_by_label"
@@ -865,7 +847,6 @@
             android:textSize="14sp"
             tools:ignore="RtlHardcoded,RtlSymmetry,TouchTargetSizeCheck" />
 
-
         <Button
             android:id="@+id/roster_download"
             style="?attr/ed_small_button_condensed_text_style"
@@ -876,38 +857,42 @@
             android:ellipsize="end"
             android:padding="2sp"
             android:text="@string/FilterRosterListDownloadLabel"
-            tools:ignore="RelativeOverlap,RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
-
+            android:drawableLeft="?attr/ed_download_glyph"
+            android:paddingLeft="4dp"
+            android:paddingStart="4dp"
+            tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
     </RelativeLayout>
 
-        <TextView
-            android:id="@+id/roster_list_empty"
-            style="?attr/floating_text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:padding="8sp"
-            android:text="@string/rosterEmpty" />
+    <TextView
+        android:id="@+id/roster_list_empty"
+        style="?attr/floating_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:padding="8sp"
+        android:text="@string/rosterEmpty" />
 
-    <LinearLayout
-        android:id="@+id/roster_list_group"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.44"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/roster_list_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="0.44"-->
+<!--        android:orientation="vertical">-->
 
 <!--        <jmri.enginedriver.util.TransparentListView-->
         <ListView
             android:id="@+id/roster_list"
             style="?attr/EDListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.44"
             android:animateLayoutChanges="true" />
-    </LinearLayout>
+
+<!--    </LinearLayout>-->
 
     <LinearLayout
-        android:id="@+id/engine_list_header_group"
+        android:id="@+id/recent_locos_list_header_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="2dp"
@@ -915,7 +900,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/recent_engines_heading"
+            android:id="@+id/recent_locos_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="match_parent"
             android:paddingLeft="4dp"
@@ -941,7 +926,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="6dp"
                 android:text="@string/order"
-                tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
+                android:drawableLeft="?attr/ed_sort_glyph"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
 
             <Button
                 android:id="@+id/clear_Loco_List_button"
@@ -952,7 +940,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:text="@string/clearLocoList"
-                tools:ignore="RelativeOverlap,TextSizeCheck,TouchTargetSizeCheck" />
+                android:drawableLeft="?attr/ed_clear_list_glyph"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -1007,7 +998,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="6dp"
                     android:text="@string/order"
-                    tools:ignore="RtlHardcoded,TextSizeCheck,TouchTargetSizeCheck" />
+                    android:drawableLeft="?attr/ed_sort_glyph"
+                    android:paddingLeft="4dp"
+                    android:paddingStart="4dp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
 
                 <Button
                     android:id="@+id/clear_consists_list_button"
@@ -1018,12 +1012,14 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/clearLocoList"
-                    tools:ignore="RelativeOverlap,TextSizeCheck,TouchTargetSizeCheck" />
+                    android:drawableLeft="?attr/ed_clear_list_glyph"
+                    android:paddingLeft="4dp"
+                    android:paddingStart="4dp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
             </RelativeLayout>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/consists_list_wrapper"

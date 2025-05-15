@@ -3,11 +3,11 @@
 
     <item
         android:top="0px" android:left="0px"
-        android:right="0px" android:bottom="0px">
+        android:right="2px" android:bottom="2px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke
-                android:width="3px"
+                android:width="4px"
                 android:color="@color/buttonCommonSelectedStrokeDark_original" />
             <solid android:color="@color/transparent" />
         </shape>
@@ -19,7 +19,7 @@
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke
-                android:width="3px"
+                android:width="4px"
                 android:color="@color/buttonCommonSelectedStrokeMid_original" />
             <solid android:color="@color/transparent" />
         </shape>
@@ -27,11 +27,11 @@
 
     <item
         android:top="0px" android:left="0px"
-        android:right="9px" android:bottom="9px">
+        android:right="10px" android:bottom="10px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke
-                android:width="3px"
+                android:width="4px"
                 android:color="@color/buttonCommonSelectedStrokeLight_original" />
             <solid android:color="@color/transparent" />
         </shape>
@@ -39,11 +39,11 @@
 
     <item
         android:top="0px" android:left="0px"
-        android:right="12px" android:bottom="12px">
+        android:right="14px" android:bottom="14px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke
-                android:width="@dimen/buttonSelectedStroke_original"
+                android:width="4px"
                 android:color="@color/buttonCommonSelectedStrokeDark_original" />
             <solid android:color="@color/transparent" />
         </shape>
