@@ -2486,6 +2486,7 @@ public class threaded_application extends Application {
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
 
+
     public void addLocoToRecents(ConLoco conLoco) {
         addLocoToRecents(conLoco, null);
     }
@@ -2503,15 +2504,15 @@ public class threaded_application extends Application {
         importExportPreferences.loadRecentLocosListFromFile();
 
         Integer locoAddress = conLoco.getIntAddress();
-        Integer address_size = conLoco.getIntAddressLength();
-        String loco_name = conLoco.getFormatAddress();
+        Integer locoAddressSize = conLoco.getIntAddressLength();
+        String locoName = conLoco.getFormatAddress();
         Integer locoSource = conLoco.getWhichSource();
         if (conLoco.getIsFromRoster()) {
             if ( (conLoco.getRosterName() != null) && (conLoco.getRosterName().length() > 0)) {
-                loco_name = conLoco.getRosterName();
+                locoName = conLoco.getRosterName();
             } else {
                 if (conLoco.getDesc().length() > 0) {
-                    loco_name = conLoco.getDesc();
+                    locoName = conLoco.getDesc();
                 }
             }
             locoSource = source_type.ROSTER;
@@ -2525,34 +2526,26 @@ public class threaded_application extends Application {
         }
         for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
             if (locoAddress.equals(importExportPreferences.recentLocoAddressList.get(i))
-                    && address_size.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
-                    && loco_name.equals(importExportPreferences.recentLocoNameList.get(i))) {
+                    && locoAddressSize.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
+                    && locoName.equals(importExportPreferences.recentLocoNameList.get(i))) {
 
                 keepFunctions = importExportPreferences.recentLocoFunctionsList.get(i);
                 if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
-                importExportPreferences.recentLocoAddressList.remove(i);
-                importExportPreferences.recentLocoAddressSizeList.remove(i);
-                importExportPreferences.recentLocoNameList.remove(i);
-                importExportPreferences.recentLocoSourceList.remove(i);
-                importExportPreferences.recentLocoFunctionsList.remove(i);
-                Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + loco_name + "' removed from Recents");
+                importExportPreferences.removeRecentLocoFromList(i);
+                Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + locoName + "' removed from Recents");
                 break;
             }
         }
 
-        // now append it to the beginning of the list
-        importExportPreferences.recentLocoAddressList.add(0, locoAddress);
-        importExportPreferences.recentLocoAddressSizeList.add(0, address_size);
-        importExportPreferences.recentLocoNameList.add(0, loco_name);
-        importExportPreferences.recentLocoSourceList.add(0, locoSource);
         if ( (!functionLabels.isEmpty()) && (!functionLabels.equals("]\\[")) ) {
-            keepFunctions = functionLabels;
+            keepFunctions = functionLabels;  // restore functions from the previous value
         }
-        importExportPreferences.recentLocoFunctionsList.add(0, keepFunctions);  // restore from the previous value
+        // now append it to the beginning of the list
+        importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
-        Log.d("Engine_Driver", "t_a: Loco '" + loco_name + "' added to Recents");
+        Log.d("Engine_Driver", "t_a: Loco '" + locoName + "' added to Recents");
 
     }
 

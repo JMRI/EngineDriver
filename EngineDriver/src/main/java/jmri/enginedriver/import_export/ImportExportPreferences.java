@@ -72,21 +72,21 @@ public class ImportExportPreferences {
     public ArrayList<Integer> recentLocoSourceList;
     public ArrayList<String> recentLocoFunctionsList;
 
-    public ArrayList<ArrayList<Integer>> consistEngineAddressList = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> consistAddressSizeList = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> consistDirectionList = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> consistSourceList = new ArrayList<>();
-    public ArrayList<ArrayList<String>> consistRosterNameList = new ArrayList<>();
-    public ArrayList<ArrayList<Integer>> consistLightList = new ArrayList<>();  // placeholder - not currently use
-    public ArrayList<String> consistNameList = new ArrayList<>();
-    public ArrayList<String> consistNameHtmlList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> recentConsistLocoAddressList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> recentConsistAddressSizeList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> recentConsistDirectionList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> recentConsistSourceList = new ArrayList<>();
+    public ArrayList<ArrayList<String>> recentConsistRosterNameList = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> recentConsistLightList = new ArrayList<>();  // placeholder - not currently use
+    public ArrayList<String> recentConsistNameList = new ArrayList<>();
+    public ArrayList<String> recentConsistNameHtmlList = new ArrayList<>();
 
     public ArrayList<String> recentTurnoutAddressList;
     public ArrayList<String> recentTurnoutNameList;
     public ArrayList<Integer> recentTurnoutSourceList;
     public ArrayList<String> recentTurnoutServerList;
 
-    private boolean writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
+    private void writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Writing export file");
         boolean result = false;
         ObjectOutputStream output = null;
@@ -123,7 +123,6 @@ public class ImportExportPreferences {
             Log.d("Engine_Driver", "writeExportFile: ImportExportPreferences: Export succeeded");
 
         }
-        return result;
     }
 
     public void writeSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
@@ -144,14 +143,15 @@ public class ImportExportPreferences {
             saveStringListDataToPreferences(recentLocoFunctionsList, "prefRecentLocoFunction", sharedPreferences);
 
             loadRecentConsistsListFromFile();
-            saveStringListDataToPreferences(consistNameList, "prefRecentConsistName", sharedPreferences);
-            for (int i = 0; i < consistNameList.size(); i++) {
-                saveIntListDataToPreferences(consistEngineAddressList.get(i), "prefRecentConsistAddress_"+i, sharedPreferences);
-                saveIntListDataToPreferences(consistAddressSizeList.get(i), "prefRecentConsistSize_"+i, sharedPreferences);
-                saveIntListDataToPreferences(consistDirectionList.get(i), "prefRecentConsistDirection_"+i, sharedPreferences);
-                saveIntListDataToPreferences(consistSourceList.get(i), "prefRecentConsistSource_"+i, sharedPreferences);
-                saveStringListDataToPreferences(consistRosterNameList.get(i), "prefRecentConsistRosterName_"+i, sharedPreferences);
-                saveIntListDataToPreferences(consistLightList.get(i), "prefRecentConsistLight_"+i, sharedPreferences);
+            saveStringListDataToPreferences(recentConsistNameList, "prefRecentConsistName", sharedPreferences);
+            // note recentConsistNameHtmlList is not save or loaded. it is generated as needed
+            for (int i = 0; i < recentConsistNameList.size(); i++) {
+                saveIntListDataToPreferences(recentConsistLocoAddressList.get(i), "prefRecentConsistAddress_"+i, sharedPreferences);
+                saveIntListDataToPreferences(recentConsistAddressSizeList.get(i), "prefRecentConsistSize_"+i, sharedPreferences);
+                saveIntListDataToPreferences(recentConsistDirectionList.get(i), "prefRecentConsistDirection_"+i, sharedPreferences);
+                saveIntListDataToPreferences(recentConsistSourceList.get(i), "prefRecentConsistSource_"+i, sharedPreferences);
+                saveStringListDataToPreferences(recentConsistRosterNameList.get(i), "prefRecentConsistRosterName_"+i, sharedPreferences);
+                saveIntListDataToPreferences(recentConsistLightList.get(i), "prefRecentConsistLight_"+i, sharedPreferences);
             }
         }
 
@@ -222,7 +222,7 @@ public class ImportExportPreferences {
             // save a few values so that we can reset them. i.e. effectively don't import them
             String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
             String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
-            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
+//            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
             int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
             String prefPreferencesImportFileName = sharedPreferences.getString("prefPreferencesImportFileName", "");
@@ -233,6 +233,7 @@ public class ImportExportPreferences {
             String prefThrottleScreenType = "Default";
             boolean prefDisplaySpeedButtons = false;
             boolean prefHideSlider = false;
+
             if (prefPreferencesImportAll.equals(pref_import_type.ALL_PARTIAL)) { // save some additional prefereneces for restoration
                 prefTheme = sharedPreferences.getString("prefTheme", "");
                 prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "Default");
@@ -342,6 +343,7 @@ public class ImportExportPreferences {
                     recentLocoNameList = new ArrayList<>();
                     recentLocoSourceList = new ArrayList<>();
                     recentLocoFunctionsList = new ArrayList<>();
+
                     getIntListDataFromPreferences(recentLocoAddressList, "prefRecentLoco", sharedPreferences,-1, 0);
                     getIntListDataFromPreferences(recentLocoAddressSizeList, "prefRecentLocoSize", sharedPreferences, recentLocoAddressList.size(), 0);
                     getStringListDataFromPreferences(recentLocoNameList, "prefRecentLocoName", sharedPreferences, recentLocoAddressList.size(), "");
@@ -349,29 +351,34 @@ public class ImportExportPreferences {
                     getStringListDataFromPreferences(recentLocoFunctionsList, "prefRecentLocoFunctions", sharedPreferences, recentLocoAddressList.size(), "");
                     writeRecentLocosListToFile(sharedPreferences);
 
-                    getStringListDataFromPreferences(consistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
-                    for (int i = 0; i < consistNameList.size(); i++) {
-                        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
-                        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
-                        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
-                        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
-                        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
-                        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
+                    ArrayList<String> tempRecentConsistNameList = new ArrayList<>();
+                    getStringListDataFromPreferences(tempRecentConsistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
+                    // note recentConsistNameHtmlList is not saved or loaded. it is generated as needed
+                    for (int i = 0; i < tempRecentConsistNameList.size(); i++) {
+                        ArrayList<Integer> tempRecentConsistLocoAddressList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempRecentConsistAddressSizeList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempRecentConsistDirectionList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempRecentConsistSourceList_inner = new ArrayList<>();
+                        ArrayList<String> tempRecentConsistRosterNameList_inner = new ArrayList<>();
+                        ArrayList<Integer> tempRecentConsistLightList_inner = new ArrayList<>();
 
-                        getIntListDataFromPreferences(tempConsistEngineAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences, -1, 0);
-                        getIntListDataFromPreferences(tempConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
-                        getIntListDataFromPreferences(tempConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), 0);
-                        getIntListDataFromPreferences(tempConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), source_type.UNKNOWN);
-                        getStringListDataFromPreferences(tempConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), "");
-                        getIntListDataFromPreferences(tempConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempConsistEngineAddressList_inner.size(), light_follow_type.UNKNOWN);
+                        getIntListDataFromPreferences(tempRecentConsistLocoAddressList_inner, "prefRecentConsistAddress_"+i, sharedPreferences, -1, 0);
+                        getIntListDataFromPreferences(tempRecentConsistAddressSizeList_inner, "prefRecentConsistSize_"+i, sharedPreferences, tempRecentConsistLocoAddressList_inner.size(), 0);
+                        getIntListDataFromPreferences(tempRecentConsistDirectionList_inner, "prefRecentConsistDirection_"+i, sharedPreferences, tempRecentConsistLocoAddressList_inner.size(), 0);
+                        getIntListDataFromPreferences(tempRecentConsistSourceList_inner, "prefRecentConsistSource_"+i, sharedPreferences, tempRecentConsistLocoAddressList_inner.size(), source_type.UNKNOWN);
+                        getStringListDataFromPreferences(tempRecentConsistRosterNameList_inner, "prefRecentConsistRosterName_"+i, sharedPreferences, tempRecentConsistLocoAddressList_inner.size(), "");
+                        getIntListDataFromPreferences(tempRecentConsistLightList_inner, "prefRecentConsistLight_"+i, sharedPreferences, tempRecentConsistLocoAddressList_inner.size(), light_follow_type.UNKNOWN);
 
-                        consistEngineAddressList.add(tempConsistEngineAddressList_inner);
-                        consistAddressSizeList.add(tempConsistAddressSizeList_inner);
-                        consistDirectionList.add(tempConsistDirectionList_inner);
-                        consistSourceList.add(tempConsistSourceList_inner);
-                        consistRosterNameList.add(tempConsistRosterNameList_inner);
-                        consistLightList.add(tempConsistLightList_inner);
+                        addRecentConsistToList(0, tempRecentConsistNameList.get(i),
+                                tempRecentConsistLocoAddressList_inner,
+                                tempRecentConsistAddressSizeList_inner,
+                                tempRecentConsistDirectionList_inner,
+                                tempRecentConsistSourceList_inner,
+                                tempRecentConsistRosterNameList_inner,
+                                tempRecentConsistLightList_inner);
+
                     }
+
                     writeRecentConsistsListToFile(sharedPreferences, -1);
                 }
             } else {
@@ -460,17 +467,12 @@ public class ImportExportPreferences {
                             functions = "";
                         }
                         if ((addr >= 0) && (size >= 0)) {
-                            recentLocoAddressList.add(addr);
-                            recentLocoAddressSizeList.add(size);
                             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
                             String engineAddressString = String.format("%s(%s)", addr, addressLengthString);
                             if ((locoName.isEmpty() || locoName.equals(engineAddressString))) { // if nothing is stored, or what is stored is the same as the address, look for it in the roster
                                 locoName = engineAddressString;
                             }
-                            recentLocoNameList.add(locoName);
-                            recentLocoSourceList.add(source);
-                            recentLocoFunctionsList.add(functions);
-
+                            addRecentLocoToList(addr, size, locoName, source, functions);
                         }
                     }
                 }
@@ -526,21 +528,21 @@ public class ImportExportPreferences {
     public void loadRecentConsistsListFromFile() {
         Log.d("Engine_Driver", "loadRecentConsistsListFromFile: ImportExportPreferences: Loading recent consists list from file");
 
-        consistEngineAddressList = new ArrayList<>();
-        consistAddressSizeList = new ArrayList<>();
-        consistDirectionList = new ArrayList<>();
-        consistLightList = new ArrayList<>();
-        consistSourceList = new ArrayList<>();
-        consistRosterNameList = new ArrayList<>();
-        consistNameList = new ArrayList<>();
-        consistNameHtmlList = new ArrayList<>();
+        recentConsistLocoAddressList = new ArrayList<>();
+        recentConsistAddressSizeList = new ArrayList<>();
+        recentConsistDirectionList = new ArrayList<>();
+        recentConsistLightList = new ArrayList<>();
+        recentConsistSourceList = new ArrayList<>();
+        recentConsistRosterNameList = new ArrayList<>();
+        recentConsistNameList = new ArrayList<>();
+        recentConsistNameHtmlList = new ArrayList<>();
 
-        ArrayList<Integer> tempConsistEngineAddressList_inner;
-        ArrayList<Integer> tempConsistAddressSizeList_inner;
-        ArrayList<Integer> tempConsistDirectionList_inner;
-        ArrayList<Integer> tempConsistSourceList_inner;
-        ArrayList<String> tempConsistRosterNameList_inner;
-        ArrayList<Integer> tempConsistLightList_inner;
+        ArrayList<Integer> tempRecentConsistLocoAddressList_inner;
+        ArrayList<Integer> tempRecentConsistAddressSizeList_inner;
+        ArrayList<Integer> tempRecentConsistDirectionList_inner;
+        ArrayList<Integer> tempRecentConsistSourceList_inner;
+        ArrayList<String> tempRecentConsistRosterNameList_inner;
+        ArrayList<Integer> tempRecentConsistLightList_inner;
 
         //if no SD Card present then there is no recent consists list
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
@@ -556,12 +558,12 @@ public class ImportExportPreferences {
                         StringBuilder oneConsistHtml = new StringBuilder();
 
                         String line = list_reader.readLine();
-                        tempConsistEngineAddressList_inner = new ArrayList<>();
-                        tempConsistAddressSizeList_inner = new ArrayList<>();
-                        tempConsistDirectionList_inner = new ArrayList<>();
-                        tempConsistSourceList_inner = new ArrayList<>();
-                        tempConsistRosterNameList_inner = new ArrayList<>();
-                        tempConsistLightList_inner = new ArrayList<>();
+                        tempRecentConsistLocoAddressList_inner = new ArrayList<>();
+                        tempRecentConsistAddressSizeList_inner = new ArrayList<>();
+                        tempRecentConsistDirectionList_inner = new ArrayList<>();
+                        tempRecentConsistSourceList_inner = new ArrayList<>();
+                        tempRecentConsistRosterNameList_inner = new ArrayList<>();
+                        tempRecentConsistLightList_inner = new ArrayList<>();
 
                         String consistName = "";
                         String splitOn = "<~>";
@@ -575,25 +577,21 @@ public class ImportExportPreferences {
                             line = splitLine[0];
                             if (splitLine.length > 2) {  // see if there is roster names saved as well
                                 String[] rosterNames = splitLine[2].split("<,>", -1);
-                                tempConsistRosterNameList_inner.addAll(Arrays.asList(rosterNames));
+                                tempRecentConsistRosterNameList_inner.addAll(Arrays.asList(rosterNames));
                             }
                         }
 
                         int splitLoco = line.indexOf(',');
                         if (splitLoco != -1) {
                             oneConsist.append(addOneConsistAddress(line, 0, splitLoco,
-                                    tempConsistEngineAddressList_inner,
-                                    tempConsistAddressSizeList_inner,
-                                    tempConsistDirectionList_inner,
-                                    tempConsistSourceList_inner,
-                                    tempConsistLightList_inner));
+                                    tempRecentConsistLocoAddressList_inner,
+                                    tempRecentConsistAddressSizeList_inner,
+                                    tempRecentConsistDirectionList_inner,
+                                    tempRecentConsistSourceList_inner,
+                                    tempRecentConsistLightList_inner));
                             oneConsistHtml.append(addOneConsistAddressHtml(
-                                    tempConsistEngineAddressList_inner.get(0),
-                                    tempConsistAddressSizeList_inner.get(0)
-//                                    ,
-//                                    tempConsistDirectionList_inner.get(0),
-//                                    tempConsistSourceList_inner.get(0),
-//                                    light_follow_type.FOLLOW)
+                                    tempRecentConsistLocoAddressList_inner.get(0),
+                                    tempRecentConsistAddressSizeList_inner.get(0)
                             ));
 
                             boolean foundOne = true;
@@ -602,46 +600,36 @@ public class ImportExportPreferences {
                                 splitLoco = line.indexOf(',', prevSplitLoco);
                                 if (splitLoco != -1) {
                                     oneConsist.append(addOneConsistAddress(line, prevSplitLoco, splitLoco,
-                                            tempConsistEngineAddressList_inner,
-                                            tempConsistAddressSizeList_inner,
-                                            tempConsistDirectionList_inner,
-                                            tempConsistSourceList_inner,
-                                            tempConsistLightList_inner));
+                                            tempRecentConsistLocoAddressList_inner,
+                                            tempRecentConsistAddressSizeList_inner,
+                                            tempRecentConsistDirectionList_inner,
+                                            tempRecentConsistSourceList_inner,
+                                            tempRecentConsistLightList_inner));
                                 } else {
                                     oneConsist.append(addOneConsistAddress(line, prevSplitLoco, line.length(),
-                                            tempConsistEngineAddressList_inner,
-                                            tempConsistAddressSizeList_inner,
-                                            tempConsistDirectionList_inner,
-                                            tempConsistSourceList_inner,
-                                            tempConsistLightList_inner));
+                                            tempRecentConsistLocoAddressList_inner,
+                                            tempRecentConsistAddressSizeList_inner,
+                                            tempRecentConsistDirectionList_inner,
+                                            tempRecentConsistSourceList_inner,
+                                            tempRecentConsistLightList_inner));
                                     foundOne = false;
                                 }
-                                int lastItem = tempConsistEngineAddressList_inner.size()-1;
-                                oneConsistHtml.append(addOneConsistAddressHtml(
-                                        tempConsistEngineAddressList_inner.get(lastItem),
-                                        tempConsistAddressSizeList_inner.get(lastItem)
-//                                        ,
-//                                        tempConsistDirectionList_inner.get(lastItem),
-//                                        tempConsistSourceList_inner.get(lastItem),
-//                                        tempConsistLightList_inner.get(lastItem)
-                                ));
                             }
                             if (splitLine.length < 3) {  // old format - need to add some dummy roster names
-                                for (int j = 0; j < tempConsistEngineAddressList_inner.size(); j++) {
-                                    tempConsistRosterNameList_inner.add("");
+                                for (int j = 0; j < tempRecentConsistLocoAddressList_inner.size(); j++) {
+                                    tempRecentConsistRosterNameList_inner.add("");
                                 }
                             }
-                            consistEngineAddressList.add(tempConsistEngineAddressList_inner);
-                            consistAddressSizeList.add(tempConsistAddressSizeList_inner);
-                            consistDirectionList.add(tempConsistDirectionList_inner);
-                            consistSourceList.add(tempConsistSourceList_inner);
-                            consistRosterNameList.add(tempConsistRosterNameList_inner);
-                            consistLightList.add(tempConsistLightList_inner);
                             if (consistName.isEmpty()) {
                                 consistName = oneConsist.toString();
                             }
-                            consistNameList.add(consistName);
-                            consistNameHtmlList.add(oneConsistHtml.toString());
+                            addRecentConsistToList(consistName,
+                                    tempRecentConsistLocoAddressList_inner,
+                                    tempRecentConsistAddressSizeList_inner,
+                                    tempRecentConsistDirectionList_inner,
+                                    tempRecentConsistSourceList_inner,
+                                    tempRecentConsistRosterNameList_inner,
+                                    tempRecentConsistLightList_inner);
                         }
                     }
                     list_reader.close();
@@ -655,12 +643,39 @@ public class ImportExportPreferences {
         }
     }
 
+    public void addRecentLocoToList(int address, int size, String locoName, int source, String functions) {
+        addRecentLocoToList(-1, address, size, locoName, source, functions);
+    }
+    public void addRecentLocoToList(int atPosition, int address, int size, String locoName, int source, String functions) {
+        if (atPosition<0) { // at end
+            recentLocoAddressList.add(address);
+            recentLocoAddressSizeList.add(size);
+            recentLocoNameList.add(locoName);
+            recentLocoSourceList.add(source);
+            recentLocoFunctionsList.add(functions);
+        } else {
+            recentLocoAddressList.add(atPosition, address);
+            recentLocoAddressSizeList.add(atPosition, size);
+            recentLocoNameList.add(atPosition, locoName);
+            recentLocoSourceList.add(atPosition, source);
+            recentLocoFunctionsList.add(atPosition, functions);
+        }
+    }
+
+    public void removeRecentLocoFromList(int position) {
+        recentLocoAddressList.remove(position);
+        recentLocoAddressSizeList.remove(position);
+        recentLocoNameList.remove(position);
+        recentLocoSourceList.remove(position);
+        recentLocoFunctionsList.remove(position);
+    }
+
     private String addOneConsistAddress(String line, Integer start, Integer end,
-                                        ArrayList<Integer> tempConsistEngineAddressList_inner,
-                                        ArrayList<Integer> tempConsistAddressSizeList_inner,
-                                        ArrayList<Integer> tempConsistDirectionList_inner,
-                                        ArrayList<Integer> tempConsistSourceList_inner,
-                                        ArrayList<Integer> tempConsistLightList_inner) {
+                                        ArrayList<Integer> tempRecentConsistLocoAddressList_inner,
+                                        ArrayList<Integer> tempRecentConsistAddressSizeList_inner,
+                                        ArrayList<Integer> tempRecentConsistDirectionList_inner,
+                                        ArrayList<Integer> tempRecentConsistSourceList_inner,
+                                        ArrayList<Integer> tempRecentConsistLightList_inner) {
         String rslt = "";
         String splitLine = line.substring(start, end);
         int splitPos = splitLine.indexOf(':');
@@ -674,11 +689,11 @@ public class ImportExportPreferences {
                 source = Integer.decode(splitLine.substring(splitPos + 3, splitPos + 4));
                 light = Integer.decode(splitLine.substring(splitPos + 4, splitPos + 5));
             }
-            tempConsistEngineAddressList_inner.add(addr);
-            tempConsistAddressSizeList_inner.add(size);
-            tempConsistDirectionList_inner.add(dir);
-            tempConsistSourceList_inner.add(source);
-            tempConsistLightList_inner.add(light);
+            tempRecentConsistLocoAddressList_inner.add(addr);
+            tempRecentConsistAddressSizeList_inner.add(size);
+            tempRecentConsistDirectionList_inner.add(dir);
+            tempRecentConsistSourceList_inner.add(source);
+            tempRecentConsistLightList_inner.add(light);
 
             rslt = addr.toString();
         }
@@ -694,13 +709,72 @@ public class ImportExportPreferences {
                 + " &nbsp;</span>";
     }
 
+    public void addRecentConsistToList(String Name,
+                                       ArrayList<Integer> LocoAddress,
+                                       ArrayList<Integer> AddressSize,
+                                       ArrayList<Integer> Direction,
+                                       ArrayList<Integer> Source,
+                                       ArrayList<String>  RosterName,
+                                       ArrayList<Integer> Light) {
+        addRecentConsistToList(-1, Name, LocoAddress, AddressSize, Direction, Source, RosterName, Light);
+    }
+    public void addRecentConsistToList(int atPosition,
+                                       String Name,
+                                       ArrayList<Integer> locoAddress,
+                                       ArrayList<Integer> addressSize,
+                                       ArrayList<Integer> direction,
+                                       ArrayList<Integer> source,
+                                       ArrayList<String>  rosterName,
+                                       ArrayList<Integer> light) {
+
+        StringBuilder oneConsistHtml = new StringBuilder();
+        for (int j = 0; j < locoAddress.size(); j++) {
+            oneConsistHtml.append(addOneConsistAddressHtml(
+                    locoAddress.get(j),
+                    addressSize.get(j)
+            ));
+        }
+
+        if (atPosition<0) { // add to end
+            recentConsistNameList.add(Name);
+            recentConsistNameHtmlList.add(oneConsistHtml.toString());
+            recentConsistLocoAddressList.add(locoAddress);
+            recentConsistAddressSizeList.add(addressSize);
+            recentConsistDirectionList.add(direction);
+            recentConsistSourceList.add(source);
+            recentConsistRosterNameList.add(rosterName);
+            recentConsistLightList.add(light);
+        } else {
+            recentConsistNameList.add(atPosition, Name);
+            recentConsistNameHtmlList.add(atPosition, oneConsistHtml.toString());
+            recentConsistLocoAddressList.add(atPosition, locoAddress);
+            recentConsistAddressSizeList.add(atPosition, addressSize);
+            recentConsistDirectionList.add(atPosition, direction);
+            recentConsistSourceList.add(atPosition, source);
+            recentConsistRosterNameList.add(atPosition, rosterName);
+            recentConsistLightList.add(atPosition, light);
+        }
+    }
+
+    public void removeRecentConsistFromListAtPosition(int position) {
+        recentConsistLocoAddressList.remove(position);
+        recentConsistAddressSizeList.remove(position);
+        recentConsistDirectionList.remove(position);
+        recentConsistSourceList.remove(position);
+        recentConsistRosterNameList.remove(position);
+        recentConsistLightList.remove(position);
+        recentConsistNameList.remove(position);
+        recentConsistNameHtmlList.remove(position);
+
+    }
+
     public int addCurrentConsistToBeginningOfList(Consist consist) { // if necessary   return -1 if not currently in the list
-        ArrayList<Integer> tempConsistEngineAddressList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistAddressSizeList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistDirectionList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistSourceList_inner = new ArrayList<>();
-        ArrayList<String> tempConsistRosterNameList_inner = new ArrayList<>();
-        ArrayList<Integer> tempConsistLightList_inner = new ArrayList<>();
+        ArrayList<Integer> tempRecentConsistLocoAddressList_inner = new ArrayList<>();
+        ArrayList<Integer> tempRecentConsistAddressSizeList_inner = new ArrayList<>();
+        ArrayList<Integer> tempRecentConsistDirectionList_inner = new ArrayList<>();
+        ArrayList<Integer> tempRecentConsistSourceList_inner = new ArrayList<>();
+        ArrayList<String> tempRecentConsistRosterNameList_inner = new ArrayList<>();
+        ArrayList<Integer> tempRecentConsistLightList_inner = new ArrayList<>();
 
         //if not updating list or no SD Card present then nothing else to do
         if ( (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
@@ -711,28 +785,28 @@ public class ImportExportPreferences {
 
 
         for (Consist.ConLoco l : conLocos) {
-            tempConsistEngineAddressList_inner.add(l.getIntAddress());
-            tempConsistAddressSizeList_inner.add(l.getIntAddressLength());
+            tempRecentConsistLocoAddressList_inner.add(l.getIntAddress());
+            tempRecentConsistAddressSizeList_inner.add(l.getIntAddressLength());
             String addr = locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
-            tempConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
+            tempRecentConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
             String rosterName = "";
             if (l.getRosterName() != null) {
                 rosterName = l.getRosterName();
             }
-//            tempConsistSourceList_inner.add(rosterName.equals("") ? source_type.ADDRESS : source_type.ROSTER);
-            tempConsistSourceList_inner.add(l.getWhichSource());
-            tempConsistRosterNameList_inner.add(rosterName);
-            tempConsistLightList_inner.add((consist.isLight(addr)));
+//            tempRecentConsistSourceList_inner.add(rosterName.equals("") ? source_type.ADDRESS : source_type.ROSTER);
+            tempRecentConsistSourceList_inner.add(l.getWhichSource());
+            tempRecentConsistRosterNameList_inner.add(rosterName);
+            tempRecentConsistLightList_inner.add((consist.isLight(addr)));
         }
 
         int whichEntryIsBeingUpdated = -1;
         // find out which entry it is in the roster
         boolean isSame = false;
-        for (int i = 0; i < consistEngineAddressList.size() && !isSame; i++) {
-            if (consistEngineAddressList.get(i).size() == tempConsistEngineAddressList_inner.size()) {  // if the lists are different sizes don't bother
-                for (int j = 0; j < consistEngineAddressList.get(i).size() && !isSame; j++) {
-                    if ((consistEngineAddressList.get(i).get(j).equals(tempConsistEngineAddressList_inner.get(j)))
-//                            && (consistDirectionList.get(i).get(j).equals(tempConsistDirectionList_inner.get(j)))
+        for (int i = 0; i < recentConsistLocoAddressList.size() && !isSame; i++) {
+            if (recentConsistLocoAddressList.get(i).size() == tempRecentConsistLocoAddressList_inner.size()) {  // if the lists are different sizes don't bother
+                for (int j = 0; j < recentConsistLocoAddressList.get(i).size() && !isSame; j++) {
+                    if ((recentConsistLocoAddressList.get(i).get(j).equals(tempRecentConsistLocoAddressList_inner.get(j)))
+//                            && (consistDirectionList.get(i).get(j).equals(tempRecentConsistDirectionList_inner.get(j)))
                     ) {
                         isSame = true;
                     }
@@ -743,19 +817,19 @@ public class ImportExportPreferences {
             }
         }
 
-        //add it to the beginning of the list
-        consistEngineAddressList.add(0, tempConsistEngineAddressList_inner);
-        consistAddressSizeList.add(0, tempConsistAddressSizeList_inner);
-        consistDirectionList.add(0, tempConsistDirectionList_inner);
-        consistSourceList.add(0, tempConsistSourceList_inner);
-        consistRosterNameList.add(0, tempConsistRosterNameList_inner);
-        consistLightList.add(0, tempConsistLightList_inner);
-
         String consistName = consist.toString();
         if (whichEntryIsBeingUpdated>0) { //this may already have a name
-            consistName = consistNameList.get(whichEntryIsBeingUpdated-1);
+            consistName = recentConsistNameList.get(whichEntryIsBeingUpdated-1);
         }
-        consistNameList.add(0, consistName);
+
+        //add it to the beginning of the list
+        addRecentConsistToList(0,consistName,
+                                        tempRecentConsistLocoAddressList_inner,
+                                        tempRecentConsistAddressSizeList_inner,
+                                        tempRecentConsistDirectionList_inner,
+                                        tempRecentConsistSourceList_inner,
+                                        tempRecentConsistRosterNameList_inner,
+                                        tempRecentConsistLightList_inner);
 
         return whichEntryIsBeingUpdated;
     }
@@ -772,29 +846,30 @@ public class ImportExportPreferences {
         try {
             list_output = new PrintWriter(consist_list_file);
             if (numberOfRecentLocosToWrite > 0) {
-                for (int i = 0; i < consistNameList.size() && numberOfRecentLocosToWrite > 0; i++) {
+                for (int i = 0; i < recentConsistNameList.size() && numberOfRecentLocosToWrite > 0; i++) {
 
                     if (i!=whichEntryIsBeingUpdated) { // if this is the one being updated, don't write it
 
-                        for (int j = 0; j < consistAddressSizeList.get(i).size(); j++) {
+                        for (int j = 0; j < recentConsistAddressSizeList.get(i).size(); j++) {
                             if (j > 0) {
                                 list_output.format(",");
                             }
                             list_output.format("%d:%d%d%d%d",
-                                    consistEngineAddressList.get(i).get(j),
-                                    consistAddressSizeList.get(i).get(j),
-                                    consistDirectionList.get(i).get(j),
-                                    consistSourceList.get(i).get(j),
-                                    (j==0 ? light_follow_type.FOLLOW :consistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
+                                    recentConsistLocoAddressList.get(i).get(j),
+                                    recentConsistAddressSizeList.get(i).get(j),
+                                    recentConsistDirectionList.get(i).get(j),
+                                    recentConsistSourceList.get(i).get(j),
+                                    (j==0 ? light_follow_type.FOLLOW :recentConsistLightList.get(i).get(j)) );  // always set the first loco as 'follow'
                         }
-                        list_output.format("<~>%s<~>", consistNameList.get(i));
-                        for (int j = 0; j < consistRosterNameList.get(i).size(); j++) {
+                        list_output.format("<~>%s<~>", recentConsistNameList.get(i));
+                        for (int j = 0; j < recentConsistRosterNameList.get(i).size(); j++) {
                             if (j > 0) {
                                 list_output.format("<,>");
                             }
                             list_output.format("%s",
-                                    consistRosterNameList.get(i).get(j));
+                                    recentConsistRosterNameList.get(i).get(j));
                         }
+                        // note recentConsistNameHtmlList is not save or loaded. it is generated as needed
 
                         list_output.format("\n");
                         numberOfRecentLocosToWrite--;
@@ -813,14 +888,14 @@ public class ImportExportPreferences {
 
 
     @SuppressLint("ApplySharedPref")
-    private boolean saveIntListDataToPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
+    private void saveIntListDataToPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
         sharedPreferences.edit().putInt(listName +"_size", list.size()).commit();
         int prefInt;
         for(int i=0 ; i<list.size() ; i++){
             prefInt=list.get(i);
             sharedPreferences.edit().putInt(listName + "_" + i, prefInt).commit();
         }
-        return sharedPreferences.edit().commit();
+        sharedPreferences.edit().commit();
     }
 
     @SuppressLint("ApplySharedPref")
@@ -848,7 +923,7 @@ public class ImportExportPreferences {
     }
 
 
-    private int getIntListDataFromPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences, int forceSize, int defaultValue) {
+    private void getIntListDataFromPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences, int forceSize, int defaultValue) {
         int size = sharedPreferences.getInt(listName + "_size", 0);
         if (forceSize>0) { // get a specified number regardless of how many are stored
             size = forceSize;
@@ -858,21 +933,20 @@ public class ImportExportPreferences {
             prefInt = sharedPreferences.getInt(listName + "_" + i, defaultValue);
             list.add(prefInt);
         }
-        return size;
     }
 
     @SuppressLint("ApplySharedPref")
-    private boolean saveStringListDataToPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences) {
+    private void saveStringListDataToPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences) {
         sharedPreferences.edit().putInt(listName +"_size", list.size()).commit();
         String prefString;
         for(int i=0 ; i<list.size() ; i++){
             prefString = list.get(i);
             sharedPreferences.edit().putString(listName + "_" + i, prefString).commit();
         }
-        return sharedPreferences.edit().commit();
+        sharedPreferences.edit().commit();
     }
 
-    private int getStringListDataFromPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences, int forceSize, String defaultValue) {
+    private void getStringListDataFromPreferences(ArrayList<String> list, String listName, SharedPreferences sharedPreferences, int forceSize, String defaultValue) {
         int size = sharedPreferences.getInt(listName + "_size", 0);
         if (forceSize>0) { // get a specified number regardless of how many are stored
             size = forceSize;
@@ -882,7 +956,6 @@ public class ImportExportPreferences {
             prefString = sharedPreferences.getString(listName + "_" + i, defaultValue);
             list.add(prefString);
         }
-        return size;
     }
 
     public String locoAddressToString(Integer addr, int size, boolean sizeAsPrefix) {
@@ -1090,24 +1163,15 @@ public class ImportExportPreferences {
                         && locoAddressSize == recentLocoAddressSizeList.get(i)
                         && locoName.equals(recentLocoNameList.get(i))) {
 
-                    recentLocoAddressList.remove(i);
-                    recentLocoAddressSizeList.remove(i);
-                    recentLocoNameList.remove(i);
-                    recentLocoSourceList.remove(i);
                     keepFunctions = recentLocoFunctionsList.get(i);
-                    recentLocoFunctionsList.remove(i);
+                    removeRecentLocoFromList(i);
                     Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
 
             // now append it to the end of the list
-            int endOfList = recentLocoAddressList.size();
-            recentLocoAddressList.add(endOfList, locoAddress);
-            recentLocoAddressSizeList.add(endOfList, locoAddressSize);
-            recentLocoNameList.add(endOfList, locoName);
-            recentLocoSourceList.add(endOfList, source_type.ROSTER);
-            recentLocoFunctionsList.add(endOfList, keepFunctions);  // blank for now
+            addRecentLocoToList(locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);   // functions are blank for now
 
             Log.d("Engine_Driver", "importExportPreferences: downloadRosterToRecents: Loco '"+ locoName + "' added to Recents");
 

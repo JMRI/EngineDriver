@@ -83,4 +83,11 @@
     <attr name="ed_clear_list_glyph" format="reference" />
     <attr name="ed_tick_glyph_large" format="reference" />
 
+    <attr name="ed_dccex_glyph_cv_programmer_pom" format="reference" />
+    <attr name="ed_dccex_glyph_cv_programmer_prog_track" format="reference" />
+    <attr name="ed_dccex_glyph_function_defaults" format="reference" />
+    <attr name="ed_dccex_glyph_track_manager" format="reference" />
+
+
+
 </resources>

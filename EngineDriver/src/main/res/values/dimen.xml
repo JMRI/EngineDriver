@@ -107,7 +107,7 @@
     <dimen name="buttonDisabledStroke_colorful">1px</dimen>
     <dimen name="buttonSelectedStroke_colorful">1px</dimen>
     <dimen name="buttonSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonSelectedInsideStrokePadding_colorful">8px</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_colorful">10px</dimen>
     <dimen name="buttonSelectedInsideStrokePaddingTopAndLeft_colorful">12px</dimen>
     <dimen name="buttonActivatedInsideStrokePadding_colorful">8px</dimen>
     <dimen name="buttonActivated2InsideStrokePadding_colorful">12px</dimen>
@@ -118,7 +118,7 @@
     <dimen name="buttonFnDisabledStroke_colorful">1px</dimen>
     <dimen name="buttonFnSelectedStroke_colorful">1px</dimen>
     <dimen name="buttonFnSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">8px</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">12px</dimen>
     <dimen name="buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful">12px</dimen>
     <dimen name="buttonFnStroke_colorful">1dp</dimen>
     <dimen name="buttonFnCornerRadius_colorful">8dp</dimen>

@@ -478,7 +478,7 @@
                 <RadioButton
                     android:id="@+id/select_consists_method_recent_button"
                     android:layout_width="match_parent"
-                    android:maxWidth="400dp"
+                    android:maxWidth="300dp"
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:fontFamily="sans-serif-condensed"
@@ -948,21 +948,13 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/engine_list_wrapper"
+    <ListView
+        android:id="@+id/recentLocoListView"
+        style="?attr/EDListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/engine_list"
-            style="?attr/EDListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true" />
-    </LinearLayout>
+        android:animateLayoutChanges="true" />
 
     <LinearLayout
         android:id="@+id/consists_list_header_group"

@@ -2,27 +2,44 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
+        android:top="2px" android:left="2px"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="2px"
+            <stroke
+                android:width="4px"
+                android:color="@color/buttonFillGradiantUltraDark_colorful" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="2px" android:left="2px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
+            <stroke
+                android:width="2px"
                 android:color="@color/buttonFillGradiantLight_colorful" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="0px" android:left="0px" android:right="2px" android:bottom="2px">
+        android:top="4px" android:left="4px"
+        android:right="2px" android:bottom="2px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="2px"
+            <stroke
+                android:width="2px"
                 android:color="@color/buttonFillGradiantVeryLight_colorful" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="3px" android:left="3px" android:right="0px" android:bottom="0px">
+        android:top="4px" android:left="4px"
+        android:right="4px" android:bottom="4px">
         <shape android:shape="rectangle">
 
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
@@ -43,7 +60,8 @@
     <item
         android:top="@dimen/buttonSelectedInsideStrokePaddingTopAndLeft_colorful"
         android:left="@dimen/buttonSelectedInsideStrokePaddingTopAndLeft_colorful"
-        android:right="@dimen/buttonSelectedInsideStrokePadding_colorful" android:bottom="@dimen/buttonSelectedInsideStrokePadding_colorful">
+        android:right="@dimen/buttonSelectedInsideStrokePadding_colorful"
+        android:bottom="@dimen/buttonSelectedInsideStrokePadding_colorful">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerInsideBorderRadius_colorful" />
             <stroke android:width="@dimen/buttonSelectedInsideStroke_colorful"
