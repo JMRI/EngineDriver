@@ -2,7 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_colorful" />
             <stroke android:width="2px"
