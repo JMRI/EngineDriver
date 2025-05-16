@@ -948,21 +948,13 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/engine_list_wrapper"
+    <ListView
+        android:id="@+id/recentLocoListView"
+        style="?attr/EDListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4"
-        android:orientation="vertical">
-
-        <ListView
-            android:id="@+id/engine_list"
-            style="?attr/EDListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true" />
-    </LinearLayout>
+        android:animateLayoutChanges="true" />
 
     <LinearLayout
         android:id="@+id/consists_list_header_group"
