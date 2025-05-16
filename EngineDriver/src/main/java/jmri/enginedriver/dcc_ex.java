@@ -18,6 +18,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.InputType.TYPE_TEXT_FLAG_AUTO_CORRECT;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -44,6 +46,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 //import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -161,6 +164,10 @@ public class dcc_ex extends AppCompatActivity {
     String cv29Direction;
     String cv29AddressSize;
     String cv29SpeedTable;
+
+    ImageButton dccexCvProgrammerProgTrackButton;
+    ImageButton dccexCvProgrammerPomButton;
+    ImageButton dccexTrackManagerButton;
 
     float vn = 4; // DCC-EC Version number
 
@@ -574,13 +581,13 @@ public class dcc_ex extends AppCompatActivity {
 
     private void showHideButtons() {
         if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-            dexcProgrammingCommonCvsLayout.setVisibility(View.VISIBLE);
-            dccexCommonCvsSpinner.setVisibility(View.VISIBLE);
+            dexcProgrammingCommonCvsLayout.setVisibility(VISIBLE);
+            dccexCommonCvsSpinner.setVisibility(VISIBLE);
 
-            dexcProgrammingAddressLayout.setVisibility(View.VISIBLE);
-            dexcProgrammingCvLayout.setVisibility(View.VISIBLE);
-            dexcDccexTrackLinearLayout.setVisibility(View.GONE);
-            dccexWriteInfoLayout.setVisibility(View.VISIBLE);
+            dexcProgrammingAddressLayout.setVisibility(VISIBLE);
+            dexcProgrammingCvLayout.setVisibility(VISIBLE);
+            dexcDccexTrackLinearLayout.setVisibility(GONE);
+            dccexWriteInfoLayout.setVisibility(VISIBLE);
 
             sendCommandButton.setEnabled(false);
             writeAddressButton.setEnabled(!dccexAddress.isEmpty());
@@ -591,16 +598,16 @@ public class dcc_ex extends AppCompatActivity {
                 writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
             }
         } else {
-            dexcProgrammingCommonCvsLayout.setVisibility(View.GONE);
-            dccexCommonCvsSpinner.setVisibility(View.GONE);
+            dexcProgrammingCommonCvsLayout.setVisibility(GONE);
+            dccexCommonCvsSpinner.setVisibility(GONE);
 
-            dexcProgrammingAddressLayout.setVisibility(View.GONE);
-            dexcProgrammingCvLayout.setVisibility(View.GONE);
-            dccexWriteInfoLayout.setVisibility(View.GONE);
-            dexcDccexTrackLinearLayout.setVisibility(View.VISIBLE);
+            dexcProgrammingAddressLayout.setVisibility(GONE);
+            dexcProgrammingCvLayout.setVisibility(GONE);
+            dccexWriteInfoLayout.setVisibility(GONE);
+            dexcDccexTrackLinearLayout.setVisibility(VISIBLE);
 
             for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-                dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? View.VISIBLE : View.GONE);
+                dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
             }
         }
         sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
@@ -617,14 +624,14 @@ public class dcc_ex extends AppCompatActivity {
 //        etDccexSendCommandValue.setText(dccexSendCommandValue);
 
         if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
-            readAddressButton.setVisibility(View.VISIBLE);
-            writeAddressButton.setVisibility(View.VISIBLE);
-            readCvButton.setVisibility(View.VISIBLE);
+            readAddressButton.setVisibility(VISIBLE);
+            writeAddressButton.setVisibility(VISIBLE);
+            readCvButton.setVisibility(VISIBLE);
             dccexHeadingLabel.setText(R.string.DCCEXheadingCvProgrammerProgTrack);
         } else {
-            readAddressButton.setVisibility(View.GONE);
-            writeAddressButton.setVisibility(View.GONE);
-            readCvButton.setVisibility(View.GONE);
+            readAddressButton.setVisibility(GONE);
+            writeAddressButton.setVisibility(GONE);
+            readCvButton.setVisibility(GONE);
             if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
                 dccexHeadingLabel.setText(R.string.DCCEXheadingCvProgrammerPoM);
             } else {
@@ -651,11 +658,11 @@ public class dcc_ex extends AppCompatActivity {
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             dccexTrackTypeSpinner[i].setSelection(mainapp.dccexTrackType[i]);
             dccexTrackTypeIdEditText[i].setText(mainapp.dccexTrackId[i]);
-            dccexTrackTypeLayout[i].setVisibility(mainapp.dccexTrackAvailable[i] ? View.VISIBLE : View.GONE);
+            dccexTrackTypeLayout[i].setVisibility(mainapp.dccexTrackAvailable[i] ? VISIBLE : GONE);
             if (vn >= 5.002005) {
                 setPowerButton(dccexTrackPowerButton[i], mainapp.dccexTrackPower[i]);
             } else {
-                dccexTrackPowerButton[i].setVisibility(View.GONE);
+                dccexTrackPowerButton[i].setVisibility(GONE);
             }
             dccexTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.dccexTrackType[i]]);
         }
@@ -859,32 +866,20 @@ public class dcc_ex extends AppCompatActivity {
         dccActionTypeSpinner.setOnItemSelectedListener(new DccActionTypeSpinnerListener());
         dccActionTypeSpinner.setSelection(mainapp.dccexActionTypeIndex);
 
-        LinearLayout cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_prog_track_layout);
+        dccexCvProgrammerProgTrackButton = findViewById(R.id.dccex_cv_programmer_prog_track_button);
         DccExNavigationButtonListener dccExNavigationButtonListener = new DccExNavigationButtonListener(0);
-        cv_programmer_layout.setOnClickListener(dccExNavigationButtonListener);
-        Button cv_programmer_button = findViewById(R.id.dccex_cv_programmer_prog_track_button);
-        dccExNavigationButtonListener = new DccExNavigationButtonListener(0);
-        cv_programmer_button.setOnClickListener(dccExNavigationButtonListener);
+        dccexCvProgrammerProgTrackButton.setOnClickListener(dccExNavigationButtonListener);
 
-        cv_programmer_layout = findViewById(R.id.dccex_cv_programmer_pom_layout);
+        dccexCvProgrammerPomButton = findViewById(R.id.dccex_cv_programmer_pom_button);
         dccExNavigationButtonListener = new DccExNavigationButtonListener(1);
-        cv_programmer_layout.setOnClickListener(dccExNavigationButtonListener);
-        cv_programmer_button = findViewById(R.id.dccex_cv_programmer_pom_button);
-        dccExNavigationButtonListener = new DccExNavigationButtonListener(1);
-        cv_programmer_button.setOnClickListener(dccExNavigationButtonListener);
+        dccexCvProgrammerPomButton.setOnClickListener(dccExNavigationButtonListener);
 
-        cv_programmer_layout = findViewById(R.id.dccex_track_manager_layout);
+        dccexTrackManagerButton = findViewById(R.id.dccex_track_manager_button);
         dccExNavigationButtonListener = new DccExNavigationButtonListener(2);
-        cv_programmer_layout.setOnClickListener(dccExNavigationButtonListener);
-        cv_programmer_button = findViewById(R.id.dccex_track_manager_button);
-        dccExNavigationButtonListener = new DccExNavigationButtonListener(2);
-        cv_programmer_button.setOnClickListener(dccExNavigationButtonListener);
+        dccexTrackManagerButton.setOnClickListener(dccExNavigationButtonListener);
 
-        LinearLayout default_functions_layout = findViewById(R.id.dccex_default_functions_layout);
+        ImageButton default_functions_button = findViewById(R.id.dccex_default_functions_button);
         DccexDefaultFunctionsButtonListener dccexDefaultFunctionsButtonListener = new DccexDefaultFunctionsButtonListener(this);
-        default_functions_layout.setOnClickListener(dccexDefaultFunctionsButtonListener);
-        Button default_functions_button = findViewById(R.id.dccex_default_functions_button);
-        dccexDefaultFunctionsButtonListener = new DccexDefaultFunctionsButtonListener(this);
         default_functions_button.setOnClickListener(dccexDefaultFunctionsButtonListener);
 
         dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);
@@ -1221,6 +1216,8 @@ public class dcc_ex extends AppCompatActivity {
             dccCvsIndex = 0;
             dccexCommonCvsSpinner.setSelection(dccCvsIndex);
 
+            setSelectedButton(position);
+
             refreshDccexView();
             refreshDccexTracksView();
         }
@@ -1343,6 +1340,12 @@ public class dcc_ex extends AppCompatActivity {
         btn.setBackground(img);
     }
 
+    void setSelectedButton(int index) {
+        dccexCvProgrammerProgTrackButton.setSelected(index==0);
+        dccexCvProgrammerPomButton.setSelected(index==1);
+        dccexTrackManagerButton.setSelected(index==2);
+    }
+
     public class DccExNavigationButtonListener implements View.OnClickListener {
         final int myIndex;
 
@@ -1352,6 +1355,7 @@ public class dcc_ex extends AppCompatActivity {
 
         public void onClick(View v) {
             mainapp.buttonVibration();
+            setSelectedButton(myIndex);
             dccActionTypeSpinner.setSelection(myIndex);
             mainapp.hideSoftKeyboard(v);
         }

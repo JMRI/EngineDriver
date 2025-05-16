@@ -478,7 +478,7 @@
                 <RadioButton
                     android:id="@+id/select_consists_method_recent_button"
                     android:layout_width="match_parent"
-                    android:maxWidth="400dp"
+                    android:maxWidth="300dp"
                     android:layout_height="wrap_content"
                     android:enabled="true"
                     android:fontFamily="sans-serif-condensed"

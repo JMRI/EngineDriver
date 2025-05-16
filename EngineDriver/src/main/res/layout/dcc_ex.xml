@@ -31,128 +31,152 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/select_loco_method_buttons_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="15sp"
+                android:baselineAligned="false"
+                android:layout_marginTop="5dp"
+                android:weightSum="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/dccex_cv_programmer_prog_track_layout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/select_loco_glyph_dcc_address_layout"
+                    android:layout_width="0dp"
+                    android:layout_weight=".25"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0sp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:orientation="horizontal">
+                    android:padding="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/dccex_cv_programmer_prog_track_button"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:background="?attr/ed_dccex_button_cv_programmer_prog_track" />
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/DCCEXbuttonCvProgrammerProgTrack"
+                        android:src="?attr/ed_dccex_glyph_cv_programmer_prog_track" />
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="42dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="10dp"
                         android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dccex_cv_programmer_pom_layout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/select_loco_glyph_roster_layout"
+                    android:layout_width="0dp"
+                    android:layout_weight=".25"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0sp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="10dp"
-                    android:orientation="horizontal">
+                    android:padding="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/dccex_cv_programmer_pom_button"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:background="?attr/ed_dccex_button_cv_programmer_pom" />
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/DCCEXbuttonCvProgrammerPoM"
+                        android:src="?attr/ed_dccex_glyph_cv_programmer_pom"/>
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="42dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="10dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
+                        android:layout_gravity="center"
                         android:text="@string/DCCEXbuttonCvProgrammerPoM"
-                        android:layout_gravity="center"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dccex_track_manager_layout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/select_loco_glyph_recent_loco_layout"
+                    android:layout_width="0dp"
+                    android:layout_weight=".25"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0sp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="10dp"
-                    android:orientation="horizontal">
+                    android:padding="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/dccex_track_manager_button"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:background="?attr/ed_dccex_button_track_manager" />
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/DCCEXbuttonTrackManager"
+                        android:src="?attr/ed_dccex_glyph_track_manager"/>
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="63dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="0dp"
-                        android:text="@string/DCCEXbuttonTrackManager"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
+                        android:text="@string/DCCEXbuttonTrackManager"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
+
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/dccex_default_functions_layout"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/select_loco_glyph_recent_consist_layout"
+                    android:layout_width="0dp"
+                    android:layout_weight=".25"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0sp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="10dp"
-                    android:orientation="horizontal">
+                    android:padding="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:orientation="vertical">
 
-                    <Button
+                    <ImageButton
                         android:id="@+id/dccex_default_functions_button"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:padding="10dp"
-                        android:background="?attr/ed_dccex_button_function_defaults" />
+                        style="?attr/ed_small_button_condensed_text_style"
+                        android:layout_width="fill_parent"
+                        android:layout_height="48dp"
+                        android:contentDescription="@string/DCCEXbuttonDefaultFunctions"
+                        android:src="?attr/ed_dccex_glyph_function_defaults"/>
 
                     <TextView
                         style="?attr/floating_text_style"
-                        android:layout_width="55dp"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="0dp"
                         android:text="@string/DCCEXbuttonDefaultFunctions"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
+
                 </LinearLayout>
 
             </LinearLayout>
