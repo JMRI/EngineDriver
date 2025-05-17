@@ -2329,7 +2329,7 @@ public class select_loco extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                recentLocosList.remove(onScreenPosition);
+                recentLocosList.remove(onScreenPosition);
                 saveRecentLocosList(true);
                 refreshRecentLocosList(true);
                 mainapp.safeToastInstructional(R.string.toastRecentCleared, Toast.LENGTH_SHORT);
@@ -2369,7 +2369,7 @@ public class select_loco extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                recentConsistsList.remove(onScreenPosition);
+                recentConsistsList.remove(onScreenPosition);
                 saveRecentConsistsList(true);
                 refreshRecentConsistsList(true);
                 mainapp.safeToastInstructional(R.string.toastRecentConsistCleared, Toast.LENGTH_SHORT);

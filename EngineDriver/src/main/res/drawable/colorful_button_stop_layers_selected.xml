@@ -1,31 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--top right-->
     <item
-        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="2px"
-                android:color="@color/buttonStopFillGradiantLight_colorful" />
+            <corners android:radius="8dp" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <solid android:color="@color/buttonStopFillGradiantUltraUltraDark_colorful" />
+
+        </shape>
+    </item>
+
+    <item
+        android:top="2px" android:left="2px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="7dp" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <solid android:color="@color/buttonStopFillGradiantUltraDark_colorful" />
+        </shape>
+    </item>
+
+    <item
+        android:top="6px" android:left="6px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="6dp" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <solid android:color="@color/buttonStopFillGradiantVeryDark_colorful" />
+        </shape>
+    </item>
+
+    <!--bottom left-->
+    <item
+        android:top="8px" android:left="8px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="8dp" />
+            <stroke android:color="@color/buttonStopFillGradiantVeryLight_colorful" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="0px" android:left="0px" android:right="2px" android:bottom="2px">
+        android:top="10px" android:left="10px"
+        android:right="2px" android:bottom="2px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
-            <stroke android:width="2px"
-                android:color="@color/buttonStopFillGradiantVeryLight_colorful" />
-            <solid android:color="@color/transparent" />
+            <corners android:radius="7dp" />
+            <solid android:color="@color/buttonStopFillGradiantLight_colorful" />
         </shape>
     </item>
 
+    <!--    face -->
     <item
-        android:top="3px" android:left="3px" android:right="0px" android:bottom="0px">
+        android:top="8px" android:left="8px"
+        android:right="2px" android:bottom="2px">
         <shape android:shape="rectangle">
 
-            <corners android:radius="@dimen/buttonCornerRadius_colorful" />
+            <corners android:radius="5dp" />
             <stroke android:width="0px" android:color="@color/solidBlack" />
             <!-- <solid android:color="@color/buttonFill_colorful" /> -->
             <gradient
@@ -42,7 +76,8 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonSelectedInsideStrokePadding_colorful" android:left="@dimen/buttonSelectedInsideStrokePadding_colorful" android:right="@dimen/buttonSelectedInsideStrokePadding_colorful" android:bottom="@dimen/buttonSelectedInsideStrokePadding_colorful">
+        android:top="@dimen/buttonSelectedInsideStrokePadding_colorful" android:left="@dimen/buttonSelectedInsideStrokePadding_colorful"
+        android:right="@dimen/buttonSelectedInsideStrokePadding_colorful" android:bottom="@dimen/buttonSelectedInsideStrokePadding_colorful">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonStopCornerInsideBorderRadius_colorful" />
             <stroke android:width="@dimen/buttonStopSelectedInsideStroke_colorful" android:color="@color/buttonStopSelectedInsideStroke_colorful" />
