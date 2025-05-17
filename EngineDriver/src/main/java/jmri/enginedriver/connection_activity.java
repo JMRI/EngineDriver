@@ -349,11 +349,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-//                    if (!mainapp.prefHideInstructionalToasts) {
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT).show();
-//                    }
                     mainapp.safeToastInstructional(R.string.toastConnectRemoved, Toast.LENGTH_SHORT);
-//                        new saveConnectionsList().execute();
                     importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "", connected_ssid, connected_serviceType);
                 }
 

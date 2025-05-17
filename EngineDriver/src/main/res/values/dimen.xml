@@ -118,8 +118,8 @@
     <dimen name="buttonFnDisabledStroke_colorful">1px</dimen>
     <dimen name="buttonFnSelectedStroke_colorful">1px</dimen>
     <dimen name="buttonFnSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">12px</dimen>
-    <dimen name="buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful">12px</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">8px</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful">14px</dimen>
     <dimen name="buttonFnStroke_colorful">1dp</dimen>
     <dimen name="buttonFnCornerRadius_colorful">8dp</dimen>
     <dimen name="buttonFnCornerInsideBorderRadius_colorful">6dp</dimen>
