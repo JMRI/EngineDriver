@@ -36,7 +36,6 @@
                     android:id="@+id/routes_direct_entry_label"
                     style="?android:attr/listSeparatorTextViewStyle"
                     android:text="@string/routes_direct_entry_label"
-                    android:paddingLeft="4dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <LinearLayout
@@ -71,7 +70,6 @@
                     android:id="@+id/routes_location_label"
                     style="?android:attr/listSeparatorTextViewStyle"
                     android:text="@string/routes_location_label"
-                    android:paddingLeft="4dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <LinearLayout
@@ -104,7 +102,6 @@
                         android:layout_height="24sp"
                         android:layout_alignParentLeft="true"
                         android:layout_toLeftOf="@+id/routes_sort"
-                        android:paddingLeft="4dp"
                         android:layout_marginRight="4dp"
                         android:layout_marginLeft="0dp"
                         android:paddingTop="2dp"

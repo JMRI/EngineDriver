@@ -14,7 +14,6 @@
         android:id="@+id/consist_lead_label"
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/consist_lead_label"
-        android:paddingLeft="4dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout
@@ -34,7 +33,6 @@
         android:id="@+id/consist_trail_label"
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/consist_trail_label"
-        android:paddingLeft="4dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
     <LinearLayout
         android:layout_width="fill_parent"
@@ -53,7 +51,6 @@
         android:id="@+id/consist_list_label"
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/consist_list_label"
-        android:paddingLeft="4dp"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <LinearLayout

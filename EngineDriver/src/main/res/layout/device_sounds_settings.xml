@@ -24,8 +24,6 @@
             android:id="@+id/dss_heading"
             style="?android:attr/listSeparatorTextViewStyle"
             android:text="@string/prefDeviceSoundsCategoryTitle"
-            android:paddingLeft="4dp"
-            android:paddingStart="4dp"
             android:layout_margin="2dp"
             tools:ignore="RtlSymmetry" />
 

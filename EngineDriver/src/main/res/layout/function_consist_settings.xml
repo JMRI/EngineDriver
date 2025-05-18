@@ -28,7 +28,6 @@
                 android:id="@+id/function_consist_heading"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:text="@string/functionConsistHeader"
-                android:paddingLeft="4dp"
                 tools:ignore="RtlSymmetry" />
 
             <ScrollView
@@ -98,7 +97,6 @@
                         style="?android:attr/listSeparatorTextViewStyle"
                         android:layout_width="30dp"
                         android:layout_marginRight="2dp"
-                        android:paddingLeft="4dp"
                         android:textSize="12sp"
                         android:text="@string/functionConsistColumnLabel"
                         android:textStyle="bold" />
@@ -107,7 +105,6 @@
                         android:id="@+id/function_consist_LocosHeader"
                         android:layout_width="130dp"
                         android:layout_marginRight="2dp"
-                        android:paddingLeft="4dp"
                         android:textSize="12sp"
                         android:text="@string/functionConsistColumnLocos"
                         android:textStyle="bold"
@@ -117,7 +114,6 @@
                         android:id="@+id/textView"
                         android:layout_width="40dp"
                         android:layout_marginRight="2dp"
-                        android:paddingLeft="4dp"
                         android:textSize="12sp"
                         android:text="@string/functionConsistColumnLatching"
                         android:textStyle="bold"

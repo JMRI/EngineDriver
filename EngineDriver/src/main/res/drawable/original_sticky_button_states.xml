@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--   <item-->
-<!--      android:state_enabled="false"-->
-<!--      android:drawable="@drawable/btn_disabled">-->
+<!--   <item android:state_enabled="false">-->
+<!--      android:top="1dip" android:left="1dip"-->
+<!--      android:right="0dip" android:bottom="0dip">-->
+<!--      <shape android:shape="rectangle">-->
+
+<!--         <corners android:radius="@dimen/buttonCornerRadius_original" />-->
+<!--         <stroke-->
+<!--             android:width="@dimen/buttonStroke_original"-->
+<!--             android:color="@color/buttonCommonDisabledStroke_original" />-->
+<!--         <solid-->
+<!--             android:color="@color/buttonCommonDisabledFill_original" />-->
+<!--      </shape>-->
 <!--   </item>-->
-<!--   <item-->
-<!--      android:state_pressed="true"-->
-<!--      android:state_enabled="true"-->
-<!--      android:drawable="@drawable/btn_pressed">-->
-<!--   </item>-->
-<!--   <item-->
-<!--       android:state_selected="true"-->
-<!--       android:state_enabled="true"-->
-<!--       android:drawable="@drawable/btn_pressed">-->
-<!--   </item>-->
-   <!--      <item-->
-   <!--         android:drawable="@drawable/btn_not_pressed">-->
 
    <item
-       android:state_enabled="false"
-       android:drawable="@drawable/original_button_layers_disabled" />
+      android:state_selected="false"
+      android:state_activated="false"
+      android:state_hovered="false"
+      android:state_pressed="false"
+      android:state_enabled="false"
+      android:drawable="@drawable/original_button_layers_disabled">
+   </item>
+
    <item
        android:state_pressed="true"
-       android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_activated">
+       android:drawable="@drawable/original_button_layers_selected">
    </item>
+
    <item
        android:state_selected="true"
        android:state_enabled="true"
+       android:drawable="@drawable/original_button_layers_selected">
+   </item>
+
+   <item
+       android:state_activated="true"
+       android:state_hovered="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/original_button_layers_activated_hovered">
+   </item>
+
+   <item
+       android:state_selected="false"
+       android:state_activated="true"
+       android:state_hovered="false"
+       android:state_enabled="true"
        android:drawable="@drawable/original_button_layers_activated">
    </item>
+
    <item
+       android:state_selected="false"
+       android:state_activated="false"
+       android:state_hovered="true"
+       android:state_enabled="true"
+       android:drawable="@drawable/original_button_layers_hovered">
+   </item>
+
+   <item
+       android:state_selected="false"
+       android:state_activated="false"
+       android:state_hovered="false"
+       android:state_enabled="true"
        android:drawable="@drawable/original_button_layers_enabled">
    </item>
+
 </selector>
