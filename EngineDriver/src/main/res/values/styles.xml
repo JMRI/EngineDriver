@@ -100,6 +100,7 @@
   </style>
 
   <style name="fn_button_style" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
@@ -193,7 +194,7 @@
   </style>
   <style name="small_heading_style" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#FFFFFF</item>
-    <item name="android:background">#8c8a8c</item>
+    <item name="android:background">@drawable/original_heading_background</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">#FF000000</item>
@@ -201,6 +202,8 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
     <item name="android:padding">2dp</item>
+    <item name="android:paddingLeft">6dp</item>
+    <item name="android:paddingStart">6dp</item>
   </style>
   <style name="large_heading_style" parent="@android:style/Widget.TextView">
     <item name="fontFamily">sans-serif-condensed</item>
@@ -322,6 +325,8 @@
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
     <item name="android:padding">2dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingStart">4dp</item>
   </style>
 
   <style name="large_heading_style_black" parent="@android:style/Widget.TextView">
@@ -526,6 +531,7 @@
   </style>
 
   <style name="fn_button_style_black" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
@@ -702,10 +708,11 @@
 
   <style name="small_button_hover_style" parent="small_button_style_outline">
     <item name="android:textSize">14sp</item>
-    <item name="android:background">@drawable/original_sticky_button_states_hover</item>
+    <item name="android:background">@drawable/common_sticky_button_states_hover</item>
   </style>
 
   <style name="fn_button_style_outline" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/outline_fn_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
@@ -805,6 +812,8 @@
     <item name="android:shadowDy">1</item>
     <item name="android:shadowRadius">3</item>
     <item name="android:padding">2dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingStart">4dp</item>
   </style>
 
   <style name="large_button_style_ultra" parent="@android:style/Widget.Button">
@@ -884,6 +893,7 @@
   </style>
 
   <style name="fn_button_style_ultra" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/ultra_fn_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
@@ -1021,6 +1031,8 @@
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
     <item name="android:padding">2dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingStart">4dp</item>
   </style>
 
   <style name="large_button_style_colorful" parent="@android:style/Widget.Button">
@@ -1122,6 +1134,7 @@
 
 
   <style name="fn_button_style_colorful" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/colorful_fn_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
@@ -1372,6 +1385,8 @@
     <item name="android:shadowDy">1</item>
     <item name="android:shadowRadius">3</item>
     <item name="android:padding">2dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingStart">4dp</item>
   </style>
 
   <style name="EDListView_neon" parent="@android:style/Widget.ListView">
@@ -1470,6 +1485,7 @@
   </style>
 
   <style name="fn_button_style_neon" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
     <item name="android:textColor">@color/neon_fn_btn_text_states</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>

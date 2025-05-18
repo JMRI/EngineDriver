@@ -2,38 +2,29 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="2px" android:left="2px"
+        android:top="0px" android:left="0px"
         android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeDark_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonSelectedStrokeDark_original" />
         </shape>
     </item>
 
     <item
-        android:top="6px" android:left="6px"
+        android:top="4px" android:left="4px"
         android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeMid_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonSelectedStrokeMid_original" />
         </shape>
     </item>
 
     <item
-        android:top="10px" android:left="10px"
+        android:top="8px" android:left="8px"
         android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeLight_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonSelectedStrokeLight_original" />
         </shape>
     </item>
 

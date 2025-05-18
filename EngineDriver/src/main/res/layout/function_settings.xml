@@ -29,7 +29,6 @@
                 android:id="@+id/fs_heading"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:text="@string/fb_header"
-                android:paddingLeft="5dp"
                 android:layout_marginRight="10dp"
                 tools:ignore="RtlSymmetry" />
 
@@ -250,7 +249,6 @@
                         android:layout_weight="7"
                         android:text="@string/fb_column_label"
                         android:textStyle="bold"
-                        android:paddingLeft="4dp"
                         android:layout_marginRight="6dp"
                         style="?android:attr/listSeparatorTextViewStyle"
                         tools:ignore="RtlSymmetry" />
@@ -259,7 +257,6 @@
                         android:layout_weight="3"
                         android:text="@string/fb_column_function"
                         android:textStyle="bold"
-                        android:paddingLeft="4dp"
                         style="?android:attr/listSeparatorTextViewStyle"
                         tools:ignore="RtlSymmetry" />
                 </TableRow>

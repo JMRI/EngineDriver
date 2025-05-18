@@ -3,84 +3,64 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="2px" android:left="2px"
-        android:right="0px" android:bottom="0px">
+        android:top="0dip" android:left="0dip"
+        android:right="0dip" android:bottom="0dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeDark_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonFillGradiantUltraDark_original" />
         </shape>
     </item>
 
     <item
-        android:top="6px" android:left="6px"
-        android:right="0px" android:bottom="0px">
+        android:top="1dip" android:left="1dip"
+        android:right="0dip" android:bottom="0dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeMid_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonFillGradiantVeryDark_original" />
         </shape>
     </item>
 
     <item
-        android:top="10px" android:left="10px"
-        android:right="0px" android:bottom="0px">
+        android:top="2dip" android:left="2dip"
+        android:right="0dip" android:bottom="0dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeLight_original" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonFillGradiantDark_original" />
         </shape>
     </item>
 
     <item
-        android:top="14px" android:left="14px"
-        android:right="1px" android:bottom="1px">
+        android:top="3dip" android:left="3dip"
+        android:right="1dip" android:bottom="1dip">
         <shape android:shape="rectangle">
 
-            <corners android:radius="3dp" />
-            <stroke android:width="0px" android:color="#878787" />
-            <!-- <solid android:color="@color/buttonFill_ultra" /> -->
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <stroke android:width="0dip" android:color="@color/black" />
             <gradient
-                android:angle="326"
-                android:centerX="35%"
-                android:centerColor="#D7D7D7"
-                android:startColor="#E4E4E4"
-                android:endColor="#B9B9B9"
+                android:angle="270"
+                android:centerX="30%"
+                android:startColor="@color/buttonCommonFillGradiantDark_original"
+                android:centerColor="@color/buttonCommonFillGradiantCenter_original"
+                android:endColor="@color/buttonCommonFillGradiantLight_original"
                 android:type="linear" />
         </shape>
     </item>
 
-    <item
-        android:top="40dp" android:height="5dp"
-        android:left="8px"  android:right="8px" android:bottom="5px"
+    <item android:gravity="bottom"
+        android:top="40dip" android:left="12dip"
+        android:bottom="6dip" android:right="10dip"
+
         tools:targetApi="m">
         <shape android:shape="rectangle">
-        <corners
-            android:radius="1dp" />
-        <gradient
-            android:angle="326"
-            android:centerX="35%"
-            android:startColor="#f6f628"
-            android:centerColor="#f6f628"
-            android:endColor="#e8e86b"
-            android:type="linear" />
-        <padding
-            android:left="0dp"
-            android:top="0dp"
-            android:right="0dp"
-            android:bottom="0dp" />
-        <size
-            android:width="30dp"
-            android:height="1dp" />
-        <stroke
-            android:width="0dp"
-            android:color="#878787" />
+            <corners
+                android:radius="3dip" />
+            <size
+                android:width="30dip"
+                android:height="7dip" />
+            <stroke
+                android:width="1dip"
+                android:color="#73CF00" />
+            <solid android:color="#98F128" />
         </shape>
     </item>
 

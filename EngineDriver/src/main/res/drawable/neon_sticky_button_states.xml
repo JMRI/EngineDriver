@@ -4,7 +4,9 @@
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke android:width="@dimen/buttonDisabledStroke_neon" android:color="@color/buttonDisabledStroke_neon" />
+            <stroke
+                android:width="@dimen/buttonDisabledStroke_neon"
+                android:color="@color/buttonDisabledStroke_neon" />
             <solid android:color="@color/buttonDisabledFill_neon" />
         </shape>
     </item>

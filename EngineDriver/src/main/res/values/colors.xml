@@ -48,9 +48,14 @@
 
     <!-- Original Theme -->
 
-    <color name="buttonCommonFillGradiantLight_original">#FFFFFF</color>
-    <color name="buttonCommonFillGradiantCenter_original">#C3C3C3</color>
-    <color name="buttonCommonFillGradiantDark_original">#B1B1B1</color>
+    <color name="buttonCommonFillGradiantVeryLight_original">#FFFFFF</color>
+    <color name="buttonCommonFillGradiantLight_original">#C3C3C3</color>
+    <color name="buttonCommonFillGradiantCenter_original">#9B9B9B</color>
+    <color name="buttonCommonFillGradiantDark_original">#616060</color>
+    <color name="buttonCommonFillGradiantVeryDark_original">#3C3C3C</color> //
+    <color name="buttonCommonFillGradiantUltraDark_original">#2E2E2E</color>
+    <color name="buttonCommonFillGradiantUltraUltraDark_original">#1A1A1A</color>
+
     <color name="buttonCommonSelectedStrokeLight_original">#D3D1D1</color>
     <color name="buttonCommonSelectedStrokeMid_original">#878787</color>
     <color name="buttonCommonSelectedStrokeDark_original">#3C3C3C</color>

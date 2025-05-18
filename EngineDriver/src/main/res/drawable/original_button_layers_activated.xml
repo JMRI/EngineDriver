@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:top="2px" android:left="2px"
-        android:right="0px" android:bottom="0px">
+        android:top="0dip" android:left="0dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <solid android:color="@color/buttonCommonFillGradiantUltraDark_original" />
+        </shape>
+    </item>
+
+    <item
+        android:top="0dip" android:left="0dip"
+        android:right="2dip" android:bottom="2dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <solid android:color="@color/buttonCommonFillGradiantVeryDark_original" />
+        </shape>
+    </item>
+
+    <item
+        android:top="0dip" android:left="0dip"
+        android:right="3dip" android:bottom="3dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_original" />
+            <solid android:color="@color/buttonCommonFillGradiantDark_original" />
+        </shape>
+    </item>
+
+    <item
+        android:top="0dip" android:left="0dip"
+        android:right="4dip" android:bottom="4dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeDark_original" />
+                android:width="@dimen/buttonSelectedStroke_original"
+                android:color="@color/buttonCommonFillGradiantCenter_original" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="6px" android:left="6px"
-        android:right="0px" android:bottom="0px">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeMid_original" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
-
-    <item
-        android:top="10px" android:left="10px"
-        android:right="0px" android:bottom="0px">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="4px"
-                android:color="@color/buttonCommonSelectedStrokeLight_original" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
-
-    <item
-        android:top="14px" android:left="14px"
-        android:right="1px" android:bottom="1px">
+        android:top="1dip" android:left="1dip"
+        android:right="4dip" android:bottom="4dip">
         <shape android:shape="rectangle">
 
             <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="0px"
-                android:color="@color/buttonCommonOutlineStroke_original" />
+            <stroke android:width="0dip" android:color="@color/black" />
             <gradient
                 android:angle="270"
                 android:centerX="50%"
@@ -54,24 +54,6 @@
                 android:centerColor="@color/buttonCommonFillGradiantCenter_original"
                 android:endColor="@color/buttonCommonFillGradiantDark_original"
                 android:type="linear" />
-        </shape>
-    </item>
-
-    <item android:gravity="bottom"
-        android:top="40dp" android:height="7dp"
-        android:left="12px" android:right="10px"
-        android:bottom="6px"
-        tools:targetApi="m">
-        <shape android:shape="rectangle">
-            <corners
-                android:radius="3dp" />
-            <size
-                android:width="30dp"
-                android:height="7dp" />
-            <stroke
-                android:width="1dp"
-                android:color="#73CF00" />
-            <solid android:color="#98F128" />
         </shape>
     </item>
 

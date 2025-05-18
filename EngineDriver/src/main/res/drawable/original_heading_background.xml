@@ -1,0 +1,43 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--top right-->
+    <item
+        android:top="0dip" android:left="0dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/buttonCommonFillGradiantDark_original" />
+        </shape>
+    </item>
+
+    <item
+        android:top="1dip" android:left="1dip"
+        android:right="1dip" android:bottom="1dip">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/buttonCommonFillGradiantCenter_original" />
+        </shape>
+    </item>
+
+    <!--    bottom left-->
+    <item
+        android:top="2dip" android:left="2dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/buttonCommonFillGradiantUltraDark_original" />
+        </shape>
+    </item>
+    <item
+        android:top="2dip" android:left="2dip"
+        android:right="1dip" android:bottom="1dip">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/buttonCommonFillGradiantDark_original" />
+        </shape>
+    </item>
+
+
+<!--fill-->
+    <item
+        android:top="2dip" android:left="2dip"
+        android:right="2dip" android:bottom="2dip"
+        android:drawable="@drawable/metal_brushed_steel_repeating" />
+
+</layer-list>
