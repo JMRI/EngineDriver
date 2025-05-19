@@ -386,6 +386,15 @@
             android:title="@string/prefShowAddressInsteadOfNameTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <ListPreference
+            android:defaultValue="@string/prefSelectedLocoIndicatorDefaultValue"
+            android:entries="@array/prefSelectedLocoIndicatorEntries"
+            android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
+            android:key="prefSelectedLocoIndicator"
+            android:summary="@string/prefSelectedLocoIndicatorSummary"
+            android:title="@string/prefSelectedLocoIndicatorTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="default_function_preferences"
@@ -1724,15 +1733,6 @@
                     android:layout="@layout/checkbox_no_icon" />
             </PreferenceCategory>
         </PreferenceScreen>
-
-        <ListPreference
-            android:defaultValue="@string/prefSelectedLocoIndicatorDefaultValue"
-            android:entries="@array/prefSelectedLocoIndicatorEntries"
-            android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
-            android:key="prefSelectedLocoIndicator"
-            android:summary="@string/prefSelectedLocoIndicatorSummary"
-            android:title="@string/prefSelectedLocoIndicatorTitle"
-            android:layout="@layout/checkbox_no_icon" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"

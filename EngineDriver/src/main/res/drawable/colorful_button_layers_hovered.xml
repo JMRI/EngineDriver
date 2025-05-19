@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--top right-->
+    <!--    used as the additional Gamepad highlight for the Select button-->
+
+    <!--bottom left-->
     <item
-        android:top="0px" android:left="0px"
+        android:top="6px" android:left="6px"
         android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="8dp" />
-            <stroke android:width="0px" android:color="@color/solidBlack" />
-            <solid android:color="@color/buttonFillGradiantUltraUltraDark_colorful" />
-
-        </shape>
-    </item>
-
-    <item
-        android:top="2px" android:left="2px"
-        android:right="0px" android:bottom="0px">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="7dp" />
             <stroke android:width="0px" android:color="@color/solidBlack" />
             <solid android:color="@color/buttonFillGradiantUltraDark_colorful" />
         </shape>
@@ -25,7 +16,7 @@
 
     <item
         android:top="6px" android:left="6px"
-        android:right="0px" android:bottom="0px">
+        android:right="2px" android:bottom="2px">
         <shape android:shape="rectangle"  >
             <corners android:radius="6dp" />
             <stroke android:width="0px" android:color="@color/solidBlack" />
@@ -33,30 +24,31 @@
         </shape>
     </item>
 
-    <!--bottom left-->
+    <!--top right-->
     <item
-        android:top="8px" android:left="8px"
-        android:right="0px" android:bottom="0px">
+        android:top="0px" android:left="0px"
+        android:right="4px" android:bottom="4px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="8dp" />
-            <stroke android:color="@color/buttonFillGradiantVeryLight_colorful" />
-            <solid android:color="@color/transparent" />
+            <corners android:radius="6dp" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <solid android:color="@color/buttonFillGradiantLight_colorful" />
         </shape>
     </item>
 
     <item
-        android:top="10px" android:left="10px"
-        android:right="2px" android:bottom="2px">
+        android:top="2px" android:left="2px"
+        android:right="4px" android:bottom="4px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="7dp" />
-            <solid android:color="@color/buttonFillGradiantLight_colorful" />
+            <corners android:radius="6dp" />
+            <stroke android:width="0px" android:color="@color/solidBlack" />
+            <solid android:color="@color/buttonFillGradiantVeryLight_colorful" />
         </shape>
     </item>
 
     <!--    face -->
     <item
-        android:top="8px" android:left="8px"
-        android:right="2px" android:bottom="2px">
+        android:top="4px" android:left="4px"
+        android:right="4px" android:bottom="4px">
         <shape android:shape="rectangle">
 
             <corners android:radius="5dp" />
@@ -64,10 +56,10 @@
             <!-- <solid android:color="@color/buttonFill_colorful" /> -->
             <gradient
                 android:angle="135"
-                android:centerX="5%"
-                android:startColor="@color/buttonFillGradiantCenter_colorful"
+                android:centerX="70%"
+                android:endColor="@color/buttonFillGradiantCenter_colorful"
                 android:centerColor="@color/buttonFillGradiantDark_colorful"
-                android:endColor="@color/buttonFillGradiantVeryDark_colorful"
+                android:startColor="@color/buttonFillGradiantVeryDark_colorful"
                 android:type="linear"
                 />
         </shape>
@@ -75,7 +67,10 @@
 
     <!-- inside border 2 -->
     <item
-        android:top="@dimen/buttonActivated2InsideStrokePadding_colorful" android:left="@dimen/buttonActivated2InsideStrokePadding_colorful" android:right="@dimen/buttonActivated2InsideStrokePadding_colorful" android:bottom="@dimen/buttonActivated2InsideStrokePadding_colorful">
+        android:top="@dimen/buttonActivated2InsideStrokePaddingTopLeft_colorful"
+        android:left="@dimen/buttonActivated2InsideStrokePaddingTopLeft_colorful"
+        android:right="@dimen/buttonActivated2InsideStrokePaddingBottomRight_colorful"
+        android:bottom="@dimen/buttonActivated2InsideStrokePaddingBottomRight_colorful">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerInsideBorderRadius_colorful" />
             <stroke android:width="@dimen/buttonSelectedInsideStroke_colorful" android:color="@color/buttonActivatedHoveredInside2Stroke_colorful" />

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--    used as the additional Gamepad highlight for the Select button-->
+
     <item
         android:top="0dip" android:left="0dip"
         android:right="0dip" android:bottom="0dip">
@@ -41,10 +43,12 @@
     </item>
 
     <item
-        android:top="1dip" android:left="1dip"
-        android:right="4dip" android:bottom="4dip">
-        <shape android:shape="rectangle">
+        android:top="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
+        android:left="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
+        android:right="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline"
+        android:bottom="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline">
 
+        <shape android:shape="rectangle">
             <corners android:radius="@dimen/buttonCornerRadius_original" />
             <stroke android:width="0dip" android:color="@color/black" />
             <gradient
@@ -59,7 +63,11 @@
 
     <!-- inside border 2 -->
     <item
-        android:top="@dimen/buttonActivated2InsideStrokePadding_outline" android:left="@dimen/buttonActivated2InsideStrokePadding_outline" android:right="@dimen/buttonActivated2InsideStrokePadding_outline" android:bottom="@dimen/buttonActivated2InsideStrokePadding_outline">
+        android:top="@dimen/buttonActivated2InsideStrokePaddingTopLeft_outline"
+        android:left="@dimen/buttonActivated2InsideStrokePaddingTopLeft_outline"
+        android:right="@dimen/buttonActivated2InsideStrokePaddingBottomRight_outline"
+        android:bottom="@dimen/buttonActivated2InsideStrokePaddingBottomRight_outline">
+
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_hover" />
             <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/buttonActivatedHoveredInside2Stroke_outline" />
