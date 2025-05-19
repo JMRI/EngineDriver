@@ -6,8 +6,8 @@
  * New 'G' command for keyboard gamepad type to force a function even if it is momentary
  * Linting
  * Rearrange the Select Loco page for better fit of non-English text. (primarily German)
- * Rework of the Select Loco and DCC-EX to be more glyph based.  Preference to go back to the old Select Loco format if desired.
- * Tweaking of the Original and Colourful themes to make the buttons more three dimensional
+ * Rework of the Select Loco and DCC-EX screens to be more glyph based.  Preference to go back to the old Select Loco format if desired.
+ * Tweaking of the Original, Colourful and Dark themes to make the buttons more three dimensional
 **Version 2.40.196
  * Only redraw Route list if actually changed
  * Avoid a few crashes reported to Play Store
