@@ -3,7 +3,7 @@
     <!-- common -->
 
     <dimen name="buttonStroke_hover">1dip</dimen>
-    <dimen name="buttonCornerRadius_hover">15dip</dimen>
+    <dimen name="buttonCornerRadius_hover">5dip</dimen>
 
     <!-- original theme -->
 
@@ -51,9 +51,19 @@
     <dimen name="buttonDisabledStroke_outline">1dip</dimen>
     <dimen name="buttonSelectedStroke_outline">2dip</dimen>
     <dimen name="buttonSelectedInsideStroke_outline">1dip</dimen>
+
     <dimen name="buttonSelectedInsideStrokePadding_outline">3dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingTopLeft_outline">3dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingBottomRight_outline">4dip</dimen>
+
     <dimen name="buttonActivatedInsideStrokePadding_outline">3dip</dimen>
-    <dimen name="buttonActivated2InsideStrokePadding_outline">4dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingTopLeft_outline">3dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingBottomRight_outline">4dip</dimen>
+
+    <dimen name="buttonActivated2InsideStrokePadding_outline">5dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingTopLeft_outline">5dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingBottomRight_outline">6dip</dimen>
+
     <dimen name="buttonStroke_outline">2dip</dimen>
     <dimen name="buttonCornerRadius_outline">5dip</dimen>
 
@@ -79,12 +89,22 @@
 
     <dimen name="buttonDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonSelectedStroke_ultra">1px</dimen>
-    <dimen name="buttonSelectedInsideStroke_ultra">2dp</dimen>
-    <dimen name="buttonSelectedInsideStrokePadding_ultra">2dp</dimen>
-    <dimen name="buttonActivatedInsideStrokePadding_ultra">2dp</dimen>
-    <dimen name="buttonActivated2InsideStrokePadding_ultra">3dp</dimen>
-    <dimen name="buttonStroke_ultra">1dp</dimen>
-    <dimen name="buttonCornerRadius_ultra">3dp</dimen>
+
+    <dimen name="buttonSelectedInsideStroke_ultra">1dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_ultra">4dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingTopLeft_ultra">6dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingBottomRight_ultra">4dip</dimen>
+
+    <dimen name="buttonActivatedInsideStrokePadding_ultra">4dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingTopLeft_ultra">6dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingBottomRight_ultra">4dip</dimen>
+
+    <dimen name="buttonActivated2InsideStrokePadding_ultra">6dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingTopLeft_ultra">8dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingBottomRight_ultra">6dip</dimen>
+
+    <dimen name="buttonStroke_ultra">1dip</dimen>
+    <dimen name="buttonCornerRadius_ultra">3dip</dimen>
 
     <dimen name="buttonFnDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonFnSelectedStroke_ultra">1px</dimen>
@@ -104,35 +124,46 @@
 
     <!-- Colorful theme -->
 
-    <dimen name="buttonDisabledStroke_colorful">1px</dimen>
-    <dimen name="buttonSelectedStroke_colorful">1px</dimen>
-    <dimen name="buttonSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonSelectedInsideStrokePadding_colorful">10px</dimen>
-    <dimen name="buttonSelectedInsideStrokePaddingTopAndLeft_colorful">12px</dimen>
-    <dimen name="buttonActivatedInsideStrokePadding_colorful">8px</dimen>
-    <dimen name="buttonActivated2InsideStrokePadding_colorful">12px</dimen>
-    <dimen name="buttonStroke_colorful">1dp</dimen>
-    <dimen name="buttonCornerRadius_colorful">8dp</dimen>
-    <dimen name="buttonCornerInsideBorderRadius_colorful">6dp</dimen>
+    <dimen name="buttonDisabledStroke_colorful">1dip</dimen>
+    <dimen name="buttonSelectedStroke_colorful">1dip</dimen>
+    <dimen name="buttonSelectedInsideStroke_colorful">2dip</dimen>
 
-    <dimen name="buttonFnDisabledStroke_colorful">1px</dimen>
-    <dimen name="buttonFnSelectedStroke_colorful">1px</dimen>
-    <dimen name="buttonFnSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonFnSelectedInsideStrokePadding_colorful">8px</dimen>
-    <dimen name="buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful">14px</dimen>
-    <dimen name="buttonFnStroke_colorful">1dp</dimen>
-    <dimen name="buttonFnCornerRadius_colorful">8dp</dimen>
-    <dimen name="buttonFnCornerInsideBorderRadius_colorful">6dp</dimen>
+    <dimen name="buttonSelectedInsideStrokePadding_colorful">4dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingTopLeft_colorful">4dip</dimen>
+    <dimen name="buttonSelectedInsideStrokePaddingBottomRight_colorful">3dip</dimen>
 
-    <dimen name="buttonStopDisabledStroke_colorful">1px</dimen>
-    <dimen name="buttonStopSelectedStroke_colorful">1px</dimen>
-    <dimen name="buttonStopSelectedInsideStroke_colorful">4px</dimen>
-    <dimen name="buttonStopSelectedInsideStrokePadding_colorful">8dp</dimen>
-    <dimen name="buttonStopStroke_colorful">1dp</dimen>
-    <dimen name="buttonStopCornerRadius_colorful">8dp</dimen>
-    <dimen name="buttonStopCornerInsideBorderRadius_colorful">6dp</dimen>
+    <dimen name="buttonActivatedInsideStrokePadding_colorful">4dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingTopLeft_colorful">4dip</dimen>
+    <dimen name="buttonActivatedInsideStrokePaddingBottomRight_colorful">3dip</dimen>
 
-    <dimen name="spinnerBackgroundCornerRadius_colorful">3dp</dimen>
+    <dimen name="buttonActivated2InsideStrokePadding_colorful">6dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingTopLeft_colorful">6dip</dimen>
+    <dimen name="buttonActivated2InsideStrokePaddingBottomRight_colorful">5dip</dimen>
+
+    <dimen name="buttonStroke_colorful">1dip</dimen>
+    <dimen name="buttonCornerRadius_colorful">8dip</dimen>
+    <dimen name="buttonCornerInsideBorderRadius_colorful">5dip</dimen>
+
+    <dimen name="buttonFnDisabledStroke_colorful">1dip</dimen>
+    <dimen name="buttonFnSelectedStroke_colorful">1dip</dimen>
+    <dimen name="buttonFnSelectedInsideStroke_colorful">2dip</dimen>
+
+    <dimen name="buttonFnSelectedInsideStrokePaddingTopLeft_colorful">5dip</dimen>
+    <dimen name="buttonFnSelectedInsideStrokePaddingBottomRight_colorful">3dip</dimen>
+
+    <dimen name="buttonFnStroke_colorful">1dip</dimen>
+    <dimen name="buttonFnCornerRadius_colorful">8dip</dimen>
+    <dimen name="buttonFnCornerInsideBorderRadius_colorful">6dip</dimen>
+
+    <dimen name="buttonStopDisabledStroke_colorful">1dip</dimen>
+    <dimen name="buttonStopSelectedStroke_colorful">1dip</dimen>
+    <dimen name="buttonStopSelectedInsideStroke_colorful">4dip</dimen>
+    <dimen name="buttonStopSelectedInsideStrokePadding_colorful">8dip</dimen>
+    <dimen name="buttonStopStroke_colorful">1dip</dimen>
+    <dimen name="buttonStopCornerRadius_colorful">8dip</dimen>
+    <dimen name="buttonStopCornerInsideBorderRadius_colorful">6dip</dimen>
+
+    <dimen name="spinnerBackgroundCornerRadius_colorful">3dip</dimen>
 
     <!-- Neon Blue theme -->
 

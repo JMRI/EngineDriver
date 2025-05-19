@@ -437,6 +437,7 @@
         <item name="ed_normal_button_style">@style/normal_button_style_ultra</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_ultra</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
+        <item name="ed_small_button_style">@style/small_button_style_ultra</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_ultra</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_ultra</item>

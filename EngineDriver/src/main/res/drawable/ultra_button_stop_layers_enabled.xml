@@ -1,25 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <!--    Top right-->
+    <item
+        android:top="0dip" android:left="0dip"
+        android:right="0dip" android:bottom="0dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_ultra" />
-            <stroke android:width="@dimen/buttonStopSelectedStroke_ultra" android:color="@color/buttonCommonSelectedStroke_ultra" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="@color/buttonCommonFillGradiantDark_ultra" />
         </shape>
     </item>
 
     <item
-        android:top="1px" android:left="1px" android:right="0px" android:bottom="0px">
+        android:top="1dip" android:left="1dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <solid android:color="@color/buttonCommonFillGradiantCenter_ultra" />
+        </shape>
+    </item>
+
+    <item
+        android:top="2dip" android:left="2dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <solid android:color="@color/buttonCommonFillGradiantLight_ultra" />
+        </shape>
+    </item>
+
+    <!--    bottom left-->
+    <item
+        android:top="3dip" android:left="3dip"
+        android:right="0dip" android:bottom="0dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <solid android:color="@color/buttonCommonFillGradiantVeryDark_ultra" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3dip" android:left="3dip"
+        android:right="1dip" android:bottom="1dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <solid android:color="@color/buttonCommonFillGradiantDark_ultra" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3dip" android:left="3dip"
+        android:right="2dip" android:bottom="2dip">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_ultra" />
+            <solid android:color="@color/buttonCommonFillGradiantCenter_ultra" />
+        </shape>
+    </item>
+
+    <!--fill-->
+    <item
+        android:top="3dip" android:left="3dip"
+        android:right="3dip" android:bottom="3dip">
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonCornerRadius_ultra" />
             <stroke android:width="0px" android:color="@color/black" />
             <gradient
                 android:angle="135"
-                android:centerX="5%"
-                android:startColor="@color/buttonCommonFillGradiantLight_ultra"
+                android:centerX="80%"
+                android:startColor="@color/buttonCommonFillGradiantDark_ultra"
                 android:centerColor="@color/buttonCommonFillGradiantCenter_ultra"
-                android:endColor="@color/buttonCommonFillGradiantDark_ultra"
+                android:endColor="@color/buttonCommonFillGradiantLight_ultra"
                 android:type="linear"
                 />
         </shape>

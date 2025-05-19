@@ -76,9 +76,11 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful"
-        android:left="@dimen/buttonFnSelectedInsideStrokePaddingTopAndLeft_colorful"
-        android:right="@dimen/buttonFnSelectedInsideStrokePadding_colorful" android:bottom="@dimen/buttonFnSelectedInsideStrokePadding_colorful">
+        android:top="@dimen/buttonFnSelectedInsideStrokePaddingTopLeft_colorful"
+        android:left="@dimen/buttonFnSelectedInsideStrokePaddingTopLeft_colorful"
+        android:right="@dimen/buttonFnSelectedInsideStrokePaddingBottomRight_colorful"
+        android:bottom="@dimen/buttonFnSelectedInsideStrokePaddingBottomRight_colorful">
+
         <shape android:shape="rectangle"  >
             <corners android:radius="@dimen/buttonFnCornerInsideBorderRadius_colorful" />
             <stroke android:width="@dimen/buttonFnSelectedInsideStroke_colorful"
