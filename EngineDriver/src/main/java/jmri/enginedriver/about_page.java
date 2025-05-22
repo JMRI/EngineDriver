@@ -29,7 +29,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,6 +65,11 @@ public class about_page extends AppCompatActivity {
         // show ED webpage
         WebView webview = findViewById(R.id.about_webview);
         webview.loadUrl(getApplicationContext().getResources().getString(R.string.about_page_url));
+
+        //Set the buttons
+        Button closeButton = findViewById(R.id.about_button_close);
+        CloseButtonListener closeButtonlistener = new CloseButtonListener();
+        closeButton.setOnClickListener(closeButtonlistener);
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.about_page_msg_handler = new about_page_handler(Looper.getMainLooper());
@@ -180,6 +187,13 @@ public class about_page extends AppCompatActivity {
                 default:
                     break;
             }
+        }
+    }
+
+    public class CloseButtonListener implements View.OnClickListener {
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            finish();
         }
     }
 }

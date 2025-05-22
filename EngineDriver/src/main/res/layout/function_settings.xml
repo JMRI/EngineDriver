@@ -34,20 +34,24 @@
 
             <TextView
                 style="?attr/floating_text_style"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4sp"
                 android:text="@string/fb_helptext"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/fb_copy_labels_from_roster"
                 style="?attr/ed_small_button_style"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/copy_function_labels"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
+                android:drawableLeft="?attr/ed_download_glyph"
+                android:drawablePadding="4dp"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
                 android:paddingRight="4dp"
                 android:paddingEnd="4dp" />
 
@@ -211,11 +215,13 @@
             <Button
                 android:id="@+id/fb_reset_function_labels"
                 style="?attr/ed_small_button_style"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fbResetFunctionLabels"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
+                android:drawableLeft="?attr/ed_reset_glyph"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
                 android:paddingRight="4dp"
                 android:paddingEnd="4dp" />
 

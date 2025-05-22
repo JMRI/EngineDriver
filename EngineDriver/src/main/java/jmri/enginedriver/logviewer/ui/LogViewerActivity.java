@@ -91,8 +91,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         //Set the buttons
         Button closeButton = findViewById(R.id.logviewer_button_close);
-        close_button_listener close_click_listener = new close_button_listener();
-        closeButton.setOnClickListener(close_click_listener);
+        CloseButtonListener closeButtonListener = new CloseButtonListener();
+        closeButton.setOnClickListener(closeButtonListener);
 
 //        Button resetButton = findViewById(R.id.logviewer_button_reset);
 //        reset_button_listener reset_click_listener = new reset_button_listener();
@@ -203,7 +203,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    public class close_button_listener implements View.OnClickListener {
+    public class CloseButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
             finish();

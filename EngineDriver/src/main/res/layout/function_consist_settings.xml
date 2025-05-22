@@ -20,13 +20,14 @@
         <!--- Width of this column will be programatically changed if used for DCC-EX Functions-->
         <RelativeLayout
             android:id="@+id/function_consist_instruction"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/function_consist_heading"
                 style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-condensed"
                 android:text="@string/functionConsistHeader"
                 tools:ignore="RtlSymmetry" />
 
@@ -41,11 +42,12 @@
                 <TextView
                     android:id="@+id/function_consist_instruction_text"
                     style="?attr/floating_text_style"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2sp"
                     android:text="@string/functionConsistHelpText"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     tools:ignore="SmallSp" />
 
             </ScrollView>
@@ -53,15 +55,23 @@
             <Button
                 android:id="@+id/functionConsistReset"
                 style="?attr/ed_small_button_style"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/functionConsistClose"
                 android:layout_centerHorizontal="true"
-                android:text="@string/fbResetFunctionLabels" />
+                android:text="@string/fbResetFunctionLabels"
+                android:drawableLeft="?attr/ed_reset_glyph"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                tools:ignore="RtlSymmetry" />
 
             <Button
                 android:id="@+id/functionConsistClose"
                 style="?attr/ed_small_button_style"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -95,6 +105,7 @@
 
                     <TextView
                         style="?android:attr/listSeparatorTextViewStyle"
+                        android:fontFamily="sans-serif-condensed"
                         android:layout_width="30dp"
                         android:layout_marginRight="2dp"
                         android:textSize="12sp"
@@ -127,10 +138,10 @@
                     android:layout_marginBottom="4dp" > <!--Row 00-->
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton00DefaultValue" />
 
                     <Spinner
@@ -150,10 +161,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton01DefaultValue" />
 
                     <Spinner
@@ -174,10 +185,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton02DefaultValue" />
 
                     <Spinner
@@ -199,10 +210,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton03DefaultValue" />
 
                     <Spinner
@@ -223,10 +234,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton04DefaultValue" />
 
                     <Spinner
@@ -247,10 +258,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton05DefaultValue" />
 
                     <Spinner
@@ -271,10 +282,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton06DefaultValue" />
 
                     <Spinner
@@ -295,10 +306,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton07DefaultValue" />
 
                     <Spinner
@@ -319,10 +330,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton08DefaultValue" />
 
                     <Spinner
@@ -343,10 +354,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton09DefaultValue" />
 
                     <Spinner
@@ -367,10 +378,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton10DefaultValue" />
 
                     <Spinner
@@ -391,11 +402,11 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:text="@string/functionButton11DefaultValue"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <Spinner
                         android:layout_width="130dp"
@@ -415,10 +426,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton12DefaultValue" />
 
                     <Spinner
@@ -439,10 +450,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton13DefaultValue" />
 
                     <Spinner
@@ -463,10 +474,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton14DefaultValue" />
 
                     <Spinner
@@ -487,10 +498,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton15DefaultValue" />
 
                     <Spinner
@@ -511,10 +522,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton16DefaultValue" />
 
                     <Spinner
@@ -535,10 +546,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton17DefaultValue" />
 
                     <Spinner
@@ -559,10 +570,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton18DefaultValue" />
 
                     <Spinner
@@ -583,10 +594,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton19DefaultValue" />
 
                     <Spinner
@@ -607,10 +618,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton20DefaultValue" />
 
                     <Spinner
@@ -631,10 +642,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton21DefaultValue" />
 
                     <Spinner
@@ -655,10 +666,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton22DefaultValue" />
 
                     <Spinner
@@ -679,10 +690,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton23DefaultValue" />
 
                     <Spinner
@@ -702,10 +713,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton24DefaultValue" />
 
                     <Spinner
@@ -726,10 +737,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton25DefaultValue" />
 
                     <Spinner
@@ -750,10 +761,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton26DefaultValue" />
 
                     <Spinner
@@ -774,10 +785,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton27DefaultValue" />
 
                     <Spinner
@@ -798,10 +809,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton28DefaultValue" />
 
                     <Spinner
@@ -822,10 +833,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton29DefaultValue" />
 
                     <Spinner
@@ -846,10 +857,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton30DefaultValue" />
 
                     <Spinner
@@ -870,10 +881,10 @@
                     android:layout_marginBottom="4dp" >
 
                     <TextView
-                        style="?attr/edit_label_style"
+                        style="?attr/edit_label_condensed_text_style"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:text="@string/functionButton31DefaultValue" />
 
                     <Spinner

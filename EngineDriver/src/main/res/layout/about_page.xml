@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:keepScreenOn="true"
     android:orientation="vertical">
 
@@ -16,10 +17,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/none" />
-    <WebView
-        android:id="@+id/about_webview"
-        android:layout_weight="1"
+
+
+    <RelativeLayout
+        android:id="@+id/dcc_ex_bottom_button_layout"
         android:layout_width="fill_parent"
-        android:layout_height="0dp" />
+        android:layout_height="match_parent"
+        android:layout_margin="0sp"
+        android:padding="0dp" >
+
+        <WebView
+            android:id="@+id/about_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true" />
+
+        <Button
+            android:id="@+id/about_button_close"
+            style="?attr/ed_normal_button_style"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/logviewerClose"
+            android:padding="5dp"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
 
 </LinearLayout>
