@@ -132,6 +132,11 @@
     <item name="android:shadowRadius">0.2</item>
   </style>
 
+  <style name="edit_label_condensed_text_style" parent="edit_label_style">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
+
   <style name="spinner" parent="Widget.AppCompat.Spinner">
     <item name="android:ellipsize">none</item>
     <item name="android:dropDownVerticalOffset">18dp</item>
@@ -589,9 +594,14 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+
   <style name="edit_label_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
   </style>
+  <style name="edit_label_condensed_text_style_black" parent="edit_label_style_black">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="edit_func_style_black">
     <item name="android:textSize">18sp</item>
     <item name="android:singleLine">true</item>
@@ -768,9 +778,14 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+
   <style name="edit_label_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/solidWhite</item>
   </style>
+  <style name="edit_label_condensed_text_style_outline" parent="edit_label_style_outline">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="list_item_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#FFFFFF</item>
     <item name="android:shadowColor">#FF000000</item>
@@ -1210,6 +1225,9 @@
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">2</item>
+  </style>
+  <style name="edit_label_condensed_text_style_colorful" parent="edit_label_style_colorful">
+    <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="spinner_colorful" parent="Widget.AppCompat.Spinner">

@@ -3,6 +3,7 @@
     <attr name="ed_loco_label_style" format="reference" />
     <attr name="floating_text_style" format="reference" />
     <attr name="edit_label_style" format="reference" />
+    <attr name="edit_label_condensed_text_style" format="reference" />
     <attr name="edit_func_style" format="reference" />
     <attr name="list_item_style" format="reference" />
     <attr name="list_id_style" format="reference" />
@@ -88,6 +89,9 @@
     <attr name="ed_dccex_glyph_function_defaults" format="reference" />
     <attr name="ed_dccex_glyph_track_manager" format="reference" />
 
-
+    <attr name="ed_connect_glyph" format="reference" />
+    <attr name="ed_acquire_loco_glyph" format="reference" />
+    <attr name="ed_reset_glyph" format="reference" />
+    <attr name="ed_save_glyph" format="reference" />
 
 </resources>

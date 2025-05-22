@@ -63,7 +63,9 @@
                 android:paddingRight="6dp"
                 android:paddingEnd="6dp"
                 android:text="@string/logviewerSave"
-                tools:ignore="RelativeOverlap,RtlHardcoded" />
+                android:drawableLeft="?attr/ed_save_glyph"
+                android:drawablePadding="6dp"
+                tools:ignore="RtlSymmetry, RelativeOverlap,RtlHardcoded" />
 
             <TextView
                 android:id="@+id/logviewer_info"

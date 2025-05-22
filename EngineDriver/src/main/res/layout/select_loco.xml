@@ -679,14 +679,17 @@
             style="?attr/ed_normal_button_style"
             android:layout_width="wrap_content"
             android:minWidth="110dp"
-            android:maxWidth="200dp"
+            android:maxWidth="220dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/select_loco_label"
             android:layout_alignBottom="@id/address_length"
             android:layout_toRightOf="@id/address_length"
             android:state_enabled="false"
             android:text="@string/acquire_button"
-            tools:ignore="RtlHardcoded" />
+            android:drawableLeft="?attr/ed_acquire_loco_glyph"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
     </RelativeLayout>
 
     <TextView
