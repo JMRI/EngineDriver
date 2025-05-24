@@ -39,16 +39,17 @@
 <!--    </item>-->
 
     <item android:gravity="bottom"
-        android:top="40dp" android:height="5dp"
-        android:left="34px" android:right="32px"  android:bottom="8px"
+        android:top="40dip" android:left="17dip"
+        android:bottom="3dip" android:right="16dip"
         tools:targetApi="m">
         <shape android:shape="rectangle">
             <corners
-                android:radius="3dp" />
+                android:radius="3dip" />
             <size
-                android:width="30dp"
-                android:height="5dp" />
-            <solid android:color="@color/buttonSelectedInsideStroke_neon" />
+                android:width="30dip"
+                android:height="5dip" />
+            <solid
+                android:color="@color/buttonSelectedInsideStroke_neon" />
         </shape>
     </item>
 
