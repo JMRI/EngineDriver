@@ -48,7 +48,7 @@
 
     <item android:gravity="bottom"
         android:top="40dip" android:left="12dip"
-        android:bottom="6dip" android:right="10dip"
+        android:bottom="3dip" android:right="10dip"
 
         tools:targetApi="m">
         <shape android:shape="rectangle">

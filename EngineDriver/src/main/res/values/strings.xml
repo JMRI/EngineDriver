@@ -1365,13 +1365,13 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake fucnctions on the decoder</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Decoder Low Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Decoder Low Function Number(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">Which Decoder Function(s) to activate at Low Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">Decoder Mid Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">Decoder Mid Function Number(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">Which Decoder Function(s) to activate at Mid Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">Decoder High Functon Number(s)</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">Decoder High Function Number(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">Which Decoder Function(s) to activate at High Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue" translatable="false">6</string>  <!-- DO NOT TRANSLATE -->
 

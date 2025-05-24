@@ -852,6 +852,8 @@ public class throttle_semi_realistic extends throttle {
     }
 
     void setDecoderBrake(int whichThrottle) {
+        if (!useEsuDecoderBrakes) return;
+
         boolean[] functionIsOn;
         int[] functionShouldBeOnOff;
 

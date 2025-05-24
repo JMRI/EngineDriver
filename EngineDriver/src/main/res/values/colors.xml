@@ -317,6 +317,7 @@
     <color name="buttonLocoDisabledText_neon">@color/solidWhite</color>
     <color name="buttonSelectedFill_neon">#FF2d2d2d</color>
     <color name="buttonSelectedInsideStroke_neon">@color/neon_yellow</color>
+    <color name="buttonSelectedInsideStroke2_neon">#D9FFFFFF</color>
     <color name="buttonActivatedHoveredInsideStroke_neon">@color/neon_yellow_dark</color>
     <color name="buttonActivatedHoveredInside2Stroke_neon">@color/neon_yellow_very_dark</color>
 
