@@ -443,7 +443,7 @@
                     android:minHeight="48dp"
                     android:text="@string/LocoSelectMethodAddress"
                     android:textSize="18sp"
-                    style = "@style/EDRadioButton" />
+                    style = "?attr/EDRadioButton" />
 
                 <RadioButton
                     android:id="@+id/select_loco_method_roster_button"
@@ -455,7 +455,7 @@
                     android:minHeight="38dp"
                     android:text="@string/LocoSelectMethodRoster"
                     android:textSize="18sp"
-                    style = "@style/EDRadioButton"
+                    style = "?attr/EDRadioButton"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
@@ -468,7 +468,7 @@
                     android:minHeight="38dp"
                     android:text="@string/LocoSelectMethodRecent"
                     android:textSize="18sp"
-                    style = "@style/EDRadioButton"
+                    style = "?attr/EDRadioButton"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
@@ -481,7 +481,7 @@
                     android:minHeight="38dp"
                     android:text="@string/LocoSelectMethodRecentConsist"
                     android:textSize="18sp"
-                    style = "@style/EDRadioButton"
+                    style = "?attr/EDRadioButton"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <RadioButton
@@ -494,7 +494,7 @@
                     android:minHeight="38dp"
                     android:text="@string/LocoSelectMethodIDNGo"
                     android:textSize="18sp"
-                    style = "@style/EDRadioButton"
+                    style = "?attr/EDRadioButton"
                     tools:ignore="TouchTargetSizeCheck" />
             </RadioGroup>
 
@@ -761,7 +761,7 @@
             android:id="@+id/roster_sort"
             style="?attr/ed_small_button_condensed_text_style"
             android:layout_width="wrap_content"
-            android:layout_height="24sp"
+            android:layout_height="26sp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="8dp"
             android:text="@string/order"
@@ -788,7 +788,7 @@
 
         <EditText
             android:id="@+id/filter_roster_text"
-            style="?attr/edit_label_style"
+            style="?attr/edit_label_condensed_text_style"
             android:layout_width="70sp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -806,7 +806,7 @@
             android:shadowDy="1"
             android:shadowRadius="0.2"
             android:singleLine="true"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:ignore="RtlHardcoded,TouchTargetSizeCheck" />
 
         <TextView
@@ -844,7 +844,7 @@
             android:id="@+id/roster_download"
             style="?attr/ed_small_button_condensed_text_style"
             android:layout_width="wrap_content"
-            android:layout_height="24sp"
+            android:layout_height="26sp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="8dp"
             android:ellipsize="end"

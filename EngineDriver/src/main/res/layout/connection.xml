@@ -151,7 +151,7 @@
             android:id="@+id/clear_recent_connections_button"
             style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
-            android:layout_height="22sp"
+            android:layout_height="26sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
