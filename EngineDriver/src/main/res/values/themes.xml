@@ -587,7 +587,9 @@
         <item name="list_id_style">@style/list_id_style_colorful</item>
         <item name="list_extras_style">@style/list_extras_style_colorful</item>
         <item name="EDListView">@style/EDListView_colorful</item>
+
         <item name="EDRadioButton">@style/EDRadioButton_colorful</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton_colorful</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_colorful</item>
 
@@ -671,8 +673,6 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
-
-        <item name="android:radioButtonStyle">@style/EDRadioButton_colorful</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

@@ -40,7 +40,7 @@
 
                 <RadioButton
                     android:id="@+id/select_turnout_method_address_button"
-                    android:theme="?attr/EDRadioButton"
+                    style="?attr/EDRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -51,7 +51,7 @@
 
                 <RadioButton
                     android:id="@+id/select_turnout_method_roster_button"
-                    android:theme="?attr/EDRadioButton"
+                    style="?attr/EDRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

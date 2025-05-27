@@ -426,7 +426,12 @@
                 <Button
                     android:id="@+id/gamepad_test_button_reset"
                     style="?attr/ed_normal_button_style"
-                    android:text="@string/gamepadTestReset" />
+                    android:text="@string/gamepadTestReset"
+                    android:drawableLeft="?attr/ed_reset_glyph"
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingRight="4dp"
+                    android:paddingEnd="4dp" />
 
                 <Button
                     android:id="@+id/gamepad_test_button_cancel"

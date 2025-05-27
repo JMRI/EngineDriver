@@ -359,7 +359,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/DCCEXclearCommands"
-                    tools:ignore="RtlHardcoded" />
+                    android:drawableLeft="?attr/ed_clear_list_glyph"
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <Button
                     android:id="@+id/withrottle_cv_programmer_button_close"
