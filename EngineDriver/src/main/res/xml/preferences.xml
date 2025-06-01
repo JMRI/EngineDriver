@@ -1110,8 +1110,7 @@
                     android:key="prefLimitSpeedButton"
                     android:summary="@string/prefLimitSpeedButtonSummary"
                     android:title="@string/prefLimitSpeedButtonTitle"
-                    android:layout="@layout/checkbox_no_icon" >
-                </CheckBoxPreference>
+                    android:layout="@layout/checkbox_no_icon" />
 
                 <EditTextPreference
                     android:defaultValue="@string/prefLimitSpeedPercentDefaultValue"

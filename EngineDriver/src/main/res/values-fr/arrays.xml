@@ -493,7 +493,7 @@
     <string-array name="prefAppIconActionEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>Arret d urgence</item>
-        <item>Page de limitation</item>
+        <item>Page regulateur</item>
     </string-array>
 
     <string-array name="prefSortOrderEntries">  <!-- display version -->
@@ -545,8 +545,8 @@
     <string-array name="selectLocoMethodEntries">  <!-- display version -->
         <item>Adresse DCC</item>
         <item>Liste des serveurs</item>
-        <item>Locos récents</item>
-        <item>Composés récents</item>
+        <item>Locos recentes</item>
+        <item>Unites Multiples recentes</item>
         <item>Demander l ID de la loco</item>
     </string-array>
 
