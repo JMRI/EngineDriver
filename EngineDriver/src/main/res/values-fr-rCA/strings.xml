@@ -928,7 +928,7 @@
 
     <string name="routes_route">Nom Système itinéraire</string>
 
-    <string name="select_loco_current_locos_heading">Locos actuellement sélectionnées - manette %1$s</string>
+    <string name="select_loco_current_locos_heading">Loco actuellemen selectionnee - Regulateur %1$s</string>
     <string name="select_loco">Entrer l\'adresse de la locomotive à contrôler</string>
 
 
