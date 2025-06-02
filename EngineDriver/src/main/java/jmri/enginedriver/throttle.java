@@ -98,9 +98,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
@@ -4336,6 +4336,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } else {
                 Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
             }
+        }
+
+        @Override
+        public void onPhysicalSliderPositionChanged(int i) {
+            // TODO implement this
         }
     };
 
