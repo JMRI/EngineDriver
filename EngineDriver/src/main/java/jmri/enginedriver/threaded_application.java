@@ -670,6 +670,7 @@ public class threaded_application extends Application {
 
         @Override
         public void onTrimMemory(int level) {
+            Log.d("Engine_Driver", "t_a: onTrimMemory(): " + level);
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;
@@ -1804,6 +1805,7 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity) {
+        Log.d("Engine_Driver", "t_a: checkExit(1): ");
         boolean prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
         if (!prefDoubleBackButtonToExit) {
             checkAskExit(activity, false);
@@ -1823,6 +1825,7 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity, boolean forceFastDisconnect) {
+        Log.d("Engine_Driver", "t_a: checkExit(2): ");
         boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
         if (!prefDoubleBackButtonToExit) {
             checkAskExit(activity, forceFastDisconnect);
@@ -1855,6 +1858,7 @@ public class threaded_application extends Application {
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                Log.d("Engine_Driver", "t_a: checkAskExit(): onClick() ");
                 exitConfirmed = true;
                 if (!forceFastDisconnect) {
                     sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
