@@ -38,6 +38,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * A local cache of downloaded images is maintained internally to improve performance.
  */
 public class ImageDownloader {
+    static final String applicationName = "Engine_Driver";
+    static final String activityName = "ImageDownloader";
 
     public ImageDownloader() {
         resetPurgeTimer();
@@ -66,7 +68,7 @@ public class ImageDownloader {
         @Override
         public void run() {
             downloadBitmap(sourceUrl, imageView);
-            Log.d("Engine_Driver", "ImagDownloader: downloadBitmapInBackground.run:");
+            Log.d(applicationName, activityName + ": downloadBitmapInBackground.run:");
         }
     } // end downloadBitmapInBackground()
 

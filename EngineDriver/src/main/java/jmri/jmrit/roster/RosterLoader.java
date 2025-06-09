@@ -15,7 +15,10 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import jmri.enginedriver.threaded_application;
+
 public class RosterLoader {
+    static final String activityName = "comm_handler";
     final URL rosterUrl;
 
     public RosterLoader(String Url) {
@@ -30,7 +33,7 @@ public class RosterLoader {
         try {
             return rosterUrl.openConnection().getInputStream();
         } catch (IOException e) {
-            Log.e("Engine_Driver", "Error retrieving roster xml: " + e.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": InputStream(): Error retrieving roster xml: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +54,7 @@ public class RosterLoader {
             }
             rosterStream.close();
         } catch (Exception e) {
-            Log.e("Engine_Driver", "Error building hashmap of Roster Entries: " + e.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": parse(): Error building hashmap of Roster Entries: " + e.getMessage());
             return null;
         }
         return roster;

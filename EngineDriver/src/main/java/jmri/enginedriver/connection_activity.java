@@ -102,6 +102,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.import_export.ImportExportConnectionList;
 
 public class connection_activity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "connection_activity";
+
     //    private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
     private SimpleAdapter connection_list_adapter;
@@ -192,13 +194,13 @@ public class connection_activity extends AppCompatActivity implements Permission
 //    //Request connection to the WiThrottle server.
 //    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
-        Log.d("Engine_Driver", "in connection_activity.connect()");
+        Log.d(threaded_application.applicationName, activityName + ": connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
     }
 
 
     private void start_throttle_activity() {
-//        Intent throttle = new Intent().setClass(this, throttle.class);
+        threaded_application.activityInTransition(activityName);
         Intent throttle = mainapp.getThrottleIntent();
         startActivity(throttle);
         this.finish();
@@ -213,6 +215,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.connection_msg_handler = null;
         }
 
+        threaded_application.activityInTransition(activityName);
         //end current CA Intent then start the new Intent
         Intent newConnection = new Intent().setClass(this, connection_activity.class);
         this.finish();
@@ -500,7 +503,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //    timestamp = SystemClock.uptimeMillis();
-        Log.d("Engine_Driver", "connection.onCreate ");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
         mainapp = (threaded_application) this.getApplication();
         mainapp.connection_msg_handler = new ui_handler(Looper.getMainLooper());
 
@@ -623,7 +626,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
-            Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(); Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
@@ -681,6 +684,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.CONNECTION;
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
@@ -721,6 +726,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     @Override
     public void onPause() {
         super.onPause();
+        threaded_application.activityPaused(activityName);
+
 //        runIntro = false;
         if (connToast != null) {
             connToast.cancel();
@@ -730,14 +737,14 @@ public class connection_activity extends AppCompatActivity implements Permission
     @Override
     public void onStop() {
         super.onStop();
-        Log.d("Engine_Driver", "connection.onStop()");
+        Log.d(threaded_application.applicationName, activityName + ": onStop()");
         //shutdown server discovery listener
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
     }
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "connection.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
         if (!isRestarting) {
@@ -745,7 +752,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 mainapp.connection_msg_handler.removeCallbacksAndMessages(null);
                 mainapp.connection_msg_handler = null;
             } else {
-                Log.d("Engine_Driver", "onDestroy: mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
+                Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.connection_msg_handler is null. Unable to removeCallbacksAndMessages");
             }
         } else {
             isRestarting = false;
@@ -806,7 +813,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
 //    void getPhoneInfo() {
-//        Log.d("Engine_Driver", "c_a: NetworkRequest.getPhoneInfo()");
+//        Log.d(threaded_application.applicationName, activityName + ":  getPhoneInfo()");
 //
 //        PermissionsHelper phi = PermissionsHelper.getInstance();
 //        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
@@ -832,7 +839,7 @@ public class connection_activity extends AppCompatActivity implements Permission
      * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
      */
     void getWifiInfo() {
-        Log.d("Engine_Driver", "c_a: NetworkRequest.getWifiInfo()");
+        Log.d(threaded_application.applicationName, activityName + ": getWifiInfo()");
         int intaddr;
         mainapp.client_address_inet4 = null;
         mainapp.client_address = null;
@@ -873,7 +880,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
             mainapp.client_ssid = wifiinfo.getSSID();
-            Log.d("Engine_Driver", "c_a: NetworkRequest.getWifiInfo(: SSID: " + mainapp.client_ssid);
+            Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): SSID: " + mainapp.client_ssid);
             if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
                 mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
             }
@@ -883,7 +890,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             try {
                 mainapp.clientLocationServiceEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             } catch (Exception except) {
-                Log.d("Engine_Driver", "c_a: unable to determine if the location service is enabled");
+                Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): unable to determine if the location service is enabled");
             }
 
             //determine if currently using mobile connection or wifi
@@ -896,7 +903,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     if (!prefAllowMobileData) {
                         // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            Log.d("Engine_Driver", "c_a: NetworkRequest.Builder");
+                            Log.d(threaded_application.applicationName, activityName + ": getWifiInfor(): Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
@@ -929,10 +936,10 @@ public class connection_activity extends AppCompatActivity implements Permission
                     mainapp.client_type = "other";
                     break;
             }
-            Log.d("Engine_Driver", "network type=" + nInfo.getType() + " " + mainapp.client_type);
+            Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): network type=" + nInfo.getType() + " " + mainapp.client_type);
 
         } catch (Exception except) {
-            Log.e("Engine_Driver", "getWifiInfo - error getting IP addr: " + except.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": getWifiInfo(): error getting IP addr: " + except.getMessage());
         }
 
     }
@@ -1026,15 +1033,6 @@ public class connection_activity extends AppCompatActivity implements Permission
             connect_button.setEnabled(false);
         }
     }
-
-    /***
-     private void sendMsgErr(long delayMs, int msgType, String msgBody, int msgArg1, String errMsg) {
-     if(!mainapp.sendMsgDelay(mainapp.comm_msg_handler, delayMs, msgType, msgBody, msgArg1, 0)) {
-     Log.e("Engine_Driver",errMsg) ;
-     Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT).show();
-     }
-     }
-     ***/
 
     public class ClearRecentConnectionsButtonListener implements AdapterView.OnClickListener {
         public void onClick(View v) {
@@ -1196,7 +1194,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d("Engine_Driver", "connection_activity: navigateToHandler:" + requestCode);
+        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): " + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
@@ -1206,30 +1204,30 @@ public class connection_activity extends AppCompatActivity implements Permission
             // Only need to consider relevant request codes initiated by this Activity
 //            switch (requestCode) {
 //                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
-//                        Log.d("Engine_Driver", "Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
 //                        clearConnectionsListImpl();
 //                        break;
 //                    case PermissionsHelper.READ_CONNECTION_LIST:
-//                        Log.d("Engine_Driver", "Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
 //                        getConnectionsListImpl("", "");
 //                        break;
 //                    case PermissionsHelper.STORE_PREFERENCES:
-//                        Log.d("Engine_Driver", "Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
+//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
 //                        writeSharedPreferencesToFileImpl();
 //                        break;
 //                    case PermissionsHelper.READ_PREFERENCES:
-//                        Log.d("Engine_Driver", "Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
 //                        loadSharedPreferencesFromFileImpl();
 //                        break;
 //                case PermissionsHelper.CONNECT_TO_SERVER:
-//                    Log.d("Engine_Driver", "Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_PHONE_STATE - navigate to connectImpl()");
 ////                    connectImpl();
 //                    checkIfDccexServerName(connected_hostname, connected_port);
 //                    connect();
 //                    break;
 //                default:
                     // do nothing
-                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -1238,7 +1236,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults, true)) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

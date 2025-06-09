@@ -61,6 +61,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "ConsistLightsEdit";
+
     public static String LIGHT_TEXT_OFF = "Off";
     public static String LIGHT_TEXT_ON = "On";
     public static String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
@@ -163,7 +165,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.CONSIST_LIGHTS_EDIT)
-                        finish();  //end this activity
+                        endThisActivity();
                     break;
 
                 case message_type.WIT_CON_RETRY:
@@ -176,7 +178,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
             }
         }
@@ -226,9 +228,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d("Engine_Driver", "consistLightsEdit onCreate consists is null");
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists is null");
             else
-                Log.d("Engine_Driver", "consistLightsEdit onCreate consists[" + whichThrottle + "] is null");
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
+            threaded_application.activityInTransition(activityName);
             this.finish();
             return;
         }
@@ -265,7 +268,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 try {
                     consist.setLight(address, light);
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                    Log.d(threaded_application.applicationName, activityName + ": onCreat(): selected engine " + address + " that is not in consist");
                 }
                 mainapp.buttonVibration();
                 refreshConsistLists();
@@ -291,7 +294,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 try {
                     consist.setLight(address, light);
                 } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d("Engine_Driver", "ConsistLightsEdit selected engine " + address + " that is not in consist");
+                    Log.d(threaded_application.applicationName, activityName + ": onItemLongClick(): selected engine " + address + " that is not in consist");
                 }
                 refreshConsistLists();
                 return true;
@@ -334,8 +337,16 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     }  // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.CONSIST_LIGHTS_EDIT;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -362,7 +373,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistLightsEdit.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
         importExportPreferences.loadRecentConsistsListFromFile();
@@ -373,7 +384,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
             mainapp.consist_lights_edit_msg_handler.removeCallbacksAndMessages(null);
             mainapp.consist_lights_edit_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.consist_lights_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.consist_lights_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -420,14 +431,19 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
-            setResult(result, resultIntent);
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+        setResult(result, resultIntent);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -458,7 +474,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         return false;
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 
@@ -475,11 +491,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         }
         public void onClick(View v) {
             mainapp.buttonVibration();
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
-            setResult(result, resultIntent);
-            finish();  //end this activity
-            connection_activity.overridePendingTransition(_consistEditLightsActivity, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
         }
     }
 }

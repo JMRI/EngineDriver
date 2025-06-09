@@ -74,6 +74,8 @@ import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.heartbeat_interval_type;
 
 public class comm_thread extends Thread {
+    static final String activityName = "comm_thread";
+
     JmDNS jmdns = null;
     volatile boolean endingJmdns = false;
     WithrottleListener listener;
@@ -115,12 +117,12 @@ public class comm_thread extends Thread {
     public class WithrottleListener implements ServiceListener {
 
         public void serviceAdded(ServiceEvent event) {
-            //          Log.d("Engine_Driver", String.format("comm_thread.serviceAdded fired"));
+            //          Log.d(threaded_application.applicationName, activityName + ": serviceAdded()");
             //A service has been added. If no details, ask for them
-            Log.d("Engine_Driver", String.format("comm_thread.serviceAdded for '%s', Type='%s'", event.getName(), event.getType()));
+            Log.d(threaded_application.applicationName, activityName + ": " + String.format("serviceAdded(): for '%s', Type='%s'", event.getName(), event.getType()));
             ServiceInfo si = jmdns.getServiceInfo(event.getType(), event.getName(), 0);
             if (si == null || si.getPort() == 0) {
-                Log.d("Engine_Driver", String.format("comm_thread.serviceAdded, requesting details: '%s', Type='%s'", event.getName(), event.getType()));
+                Log.d(threaded_application.applicationName, activityName + ": " + String.format("serviceAdded(): requesting details: '%s', Type='%s'", event.getName(), event.getType()));
                 jmdns.requestServiceInfo(event.getType(), event.getName(), true, 1000);
             }
         }
@@ -128,11 +130,11 @@ public class comm_thread extends Thread {
         public void serviceRemoved(ServiceEvent event) {
             //Tell the UI thread to remove from the list of services available.
             mainapp.sendMsg(mainapp.connection_msg_handler, message_type.SERVICE_REMOVED, event.getName()); //send the service name to be removed
-            Log.d("Engine_Driver", String.format("comm_thread.serviceRemoved: '%s'", event.getName()));
+            Log.d(threaded_application.applicationName, activityName + ": " + String.format("serviceRemoved(): '%s'", event.getName()));
         }
 
         public void serviceResolved(ServiceEvent event) {
-            //          Log.d("Engine_Driver", String.format("comm_thread.serviceResolved fired"));
+            //          Log.d(threaded_application.applicationName, activityName + ": " + String.format("serviceResolved()"));
             //A service's information has been resolved. Send the port and service name to connect to that service.
             int port = event.getInfo().getPort();
 
@@ -170,7 +172,7 @@ public class comm_thread extends Thread {
             if (!sent)
                 service_message.recycle();
 
-            Log.d("Engine_Driver", String.format("comm_thread.serviceResolved - %s(%s):%d -- %s",
+            Log.d(threaded_application.applicationName, activityName + ": " + String.format("serviceResolved(): %s(%s):%d -- %s",
                     host_name, ip_address, port,
                     event.toString().replace(Objects.requireNonNull(System.getProperty("line.separator")), " ")));
 
@@ -188,18 +190,18 @@ public class comm_thread extends Thread {
                     multicast_lock.setReferenceCounted(true);
                 }
 
-                Log.d("Engine_Driver", "comm_thread.startJmdns: local IP addr " + mainapp.client_address);
+                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): local IP addr " + mainapp.client_address);
 
                 jmdns = JmDNS.create(mainapp.client_address_inet4, mainapp.client_address);  //pass ip as name to avoid hostname lookup attempt
 
                 listener = new WithrottleListener();
-                Log.d("Engine_Driver", "comm_thread.startJmdns: listener created");
+                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): listener created");
 
             } else {
                 threaded_application.safeToast(R.string.toastThreadedAppNoLocalIp, Toast.LENGTH_LONG);
             }
         } catch (Exception except) {
-            Log.e("Engine_Driver", "comm_thread.startJmdns - Error creating withrottle listener: " + except.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": startJmdns(): Error creating withrottle listener: " + except.getMessage());
             threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), LENGTH_SHORT);
         }
     }
@@ -210,33 +212,33 @@ public class comm_thread extends Thread {
             @Override
             public void run() {
                 try {
-                    Log.d("Engine_Driver", "comm_thread.endJmdns: removing jmdns listener");
+                    Log.d(threaded_application.applicationName, activityName + ": endJmdns(): removing jmdns listener");
                     jmdns.removeServiceListener(mainapp.JMDNS_SERVICE_WITHROTTLE, listener);
                     jmdns.removeServiceListener(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, listener);
 
                     multicast_lock.release();
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.endJmdns: exception in jmdns.removeServiceListener()");
+                    Log.d(threaded_application.applicationName, activityName + ": endJmdns(): exception in jmdns.removeServiceListener()");
                 }
                 try {
-                    Log.d("Engine_Driver", "comm_thread.endJmdns: calling jmdns.close()");
+                    Log.d(threaded_application.applicationName, activityName + ": endJmdns(): calling jmdns.close()");
                     jmdns.close();
-                    Log.d("Engine_Driver", "comm_thread.endJmdns: after jmdns.close()");
+                    Log.d(threaded_application.applicationName, activityName + ": endJmdns(): after jmdns.close()");
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.endJmdns: exception in jmdns.close()");
+                    Log.d(threaded_application.applicationName, activityName + ": endJmdns(): exception in jmdns.close()");
                 }
                 jmdns = null;
                 endingJmdns = false;
-                Log.d("Engine_Driver", "comm_thread.endJmdns run exit");
+                Log.d(threaded_application.applicationName, activityName + ": endJmdns(): run exit");
             }
         };
         if (jmdnsIsActive()) {      //only need to run one instance of this thread to terminate jmdns
             endingJmdns = true;
             jmdnsThread.start();
-            Log.d("Engine_Driver", "comm_thread.endJmdns active so ending it and starting thread to remove listener");
+            Log.d(threaded_application.applicationName, activityName + ": endJmdns(): active so ending it and starting thread to remove listener");
         } else {
             jmdnsThread = null;
-            Log.d("Engine_Driver", "comm_thread.endJmdns not active");
+            Log.d(threaded_application.applicationName, activityName + ": endJmdns(): not active");
         }
     }
 
@@ -278,7 +280,7 @@ public class comm_thread extends Thread {
         if (!sent)
             service_message.recycle();
 
-        Log.d("Engine_Driver", String.format("comm_thread.addFakeDiscoveredServer: added '%s' at %s to Discovered List", entryName, server_addr));
+        Log.d(threaded_application.applicationName, activityName + ": " + String.format("addFakeDiscoveredServer(): added '%s' at %s to Discovered List", entryName, server_addr));
 
     }
 
@@ -294,11 +296,11 @@ public class comm_thread extends Thread {
     }
 
     protected void shutdown(boolean fast) {
-        Log.d("Engine_Driver", "comm_thread.Shutdown");
+        Log.d(threaded_application.applicationName, activityName + ": Shutdown()");
         if (socketWiT != null) {
             socketWiT.disconnect(true, fast);     //stop reading from the socket
         }
-        Log.d("Engine_Driver", "comm_thread.Shutdown: socketWit down");
+        Log.d(threaded_application.applicationName, activityName + ": Shutdown(): socketWit down");
         mainapp.writeSharedPreferencesToFileIfAllowed();
         mainapp.host_ip = null;
         mainapp.port = 0;
@@ -314,7 +316,7 @@ public class comm_thread extends Thread {
             threaded_application.flashlight.teardown();
         }
         mainapp.flashState = false;
-        Log.d("Engine_Driver", "comm_thread.Shutdown finished");
+        Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end)");
     }
 
     /* ******************************************************************************************** */
@@ -333,7 +335,7 @@ public class comm_thread extends Thread {
             }
 
         } else { //DCC-EX // name is not relevant, so send a Command Station Status Request
-//            Log.d("Engine_Driver", "comm_thread.sendThrottleName DCC-EX: <s>");
+//            Log.d(threaded_application.applicationName, activityName + ": sendThrottleName DCC-EX: <s>");
             if (mainapp.DCCEXlistsRequested < 0) { // if we haven't received all the lists go ask for them
                 wifiSend("<s>");
                 sendRequestRoster();
@@ -371,7 +373,7 @@ public class comm_thread extends Thread {
         if (!mainapp.isDCCEX) { // not DCC-EX
             //format multithrottle request for loco M1+L37<;>ECSX37
             msgTxt = String.format("M%s+%s<;>%s", mainapp.throttleIntToString(whichThrottle), address, rosterName);  //add requested loco to this throttle
-//            Log.d("Engine_Driver", "comm_thread.sendAquireLoco: acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
+//            Log.d(threaded_application.applicationName, activityName + ": sendAquireLoco(): acquireLoco: addr:'" + addr + "' msgTxt: '" + msgTxt + "'");
 //            sendMsgDelay(comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
 
@@ -410,7 +412,7 @@ public class comm_thread extends Thread {
                 wifiSend("<R>");
             }
 
-//            Log.d("Engine_Driver", "comm_thread.sendAcquireLoco DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendAcquireLoco(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -473,7 +475,7 @@ public class comm_thread extends Thread {
             for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 sendSpeed(throttleIndex, 0);
             }
-//            Log.d("Engine_Driver", "comm_thread.sendEStop DCC-EX: ");
+//            Log.d(threaded_application.applicationName, activityName + ": sendEStop(): DCC-EX: ");
         }
     }
 
@@ -580,12 +582,12 @@ public class comm_thread extends Thread {
                     for (Consist.ConLoco l : con.getLocos()) {
                         msgTxt = String.format("<F %s %d %d>", l.getAddress().substring(1), fn, newfState);
                         wifiSend(msgTxt);
-//                        Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
+//                        Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
                     }
                 } else { // just one address
                     msgTxt = String.format("<F %s %d %d>", addr.substring(1), fn, newfState);
                     wifiSend(msgTxt);
-//                    Log.d("Engine_Driver", "comm_thread.sendFunction DCC-EX: " + msgTxt);
+//                    Log.d(threaded_application.applicationName, activityName + ": sendFunction(): DCC-EX: " + msgTxt);
                 }
             }
         }
@@ -612,7 +614,7 @@ public class comm_thread extends Thread {
             String msgTxt = "<JR>";
             wifiSend(msgTxt);
 //          mainapp.dccexRosterFullyReceived = false;
-//          Log.d("Engine_Driver", "comm_thread.sendRequestRoster DCC-EX: " + msgTxt);
+//          Log.d(threaded_application.applicationName, activityName + ": sendRequestRoster(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -623,7 +625,7 @@ public class comm_thread extends Thread {
             String msgTxt = "<JT>";
             wifiSend(msgTxt);
 //          mainapp.dccexTurnoutsFullyReceived = false;
-//          Log.d("Engine_Driver", "comm_thread.sendRequestTurnouts DCC-EX: " + msgTxt);
+//          Log.d(threaded_application.applicationName, activityName + ": sendRequestTurnouts(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -634,7 +636,7 @@ public class comm_thread extends Thread {
             wifiSend(msgTxt);
 //            mainapp.dccexRoutesRequested = true;
 //            mainapp.dccexRoutesFullyReceived = false;
-//            Log.d("Engine_Driver", "comm_thread.sendRequestRoutes DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendRequestRoutes(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -648,7 +650,7 @@ public class comm_thread extends Thread {
             if (vn >= 04.002007) {  /// need to remove the track manager option
                 String msgTxt = "<=>";
                 wifiSend(msgTxt);
-//            Log.d("Engine_Driver", "comm_thread.sendRequestTracks DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendRequestTracks() DCC-EX: " + msgTxt);
             }
         }
     }
@@ -677,7 +679,7 @@ public class comm_thread extends Thread {
                 msgTxt = msgTxt + "<= " + track + " "+ type + " " + id + ">";
                 wifiSend(msgTxt);
             }
-//            Log.d("Engine_Driver", "comm_thread.sendTracks DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendTracks() DCC-EX: " + msgTxt);
         }
     }
 
@@ -694,7 +696,7 @@ public class comm_thread extends Thread {
     }
 
     protected void sendTurnout(String cmd) {
-//        Log.d("Engine_Driver", "comm_thread.sendTurnout: cmd=" + cmd);
+//        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
         char action = cmd.charAt(0); //first char is action (C=close,T=throw,2=toggle)
         String systemName = cmd.substring(1); //remainder is systemName
         String cs = mainapp.getTurnoutState(systemName);
@@ -734,7 +736,7 @@ public class comm_thread extends Thread {
             }
             String msgTxt = "<T " + to_id + " " + translatedState + ">";              // format <T id 0|1|T|C>
             wifiSend(msgTxt);
-//            Log.d("Engine_Driver", "comm_thread.sendTurnout DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -765,7 +767,7 @@ public class comm_thread extends Thread {
             }
             msgTxt = msgTxt + " " + systemName + ">";
             wifiSend(msgTxt);
-//            Log.d("Engine_Driver", "comm_thread.sendRoute DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendRoute(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -777,7 +779,7 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             String msgTxt = String.format("<%d>", pState);
             wifiSend(msgTxt);
-//            Log.d("Engine_Driver", "comm_thread.sendPower DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -787,7 +789,7 @@ public class comm_thread extends Thread {
         if (mainapp.isDCCEX) { //DCC-EX
             String msgTxt = String.format("<%d %s>", pState, trackLetter);
             wifiSend(msgTxt);
-//            Log.d("Engine_Driver", "comm_thread.sendPower DCC-EX: " + msgTxt);
+//            Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -814,7 +816,7 @@ public class comm_thread extends Thread {
         } else { //DCC-EX
             heart.setHeartbeatSent(true);
             wifiSend("<#>"); // DCC-EX doesn't have heartbeat, so sending a command with a simple response
-//            Log.d("Engine_Driver", "comm_thread.sendHeartbeatStart DCC-EX: <#>)");
+//            Log.d(threaded_application.applicationName, activityName + ": sendHeartbeatStart(): DCC-EX: <#>)");
         }
     }
 
@@ -834,7 +836,7 @@ public class comm_thread extends Thread {
                     msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
-//                    Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
+//                    Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
                 }
             } else {
                 String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
@@ -843,7 +845,7 @@ public class comm_thread extends Thread {
                 if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
                     mainapp.dccexLastKnownDirection[whichThrottle] = dir;
                 }
-//                Log.d("Engine_Driver", "comm_thread.sendDirection DCC-EX: " + msgTxt);
+//                Log.d(threaded_application.applicationName, activityName + ": sendDirection(): DCC-EX: " + msgTxt);
             }
         }
     }
@@ -868,7 +870,7 @@ public class comm_thread extends Thread {
                 String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 wifiSend(msgTxt);
-//                Log.d("Engine_Driver", "comm_thread.sendSpeed DCC-EX: " + msgTxt);
+//                Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
             }
             mainapp.dccexLastSpeedCommandSentTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
         }
@@ -886,7 +888,7 @@ public class comm_thread extends Thread {
 //            for (Consist.ConLoco l : con.getLocos()) {
 //                msgTxt = String.format("<t %s>", l.getAddress().substring(1,l.getAddress().length()));
 //                wifiSend(msgTxt);
-////                Log.d("Engine_Driver", "comm_thread.sendRequestSpeed DCC-EX: " + msgTxt);
+////                Log.d(threaded_application.applicationName, activityName + ": sendRequestSpeed(): DCC-EX: " + msgTxt);
 //            }
 //        }
 //    }
@@ -903,7 +905,7 @@ public class comm_thread extends Thread {
 //            for (Consist.ConLoco l : con.getLocos()) {
 //                msgTxt = String.format("<t %s>", l.getAddress().substring(1,l.getAddress().length()));
 //                wifiSend(msgTxt);
-////                Log.d("Engine_Driver", "comm_thread.sendRequestDir DCC-EX: " + msgTxt);
+////                Log.d(threaded_application.applicationName, activityName + ": sendRequestDir(): DCC-EX: " + msgTxt);
 //            }
 //        }
 //    }
@@ -920,7 +922,7 @@ public class comm_thread extends Thread {
             for (Consist.ConLoco l : con.getLocos()) {
                 msgTxt = String.format("<t %s>", l.getAddress().substring(1));
                 wifiSend(msgTxt);
-//                Log.d("Engine_Driver", "comm_thread.sendRequestSpeedAndDir DCC-EX: " + msgTxt);
+//                Log.d(threaded_application.applicationName, activityName + ": sendRequestSpeedAndDir(): DCC-EX: " + msgTxt);
             }
         }
     }
@@ -984,31 +986,26 @@ public class comm_thread extends Thread {
 
     @SuppressLint("DefaultLocale")
     protected static void processWifiResponse(String responseStr) {
-            /* see java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
-          VN<Version#>
-          RL<RosterSize>]<RosterList>
-          RF<RosterFunctionList>
-          RS<2ndRosterFunctionList>
-          *<HeartbeatIntervalInSeconds>
-          PTL[<SystemTurnoutName><UserName><State>repeat] where state 1=Unknown. 2=Closed, 4=Thrown
-          PTA<NewTurnoutState><SystemName>
-          PPA<NewPowerState> where state 0=off, 1=on, 2=unknown
-          M<throttleid> multi-throttle command
-          TODO: add remaining items, or move examples into code below
-             */
+        /* Withrottle Protocol
+            See java/arc/jmri/jmrit/withrottle/deviceserver.java for server code and some documentation
+            Also see https://www.jmri.org/help/en/package/jmri/jmrit/withrottle/Protocol.shtml for documentation on the protocol
+           DCC-EX Native Protocol
+            See https://dcc-ex.com/reference/software/command-summary-consolidated.html#gsc.tab=0 for documentation on the protocol
+        */
 
         //send response to debug log for review
-        Log.d("Engine_Driver", "comm_thread.processWifiResponse: " + (mainapp.isDCCEX ? "DCC-EX" : "") + "<--:" + responseStr);
+        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): " + (mainapp.isDCCEX ? "DCC-EX" : "") + "<--:" + responseStr);
 
         boolean skipAlert = false;          //set to true if the Activities do not need to be Alerted
 
-        if (!mainapp.isDCCEX) { // not DCC-EX
+        if (!mainapp.isDCCEX) { // WiThrottle Protocol. not DCC-EX Native Protocol
 
             switch (responseStr.charAt(0)) {
 
                 case 'M': { //handle responses from MultiThrottle function
+                    // --- M{throttleId}{command}{locoId}<;>{command}
                     if (responseStr.length() < 5) { //must be at least Mtxs9
-                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: invalid response string: '" + responseStr + "'");
+                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid response string: '" + responseStr + "'");
                         break;
                     }
                     String sWhichThrottle = responseStr.substring(1, 2);
@@ -1036,22 +1033,22 @@ public class comm_thread extends Thread {
                             con.setWhichSource(addr, 1); //entered by address, not roster
                             con.setConfirmed(addr);
                             mainapp.addLocoToRecents(conLoco); // WiT
-                            Log.d("Engine_Driver", "comm_thread.processWifiResponse: loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
+                            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
                         } else {
-                            Log.d("Engine_Driver", "comm_thread.processWifiResponse: loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
+                            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
                         }
 
                         String consistname = mainapp.getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
                         if (consistname != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                             String[] cna = threaded_application.splitByString(consistname, "+");
                             String cmd = String.format("M%sA%s<;>C%s", mainapp.throttleIntToString(whichThrottle), addr, mainapp.cvtToLAddr(cna[0]));
-                            Log.d("Engine_Driver", "comm_thread.processWifiResponse: rqsting fkeys for lead loco " + mainapp.cvtToLAddr(cna[0]));
+                            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): rqsting fkeys for lead loco " + mainapp.cvtToLAddr(cna[0]));
                             wifiSend(cmd);
                         }
 
                     } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                         mainapp.consists[whichThrottle].remove(addr);
-                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: loco " + addr + " dropped from " + mainapp.throttleIntToString(whichThrottle));
+                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco " + addr + " dropped from " + mainapp.throttleIntToString(whichThrottle));
 
                     } else if (com2 == 'L') { //list of function buttons
                         if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
@@ -1075,24 +1072,25 @@ public class comm_thread extends Thread {
                             try {
                                 processFunctionState(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                             } catch (NumberFormatException | StringIndexOutOfBoundsException ignore) {
-                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: bad incoming message data, unable to parse '" + responseStr + "'");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): bad incoming message data, unable to parse '" + responseStr + "'");
                             }
                         }
 
                     } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: rcvd MTS, request prompt for " + addr + " on " + mainapp.throttleIntToString(whichThrottle));
+                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): rcvd MTS, request prompt for " + addr + " on " + mainapp.throttleIntToString(whichThrottle));
                         mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.REQ_STEAL, addr, whichThrottle);
                     }
 
                     break;
                 }
                 case 'V': // WiThrottle Protocol Version
+                    // --- VN{Version#}
                     if (responseStr.startsWith("VN")) {
                         Double old_vn = mainapp.withrottle_version;
                         try {
                             mainapp.withrottle_version = Double.parseDouble(responseStr.substring(2));
                         } catch (Exception e) {
-                            Log.e("Engine_Driver", "comm_thread.processWifiResponse: invalid WiT version string");
+                            Log.e(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT version string");
                             mainapp.withrottle_version = 0.0;
                             break;
                         }
@@ -1101,18 +1099,20 @@ public class comm_thread extends Thread {
                             if (!mainapp.withrottle_version.equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
 //                            } else {
-//                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: version already set to " + mainapp.withrottle_version + ", ignoring");
+//                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.withrottle_version + ", ignoring");
                             }
                         } else {
                             threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), LENGTH_SHORT);
                             socketWiT.disconnect(false);
                         }
                     } else {
-                        Log.e("Engine_Driver", "comm_thread.processWifiResponse: invalid WiT version string");
+                        Log.e(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT version string");
                     }
                     break;
 
                 case 'H': // Alert and Info Message
+                    // --- HM{messageText}
+                    // --- Hm{messageText}
                     if (responseStr.charAt(1) == 'T') { //set hardware server type, HTMRC for example
                         mainapp.setServerType(responseStr.substring(2)); //store the type
                     } else if (responseStr.charAt(1) == 't') { //server description string "HtMy Server Details go here"
@@ -1136,16 +1136,20 @@ public class comm_thread extends Thread {
                     break;
 
                 case '*': // heartbeat
+                    // --- *<HeartbeatIntervalInSeconds>
                     try {
                         mainapp.heartbeatInterval = Integer.parseInt(responseStr.substring(1)) * 1000;  //convert to milliseconds
                     } catch (Exception e) {
-                        Log.d("Engine_Driver", "comm_thread.processWifiResponse: invalid WiT heartbeat string");
+                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT heartbeat string");
                         mainapp.heartbeatInterval = 0;
                     }
                     heart.startHeartbeat(mainapp.heartbeatInterval);
                     break;
 
                 case 'R': // Roster
+                    // --- RL{RosterSize}]{RosterList}
+                    // --- RF{RosterFunctionList}
+                    // --- RS{2ndRosterFunctionList}
                     switch (responseStr.charAt(1)) {
 
                         case 'C':
@@ -1172,6 +1176,11 @@ public class comm_thread extends Thread {
                     }  //end switch inside R
                     break;
                 case 'P': //Panel
+                    // --- PTL[{SystemTurnoutName}{UserName}{State}repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+                    // --- PTA{NewTurnoutState}{SystemName}
+                    // --- PPA{NewPowerState} where state 0=off, 1=on, 2=unknown
+                    // --- PFT{FastClockSeconds}<;><time ratio>
+                    // --- PW{webPort}
                     switch (responseStr.charAt(1)) {
                         case 'T': //turnouts
                             if (responseStr.charAt(2) == 'T') {  //turnout control allowed
@@ -1226,7 +1235,7 @@ public class comm_thread extends Thread {
                             try {
                                 mainapp.web_server_port = Integer.parseInt(responseStr.substring(2));  //set app variable
                             } catch (Exception e) {
-                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: invalid web server port string");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid web server port string");
                             }
                             if (oldPort == mainapp.web_server_port) {
                                 skipAlert = true;
@@ -1270,7 +1279,7 @@ public class comm_thread extends Thread {
                             try {
                                 vn = String.format("%02d.", Integer.parseInt(vn2[0]));
                             } catch (Exception e) {
-                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: Invalid Version " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.DccexVersion + ", ignoring");
                             }
                             if (vn2.length>=2) {
                                 try { vn = vn +String.format("%02d",Integer.parseInt(vn2[1]));
@@ -1302,7 +1311,7 @@ public class comm_thread extends Thread {
                             if (!mainapp.DccexVersion.equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
                             } else {
-                                Log.d("Engine_Driver", "comm_thread.processWifiResponse: version already set to " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.DccexVersion + ", ignoring");
                             }
 
                             mainapp.withrottle_version = 4.0;  // fudge it
@@ -1622,14 +1631,14 @@ public class comm_thread extends Thread {
 
                     // only process the functions if it is the lead loco
                     if (con.getLeadAddr().equals(addressStr)) {
-                        Log.d("Engine_Driver", "processDccexLocos(): process functions" );
+                        Log.d(threaded_application.applicationName, activityName + ": processDccexLocos(): process functions" );
                         // Process the functions
                         int fnState;
                         for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
                             try {
 //                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
                                 fnState = mainapp.bitExtracted(Long.parseLong(args[4]), 1, i + 1);
-                                if (i==0) Log.d("Engine_Driver", "processDccexLocos(): function:" + i + " state: " + fnState);
+                                if (i==0) Log.d(threaded_application.applicationName, activityName + ": processDccexLocos(): function:" + i + " state: " + fnState);
                                 processFunctionState(whichThrottle, i, (fnState != 0));
                                 responseStr = "M" + mainapp.throttleIntToString(whichThrottle) + "A" + addressStr + "<;>F" + fnState + (i);
                                 mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
@@ -1741,7 +1750,7 @@ public class comm_thread extends Thread {
                                 mainapp.dccexRosterString = "";
                                 mainapp.DCCEXlistsRequested++;
                                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROSTER_UPDATE); //send message to alert activities that roster has changed
-                                Log.d("Engine_Driver", "comm_thread.processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
+                                Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
 //                            mainapp.dccexRosterFullyReceived = true;
                                 mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
@@ -1921,7 +1930,7 @@ public class comm_thread extends Thread {
                     mainapp.DCCEXlistsRequested++;
 
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                    Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts complete. Count: " + count);
+                    Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
@@ -1932,7 +1941,7 @@ public class comm_thread extends Thread {
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
-                Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received.");
+                Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received.");
                 if (!mainapp.dccexTurnoutsBeingProcessed) {
                     mainapp.dccexTurnoutsBeingProcessed = true;
                     if (mainapp.dccexTurnoutString.isEmpty()) {
@@ -1948,7 +1957,7 @@ public class comm_thread extends Thread {
                         }
 
                         int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                        Log.d("Engine_Driver", "comm_thread.processDccexTurnouts: Turnouts list received. Count: " + count);
+                        Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received. Count: " + count);
                     }
                 }
             }
@@ -1995,7 +2004,7 @@ public class comm_thread extends Thread {
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
                         if (!mainapp.dccexRouteDetailsReceived[i]) {
                             ready = false;
-                            Log.d("Engine_Driver", "comm_thread.processDccexRoster: Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
+                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster(): Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
                             break;
                         }
                     }
@@ -2029,7 +2038,7 @@ public class comm_thread extends Thread {
                     }
 
                     int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
-                    Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes complete. Count: " + count);
+                    Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes complete. Count: " + count);
                     mainapp.dccexRoutesBeingProcessed = false;
 
 //                    mainapp.dccexRoutesFullyReceived = true;
@@ -2040,7 +2049,7 @@ public class comm_thread extends Thread {
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
 
-                Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received.");
+                Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes list received.");
                 if (!mainapp.dccexRoutesBeingProcessed) {
                     mainapp.dccexRoutesBeingProcessed = true;
                     if (mainapp.dccexRouteString.isEmpty()) {
@@ -2058,7 +2067,7 @@ public class comm_thread extends Thread {
                         }
 
                         int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
-                        Log.d("Engine_Driver", "comm_thread.processDccexRoutes: Routes list received. Count: " + count);
+                        Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes list received. Count: " + count);
                     }
                 }
             }
@@ -2118,7 +2127,7 @@ public class comm_thread extends Thread {
     /* ***********************************  *********************************** */
 
     static void processRosterFunctionString(String responseStr, int whichThrottle) {
-        Log.d("Engine_Driver", "comm_thread.processRosterFunctionString: processing function labels for " + mainapp.throttleIntToString(whichThrottle));
+        Log.d(threaded_application.applicationName, activityName + ": processRosterFunctionString(): processing function labels for " + mainapp.throttleIntToString(whichThrottle));
         LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels(responseStr);
         mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
@@ -2139,7 +2148,7 @@ public class comm_thread extends Thread {
                 try {
                     mainapp.roster_entries.put(tv[0], tv[1] + "(" + tv[2] + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.processRosterList caught Exception");  //ignore any bad stuff in roster entries
+                    Log.d(threaded_application.applicationName, activityName + ": processRosterList(): caught Exception");  //ignore any bad stuff in roster entries
                 }
             }
             i++;
@@ -2167,13 +2176,13 @@ public class comm_thread extends Thread {
             }  //end if i==0
             i++;
         }  //end for
-        Log.d("Engine_Driver", "comm_thread.processConsistList: consist header, addr='" + consist_addr
+        Log.d(threaded_application.applicationName, activityName + ": processConsistList(): consist header, addr='" + consist_addr
                 + "', name='" + consist_name + "', desc='" + consist_desc + "'");
         //don't add empty consists to list
         if (mainapp.consist_entries != null && consist_desc.length() > 0) {
             mainapp.consist_entries.put(consist_addr, consist_desc.toString());
         } else {
-            Log.d("Engine_Driver", "comm_thread.processConsistList: skipping empty consist '" + consist_name + "'");
+            Log.d(threaded_application.applicationName, activityName + ": processConsistList(): skipping empty consist '" + consist_name + "'");
         }
     } // end processConsistList()
 
@@ -2264,11 +2273,11 @@ public class comm_thread extends Thread {
         }
         if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found
             if (!newState.equals(mainapp.routeStates[pos])) { //route state is changed
-//                Log.d("Engine_Driver", "comm_thread.processRouteChange(" + responseStr + ") CHANGED");
+//                Log.d(threaded_application.applicationName, activityName + ": processRouteChange(" + responseStr + ") CHANGED");
                 mainapp.routeStates[pos] = newState;
                 mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
 //            } else {
-//                Log.d("Engine_Driver", "comm_thread.processRouteChange(" + responseStr + ") NOT CHANGED");
+//                Log.dthreaded_application.applicationName, activityName + ": processRouteChange(" + responseStr + ") NOT CHANGED");
             }
         }
     }  //end of processRouteChange
@@ -2346,12 +2355,12 @@ public class comm_thread extends Thread {
     //send formatted msg to the socket using multithrottle format
     //  intermessage gap enforced by requeueing messages as needed
     protected static void wifiSend(String msg) {
-//            Log.d("Engine_Driver", "comm_thread.wifiSend: WiT send '" + msg + "'");
+//            Log.d(threaded_application.applicationName, activityName + ": wifiSend(): WiT send '" + msg + "'");
         if (msg == null) { //exit if no message
-            Log.d("Engine_Driver", "comm_thread.wifiSend: --> null msg");
+            Log.d(threaded_application.applicationName, activityName + ": wifiSend(): --> null msg");
             return;
         } else if (socketWiT == null) {
-            Log.e("Engine_Driver", "comm_thread.wifiSend: socketWiT is null, message '" + msg + "' not sent!");
+            Log.e(threaded_application.applicationName, activityName + ": wifiSend(): socketWiT is null, message '" + msg + "' not sent!");
             return;
         }
 
@@ -2362,7 +2371,7 @@ public class comm_thread extends Thread {
         if (lastGap >= threaded_application.WiThrottle_Msg_Interval || timingSensitive(msg)) {
             //perform the send
             //noinspection UnnecessaryUnicodeEscape
-            Log.d("Engine_Driver", "comm_thread.wifiSend: " + (mainapp.isDCCEX ? "DCC-EX" : "") + "           -->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
+            Log.d(threaded_application.applicationName, activityName + ": wifiSend(): " + (mainapp.isDCCEX ? "DCC-EX" : "") + "           -->:" + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
             lastSentMs = now;
             socketWiT.Send(msg);
 
@@ -2373,7 +2382,7 @@ public class comm_thread extends Thread {
             //requeue this message
             int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.WiThrottle_Msg_Interval + 5); //extra 5 for processing
             //noinspection UnnecessaryUnicodeEscape
-            Log.d("Engine_Driver", "comm_thread.wifiSend: requeue:" + msg.replaceAll("\n", "\u21B5") +
+            Log.d(threaded_application.applicationName, activityName + ": wifiSend(): requeue:" + msg.replaceAll("\n", "\u21B5") +
                     ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
             mainapp.sendMsgDelay(mainapp.comm_msg_handler, nextGap, message_type.WIFI_SEND, msg);
             lastQueuedMs = now + nextGap;
@@ -2390,7 +2399,7 @@ public class comm_thread extends Thread {
                 ret = true;
             } //any function key message
         }
-        if (ret) Log.d("Engine_Driver", "comm_thread.timingSensitive: timeSensitive msg, not requeuing:");
+        if (ret) Log.d(threaded_application.applicationName, activityName + ": timingSensitive(): timeSensitive msg, not requeuing:");
         return ret;
     }
 
@@ -2401,7 +2410,7 @@ public class comm_thread extends Thread {
         mainapp.comm_msg_handler = new comm_handler(threadLooper);
         mainapp.comm_msg_handler.initialise(mainapp, prefs, this);
         Looper.loop();
-        Log.d("Engine_Driver", "comm_thread.run() exit");
+        Log.d(threaded_application.applicationName, activityName + ": run() exit");
     }
 
     /* ******************************************************************************************** */
@@ -2446,7 +2455,7 @@ public class comm_thread extends Thread {
                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
                     socketOk = false;
                 } catch (Exception except) {
-                    Log.d("Engine_Driver", "comm_thread.connect(): Unknown error.");
+                    Log.d(threaded_application.applicationName, activityName + ": connect(): Unknown error.");
                     socketOk = false;
                 }
             }
@@ -2455,20 +2464,20 @@ public class comm_thread extends Thread {
             if (socketOk) {
                 try {
                     //look for someone to answer on specified socket, and set timeout
-                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                    Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
                     clientSocket = new Socket();
                     InetSocketAddress sa = new InetSocketAddress(mainapp.host_ip, mainapp.port);
                     clientSocket.connect(sa, connectTimeoutMs);
-                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: Connect successful.");
+                    Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: Connect successful.");
                     clientSocket.setSoTimeout(socketTimeoutMs);
-                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: set timeout successful.");
+                    Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: set timeout successful.");
                 } catch (Exception except) {
                     if (!firstConnect) {
                         threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
                                                       mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
                     }
                     if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
-                        Log.d("Engine_Driver", "comm_thread.SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
+                        Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
                         threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI,
                                                             mainapp.client_type), Toast.LENGTH_LONG);
                     }
@@ -2542,7 +2551,7 @@ public class comm_thread extends Thread {
                 try {
                     clientSocket.close();
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.SocketWifi: Error closing the Socket: " + e.getMessage());
+                    Log.d(threaded_application.applicationName, activityName + ": SocketWifi(): Error closing the Socket: " + e.getMessage());
                 }
             }
         }
@@ -2565,7 +2574,7 @@ public class comm_thread extends Thread {
                         socketGood = this.SocketCheck();
                     } catch (IOException e) {
                         if (socketGood) {
-                            Log.d("Engine_Driver", "comm_thread.run(): WiT rcvr error.");
+                            Log.d(threaded_application.applicationName, activityName + ": run(): WiT rcvr error.");
                             socketGood = false;     //input buffer error so force reconnection on next send
                         }
                     }
@@ -2575,7 +2584,7 @@ public class comm_thread extends Thread {
                 }
             }
             heart.stopHeartbeat();
-            Log.d("Engine_Driver", "comm_thread.run(): SocketWifi exit.");
+            Log.d(threaded_application.applicationName, activityName + ": run(): SocketWifi exit.");
         }
 
         @SuppressLint("StringFormatMatches")
@@ -2586,13 +2595,13 @@ public class comm_thread extends Thread {
                 String status;
                 if (mainapp.client_address == null) {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
-                    Log.d("Engine_Driver", "comm_thread.send(): Not Connected: WiT send reconnection attempt.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): Not Connected: WiT send reconnection attempt.");
                 } else if (inboundTimeout) {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval());
-                    Log.d("Engine_Driver", "comm_thread.send(): No Response: WiT receive reconnection attempt.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): No Response: WiT receive reconnection attempt.");
                 } else {
                     status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                    Log.d("Engine_Driver", "comm_thread.send(): Unable to connect: WiT send reconnection attempt.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): Unable to connect: WiT send reconnection attempt.");
                 }
                 socketGood = false;
 
@@ -2615,13 +2624,13 @@ public class comm_thread extends Thread {
                     if (reconInProg) {
                         String status = "Connected to WiThrottle Server at " + mainapp.host_ip + ":" + mainapp.port;
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIT_CON_RECONNECT, status);
-                        Log.d("Engine_Driver", "comm_thread.send(): WiT reconnection successful.");
+                        Log.d(threaded_application.applicationName, activityName + ": send(): WiT reconnection successful.");
                         clearInboundTimeout();
                         heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                         mainapp.DCCEXlistsRequested = -1; //invalidate the lists
                     }
                 } catch (Exception e) {
-                    Log.d("Engine_Driver", "comm_thread.send(): WiT xmtr error.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): WiT xmtr error.");
                     socketGood = false;             //output buffer error so force reconnection on next send
                 }
             }
@@ -2659,7 +2668,7 @@ public class comm_thread extends Thread {
                         if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                                 && (!mainapp.haveForcedWiFiConnection)) {
 
-                            Log.d("Engine_Driver", "comm_thread.HaveNetworkConnection: NetworkRequest.Builder");
+                            Log.d(threaded_application.applicationName, activityName + ": HaveNetworkConnection(): NetworkRequest.Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
@@ -2712,14 +2721,14 @@ public class comm_thread extends Thread {
 
         void InboundTimeout() {
             if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
-                Log.d("Engine_Driver", "comm_thread.InboundTimeout: WiT max inbound timeouts");
+                Log.d(threaded_application.applicationName, activityName + ": InboundTimeout(): WiT max inbound timeouts");
                 inboundTimeout = true;
                 inboundTimeoutRetryCount = 0;
                 inboundTimeoutRecovery = false;
                 // force a send to start the reconnection process
                 mainapp.comm_msg_handler.postDelayed(heart.outboundHeartbeatTimer, 200L);
             } else {
-                Log.d("Engine_Driver", "comm_thread.InboundTimeout: WiT inbound timeout " +
+                Log.d(threaded_application.applicationName, activityName + ": InboundTimeout(): WiT inbound timeout " +
                         inboundTimeoutRetryCount + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
                 // heartbeat should trigger a WiT reply so force that now
                 inboundTimeoutRecovery = true;
@@ -2837,7 +2846,7 @@ public class comm_thread extends Thread {
             mainapp.comm_msg_handler.removeCallbacks(outboundHeartbeatTimer);           //remove any pending requests
             mainapp.comm_msg_handler.removeCallbacks(inboundHeartbeatTimer);
             heartbeatIntervalSetpoint = 0;
-            Log.d("Engine_Driver", "comm_thread.stopHeartbeat: heartbeat stopped.");
+            Log.d(threaded_application.applicationName, activityName + ": stopHeartbeat(): heartbeat stopped.");
         }
 
         //outboundHeartbeatTimer()
@@ -2901,7 +2910,7 @@ public class comm_thread extends Thread {
             try {
                 telMgr.listen(this, PhoneStateListener.LISTEN_CALL_STATE);
             } catch (SecurityException e) {
-                Log.e("Engine_Driver", "SecurityException encountered (and ignored) for telMgr");
+                Log.e(threaded_application.applicationName, activityName + ": PhoneListener(): enable(): SecurityException encountered (and ignored) for telMgr");
             }
         }
 
@@ -2910,7 +2919,7 @@ public class comm_thread extends Thread {
             if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
                 if (prefs.getBoolean("stop_on_phonecall_preference",
                         mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-                    Log.d("Engine_Driver", "comm_thread.onCallStateChanged: Phone is OffHook, Stopping Trains");
+                    Log.d(threaded_application.applicationName, activityName + ": onCallStateChanged(): Phone is OffHook, Stopping Trains");
                     for (int i = 0; i < mainapp.numThrottles; i++) {
                         if (mainapp.consists[i].isActive()) {
                             sendSpeedZero(i);

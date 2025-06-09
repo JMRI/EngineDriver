@@ -25,6 +25,8 @@ import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
 public class ImportExportConnectionList {
+    static final String activityName = "ImportExportConnectionList";
+
     public ArrayList<HashMap<String, String>> connections_list;
     private final SharedPreferences prefs;
     private final boolean prefHideDemoServer;
@@ -41,6 +43,7 @@ public class ImportExportConnectionList {
     public String failureReason = "";
 
     public ImportExportConnectionList(SharedPreferences p) {
+
         prefs = p;
         prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", context.getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
         connections_list = new ArrayList<>();
@@ -115,11 +118,11 @@ public class ImportExportConnectionList {
                 }
                 list_reader.close();
             } else {
-                Log.d("connection_activity", "Recent connections not found");
+                Log.d(threaded_application.applicationName, activityName + ": getConnectionsList(): Recent connections not found");
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e("connection_activity", "Error reading recent connections list: " + errMsg);
+            Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
             failureReason = errMsg;
 //                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
         }

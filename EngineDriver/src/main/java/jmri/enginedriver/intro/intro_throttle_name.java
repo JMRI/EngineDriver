@@ -38,6 +38,7 @@ import jmri.enginedriver.threaded_application;
 
 
 public class intro_throttle_name extends Fragment {
+    static final String activityName = "intro_throttle_name";
 
     SharedPreferences prefs;
     String currentValue = "";
@@ -47,7 +48,7 @@ public class intro_throttle_name extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_throttle_name");
+        Log.d(threaded_application.applicationName, activityName + ":");
 
         super.onActivityCreated(savedInstanceState);
         mainapp = (threaded_application) Objects.requireNonNull(this.getActivity()).getApplication();

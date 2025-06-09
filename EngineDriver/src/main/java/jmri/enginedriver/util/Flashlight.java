@@ -23,6 +23,8 @@ import jmri.enginedriver.threaded_application;
  */
 
 public abstract class Flashlight {
+    static final String activityName = "Flashlight";
+
     private static Context flashlightContext;
 
     public static Flashlight newInstance(Context context) {
@@ -35,7 +37,7 @@ public abstract class Flashlight {
             flashlight = new MarshmallowFlashlight();
         }
         flashlight.init();
-        Log.d("Engine_Driver", "Created new " + flashlight.getClass());
+        Log.d(threaded_application.applicationName, activityName + ": newInstance(): Created new " + flashlight.getClass());
         return flashlight;
     }
 
@@ -101,10 +103,10 @@ public abstract class Flashlight {
                 camera.setParameters(parameters);
                 camera.setDisplayOrientation(getDisplayOrientation(activity));
                 camera.startPreview();
-                Log.d("Engine_Driver", "Flashlight switched on");
+                Log.d(threaded_application.applicationName, activityName + ": Flashlight switched on");
                 return true;
             } catch (Exception ex) {
-                Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Error switching on flashlight: " + ex.getMessage());
 //                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
@@ -120,9 +122,9 @@ public abstract class Flashlight {
                     camera.release();
                     camera = null;
                 }
-                Log.d("Engine_Driver", "Flashlight switched off");
+                Log.d(threaded_application.applicationName, activityName + ": Flashlight switched off");
             } catch (Exception ex) {
-                Log.e("Engine_Driver", "Error switching off flashlight: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Error switching off flashlight: " + ex.getMessage());
 //                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             }
@@ -163,9 +165,9 @@ public abstract class Flashlight {
             try {
                 cameraId = cameraManager.getCameraIdList()[0];
             } catch (CameraAccessException|SecurityException ex) {
-                Log.e("Engine_Driver", "Error initiating camera manager: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Error initiating camera manager: " + ex.getMessage());
             } catch (ArrayIndexOutOfBoundsException ex) {
-                Log.e("Engine_Driver", "Error initiating camera manager: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Error initiating camera manager: " + ex.getMessage());
             }
 
         }
@@ -179,15 +181,15 @@ public abstract class Flashlight {
         public boolean setFlashlightOn(Activity activity) {
             try {
                 cameraManager.setTorchMode(cameraId, true);
-                Log.d("Engine_Driver", "Flashlight switched on");
+                Log.d(threaded_application.applicationName, activityName + ": setFlashlightOn(): Flashlight switched on");
                 return true;
             } catch (CameraAccessException ex) {
-                Log.e("Engine_Driver", "Error switching on flashlight: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOn(): Error switching on flashlight: " + ex.getMessage());
 //                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             } catch (IllegalArgumentException ex) {
-                Log.e("Engine_Driver", "Problem switching on flashlight:" + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Problem switching on flashlight:" + ex.getMessage());
                 return false;
             }
         }
@@ -196,13 +198,13 @@ public abstract class Flashlight {
         public void setFlashlightOff() {
             try {
                 cameraManager.setTorchMode(cameraId, false);
-                Log.d("Engine_Driver", "Flashlight switched off");
+                Log.d(threaded_application.applicationName, activityName + ": setFlashlightOff(): Flashlight switched off");
             } catch (CameraAccessException ex) {
-                Log.e("Engine_Driver", "Error switching off flashlight: " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Error switching off flashlight: " + ex.getMessage());
 //                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             } catch (IllegalArgumentException ex) {
-                Log.e("Engine_Driver", "Problem switching off flashlight:" + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Problem switching off flashlight:" + ex.getMessage());
             }
         }
     }

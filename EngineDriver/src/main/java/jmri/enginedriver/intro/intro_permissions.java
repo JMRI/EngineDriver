@@ -34,6 +34,7 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 
 /**
@@ -41,6 +42,7 @@ import jmri.enginedriver.util.PermissionsHelper;
  */
 
 public class intro_permissions extends Fragment {
+    static final String activityName = "intro_permissions";
 
     private boolean askedThisSession = false;
     int permissionId;
@@ -49,7 +51,7 @@ public class intro_permissions extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_permissions");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
 
         introPermissionLabel = getView().findViewById(R.id.intro_permission_label);

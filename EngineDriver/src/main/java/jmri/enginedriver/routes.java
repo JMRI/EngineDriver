@@ -75,6 +75,7 @@ import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
 public class routes extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+    static final String activityName = "routes";
 
     private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -108,7 +109,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private VelocityTracker mVelocityTracker;
 
     public void refresh_route_view() {
-//        Log.d("Engine_Driver", "routes: refresh_route_view()");
+//        Log.d(threaded_application.applicationName, activityName + ": refresh_route_view()");
 
         boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
@@ -243,7 +244,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void filterRouteView() {
-//        Log.d("Engine_Driver", "routes: filterRouteView()");
+//        Log.d(threaded_application.applicationName, activityName + ": filterRouteView()");
 
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
@@ -263,7 +264,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     /** @noinspection UnusedReturnValue*/
     private int updateRouteEntry() {
-//        Log.d("Engine_Driver", "routes: updateRouteEntry()");
+//        Log.d(threaded_application.applicationName, activityName + ": updateRouteEntry()");
 
         Button routeButton = findViewById(R.id.route_toggle);
         EditText routeEntry = findViewById(R.id.route_entry);
@@ -297,7 +298,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         }
 
         public void handleMessage(Message msg) {
-//            Log.d("Engine_Driver", "routes_handler: handleMessage("+msg.obj.toString()+")");
+//            Log.d(threaded_application.applicationName, activityName + ": routes_handler: handleMessage("+msg.obj.toString()+")");
 
             switch (msg.what) {
                 case message_type.WIT_CON_RECONNECT:
@@ -338,7 +339,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
                 default:
                     // do nothing
@@ -348,7 +349,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void witRetry(String s) {
-//        Log.d("Engine_Driver", "routes: witRetry");
+//        Log.d(applicationName: witRetry");
 
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
@@ -414,7 +415,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        Log.d("Engine_Driver", "routes: onCreate");
+//        Log.d(applicationName: onCreate");
 
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -423,6 +424,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         super.onCreate(savedInstanceState);
 
         if (mainapp.isForcingFinish()) {     // expedite
+            this.finish();
             return;
         }
 
@@ -489,11 +491,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    InputMethodManager imm =
-                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    }
+                    mainapp.hideSoftKeyboard(v);
                     return true;
                 } else
                     return false;
@@ -552,14 +550,15 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
     } // end onCreate
 
-
     @Override
     public void onResume() {
-//        Log.d("Engine_Driver", "routes: onResume");
+//        Log.d(applicationName: onResume");
 
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.ROUTES;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -602,7 +601,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
      */
     @Override
     public void onDestroy() {
-//        Log.d("Engine_Driver", "routes: onDestroy");
+//        Log.d(applicationName: onDestroy");
 
         super.onDestroy();
 
@@ -611,15 +610,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
             mainapp.routes_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.routes_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.routes_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
     @Override
     public void onPause() {
-//        Log.d("Engine_Driver", "routes: onPause");
+//        Log.d(applicationName: onPause");
 
         super.onPause();
+        threaded_application.activityPaused(activityName);
         //save scroll position for later restore
         ListView lv = findViewById(R.id.routes_list);
         mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
@@ -628,7 +628,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         EditText rte = findViewById(R.id.route_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && rte != null) {
-            imm.hideSoftInputFromWindow(rte.getWindowToken(), 0);
+            mainapp.hideSoftKeyboard(rte);
         }
     }
 
@@ -636,18 +636,22 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         if (key == KeyEvent.KEYCODE_BACK) {
-            //Log.d("Engine_Driver","routes.onKeyDown() KEYCODE_BACK");
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+            endThisActivity();
             return true;
         }
         mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
     }
 
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        Log.d("Engine_Driver", "routes: onCreateOptionsMenu");
+//        Log.d(applicationName: onCreateOptionsMenu");
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
@@ -673,7 +677,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.d("Engine_Driver", "routes: onOptionsItemSelected");
+//        Log.d(applicationName: onOptionsItemSelected");
 
         // Handle all of the possible menu actions.
         Intent in;
@@ -744,12 +748,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     //handle return from menu items
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Log.d("Engine_Driver", "routes: onActivityResult");
+//        Log.d(applicationName: onActivityResult");
         //since we always do the same action no need to distinguish between requests
         refresh_route_view();
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 
@@ -796,7 +800,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
@@ -815,7 +819,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     public void gestureMove(MotionEvent event) {
-//        Log.d("Engine_Driver", "routes: gestureMove action " + event.getAction());
+//        Log.d(applicationName: gestureMove action " + event.getAction());
         if (mainapp!=null && mainapp.routes_msg_handler!=null && gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
@@ -828,7 +832,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+                // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
@@ -841,7 +845,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     private void gestureEnd(MotionEvent event) {
-//        Log.d("Engine_Driver", "routes: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        Log.d(applicationName: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ( (mainapp!=null) && (mainapp.routes_msg_handler != null) && (gestureInProgress) ) {
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
 
@@ -879,7 +883,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "routes: Runnable");
+//            Log.d(applicationName: Runnable");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
@@ -892,7 +896,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     try {
                         routesView.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -927,6 +931,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX>0) {
