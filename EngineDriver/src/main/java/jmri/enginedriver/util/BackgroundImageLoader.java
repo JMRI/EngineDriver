@@ -12,6 +12,8 @@ import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
 public class BackgroundImageLoader {
+    static final String activityName = "BackgroundImageLoader";
+
     private final String prefBackgroundImageFileName;
     private final String prefBackgroundImagePosition;
     private final boolean prefBackgroundImage;
@@ -71,7 +73,7 @@ public class BackgroundImageLoader {
                     break;
             }
         } catch (Exception e) {
-            Log.d("Engine_Driver", "backgroundImageLoader: failed loading background image");
+            Log.d(threaded_application.applicationName, activityName + ": loadBackgroundImageImpl(): failed loading background image");
         }
     }
 }

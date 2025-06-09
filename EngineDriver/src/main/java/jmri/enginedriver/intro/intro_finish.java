@@ -32,13 +32,15 @@ import android.view.ViewGroup;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_finish extends Fragment {
+    static final String activityName = "intro_finish";
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_finish");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
     }
 

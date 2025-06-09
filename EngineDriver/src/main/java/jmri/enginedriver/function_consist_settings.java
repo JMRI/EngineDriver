@@ -62,6 +62,7 @@ import jmri.enginedriver.util.LocaleHelper;
 
 @SuppressLint("ApplySharedPref")
 public class function_consist_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "function_consist_settings";
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -155,8 +156,16 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     } //end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.FUNCTION_CONSIST_SETTINGS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -181,10 +190,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "function_consist_settings.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         mainapp.set_default_function_labels(false); // reload the preference in cases the display number is less than the total number
 
-        Log.d("Engine_Driver", "function_consist_settings.onDestroy() called");
         if (!orientationChange) {
             aLbl.clear();
             aFnc.clear();
@@ -431,14 +439,19 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         mainapp.exitDoubleBackButtonInitiated = 0;
 
         if (key == KeyEvent.KEYCODE_BACK) {
-            move_view_to_settings();        //sync settings array to view
-            if (!settingsCurrent)
-                saveSettings();         //save function settings to the file
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        move_view_to_settings();        //sync settings array to view
+        if (!settingsCurrent)
+            saveSettings();         //save function settings to the file
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     void saveSettings() {
@@ -471,7 +484,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             settings_output.close();
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e("settings_activity", "Error creating a PrintWriter, IOException: " + errMsg);
+            Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (!errMsg.isEmpty())
 //            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
@@ -491,7 +504,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d("Engine_Driver", "function_settings: navigateToHandler:" + requestCode);
+        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(function_consist_settings.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(function_consist_settings.this, requestCode);
@@ -499,16 +512,16 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         } else {
 //            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
-//                    Log.d("Engine_Driver", "Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
 //                    break;
 //                case PermissionsHelper.READ_FUNCTION_SETTINGS:
-//                    Log.d("Engine_Driver", "Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
 //                default:
                     // do nothing
-                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -516,7 +529,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(function_consist_settings.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -533,9 +546,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     }
 
     void reopenThrottlePage() {
+        threaded_application.activityInTransition(activityName);
+
         move_view_to_settings();        //sync settings array to view
         if (!settingsCurrent)
             saveSettings();         //save function settings to the file
-        finish();  //end this activity
+        this.finish();  //end this activity
     }
 }

@@ -1,4 +1,8 @@
 **Version 2.40.200
+* added a new seperate check for when the app is in background
+* reduce the amount of static text related to log messages
+* wholesale cleanup if the code to 'finish' an activity
+*additional log messages in select_loco
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message

@@ -35,15 +35,17 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 public class intro_throttle_type extends Fragment {
+    static final String activityName = "intro_throttle_type";
 
     private SharedPreferences prefs;
     private String[] nameEntryValues;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_throttle_type");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
         String currentValue = prefs.getString("prefThrottleScreenType", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));

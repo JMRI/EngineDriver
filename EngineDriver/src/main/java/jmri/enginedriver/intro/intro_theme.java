@@ -35,16 +35,18 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 
 public class intro_theme extends Fragment {
+    static final String activityName = "intro_theme";
 
     private SharedPreferences prefs;
     private String[] nameEntryValues;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_theme");
+        Log.d(threaded_application.applicationName, activityName + ":");
 
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);

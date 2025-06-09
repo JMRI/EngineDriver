@@ -196,6 +196,7 @@ import jmri.enginedriver.type.acceleratorometer_action_type;
 import jmri.enginedriver.type.direction_type;
 
 public class throttle extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener, PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "throttle";
 
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
@@ -467,6 +468,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private float externalGamepadyAxis;
     private float externalGamepadxAxis2;
     private float externalGamepadyAxis2;
+
+    int keyboardStopCount = 0;
 
 //    protected MediaPlayer _mediaPlayer;
 
@@ -777,7 +780,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "RptUpdater: onProgressChanged - mAutoIncrement: " + mAutoIncrement + " mAutoDecrement: " + mAutoDecrement);
+//            Log.d(threaded_application.applicationName, activityName + ": RptUpdater: onProgressChanged - mAutoIncrement: " + mAutoIncrement + " mAutoDecrement: " + mAutoDecrement);
             if (mAutoIncrement[whichThrottle]) {
                 incrementSpeed(whichThrottle, speed_commands_from_type.BUTTONS);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle, REP_DELAY), REP_DELAY);
@@ -901,7 +904,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void handleMessage(Message msg) {
             String response_str = msg.obj.toString();
 
-//            Log.d("Engine_Driver", "throttle handleMessage " + response_str );
+//            Log.d(threaded_application.applicationName, activityName + " handleMessage() " + response_str );
 
             switch (msg.what) {
                 case message_type.RESPONSE: { // handle messages from WiThrottle server
@@ -979,7 +982,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                             } catch (
                                                     Exception e) {     // isReverseOfLead returns null if addr is not in con
                                                 // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
-                                                Log.d("Engine_Driver", "throttle " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
+                                                Log.d(threaded_application.applicationName, activityName + ": " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
                                             }
                                         }
                                     } else if (com3 == 'V') { // set speed
@@ -1071,7 +1074,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.REQUEST_REFRESH_THROTTLE:
 //                    refreshMenu();
                     set_labels();
-                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: REQUEST_REFRESH_THROTTLE");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): REQUEST_REFRESH_THROTTLE");
                     break;
                 case message_type.REFRESH_FUNCTIONS:
                     setAllFunctionLabelsAndListeners();
@@ -1148,7 +1151,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimerActions(kids_timer_action_type.ENDED, 0);
                     break;
                 case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: AUTO_IMPORT_URL_AVAILABLE " + response_str);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): AUTO_IMPORT_URL_AVAILABLE " + response_str);
                     autoImportUrlAskToImport();
                     break;
                 case message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START:
@@ -1157,7 +1160,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     break;
                 case message_type.GAMEPAD_ACTION:
-                    Log.d("Engine_Driver", "throttle: ThrottleMessageHandler: GAMEPAD_ACTION " + response_str);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): GAMEPAD_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         externalGamepadAction = Integer.parseInt(splitString[0]);
@@ -1171,7 +1174,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     break;
                 case message_type.VOLUME_BUTTON_ACTION: // volumem button n another activity
-                    Log.d("Engine_Driver", "throttle handleMessage VOLUMN_BUTTON_ACTION " + response_str);
+                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): VOLUME_BUTTON_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         doVolumeButtonAction(Integer.parseInt(splitString[0]), Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
@@ -1179,7 +1182,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
 
                 case message_type.GAMEPAD_JOYSTICK_ACTION:
-                    Log.d("Engine_Driver", "throttle handleMessage GAMEPAD_JOYSTICK_ACTION " + response_str);
+                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): GAMEPAD_JOYSTICK_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         externalGamepadAction = Integer.parseInt(splitString[0]);
@@ -1214,6 +1217,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         isRestarting = true;        // tell OnDestroy to skip removing handlers since it will run after the new Intent is created
         removeHandlers();
 
+        threaded_application.activityInTransition(activityName);
         //end current throttle Intent then start the new Intent
         Intent newThrottle = mainapp.getThrottleIntent();
         this.finish();
@@ -1240,9 +1244,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue);
-                    Log.d("Engine_Driver", "screen brightness successfully changed to " + brightnessValue);
+                    Log.d(threaded_application.applicationName, activityName + ": setScreenBrightness(): screen brightness successfully changed to " + brightnessValue);
                 } catch (Exception e) {
-                    Log.e("Engine_Driver", "screen brightness was NOT changed to " + brightnessValue);
+                    Log.e(threaded_application.applicationName, activityName + ": setScreenBrightness(): screen brightness was NOT changed to " + brightnessValue);
                 }
             } else {
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -1448,7 +1452,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 speedUpdate(0);  // update all throttles
                                 applySpeedRelatedOptions();  // update all throttles
                                 if (IS_ESU_MCII) {
-                                    Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
+                                    Log.d(threaded_application.applicationName, activityName + ": setupSensor(): ESU_MCII: Move knob request for EStop");
                                     setEsuThrottleKnobPosition(whichVolume, 0);
                                 }
                         }
@@ -1815,7 +1819,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             sbs[whichThrottle].setProgress(speedWiT);
             // Now update ESU MCII Knob position
             if (IS_ESU_MCII) {
-                Log.d("Engine_Driver", "ESU_MCII: Move knob request for WiT speed report");
+                Log.d(threaded_application.applicationName, activityName + ": speedUpdateWiT(): ESU_MCII: Move knob request for WiT speed report");
                 setEsuThrottleKnobPosition(whichThrottle, speedWiT);
             }
         }
@@ -1889,7 +1893,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
         int scaleSpeed = lastScaleSpeed + change;
         int speed = (int) Math.round(scaleSpeed / displayUnitScale);
-//        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
+//        Log.d(threaded_application.applicationName, activityName + ": speedChange():  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
         if (lastScaleSpeed == scaleSpeed) {
             speed += (int) Math.signum(change);
         }
@@ -1902,7 +1906,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             speed = limitSpeedMax[whichThrottle];
         }
 
-//        Log.d("Engine_Driver","throttle: speedChange -  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
+//        Log.d(threaded_application.applicationName, activityName + ": speedChange():  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
         doLocoSound(whichThrottle);
@@ -2148,7 +2152,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
         if (IS_ESU_MCII && moveMc2Knob) {
-            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed update");
+            Log.d(threaded_application.applicationName, activityName + ": speedUpdateAndNotify(): ESU_MCII: Move knob request for speed update");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
         doLocoSound(whichThrottle);
@@ -2163,7 +2167,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
         if (IS_ESU_MCII) {
-            Log.d("Engine_Driver", "ESU_MCII: Move knob request for speed change");
+            Log.d(threaded_application.applicationName, activityName + ": speedChangeAndNotify(): ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
         doLocoSound(whichThrottle);
@@ -2186,7 +2190,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             speed_label.setText(Integer.toString(scaleSpeed));
             mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
         } catch (NumberFormatException | ClassCastException e) {
-            Log.e("Engine_Driver", "problem showing speed: " + e.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": setDisplayedSpeed(): problem showing speed: " + e.getMessage());
         }
     }
 
@@ -2302,7 +2306,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
                     } catch (
                             Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
-                        Log.d("Engine_Driver", "throttle " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
+                        Log.d(threaded_application.applicationName, activityName + ": " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
                     }
                 }
             }
@@ -2477,7 +2481,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             startActivityForResult(select_loco, sub_activity_type.SELECT_LOCO);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d("Engine_Driver", "Throttle: start_select_loco_activity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            Log.d(threaded_application.applicationName, activityName + ": start_select_loco_activity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
@@ -2492,7 +2496,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivityForResult(in, sub_activity_type.GAMEPAD_TEST);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d("Engine_Driver", "Throttle: start_gamepad_test_activity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+                Log.d(threaded_application.applicationName, activityName + ": start_gamepad_test_activity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
         } else { // don't bother doing the test if the preference is set not to
             mainapp.gamePadDeviceIdsTested[gamepadNo] = GAMEPAD_GOOD;
@@ -2508,7 +2512,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d("Engine_Driver", "Throttle: start_consist_lights_edit() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+                Log.d(threaded_application.applicationName, activityName + ": start_consist_lights_edit() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
         }
     }
@@ -2621,26 +2625,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // helper function to enable/disable all children for a group
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
-
         // implemented in derived class, but called from this class
-
     }
 
     // update the appearance of all function buttons
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d("Engine_Driver","set_function_states");
-
         // implemented in derived class, but called from this class
-
     }
 
     // update a function button appearance based on its state
     void set_function_state(int whichThrottle, int function) {
-        // Log.d("Engine_Driver","starting set_function_request");
-
         // implemented in derived class, but called from this class
-
     }
 
     /*
@@ -2648,7 +2643,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
      * todo: need to handle momentary buttons somehow
      */
     void set_function_request(int whichThrottle, int function, int reqState) {
-        // Log.d("Engine_Driver","starting set_function_request");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_request");
         Button b;
         b = functionMaps[whichThrottle].get(function);
         if (b != null) {
@@ -2719,7 +2714,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII) {
-            Log.d("Engine_Driver", "ESU_MCII: Throttle changed to: " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": setVolumeIndicator(): ESU_MCII: Throttle changed to: " + whichVolume);
             setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
             if (!isEsuMc2Stopped) {
                 // Set green LED on if controlling a throttle; flash if nothing selected
@@ -2819,7 +2814,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
         mainapp.prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
-        Log.d("Engine_Driver", "setGamepadKeys() : prefGamePadType" + mainapp.prefGamePadType);
+        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType" + mainapp.prefGamePadType);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -3079,7 +3074,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // map the button pressed to the user selected action for that button on the gamepad or ESP32 DIY Gamepad (which thinks it is a Keyboard)
     private void performButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int whichGamePadIsEventFrom, int repeatCnt) {
-        Log.d("Engine_Driver", "throttle: performButtonAction() buttonNo: " + buttonNo + " action: " + ((action == ACTION_DOWN) ? "ACTION_DOWN" : "ACTION_UP"));
+        Log.d(threaded_application.applicationName, activityName + ": performButtonAction() buttonNo: " + buttonNo + " action: " + ((action == ACTION_DOWN) ? "ACTION_DOWN" : "ACTION_UP"));
 
         if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.ALL_STOP)) {  // All Stop
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
@@ -3358,7 +3353,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // map the button pressed to the user selected action for that button on a keyboard
     private void performKeyboardKeyAction(int keyCode, int action, boolean isShiftPressed, int repeatCnt, int originalWhichThrottle, int whichGamePadIsEventFrom) {
-        Log.d("Engine_Driver", "throttle: performKeyboardKeyAction() action: " + action);
+        Log.d(threaded_application.applicationName, activityName + ": performKeyboardKeyAction() action: " + action);
         int whichThrottle = originalWhichThrottle;
         boolean isActive = getConsist(originalWhichThrottle).isActive();
         if ((keyboardThrottle >= 0) && (keyboardThrottle != originalWhichThrottle)) {
@@ -3366,11 +3361,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             isActive = getConsist(whichThrottle).isActive();
         }
 
-        if ((keyCode == KEYCODE_Z) || (keyCode == KEYCODE_MOVE_END)) {  // All Stop
+        if ((keyCode == KEYCODE_Z) || (keyCode == KEYCODE_MOVE_END)) {  // E Stop
+
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 GamepadFeedbackSound(false);
                 if (!isSemiRealisticTrottle) {
-                    speedUpdateAndNotify(0);         // update all three throttles
+                    speedUpdateAndNotify(0);         // update all throttles
+                    mainapp.sendEStopMsg();
                 } else {
 // ok
                     // assumes only one Throttle
@@ -3380,9 +3377,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if ((keyCode == KEYCODE_X) || (keyCode == KEYCODE_MOVE_HOME)) {  // Stop
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                keyboardStopCount++;
                 GamepadFeedbackSound(false);
                 if (!isSemiRealisticTrottle) {
-                    speedUpdateAndNotify(whichThrottle, 0);
+                    if (keyboardStopCount==1) {
+                        speedUpdateAndNotify(whichThrottle, 0);
+                    } else { // Estop all
+                        speedUpdateAndNotify(0);         // update all throttles
+                        mainapp.sendEStopMsg();
+                        keyboardStopCount = 0;
+                    }
                     tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
                             , getMaxSpeed(whichThrottle)
                             , getSpeedFromCurrentSliderPosition(whichThrottle, false)
@@ -3679,20 +3683,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                 }
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'G')) {  // Forced Latching Function
-                    if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        keyboardString = keyboardString + num;
-                    }
-                    if (keyboardString.length() == 3) {  // have a two digit function number now
-                        int fKey = Integer.parseInt(keyboardString.substring(1, 3));
-                        if(fKey<MAX_FUNCTIONS) {
-                            if (action == ACTION_DOWN) {
-                                doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
-                            } else {
-                                doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
-                                resetKeyboardString();
-                            }
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (keyboardString.length() == 3) {  // have a two digit function number now
+                    int fKey = Integer.parseInt(keyboardString.substring(1, 3));
+                    if (fKey < MAX_FUNCTIONS) {
+                        if (action == ACTION_DOWN) {
+                            doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
+                        } else {
+                            doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, true);
+                            resetKeyboardString();
                         }
                     }
+                }
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'S')) {  // speed
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
@@ -3750,10 +3754,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
         }
+
+        if ((keyCode != KEYCODE_X) && (keyCode != KEYCODE_MOVE_HOME)) {  // if the key was anything other than a stop, reset the count
+            keyboardStopCount = 0;
+        }
     }
 
     void resetKeyboardString() {
-        Log.d("Engine_Driver", "throttle: resetKeyboardString()");
+        Log.d(threaded_application.applicationName, activityName + ": resetKeyboardString()");
         keyboardString = "";
         keyboardThrottle = -1;  //reset it
     }
@@ -3762,7 +3770,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, false);
     }
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt, boolean forceIsLatching) {
-        Log.d("Engine_Driver", "throttle: doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
+        Log.d(threaded_application.applicationName, activityName + ": doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
             if (lab != null) {
@@ -3806,7 +3814,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        Log.d("Engine_Driver", "dispatchGenericMotionEvent() Joystick Event");
+        Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent() Joystick Event");
         if ( (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick) ) {
 
             boolean acceptEvent = true; // default to assuming that we will respond to the event
@@ -3862,7 +3870,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     yAxis2 = externalGamepadyAxis2;
                 }
 
-                Log.d("Engine_Driver", "dispatchGenericMotionEvent() Joystick Event x: " + xAxis + "y: " + yAxis + "x2: " + xAxis2 + "y2: " + yAxis2 );
+                Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent() Joystick Event x: " + xAxis + "y: " + yAxis + "x2: " + xAxis2 + "y2: " + yAxis2 );
 
                 if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                     if (whichGamePadIsEventFrom >= 0) {
@@ -3882,7 +3890,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     mGamepadAutoIncrement = false;
                     mGamepadAutoDecrement = false;
                     GamepadFeedbackSoundStop();
-                    Log.d("Engine_Driver", "dispatchGenericMotionEvent: ACTION_UP"
+                    Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent(): ACTION_UP"
                             + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                             + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                     );
@@ -4007,7 +4015,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     boolean isActive = getConsist(whichThrottle).isActive();
 
                     if (keyCode != 0) {
-                        Log.d("Engine_Driver", "throttle: dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                     }
 
                     if (!mainapp.prefGamePadType.equals("Keyboard")) {
@@ -4015,12 +4023,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
-                            Log.d("Engine_Driver", "throttle: dispatchKeyEvent (not Keyboard): ACTION_UP"
+                            Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent (not Keyboard): ACTION_UP"
                                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                             );
                         } else {
-                            Log.d("Engine_Driver", "throttle: dispatchKeyEvent (not Keyboard): ACTION_DOWN");
+                            Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent (not Keyboard): ACTION_DOWN");
                         }
 
                         // if the preference name has "-rotate" at the end of it swap the direction keys around
@@ -4068,7 +4076,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
                         }
-                        Log.d("Engine_Driver", "throttle: dispatchKeyEvent: ACTION" + ((action == ACTION_UP) ? "UP" : "DOWN")
+                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent: ACTION" + ((action == ACTION_UP) ? "UP" : "DOWN")
                                 + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                                 + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                         );
@@ -4087,7 +4095,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             boolean isActive = getConsist(whichVolume).isActive();
 
             if (keyCode != 0) {
-                Log.d("Engine_Driver", "ESU_MCII: keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): ESU_MCII: keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                 if (action == ACTION_UP) {
                     esuButtonAutoIncrement = false;
                     esuButtonAutoDecrement = false;
@@ -4102,7 +4110,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         return true; // stop processing this key
                     default:
                         // Unrecognised key - do nothing
-                        Log.d("Engine_Driver", "ESU_MCII: Unrecognised keyCode: " + keyCode);
+                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): ESU_MCII: Unrecognised keyCode: " + keyCode);
 
                 }
             }
@@ -4115,7 +4123,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
-        Log.d("Engine_Driver", "GamepadIncrementSpeed()");
+        Log.d(threaded_application.applicationName, activityName + ": GamepadIncrementSpeed()");
         incrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4128,7 +4136,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
-        Log.d("Engine_Driver", "GamepadDecrementSpeed()");
+        Log.d(threaded_application.applicationName, activityName + ": GamepadDecrementSpeed()");
         decrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4192,7 +4200,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             whichThrottle = WhichThrottle;
             stepMultiplier = StepMultiplier;
 
-            Log.d("Engine_Driver", "GamepadRptUpdater: WhichThrottle: " + whichThrottle
+            Log.d(threaded_application.applicationName, activityName + ": GamepadRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -4206,7 +4214,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-            Log.d("Engine_Driver", "GamepadRptUpdater: run(): WhichThrottle: " + whichThrottle
+            Log.d(threaded_application.applicationName, activityName + ": GamepadRptUpdater(): run(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -4229,7 +4237,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int whichThrottle;
 
         private VolumeKeysRptUpdater(int WhichThrottle) {
-            Log.d("Engine_Driver", "VolumeKeysRptUpdater: WhichThrottle: " + whichThrottle
+            Log.d(threaded_application.applicationName, activityName + ": VolumeKeysRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -4244,7 +4252,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-            Log.d("Engine_Driver", "VolumeKeysRptUpdater: run(): WhichThrottle: " + whichThrottle
+            Log.d(threaded_application.applicationName, activityName + ": VolumeKeysRptUpdater(): run(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -4294,26 +4302,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void onButtonDown() {
-            Log.d("Engine_Driver", "ESU_MCII: Knob button down for throttle " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d("Engine_Driver", "ESU_MCII: Knob disabled - direction change ignored");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
-                    Log.d("Engine_Driver", "ESU_MCII: Attempting to switch direction");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Attempting to switch direction");
                     changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
                     speedUpdateAndNotify(whichVolume, 0, false);
                 } else {
-                    Log.d("Engine_Driver", "ESU_MCII: Direction change option disabled - do nothing");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
                     speedUpdateAndNotify(whichVolume, 0, false);
                 }
             } else {
-                Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Screen locked - do nothing");
             }
         }
 
         @Override
         public void onButtonUp() {
-            Log.d("Engine_Driver", "ESU_MCII: Knob button up for throttle " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonUp(): ESU_MCII: Knob button up for throttle " + whichVolume);
         }
 
         @Override
@@ -4321,20 +4329,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             int speed;
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d("Engine_Driver", "ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
-                    Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged(): ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Nothing updated");
                 } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
-                    Log.d("Engine_Driver", "ESU_MCII: Knob position changed for throttle " + whichVolume);
-                    Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
                     speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
                 } else {
                     // Ignore knob movements for stopped or inactive throttles
-                    Log.d("Engine_Driver", "ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
-                    Log.d("Engine_Driver", "ESU_MCII: Nothing updated");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Nothing updated");
                 }
             } else {
-                Log.d("Engine_Driver", "ESU_MCII: Screen locked - do nothing");
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Screen locked - do nothing");
             }
         }
 
@@ -4355,14 +4363,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @Override
         public void onStopButtonDown() {
             if (!getConsist(whichVolume).isActive()) {
-                Log.d("Engine_Driver", "ESU_MCII: Stop button down for inactive throttle " + whichVolume);
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onStopButton(): ESU_MCII: Stop button down for inactive throttle " + whichVolume);
                 return;
             }
-            Log.d("Engine_Driver", "ESU_MCII: Stop button down for throttle " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onStopButton(): ESU_MCII: Stop button down for throttle " + whichVolume);
             if (!isEsuMc2Stopped) {
                 origSpeed = getSpeed(whichVolume);
                 timePressed = System.currentTimeMillis();
-                Log.d("Engine_Driver", "ESU_MCII: Speed value was: " + origSpeed);
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onStopButton(): ESU_MCII: Speed value was: " + origSpeed);
             }
             // Toggle press status
             isEsuMc2Stopped = !isEsuMc2Stopped;
@@ -4402,19 +4410,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 buttonTimer.cancel();
             }
             if (!getConsist(whichVolume).isActive()) {
-                Log.d("Engine_Driver", "ESU_MCII: Stop button up for inactive throttle " + whichVolume);
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button up for inactive throttle " + whichVolume);
                 return;
             }
             if (fromTimer) {
-                Log.d("Engine_Driver", "ESU_MCII: Stop button timer finished for throttle " + whichVolume);
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button timer finished for throttle " + whichVolume);
             } else {
-                Log.d("Engine_Driver", "ESU_MCII: Stop button up for throttle " + whichVolume);
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button up for throttle " + whichVolume);
             }
             if (isEsuMc2Stopped) {
                 if (fromTimer || System.currentTimeMillis() - timePressed > delay) {
                     // It's a long initial press so record this
                     wasLongPress = true;
-                    Log.d("Engine_Driver", "ESU_MCII: Stop button press was long - long flash Red LED");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button press was long - long flash Red LED");
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
@@ -4427,12 +4435,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 } else {
                     wasLongPress = false;
                     if (prefEsuMc2StopButtonShortPress) {
-                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short - short flash Red LED");
+                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button press was short - short flash Red LED");
                         esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
                         esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                         setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
                     } else {
-                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short but action disabled");
+                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button press was short but action disabled");
                         isEsuMc2Stopped = !isEsuMc2Stopped;
                         esuMc2Led.revertLEDStates();
                     }
@@ -4440,15 +4448,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } else {
                 if (!wasLongPress) {
                     if (prefEsuMc2StopButtonShortPress) {
-                        Log.d("Engine_Driver", "ESU_MCII: Revert speed value to: " + origSpeed);
+                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): SU_MCII: Revert speed value to: " + origSpeed);
                         set_stop_button(whichVolume, false);
                         speedUpdateAndNotify(whichVolume, origSpeed);
                         setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
                     } else {
-                        Log.d("Engine_Driver", "ESU_MCII: Stop button press was short but revert action disabled");
+                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Stop button press was short but revert action disabled");
                     }
                 } else {
-                    Log.d("Engine_Driver", "ESU_MCII: Resume control without speed revert");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
                     for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                         set_stop_button(throttleIndex, false);
@@ -4464,25 +4472,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // Function to move ESU MCII control knob
     protected void setEsuThrottleKnobPosition(int whichThrottle, int speed) {
-        Log.d("Engine_Driver", "ESU_MCII: Request to update knob position for throttle " + whichThrottle);
+        Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Request to update knob position for throttle " + whichThrottle);
         if (whichThrottle == whichVolume) {
             int knobPos;
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
-            Log.d("Engine_Driver", "ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
-            Log.d("Engine_Driver", "ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
+            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
             try {
                 esuThrottleFragment.moveThrottle(knobPos);
             } catch (IllegalArgumentException ex) {
-                Log.e("Engine_Driver", "ESU_MCII: Problem moving throttle " + ex.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Problem moving throttle " + ex.getMessage());
             }
         } else {
-            Log.d("Engine_Driver", "ESU_MCII: This throttle not selected for control by knob");
+            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: This throttle not selected for control by knob");
         }
     }
 
     private void updateEsuMc2ZeroTrim() {
         int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
-        Log.d("Engine_Driver", "ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
+        Log.d(threaded_application.applicationName, activityName + ": updateEsuMc2ZeroTrim(): ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
         // first the knob
         esuThrottleFragment.setZeroPosition(zeroTrim);
@@ -4496,7 +4504,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int repeatCnt) {
 
         if (isEsuMc2Stopped) {
-            Log.d("Engine_Driver", "ESU_MCII: Device button presses whilst stopped ignored");
+            Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
 //            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoButtonPresses), Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
             return;
@@ -4885,7 +4893,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 isDirectionButtonLongPress = true;
                 directionButtonLongPressHandler.postDelayed(run, prefDirectionButtonLongPressDelay);
 
-                // Log.d("Engine_Driver", "onTouch direction " + function + " action " +
+                // Log.d(threaded_application.applicationName, activityName + ": onTouch(): direction " + function + " action " +
 
                 v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
 
@@ -5095,7 +5103,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "doLocoSoundDelayed.run: (locoSound) wt" + whichThrottle);
+//            Log.d(threaded_application.applicationName, activityName + ": doLocoSoundDelayed(): run: (locoSound) wt" + whichThrottle);
             doLocoSound(whichThrottle);
         }
     } // end DoLocoSoundDelayed
@@ -5108,18 +5116,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
                         mSound = getLocoSoundStep(whichThrottle);
 
-                        Log.d("Engine_Driver", "doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+                        Log.d(threaded_application.applicationName, activityName + ": doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                         if ((mSound >= 0)) {
                             if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == sounds_type.NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
-//                                Log.d("Engine_Driver", "doLocoSound 2              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+//                                Log.d(threaded_application.applicationName, activityName + ": doLocoSound 2              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                 //see if there is a startup sound for this profile
                                 if (mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX] > 0) {
-//                                    Log.d("Engine_Driver", "doLocoSound 3              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+//                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 3              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                     soundStart(sounds_type.LOCO, whichThrottle, sounds_type.STARTUP_INDEX, sounds_type.REPEAT_NONE);
                                     soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX]);
                                     soundQueueNextLocoSound(whichThrottle, mSound);
                                 } else {
-//                                    Log.d("Engine_Driver", "doLocoSound 4              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+//                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 4              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                                     soundStart(sounds_type.LOCO, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
                                     mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
                                 }
@@ -5143,7 +5151,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ((mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == mSound) && (mainapp.soundsLocoQueue[whichThrottle].queueCount() == 0) && (!wasDirectionChange)) {
             return; // sound is already playing and nothing is queued
         }
-//        Log.d("Engine_Driver", "soundQueueNextLocoSound  : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
+//        Log.d(threaded_application.applicationName, activityName + ": soundQueueNextLocoSound  : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int queueCount = mainapp.soundsLocoQueue[whichThrottle].queueCount();
 
@@ -5155,7 +5163,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end soundQueueNextLocoSound()
 
     void soundScheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime) {
-//        Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
+//        Log.dthreaded_application.applicationName, activityName + ": soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int expectedEndTime;
         if (forcedExpectedEndTime > 0) {
@@ -5169,7 +5177,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.throttle_msg_handler.postDelayed(
                     new SoundScheduleNextSoundToPlay(sounds_type.LOCO, whichThrottle, nextSound),
                     expectedEndTime - 100);
-//            Log.d("Engine_Driver", "soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
+//            Log.d(threaded_application.applicationName, activityName + ": soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
         }
     } //end soundScheduleNextLocoSound()
 
@@ -5181,12 +5189,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         speed = (float) ((speed / 126 * steps) + 0.99);
         rslt = (int) speed;
 
-//        Log.d("Engine_Driver", "getLocoSoundStep         : (locoSound) wt: " + whichThrottle + " step:" + rslt);
+//        Log.d(threaded_application.applicationName, activityName + ": getLocoSoundStep         : (locoSound) wt: " + whichThrottle + " step:" + rslt);
         return rslt;
     } // end getLocoSoundStep()
 
     void doDeviceButtonSound(int whichThrottle, int soundType) {
-        Log.d("Engine_Driver", "doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
+        Log.d(threaded_application.applicationName, activityName + ": doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
         int soundTypeArrayIndex = soundType - 1;
 
         if ((mainapp.consists != null)
@@ -5223,7 +5231,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end soundIsPlaying()
 
     void startBellHornSound(int soundType, int whichThrottle) {
-//        Log.d("Engine_Driver", "startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
+//        Log.d(threaded_application.applicationName, activityName + ": startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
         int soundTypeArrayIndex = soundType - 1;
 
         if (soundIsPlaying(soundType, whichThrottle) < 0) { // check if the loop sound is not currently playing
@@ -5240,7 +5248,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end startBellHornSound()
 
     void stopBellHornSound(int soundType, int whichThrottle) {
-//        Log.d("Engine_Driver", "stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
+//        Log.d(threaded_application.applicationName, activityName + ": stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
         int soundTypeArrayIndex = soundType - 1;
 
         if (soundType != sounds_type.HORN_SHORT) {
@@ -5264,13 +5272,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end stopBellHornSound(
 
     void soundStart(int soundType, int whichThrottle, int mSound, int loop) {
-//        Log.d("Engine_Driver", "soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+//        Log.d(threaded_application.applicationName, activityName + ": soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
         int soundTypeArrayIndex = soundType - 1;
 
         switch (soundType) {
             default:
             case sounds_type.LOCO: // loco
-//                Log.d("Engine_Driver", "soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
+//                Log.d(threaded_application.applicationName, activityName + ": soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
                 if (mSound >= 0) {
                     if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] != mSound) {
                         if (mSound < sounds_type.STARTUP_INDEX) {
@@ -5283,7 +5291,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
                                     soundsVolume(sounds_type.LOCO, whichThrottle), soundsVolume(sounds_type.LOCO, whichThrottle),
                                     0, sounds_type.REPEAT_NONE, 1);
-//                            Log.d("Engine_Driver", "soundStart SU            : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
+//                            Log.d(threaded_application.applicationName, activityName + ": soundStart SU            : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 
 //                        } else if (mSound == sounds_type.SHUTDOWN_INDEX) {
                         }
@@ -5309,7 +5317,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }  // end startSound()
 
     int soundStop(int soundType, int whichThrottle, int mSound, boolean forceStop) {
-//        Log.d("Engine_Driver", "soundStop: soundType" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
+//        Log.d(threaded_application.applicationName, activityName + ": soundStop: soundType" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
         int timesPlayed = 0;
         double expectedEndTime = 0;
         int soundTypeArrayIndex = soundType - 1;
@@ -5344,7 +5352,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             case sounds_type.LOCO: // loco
             default:
-//                Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " mSound: " + snd + " forceStop:" + forceStop);
+//                Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " mSound: " + snd + " forceStop:" + forceStop);
                 if (mSound >= 0) {
                     if (mSound < sounds_type.STARTUP_INDEX) {
                         if (!forceStop) {
@@ -5363,7 +5371,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 repeats = (int) (mainapp.prefDeviceSoundsMomentum / duration) + 1;
                             }
 //                            double x = expectedEndTime + repeats * duration;
-//                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " expected to end in: " +(x/1000)+"sec" );
+//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " expected to end in: " +(x/1000)+"sec" );
 
                             mainapp.soundPool.pause(mainapp.soundsLocoStreamId[whichThrottle][mSound]); // unfortunately you seem to have to pause it to change the number of repeats
                             mainapp.soundPool.setLoop(mainapp.soundsLocoStreamId[whichThrottle][mSound], repeats);  // don't really stop it, just let it finish
@@ -5376,19 +5384,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for the preference amount regardless
                             }
 
-//                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
+//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
                         } else {
                             mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-//                        Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
+//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
                         }
                     } else if (mSound == sounds_type.STARTUP_INDEX) {
                         // this will only ever play once
                         if (!forceStop) {
                             expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + mainapp.soundsLocoDuration[whichThrottle][mSound] - System.currentTimeMillis();
-//                            Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
+//                            Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
                         } else {
                             mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-//                            Log.d("Engine_Driver", "soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
+//                            Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
                         }
 
                     }
@@ -5413,13 +5421,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "SoundScheduleNextSoundToPlay.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
+//            Log.d(threaded_application.applicationName, activityName + ": SoundScheduleNextSoundToPlay.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
             switch (soundType) {
                 default:
                     break;
                 case sounds_type.LOCO: // loco
                     // pull the next sound off the queue
-//                    Log.d("Engine_Driver", "SoundScheduleNextSoundToPlay.run: (locoSound) wt: " + whichThrottle + " snd: " + mSound);
+//                    Log.d(threaded_application.applicationName, activityName + ": SoundScheduleNextSoundToPlay.run: (locoSound) wt: " + whichThrottle + " snd: " + mSound);
                     soundStop(soundType, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], true);
                     soundStart(soundType, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
                     mainapp.soundsLocoQueue[whichThrottle].dequeue();
@@ -5451,7 +5459,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "SoundScheduleSoundToStop.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
+//            Log.d(threaded_application.applicationName, activityName + ": SoundScheduleSoundToStop.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
             switch (soundType) {
                 default:
                     break;
@@ -5503,7 +5511,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-            // Log.d("Engine_Driver", "onTouch func " + function + " action " +
+            // Log.d(threaded_application.applicationName, activityName + ": onTouch(): func " + function + " action " +
 
             // make the click sound once
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -5526,7 +5534,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         private void handleAction(int action) {
-//            Log.d("Engine_Driver", "handleAction - action: " + action );
+//            Log.d(threaded_application.applicationName, activityName + ": handleAction(): action: " + action );
             int isLatching = consist_function_latching_type.NA;  // only used for the special consist function matching
 
             switch (action) {
@@ -5603,7 +5611,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-//             Log.d("Engine_Driver", "throttle: ThrottleSeekBarListener: onTouch: Throttle action " + event.getAction());
+//             Log.d(threaded_application.applicationName, activityName + ": ThrottleSeekBarListener: onTouch: Throttle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
@@ -5616,7 +5624,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (vsbSpeeds != null) {
                 touchFromUser = vsbSpeeds[whichThrottle].touchFromUser;
             }
-//                Log.d("Engine_Driver", "onProgressChanged -- lj: " + limitedJump[whichThrottle] + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
+//                Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): lj: " + limitedJump[whichThrottle] + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (touchFromUser)) {
@@ -5631,7 +5639,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
                     if (dif > max_throttle_change) { // if jump is too large then limit it
 
-                        // Log.d("Engine_Driver", "onProgressChanged -- throttling change");
+                        // Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): throttling change");
 
                         if (speed < lastSpeed) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
@@ -5794,7 +5802,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "throttle: onCreate(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.applyTheme(this);
@@ -5810,13 +5818,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
                 }
             } catch (Exception ignored) {              // log the error, but otherwise keep going.
-                Log.d("Engine_Driver", "Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
             }
         }
 
 
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
+            this.finish();
             return;
         }
 
@@ -5948,7 +5957,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 bLSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
 
             } catch (Exception ex) {
-                Log.d("debug", "onCreate: " + ex.getMessage());
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): Exception: " + ex.getMessage());
             }
 
             // set listeners for 3 direction buttons for each throttle
@@ -6344,20 +6353,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                     threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
         } catch (RuntimeException e) {
-            Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+            Log.e(threaded_application.applicationName, activityName + ": onCreate(): new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
         }
         // set GamePad Support
         setGamepadKeys();
 
         // initialise ESU MCII
         if (IS_ESU_MCII) {
-            Log.d("Engine_Driver", "ESU_MCII: Initialise fragments...");
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialise fragments...");
             int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
             esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
             esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
             esuStopButtonFragment = StopButtonFragment.newInstance();
             esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
-            Log.d("Engine_Driver", "ESU_MCII: ...fragments initialised");
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: ...fragments initialised");
 
             getSupportFragmentManager().beginTransaction()
                     .add(esuThrottleFragment, "mc2:throttle")
@@ -6368,7 +6377,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             // Now apply knob zero trim
             updateEsuMc2ZeroTrim();
-            Log.d("Engine_Driver", "ESU_MCII: Initialisation complete");
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialisation complete");
         }
 
         setupSensor(); // setup the support for shake actions.
@@ -6403,8 +6412,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResume() {
-        Log.d("Engine_Driver", "throttle: onResume(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.THROTTLE;
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
@@ -6508,7 +6519,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
-            Log.d("Engine_Driver", "connection: Forced Restart Reason: " + prefForcedRestartReason);
+            Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
@@ -6571,7 +6582,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private void showHideConsistMenus() {
         if ((mainapp.consists == null) && (!mainapp.isDCCEX)) {
-            Log.d("Engine_Driver", "showHideConsistMenu consists[] is null and not DCC-EX");
+            Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[] is null and not DCC-EX");
             return;
         }
 
@@ -6580,7 +6591,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 Consist con = mainapp.consists[throttleIndex];
                 if (con == null) {
-                    Log.d("Engine_Driver", "showHideConsistMenu consists[" + throttleIndex + "] is null");
+                    Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[" + throttleIndex + "] is null");
                     break;
                 }
                 boolean isMulti = con.isMulti();
@@ -6639,6 +6650,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public void onPause() {
         super.onPause();
+        threaded_application.activityPaused(activityName);
+
         if (webViewIsOn) {
             pauseWebView();
         }
@@ -6685,7 +6698,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public void onStart() {
-        Log.d("Engine_Driver", "throttle: onStart(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
         super.onStart();
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.throttle_msg_handler == null)
@@ -6706,9 +6719,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "throttle: onDestroy(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy(): called");
         super.onDestroy();
-        Log.d("Engine_Driver", "throttle.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
         if (!isRestarting) {
             removeHandlers();
         } else {
@@ -6733,7 +6746,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.throttle_msg_handler.removeCallbacksAndMessages(null);
             mainapp.throttle_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.throttle_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.throttle_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
 
         if (volumeKeysRepeatUpdateHandler != null) {
@@ -6810,7 +6823,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // set label and dcc functions (based on settings) or hide if no label
     @SuppressLint("ClickableViewAccessibility")
     void set_function_labels_and_listeners_for_view(int whichThrottle) {
-        Log.d("Engine_Driver", "throttle: set_function_labels_and_listeners_for_view() called");
+        Log.d(threaded_application.applicationName, activityName + ": set_function_labels_and_listeners_for_view() called");
 
 //        // implemented in derived class, but called from this class
 
@@ -6928,7 +6941,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // screen elements
 
     protected void set_labels() {
-//         Log.d("Engine_Driver","throttle: set_labels() starting");
+//         Log.d(threaded_application.applicationName, activityName + ": set_labels()");
 
         if (mainapp.appIsFinishing) {
             return;
@@ -6969,7 +6982,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         refreshMenu();
 
         vThrotScrWrap.invalidate();
-        // Log.d("Engine_Driver","ending set_labels");
+        // Log.d(threaded_application.applicationName, activityName + ": set_labels(): end");
     }
 
     private void refreshMenu() {
@@ -7252,7 +7265,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             speedUpdate(0);  // update all throttles
             applySpeedRelatedOptions();  // update all throttles
             if (IS_ESU_MCII) {
-                Log.d("Engine_Driver", "ESU_MCII: Move knob request for EStop");
+                Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
                 setEsuThrottleKnobPosition(whichVolume, 0);
             }
             mainapp.buttonVibration();
@@ -7375,7 +7388,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 try {
                     overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle", ' '))] = data.getStringExtra("overrideThrottleName");
                 } catch (RuntimeException e) {
-                    Log.e("Engine_Driver", "Throttle: Call to OverrideThrottleName failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                    Log.e(threaded_application.applicationName, activityName + ": Call to OverrideThrottleName failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                 }
                 if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
@@ -7408,7 +7421,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                     threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
-                            Log.e("Engine_Driver", "new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                         }
                     }
                     // update GamePad Support
@@ -7462,11 +7475,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
                                 break;
                             default:
-                                Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");
+                                Log.e(threaded_application.applicationName, activityName + ": OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");
                         }
                     }
                 } else {
-                    Log.e("Engine_Driver", "OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
+                    Log.e(threaded_application.applicationName, activityName + ": OnActivityResult(ACTIVITY_GAMEPAD_TEST) called with null data!");
                 }
                 break;
             }
@@ -7500,7 +7513,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // touch events outside the GestureOverlayView get caught here
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        Log.d("Engine_Driver", "onTouchEvent action: " + event.getAction());
+//        Log.d(threaded_application.applicationName, activityName + ": onTouchEvent(): action: " + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 gestureStart(event);
@@ -7519,16 +7532,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//        Log.d("Engine_Driver", "dispatchTouchEvent:");
+//        Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent():");
         // if screen is locked
         if (isScreenLocked) {
             // check if we have a swipe up
             if (ev.getAction() == ACTION_DOWN) {
-//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_DOWN" );
+//                Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent(): ACTION_DOWN" );
                 gestureStart(ev);
             }
             if (ev.getAction() == ACTION_UP) {
-//                Log.d("Engine_Driver", "dispatchTouchEvent: ACTION_UP" );
+//                Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent(): ACTION_UP" );
                 gestureEnd(ev);
             }
             // otherwise ignore the event
@@ -7562,7 +7575,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);
 
@@ -7589,7 +7602,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         )
                 )
                 ) {
-//                    Log.d("Engine_Driver","exiting gestureStart on slider: " + gestureStartX + ", " + gestureStartY);
+//                    Log.d(threaded_application.applicationName, activityName + ": gestureStart() exit on slider: " + gestureStartX + ", " + gestureStartY);
                     return;
                 }
             }
@@ -7601,15 +7614,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // start the gesture timeout timer
         if (mainapp.throttle_msg_handler != null) {
-//            Log.d("Engine_Driver","gestureStart start gesture timer");
+//            Log.d(threaded_application.applicationName, activityName + ": gestureStart(): start gesture timer");
             mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
         } else {
-            Log.d("Engine_Driver", "gestureStart Can't start gesture timer");
+            Log.d(threaded_application.applicationName, activityName + ": gestureStart(): Can't start gesture timer");
         }
     }
 
     public void gestureMove(MotionEvent event) {
-//        Log.d("Engine_Driver", "gestureMove action " + event.getAction() + " eventTime: " + event.getEventTime() );
+//        Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction() + " eventTime: " + event.getEventTime() );
         if (gestureInProgress) {
             // stop the gesture timeout timer
             if (mainapp.throttle_msg_handler != null)
@@ -7623,18 +7636,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-//                Log.d("Engine_Driver", "gestureMove gestureVelocity vel " + velocityX);
+//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
             }
 //            else {
-//                Log.d("Engine_Driver", "gestureMove event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
-//                Log.d("Engine_Driver", "gestureMove event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
+//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
+//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
 //            }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
-//                Log.d("Engine_Driver","gestureSMove restart gesture timer");
+//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): restart gesture timer");
                 if (mainapp.throttle_msg_handler != null)
                     mainapp.throttle_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
             }
@@ -7642,7 +7655,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void gestureEnd(MotionEvent event) {
-//        Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ((mainapp != null) && (mainapp.throttle_msg_handler != null) && (gestureInProgress)) {
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
 
@@ -7728,7 +7741,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void gestureCancel(MotionEvent event) {
-//        Log.d("Engine_Driver", "gestureEnd gestureCancel");
+//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): gestureCancel");
         if (mainapp.throttle_msg_handler != null)
             mainapp.throttle_msg_handler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
@@ -7736,7 +7749,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void gestureFailed(MotionEvent event) {
-//        Log.d("Engine_Driver", "gestureEnd gestureFailed");
+//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd gestureFailed");
         // end the gesture
         gestureInProgress = false;
         gestureFailed = true;
@@ -7750,14 +7763,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-//            Log.d("Engine_Driver", "gestureStopped");
+//            Log.d(threaded_application.applicationName, activityName + ": gestureStopped()");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
                 gestureFailed = true;
                 // create a MOVE event to trigger the underlying control
                 if (vThrotScr != null) {
-//                    Log.d("Engine_Driver", "gestureStopped vThrotScr != null");
+//                    Log.d(threaded_application.applicationName, activityName + ": gestureStopped vThrotScr != null");
                     // use uptimeMillis() rather than 0 for time in
                     // MotionEvent.obtain() call in throttle gestureStopped:
                     MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
@@ -7765,7 +7778,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     try {
                         vThrotScr.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -7839,7 +7852,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             public void onClick(DialogInterface dialog, int whichButton) {
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 passwordText = input.getText().toString();
-                Log.d("", "Password Value : " + passwordText);
+                Log.d(threaded_application.applicationName, activityName + ": showTimerPasswordDialog(): onClick(): Password Value : " + passwordText);
 
                 if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
                     kidsTimerActions(kids_timer_action_type.ENDED, 0);
@@ -7872,7 +7885,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d("Engine_Driver", "throttle: navigateToHandler:" + requestCode);
+        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
@@ -7883,16 +7896,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
-//                    Log.d("Engine_Driver", "Got permission for READ_SERVER_AUTO_PREFERENCES");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_SERVER_AUTO_PREFERENCES");
 //                    autoImportUrlAskToImportImpl();
 //                    break;
 //                case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
-//                    Log.d("Engine_Driver", "Got permission for STORE_SERVER_AUTO_PREFERENCES");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_SERVER_AUTO_PREFERENCES");
 //                    autoImportFromURLImpl();
 //                    break;
                 default:
                     // do nothing
-                    Log.d("Engine_Driver", "Unrecognised permissions request code: " + requestCode);
+                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
             }
         }
     }
@@ -7900,7 +7913,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(throttle.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -7919,7 +7932,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // Importing file in background thread
         @SuppressLint("ApplySharedPref")
         public void run() {
-            Log.d("Engine_Driver", "throttle: Import preferences from Server: start");
+            Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: start");
             int count;
             String n_url;
 
@@ -7938,14 +7951,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             try {
                 urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 urlPreferencesFilePath = context.getExternalFilesDir(null) + "/" + urlPreferencesFileName;
-                Log.d("Engine_Driver", "throttle: Import preferences from Server: linkg for: " + urlPreferencesFilePath);
+                Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: linkg for: " + urlPreferencesFilePath);
                 url = new URL(n_url);
 
                 connection = url.openConnection();
                 connection.connect();
 
             } catch (Exception e) {
-                Log.d("Engine_Driver", "throttle: Auto import preferences from Server Failed: " + e.getMessage());
+                Log.d(threaded_application.applicationName, activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
                 return;
             }
 
@@ -7960,10 +7973,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     localDate = new Date(timestamp);
 
                     if (localDate.compareTo(urlDate) >= 0) {
-                        Log.d("Engine_Driver", "throttle: Auto Import preferences from Server: Local file is up-to-date: " + localFile);
+                        Log.d(threaded_application.applicationName, activityName + ": Auto Import preferences from Server: Local file is up-to-date: " + localFile);
                         return;
 //                    } else {
-//                        Log.d("Engine_Driver", "throttle: Import preferences from Server: Local file is newer. Date " + localDate.toString());
+//                        Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: Local file is newer. Date " + localDate.toString());
                     }
                 }
 
@@ -7988,10 +8001,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
 
             } catch (Exception e) {
-                Log.e("Engine_Driver", "throttle: Auto import preferences from Server Failed: " + e.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
             }
 
-            Log.d("Engine_Driver", "throttle: Auto Import preferences from Server: End");
+            Log.d(threaded_application.applicationName, activityName + ": Auto Import preferences from Server: End");
             return;
         }
 
@@ -8043,7 +8056,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // restart the app so that the new preferences can be applied
     // note: should verify that permissions have been granted before calling this method since it will try to read the preference file
     private void loadSharedPreferencesFromFileImpl(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
-        Log.d("Engine_Driver", "Preferences: Loading saved preferences from file: " + exportedPreferencesFileName);
+        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFileImpl(): Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
@@ -8057,7 +8070,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "throttle.forceRestartApp() ");
+        Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() ");
         Message msg = Message.obtain();
         msg.what = message_type.RESTART_APP;
         msg.arg1 = forcedRestartReason;
@@ -8212,7 +8225,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end getSpeedFromCurrentSliderPosition()
 
     void soundsStopAllSoundsForLoco(int whichThrottle) {
-//        Log.d("Engine_Driver", "soundsStopAllSoundsForLoco : (locoSound) wt: " + whichThrottle);
+//        Log.d(threaded_application.applicationName, activityName + ": soundsStopAllSoundsForLoco(): (locoSound) wt: " + whichThrottle);
         if (mainapp.soundPool != null) {
             for (int i = 0; i < 17; i++) {
                 mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][i]);
@@ -8309,7 +8322,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void handleDeviceButtonAction(int whichThrottle, int buttonType, int soundType, int action) {
-        Log.d("Engine_Driver", "handleDeviceButtonAction: handleAction - action: " + action);
+        Log.d(threaded_application.applicationName, activityName + ": handleDeviceButtonAction(): handleAction - action: " + action);
 
         if ((buttonType == sounds_type.BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary)) {
             boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][buttonType];
@@ -8461,6 +8474,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
     protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX > 0) {
@@ -8503,7 +8517,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             whichThrottle = WhichThrottle;
             stepMultiplier = StepMultiplier;
 
-            Log.d("Engine_Driver", "GamepadRptUpdater: WhichThrottle: " + whichThrottle
+            Log.d(threaded_application.applicationName, activityName + ": SemiRealisticGamepadRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );

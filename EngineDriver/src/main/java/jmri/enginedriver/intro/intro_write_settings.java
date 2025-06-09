@@ -36,12 +36,14 @@ import android.widget.Button;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 public class intro_write_settings extends Fragment {
+    static final String activityName = "intro_write_settings";
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_write_settings");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
 
         Button settingsButton = Objects.requireNonNull(getView()).findViewById(R.id.intro_write_settings_launch);

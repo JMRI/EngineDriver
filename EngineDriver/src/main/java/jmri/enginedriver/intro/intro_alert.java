@@ -29,12 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 public class intro_alert extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_alert");
+        Log.d(threaded_application.applicationName, "intro_alert: onActivityCreated()" );
         super.onActivityCreated(savedInstanceState);
     }
 

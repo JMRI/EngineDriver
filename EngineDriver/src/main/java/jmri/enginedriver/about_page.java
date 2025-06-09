@@ -41,6 +41,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 
 public class about_page extends AppCompatActivity {
+    static final String activityName = "about_page";
 
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
@@ -90,8 +91,16 @@ public class about_page extends AppCompatActivity {
     } //end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.ABOUT;
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
@@ -151,11 +160,16 @@ public class about_page extends AppCompatActivity {
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @SuppressLint("HandlerLeak")
@@ -181,7 +195,7 @@ public class about_page extends AppCompatActivity {
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.ABOUT)
-                        finish();  //end this activity
+                        endThisActivity();
                     break;
 
                 default:
@@ -193,7 +207,7 @@ public class about_page extends AppCompatActivity {
     public class CloseButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
-            finish();
+            endThisActivity();
         }
     }
 }

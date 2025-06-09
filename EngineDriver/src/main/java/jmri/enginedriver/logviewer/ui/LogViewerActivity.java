@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
@@ -50,6 +52,8 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 
 /** @noinspection CallToPrintStackTrace*/
 public class LogViewerActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "LogViewerActivity";
+
     private ArrayAdapter<String> adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -65,6 +69,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {        // expedite
+            this.finish();
             return;
         }
 
@@ -128,14 +133,22 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     "");
         }
 
-        Log.d("Engine_Driver", mainapp.getAboutInfo());
-        Log.d("Engine_Driver", mainapp.getAboutInfo(false));
+        Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
+        Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
 
     } // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.LOG_VIEWER;
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();
@@ -190,7 +203,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     protected void onDestroy() {
-        Log.d("Engine_Driver", "log_viewer.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
 
         if (logReaderTask != null ) {
             logReaderTask.stopTask();
@@ -206,7 +219,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     public class CloseButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
-            finish();
+            endThisActivity();
         }
     }
 
@@ -215,6 +228,23 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //
 //        }
 //    }
+
+    //Handle pressing of the back button to end this activity
+    @Override
+    public boolean onKeyDown(int key, KeyEvent event) {
+        mainapp.exitDoubleBackButtonInitiated = 0;
+        if (key == KeyEvent.KEYCODE_BACK) {
+            endThisActivity();
+            return true;
+        }
+        return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
 
     class logviewer_handler extends Handler {
 
@@ -241,7 +271,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     break;
                 }
                 case message_type.REOPEN_THROTTLE:
-                    finish();
+                    endThisActivity();
                     break;
 
                 default:
@@ -267,9 +297,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
-            Log.d("Engine_Driver", "Logging started to: " + logFile);
-            Log.d("Engine_Driver", mainapp.getAboutInfo());
-            Log.d("Engine_Driver", mainapp.getAboutInfo(false));
+            Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
+            Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
+            Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -289,7 +319,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
-        Log.d("Engine_Driver", "LogViewerActivity: navigateToHandler:" + requestCode);
+        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(LogViewerActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
@@ -300,12 +330,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                case PermissionsHelper.STORE_LOG_FILES:
-//                    Log.d("Engine_Driver", "Preferences: Got permission for STORE_LOG_FILES - navigate to writeSharedPreferencesToFileImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_LOG_FILES - navigate to writeSharedPreferencesToFileImpl()");
 //                    saveLogFileImpl();
 //                    break;
                 default:
                     // do nothing
-                    Log.d("Engine_Driver", "Preferences: Unrecognised permissions request code: " + requestCode);
+                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
             }
         }
     }
@@ -313,7 +343,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(LogViewerActivity.this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "Unrecognised request - send up to super class");
+            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -452,7 +482,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             adaptor.add(line);
             adaptor.notifyDataSetChanged();
         } catch (Exception e) {
-            Log.d("Engine_Driver", "LogViewerActivity: addLine: exception: " + e);
+            Log.d(threaded_application.applicationName, activityName + ": addLogEntryToView(): addLine: exception: " + e);
         }
     }
 }

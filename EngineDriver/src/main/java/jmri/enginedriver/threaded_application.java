@@ -122,6 +122,9 @@ import jmri.jmrit.roster.RosterLoader;
 //This thread will only act upon messages sent to it. The network communication needs to persist across activities, so that is why
 @SuppressLint("NewApi")
 public class threaded_application extends Application {
+    public static final String applicationName = "Engine_Driver";
+    public static final String activityName = "t_a";
+
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
 
     private final threaded_application mainapp = this;
@@ -484,6 +487,30 @@ public class threaded_application extends Application {
     public String witCvValue = "";
     public String witAddress = "";
 
+    static boolean activityVisible = false;
+    static boolean activityInTransition = false;
+
+    public static boolean isActivityVisible() {
+        Log.d(applicationName, "t_a: isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));
+        return activityVisible || activityInTransition;
+    }
+
+    public static void activityResumed(String activityName) {
+        activityVisible = true;
+        activityInTransition = false;
+        Log.d(applicationName, "t_a: activityResumed("+activityName+")");
+    }
+
+    public static void activityPaused(String activityName) {
+        activityVisible = false;
+        Log.d(applicationName, "t_a: activityPaused("+activityName+")");
+    }
+
+    public static void activityInTransition(String activityName) {
+        activityInTransition = true;
+        Log.d(applicationName, "t_a: activityInTransition("+activityName+")");
+    }
+
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
      * Should only be called when ED is going into the background.
@@ -554,14 +581,14 @@ public class threaded_application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Engine_Driver", "t_a: onCreate()");
+        Log.d(applicationName, "t_a: onCreate()");
         try {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
         androidVersion = android.os.Build.VERSION.SDK_INT;
 
-        Log.i("Engine_Driver", "Engine Driver:" + appVersion + ", SDK:" + androidVersion);
+        Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + androidVersion);
 
         context = getApplicationContext();
 
@@ -670,6 +697,7 @@ public class threaded_application extends Application {
 
         @Override
         public void onTrimMemory(int level) {
+            Log.d(applicationName, "t_a: onTrimMemory(): " + level);
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;
@@ -680,9 +708,11 @@ public class threaded_application extends Application {
                 }
                 if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) { // time to kill app
                     if (!exitConfirmed) {       // if TA is running in bkg
-                        // disconnect and shutdown
-                        sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);
-                        exitConfirmed = true;
+                        if (!isActivityVisible()) {   // double check it is in background
+                            // disconnect and shutdown
+                            sendMsg(comm_msg_handler, message_type.DISCONNECT, "", 1);
+                            exitConfirmed = true;
+                        }
                     }
                 }
             }
@@ -774,9 +804,9 @@ public class threaded_application extends Application {
                 }
             }
         } catch (IOException except) {
-            Log.e("settings_activity", "Could not read file, error: " + except.getMessage());
+            Log.e(applicationName, activityName + ": Could not read file, error: " + except.getMessage());
         } catch (NumberFormatException except) {
-            Log.e("settings_activity", "NumberFormatException reading function_settings file: " + except.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": set_default_function_labels(): NumberFormatException reading function_settings file: " + except.getMessage());
         }
 
     }
@@ -787,9 +817,9 @@ public class threaded_application extends Application {
         void runMethod(Download dl) throws IOException {
             String rosterUrl = createUrl("roster/?format=xml");
             HashMap<String, RosterEntry> rosterTemp;
-            if (rosterUrl == null || rosterUrl.equals("") || dl.cancel)
+            if (rosterUrl == null || rosterUrl.isEmpty() || dl.cancel)
                 return;
-            Log.d("Engine_Driver", "t_a: Background loading roster from " + rosterUrl);
+            Log.d(applicationName, "t_a: Background loading roster from " + rosterUrl);
             int rosterSize;
             try {
                 RosterLoader rl = new RosterLoader(rosterUrl);
@@ -797,7 +827,7 @@ public class threaded_application extends Application {
                     return;
                 rosterTemp = rl.parse();
                 if (rosterTemp == null) {
-                    Log.w("Engine_Driver", "t_a: Roster parse failed.");
+                    Log.w(applicationName, "t_a: Roster parse failed.");
                     return;
                 }
                 rosterSize = rosterTemp.size();     //throws exception if still null
@@ -806,7 +836,7 @@ public class threaded_application extends Application {
             } catch (Exception e) {
                 throw new IOException();
             }
-            Log.d("Engine_Driver", "t_a: Loaded " + rosterSize + " entries from /roster/?format=xml.");
+            Log.d(applicationName, "t_a: Loaded " + rosterSize + " entries from /roster/?format=xml.");
         }
     }
 
@@ -817,14 +847,14 @@ public class threaded_application extends Application {
 //            String metaUrl = createUrl("json/metadata");
 //            if (metaUrl == null || metaUrl.equals("") || dl.cancel)
 //                return;
-//            Log.d("Engine_Driver", "t_a: Background loading metadata from " + metaUrl);
+//            Log.d(applicationName, "t_a: Background loading metadata from " + metaUrl);
 //
 //            HttpClient Client = new DefaultHttpClient();
 //            HttpGet httpget = new HttpGet(metaUrl);
 //            ResponseHandler<String> responseHandler = new BasicResponseHandler();
 //            String jsonResponse;
 //            jsonResponse = Client.execute(httpget, responseHandler);
-//            Log.d("Engine_Driver", "t_a: Raw metadata retrieved: " + jsonResponse);
+//            Log.d(applicationName, "t_a: Raw metadata retrieved: " + jsonResponse);
 //
 //            HashMap<String, String> metadataTemp = new HashMap<>();
 //            try {
@@ -836,15 +866,15 @@ public class threaded_application extends Application {
 //                    metadataTemp.put(metadataName, metadataValue);
 //                }
 //            } catch (JSONException e) {
-//                Log.d("Engine_Driver", "t_a: exception trying to retrieve json metadata.");
+//                Log.d(applicationName, "t_a: exception trying to retrieve json metadata.");
 //            } catch (Exception e) {
 //                throw new IOException();
 //            }
 //            if (metadataTemp.size() == 0) {
-//                Log.d("Engine_Driver", "t_a: did not retrieve any json metadata entries.");
+//                Log.d(applicationName, "t_a: did not retrieve any json metadata entries.");
 //            } else {
 //                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-//                Log.d("Engine_Driver", "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
+//                Log.d(applicationName, "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
 //            }
 //        }
 //    }
@@ -862,20 +892,20 @@ public class threaded_application extends Application {
                 try {
                     runMethod(this);
                     if (!cancel) {
-                        Log.d("Engine_Driver", "t_a: sendMsg - message - ROSTER_UPDATE");
+                        Log.d(applicationName, "t_a: sendMsg - message - ROSTER_UPDATE");
                         sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
                     }
                 } catch (Throwable t) {
-                    Log.d("Engine_Driver", "t_a: Data fetch failed: " + t.getMessage());
+                    Log.d(applicationName, "t_a: Data fetch failed: " + t.getMessage());
                 }
 
                 // background load of Data completed
                 finally {
                     if (cancel) {
-                        Log.d("Engine_Driver", "t_a: Data fetch cancelled");
+                        Log.d(applicationName, "t_a: Data fetch cancelled");
                     }
                 }
-                Log.d("Engine_Driver", "t_a: Data fetch ended");
+                Log.d(applicationName, "t_a: Data fetch ended");
             }
 
             Download() {
@@ -1143,7 +1173,7 @@ public class threaded_application extends Application {
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
             roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
         } catch (Exception e) {
-            Log.d("Engine_Driver", "t_a: initShared object create exception");
+            Log.d(applicationName, "t_a: initShared object create exception");
         }
         doFinish = false;
         turnouts_list_position = 0;
@@ -1504,7 +1534,7 @@ public class threaded_application extends Application {
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;
-                Log.d("Engine_Driver", "t_a: EStop sent to server for " + i);
+                Log.d(applicationName, "t_a: EStop sent to server for " + i);
             }
         }
     }
@@ -1657,7 +1687,7 @@ public class threaded_application extends Application {
         int port = web_server_port;
         if (getServerType().equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
             defaultUrl = "";
-            Log.d("Engine_Driver", "t_a: ignoring web url for MRC");
+            Log.d(applicationName, "t_a: ignoring web url for MRC");
         }
         if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
             if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
@@ -1730,7 +1760,7 @@ public class threaded_application extends Application {
     public void applyTheme(Activity activity, boolean isPreferences) {
         int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
-        Log.d("Engine_Driver", "t_a: applyTheme: " + selectedTheme);
+        Log.d(applicationName, "t_a: applyTheme: " + selectedTheme);
         theme = activity.getTheme();
 
     }
@@ -1796,7 +1826,7 @@ public class threaded_application extends Application {
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } catch (Exception e) {
-            Log.e("Engine_Driver", "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
+            Log.e(applicationName, "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
         }
 
         webMenuSelected = false;  // reset after each check
@@ -1804,6 +1834,7 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity) {
+        Log.d(applicationName, "t_a: checkExit(1): ");
         boolean prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
         if (!prefDoubleBackButtonToExit) {
             checkAskExit(activity, false);
@@ -1823,6 +1854,7 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity, boolean forceFastDisconnect) {
+        Log.d(applicationName, "t_a: checkExit(2): ");
         boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
         if (!prefDoubleBackButtonToExit) {
             checkAskExit(activity, forceFastDisconnect);
@@ -1855,6 +1887,7 @@ public class threaded_application extends Application {
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                Log.d(applicationName, "t_a: checkAskExit(): onClick() ");
                 exitConfirmed = true;
                 if (!forceFastDisconnect) {
                     sendMsg(comm_msg_handler, message_type.DISCONNECT, "");  //trigger disconnect / shutdown sequence
@@ -1887,7 +1920,7 @@ public class threaded_application extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         languageCountry = Locale.getDefault().getLanguage();
-        if (!Locale.getDefault().getCountry().equals("")) {
+        if (!Locale.getDefault().getCountry().isEmpty()) {
             languageCountry = languageCountry + "_" + Locale.getDefault().getCountry();
         }
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
@@ -2083,11 +2116,11 @@ public class threaded_application extends Application {
                 break;
             default:
                 val = 0;
-                Log.d("debug", "t_a: throttleCharToInt: no match for argument " + cWhichThrottle);
+                Log.d(threaded_application.applicationName, "t_a: throttleCharToInt: no match for argument " + cWhichThrottle);
                 break;
         }
         if (val > maxThrottlesCurrentScreen)
-            Log.d("debug", "t_a: throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
+            Log.d(threaded_application.applicationName, "t_a: throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
         return val;
     }
 
@@ -2105,7 +2138,7 @@ public class threaded_application extends Application {
 
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
-        if (currentValue.equals("") || currentValue.equals(defaultName)) {
+        if (currentValue.isEmpty() || currentValue.equals(defaultName)) {
             deviceId = mainapp.getFakeDeviceId();
             if (MobileControl2.isMobileControl2()) {
                 // Change default name for ESU MCII
@@ -2200,7 +2233,7 @@ public class threaded_application extends Application {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
     public static void safeToast(final String msg_txt, final int length) {
-        Log.d("Engine_Driver", "t_a: safeToast: " + msg_txt);
+        Log.d(applicationName, "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
@@ -2449,7 +2482,7 @@ public class threaded_application extends Application {
     }
 
     public void writeSharedPreferencesToFileIfAllowed() {
-        Log.d("Engine_Driver", "t_a: writeSharedPreferencesToFileIfAllowed: start");
+        Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -2461,7 +2494,7 @@ public class threaded_application extends Application {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                     importExportPreferences.writeSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
                 }
-                Log.d("Engine_Driver", "t_a: writeSharedPreferencesToFileIfAllowed: done");
+                Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: done");
             } else {
                 safeToast(R.string.toastConnectUnableToSavePref, Toast.LENGTH_LONG);
             }
@@ -2533,7 +2566,7 @@ public class threaded_application extends Application {
                 if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
                 importExportPreferences.removeRecentLocoFromList(i);
-                Log.d("Engine_Driver", "t_a: addLocoToRecents: Loco '" + locoName + "' removed from Recents");
+                Log.d(applicationName, "t_a: addLocoToRecents: Loco '" + locoName + "' removed from Recents");
                 break;
             }
         }
@@ -2545,7 +2578,7 @@ public class threaded_application extends Application {
         importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
-        Log.d("Engine_Driver", "t_a: Loco '" + locoName + "' added to Recents");
+        Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
 
     }
 
@@ -2559,7 +2592,7 @@ public class threaded_application extends Application {
                     && size.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
                     && name.equals(importExportPreferences.recentLocoNameList.get(i))) {
                 position = i;
-                Log.d("Engine_Driver", "t_a: findLocoInRecents: Loco '" + name + "' found in Recents");
+                Log.d(applicationName, "t_a: findLocoInRecents: Loco '" + name + "' found in Recents");
                 break;
             }
         }
@@ -2597,7 +2630,7 @@ public class threaded_application extends Application {
                 Message msg = Message.obtain();
                 msg.what = message_type.RESTART_APP;
                 msg.arg1 = restart_reason_type.AUTO_IMPORT;
-                Log.d("Engine_Driver", "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                Log.d(applicationName, "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                 comm_msg_handler.sendMessage(msg);
             } else {
 //                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
@@ -2629,7 +2662,7 @@ public class threaded_application extends Application {
             if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
                     || ((xSpeed == 0) && (xLastSpeed != 0))
                     || ((xSpeed == 126) && (xLastSpeed != 126))) {
-//                    Log.d("Engine_Driver", "t_a: haptic_test: " + "beep");
+//                    Log.d(applicationName, "t_a: haptic_test: " + "beep");
                 vibrate(prefHapticFeedbackDuration);
             }
         }
@@ -2749,10 +2782,19 @@ public class threaded_application extends Application {
     }
 
     public void hideSoftKeyboard(View view) {
+        hideSoftKeyboard(view, "unknown");
+    }
+    public void hideSoftKeyboard(View view, String activityName) {
+        Log.d(applicationName, "t_a: hideSoftKeyboard()");
+        activityInTransition(activityName);
         // Check if no view has focus:
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            } catch (Exception e) {
+                Log.e(applicationName, "select_loco: hideSoftKeyboard(): unable to hide the soft keyboard");
+            }
         }
     }
 
@@ -2762,7 +2804,7 @@ public class threaded_application extends Application {
     }
 
     public void stopAllSounds() {
-        Log.d("Engine_Driver", "t_a: stopAllSounds (locoSounds)");
+        Log.d(applicationName, "t_a: stopAllSounds (locoSounds)");
         if (soundPool != null) {
             for (int soundType = 0; soundType < 3; soundType++) {
                 for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {
@@ -2796,7 +2838,7 @@ public class threaded_application extends Application {
 //                method = s.getMethodName();
 //            }
 //            if (doNext == 2) {
-//                Log.d("Engine_Driver", s.getMethodName() + "->" + method + ": " + label);
+//                Log.d(applicationName, s.getMethodName() + "->" + method + ": " + label);
 //                return;
 //            }
 //            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
@@ -2917,7 +2959,7 @@ public class threaded_application extends Application {
 
     // listener for the joystick events
     public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d("Engine_Driver", "dgme " + event.getAction());
+        //Log.d(applicationName, "dgme " + event.getAction());
         if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
@@ -3100,7 +3142,7 @@ public class threaded_application extends Application {
     public String getFakeDeviceId(boolean forceNewId) {
 //        return Settings.System.getString(getContentResolver(), Settings.Secure.ANDROID_ID);  // no longer permitted
         mainapp.deviceId = prefs.getString("prefAndroidId", "");
-        if ( (mainapp.deviceId.equals("")) || (forceNewId) ) {
+        if ( (mainapp.deviceId.isEmpty()) || (forceNewId) ) {
             Random rand = new Random();
             mainapp.deviceId = String.valueOf(rand.nextInt(999999)); //use random string
             prefs.edit().putString("prefAndroidId", deviceId).commit();

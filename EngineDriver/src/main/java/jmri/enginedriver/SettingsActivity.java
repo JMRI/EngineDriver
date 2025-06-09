@@ -89,6 +89,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+    static final String activityName = "SettingsActivity";
+
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
     static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
     public static final int RESULT_LOAD_IMG = 1;
@@ -150,7 +152,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "Settings: onCreate()");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
@@ -191,7 +193,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
-            Log.d("Engine_Driver", "Settings: Set toolbar");
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): Set toolbar");
         }
 
     } // end onCreate
@@ -199,7 +201,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @Override
     public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
                                            PreferenceScreen preferenceScreen) {
-        Log.d("Engine_Driver", "callback called to attach the preference sub screen");
+        Log.d(threaded_application.applicationName, activityName + ": onPreferenceStartScreen(): callback called to attach the preference sub screen");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         SettingsSubScreenFragment fragment = SettingsSubScreenFragment.newInstance("Advanced Settings Subscreen");
         Bundle args = new Bundle();
@@ -215,16 +217,23 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     protected void onResume() {
-        Log.d("Engine_Driver", "Settings: onResume()");
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.SETTINGS;
 
-        Log.d("Engine_Driver", "settings.onResume() called");
 //        try {
 //            dismissDialog(PROGRESS_BAR_TYPE);
 //        } catch (Exception e) {
-//            Log.d("Engine_Driver", "settings.onResume() no dialog to kill");
+//            Log.d(threaded_application.applicationName, activityName + ": onResume() no dialog to kill");
 //        }
 
         if (mainapp.isForcingFinish()) {     //expedite
@@ -254,7 +263,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
-            Log.d("Engine_Driver", "Settings: Set toolbar");
+            Log.d(threaded_application.applicationName, activityName + ": onResume(): Set toolbar");
         }
 
         // save some values
@@ -264,19 +273,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 //    @Override
 //    protected void onStart() {
-//        Log.d("Engine_Driver", "Settings: onStart()");
+//        Log.d(threaded_application.applicationName, activityName + ": onStart()");
 //        super.onStart();
 //    }
 
     @Override
     protected void onDestroy() {
-        Log.d("Engine_Driver", "settings.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
         if (mainapp.settings_msg_handler !=null) {
             mainapp.settings_msg_handler.removeCallbacksAndMessages(null);
             mainapp.settings_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "Preferences: onDestroy: mainapp.settings_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.settings_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
         if (forceRestartAppOnPreferencesClose) {
             forceRestartApp(forceRestartAppOnPreferencesCloseReason);
@@ -288,7 +297,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "Settings: forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
+        Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -298,7 +307,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 writeSharedPreferencesToFile(prefs, exportedPreferencesFileName, false);
             }
         }
-        finish();
+        this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         Message msg = Message.obtain();
         msg.what = message_type.RESTART_APP;
@@ -308,9 +317,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceReLaunchApp(int forcedRestartReason) {
-        Log.d("Engine_Driver", "Settings: forceRelaunchApp() ");
+        Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
 
-        finish();
+        this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         Message msg = Message.obtain();
         msg.what = message_type.RELAUNCH_APP;
@@ -333,20 +342,20 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d("Engine_Driver", "Settings: " + ex.getMessage());
+                Log.d(threaded_application.applicationName, activityName + ": start_gamepad_test_activity(): Settings: " + ex.getMessage());
             }
         }
     }
 
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported / hidden
-        Log.d("Engine_Driver", "Settings: Forcing activity to recreate");
+        Log.d(threaded_application.applicationName, activityName + ": reload(): Forcing activity to recreate");
         recreate();
     }
 
     @SuppressLint("ApplySharedPref")
     private void writeSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
-        Log.d("Engine_Driver", "Settings: Saving preferences to file");
+//        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         if (!exportedPreferencesFileName.equals(".ed")) {
             File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
@@ -389,7 +398,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "Settings: Fix and Loading saved preferences.");
+        Log.d(threaded_application.applicationName, activityName + ": fixAndReloadImportExportPreference()");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         sharedPreferences.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
         reload();
@@ -423,7 +432,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
-        Log.d("Engine_Driver", "Settings: Loading saved preferences from file: " + exportedPreferencesFileName);
+        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + exportedPreferencesFileName);
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
@@ -436,7 +445,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void resetPreferencesDialog() {
-        Log.d("Engine_Driver", "Settings: Resetting preferences");
+        Log.d(threaded_application.applicationName, activityName + ": resetPreferencesDialog()");
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
@@ -467,7 +476,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         SharedPreferences.Editor prefEdit = prefs.edit();
         prefEdit.clear();
         prefEdit.commit();
-        Log.d("Engine_Driver", "Settings: Reset succeeded");
+        Log.d(threaded_application.applicationName, activityName + ": resetPreferences(): Reset succeeded");
         delete_settings_file("function_settings.txt");
         delete_settings_file("connections_list.txt");
         delete_settings_file("recent_engine_list.txt");
@@ -502,9 +511,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             File settings_file = new File(context.getExternalFilesDir(null), file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
-                    Log.d("Engine_Driver", "Settings: " + file_name + " deleted");
+                    Log.d(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " deleted");
                 } else {
-                    Log.e("Engine_Driver", "Settings: " + file_name + " NOT deleted");
+                    Log.e(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " NOT deleted");
                 }
             }
         }
@@ -541,11 +550,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     }
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
-                    Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File Found");
+                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File Found");
                     loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, restart_reason_type.IMPORT_SERVER_MANUAL);
                     break;
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
-                    Log.d("Engine_Driver", "Settings: Message: Import preferences from Server: File not Found");
+                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
                     prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
                     prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
 //                    Toast.makeText(getApplicationContext(),
@@ -559,7 +568,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.SETTINGS)
-                        finish();  //end this activity
+                        endThisActivity();
                     break;
 
             }
@@ -597,14 +606,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //        @SuppressLint("ApplySharedPref")
 //        @Override
 //        protected String doInBackground(String... f_url) {
-//            Log.d("Engine_Driver", "Settings: Import preferences from Server: start");
+//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: start");
 //            int count;
 //            String n_url = f_url[0].trim();
 //
 //            if ((mainapp.connectedHostip != null)) {
 //                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
 //            } else {
-//                Log.d("Engine_Driver", "Settings: Import preferences from Server: Not currently connected");
+//                Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: Not currently connected");
 //                return null;
 //            }
 //
@@ -655,7 +664,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
 //
 //            } catch (Exception e) {
-//                Log.e("Engine_Driver", "Settings: Import preferences from Server Failed: " + e.getMessage());
+//                Log.e(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server Failed: " + e.getMessage());
 //                try {
 //                    dismissDialog(PROGRESS_BAR_TYPE);
 //                } catch (Exception ignored) {
@@ -664,7 +673,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
 //            }
 //
-//            Log.d("Engine_Driver", "Settings: Import preferences from Server: End");
+//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: End");
 //            return null;
 //        }
 //
@@ -695,18 +704,23 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if ((key == KeyEvent.KEYCODE_BACK) && (!isInSubScreen) ) {
-            setResult(result);
-            finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         isInSubScreen = false;
         return (super.onKeyDown(key, event));
     }
 
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        setResult(result);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("Engine_Driver", "Settings: onCreateOptionsMenu()");
+        Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
         SAMenu = menu;
@@ -746,7 +760,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Engine_Driver", "Settings: onActivityResult()");
+        Log.d(threaded_application.applicationName, activityName + ": onActivityResult()");
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // When an Image is picked
@@ -777,14 +791,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 threaded_application.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
-            Log.e("Engine_Driver", "Settings: Loading background image Failed: " + e.getMessage());
+            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
         }
 
     }
 
     @SuppressLint("ApplySharedPref")
     protected void limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
-        Log.d("Engine_Driver", "Settings: limitIntPrefValue()");
+        Log.d(threaded_application.applicationName, activityName + ": limitIntPrefValue()");
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
@@ -813,7 +827,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     /** @noinspection SameParameterValue, SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
-        Log.d("Engine_Driver", "Settings: limitIntArraryPrefValue()");
+        Log.d(threaded_application.applicationName, activityName + ": limitIntArraryPrefValue()");
 
         String prefValue = sharedPreferences.getString(key, defaultVal).trim();
         String[] prefValues = threaded_application.splitByString(prefValue, " ");
@@ -860,7 +874,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
-        Log.d("Engine_Driver", "Settings: limitFloatPrefValue()");
+        Log.d(threaded_application.applicationName, activityName + ": limitFloatPrefValue()");
         EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
         try {
             float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
@@ -888,7 +902,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void checkThrottleScreenType(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "Settings: checkThrottleScreenType()");
+        Log.d(threaded_application.applicationName, activityName + ": checkThrottleScreenType()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if (prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC)) {
@@ -909,7 +923,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "Settings: limitNumThrottles()");
+        Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
         int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
@@ -922,7 +936,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         if ( ((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
-            Log.d("Engine_Driver", "Settings: limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
+            Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
@@ -933,7 +947,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             ListPreference p = (ListPreference) prefScreen.findPreference("NumThrottle");
             if (p != null) {
                 ignoreThisThrottleNumChange = true;
-                Log.d("Engine_Driver", "Settings: limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
+                Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
                 p.setValue(textNumbers[max[index]-1]);
                 p.setValueIndex(max[index]-1);
             }
@@ -990,7 +1004,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 for (int x = 0; x < childCount; x++) {
                     RadioButton btn = (RadioButton) group.getChildAt(x);
                     if (btn.getId() == checkedId) {
-                        Log.e("selected RadioButton->",btn.getText().toString());
+                        Log.e(threaded_application.applicationName, activityName + ": selected RadioButton-> " + btn.getText().toString());
                         setSharedPreferenceValueString(prefScreen, "NumThrottle", entryValueList.get(x));
                     }
                 }
@@ -1001,7 +1015,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "Settings: throttleScreenTypeSupportsWebView()");
+        Log.d(threaded_application.applicationName, activityName + ": throttleScreenTypeSupportsWebView()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         boolean supportsWebView = false;
 
@@ -1017,7 +1031,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences) {
-        Log.d("Engine_Driver", "Settings: getThrottleScreenTypeArrayIndex()");
+        Log.d(threaded_application.applicationName, activityName + ": getThrottleScreenTypeArrayIndex()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = -1;
@@ -1104,13 +1118,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void enableDisablePreference(PreferenceScreen prefScreen, String key, boolean enable) {
-//        Log.d("Engine_Driver", "Settings: enableDisablePreference(): key: " + key);
+//        Log.d(threaded_application.applicationName, activityName + ": enableDisablePreference(): key: " + key);
         Preference p = prefScreen.findPreference(key);
         if (p != null) {
             p.setSelectable(enable);
             p.setEnabled(enable);
         } else {
-            Log.w("Engine_Driver", "Preference key '" + key + "' not found, not set to " + enable);
+            Log.w(threaded_application.applicationName, activityName + ": enableDisablePreference(): Preference key '" + key + "' not found, not set to " + enable);
         }
     }
 
@@ -1200,7 +1214,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
-        Log.d("Engine_Driver", "Settings: showHideThrottleSwitchPreferences()");
+        Log.d(threaded_application.applicationName, activityName + ": showHideThrottleSwitchPreferences()");
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType",
                 getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         boolean enable = prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
@@ -1270,11 +1284,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
                 list_reader.close();
             } else {
-                Log.d("settingActivity", "getConnectionsList: Recent connections not found");
+                Log.d(threaded_application.applicationName, activityName + ": getConnectionsList(): Recent connections not found");
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e("Engine_Driver", "Settings: Error reading recent connections list: " + errMsg);
+            Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
 //            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
         }
@@ -1338,7 +1352,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            Log.d("Engine_Driver", "Settings: SettingsFragment onCreatePreferences()");
+            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences()");
                 setPreferencesFromResource(R.xml.preferences, rootKey);
 
             Activity a = getActivity();
@@ -1351,8 +1365,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @Override
         public void onResume() {
-            Log.d("Engine_Driver", "Settings: SettingsFragment onResume()");
+            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
             super.onResume();
+            threaded_application.activityResumed(activityName);
+
             threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
@@ -1371,6 +1387,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public void onPause() {
             super.onPause();
+            threaded_application.activityPaused(activityName);
 
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(this);
@@ -1378,7 +1395,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @SuppressLint("ApplySharedPref")
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.d("Engine_Driver", "Settings: onSharedPreferenceChanged(): key: " + key);
+            Log.d(threaded_application.applicationName, activityName + ": onSharedPreferenceChanged(): key: " + key);
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
@@ -1522,7 +1539,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @SuppressLint("ApplySharedPref")
         void setPreferencesUI() {
-            Log.d("Engine_Driver", "Settings: setPreferencesUI()");
+            Log.d(threaded_application.applicationName, activityName + ": setPreferencesUI()");
             prefs = parentActivity.prefs;
             defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
@@ -1654,7 +1671,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //        }
 
         private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
-            Log.d("Engine_Driver", "Settings: showHideThrottleNumberPreference()");
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleNumberPreference()");
             boolean enable = true;
             parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
             int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
@@ -1668,7 +1685,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
 
         private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
-            Log.d("Engine_Driver", "Settings: showHideThrottleWebViewPreferences()");
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleWebViewPreferences()");
             boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
@@ -1696,7 +1713,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 
         private void showHideThrottleTypePreferences() {
-            Log.d("Engine_Driver", "Settings: showHideThrottleTypePreferences()");
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleTypePreferences()");
             boolean enable = (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING))
@@ -1747,19 +1764,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 else //Doesn't have a parent
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
-                Log.d("Engine_Driver", "Settings: removePreference: failed: " + preference);
+                Log.d(threaded_application.applicationName, activityName + ": removePreference(): failed: " + preference);
             }
         }
 
         private void hideAdvancedPreferences() {
             if (!prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedPreference1 : advancedPreferences) {
-// //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
+// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
                     Preference advancedPreference = findPreference(advancedPreference1);
                     if (advancedPreference != null) {
                         removePreference(advancedPreference);
                     } else {
-                        Log.d("Engine_Driver", "Settings: '" + advancedPreference1 + "' not found.");
+                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): '" + advancedPreference1 + "' not found.");
                     }
                 }
             }
@@ -1811,7 +1828,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             // rootKey is the name of preference sub screen key name , here--customPrefKey
             setPreferencesFromResource(R.xml.preferences, rootKey);
-            Log.d(TAG, "onCreatePreferences of the sub screen " + rootKey);
+            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
 
             Activity a = getActivity();
             parentActivity = (SettingsActivity) a;
@@ -1863,8 +1880,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @Override
         public void onResume() {
-            Log.d("Engine_Driver", "Settings: SettingsFragment onResume()");
+            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
             super.onResume();
+            threaded_application.activityResumed(activityName);
+
             threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
@@ -1879,6 +1898,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public void onPause() {
             super.onPause();
+            threaded_application.activityPaused(activityName);
 
             getPreferenceScreen().getSharedPreferences()
                     .unregisterOnSharedPreferenceChangeListener(this);
@@ -1920,26 +1940,26 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 else //Doesn't have a parent
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
-                Log.d("Engine_Driver", "Settings: removeSubPreference: failed: " + preference);
+                Log.d(threaded_application.applicationName, activityName + ": removeSubPreference: failed: " + preference);
             }
         }
 
         private void hideAdvancedSubPreferences() {
             if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedSubPreference1 : advancedSubPreferences) {
-// //                Log.d("Engine_Driver", "Settings: hideAdvancedPreferences(): " + advancedPreference1);
+// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
                     Preference advancedSubPreference = findPreference(advancedSubPreference1);
                     if (advancedSubPreference != null) {
                         removeSubPreference(advancedSubPreference);
                     } else {
-                        Log.d("Engine_Driver", "Settings: '" + advancedSubPreference1 + "' not found.");
+                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedSubPreferences(): '" + advancedSubPreference1 + "' not found.");
                     }
                 }
             }
         }
 
         private void showHideLeftRightSwipePreferences() {
-            Log.d("Engine_Driver", "Settings: showHideLeftRightSwipePreferences()");
+            Log.d(threaded_application.applicationName, activityName + ": showHideLeftRightSwipePreferences()");
             boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
                     getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);

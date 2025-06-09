@@ -35,12 +35,14 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 /**
  * Created by andrew on 11/17/16.
  */
 
 public class intro_buttons extends Fragment {
+    static final String activityName = "intro_buttons";
 
     private SharedPreferences prefs;
     private boolean displaySpeedButtons = false;
@@ -48,7 +50,7 @@ public class intro_buttons extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_buttons");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDisplaySpeedButtons = prefs.getBoolean("display_speed_arrows_buttons", false);

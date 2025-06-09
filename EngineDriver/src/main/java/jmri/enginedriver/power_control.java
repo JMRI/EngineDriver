@@ -45,6 +45,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class power_control extends AppCompatActivity {
+    static final String activityName = "power_control";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Drawable powerOnDrawable;  //hold background graphics for power button
@@ -83,7 +84,7 @@ public class power_control extends AppCompatActivity {
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.POWER_CONTROL)
-                        finish();
+                        endThisActivity();
                     break;
 
                 case message_type.WIT_CON_RETRY:
@@ -96,7 +97,7 @@ public class power_control extends AppCompatActivity {
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
                 case message_type.RECEIVED_TRACKS:
                     refreshDccexTracksView();
@@ -172,7 +173,7 @@ public class power_control extends AppCompatActivity {
         }
     }
 
-    //Set the button text based on current power state  TODO: improve code 
+    //Set the button text based on current power state
     public void refresh_power_control_view() {
         Button b = findViewById(R.id.power_control_button);
         Drawable currentImage = powerUnknownDrawable;
@@ -319,8 +320,16 @@ public class power_control extends AppCompatActivity {
     } // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.POWER_CONTROL;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
@@ -349,7 +358,7 @@ public class power_control extends AppCompatActivity {
             mainapp.power_control_msg_handler.removeCallbacksAndMessages(null);
             mainapp.power_control_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.power_control_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.power_control_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -394,14 +403,19 @@ public class power_control extends AppCompatActivity {
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
     }
 
-    private void disconnect() {
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void shutdown() {
         this.finish();
     }
 

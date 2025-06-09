@@ -34,19 +34,21 @@ import android.widget.RadioGroup;
 import java.util.Objects;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 /**
  * Created by andrew on 11/17/16.
  */
 
 public class intro_dccex extends Fragment {
+    static final String activityName = "intro_dccex";
 
     private SharedPreferences prefs;
     private boolean dccexYes;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "intro_dccex");
+        Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));

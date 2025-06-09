@@ -77,6 +77,7 @@ import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.type.gamepad_test_type;
 
 public class gamepad_test extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "gamepad_test";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu GPTMenu;
@@ -156,6 +157,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
+        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys()");
         prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
         gamePadModeEntryValuesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
@@ -420,7 +422,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d("Engine_Driver", "dgme " + event.getAction());
+        //Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent(): " + event.getAction());
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
             if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
                 int action;
@@ -521,7 +523,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 int repeatCnt = event.getRepeatCount();
 
                 if (keyCode != 0) {
-                    Log.d("Engine_Driver", "keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                    Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
 
                     setAllKeyCodes( String.valueOf(keyCode), action);
                 }
@@ -569,7 +571,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+                mainapp.hideSoftKeyboard(view);
             }
         }
 
@@ -719,8 +721,16 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     } // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         if (GPTMenu != null) {
@@ -741,7 +751,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "gamepad_test.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
 
         if (tg != null) {
             tg.release();
@@ -753,6 +763,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     // end current activity
     void endThisActivity(int passedTest) {
+        threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichGamepadNo", whichGamepadNo + passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
         setResult(result, resultIntent);
@@ -821,7 +832,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.GAMEPAD_TEST)
-                        finish();
+                        endThisActivity();
                     break;
 
             }
@@ -833,12 +844,18 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
-            setResult(result, resultIntent);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("whichGamepadNo", whichGamepadNo+"2");  //pass whichGamepadNo as an extra - plus "2" for fail
+        setResult(result, resultIntent);
     }
 
     @Override
@@ -869,7 +886,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         return false;
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 

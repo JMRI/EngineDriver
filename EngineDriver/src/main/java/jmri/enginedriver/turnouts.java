@@ -88,6 +88,7 @@ import jmri.enginedriver.type.source_type;
 
 //public class turnouts extends AppCompatActivity implements OnGestureListener {
 public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+    static final String activityName = "turnouts";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -200,7 +201,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
                 boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.to_user_names) {
-                    boolean hasUserName = (username != null && !username.equals(""));
+                    boolean hasUserName = (username != null && !username.isEmpty());
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get values from global array
                         String systemName = mainapp.to_system_names[pos];
@@ -253,7 +254,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 int pos = 0;
                 boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.to_user_names) {
-                    boolean hasUserName = (username != null && !username.equals(""));
+                    boolean hasUserName = (username != null && !username.isEmpty());
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
                         //get state from recents array
                         String systemName = mainapp.to_system_names[pos];
@@ -402,7 +403,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
                 case message_type.WIT_TURNOUT_NOT_DEFINED:
                     removeTurnoutFromRecentList(msg.obj.toString());
@@ -639,7 +640,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //                    InputMethodManager imm =
 //                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                    if (imm != null) {
-//                        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//                        mainapp.hideSoftKeyboard(view);
 //                    }
 //                    return true;
 //                } else
@@ -790,6 +791,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public void onPause() {
         super.onPause();
+        threaded_application.activityPaused(activityName);
 
         //save scroll position for later restore
         ListView lv = findViewById(R.id.turnouts_list);
@@ -799,16 +801,18 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        EditText trn = findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
-            imm.hideSoftInputFromWindow(trn.getWindowToken(), 0);
+            mainapp.hideSoftKeyboard(trn);
         }
     }
 
     @Override
     public void onResume() {
-        Log.d("Engine_Driver", "turnouts: onResume");
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.TURNOUTS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -847,7 +851,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
      */
     @Override
     public void onDestroy() {
-        //Log.d("Engine_Driver","turnouts.onDestroy()");
+        //Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
         if (mainapp.turnouts_msg_handler != null) {
@@ -855,7 +859,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
             mainapp.turnouts_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.turnouts_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.turnouts_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -868,12 +872,17 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         boolean rslt = mainapp.implDispatchKeyEvent(event);
 
         if (key == KeyEvent.KEYCODE_BACK) {
-            this.finish();
-            connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+            endThisActivity();
             return true;
         }
         mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -979,7 +988,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         refreshRecentTurnoutViewStates();
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 
@@ -1036,7 +1045,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 if (!toSuppress.contains(sn)) {
                     recentTurnoutsList.add(rthm);
                 } else {
-                    Log.d("Engine_Driver","skipping sn="+sn);
+                    Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsList(): skipping sn="+sn);
                 }
             }
             recentTurnoutsListAdapter.notifyDataSetChanged();
@@ -1177,8 +1186,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             try {
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {
-                Log.e("Engine_Driver",
-                        "deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
+                Log.e(threaded_application.applicationName, activityName
+                                + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
                                 + except.getMessage());
                 numberOfRecentTurnoutsToWrite = 20;
             }
@@ -1375,7 +1384,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
@@ -1393,7 +1402,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+        // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction());
         if (mainapp!=null && mainapp.turnouts_msg_handler!=null && gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
@@ -1406,7 +1415,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+                // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
@@ -1419,7 +1428,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        // Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ( (mainapp!=null) && (mainapp.turnouts_msg_handler != null) && (gestureInProgress)) {
             mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
 
@@ -1469,7 +1478,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     try {
                         turnoutsView.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -1505,6 +1514,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX>0) {

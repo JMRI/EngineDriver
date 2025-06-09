@@ -309,7 +309,7 @@
     <string name="FilterRosterListHint">Contém…</string>
     <string name="LocoSelectMethodHelp">Digite o endereço DCC da sua locomotiva acima e clique em \'Acquire\'.\n\nAlternadamente, selecione uma locomotiva da \'Lista\' JMRI ou selecione uma locmotivas usadas \'Recentemente\', clicando em um dos botões acima.</string>
 
-<!--    <string name="LocoSelectMethodQuestion">Método: </string>-->
+<!--    <string name="LocoSelectMethodQuestion">-->
     <string name="prefSelectLocoByRadioButtonsTitle">Selecione a aparência do método loco</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Mostrar uma lista de texto de métodos em vez de botões de imagem</string>
     <string name="LocoSelectMethodAddress">DCC Endereço</string>
