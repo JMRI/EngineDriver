@@ -15,8 +15,6 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 -->
 
-<!-- TODO: workout how to use the KEYCODES from android.view.KeyEvent rather having the declare them as integers -->
-
 <resources>
     <integer name="KeyCode_0"> 7</integer>
     <integer name="KeyCode_1"> 8</integer>

@@ -48,6 +48,8 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class reconnect_status extends AppCompatActivity {
+    static final String activityName = "reconnect_status";
+
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private String prog = "";
@@ -91,7 +93,7 @@ public class reconnect_status extends AppCompatActivity {
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
             }
         }
@@ -117,8 +119,8 @@ public class reconnect_status extends AppCompatActivity {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
                 mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen, 500L);
             } else {
-                Log.d("Engine_Driver", "Reconnect: handler already null");
-                closeScreen();
+                Log.d(threaded_application.applicationName, activityName + ": reconnected(): handler already null");
+                endThisActivity();
             }
         }
     }
@@ -127,13 +129,14 @@ public class reconnect_status extends AppCompatActivity {
     private final Runnable delayCloseScreen = new Runnable() {
         @Override
         public void run() {
-            closeScreen();
+            endThisActivity();
         }
     };
 
-    private void closeScreen() {
+    private void endThisActivity() {
 //        this.finish();                  //end this activity
 //        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);utes
+        threaded_application.activityInTransition(activityName);
         startACoreActivity(this, mainapp.getThrottleIntent(), false, 0);
     }
 
@@ -169,7 +172,7 @@ public class reconnect_status extends AppCompatActivity {
             try {
                 mediaPlayer.start();
             } catch (Exception e) {
-                Log.d("Engine_Driver", "Reconnect: Unable to play notification sound");
+                Log.d(threaded_application.applicationName, activityName + ": reconnected(): Unable to play notification sound");
             }
 
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
@@ -191,8 +194,16 @@ public class reconnect_status extends AppCompatActivity {
     } //end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.RECONNECT_STATUS;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
@@ -207,13 +218,14 @@ public class reconnect_status extends AppCompatActivity {
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "reconnect_status.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
+
         if (mainapp.reconnect_status_msg_handler !=null) {
             mainapp.reconnect_status_msg_handler.removeCallbacksAndMessages(null);
             mainapp.reconnect_status_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.reconnect_status_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.reconnect_status_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -228,10 +240,9 @@ public class reconnect_status extends AppCompatActivity {
         return (super.onKeyDown(key, event));
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
-
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -242,6 +253,7 @@ public class reconnect_status extends AppCompatActivity {
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options = ActivityOptions.makeCustomAnimation(context, R.anim.fade_in, R.anim.fade_out);
             startActivity(in, options.toBundle());

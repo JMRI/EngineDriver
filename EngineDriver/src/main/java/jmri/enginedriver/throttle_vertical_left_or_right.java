@@ -42,6 +42,7 @@ import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_vertical_left_or_right extends throttle {
+    static final String activityName = "throttle_vertical_left_or_right";
 
     protected static final int MAX_SCREEN_THROTTLES = 2;
     protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = 1;
@@ -60,7 +61,7 @@ public class throttle_vertical_left_or_right extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "throttle_vertical_left_or_right: onCreate(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -191,9 +192,16 @@ public class throttle_vertical_left_or_right extends throttle {
     } // end of onCreate()
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
-        Log.d("Engine_Driver", "throttle_vertical_left_or_right: onResume(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
         super.onResume();
+        threaded_application.activityResumed(activityName);
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -220,7 +228,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
     protected void set_labels() {
         super.set_labels();
-         Log.d("Engine_Driver","throttle_vertical_left_or_right set_labels(): starting");
+         Log.d(threaded_application.applicationName, activityName + ": set_labels(): starting");
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -236,7 +244,7 @@ public class throttle_vertical_left_or_right extends throttle {
             if ( (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive()) ) {
                 if (!prefShowAddressInsteadOfName) {
-                    if (!overrideThrottleNames[throttleIndex].equals("")) {
+                    if (!overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = overrideThrottleNames[throttleIndex];
                         bLabelPlainText = overrideThrottleNames[throttleIndex];
                     } else {
@@ -248,7 +256,7 @@ public class throttle_vertical_left_or_right extends throttle {
 //                    bLabelPlainText = mainapp.consists[throttleIndex].toString();
 //                    bLabel = mainapp.consists[throttleIndex].toHtml();
                 } else {
-                    if (overrideThrottleNames[throttleIndex].equals("")) {
+                    if (overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
@@ -333,7 +341,7 @@ public class throttle_vertical_left_or_right extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //Log.d(threaded_application.applicationName, activityName + ": set_labels(): vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         if (webView != null) {
@@ -420,7 +428,7 @@ public class throttle_vertical_left_or_right extends throttle {
             sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
             sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() - ovy;
 
-//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            Log.d(threaded_application.applicationName, activityName + ": set_labels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
 
         }
@@ -432,7 +440,7 @@ public class throttle_vertical_left_or_right extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d("Engine_Driver","ending set_labels");
+        // Log.d(threaded_application.applicationName, activityName + ": set_labels() end");
 
     }
 
@@ -455,8 +463,7 @@ public class throttle_vertical_left_or_right extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
-        // newEnabledState);
+        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView " + newEnabledState);
 
         if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
@@ -475,7 +482,7 @@ public class throttle_vertical_left_or_right extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d("Engine_Driver","set_function_states");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -491,7 +498,7 @@ public class throttle_vertical_left_or_right extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d("Engine_Driver","starting set_function_request");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array

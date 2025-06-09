@@ -22,8 +22,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.threaded_application;
 
 public class PermissionsHelper {
+    static final String activityName = "PermissionsHelper";
 
     /**
      * A compile time annotation to range-check the list of possible permission request codes.
@@ -105,12 +107,12 @@ public class PermissionsHelper {
 
             if (!showPermissionRationale(activity, requestCode) && grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
-                Log.d("Engine_Driver", "Permission denied - showAppSettingsDialog");
+                Log.d(threaded_application.applicationName, activityName + ": Permission denied - showAppSettingsDialog");
                 showAppSettingsDialog(activity, requestCode);
                 break;
             } else if (grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
-                Log.d("Engine_Driver", "Permission denied - showRetryDialog");
+                Log.d(threaded_application.applicationName, activityName + ": Permission denied - showRetryDialog");
                 if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                     showRetryDialog(activity, requestCode);
                 } else {
@@ -119,7 +121,7 @@ public class PermissionsHelper {
                 break;
             } else {
                 isRecognised = true;
-                Log.d("Engine_Driver", "Permission granted - navigateToHandler");
+                Log.d(threaded_application.applicationName, activityName + ": Permission granted - navigateToHandler");
                 ((PermissionsHelperGrantedCallback) activity).navigateToHandler(requestCode);
             }
         }
@@ -184,9 +186,9 @@ public class PermissionsHelper {
     public void requestNecessaryPermissions(final Activity activity, @RequestCodes final int requestCode) {
         // Request the necessary permissions based on request code
         // All possible request codes should be considered
-        Log.d("Engine_Driver", "isDialogOpen at requestNecessaryPermissions? " + isDialogOpen);
+        Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): isDialogOpen at requestNecessaryPermissions()? " + isDialogOpen);
         if (!isDialogOpen) {
-            Log.d("Engine_Driver", "Requesting " + getManifestPermissionId(requestCode)+ " permissions");
+            Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): Requesting " + getManifestPermissionId(requestCode)+ " permissions");
             switch (requestCode) {
                 case READ_IMAGES:
                     activity.requestPermissions(new String[]{
@@ -243,7 +245,7 @@ public class PermissionsHelper {
 //                    activity.requestPermissions(new String[]{
 //                                    Manifest.permission.NEARBY_WIFI_DEVICES},
 //                            requestCode);
-//                    Log.d("Engine_Driver", "Requesting NEARBY_WIFI_DEVICES permissions");
+//                    Log.d(threaded_application.applicationName, activityName + ": Requesting NEARBY_WIFI_DEVICES permissions");
 //                    break;
                 case POST_NOTIFICATIONS:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -272,7 +274,7 @@ public class PermissionsHelper {
             }
 
         } else {
-            Log.d("Engine_Driver", "Permissions dialog is opened - don't ask yet...");
+            Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): Permissions dialog is opened - don't ask yet...");
         }
     }
 

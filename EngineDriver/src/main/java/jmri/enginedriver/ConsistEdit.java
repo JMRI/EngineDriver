@@ -64,6 +64,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistEdit extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "ConsistEdit";
+
     public static final String LIGHT_TEXT_OFF = "Off";
     public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static final String LIGHT_TEXT_UNKNOWN = "Unknown";
@@ -197,7 +199,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
             }
         }
@@ -240,15 +242,16 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
             saveConsistsFile = extras.getChar("saveConsistsFile");
         } else {
-            Log.d("debug", "ConsistEdit.onCreate: no bundle - whichThrottle undefined, setting to 0");
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): no bundle - whichThrottle undefined, setting to 0");
             whichThrottle = 0;
         }
 
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d("Engine_Driver", "consistEdit onCreate consists is null");
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists is null");
             else
-                Log.d("Engine_Driver", "consistEdit onCreate consists[" + whichThrottle + "] is null");
+                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
+            threaded_application.activityInTransition(activityName);
             this.finish();
             return;
         }
@@ -336,8 +339,16 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     } // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.CONSIST_EDIT;
 
         if (mainapp.isForcingFinish()) {     //expedite
@@ -364,7 +375,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "ConsistEdit.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
         if (saveConsistsFile == 'Y') {
@@ -376,7 +387,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             mainapp.consist_edit_msg_handler.removeCallbacksAndMessages(null);
             mainapp.consist_edit_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.consist_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.consist_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -423,14 +434,19 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
-            setResult(result, resultIntent);
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
+    }
+
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+        setResult(result, resultIntent);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -461,7 +477,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         return false;
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 
@@ -495,7 +511,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 try {
                     consist.setBackward(address, !consist.isBackward(address));
                 } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d("Engine_Driver", "ConsistEdit selected engine " + address + " that is not in consist");
+                    Log.d(threaded_application.applicationName, activityName + ": locoItemClickListner():  selected engine " + address + " that is not in consist");
                 }
             }
 
@@ -513,19 +529,17 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         public void onClick(View v) {
             mainapp.buttonVibration();
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
-            setResult(result, resultIntent);
-            finish();  //end this activity
-            connection_activity.overridePendingTransition(_consistEditActivity, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
         }
     }
 
     void reopenThrottlePage() {
+        threaded_application.activityInTransition(activityName);
+
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
         setResult(result, resultIntent);
-        finish();  //end this activity
+        this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 }

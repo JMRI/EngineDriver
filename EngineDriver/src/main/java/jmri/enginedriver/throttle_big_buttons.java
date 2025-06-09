@@ -40,6 +40,7 @@ import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_big_buttons extends throttle {
+    static final String activityName = "throttle_big_buttons";
 
     protected static final int MAX_SCREEN_THROTTLES = 1;
 
@@ -56,7 +57,7 @@ public class throttle_big_buttons extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "throttle_big_buttons: onCreate(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -107,9 +108,16 @@ public class throttle_big_buttons extends throttle {
     } // end of onCreate()
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
-        Log.d("Engine_Driver", "throttle_big_buttons: onResume(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
         super.onResume();
+        threaded_application.activityResumed(activityName);
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -135,7 +143,7 @@ public class throttle_big_buttons extends throttle {
 
 
     protected void set_labels() {
-//        Log.d("Engine_Driver","throttle_big_buttons: set_labels() starting");
+//        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) { return;}
@@ -152,7 +160,7 @@ public class throttle_big_buttons extends throttle {
             if ( (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive()) ) {
                 if (!prefShowAddressInsteadOfName) {
-                    if (!overrideThrottleNames[throttleIndex].equals("")) {
+                    if (!overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = overrideThrottleNames[throttleIndex];
                         bLabelPlainText = overrideThrottleNames[throttleIndex];
                     } else {
@@ -164,7 +172,7 @@ public class throttle_big_buttons extends throttle {
 //                    bLabelPlainText = mainapp.consists[throttleIndex].toString();
 //                    bLabel = mainapp.consists[throttleIndex].toHtml();
                 } else {
-                    if (overrideThrottleNames[throttleIndex].equals("")) {
+                    if (overrideThrottleNames[throttleIndex].isEmpty()) {
                         bLabel = mainapp.consists[throttleIndex].formatConsistAddr();
                     } else {
                         bLabel = overrideThrottleNames[throttleIndex];
@@ -248,7 +256,7 @@ public class throttle_big_buttons extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //Log.d(threaded_application.applicationName, activityName + ": vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         ImageView myImage = findViewById(R.id.backgroundImgView);
@@ -278,7 +286,7 @@ public class throttle_big_buttons extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d("Engine_Driver","ending set_labels");
+        // Log.d(threaded_application.applicationName, activityName + ": ending set_labels");
 
     }
 
@@ -301,8 +309,7 @@ public class throttle_big_buttons extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
-        // newEnabledState);
+        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView() " + newEnabledState);
 
         if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
@@ -321,7 +328,7 @@ public class throttle_big_buttons extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d("Engine_Driver","set_function_states");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -336,7 +343,7 @@ public class throttle_big_buttons extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d("Engine_Driver","starting set_function_request");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array

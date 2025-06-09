@@ -65,6 +65,7 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+    static final String activityName = "web_activity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -119,7 +120,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d("Engine_Driver", "gestureStart x=" + gestureStartX + " y=" + gestureStartY);
+//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
@@ -138,7 +139,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureMove action " + event.getAction());
+        // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction());
         if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
             // stop the gesture timeout timer
             mainapp.web_msg_handler.removeCallbacks(gestureStopped);
@@ -151,7 +152,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d("Engine_Driver", "gestureVelocity vel " + velocityX);
+                // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
@@ -164,7 +165,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d("Engine_Driver", "gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        // Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
             mainapp.web_msg_handler.removeCallbacks(gestureStopped);
 
@@ -214,7 +215,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     try {
                         webView.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d("Engine_Driver", "gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -274,7 +275,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
             }
         }
@@ -308,7 +309,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "web_activity.onCreate()");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -439,10 +440,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     @Override
     public void onResume() {
-        Log.d("Engine_Driver", "web_activity.onResume() called");
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         mainapp.applyTheme(this);
 
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.WEB;
 
         setActivityTitle();
@@ -489,8 +492,10 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     @Override
     public void onPause() {
-        Log.d("Engine_Driver", "web_activity.onPause() called");
+        Log.d(threaded_application.applicationName, activityName + ": onPause()");
         super.onPause();
+        threaded_application.activityPaused(activityName);
+
         pauseWebView();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager.getInstance().stopSync();
@@ -503,7 +508,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("Engine_Driver", "we_activity.onStart() called");
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.web_msg_handler == null)
             mainapp.web_msg_handler = new web_handler(Looper.getMainLooper());
@@ -524,7 +529,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("Engine_Driver", "web_activity.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
 
         if (webView != null) {
             final ViewGroup webGroup = (ViewGroup) webView.getParent();
@@ -536,7 +541,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             mainapp.web_msg_handler.removeCallbacksAndMessages(null);
             mainapp.web_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.web_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.web_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -688,6 +693,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     // helper methods to handle navigating away from this activity
     private void navigateAway() {
+        threaded_application.activityInTransition(activityName);
         mainapp.webMenuSelected = false;    // not returning so clear flag
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -703,6 +709,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         if (returningToOtherActivity) {                 // if not returning
             startACoreActivity(this, in, false, 0);
         } else {
+            threaded_application.activityInTransition(activityName);
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
             startActivityForResult(in, 0);
@@ -740,7 +747,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
     }
 
-    private void disconnect() {
+    private void shutdown() {
         webView.stopLoading();
         this.finish();
     }
@@ -786,6 +793,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
     void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX>0) {

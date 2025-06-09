@@ -38,6 +38,7 @@ import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_original extends throttle {
+    static final String activityName = "throttle_original";
 
     protected static final int MAX_SCREEN_THROTTLES = 3;
 
@@ -50,8 +51,7 @@ public class throttle_original extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d("Engine_Driver","starting enableDisableButtonsForView " +
-        // newEnabledState);
+        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView() " + newEnabledState);
 
         if (vg == null) {
             return;
@@ -74,7 +74,7 @@ public class throttle_original extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d("Engine_Driver","set_function_states");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) {
             return;
@@ -91,7 +91,7 @@ public class throttle_original extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d("Engine_Driver","starting set_function_request");
+        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
 
         if (function > threaded_application.MAX_FUNCTION_NUMBER)
             return; //bail if this function number not supported
@@ -117,7 +117,7 @@ public class throttle_original extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Engine_Driver", "throttle_original: onCreate(): called");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -181,7 +181,7 @@ public class throttle_original extends throttle {
 //    @SuppressWarnings("deprecation")
 //    @Override
     protected void set_labels() {
-//        Log.d("Engine_Driver", "throttle_original: set_labels() starting");
+//        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
         super.set_labels();
 
         if (mainapp.appIsFinishing) {
@@ -224,7 +224,7 @@ public class throttle_original extends throttle {
         String bLabelPlainText;
 
         if (mainapp.consists == null) {
-            Log.d("Engine_Driver", "throttle_original.setLabels consists is null");
+            Log.d(threaded_application.applicationName, activityName + ": set_Labels() consists is null");
             return;
         }
 
@@ -235,11 +235,11 @@ public class throttle_original extends throttle {
 
             Consist con = mainapp.consists[throttleIndex];
             if (con == null) {
-                Log.d("Engine_Driver", "throttle_original setLabels consists[" + throttleIndex + "] is null");
+                Log.d(threaded_application.applicationName, activityName + ": set_Labels() consists[" + throttleIndex + "] is null");
             } else {
                 if (con.isActive()) {
                     if (!prefShowAddressInsteadOfName) {
-                        if (!overrideThrottleNames[throttleIndex].equals("")) {
+                        if (!overrideThrottleNames[throttleIndex].isEmpty()) {
                             bLabel = overrideThrottleNames[throttleIndex];
                             bLabelPlainText = overrideThrottleNames[throttleIndex];
                         } else {
@@ -251,7 +251,7 @@ public class throttle_original extends throttle {
 //                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
 //                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
-                        if (overrideThrottleNames[throttleIndex].equals("")) {
+                        if (overrideThrottleNames[throttleIndex].isEmpty()) {
                             bLabel = con.formatConsistAddr();
                         } else {
                             bLabel = overrideThrottleNames[throttleIndex];
@@ -345,7 +345,7 @@ public class throttle_original extends throttle {
 
 
         if ((screenHeight > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
-            //Log.d("Engine_Driver","starting screen height adjustments, screenHeight=" + screenHeight);
+            // Log.d(threaded_application.applicationName, activityName + ": starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
 
             adjustThrottleHeights();
@@ -371,11 +371,11 @@ public class throttle_original extends throttle {
                 sliderBottomRightX[throttleIndex] = x + sbSpeeds[throttleIndex].getWidth() - ovx;
                 sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() - ovy;
 
-//            Log.d("Engine_Driver","slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            Log.d(threaded_application.applicationName, activityName + ": set_labels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
             }
         } else {
-            Log.d("Engine_Driver", "screen height adjustments skipped, screenHeight=" + screenHeight);
+            Log.d(threaded_application.applicationName, activityName + ": screen height adjustments skipped, screenHeight=" + screenHeight);
         }
 
         // update the direction indicators
@@ -386,7 +386,7 @@ public class throttle_original extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d("Engine_Driver","ending set_labels");
+        // Log.d(threaded_application.applicationName, activityName + ": set_labels() end");
 
     }
 
@@ -503,7 +503,7 @@ public class throttle_original extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d("Engine_Driver","vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            // Log.d(threaded_application.applicationName, activityName + ": vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         double height = screenHeight;

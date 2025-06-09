@@ -62,6 +62,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class dcc_ex extends AppCompatActivity {
+    static final String activityName = "dcc_ex";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu menu;
@@ -236,7 +237,7 @@ public class dcc_ex extends AppCompatActivity {
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.DCC_EX)
-                        finish();  //end this activity
+                        endThisActivity();
                     break;
 
                 case message_type.WIT_CON_RETRY:
@@ -249,7 +250,7 @@ public class dcc_ex extends AppCompatActivity {
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
-                    disconnect();
+                    shutdown();
                     break;
                 case message_type.RESPONSE:    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -998,8 +999,16 @@ public class dcc_ex extends AppCompatActivity {
     // ************************************************************************************************************* //
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.DCC_EX;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();
@@ -1034,7 +1043,7 @@ public class dcc_ex extends AppCompatActivity {
             mainapp.dcc_ex_msg_handler.removeCallbacksAndMessages(null);
             mainapp.dcc_ex_msg_handler = null;
         } else {
-            Log.d("Engine_Driver", "onDestroy: mainapp.dcc_ex_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.dcc_ex_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
     }
 
@@ -1057,15 +1066,20 @@ public class dcc_ex extends AppCompatActivity {
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
         if (key == KeyEvent.KEYCODE_BACK) {
-            mainapp.dccexScreenIsOpen = false;
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
     }
 
-    private void disconnect() {
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
+        mainapp.dccexScreenIsOpen = false;
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void shutdown() {
         this.finish();
     }
 
@@ -1077,7 +1091,7 @@ public class dcc_ex extends AppCompatActivity {
     public class CloseButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
-            finish();
+            endThisActivity();
         }
     }
 
@@ -1149,7 +1163,7 @@ public class dcc_ex extends AppCompatActivity {
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+                mainapp.hideSoftKeyboard(view);
             }
 
             refreshDccexView();
@@ -1183,7 +1197,7 @@ public class dcc_ex extends AppCompatActivity {
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+                mainapp.hideSoftKeyboard(view);
             }
 
             refreshDccexView();
@@ -1210,7 +1224,7 @@ public class dcc_ex extends AppCompatActivity {
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
+                mainapp.hideSoftKeyboard(view);
             }
 
             dccCvsIndex = 0;
@@ -1256,7 +1270,7 @@ public class dcc_ex extends AppCompatActivity {
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if ((imm != null) && (view != null)) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the soft keyboard to close
+                mainapp.hideSoftKeyboard(view);
             }
 
             refreshDccexView();
@@ -1318,7 +1332,7 @@ public class dcc_ex extends AppCompatActivity {
                         + "</p>" + dccexResponsesStr;
 
             } catch (Exception e) {
-                Log.e("EX_Toolbox", "Error processing cv29: " + e.getMessage());
+                Log.e(threaded_application.applicationName, activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
             }
         }
     }

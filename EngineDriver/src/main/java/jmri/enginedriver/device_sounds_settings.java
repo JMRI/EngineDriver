@@ -40,7 +40,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,6 +58,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "device_sounds_settings";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu DSSMenu;
@@ -143,7 +143,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             dssThrottle0Index = spinner.getSelectedItemPosition();
             prefs.edit().putString("prefDeviceSounds0", deviceSoundsEntryValuesArray[dssThrottle0Index]).commit();  //reset the preference
             mainapp.soundsReloadSounds = true;
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -158,7 +158,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             dssThrottle1Index = spinner.getSelectedItemPosition();
             prefs.edit().putString("prefDeviceSounds1", deviceSoundsEntryValuesArray[dssThrottle1Index]).commit();  //reset the preference
             mainapp.soundsReloadSounds = true;
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -174,7 +174,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             prefDeviceSoundsLocoVolume = valuesList[dssDeviceSoundsLocoVolumeIndex];
             prefs.edit().putString("prefDeviceSoundsLocoVolume", prefDeviceSoundsLocoVolume).commit();  //reset the preference
 
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -190,7 +190,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             prefDeviceSoundsBellVolume = valuesList[dssDeviceSoundsBellVolumeIndex];
             prefs.edit().putString("prefDeviceSoundsBellVolume", prefDeviceSoundsBellVolume).commit();  //reset the preference
 
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -206,7 +206,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             prefDeviceSoundsHornVolume = valuesList[dssDeviceSoundsHornVolumeIndex];
             prefs.edit().putString("prefDeviceSoundsHornVolume", prefDeviceSoundsHornVolume).commit();  //reset the preference
 
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -224,7 +224,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             mainapp.prefDeviceSoundsBellIsMomentary = dss_DeviceSoundsBellIsMomentary == 0;
             prefs.edit().putBoolean("prefDeviceSoundsBellIsMomentary", mainapp.prefDeviceSoundsBellIsMomentary).commit();  //reset the preference
 
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
 
         @Override
@@ -243,7 +243,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             mainapp.prefDeviceSoundsMomentumOverride = dss_DeviceSoundsMomentumOverride == 0;
             prefs.edit().putBoolean("prefDeviceSoundsMomentumOverride", mainapp.prefDeviceSoundsMomentumOverride).commit();  //reset the preference
 
-            hideKeyboard(view);
+            mainapp.hideSoftKeyboard(view);
         }
 
         @Override
@@ -418,8 +418,16 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     } // end onCreate
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
         threaded_application.currentActivity = activity_id_type.DEVICE_SOUNDS_SETTINGS;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         if (DSSMenu != null) {
@@ -439,7 +447,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
      */
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "device_sounds_settings.onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
         iplsLoader.loadSounds();
         super.onDestroy();
     }
@@ -447,17 +455,18 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     public class close_button_listener implements View.OnClickListener {
         public void onClick(View v) {
             saveNumberEntries();
-            hideKeyboard(v);
+            mainapp.hideSoftKeyboard(v);
             mainapp.buttonVibration();
-            finish();
+            endThisActivity();
         }
     }
 
     // end current activity
-    void end_this_activity() {
+    void endThisActivity() {
+        threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         setResult(result, resultIntent);
-        this.finish();
+        this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
@@ -522,7 +531,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.DEVICE_SOUNDS_SETTINGS)
-                        finish();  //end this activity
+                        endThisActivity();
                     break;
 
                 default:
@@ -548,10 +557,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp.exitDoubleBackButtonInitiated = 0;
 
         if (key == KeyEvent.KEYCODE_BACK) {
-            Intent resultIntent = new Intent();
-            setResult(result, resultIntent);
-            this.finish();  //end this activity
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            endThisActivity();
             return true;
         }
         return (super.onKeyDown(key, event));
@@ -585,7 +591,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         return false;
     }
 
-    private void disconnect() {
+    private void shutdown() {
         this.finish();
     }
 
@@ -594,14 +600,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
-    void hideKeyboard(View view) {
-        InputMethodManager imm =
-                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if ((imm != null) && (view != null)) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS); // force the softkeyboard to close
-        }
-
-    }
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {

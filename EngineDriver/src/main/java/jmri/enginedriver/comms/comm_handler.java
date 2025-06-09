@@ -39,6 +39,8 @@ import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.dccex_protocol_option_type;
 
 public class comm_handler extends Handler {
+   static final String activityName = "comm_handler";
+
    //All of the work of the communications thread is initiated from this function.
 
    private boolean initialised = false;
@@ -65,7 +67,7 @@ public class comm_handler extends Handler {
 
    @SuppressLint({"DefaultLocale", "ApplySharedPref", "WebViewApiAvailability"})
    public void handleMessage(Message msg) {
-//                Log.d("Engine_Driver", "comm_handler.handleMessage: message: " +msg.what);
+//                Log.d(threaded_application.applicationName, activityName + ": handleMessage(): message: " +msg.what);
       if (!initialised) return;
 
       switch (msg.what) {
@@ -76,21 +78,21 @@ public class comm_handler extends Handler {
          case message_type.SET_LISTENER:
             if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
-               Log.d("Engine_Driver", "comm_handler.handleMessage: DCCEX SSID found");
+               Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DCCEX SSID found");
                //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
                mainapp.isDCCEX = (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
                        || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO));
             } else if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
-               Log.d("Engine_Driver", "comm_handler.handleMessage: LnWi SSID found");
+               Log.d(threaded_application.applicationName, activityName + ": handleMessage(): LnWi SSID found");
                //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
                commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "12090", "LnWi");
             } else {
                if (mainapp.client_ssid == null)
-                  Log.d("Engine_Driver", "comm_handler.handleMessage: SSID is Null!");
+                  Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SSID is Null!");
                else
-                  Log.d("Engine_Driver", "comm_handler.handleMessage: SSID: " + mainapp.client_ssid);
+                  Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SSID: " + mainapp.client_ssid);
 
                //arg1= 1 to turn on, arg1=0 to turn off
                if (msg.arg1 == 0) {
@@ -107,16 +109,16 @@ public class comm_handler extends Handler {
                            commThread.multicast_lock.acquire();
                         } catch (Exception e) {
                            //log message, but keep going if this fails
-                           Log.d("Engine_Driver", "comm_handler.handleMessage: multicast_lock.acquire() failed");
+                           Log.d(threaded_application.applicationName, activityName + ": handleMessage(): multicast_lock.acquire() failed");
                         }
                         commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
                         commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
-                        Log.d("Engine_Driver", "comm_handler.handleMessage: jmdns listener added");
+                        Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns listener added");
                      } else {
-                        Log.d("Engine_Driver", "comm_handler.handleMessage: jmdns not running, didn't start listener");
+                        Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns not running, didn't start listener");
                      }
                   } else {
-                     Log.d("Engine_Driver", "comm_handler.handleMessage: jmdns already running");
+                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns already running");
                   }
                }
             }
@@ -133,7 +135,7 @@ public class comm_handler extends Handler {
             //avoid duplicate connects, seen when user clicks address multiple times quickly
             if (comm_thread.socketWiT != null && comm_thread.socketWiT.SocketGood()
                     && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
-               Log.d("Engine_Driver", "comm_handler.handleMessage: Duplicate CONNECT message received.");
+               Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Duplicate CONNECT message received.");
                break;
             }
 
@@ -235,9 +237,9 @@ public class comm_handler extends Handler {
 
          //Disconnect from the WiThrottle server and Shutdown
          case message_type.DISCONNECT: {
-            Log.d("Engine_Driver", "comm_handler.handleMessage: TA Disconnect");
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): TA Disconnect");
             mainapp.doFinish = true;
-            Log.d("Engine_Driver", "comm_handler.handleMessage: TA alert all activities to shutdown");
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): TA alert all activities to shutdown");
             mainapp.alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
             commThread.stoppingConnection();
 
@@ -547,7 +549,7 @@ public class comm_handler extends Handler {
             mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.KIDS_TIMER_TICK, "", msg.arg1);
             break;
          case message_type.IMPORT_SERVER_AUTO_AVAILABLE:
-            Log.d("Engine_Driver", "comm_handler.handleMessage: message: AUTO_IMPORT_URL_AVAILABLE " + msg.what);
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): message: AUTO_IMPORT_URL_AVAILABLE " + msg.what);
             mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.IMPORT_SERVER_AUTO_AVAILABLE, "", 0);
             break;
 

@@ -41,6 +41,8 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_activity extends AppIntro2 implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "intro_activity";
+
     private boolean introComplete = false;
     private SharedPreferences prefs;
     //    private String prefThrottleType  = "";
@@ -52,7 +54,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Engine_Driver", "intro_activity.onCreate()");
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
         mainapp = (threaded_application) this.getApplication();
 
@@ -300,20 +302,20 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
-        Log.d("Engine_Driver", "introActivity: navigateToHandler:" + requestCode);
+        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(this, requestCode)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(this, requestCode);
             }
         } else {
             // do nothing
-            Log.d("Engine_Driver", "introActivity: Unrecognised permissions request code: " + requestCode);
+            Log.d(threaded_application.applicationName, activityName + ": Unrecognised permissions request code: " + requestCode);
         }
     }
     @Override
     public void onRequestPermissionsResult(@PermissionsHelper.RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(this, requestCode, permissions, grantResults)) {
-            Log.d("Engine_Driver", "introActivity: Unrecognised request - send up to super class");
+            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -358,9 +360,17 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
     public void onResume() {
         threaded_application.currentActivity = activity_id_type.INTRO;
         super.onResume();
+        threaded_application.activityResumed(activityName);
+
 //        if (this.isFinishing()) {        //if finishing, expedite it
 //            return;
 //        }
@@ -369,7 +379,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @Override
     public void onDestroy() {
-        Log.d("Engine_Driver", "intro_activity: onDestroy() called");
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
 
         mainapp.introIsRunning = false;
         if (!introComplete) {
