@@ -216,8 +216,8 @@
     <string name="prefGamePadButtonLeftTitle">Ação Gamepad DPAD Esquerda</string>
     <string name="prefGamePadButtonSummary">Escolha a ação ao apertar o botão.</string>
 
-    <string name="prefEsuMc2Title">Opções ESU MobileControl II</string>
-    <string name="prefEsuMc2Summary">Escolha Opções ESU MobileControl II</string>
+    <string name="prefEsuMc2Title">Opções ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Summary">Escolha Opções ESU MobileControl II/Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opções botões laterais dispositivo</string>
     <string name="prefEsuMc2ButtonTLTitle">Ação botão alto-esquerda</string>
     <string name="prefEsuMc2ButtonTLSummary">Escolha a ação ao apertar o botão.</string>
@@ -242,9 +242,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Regulagem Zero Manopla de Controle</string>
     <string name="prefEsuMc2ZeroTrimSummary">Regula o zero da Manopla de Controle.\n Menor is mais perto à posição extrema antiorária.\nValores permitidos 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Troca de Locomotiva não permitida: Mobile Control II em modo parada</string>
-    <string name="toastEsuMc2NoThrottleChange">Troca de Controlador não permitida: Mobile Control II atualmente em modo parada</string>
-    <string name="toastEsuMc2NoButtonPresses">Pressão de botões não permitida:Mobile Control II atualmente em modo parada</string>
+    <string name="toastEsuMc2NoLocoChange">Troca de Locomotiva não permitida: Mobile Control II/Pro em modo parada</string>
+    <string name="toastEsuMc2NoThrottleChange">Troca de Controlador não permitida: Mobile Control II/Pro atualmente em modo parada</string>
+    <string name="toastEsuMc2NoButtonPresses">Pressão de botões não permitida:Mobile Control II/Pro atualmente em modo parada</string>
 
     <string name="prefDefaultFunctionsTitle">Preferências Funções Padrão</string>
     <string name="prefDefaultFunctionsSummary">Quando e como as etiquetas das funções padrão são mostradas.</string>

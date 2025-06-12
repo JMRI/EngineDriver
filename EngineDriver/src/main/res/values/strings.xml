@@ -315,9 +315,9 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl II</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
-    <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
+    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl II/Pro</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefEsuMc2Title">ESU MobileControl II/Pro Options</string>
+    <string name="prefEsuMc2Summary">Choose ESU MobileControl II/Pro options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
     <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button</string>
@@ -352,9 +352,9 @@
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
-    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
-    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
-    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
+    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II/Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II/Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II/Pro currently in stop mode</string>
     <string name="EsuMc2KnobAction">Enable/Disable Knob</string>
     <!-- ESU MCII Messages -->
 

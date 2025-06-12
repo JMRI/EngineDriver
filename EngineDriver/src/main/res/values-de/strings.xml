@@ -217,8 +217,8 @@
     <string name="prefGamePadButtonDownDefaultValue">Verringere Geschwindigkeit</string>
     <string name="prefGamePadButtonLeftDefaultValue">Vorwärts</string>
 -->
-    <string name="prefEsuMc2Title">ESU MobileControl II Optionen</string>
-    <string name="prefEsuMc2Summary">Wähle ESU MobileControl II Optionen</string>
+    <string name="prefEsuMc2Title">ESU MobileControl II/Pro Optionen</string>
+    <string name="prefEsuMc2Summary">Wähle ESU MobileControl II/Pro Optionen</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Optionen für seitliche Knöpfe</string>
     <string name="prefEsuMc2ButtonTLTitle">Aktion für Knopf Oben-Links</string>
     <string name="prefEsuMc2ButtonTLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
@@ -243,9 +243,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Drehregler Nullpunkt Kalibration</string>
     <string name="prefEsuMc2ZeroTrimSummary">Drehregler Nullpunkt einstellen.\nKleiner ist näher zur Endposition im Gegenuhrzeigersinn.\nErlaubter Bereich 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Lokwechsel nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
-    <string name="toastEsuMc2NoThrottleChange">Fahrreglerwechsel nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
-    <string name="toastEsuMc2NoButtonPresses">Knöpfe drücken nicht erlaubt: Mobile Control II ist aktuell im Stop Mode</string>
+    <string name="toastEsuMc2NoLocoChange">Lokwechsel nicht erlaubt: Mobile Control II/Pro ist aktuell im Stop Mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Fahrreglerwechsel nicht erlaubt: Mobile Control II/Pro ist aktuell im Stop Mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Knöpfe drücken nicht erlaubt: Mobile Control II/Pro ist aktuell im Stop Mode</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Nutze Standard Funktionsbezeichnungen?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Zeige Standard Funktionsbezeichnungen statt jene aus dem Lokverzeichnis.</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Überschreiben Sie die Sperrung der WiThrottle-Funktion</string>

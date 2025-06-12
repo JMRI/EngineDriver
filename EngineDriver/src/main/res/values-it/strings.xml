@@ -217,8 +217,8 @@
     <string name="prefGamePadButtonLeftTitle">Azione Gamepad DPAD Sinistra</string>
     <string name="prefGamePadButtonSummary">Scegli l\'azione al premere il pulsante.</string>
 
-    <string name="prefEsuMc2Title">Opzioni ESU MobileControl II</string>
-    <string name="prefEsuMc2Summary">Scelta Opzioni ESU MobileControl II</string>
+    <string name="prefEsuMc2Title">Opzioni ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Summary">Scelta Opzioni ESU MobileControl II/Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opzioni pulsanti laterali dispositivo</string>
     <string name="prefEsuMc2ButtonTLTitle">Azione pulsante alto-sinistra</string>
     <string name="prefEsuMc2ButtonTLSummary">Scegli l\'azione al premere il pulsante.</string>
@@ -243,9 +243,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Regolazione Zero Manopola di Controllo</string>
     <string name="prefEsuMc2ZeroTrimSummary">Regola lo zero della Manopola di Controllo.\n Minore é più vicino alla posizione estrema antioraria.\nValori permessi 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Cambio di locomotiva non permesso: Mobile Control II attualmente in modalitá stop</string>
-    <string name="toastEsuMc2NoThrottleChange">Cambio di Controllore non permesso: Mobile Control II attualmente in modalitá stop</string>
-    <string name="toastEsuMc2NoButtonPresses">Pressione pulsanti non permessa: Mobile Control II attualmente in modalitá stop</string>
+    <string name="toastEsuMc2NoLocoChange">Cambio di locomotiva non permesso: Mobile Control II/Pro attualmente in modalitá stop</string>
+    <string name="toastEsuMc2NoThrottleChange">Cambio di Controllore non permesso: Mobile Control II/Pro attualmente in modalitá stop</string>
+    <string name="toastEsuMc2NoButtonPresses">Pressione pulsanti non permessa: Mobile Control II/Pro attualmente in modalitá stop</string>
 
     <string name="prefDefaultFunctionsTitle">Preferenze Funzioni Default</string>
     <string name="prefDefaultFunctionsSummary">Quando e come le etichette funzioni di default sono visualizzate.</string>

@@ -206,8 +206,8 @@
     <string name="prefGamePadButtonLeftTitle">Acción izquierda gamepad DPAD</string>
     <string name="prefGamePadButtonSummary">Escoge un acción cuando presionas la tecla</string>
 
-    <string name="prefEsuMc2Title">Opciones de ESU MobileControl II</string>
-    <string name="prefEsuMc2Summary">Escoge opciones de ESU MobileControl II</string>
+    <string name="prefEsuMc2Title">Opciones de ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Summary">Escoge opciones de ESU MobileControl II/Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opciones de la tecla lateral del dispositivo</string>
     <string name="prefEsuMc2ButtonTLTitle">Acción de la tecla superior izquierdo</string>
     <string name="prefEsuMc2ButtonTLSummary">Escoge un acción cuando presiones la tecla</string>
@@ -232,9 +232,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Puesta a cero de la tecla del controlador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Establece los parámetros de puesta a cero de la tecla del controlador.\nUn valor más pequeño está más cerca de la posición de parada final en sentido antihorario.\nRango permitido 0&#8211;255</string>
 
-    <string name="toastEsuMc2NoLocoChange">Cambio de Locomotora no permitido: Mobile Control II  en modo de parada</string>
-    <string name="toastEsuMc2NoThrottleChange">Cambio de Controlador no permitido: Mobile Control II en modo de parada</string>
-    <string name="toastEsuMc2NoButtonPresses">Presionar la tecla no está permitido: Mobile Control II en modo de parada</string>
+    <string name="toastEsuMc2NoLocoChange">Cambio de Locomotora no permitido: Mobile Control II/Pro en modo de parada</string>
+    <string name="toastEsuMc2NoThrottleChange">Cambio de Controlador no permitido: Mobile Control II/Pro en modo de parada</string>
+    <string name="toastEsuMc2NoButtonPresses">Presionar la tecla no está permitido: Mobile Control II/Pro en modo de parada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">¿Utiliza las etiquetas de las funciones por defecto?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Muestra las etiquetas de funciones predeterminadas en lugar de las etiquetas de las entradas de la flota</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anular con el bloqueo de la función del acelerador</string>
