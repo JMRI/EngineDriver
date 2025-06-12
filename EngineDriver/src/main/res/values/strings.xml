@@ -341,6 +341,7 @@
     <string name="prefEsuMc2StopButtonShortPressTitle">Enable Short Press</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">A \'short-press\' pauses the currently controlled locomotive/consist.\nWill revert to original speed when operations resume.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Slider options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
@@ -1362,8 +1363,12 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Decoder Brake Type</string>
-    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake fucnctions on the decoder</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake functions on the decoder</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefEsuMc2SliderTypeTitle">Slider Type</string>
+    <string name="prefEsuMc2SliderTypeSummary">Define what the Slider will do</string>
+    <string name="prefEsuMc2SliderTypeDefaultValue" translatable="false">esu</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Decoder Low Function Number(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">Which Decoder Function(s) to activate at Low Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>

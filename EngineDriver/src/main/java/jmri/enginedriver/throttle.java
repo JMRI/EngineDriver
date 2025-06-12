@@ -1674,6 +1674,34 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.stopAllSounds();
         }
 
+        // ESU MC II
+        mainapp.prefEsuMc2SliderType = prefs.getString("prefEsuMc2SliderType", getApplicationContext().getResources().getString(R.string.prefEsuMc2SliderTypeDefaultValue));
+        mainapp.useEsuMc2DecoderBrakes = (mainapp.prefEsuMc2SliderType.equals("esu"));
+
+        if (mainapp.useEsuMc2DecoderBrakes) {
+            String tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
+            String[] prefValues = threaded_application.splitByString(tmp, " ");
+            for (int i = 0; i < 5; i++) {
+                if (i < prefValues.length)
+                    mainapp.esuMc2BrakeFunctions[0][i] = Integer.parseInt(prefValues[i]);
+                else mainapp.esuMc2BrakeFunctions[0][i] = -1;
+            }
+            tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
+            prefValues = threaded_application.splitByString(tmp, " ");
+            for (int i = 0; i < 5; i++) {
+                if (i < prefValues.length)
+                    mainapp.esuMc2BrakeFunctions[1][i] = Integer.parseInt(prefValues[i]);
+                else mainapp.esuMc2BrakeFunctions[1][i] = -1;
+            }
+            tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
+            prefValues = threaded_application.splitByString(tmp, " ");
+            for (int i = 0; i < 5; i++) {
+                if (i < prefValues.length)
+                    mainapp.esuMc2BrakeFunctions[2][i] = Integer.parseInt(prefValues[i]);
+                else mainapp.esuMc2BrakeFunctions[2][i] = -1;
+            }
+        }
+
         mainapp.prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
         mainapp.prefActionBarShowDccExButton = prefs.getBoolean("prefActionBarShowDccExButton",
                 getResources().getBoolean(R.bool.prefActionBarShowDccExButtonDefaultValue));
@@ -4346,11 +4374,72 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
+        // The new physical sliders position from 0 to 255.
         @Override
-        public void onPhysicalSliderPositionChanged(int i) {
-            // TODO implement this
+        public void onPhysicalSliderPositionChanged(int position) {
+            float pcntPos = ((float) position) / 255 * 100;
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
+            if (mainapp.esuMc2BrakePostion != pcntPos) {
+                mainapp.esuMc2BrakePostion = pcntPos;
+                setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
+            }
         }
     };
+
+    void setEsuMc2DecoderBrake(int whichThrottle) {
+        if (!mainapp.useEsuMc2DecoderBrakes) return;
+
+        boolean[] functionIsOn;
+        int[] functionShouldBeOnOff;
+
+        functionIsOn = new boolean[threaded_application.MAX_FUNCTIONS];
+        functionShouldBeOnOff = new int[threaded_application.MAX_FUNCTIONS];
+
+        for (int k=0; k<threaded_application.MAX_FUNCTIONS; k++) {
+            functionIsOn[k] = mainapp.function_states[whichThrottle][k];
+            functionShouldBeOnOff[k] = -1; // -1 don't care, 1 = on, 0 = off
+        }
+
+        double brakePcnt = mainapp.esuMc2BrakePostion;
+        int foundBrakeLevel = -1;
+        for (int i = 0; i <= 2; i++) {  // cycle through the thresholds from low to high
+            if (mainapp.esuMc2BrakeLevels[i] >= 0) {  // ignore it if it is set to -1
+                for (int j = 0; j < 5; j++) { // set them to bee turned off
+                    if (mainapp.esuMc2BrakeFunctions[i][j] >= 0) {
+                        functionShouldBeOnOff[mainapp.esuMc2BrakeFunctions[i][j]] = 0;
+                    }
+                }
+            }
+        }
+        for (int i = 2; i >= 0; i--) {  // cycle through the thresholds from high to low
+            if (mainapp.esuMc2BrakeLevels[i] >= 0) {  // ignore it if it is set to -1
+                if ((brakePcnt >= mainapp.esuMc2BrakeLevels[i]) && (foundBrakeLevel < 0)) {
+                    for (int j = 0; j < 5; j++) { // set them to be turned on
+                        if (mainapp.esuMc2BrakeFunctions[i][j] >= 0) {
+                            functionShouldBeOnOff[mainapp.esuMc2BrakeFunctions[i][j]] = 1;
+                        }
+                    }
+                    foundBrakeLevel = i;
+                    mainapp.esuMc2BrakeActive[whichThrottle][i] = true;
+                } else {
+                    mainapp.esuMc2BrakeActive[whichThrottle][i] = false;
+                }
+            }
+        }
+
+        for (int k=0; k<threaded_application.MAX_FUNCTIONS; k++) {
+            if (functionShouldBeOnOff[k] == 1) {  // should be on
+                if (!functionIsOn[k]) { // is not on
+                    sendFunctionToConsistLocos(whichThrottle, k, "", button_press_message_type.DOWN, false, false, true, consist_function_latching_type.NO, true);
+                } // else already on so leave it alone
+            } else if (functionShouldBeOnOff[k] == 0) { // should be off
+                if (functionIsOn[k]) { // is on
+                    sendFunctionToConsistLocos(whichThrottle, k, "", button_press_message_type.UP, false, false, true, consist_function_latching_type.NO, true);
+                } // else already off so leave it alone
+            } // else don't care
+        }
+    }
+
 
     // Callback for ESU MCII stop button
     private final StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {

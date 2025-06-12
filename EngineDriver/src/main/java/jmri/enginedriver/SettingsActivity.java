@@ -2138,22 +2138,28 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 20000, "100");
                         break;
 
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu":
                         parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "4");
                         break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu":
                         parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "5");
                         break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu":
                         parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "6");
                         break;
 
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "30");
                         break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu":
-                    parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "60");
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "60");
                         break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu":
                     case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "100");
                         break;
