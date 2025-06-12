@@ -1388,7 +1388,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue" translatable="false">60</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Decoder High Brake Value (Percent)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">What Percentage Brake to activate the High Function(s)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">98</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximum Load Percentage</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Adjust the maximum percentage of the Load slider. (100-20000%) 100% = loco alone</string>
