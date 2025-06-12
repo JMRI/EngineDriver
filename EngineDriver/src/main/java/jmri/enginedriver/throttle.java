@@ -4377,7 +4377,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // The new physical sliders position from 0 to 255.
         @Override
         public void onPhysicalSliderPositionChanged(int position) {
-            float pcntPos = ((float) position) / 255 * 100;
+            float pcntPos = Math.round((((float) position) / 255 * 100));
             Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
             if (mainapp.esuMc2BrakePostion != pcntPos) {
                 mainapp.esuMc2BrakePostion = pcntPos;
