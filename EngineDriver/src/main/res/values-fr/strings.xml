@@ -232,6 +232,7 @@
     <string name="prefEsuMc2StopButtonShortPressTitle">Autorise l appui court</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">Un \'appui court\' stoppe la locomotive ou l UM controlée. \n Qui reprendra sa vitesse initiale lors de la reprise des opérations. </string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Options du bouton rotatif</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Options du curseur</string>
     <string name="prefEsuMc2ZeroTrimTitle">Réglage de trim à zero</string>
     <string name="prefEsuMc2ZeroTrimSummary">Définition du trim de la molette\nUne faible valeur se rapproche de la position 0.\nIntervalle 0&#8211;255.</string>
 
@@ -709,11 +710,13 @@
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Touches de vitesse seulement</string>
+    <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouton recommandé pour ESU MC 2/Pro</string>
     <string name="introDccexTitle">Options pour station de commande EX</string>
     <string name="introDccexSummary">Engine Driver permet des foncstionnalités supplémentaires, par exemple la programmation directe de CV sur une centrale DCC-EX (et pas via JMRI)
         \n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Oui, j\'utiliserai une centrale EX-</string>
     <string name="introDccexQuestionNo">Non, je n\'utiliserai pas une centrale EX-</string>
+    <string name="introEsuMc2QuestionNo">Non, je choisirai mes propres paramètres</string>
     <string name="introbackButtonPress">Merci de redémarrer Engine Driver pour terminer cette introduction.</string>
     <string name="functionButtonLookForWhistle">SIFFLET</string>
     <string name="functionButtonLookForHorn">KLAXON</string>
@@ -1164,5 +1167,10 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Action du bouton STOP</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Choix action du bouton STOP</string>
     <string name="statusThreadedAppNoLocationService">SSID inaccessible</string>
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">L\'écran de l\'ESU Mobile Control 2/Pro est limité et les commandes physiques rendent certaines commandes à l\'écran d\'Engine Driver superflues. Si vous sélectionnez « Oui » ci-dessous, certains paramètres seront modifiés pour optimiser l\'utilisation de l\'écran de l\'ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Oui, utilisez les paramètres recommandés</string>
+    <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
+    <string name="prefEsuMc2SliderTypeSummary">Définir ce que fera le curseur</string>
 
 </resources>

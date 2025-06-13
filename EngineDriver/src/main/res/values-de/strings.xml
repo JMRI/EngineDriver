@@ -240,6 +240,7 @@
     <string name="prefEsuMc2StopButtonDelaySummary">Wie lange für ein \'langes Drücken\' des Stop Knopfes.\nEin \'langes Drücken\' stoppt alle aktiven Fahrregler; ein \'kurzes Drücken\' pausiert den aktuellen Fahrregler.\nKleiner ist schneller.</string>
 
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Drehregler Optionen</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Schieberegleroptionen</string>
     <string name="prefEsuMc2ZeroTrimTitle">Drehregler Nullpunkt Kalibration</string>
     <string name="prefEsuMc2ZeroTrimSummary">Drehregler Nullpunkt einstellen.\nKleiner ist näher zur Endposition im Gegenuhrzeigersinn.\nErlaubter Bereich 0&#8211;255.</string>
 
@@ -748,10 +749,12 @@
     <string name="introButtonsSliderAndButtons">Schieberegler und Tasten\n(nicht möglich mit \'Big Buttons\'.)</string>
     <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
 
+    <string name="introButtonsNoSliderOrButtons">Keine Schieberegler oder Tasten empfohlen für ESU MC 2/Pro</string>
     <string name="introDccexTitle">EX-CommandStation-Optionen</string>
     <string name="introDccexSummary">Engine Driver kann zusätzliche Funktionen bereitstellen, einschließlich CV-Programmierung, wenn Sie eine DCC-EX EX-CommandStation direkt verwenden. (Nicht über JMRI)\n\nWenn Sie unten mit „Ja“ antworten, verwendet Engine Driver standardmäßig native DCC-EX-Befehle anstelle von WiThrottle, wenn der Servername „DCC-EX“ oder „DCCEX“ enthält.</string>
     <string name="introDccexQuestionYes">Ja, ich werde eine EX-CommandStation verwenden</string>
     <string name="introDccexQuestionNo">Nein, ich werde KEINE EX-CommandStation verwenden</string>
+    <string name="introEsuMc2QuestionNo">Nein, ich wähle meine eigenen Einstellungen</string>
     <string name="introbackButtonPress">Starten Sie die Engine Driver app erneut, um die Einführung abzuschließen.</string>
     <string name="consist_trail_label">Leitlokomotive</string>
     <string name="prefHeartbeatResponseFactorTitle">Herzschlag-Reaktionsfaktor</string>
@@ -1163,5 +1166,10 @@
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Wählen Sie aus, was die Schaltfläche „Stopp“ bewirken soll</string>
     <string name="statusThreadedAppNoLocationService">Auf die SSID kann nicht zugegriffen werden</string>
     <string name="prefSelectLocoByRadioButtonsTitle">Wählen Sie das Erscheinungsbild der Lokmethode aus</string>
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">Die Bildschirmfläche des ESU Mobile Control 2/Pro ist begrenzt, und die physischen Bedienelemente machen einige der Bildschirmfunktionen des Lokführers überflüssig. Wenn Sie unten „Ja“ wählen, werden einige Einstellungen geändert, um den Bildschirm des ESU MC2/Pro optimal zu nutzen.</string>
+    <string name="introEsuMc2QuestionYes">Ja, empfohlene Einstellungen verwenden</string>
+    <string name="prefEsuMc2SliderTypeTitle">Schiebereglertyp</string>
+    <string name="prefEsuMc2SliderTypeSummary">Definieren Sie, was der Slider tun soll</string>
 
 </resources>

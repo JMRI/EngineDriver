@@ -277,6 +277,7 @@
     <string name="prefEsuMc2StopButtonShortPressTitle">Povolit krátký stisk</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">\'krátký stisk\' pozastaví aktuálně řízenou lokomotivu/soupravu.\nPo obnovení provozu se vrátí na původní rychlost.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Volby řídícího kolečka</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Možnosti posuvníku</string>
     <string name="prefEsuMc2ZeroTrimTitle">Řídící kolečko nastavení nuly</string>
     <string name="prefEsuMc2ZeroTrimSummary">Nastavení řídícího kolečka nastavení nuly.\nMenší je blíže koncové poloze proti směru hodinových ručiček.\nDovolené meze 0 &#8211; 255.</string>
 
@@ -919,10 +920,12 @@
     <string name="introButtonsSliderAndButtons">Posuvník + Tlačítka\n(není možné s \'Velká tlačítka\'.)</string>
     <string name="introButtonsNoSlider">Pouze tlačítka rychlosti</string>
 
+    <string name="introButtonsNoSliderOrButtons">Pro ESU MC 2/Pro se nedoporučuje žádný posuvník ani tlačítka</string>
     <string name="introDccexTitle">Možnosti EX-CommandStation</string>
     <string name="introDccexSummary">Engine Driver může poskytovat další funkce, včetně programování CV, pokud přímo používáte DCC-EX EX-CommandStation. (Ne přes JMRI)\n\nPokud níže odpovíte \'Ano\', Engine Driver použije výchozí příkazy DCC-EX Native namísto WiThrottle, pokud název serveru obsahuje \'DCC-EX\' nebo \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Ano, budu používat EX-CommandStation</string>
     <string name="introDccexQuestionNo">Ne, EX-CommandStation NEBUDU používat</string>
+    <string name="introEsuMc2QuestionNo">Ne, vyberu si vlastní nastavení</string>
     <string name="introbackButtonPress">Prosím restartujte aplikaci Engine Driver pro dokončení úvodního nastavení.</string>
     <string name="edit_consist_menu">\≡ Upravit soupravu</string>
     <string name="edit_consist_throttle_1">Upravit soupravu ovladače 1</string>
@@ -1259,5 +1262,10 @@
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Použít výchozí hodnoty pro záznamy seznamu bez funkcí</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Akce tlačítka Stop</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Vyberte, co dělá tlačítko Stop</string>
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">ESU Mobile Control 2/Pro má omezený prostor na obrazovce a fyzické ovládací prvky činí některé ovládací prvky na obrazovce ovladače motoru nadbytečnými.   Zvolíte-li níže „Ano“, některá nastavení se změní, aby se co nejlépe využila obrazovka ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Ano, použít doporučená nastavení</string>
+    <string name="prefEsuMc2SliderTypeTitle">Typ posuvníku</string>
+    <string name="prefEsuMc2SliderTypeSummary">Definujte, co bude posuvník dělat</string>
 
 </resources>

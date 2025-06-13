@@ -229,6 +229,7 @@
     <string name="prefEsuMc2StopButtonDelaySummary">Cómo de larga debe de ser la \'pulsación-larga\' de la tecla de parada.\nUna \'pulsación-larga\' detiene todos los Controladores activos; una \'pulsación-corta\' detiene el Controlador actual.\nUn valor pequeño la acción es más rápida</string>
 
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opciones de la tecla controlador</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Opciones del control deslizante</string>
     <string name="prefEsuMc2ZeroTrimTitle">Puesta a cero de la tecla del controlador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Establece los parámetros de puesta a cero de la tecla del controlador.\nUn valor más pequeño está más cerca de la posición de parada final en sentido antihorario.\nRango permitido 0&#8211;255</string>
 
@@ -783,10 +784,12 @@
     <string name="introButtonsSliderAndButtons">Control deslizante y teclas\n(no es posible con \'Teclas grandes\'.)</string>
     <string name="introButtonsNoSlider">Teclas de velocidad solamente</string>
 
+    <string name="introButtonsNoSliderOrButtons">No se recomiendan controles deslizantes ni botones para ESU MC 2/Pro</string>
     <string name="introDccexTitle">Opciones de EX-CommandStation</string>
     <string name="introDccexSummary">Engine Driver puede proporcionar funciones adicionales, incluida la programación de CV, si utiliza directamente una EX-CommandStation DCC-EX. (No a través de JMRI)\n\nSi responde \'Sí\' a continuación, Engine Driver utilizará de forma predeterminada los comandos nativos DCC-EX en lugar de WiThrottle si el nombre del servidor contiene \'DCC-EX\' o \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sí, usaré una EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, NO usaré una EX-CommandStation</string>
+    <string name="introEsuMc2QuestionNo">No, elegiré mi propia configuración.</string>
     <string name="introbackButtonPress">Reinicie la aplicación Engine Driver para completar el proceso de inicio</string>
 
     <string name="edit_consist_throttle_1">Edita el controlador de TM 1</string>
@@ -1161,5 +1164,10 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acción del botón Detener</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Elija lo que hace el botón Detener</string>
     <string name="statusThreadedAppNoLocationService">No puedo acceder al SSID</string>
+    <string name="introEsuMc2Title">Control móvil ESU 2/Pro</string>
+    <string name="introEsuMc2Summary">El ESU Mobile Control 2/Pro tiene un espacio de pantalla limitado y los controles físicos hacen que algunos controles en pantalla del Engine Driver sean redundantes. Si selecciona \"Sí\" a continuación, se modificarán algunos ajustes para optimizar el uso de la pantalla del ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Sí, utilice la configuración recomendada</string>
+    <string name="prefEsuMc2SliderTypeTitle">Tipo de control deslizante</string>
+    <string name="prefEsuMc2SliderTypeSummary">Define lo que hará el control deslizante</string>
 
 </resources>
