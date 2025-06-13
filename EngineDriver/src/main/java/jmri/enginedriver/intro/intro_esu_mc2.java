@@ -23,46 +23,36 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
-/**
- * Created by andrew on 11/17/16.
- */
-
-public class intro_dccex extends Fragment {
-    static final String activityName = "intro_dccex";
+public class intro_esu_mc2 extends Fragment {
+    static final String activityName = "intro_esu_mc2";
 
     private SharedPreferences prefs;
-    private boolean dccexYes;
+    private boolean esuMc2Yes;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
-        boolean prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
 
-//        TextView v = getView().findViewById(R.id.intro_dccex_no);
-//        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
-//        v = getView().findViewById(R.id.intro_dccex_yes);
-//        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
-
-        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_dccex_radio_group);
+        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_esu_mc2_radio_group);
 
         radioGroup.clearCheck();
-        if (!prefDccexConnectionOption) {radioGroup.check(R.id.intro_dccex_no); }
-        else {radioGroup.check(R.id.intro_dccex_yes); }
+        radioGroup.check(R.id.intro_esu_mc2_no);
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -70,15 +60,19 @@ public class intro_dccex extends Fragment {
             @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.intro_dccex_no) {
-                    dccexYes = false;
-                    prefs.edit().putString("prefUseDccexProtocol","No").commit();
-                } else if (checkedId == R.id.intro_dccex_yes) {
-                    dccexYes = true;
-                    prefs.edit().putString("prefUseDccexProtocol","Auto").commit();
+                if (checkedId == R.id.intro_esu_mc2_no) {
+                    esuMc2Yes = false;
+                    prefs.edit().putString("prefThrottleScreenType", "Default").commit();
+                    prefs.edit().putString("NumThrottles", "2").commit();
+                } else if (checkedId == R.id.intro_esu_mc2_yes) {
+                    esuMc2Yes = true;
                 }
-                prefs.edit().putBoolean("prefDCCEXconnectionOption", dccexYes).commit();
-                prefs.edit().putBoolean("prefActionBarShowDccExButton", dccexYes).commit();
+                prefs.edit().putBoolean("display_speed_arrows_buttons", !esuMc2Yes).commit();
+                prefs.edit().putBoolean("hide_slider_preference", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefDoubleBackButtonToExit", esuMc2Yes).commit();
          }
         });
 
@@ -88,7 +82,7 @@ public class intro_dccex extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_dccex, container, false);
+        return inflater.inflate(R.layout.intro_esu_mc2, container, false);
     }
 
 }

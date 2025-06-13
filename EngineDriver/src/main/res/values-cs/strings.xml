@@ -252,8 +252,8 @@
 
     <!-- ESU MCII preferences -->
     
-    <string name="prefEsuMc2Title">ESU MobileControl II Volby</string>
-    <string name="prefEsuMc2Summary">Zvolte ESU MobileControl II volby</string>
+    <string name="prefEsuMc2Title">ESU MobileControl II/Pro Volby</string>
+    <string name="prefEsuMc2Summary">Zvolte ESU MobileControl II/Pro volby</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Volby postranní tlačítka zařízení</string>
     <string name="prefEsuMc2ButtonTLTitle">Akce horní-levé tlačítko</string>
     <string name="prefEsuMc2ButtonTLSummary">Zvolte akci pro stisk tlačítka.</string>
@@ -287,9 +287,9 @@
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
-    <string name="toastEsuMc2NoLocoChange">Změna lokomotivy není povolena: v současnosti je Mobile Control II v režimu stop</string>
-    <string name="toastEsuMc2NoThrottleChange">Změna ovladače není povolena: v současnosti je Mobile Control II v režimu stop</string>
-    <string name="toastEsuMc2NoButtonPresses">Stisk tlačítka není povolen: v současnosti je Mobile Control II v režimu stop</string>
+    <string name="toastEsuMc2NoLocoChange">Změna lokomotivy není povolena: v současnosti je Mobile Control II/Pro v režimu stop</string>
+    <string name="toastEsuMc2NoThrottleChange">Změna ovladače není povolena: v současnosti je Mobile Control II/Pro v režimu stop</string>
+    <string name="toastEsuMc2NoButtonPresses">Stisk tlačítka není povolen: v současnosti je Mobile Control II/Pro v režimu stop</string>
     <string name="EsuMc2KnobAction">Povolit/Zakázat kolečko</string>
     <!-- ESU MCII Messages -->
 

@@ -207,8 +207,8 @@
     <string name="prefGamePadButtonLeftTitle">Action touche DPAD Gauche</string>
     <string name="prefGamePadButtonSummary">Choisir l action affectée à la touche</string>
 
-    <string name="prefEsuMc2Title">Options ESU MobileControl II</string>
-    <string name="prefEsuMc2Summary">Choisir les options pour ESU MobileControl II</string>
+    <string name="prefEsuMc2Title">Options ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Summary">Choisir les options pour ESU MobileControl II/Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Options touches latérales</string>
     <string name="prefEsuMc2ButtonTLTitle">Action de la touche en Haut à Gauche</string>
     <string name="prefEsuMc2ButtonTLSummary">Choisir l action affectée à la touche</string>
@@ -239,9 +239,9 @@
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Autorise le changement de sens en butée 0 via la molette de commande</string>
     <string name="prefEsuMc2KnobButtonTitle">Affiche molette désactivée</string>
     <string name="prefEsuMc2KnobButtonSummary">Permet de désactiver la molette via l écran du régulateur</string>
-    <string name="toastEsuMc2NoLocoChange">Changement de locomotive interdit: Mobile Control II en mode Stop</string>
-    <string name="toastEsuMc2NoThrottleChange">Changement de commande interdit: Mobile Control II en mode Stop</string>
-    <string name="toastEsuMc2NoButtonPresses">Utilisation des touches interdite: Mobile Control II en mode Stop</string>
+    <string name="toastEsuMc2NoLocoChange">Changement de locomotive interdit: Mobile Control II/Pro en mode Stop</string>
+    <string name="toastEsuMc2NoThrottleChange">Changement de commande interdit: Mobile Control II/Pro en mode Stop</string>
+    <string name="toastEsuMc2NoButtonPresses">Utilisation des touches interdite: Mobile Control II/Pro en mode Stop</string>
     <string name="EsuMc2KnobAction">Active/désactive molette de commande</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilisation des libellés de fonctions par défaut?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Laisser votre appareil se connecter en Data à JMRI</string>

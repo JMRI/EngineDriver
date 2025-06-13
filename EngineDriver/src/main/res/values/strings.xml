@@ -315,9 +315,9 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl II</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefEsuMc2Title">ESU MobileControl II Options</string>
-    <string name="prefEsuMc2Summary">Choose ESU MobileControl II options</string>
+    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl II/Pro</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefEsuMc2Title">ESU MobileControl II/Pro Options</string>
+    <string name="prefEsuMc2Summary">Choose ESU MobileControl II/Pro options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
     <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button</string>
@@ -341,6 +341,7 @@
     <string name="prefEsuMc2StopButtonShortPressTitle">Enable Short Press</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">A \'short-press\' pauses the currently controlled locomotive/consist.\nWill revert to original speed when operations resume.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Control Knob options</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Slider options</string>
     <string name="prefEsuMc2ZeroTrimTitle">Control Knob Zero Trim</string>
     <string name="prefEsuMc2ZeroTrimSummary">Set the Control Knob zero trim setting.\nSmaller is closer to counter-clockwise end-stop position.\nPermitted range 0&#8211;255.</string>
     <string name="prefEsuMc2ZeroTrimDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
@@ -351,9 +352,9 @@
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
-    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II currently in stop mode</string>
-    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II currently in stop mode</string>
-    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II currently in stop mode</string>
+    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II/Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II/Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II/Pro currently in stop mode</string>
     <string name="EsuMc2KnobAction">Enable/Disable Knob</string>
     <!-- ESU MCII Messages -->
 
@@ -1247,6 +1248,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
+    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons \n Recommended for ESU MC 2/Pro</string>
 
     <string name="introDccexTitle">EX-CommandStation Options</string>
     <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming,
@@ -1255,6 +1257,13 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
         \'DCC-EX\' or \'DCCEX\' or uses port \'2560\'.</string>
     <string name="introDccexQuestionYes">Yes, I will be using an EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
+
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">The ESU Mobile Control 2/Pro has limited screen space and the physical controls
+        make some of Engine Driver\'s on-screen controls redundant. \n\nIf you choose \'Yes\' below,
+        some settings will be altered to make best use of the ESU MC2/Pro screen.</string>
+    <string name="introEsuMc2QuestionYes">Yes, Use recommended settings</string>
+    <string name="introEsuMc2QuestionNo">No, I will choose my own settings</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
     <string name="edit_consist_menu">\≡ Edit Consist</string>
@@ -1362,8 +1371,12 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleNumberOfLoadStepsDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Decoder Brake Type</string>
-    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake fucnctions on the decoder</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activate the Brake functions on the decoder</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefEsuMc2SliderTypeTitle">Slider Type</string>
+    <string name="prefEsuMc2SliderTypeSummary">Define what the Slider will do</string>
+    <string name="prefEsuMc2SliderTypeDefaultValue" translatable="false">esu</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Decoder Low Function Number(s)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">Which Decoder Function(s) to activate at Low Brake Value. (-1 to ignore) \nMax five Fuctions. Separate multiple functions with space(\" \")</string>
@@ -1383,7 +1396,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue" translatable="false">60</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">Decoder High Brake Value (Percent)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">What Percentage Brake to activate the High Function(s)</string>
-    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">98</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximum Load Percentage</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Adjust the maximum percentage of the Load slider. (100-20000%) 100% = loco alone</string>

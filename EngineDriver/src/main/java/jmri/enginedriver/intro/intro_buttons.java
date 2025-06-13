@@ -23,8 +23,8 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +47,7 @@ public class intro_buttons extends Fragment {
     private SharedPreferences prefs;
     private boolean displaySpeedButtons = false;
     private boolean hideSlider = false;
+    private boolean hideSliderAndButtons = false;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class intro_buttons extends Fragment {
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDisplaySpeedButtons = prefs.getBoolean("display_speed_arrows_buttons", false);
         boolean prefHideSlider = prefs.getBoolean("hide_slider_preference", false);
+        boolean prefHideSliderAndSpeedButtons = prefs.getBoolean("prefHideSliderAndSpeedButtons", false);
 
         TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_buttons_slider_name);
         v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
@@ -68,9 +70,15 @@ public class intro_buttons extends Fragment {
         RadioGroup radioGroup = getView().findViewById(R.id.intro_buttons_radio_group);
 
         radioGroup.clearCheck();
-        if (!prefDisplaySpeedButtons && !prefHideSlider) {radioGroup.check(R.id.intro_buttons_slider_name); }
-        else if (prefDisplaySpeedButtons && !prefHideSlider) {radioGroup.check(R.id.intro_buttons_slider_and_buttons_name); }
-        else {radioGroup.check(R.id.intro_buttons_no_slider_name); }
+        if (prefHideSliderAndSpeedButtons) { // overrides the othe options
+            radioGroup.check(R.id.intro_buttons_no_slider_or_buttons_name);
+        } else if (!prefDisplaySpeedButtons && !prefHideSlider) {
+            radioGroup.check(R.id.intro_buttons_slider_name);
+        } else if (prefDisplaySpeedButtons && !prefHideSlider) {
+            radioGroup.check(R.id.intro_buttons_slider_and_buttons_name);
+        } else {
+            radioGroup.check(R.id.intro_buttons_no_slider_name);
+        }
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -78,11 +86,18 @@ public class intro_buttons extends Fragment {
             @SuppressLint("ApplySharedPref")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.intro_buttons_slider_name) { displaySpeedButtons = false; hideSlider = false; }
-                else if (checkedId == R.id.intro_buttons_slider_and_buttons_name) {  displaySpeedButtons = true; hideSlider = false;  }
-                else if (checkedId == R.id.intro_buttons_no_slider_name) {  displaySpeedButtons = true; hideSlider = true;  }
+                if (checkedId == R.id.intro_buttons_no_slider_or_buttons_name) {
+                    hideSliderAndButtons = true; displaySpeedButtons = false; hideSlider = false;
+                } else if (checkedId == R.id.intro_buttons_slider_name) {
+                    hideSliderAndButtons = false; displaySpeedButtons = false; hideSlider = false;
+                } else if (checkedId == R.id.intro_buttons_slider_and_buttons_name) {
+                    hideSliderAndButtons = false; displaySpeedButtons = true; hideSlider = false;
+                } else if (checkedId == R.id.intro_buttons_no_slider_name) {
+                    hideSliderAndButtons = false; displaySpeedButtons = true; hideSlider = true;
+                }
                 prefs.edit().putBoolean("display_speed_arrows_buttons", displaySpeedButtons).commit();
                 prefs.edit().putBoolean("hide_slider_preference", hideSlider).commit();
+                prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", hideSliderAndButtons).commit();
          }
         });
 

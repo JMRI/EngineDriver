@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
+    android:background="@color/intro_background"
+    android:baselineAligned="false"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="4dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="80dp">
+
+    <LinearLayout
+        android:id="@+id/intro_buttons_title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/intro_esu_mc2_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/introEsuMc2Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded, TextContrastCheck"  />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/intro_esu_mc2_summary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/introEsuMc2Summary"
+                android:textColor="@color/solidWhite"
+                android:textSize="16sp"
+                tools:ignore="RtlHardcoded, TextContrastCheck"  />
+
+            <RadioGroup
+                android:id="@+id/intro_esu_mc2_radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/intro_esu_mc2_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text="@string/introEsuMc2QuestionNo"
+                    android:textSize="16sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
+
+                <RadioButton
+                    android:id="@+id/intro_esu_mc2_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text="@string/introEsuMc2QuestionYes"
+                    android:textSize="16sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
+
+            </RadioGroup>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/esu_logo"
+                tools:ignore="ImageContrastCheck"  />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

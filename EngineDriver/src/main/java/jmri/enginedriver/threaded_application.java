@@ -56,9 +56,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
@@ -489,6 +489,14 @@ public class threaded_application extends Application {
 
     static boolean activityVisible = false;
     static boolean activityInTransition = false;
+
+    // ESU MC II / Pro
+    public String prefEsuMc2SliderType = "esu";
+    public boolean useEsuMc2DecoderBrakes = false;
+    public int [][] esuMc2BrakeFunctions = {{4,0,0,0,0}, {5,0,0,0,0}, {6,0,0,0,0} };
+    public int [] esuMc2BrakeLevels = {30, 60, 100};
+    public boolean [][] esuMc2BrakeActive = {{false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}};
+    public float esuMc2BrakePostion = 0;
 
     public static boolean isActivityVisible() {
         Log.d(applicationName, "t_a: isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));

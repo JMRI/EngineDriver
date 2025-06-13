@@ -207,8 +207,8 @@
     <string name="prefGamePadButtonLeftTitle">Acció esquerra gamepad DPAD</string>
     <string name="prefGamePadButtonSummary">Tria una acció quan premis la tecla</string>
 
-    <string name="prefEsuMc2Title">Opcions de ESU MobileControl II</string>
-    <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl II</string>
+    <string name="prefEsuMc2Title">Opcions de ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl II/Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opcions de la tecla lateral del dispositiu</string>
     <string name="prefEsuMc2ButtonTLTitle">Acció de la tecla superior esquerra</string>
     <string name="prefEsuMc2ButtonTLSummary">Escull una acció quan premis la tecla</string>
@@ -234,9 +234,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero de la tecla regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255</string>
 
-    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II en mode d\'aturada</string>
-    <string name="toastEsuMc2NoButtonPresses">Prémer la tecla no està permès: Mobile Control II en mode d\'aturada</string>
+    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II/Pro en mode d\'aturada</string>
+    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II/Pro en mode d\'aturada</string>
+    <string name="toastEsuMc2NoButtonPresses">Prémer la tecla no està permès: Mobile Control II/Pro en mode d\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anul·lació del bloqueig de la funció de l\'accelerador</string>
