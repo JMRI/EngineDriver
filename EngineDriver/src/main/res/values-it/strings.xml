@@ -240,6 +240,7 @@
     <string name="prefEsuMc2StopButtonDelaySummary">Attesa per una \'pressione prolungata\' del Pulsante di Stop.\n Una \'Pressione Prolungata\' ferma tutti i controllori attivi; una \'pressione breve\' mette in pausa il controllore in uso.\nMinore è più veloce.</string>
 
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opzioni Manopola di Controllo</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Opzioni cursore</string>
     <string name="prefEsuMc2ZeroTrimTitle">Regolazione Zero Manopola di Controllo</string>
     <string name="prefEsuMc2ZeroTrimSummary">Regola lo zero della Manopola di Controllo.\n Minore é più vicino alla posizione estrema antioraria.\nValori permessi 0&#8211;255.</string>
 
@@ -699,10 +700,12 @@
     <string name="introButtonsSliderAndButtons">Slider e pulsanti\n(non possibile con \'Grandi pulsanti\'.)</string>
     <string name="introButtonsNoSlider">Solo i pulsanti di velocità</string>
 
+    <string name="introButtonsNoSliderOrButtons">Nessun cursore o pulsante consigliato per ESU MC 2/Pro</string>
     <string name="introDccexTitle">Opzioni EX-CommandStation</string>
     <string name="introDccexSummary">Engine Driver può fornire funzionalità aggiuntive, inclusa la programmazione CV, se si utilizza direttamente una DCC-EX EX-CommandStation. (Non tramite JMRI)\n\nSe rispondi \'Sì\' di seguito, Engine Driver utilizzerà per impostazione predefinita i comandi nativi DCC-EX invece di WiThrottle se il nome del server contiene \'DCC-EX\' o \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sì, utilizzerò una EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, NON utilizzerò una EX-CommandStation</string>
+    <string name="introEsuMc2QuestionNo">No, sceglierò le mie impostazioni</string>
     <string name="introbackButtonPress">Please Riavvia l\'app Engine Driver per completare l\'introduzione.</string>
     <string name="consist_trail_label">Locomotiva di piombo</string>
     <string name="dccExFunctionSettings">Impostazioni della funzione DCC-EX</string>
@@ -1111,5 +1114,10 @@
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Scegli cosa fa il pulsante Interrompi</string>
     <string name="statusThreadedAppNoLocationService">Impossibile accedere all\'SSID</string>
     <string name="prefSelectLocoByRadioButtonsTitle">Seleziona l\'aspetto del metodo loco</string>
+    <string name="introEsuMc2Title">Controllo mobile ESU 2/Pro</string>
+    <string name="introEsuMc2Summary">L\'ESU Mobile Control 2/Pro ha uno spazio sullo schermo limitato e i comandi fisici rendono ridondanti alcuni dei comandi a schermo del macchinista. Se si sceglie \"Sì\" di seguito, alcune impostazioni verranno modificate per sfruttare al meglio lo schermo dell\'ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Sì, usa le impostazioni consigliate</string>
+    <string name="prefEsuMc2SliderTypeTitle">Tipo di cursore</string>
+    <string name="prefEsuMc2SliderTypeSummary">Definisci cosa farà lo Slider</string>
 
 </resources>

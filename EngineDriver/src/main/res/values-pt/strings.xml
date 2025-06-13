@@ -239,6 +239,7 @@
     <string name="prefEsuMc2StopButtonDelaySummary">Espera para \'aperto prolongado\' do botão de Parada.\nUm \'Aperto Prolongado\' para todos os controladores ativos; um \'aperto curto\' pausa o presente controlador. \'Menor é mais rápido.</string>
 
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opções Manopla de Controle</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Opções do controle deslizante</string>
     <string name="prefEsuMc2ZeroTrimTitle">Regulagem Zero Manopla de Controle</string>
     <string name="prefEsuMc2ZeroTrimSummary">Regula o zero da Manopla de Controle.\n Menor is mais perto à posição extrema antiorária.\nValores permitidos 0&#8211;255.</string>
 
@@ -716,6 +717,7 @@
     <string name="prefConsistFollowDefaultActionTitle">Se Todos os jogos Falha Ação</string>
     <string name="prefConsistFollowDefaultActionSummary">Que locos na consistem deve reagir aos botões de função se nenhuma das regras abaixo são se encontram.</string>
 
+    <string name="introEsuMc2QuestionNo">Não, eu escolherei minhas próprias configurações</string>
     <string name="introbackButtonPress">Reinicie o aplicativo Engine Driver para concluir a introdução.</string>
     <string name="edit_consist_throttle_1">Editar Consistem acelerador 1</string>
     <string name="edit_consist_throttle_2">Editar Consistem acelerador 2</string>
@@ -813,6 +815,7 @@
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
+    <string name="introButtonsNoSliderOrButtons">Nenhum controle deslizante ou botões recomendados para ESU MC 2/Pro</string>
     <string name="introDccexTitle">Opções EX-CommandStation</string>
     <string name="introDccexSummary">O Engine Driver pode fornecer funcionalidades adicionais, incluindo programação CV, se você estiver usando um DCC-EX EX-CommandStation diretamente. (Não via JMRI)\n\nSe você responder \'Sim\' abaixo, o Engine Driver usará como padrão comandos DCC-EX Native em vez de WiThrottle se o nome do servidor contiver \'DCC-EX\' ou \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sim, usarei uma EX-CommandStation</string>
@@ -1116,4 +1119,9 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Ação do botão Parar</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Escolha o que o botão Parar faz</string>
     <string name="statusThreadedAppNoLocationService">Não consigo acessar o SSID</string>
+    <string name="introEsuMc2Title">Controle Móvel ESU 2/Pro</string>
+    <string name="introEsuMc2Summary">O ESU Mobile Control 2/Pro tem espaço de tela limitado e os controles físicos tornam redundantes alguns dos controles na tela do Engine Driver. Se você escolher \"Sim\" abaixo, algumas configurações serão alteradas para aproveitar ao máximo a tela do ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Sim, use as configurações recomendadas</string>
+    <string name="prefEsuMc2SliderTypeTitle">Tipo de controle deslizante</string>
+    <string name="prefEsuMc2SliderTypeSummary">Defina o que o Slider fará</string>
 </resources>

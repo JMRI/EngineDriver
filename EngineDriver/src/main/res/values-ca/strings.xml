@@ -231,6 +231,7 @@
 
     <string name="prefEsuMc2StopButtonShortPressSummary">Una \'premsa curta\' posa en pausa la locomotora/consisteix controlada actualment.\nRevertirà a la velocitat original quan es reprenguin les operacions.</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Opcions de la tecla regulador</string>
+    <string name="prefEsuMc2SliderCategoryTitle">Opcions del control lliscant</string>
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero de la tecla regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255</string>
 
@@ -794,10 +795,12 @@
     <string name="introButtonsSliderAndButtons">Control lliscant i tecles\n(no és possible amb \'Botons grans\')</string>
     <string name="introButtonsNoSlider">Només tecles de velocitat</string>
 
+    <string name="introButtonsNoSliderOrButtons">No es recomana cap control lliscant ni botons per a ESU MC 2/Pro</string>
     <string name="introDccexTitle">Opcions de l\'EX-CommandStation</string>
     <string name="introDccexSummary">El controlador del motor pot proporcionar funcionalitats addicionals, inclosa la programació de CV, si utilitzeu directament una DCC-EX EX-CommandStation. (No mitjançant JMRI)\n\nSi responeu \'Sí\' a continuació, el controlador del motor utilitzarà per defecte les ordres natives de DCC-EX en comptes de WiThrottle si el nom del servidor conté \'DCC-EX\' o \'DCCEX\' .</string>
     <string name="introDccexQuestionYes">Sí, faré servir una EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, NO faré servir una EX-CommandStation</string>
+    <string name="introEsuMc2QuestionNo">No, triaré la meva pròpia configuració</string>
     <string name="introbackButtonPress">Torneu a iniciar l\'aplicació Engine Driver per completar el procés d\'inici</string>
 
     <string name="edit_consist_throttle_1">Editar el Regulador de TM 1</string>
@@ -1174,5 +1177,10 @@
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilitzeu els valors per defecte per a les entrades de la llista sense funcions</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acció del botó Stop</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Trieu què fa el botó Atura</string>
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">L\'ESU Mobile Control 2/Pro té un espai limitat a la pantalla i els controls físics fan que alguns dels controls a la pantalla de Engine Driver siguin redundants.   Si trieu \"Sí\" a continuació, alguns paràmetres es modificaran per fer un millor ús de la pantalla ESU MC2/Pro.</string>
+    <string name="introEsuMc2QuestionYes">Sí, utilitza la configuració recomanada</string>
+    <string name="prefEsuMc2SliderTypeTitle">Tipus de control lliscant</string>
+    <string name="prefEsuMc2SliderTypeSummary">Definiu què farà el control lliscant</string>
 
 </resources>
