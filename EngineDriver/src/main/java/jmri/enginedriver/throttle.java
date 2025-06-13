@@ -2802,11 +2802,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (i >= mainapp.numThrottles) {                // wrap
                 i = 0;
             } else {
-                int whichT = i;
-                if (getConsist(whichT).isActive()) { // found next active throttle
-                    whichVolume = whichT;
+                int whichThrottle = i;
+                if (getConsist(whichThrottle).isActive()) { // found next active throttle
+                    whichVolume = whichThrottle;
                     setVolumeIndicator();
-                    mainapp.whichThrottleLastTouch = whichT;
+                    setSelectedLocoAdditionalIndicator(whichThrottle, true);
+                    adjustThrottleHeights();
+                    mainapp.whichThrottleLastTouch = whichThrottle;
                     break;  // done
                 } else {                            // move to next throttle
                     i++;

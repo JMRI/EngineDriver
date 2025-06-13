@@ -35,6 +35,7 @@ import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.activity_id_type;
@@ -235,13 +236,16 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             }
         }
 
-        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
-            args = new Bundle();
-            args.putString("id", Integer.toString(PermissionsHelper.READ_PHONE_STATE));
-            args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
-            fragment = new intro_permissions();
-            fragment.setArguments(args);
-            addSlide(fragment);
+
+        if (!MobileControl2.isMobileControl2()) {
+            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
+                args = new Bundle();
+                args.putString("id", Integer.toString(PermissionsHelper.READ_PHONE_STATE));
+                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
+                fragment = new intro_permissions();
+                fragment.setArguments(args);
+                addSlide(fragment);
+            }
         }
 
         if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
@@ -263,19 +267,23 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         }
 
 
-        Fragment fragment10 = new intro_throttle_name();
-        addSlide(fragment10);
-        Fragment fragment11 = new intro_theme();
-        addSlide(fragment11);
-        Fragment fragment12 = new intro_throttle_type();
-        addSlide(fragment12);
-        Fragment fragment13 = new intro_buttons();
-        addSlide(fragment13);
-        Fragment fragment14 = new intro_dccex();
-        addSlide(fragment14);
+        fragment = new intro_throttle_name();
+        addSlide(fragment);
+        fragment = new intro_theme();
+        addSlide(fragment);
+        if (MobileControl2.isMobileControl2()) {
+            fragment = new intro_esu_mc2();
+            addSlide(fragment);
+        }
+        fragment = new intro_throttle_type();
+        addSlide(fragment);
+        fragment = new intro_buttons();
+        addSlide(fragment);
+        fragment = new intro_dccex();
+        addSlide(fragment);
 
-        Fragment fragment99 = new intro_finish();
-        addSlide(fragment99);
+        fragment = new intro_finish();
+        addSlide(fragment);
 
 //        SliderPage sliderPage99 = new SliderPage();
 //        sliderPage99.setTitle(getApplicationContext().getResources().getString(R.string.introFinishTitle));

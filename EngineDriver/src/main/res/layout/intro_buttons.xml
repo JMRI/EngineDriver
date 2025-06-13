@@ -47,14 +47,14 @@
 
             <RadioGroup
                 android:id="@+id/intro_buttons_radio_group"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/intro_buttons_slider_name"
                     android:layout_width="wrap_content"
                     android:minWidth="320dp"
-                    android:maxWidth="320dp"
+                    android:maxWidth="420dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_buttons_slider"
                     android:gravity="center"
@@ -68,7 +68,7 @@
                     android:id="@+id/intro_buttons_slider_and_buttons_name"
                     android:layout_width="wrap_content"
                     android:minWidth="320dp"
-                    android:maxWidth="320dp"
+                    android:maxWidth="420dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_buttons_slider_and_speed"
                     android:gravity="center"
@@ -83,13 +83,27 @@
                     android:id="@+id/intro_buttons_no_slider_name"
                     android:layout_width="wrap_content"
                     android:maxWidth="320dp"
-                    android:minWidth="320dp"
+                    android:minWidth="420dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
                     android:drawableLeft="@drawable/intro_buttons_no_slider"
                     android:gravity="center"
                     android:paddingTop="5dp"
                     android:text="@string/introButtonsNoSlider"
+                    android:textSize="16sp"
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
+
+                <RadioButton
+                    android:id="@+id/intro_buttons_no_slider_or_buttons_name"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="320dp"
+                    android:minWidth="420dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:drawableLeft="@drawable/intro_buttons_no_slider_or_buttons"
+                    android:gravity="center"
+                    android:paddingTop="5dp"
+                    android:text="@string/introButtonsNoSliderOrButtons"
                     android:textSize="16sp"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 

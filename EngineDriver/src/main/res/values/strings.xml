@@ -1248,6 +1248,7 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
+    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons \n Recommended for ESU MC 2/Pro</string>
 
     <string name="introDccexTitle">EX-CommandStation Options</string>
     <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming,
@@ -1256,6 +1257,13 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
         \'DCC-EX\' or \'DCCEX\' or uses port \'2560\'.</string>
     <string name="introDccexQuestionYes">Yes, I will be using an EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
+
+    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
+    <string name="introEsuMc2Summary">The ESU Mobile Control 2/Pro has limited screen space and the physical controls
+        make some of Engine Driver\'s on-screen controls redundant. \n\nIf you choose \'Yes\' below,
+        some settings will be altered to make best use of the ESU MC2/Pro screen.</string>
+    <string name="introEsuMc2QuestionYes">Yes, Use recommended settings</string>
+    <string name="introEsuMc2QuestionNo">No, I will choose my own settings</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
     <string name="edit_consist_menu">\≡ Edit Consist</string>
