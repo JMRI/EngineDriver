@@ -7480,17 +7480,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (resultCode == select_loco.RESULT_LOCO_EDIT) {
                     activityConsistUpdate(resultCode, data.getExtras());
                 }
+                int newThrottle = 0;
                 try {
-                    overrideThrottleNames[mainapp.throttleCharToInt(data.getCharExtra("whichThrottle", ' '))] = data.getStringExtra("overrideThrottleName");
+                    newThrottle = mainapp.throttleCharToInt(data.getCharExtra("whichThrottle", ' '));
+                    overrideThrottleNames[newThrottle] = data.getStringExtra("overrideThrottleName");
                 } catch (RuntimeException e) {
                     Log.e(threaded_application.applicationName, activityName + ": Call to OverrideThrottleName failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
                 }
-                if ((getConsist(whichVolume) != null) && (!getConsist(whichVolume).isActive())) {
+                if ((getConsist(newThrottle) != null) && (!getConsist(newThrottle).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
                 } else {
                     if (IS_ESU_MCII) {
                         esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
                     }
+                    whichVolume = newThrottle;
+                    setVolumeIndicator();
                     setActiveThrottle(whichVolume);
                 }
                 for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
