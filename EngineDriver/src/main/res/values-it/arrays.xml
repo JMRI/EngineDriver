@@ -53,6 +53,12 @@
         <item>9 passi</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Nessuno</item>
+        <item>3 livelli di freno del decoder</item>
+        <item>Luminosità dello schermo</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>niente</item>
         <item>Superiore</item>

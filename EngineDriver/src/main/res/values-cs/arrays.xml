@@ -61,6 +61,12 @@
         <item>9 kroků</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Žádný</item>
+        <item>3 úrovně brzdění dekodéru</item>
+        <item>Jas obrazovky</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>nic</item>
         <item>Horní</item>

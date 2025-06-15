@@ -517,6 +517,7 @@
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>3 niveaux de freinage</item>
+        <item>Luminosité de l\'écran</item>
     </string-array>
 
     <string-array name="deviceSoundsEntries">  <!-- display version -->

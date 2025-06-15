@@ -52,6 +52,12 @@
         <item>9 passos</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Nenhum</item>
+        <item>3 níveis de freio decodificador</item>
+        <item>Brilho da tela</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>nada</item>
         <item>Principal</item>

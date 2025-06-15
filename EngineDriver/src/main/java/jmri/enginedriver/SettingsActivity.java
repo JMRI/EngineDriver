@@ -1250,6 +1250,27 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu", enable);
     }
 
+    private void showHideEsuMc2Preferences(PreferenceScreen prefScreen) {
+        // Disable all ESU MC2/Pro preferences if not an ESU MC2/Pro
+        if (!MobileControl2.isMobileControl2()) {
+            enableDisablePreference(prefScreen, "prefEsuMc2", false);
+            return;
+        }
+
+        String prefEsuMc2SliderType = prefs.getString("prefEsuMc2SliderType", getApplicationContext().getResources().getString(R.string.prefEsuMc2SliderTypeDefaultValue));
+
+        boolean enable = prefEsuMc2SliderType.equals("esu");
+
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu", enable);
+
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu", enable);
+    }
+
+
     public void loadSharedPreferences(){
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
     }
@@ -1612,10 +1633,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.result = RESULT_OK;
 
-                // Disable ESU MCII preferences if not an ESU MCII
-                if (!MobileControl2.isMobileControl2()) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
-                }
+//                // Disable ESU MCII preferences if not an ESU MCII
+//                if (!MobileControl2.isMobileControl2()) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
+//                }
+                parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
 
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
 
@@ -1853,6 +1875,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
             parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
             parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
+            parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
 
             // option is only available when there is no current connection
 
@@ -2119,6 +2142,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "maximum_throttle_preference":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
+
+                    case "prefEsuMc2SliderType":
+                        parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
                         break;
 
                     case "prefSemiRealisticThrottleNumberOfBrakeSteps":

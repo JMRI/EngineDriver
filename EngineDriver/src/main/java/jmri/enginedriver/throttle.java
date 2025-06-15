@@ -4383,7 +4383,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
             if (mainapp.esuMc2BrakePostion != pcntPos) {
                 mainapp.esuMc2BrakePostion = pcntPos;
-                setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
+                if (mainapp.useEsuMc2DecoderBrakes) {
+                    setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
+                } else if (mainapp.prefEsuMc2SliderType.equals("dim")) {
+                    setScreenBrightness(255 - position);
+                }
             }
         }
     };
