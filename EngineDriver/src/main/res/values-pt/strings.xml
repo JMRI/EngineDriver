@@ -83,6 +83,7 @@
 
     <string name="consist_help">Clicar uma locomotiva para mudar sua direção em relação à cabeça do comboio. Manter apertado para remover uma locomotiva do comboio. Apertar a seta Voltar quando for pronto.</string>
     <string name="about">Sobre</string>
+    <string name="about_page_url">file:///android_asset/about_page-pt.html</string>
     <string name="mrc_settings">Configuração MRC</string>
     <string name="dccesp_settings">Configurações DCC ESP</string>
     <string name="loco_direction_left_extra">\u00B7F\u00B7</string>

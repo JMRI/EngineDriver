@@ -52,6 +52,12 @@
         <item>9 Schritte</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Keiner</item>
+        <item>3 Decoder-Bremsstufen</item>
+        <item>Bildschirmhelligkeit</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>kein</item>
         <item>Spitze</item>

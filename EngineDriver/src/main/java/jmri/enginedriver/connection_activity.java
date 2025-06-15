@@ -85,6 +85,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.dccex_protocol_option_type;
 import jmri.enginedriver.type.message_type;
@@ -891,6 +892,10 @@ public class connection_activity extends AppCompatActivity implements Permission
                 mainapp.clientLocationServiceEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             } catch (Exception except) {
                 Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): unable to determine if the location service is enabled");
+            }
+            if (MobileControl2.isMobileControl2()) {
+                // ESU Mc2/Pro does not have a gps receiver so incorrectly reports that it that the service is disabled
+                mainapp.clientLocationServiceEnabled = true;
             }
 
             //determine if currently using mobile connection or wifi

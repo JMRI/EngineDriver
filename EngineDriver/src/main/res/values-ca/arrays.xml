@@ -52,6 +52,12 @@
         <item>9 passos</item>
     </string-array>
 
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>Cap</item>
+        <item>3 nivells de fre del descodificador</item>
+        <item>Brillantor de la pantalla</item>
+    </string-array>
+
     <string-array name="WebViewLocationEntries">  <!-- display version -->
         <item>Cap</item>
         <item>Superior</item>

@@ -439,7 +439,8 @@
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>なし</item>
-        <item>ESU (3 ブレーキレベル)</item>
+        <item>3つのデコーダーブレーキレベル</item>
+        <item>D画面の明るさ</item>
     </string-array>
     <string-array name="deviceSoundsEntries">  <!-- display version -->
         <item>なし</item>

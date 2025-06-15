@@ -37,6 +37,7 @@
     <string name="app_name_turnouts">Engine Driver - Scambi</string>
     <string name="app_name_turnouts_short">Scambi</string>
     <string name="app_name_about">Circa</string>
+    <string name="about_page_url">file:///android_asset/about_page-it.html</string>
     <string name="app_name_functions">Configurazione Funzioni Default</string>
     <string name="app_name_preferences">Preferenze</string>
     <string name="app_name_select_loco">Selezione Locomotiva</string>

@@ -100,10 +100,12 @@
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>None</item>
         <item>3 Decoder Brake Levels</item>
+        <item>Screen Brightness</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>esu</item>
+        <item>dim</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
