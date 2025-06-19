@@ -187,7 +187,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 int cv = Integer.decode(cvStr);
                 int cvValue = Integer.decode(cvValueStr);
                 int addr = Integer.decode(addrStr);
-                if ((addr > 2) && (addr <= 10239) && (cv > 0)) {
+                if ((addr > 0) && (addr <= 10239) && (cv > 0)) {
                     mainapp.witAddress = Integer.toString(addr);
                     mainapp.witCv = Integer.toString(cv);
                     mainapp.witCvValue = Integer.toString(cvValue);
