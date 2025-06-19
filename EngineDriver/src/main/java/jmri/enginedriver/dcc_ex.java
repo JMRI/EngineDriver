@@ -287,7 +287,7 @@ public class dcc_ex extends AppCompatActivity {
             String addrStr = etDccexWriteAddressValue.getText().toString();
             try {
                 int addr = Integer.decode(addrStr);
-                if ((addr > 2) && (addr <= 10239)) {
+                if ((addr > 0) && (addr <= 10239)) {
                     dccexAddress = Integer.toString(addr);
                     mainapp.buttonVibration();
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WRITE_DECODER_ADDRESS, "", addr);
@@ -349,7 +349,7 @@ public class dcc_ex extends AppCompatActivity {
                     Integer cv = Integer.decode(cvStr);
                     int cvValue = Integer.decode(cvValueStr);
                     int addr = Integer.decode(addrStr);
-                    if ((addr > 2) && (addr <= 10239) && (cv > 0)) {
+                    if ((addr > 0) && (addr <= 10239) && (cv > 0)) {
                         dccexAddress = Integer.toString(addr);
                         dccexCv = cv.toString();
                         dccexCvValue = Integer.toString(cvValue);
