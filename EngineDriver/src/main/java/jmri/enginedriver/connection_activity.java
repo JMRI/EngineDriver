@@ -93,6 +93,7 @@ import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 
 //import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
@@ -618,10 +619,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
 
         set_labels();
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
-        threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
+        calculateDisplayMetrics();
 
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
@@ -697,6 +695,8 @@ public class connection_activity extends AppCompatActivity implements Permission
             return;
         }
 
+        calculateDisplayMetrics();
+
         getWifiInfo();
 //        getPhoneInfo();
 
@@ -720,7 +720,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         if (CMenu != null) {
             mainapp.displayFlashlightMenuButton(CMenu);
-            mainapp.setFlashlightButton(CMenu);
+            mainapp.setFlashlightActionViewButton(CMenu, findViewById(R.id.flashlight_button));
         }
     }  //end of onResume
 
@@ -768,6 +768,31 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void shutdown() {
         this.finish();
+    }
+
+    private void calculateDisplayMetrics() {
+        Log.d(threaded_application.applicationName, activityName + ": calculateDisplayMetrics()");
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        threaded_application.displayMetrics = dm;
+        float yInches= threaded_application.displayMetrics.heightPixels/mainapp.displayMetrics.ydpi;
+        float xInches= threaded_application.displayMetrics.widthPixels/mainapp.displayMetrics.xdpi;
+        threaded_application.displayDiagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
+        threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
+        if (MobileControl2.isMobileControl2()) { // ESU MC2 / Pro mis-report their size
+            threaded_application.useSmallToolbarButtonSize = true;
+        } else if ( (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE)
+                && (!threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
+            threaded_application.useSmallToolbarButtonSize = false;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
+            threaded_application.useSmallToolbarButtonSize = false;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
+            threaded_application.useSmallToolbarButtonSize = true;
+        }
+
+        threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
+        threaded_application.min_fling_velocity = (int) (threaded_application.SWIPE_THRESHOLD_VELOCITY * dm.densityDpi / 160.0f);
+
     }
 
     private void set_labels() {
@@ -955,7 +980,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         inflater.inflate(R.menu.connection_menu, menu);
         CMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -985,7 +1012,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            getConnectionsList();
 //            return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, CMenu);
+            mainapp.toggleFlashlightActionView(this, CMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.logviewer_menu) {
@@ -1321,5 +1348,33 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                        && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.type.message_type;
@@ -232,9 +233,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         if (FMenu != null) {
             mainapp.displayEStop(FMenu);
             mainapp.displayFlashlightMenuButton(FMenu);
-            mainapp.setFlashlightButton(FMenu);
+            mainapp.setFlashlightActionViewButton(FMenu, findViewById(R.id.flashlight_button));;
             mainapp.displayPowerStateMenuButton(FMenu);
-            mainapp.setPowerStateButton(FMenu);
+            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
         }
     }
 
@@ -264,9 +265,11 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         FMenu = menu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -279,7 +282,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, FMenu);
+            mainapp.toggleFlashlightActionView(this, FMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -311,7 +314,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(FMenu);
+                            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));;
                         }
                     }
                     break;
@@ -751,5 +754,33 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
             saveSettings();         //save function labels to file
         this.finish();  //end this activity
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

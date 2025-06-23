@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -39,12 +40,14 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 
 public class about_page extends AppCompatActivity {
     static final String activityName = "about_page";
 
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
+    private Toolbar toolbar;
 
     /**
      * Called when the activity is first created.
@@ -76,7 +79,7 @@ public class about_page extends AppCompatActivity {
         mainapp.about_page_msg_handler = new about_page_handler(Looper.getMainLooper());
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -111,9 +114,9 @@ public class about_page extends AppCompatActivity {
         if (AMenu != null) {
             mainapp.displayEStop(AMenu);
             mainapp.displayFlashlightMenuButton(AMenu);
-            mainapp.setFlashlightButton(AMenu);
+            mainapp.setFlashlightActionViewButton(AMenu, findViewById(R.id.flashlight_button));
             mainapp.displayPowerStateMenuButton(AMenu);
-            mainapp.setPowerStateButton(AMenu);
+            mainapp.setPowerStateActionViewButton(AMenu, findViewById(R.id.powerLayoutButton));
         }
     }
 
@@ -124,9 +127,11 @@ public class about_page extends AppCompatActivity {
         AMenu = menu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(AMenu);
-        mainapp.setFlashlightButton(AMenu);
+        mainapp.setFlashlightActionViewButton(AMenu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -139,7 +144,7 @@ public class about_page extends AppCompatActivity {
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, AMenu);
+            mainapp.toggleFlashlightActionView(this, AMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -187,7 +192,7 @@ public class about_page extends AppCompatActivity {
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(AMenu);
+                            mainapp.setPowerStateActionViewButton(AMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -208,6 +213,34 @@ public class about_page extends AppCompatActivity {
         public void onClick(View v) {
             mainapp.buttonVibration();
             endThisActivity();
+        }
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
         }
     }
 }

@@ -101,6 +101,7 @@ import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
@@ -162,6 +163,7 @@ public class select_loco extends AppCompatActivity {
     private SharedPreferences prefs;
     private String defaultAddressLength;
     private Menu SMenu;
+    private Toolbar toolbar;
 
     protected final int layoutViewId = R.layout.select_loco;
 
@@ -583,7 +585,7 @@ public class select_loco extends AppCompatActivity {
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateButton(SMenu);
+                            mainapp.setPowerStateActionViewButton(SMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     if (!response_str.isEmpty()) {
@@ -1921,7 +1923,7 @@ public class select_loco extends AppCompatActivity {
         handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -2113,9 +2115,9 @@ public class select_loco extends AppCompatActivity {
 
         if (SMenu != null) {
             mainapp.displayFlashlightMenuButton(SMenu);
-            mainapp.setFlashlightButton(SMenu);
+            mainapp.setFlashlightActionViewButton(SMenu, findViewById(R.id.flashlight_button));
             mainapp.displayPowerStateMenuButton(SMenu);
-            mainapp.setPowerStateButton(SMenu);
+            mainapp.setPowerStateActionViewButton(SMenu, findViewById(R.id.powerLayoutButton));
         }
         Log.d(threaded_application.applicationName, activityName + ": onResume(): end");
     }
@@ -2151,9 +2153,11 @@ public class select_loco extends AppCompatActivity {
         SMenu = menu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -2167,7 +2171,7 @@ public class select_loco extends AppCompatActivity {
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, SMenu);
+            mainapp.toggleFlashlightActionView(this, SMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -2873,5 +2877,33 @@ public class select_loco extends AppCompatActivity {
     void reopenThrottlePage() {
         Log.d(threaded_application.applicationName, activityName + ": reopenThrottlePage()");
         endThisActivity();
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

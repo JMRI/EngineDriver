@@ -59,6 +59,8 @@ import android.os.Vibrator;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
@@ -72,6 +74,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -315,6 +318,12 @@ public class threaded_application extends Application {
     public static final int SWIPE_THRESHOLD_VELOCITY = 200;
     public static int min_fling_distance;           // pixel width needed for fling
     public static int min_fling_velocity;           // velocity needed for fling
+
+    public static DisplayMetrics displayMetrics;
+    public static double displayDiagonalInches;
+    public static String prefToolbarButtonSize = "auto";
+    public static boolean useSmallToolbarButtonSize = true;
+    public static final double LARGE_SCREEN_SIZE = 7.9;
 
     private static final int ED_NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
@@ -1492,31 +1501,61 @@ public class threaded_application extends Application {
         return (to_state_names != null);
     }
 
-    public void setPowerStateButton(Menu menu) {
-        if (menu != null) {
-            TypedValue outValue = new TypedValue();
-            if (power_state == null) {
+//    public void setPowerStateButton(Menu menu) {
+//        if (menu != null) {
+//            TypedValue outValue = new TypedValue();
+//            if (power_state == null) {
+//                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
+//            } else if (power_state.equals("2")) {
+//                if (!mainapp.isDCCEX) {
+//                    theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+//                } else {
+//                    theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
+//                }
+//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
+//            } else if (power_state.equals("1")) {
+//                theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
+//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
+//            } else {
+//                theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
+//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
+//            }
+//        }
+//    }
+
+    public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+        if (menu == null) return;
+
+        TypedValue outValue = new TypedValue();
+
+        if (power_state == null) {
+            theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
+            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
+        } else if (power_state.equals("2")) {
+            if (!mainapp.isDCCEX) {
                 theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-            } else if (power_state.equals("2")) {
-                if (!mainapp.isDCCEX) {
-                    theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-                } else {
-                    theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-                }
-                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-            } else if (power_state.equals("1")) {
-                theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
             } else {
-                theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
+                theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
             }
+            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
+        } else if (power_state.equals("1")) {
+            theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
+            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
+        } else {
+            theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
+            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
         }
+
+        if (menuItemViewGroup  == null) return;
+        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
+
+        if (image == null) return;
+        image.setImageResource(outValue.resourceId);
     }
 
     public void displayEStop(Menu menu) {
@@ -1525,8 +1564,6 @@ public class threaded_application extends Application {
 
         if (prefs.getBoolean("show_emergency_stop_menu_preference", false)) {
             TypedValue outValue = new TypedValue();
-            theme.resolveAttribute(R.attr.ed_estop_button, outValue, true);
-            mi.setIcon(outValue.resourceId);
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1934,25 +1971,39 @@ public class threaded_application extends Application {
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
 
-    /**
-     * Set the state of the flashlight action button/menu entry
-     *
-     * @param menu the menu upon which the action is shown
-     */
-    public void setFlashlightButton(Menu menu) {
-        if (menu != null) {
-            TypedValue outValue = new TypedValue();
-            if (flashState) {
-                theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
-                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-            } else {
-                theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
-                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-            }
+//    public void setFlashlightButton(Menu menu) {
+//        if (menu != null) {
+//            TypedValue outValue = new TypedValue();
+//            if (flashState) {
+//                theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
+//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
+//            } else {
+//                theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
+//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
+//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
+//            }
+//        }
+//    }
+
+    public void setFlashlightActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+        if (menu == null) return;
+
+        TypedValue outValue = new TypedValue();
+        if (flashState) {
+            theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
+            menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
+        } else {
+            theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
+            menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
         }
-    }
+
+        if (menuItemViewGroup  == null) return;
+        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
+
+        if (image == null) return;
+        image.setImageResource(outValue.resourceId);
+}
 
     /**
      * Display the flashlight action if configured
@@ -2068,20 +2119,24 @@ public class threaded_application extends Application {
         return flashlight.isFlashlightAvailable();
     }
 
-    /**
-     * Toggle the flashlight (where supported)
-     *
-     * @param activity the requesting activity
-     * @param menu     the menu upon which the entry/button should be updated
-     */
-    public void toggleFlashlight(Activity activity, Menu menu) {
+//    public void toggleFlashlight(Activity activity, Menu menu) {
+//        if (flashState) {
+//            flashlight.setFlashlightOff();
+//            flashState = false;
+//        } else {
+//            flashState = flashlight.setFlashlightOn(activity);
+//        }
+//        setFlashlightButton(menu);
+//    }
+
+    public void toggleFlashlightActionView(Activity activity, Menu menu, ViewGroup menuItemViewGroup) {
         if (flashState) {
             flashlight.setFlashlightOff();
             flashState = false;
         } else {
             flashState = flashlight.setFlashlightOn(activity);
         }
-        setFlashlightButton(menu);
+        setFlashlightActionViewButton(menu, menuItemViewGroup);
     }
 
     public int Numeralise(String value) {
@@ -3263,4 +3318,5 @@ public class threaded_application extends Application {
                 break;
         }
     }
+
 }

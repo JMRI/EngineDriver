@@ -1301,6 +1301,10 @@ if \'discovered\', or manually enter the ip address and port.</string> -->
     <string name="prefHideInstructionalToastsTitle">Hide Instructional Hints</string>
     <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>
 
+    <string name="prefToolbarButtonSizeTitle">Toolbar Button Size</string>
+    <string name="prefToolbarButtonSizeSummary">Set the size of the toolbar buttons. (Re-start required)</string>
+    <string name="prefToolbarButtonSizeDefaultValue" translatable="false">auto</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="dialogConfirmResetPreferencesTitle">Reset Preferences</string>
     <string name="dialogResetPreferencesQuestion">Confirm that you want reset all preferences.\nALL current preferences will be lost.</string>
 

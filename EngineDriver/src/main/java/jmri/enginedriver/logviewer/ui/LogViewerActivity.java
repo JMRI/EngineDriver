@@ -44,6 +44,7 @@ import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -64,6 +65,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
     private Menu AMenu;
+    private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +119,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -156,9 +158,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         if (AMenu != null) {
             mainapp.displayFlashlightMenuButton(AMenu);
-            mainapp.setFlashlightButton(AMenu);
+            mainapp.setFlashlightActionViewButton(AMenu, findViewById(R.id.flashlight_button));
 //            mainapp.displayPowerStateMenuButton(AMenu);
-//            mainapp.setPowerStateButton(AMenu);
+//             mainapp.setPowerStateActionViewButton(AMenu, findViewById(R.id.powerLayoutButton));
         }
     }
 
@@ -169,9 +171,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         mainapp.displayEStop(menu);
         AMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return  super.onCreateOptionsMenu(menu);
     }
@@ -184,7 +188,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, AMenu);
+            mainapp.toggleFlashlightActionView(this, AMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -260,7 +264,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(AMenu);
+                            mainapp.setPowerStateActionViewButton(AMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -485,4 +489,33 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             Log.d(threaded_application.applicationName, activityName + ": addLogEntryToView(): addLine: exception: " + e);
         }
     }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
+    }
+
 }

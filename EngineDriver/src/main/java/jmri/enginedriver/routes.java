@@ -71,6 +71,7 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
@@ -90,7 +91,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private Spinner locationSpinner;
 
 //    private GestureDetector myGesture;
-    private Menu RMenu;
+    private Menu activityMenu;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -282,8 +283,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 routeEntry.setText(getString(R.string.disabled));
         }
 
-        if (RMenu != null) {
-            mainapp.displayEStop(RMenu);
+        if (activityMenu != null) {
+            mainapp.displayEStop(activityMenu);
         }
 
         return txtLen;
@@ -318,7 +319,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 //                        }
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(RMenu);
+                            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                 }
@@ -570,12 +571,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         ListView lv = findViewById(R.id.routes_list);
         lv.setSelectionFromTop(mainapp.routes_list_position, 0);
 
-        if (RMenu != null) {
-            mainapp.displayEStop(RMenu);
-            mainapp.displayPowerStateMenuButton(RMenu);
-            mainapp.displayThrottleMenuButton(RMenu, "swipe_through_routes_preference");
-            mainapp.displayFlashlightMenuButton(RMenu);
-            mainapp.setFlashlightButton(RMenu);
+        if (activityMenu != null) {
+            mainapp.displayEStop(activityMenu);
+            mainapp.displayDccExButton(activityMenu);
+
+            mainapp.displayPowerStateMenuButton(activityMenu);
+            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
+
+            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+            mainapp.displayFlashlightMenuButton(activityMenu);
+            mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
         }
         setActivityTitle();
 
@@ -655,7 +660,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
-        RMenu = menu;
+        activityMenu = menu;
         mainapp.actionBarIconCountRoutes = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
@@ -664,12 +669,14 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
         mainapp.setWebMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
 //        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountRoutes);
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -730,14 +737,14 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(RMenu);
+                mainapp.powerControlNotAllowedDialog(activityMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, RMenu);
+            mainapp.toggleFlashlightActionView(this, activityMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else {
@@ -963,5 +970,33 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     void reopenThrottlePage() {
         Intent in = mainapp.getThrottleIntent();
         startACoreActivity(this, in, false, 0);
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

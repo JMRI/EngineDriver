@@ -58,6 +58,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
@@ -179,7 +180,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateButton(CEMenu);
+                            mainapp.setPowerStateActionViewButton(CEMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -364,9 +365,9 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         if (CEMenu != null) {
             mainapp.displayFlashlightMenuButton(CEMenu);
-            mainapp.setFlashlightButton(CEMenu);
+            mainapp.setFlashlightActionViewButton(CEMenu, findViewById(R.id.flashlight_button));
             mainapp.displayPowerStateMenuButton(CEMenu);
-            mainapp.setPowerStateButton(CEMenu);
+            mainapp.setPowerStateActionViewButton(CEMenu, findViewById(R.id.powerLayoutButton));
         }
     }
 
@@ -398,9 +399,11 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         CEMenu = menu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(CEMenu);
-        mainapp.setFlashlightButton(CEMenu);
+        mainapp.setFlashlightActionViewButton(CEMenu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -413,7 +416,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, CEMenu);
+            mainapp.toggleFlashlightActionView(this, CEMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -541,5 +544,33 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         setResult(result, resultIntent);
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

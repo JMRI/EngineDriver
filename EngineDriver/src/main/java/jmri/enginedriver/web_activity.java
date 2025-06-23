@@ -62,6 +62,7 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -247,7 +248,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(WMenu);
+                            mainapp.setPowerStateActionViewButton(WMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
 
@@ -617,14 +618,16 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
         mainapp.setPowerMenuOption(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
 
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayFlashlightMenuButton(menu);
 
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
         mainapp.setPowerMenuOption(menu);
+
+        adjustToolbarSize(menu);
 
         return  super.onCreateOptionsMenu(menu);
     }
@@ -670,7 +673,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 navigateAway(false, about_page.class);
                 return true;
             case R.id.flashlight_button:
-                mainapp.toggleFlashlight(this, WMenu);
+                mainapp.toggleFlashlightActionView(this, WMenu, findViewById(R.id.flashlight_button));
                 mainapp.buttonVibration();
                 return true;
             case R.id.powerLayoutButton:
@@ -809,5 +812,33 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     void reopenThrottlePage() {
         Intent in = mainapp.getThrottleIntent();
         startACoreActivity(this, in, false, 0);
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }
