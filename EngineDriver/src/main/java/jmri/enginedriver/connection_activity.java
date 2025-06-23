@@ -782,7 +782,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (MobileControl2.isMobileControl2()) { // ESU MC2 / Pro mis-report their size
             threaded_application.useSmallToolbarButtonSize = true;
         } else if ( (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE)
-                && (!threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
+                && (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
             threaded_application.useSmallToolbarButtonSize = false;
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
             threaded_application.useSmallToolbarButtonSize = false;
