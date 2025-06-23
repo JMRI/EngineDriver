@@ -323,7 +323,7 @@ public class threaded_application extends Application {
     public static double displayDiagonalInches;
     public static String prefToolbarButtonSize = "auto";
     public static boolean useSmallToolbarButtonSize = true;
-    public static final double LARGE_SCREEN_SIZE = 7.9;
+    public static final double LARGE_SCREEN_SIZE = 6.9;
 
     private static final int ED_NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
