@@ -36,6 +36,19 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>Auto</item>
+        <item>Small</item>
+        <item>Large</item>
+    </string-array>
+    <string-array name="prefToolbarButtonSizeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>auto</item>
+        <item>small</item>
+        <item>large</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentage</item>
         <item>Auto speed steps</item>

@@ -24,12 +24,14 @@
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/flashlight_button"
+        app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/web_view_button"
+        app:actionLayout="@layout/toolbar_button_web_view"
         android:icon="?attr/ed_web_view_button"
         android:title="@string/webViewButtonBar"
         android:visible="false"
@@ -37,19 +39,21 @@
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/throttle_button_mnu"
+        app:actionLayout="@layout/toolbar_button_throttle"
         android:title="@string/throttle"
         app:showAsAction="always"
-        android:icon="?attr/ed_throttle_button"
         android:visible="false"
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/EmerStop"
+        app:actionLayout="@layout/toolbar_button_estop"
         android:title="@string/EStop"
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/powerLayoutButton"
+        app:actionLayout="@layout/toolbar_button_power_red"
         android:title="@string/PowerButtonBar"
         android:visible="false"
         app:showAsAction="always"

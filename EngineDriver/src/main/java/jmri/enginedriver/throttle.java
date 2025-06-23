@@ -166,6 +166,7 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -7085,7 +7086,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (TMenu != null) {
             mainapp.actionBarIconCountThrottle = 0;
             mainapp.displayEStop(TMenu);
-            mainapp.setPowerStateButton(TMenu);
+            mainapp.setPowerStateActionViewButton(TMenu, findViewById(R.id.powerLayoutButton));
             mainapp.displayPowerStateMenuButton(TMenu);
             mainapp.setPowerMenuOption(TMenu);
             mainapp.setDCCEXMenuOption(TMenu);
@@ -7096,7 +7097,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.setTurnoutsMenuOption(TMenu);
             mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
             mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), mainapp.gamepadCount);
-            mainapp.setFlashlightButton(TMenu);
+            mainapp.setFlashlightActionViewButton(TMenu, findViewById(R.id.flashlight_button));
             mainapp.displayFlashlightMenuButton(TMenu);
             mainapp.displayTimerMenuButton(TMenu, kidsTimerRunning);
             mainapp.displayThrottleSwitchMenuButton(TMenu);
@@ -7267,17 +7268,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         showHideConsistMenus();
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayThrottleSwitchMenuButton(menu);
         mainapp.displayWebViewMenuButton(menu);
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(menu);
         }
-        mainapp.displayDeviceSoundsThrottleButton(TMenu);
-        mainapp.displayDccExButton(TMenu);
+        mainapp.displayDeviceSoundsThrottleButton(menu);
+        mainapp.displayDccExButton(menu);
 
-//        mainapp.adjustToolbarButtonSpacing(toolbar);
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -7447,7 +7448,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, TMenu);
+            mainapp.toggleFlashlightActionView(this, TMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.throttle_switch_button) {
@@ -8643,4 +8644,33 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
     }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
+    }
+
 }

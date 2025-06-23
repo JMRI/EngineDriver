@@ -34,6 +34,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class power_control extends AppCompatActivity {
@@ -53,6 +55,7 @@ public class power_control extends AppCompatActivity {
     private Drawable powerOffDrawable;
     private Drawable powerUnknownDrawable;
     private Menu menu;
+    private Toolbar toolbar;
 
     static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX"};
     private final Button[] dccExTrackPowerButton = {null, null, null, null, null, null, null, null};
@@ -305,7 +308,7 @@ public class power_control extends AppCompatActivity {
         }
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         LinearLayout statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -340,7 +343,7 @@ public class power_control extends AppCompatActivity {
         if (menu != null) {
             mainapp.displayEStop(menu);
             mainapp.displayFlashlightMenuButton(menu);
-            mainapp.setFlashlightButton(menu);
+            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         }
         //update power state
         refresh_power_control_view();
@@ -369,7 +372,9 @@ public class power_control extends AppCompatActivity {
         menu = myMenu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+
+        adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -382,7 +387,7 @@ public class power_control extends AppCompatActivity {
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, menu);
+            mainapp.toggleFlashlightActionView(this, menu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -453,6 +458,34 @@ public class power_control extends AppCompatActivity {
             return (true);
         } else {
             return super.dispatchKeyEvent(event);
+        }
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
         }
     }
 }

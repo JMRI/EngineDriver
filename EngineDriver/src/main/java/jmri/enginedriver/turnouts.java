@@ -82,6 +82,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
@@ -102,7 +103,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private Spinner locationSpinner;
 
 //    private GestureDetector myGesture;
-    private Menu TuMenu;
+    private Menu activityMenu;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -341,10 +342,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             trnPrefix.setEnabled(false);
         }
 
-        if (TuMenu != null) {
-            mainapp.displayEStop(TuMenu);
-            mainapp.displayPowerStateMenuButton(TuMenu);
-            mainapp.displayThrottleMenuButton(TuMenu, "swipe_through_turnouts_preference");
+        if (activityMenu != null) {
+            mainapp.displayEStop(activityMenu);
+            mainapp.displayPowerStateMenuButton(activityMenu);
+            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_turnouts_preference");
         }
 
         return txtLen;
@@ -378,7 +379,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         }
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(TuMenu);
+                            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -831,6 +832,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        if (activityMenu != null) {
+            mainapp.displayEStop(activityMenu);
+            mainapp.displayDccExButton(activityMenu);
+            mainapp.displayPowerStateMenuButton(activityMenu);
+            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
+            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+            mainapp.displayFlashlightMenuButton(activityMenu);
+            mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
+        }
         setActivityTitle();
     }
 
@@ -889,7 +899,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
-        TuMenu = menu;
+        activityMenu = menu;
         mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
@@ -898,12 +908,14 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
 //        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
+
+        adjustToolbarSize(menu);
 
         return  super.onCreateOptionsMenu(menu);
     }
@@ -965,14 +977,14 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(TuMenu);
+                mainapp.powerControlNotAllowedDialog(activityMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, TuMenu);
+            mainapp.toggleFlashlightActionView(this, activityMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         }
@@ -1546,5 +1558,33 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     void reopenThrottlePage() {
         Intent in = mainapp.getThrottleIntent();
         startACoreActivity(this, in, false, 0);
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }

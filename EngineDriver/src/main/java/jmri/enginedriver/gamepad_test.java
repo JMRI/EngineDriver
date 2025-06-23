@@ -52,6 +52,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -71,6 +72,7 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.Tts;
@@ -736,9 +738,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (GPTMenu != null) {
             mainapp.displayEStop(GPTMenu);
             mainapp.displayFlashlightMenuButton(GPTMenu);
-            mainapp.setFlashlightButton(GPTMenu);
+            mainapp.setFlashlightActionViewButton(GPTMenu, findViewById(R.id.flashlight_button));
             mainapp.displayPowerStateMenuButton(GPTMenu);
-            mainapp.setPowerStateButton(GPTMenu);
+            mainapp.setPowerStateActionViewButton(GPTMenu, findViewById(R.id.powerLayoutButton));
         }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -778,9 +780,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         GPTMenu = menu;
         mainapp.displayEStop(menu);
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightButton(menu);
+        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.setPowerStateButton(menu);
+        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+
+        adjustToolbarSize(menu);
 
         return  super.onCreateOptionsMenu(menu);
     }
@@ -793,7 +797,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlight(this, GPTMenu);
+            mainapp.toggleFlashlightActionView(this, GPTMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -824,7 +828,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateButton(GPTMenu);
+                            mainapp.setPowerStateActionViewButton(GPTMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -893,5 +897,33 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (!threaded_application.useSmallToolbarButtonSize) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if (itemChooser != null) {
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
     }
 }
