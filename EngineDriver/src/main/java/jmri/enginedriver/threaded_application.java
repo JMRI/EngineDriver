@@ -323,7 +323,7 @@ public class threaded_application extends Application {
     public static double displayDiagonalInches;
     public static String prefToolbarButtonSize = "auto";
     public static boolean useSmallToolbarButtonSize = true;
-    public static final double LARGE_SCREEN_SIZE = 6.9;
+    public static final double LARGE_SCREEN_SIZE = 6.7;
 
     private static final int ED_NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
@@ -2003,7 +2003,24 @@ public class threaded_application extends Application {
 
         if (image == null) return;
         image.setImageResource(outValue.resourceId);
-}
+    }
+
+    public void setEsuMc2KnobButton(Menu menu, ViewGroup menuItemViewGroup, boolean isEsuMc2KnobEnabled) {
+        if (menu == null) return;
+
+        TypedValue outValue = new TypedValue();
+        if (isEsuMc2KnobEnabled) {
+            theme.resolveAttribute(R.attr.ed_esu_mc2_knob_on_button, outValue, true);
+        } else {
+            theme.resolveAttribute(R.attr.ed_esu_mc2_knob_off_button, outValue, true);
+        }
+
+        if (menuItemViewGroup  == null) return;
+        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
+
+        if (image == null) return;
+        image.setImageResource(outValue.resourceId);
+    }
 
     /**
      * Display the flashlight action if configured

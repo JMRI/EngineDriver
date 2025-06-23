@@ -166,7 +166,6 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -4751,7 +4750,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
      * @param menu the menu upon which the action should be shown
      */
     private void displayEsuMc2KnobMenuButton(Menu menu) {
-        MenuItem mi = menu.findItem(R.id.EsuMc2Knob_button);
+        MenuItem mi = menu.findItem(R.id.esu_mc2_knob_button);
         if (mi == null) return;
 
         if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
@@ -4760,24 +4759,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else {
             mi.setVisible(false);
         }
-        setEsuMc2KnobButton(menu);
+        mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
 
     }
 
-    /**
-     * Set the state of the ESU MCII knob action button/menu entry
-     *
-     * @param menu the menu upon which the action is shown
-     */
-    public void setEsuMc2KnobButton(Menu menu) {
-        if (menu != null) {
-            if (isEsuMc2KnobEnabled) {
-                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_on);
-            } else {
-                menu.findItem(R.id.EsuMc2Knob_button).setIcon(R.drawable.esumc2knob_off);
-            }
-        }
-    }
+//    /**
+//     * Set the state of the ESU MCII knob action button/menu entry
+//     *
+//     * @param menu the menu upon which the action is shown
+//     */
+//    public void setEsuMc2KnobButton(Menu menu) {
+//        if (menu != null) {
+//            if (isEsuMc2KnobEnabled) {
+//                menu.findItem(R.id.esu_mc2_knob_button).setIcon(R.drawable.original_toolbar_button_esu_mc2_knob_on);
+//            } else {
+//                menu.findItem(R.id.esu_mc2_knob_button).setIcon(R.drawable.original_toolbar_button_esu_mc2_knob_off);
+//            }
+//        }
+//    }
 
     /**
      * Toggle the state of the ESU MCII knob
@@ -4787,7 +4786,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
      */
     public void toggleEsuMc2Knob(Activity activity, Menu menu) {
         isEsuMc2KnobEnabled = !isEsuMc2KnobEnabled;
-        setEsuMc2KnobButton(menu);
+        mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
     }
 
     // Listeners for the Select Loco buttons
@@ -7458,7 +7457,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (item.getItemId() == R.id.web_view_button) {
             showHideWebView("");
             return true;
-        } else if (item.getItemId() == R.id.EsuMc2Knob_button) {
+        } else if (item.getItemId() == R.id.esu_mc2_knob_button) {
             toggleEsuMc2Knob(this, TMenu);
             return true;
 
