@@ -1182,5 +1182,7 @@
     <string name="introEsuMc2QuestionYes">Sí, utilitza la configuració recomanada</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipus de control lliscant</string>
     <string name="prefEsuMc2SliderTypeSummary">Definiu què farà el control lliscant</string>
+    <string name="prefToolbarButtonSizeTitle">"Botó de la barra d\\'eines "</string>
+    <string name="prefToolbarButtonSizeSummary">Estableix la mida dels botons de la barra d\\\'eines. (Cal reiniciar)</string>
 
 </resources>

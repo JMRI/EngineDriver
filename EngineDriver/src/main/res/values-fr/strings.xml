@@ -1172,5 +1172,7 @@
     <string name="introEsuMc2QuestionYes">Oui, utilisez les paramètres recommandés</string>
     <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
     <string name="prefEsuMc2SliderTypeSummary">Définir ce que fera le curseur</string>
+    <string name="prefToolbarButtonSizeTitle">Bouton de la barre d\\\'outils</string>
+    <string name="prefToolbarButtonSizeSummary">Définissez la taille des boutons de la barre d\\\'outils. (Redémarrage requis)</string>
 
 </resources>

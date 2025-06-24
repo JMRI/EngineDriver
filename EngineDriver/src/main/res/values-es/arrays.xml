@@ -328,4 +328,10 @@
         <item>Solicitar identificación de locomotora</item>
     </string-array>
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>Auto</item>
+        <item>Pequeño</item>
+        <item>Grande</item>
+    </string-array>
+
 </resources>

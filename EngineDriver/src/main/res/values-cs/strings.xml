@@ -1267,5 +1267,7 @@
     <string name="introEsuMc2QuestionYes">Ano, použít doporučená nastavení</string>
     <string name="prefEsuMc2SliderTypeTitle">Typ posuvníku</string>
     <string name="prefEsuMc2SliderTypeSummary">Definujte, co bude posuvník dělat</string>
+    <string name="prefToolbarButtonSizeTitle">"Tlačítko na panelu nástrojů "</string>
+    <string name="prefToolbarButtonSizeSummary">Nastavte velikost tlačítek panelu nástrojů. (Je vyžadován restart)</string>
 
 </resources>

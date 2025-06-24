@@ -1191,5 +1191,7 @@
     <string name="introEsuMc2QuestionYes">はい、推奨設定を使用します</string>
     <string name="prefEsuMc2SliderTypeTitle">スライダータイプ</string>
     <string name="prefEsuMc2SliderTypeSummary">スライダーの動作を定義する</string>
+    <string name="prefToolbarButtonSizeTitle">ツールバーボタン</string>
+    <string name="prefToolbarButtonSizeSummary">ツールバーボタンのサイズを設定します。(再起動が必要です)</string>
 
 </resources>

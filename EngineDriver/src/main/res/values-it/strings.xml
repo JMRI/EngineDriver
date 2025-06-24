@@ -1120,5 +1120,7 @@
     <string name="introEsuMc2QuestionYes">Sì, usa le impostazioni consigliate</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipo di cursore</string>
     <string name="prefEsuMc2SliderTypeSummary">Definisci cosa farà lo Slider</string>
+    <string name="prefToolbarButtonSizeTitle">Pulsante della barra degli strumenti</string>
+    <string name="prefToolbarButtonSizeSummary">Imposta la dimensione dei pulsanti della barra degli strumenti. (Riavvio richiesto)</string>
 
 </resources>

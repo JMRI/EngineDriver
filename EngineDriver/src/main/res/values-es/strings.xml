@@ -1169,5 +1169,7 @@
     <string name="introEsuMc2QuestionYes">Sí, utilice la configuración recomendada</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipo de control deslizante</string>
     <string name="prefEsuMc2SliderTypeSummary">Define lo que hará el control deslizante</string>
+    <string name="prefToolbarButtonSizeTitle">Botón de la barra de herramientas</string>
+    <string name="prefToolbarButtonSizeSummary">Establezca el tamaño de los botones de la barra de herramientas. (Es necesario reiniciar).</string>
 
 </resources>
