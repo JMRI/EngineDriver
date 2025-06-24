@@ -1626,7 +1626,7 @@
 
         <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_esu_icon"
             android:key="prefEsuMc2"
             android:title="@string/prefEsuMc2Title"
             android:summary="@string/prefEsuMc2Summary"
@@ -1634,6 +1634,8 @@
             android:shouldDisableView="true">
 
             <PreferenceCategory
+                android:icon="@drawable/category_esu"
+                android:layout="@layout/category_icon_left"
                 android:key="prefCategoryEsuMc2StopButton"
                 android:title="@string/prefEsuMc2StopButtonCategoryTitle">
 
@@ -1658,6 +1660,8 @@
 
             <!-- Button preferences -->
             <PreferenceCategory
+                android:icon="@drawable/category_esu"
+                android:layout="@layout/category_icon_left"
                 android:key="prefCategoryEsuMc2SideButton"
                 android:title="@string/prefEsuMc2ButtonsCategoryTitle">
 
@@ -1713,6 +1717,8 @@
 
             <!-- knob zero position trim setting -->
             <PreferenceCategory
+                android:icon="@drawable/category_esu"
+                android:layout="@layout/category_icon_left"
                 android:key="prefCategoryEsiMc2ControlKnob"
                 android:title="@string/prefEsuMc2ZeroTrimCategoryTitle">
                 <EditTextPreference
@@ -1734,16 +1740,19 @@
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
+                    android:icon="?attr/ed_esu_mc2_knob_on_button"
                     android:key="prefEsuMc2KnobButtonDisplay"
                     android:title="@string/prefEsuMc2KnobButtonTitle"
                     android:summary="@string/prefEsuMc2KnobButtonSummary"
                     android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue"
-                    android:layout="@layout/checkbox_no_icon" />
+                    android:layout="@layout/checkbox_icon_right" />
             </PreferenceCategory>
 
 
             <!-- knob zero position trim setting -->
             <PreferenceCategory
+                android:icon="@drawable/category_esu"
+                android:layout="@layout/category_icon_left"
                 android:key="prefCategoryEsuMc2Slider"
                 android:title="@string/prefEsuMc2SliderCategoryTitle">
 

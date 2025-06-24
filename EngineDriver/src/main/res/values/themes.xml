@@ -101,6 +101,7 @@
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
@@ -234,6 +235,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
@@ -361,6 +363,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
@@ -496,6 +499,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/ultra_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/ultra_toolbar_button_in_device_sounds</item>
@@ -639,6 +643,7 @@
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>
         <item name="ed_clock_icon">@drawable/black_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
@@ -775,6 +780,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/neon_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/neon_toolbar_button_in_device_sounds</item>
