@@ -491,4 +491,10 @@
         <item>ロコIDのリクエスト</item>
     </string-array>
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>オート</item>
+        <item>小さい</item>
+        <item>大きい</item>
+    </string-array>
+
 </resources>

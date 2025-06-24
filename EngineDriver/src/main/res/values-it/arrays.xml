@@ -347,4 +347,10 @@
         <item>Richiedi l\'ID della locomotiva</item>
     </string-array>
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>Auto</item>
+        <item>Piccolo</item>
+        <item>Grande</item>
+    </string-array>
+
 </resources>

@@ -17,7 +17,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
-    <item android:id="@+id/EsuMc2Knob_button"
+    <item android:id="@+id/esu_mc2_knob_button"
+        app:actionLayout="@layout/toolbar_button_esu_mc2_knob_on"
         android:title="@string/EsuMc2KnobAction"
         android:visible="false"
         app:showAsAction="always"

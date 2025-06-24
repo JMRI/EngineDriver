@@ -527,4 +527,10 @@
         <item>Vyžádejte si Loco ID</item>
     </string-array>
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>Auto</item>
+        <item>Malý</item>
+        <item>Velký</item>
+    </string-array>
+
 </resources>

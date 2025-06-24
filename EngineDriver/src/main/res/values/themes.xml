@@ -90,6 +90,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/original_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
@@ -99,6 +101,7 @@
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
@@ -221,6 +224,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/outline_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/outline_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/outline_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
@@ -230,6 +235,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
@@ -347,6 +353,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/outline_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/outline_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/outline_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
         <item name="ed_power_green_red_button">@drawable/outline_power_green_red</item>
@@ -355,6 +363,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
@@ -479,6 +488,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/ultra_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/ultra_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/ultra_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/ultra_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/ultra_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/ultra_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/ultra_power_green</item>
@@ -488,6 +499,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/ultra_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/ultra_toolbar_button_in_device_sounds</item>
@@ -620,6 +632,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/original_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
@@ -629,6 +643,7 @@
 
         <item name="ed_folder_icon">@drawable/original_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>
         <item name="ed_clock_icon">@drawable/black_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
@@ -754,6 +769,8 @@
 
         <item name="ed_flashlight_on_button">@drawable/neon_toolbar_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/neon_toolbar_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/neon_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/neon_toolbar_button_esu_mc2_knob_off</item>
         <item name="ed_estop_button">@drawable/neon_toolbar_button_estop</item>
         <item name="ed_timer_button">@drawable/neon_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/neon_toolbar_power_green</item>
@@ -763,6 +780,7 @@
 
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
+        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/neon_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/neon_toolbar_button_in_device_sounds</item>

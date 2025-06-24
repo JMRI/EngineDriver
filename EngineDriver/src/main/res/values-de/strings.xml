@@ -1171,5 +1171,7 @@
     <string name="introEsuMc2QuestionYes">Ja, empfohlene Einstellungen verwenden</string>
     <string name="prefEsuMc2SliderTypeTitle">Schiebereglertyp</string>
     <string name="prefEsuMc2SliderTypeSummary">Definieren Sie, was der Slider tun soll</string>
+    <string name="prefToolbarButtonSizeTitle">Symbolleistenschaltfläche</string>
+    <string name="prefToolbarButtonSizeSummary">Legen Sie die Größe der Symbolleistenschaltflächen fest. (Neustart erforderlich)</string>
 
 </resources>

@@ -329,4 +329,10 @@
         <item>Lok-ID anfordern</item>
     </string-array>
 
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>Auto</item>
+        <item>Klein</item>
+        <item>Groß</item>
+    </string-array>
+
 </resources>

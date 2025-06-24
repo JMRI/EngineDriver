@@ -36,6 +36,8 @@
     <attr name="ed_throttle_button" format="reference" />
     <attr name="ed_flashlight_on_button" format="reference" />
     <attr name="ed_flashlight_off_button" format="reference" />
+    <attr name="ed_esu_mc2_knob_on_button" format="reference" />
+    <attr name="ed_esu_mc2_knob_off_button" format="reference" />
     <attr name="ed_estop_button" format="reference" />
     <attr name="ed_timer_button" format="reference" />
     <attr name="ed_power_green_button" format="reference" />
@@ -45,6 +47,7 @@
 
     <attr name="ed_folder_icon" format="reference" />
     <attr name="ed_folder_dcc_ex_icon" format="reference" />
+    <attr name="ed_folder_esu_icon" format="reference" />
     <attr name="ed_clock_icon" format="reference" />
     <attr name="ed_web_view_button" format="reference" />
     <attr name="ed_in_device_sounds_button" format="reference" />
