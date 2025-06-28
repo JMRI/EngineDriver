@@ -1674,31 +1674,35 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.stopAllSounds();
         }
 
-        // ESU MC II
-        mainapp.prefEsuMc2SliderType = prefs.getString("prefEsuMc2SliderType", getApplicationContext().getResources().getString(R.string.prefEsuMc2SliderTypeDefaultValue));
-        mainapp.useEsuMc2DecoderBrakes = (mainapp.prefEsuMc2SliderType.equals("esu"));
+        // ESU MC 2/Pro
+        if (IS_ESU_MCII) {
+            updateEsuMc2ZeroTrim();
 
-        if (mainapp.useEsuMc2DecoderBrakes) {
-            String tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
-            String[] prefValues = threaded_application.splitByString(tmp, " ");
-            for (int i = 0; i < 5; i++) {
-                if (i < prefValues.length)
-                    mainapp.esuMc2BrakeFunctions[0][i] = Integer.parseInt(prefValues[i]);
-                else mainapp.esuMc2BrakeFunctions[0][i] = -1;
-            }
-            tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
-            prefValues = threaded_application.splitByString(tmp, " ");
-            for (int i = 0; i < 5; i++) {
-                if (i < prefValues.length)
-                    mainapp.esuMc2BrakeFunctions[1][i] = Integer.parseInt(prefValues[i]);
-                else mainapp.esuMc2BrakeFunctions[1][i] = -1;
-            }
-            tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
-            prefValues = threaded_application.splitByString(tmp, " ");
-            for (int i = 0; i < 5; i++) {
-                if (i < prefValues.length)
-                    mainapp.esuMc2BrakeFunctions[2][i] = Integer.parseInt(prefValues[i]);
-                else mainapp.esuMc2BrakeFunctions[2][i] = -1;
+            mainapp.prefEsuMc2SliderType = prefs.getString("prefEsuMc2SliderType", getApplicationContext().getResources().getString(R.string.prefEsuMc2SliderTypeDefaultValue));
+            mainapp.useEsuMc2DecoderBrakes = (mainapp.prefEsuMc2SliderType.equals("esu"));
+
+            if (mainapp.useEsuMc2DecoderBrakes) {
+                String tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
+                String[] prefValues = threaded_application.splitByString(tmp, " ");
+                for (int i = 0; i < 5; i++) {
+                    if (i < prefValues.length)
+                        mainapp.esuMc2BrakeFunctions[0][i] = Integer.parseInt(prefValues[i]);
+                    else mainapp.esuMc2BrakeFunctions[0][i] = -1;
+                }
+                tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
+                prefValues = threaded_application.splitByString(tmp, " ");
+                for (int i = 0; i < 5; i++) {
+                    if (i < prefValues.length)
+                        mainapp.esuMc2BrakeFunctions[1][i] = Integer.parseInt(prefValues[i]);
+                    else mainapp.esuMc2BrakeFunctions[1][i] = -1;
+                }
+                tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
+                prefValues = threaded_application.splitByString(tmp, " ");
+                for (int i = 0; i < 5; i++) {
+                    if (i < prefValues.length)
+                        mainapp.esuMc2BrakeFunctions[2][i] = Integer.parseInt(prefValues[i]);
+                    else mainapp.esuMc2BrakeFunctions[2][i] = -1;
+                }
             }
         }
 
@@ -1847,8 +1851,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             sbs[whichThrottle].setProgress(speedWiT);
             // Now update ESU MCII Knob position
             if (IS_ESU_MCII) {
-                Log.d(threaded_application.applicationName, activityName + ": speedUpdateWiT(): ESU_MCII: Move knob request for WiT speed report");
-                setEsuThrottleKnobPosition(whichThrottle, speedWiT);
+                if (!isSemiRealisticTrottle) {
+                    Log.d(threaded_application.applicationName, activityName + ": speedUpdateWiT(): ESU_MCII: Move knob request for WiT speed report");
+                    setEsuThrottleKnobPosition(whichThrottle, speedWiT);
+                } else {
+                    // if it is the first update since acquiring the loco, force the knob abd slider to the retrieved speed
+                    if (mainapp.EsuMc2FirstServerUpdate[whichThrottle]) {
+                        mainapp.EsuMc2FirstServerUpdate[whichVolume] = false;
+                        int vSpeed = (int) ( (float) speedWiT / 126 * (float) getNewSemiRealisticThrottleSliderNotches());
+                        semiRealisticThrottleSliderPositionUpdate(whichVolume,vSpeed);
+                        setTargetSpeed(whichVolume,true);
+                        setEsuThrottleKnobPosition(whichVolume, speedWiT);
+                        showTargetDirectionIndication(whichThrottle);
+                    }
+                }
             }
         }
         doLocoSound(whichThrottle);
@@ -2179,7 +2195,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         speedUpdate(whichThrottle, speed);
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
-        if (IS_ESU_MCII && moveMc2Knob) {
+        if (IS_ESU_MCII && moveMc2Knob && !isSemiRealisticTrottle) {
             Log.d(threaded_application.applicationName, activityName + ": speedUpdateAndNotify(): ESU_MCII: Move knob request for speed update");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
@@ -2194,7 +2210,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int speed = speedChange(whichThrottle, change);
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
-        if (IS_ESU_MCII) {
+        if (IS_ESU_MCII && !isSemiRealisticTrottle) {
             Log.d(threaded_application.applicationName, activityName + ": speedChangeAndNotify(): ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
@@ -2413,6 +2429,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // indicate requested direction using the button typeface
     void showDirectionRequest(int whichThrottle, int direction) {
         showDirectionIndication(whichThrottle, direction);
+    }
+
+    boolean changeActualOrTargetDirectionIfAllowed(int whichThrottle, int direction, boolean buttonsAreReversed) {
+        boolean result;
+        if (!isSemiRealisticTrottle) {
+            if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
+                result = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+            } else {
+                result = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+            }
+        } else {
+            if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
+                result = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+            } else {
+                result = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+            }
+            showTargetDirectionIndication(whichThrottle);
+        }
+        return result;
     }
 
     //
@@ -2741,7 +2776,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
         // Ensure ESU MCII tracks selected throttle
-        if (IS_ESU_MCII) {
+        if (IS_ESU_MCII && !isSemiRealisticTrottle) {
             Log.d(threaded_application.applicationName, activityName + ": setVolumeIndicator(): ESU_MCII: Throttle changed to: " + whichVolume);
             setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
             if (!isEsuMc2Stopped) {
@@ -3131,7 +3166,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (!isSemiRealisticTrottle) {
                     speedUpdateAndNotify(whichThrottle, 0);
                 } else { // semi-realistic throttle variant
-// ok
                     semiRealisticThrottleSliderPositionUpdate(whichThrottle, 0);
                 }
                 tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -3146,29 +3180,29 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (!isSemiRealisticTrottle) {
                             speedUpdateAndNotify(0);         // update all throttles
                         } else { // semi-realistic throttle variant
-// ok
                             // assumes only one Throttle
                             semiRealisticThrottleSliderPositionUpdate(whichThrottle, 0);
                         }
                     } else if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {
-                        boolean dirChangeFailed;
-                        if (!isSemiRealisticTrottle) {
-                            if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                                dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                            } else {
-                                dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                            }
-                            GamepadFeedbackSound(dirChangeFailed);
-                        } else { // semi-realistic throttle variant
-// -----------
-// need to figure out neutral!!!
-                            if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                                dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                            } else {
-                                dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                            }
-                            GamepadFeedbackSound(dirChangeFailed);
-                        }
+                        boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                                getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                                gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                        if (!isSemiRealisticTrottle) {
+//                            if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                                dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                            } else {
+//                                dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                            }
+//                        } else { // semi-realistic throttle variant
+//// -----------
+//// need to figure out neutral!!!
+//                            if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                                dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                            } else {
+//                                dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                            }
+//                        }
+                          GamepadFeedbackSound(dirChangeFailed);
                     } // else do nothing
                     whichLastGamepadButtonPressed = -1;  // reset the count
                     gamePadDoublePressStopTime = 0; // reset the time
@@ -3187,62 +3221,66 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.FORWARD)) {  // Forward
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed;
-                if (!isSemiRealisticTrottle) {
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    }
-                } else {
-// ok
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                }
+                dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                if (!isSemiRealisticTrottle) {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    }
+//                } else {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.REVERSE)) {  // Reverse
             boolean dirChangeFailed;
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                if (!isSemiRealisticTrottle) {
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                    GamepadFeedbackSound(dirChangeFailed);
-                } else { // semi-realistic throttle variant
-// ok
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                    GamepadFeedbackSound(dirChangeFailed);
-                }
+                dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                if (!isSemiRealisticTrottle) {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                } else { // semi-realistic throttle variant
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
+                GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed;
-                if (!isSemiRealisticTrottle) {
-                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                } else { // semi-realistic throttle variant
-// -----------
-                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                }
+                boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                if (!isSemiRealisticTrottle) {
+//                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                } else { // semi-realistic throttle variant
+//                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.INCREASE_SPEED)) {  // Increase Speed
@@ -3252,7 +3290,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!isSemiRealisticTrottle) {
                         gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                     } else { // semi-realistic throttle
-// ok
                         gamepadRepeatUpdateHandler.post(new SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                     }
                 }
@@ -3264,7 +3301,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (!isSemiRealisticTrottle) {
                         gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                     } else { // semi-realistic throttle variant
-// ok
                         gamepadRepeatUpdateHandler.post(new SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                     }
                 }
@@ -3350,7 +3386,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         , isSemiRealisticTrottle
                         , getConsistAddressString(whichThrottle));
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NEUTRAL)) {
-// ok
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.NEUTRAL);
                 showTargetDirectionIndication(whichThrottle);
@@ -3399,7 +3434,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     speedUpdateAndNotify(0);         // update all throttles
                     mainapp.sendEStopMsg();
                 } else {
-// ok
                     // assumes only one Throttle
                     semiRealisticThrottleSliderPositionUpdate(whichThrottle, 0);
                 }
@@ -3425,7 +3459,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             , isSemiRealisticTrottle
                             , "");
                 } else {
-// ok
                     // assumes only one Throttle
                     semiRealisticThrottleSliderPositionUpdate(whichThrottle, 0);
                 }
@@ -3442,64 +3475,67 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if ((keyCode == KEYCODE_DPAD_RIGHT) || (keyCode == KEYCODE_RIGHT_BRACKET)) {  // Forward
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed;
-                if (!isSemiRealisticTrottle) {
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    }
-                } else {
-// ok
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                }
+                boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                if (!isSemiRealisticTrottle) {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    }
+//                } else {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
         } else if ((keyCode == KEYCODE_DPAD_LEFT) || (keyCode == KEYCODE_LEFT_BRACKET)) {  // Reverse
-            boolean dirChangeFailed;
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                if (!isSemiRealisticTrottle) {
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                } else {
-// ok
-                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                }
+                boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                if (!isSemiRealisticTrottle) {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                } else {
+//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
         } else if (keyCode == KEYCODE_D) {  // Toggle Forward/Reverse
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                boolean dirChangeFailed;
-                if (!isSemiRealisticTrottle) {
-                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                } else {
-// ok
-                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                    } else {
-                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                    }
-                    showTargetDirectionIndication(whichThrottle);
-                }
+                boolean  dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                        false);
+//                if (!isSemiRealisticTrottle) {
+//                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                } else {
+//                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                    } else {
+//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                    }
+//                    showTargetDirectionIndication(whichThrottle);
+//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
@@ -3511,7 +3547,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (!isSemiRealisticTrottle) {
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 } else { // semi-realistic throttle variant
-// ok
                     gamepadRepeatUpdateHandler.post(new SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                 }
                 resetKeyboardString();
@@ -3524,31 +3559,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (!isSemiRealisticTrottle) {
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 1));
                 } else { // semi-realistic throttle variant
-// ok
                     gamepadRepeatUpdateHandler.post(new SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                 }
                 resetKeyboardString();
             }
         } else if ((isSemiRealisticTrottle) && (keyCode == KEYCODE_BACKSLASH)) { // semi-realistic throttle - neutral
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-// ok
                 boolean dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.NEUTRAL);
                 showTargetDirectionIndication(whichThrottle);
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if ((isSemiRealisticTrottle) && ((keyCode == KEYCODE_PAGE_UP) || (keyCode == KEYCODE_APOSTROPHE)) ) { // semi-realistic throttle - increase brake
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-// ok
                 incrementBrakeSliderPosition(whichThrottle);
             }
         } else if ((isSemiRealisticTrottle) && ((keyCode == KEYCODE_PAGE_DOWN) || (keyCode == KEYCODE_SEMICOLON)) ) { // semi-realistic throttle - decrease brake
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-// ok
                 decrementBrakeSliderPosition(whichThrottle);
             }
         } else if ((isSemiRealisticTrottle) && (keyCode == KEYCODE_COMMA) ) { // semi-realistic throttle - decrease load
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-// ok
                                 decrementLoadSliderPosition(whichThrottle);
             }
         } else if ((isSemiRealisticTrottle) && (keyCode == KEYCODE_PERIOD)) { // semi-realistic throttle - increase load
@@ -3572,7 +3602,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (!isSemiRealisticTrottle) {
                     gamepadRepeatUpdateHandler.post(new GamepadRptUpdater(whichThrottle, 2));
                 } else { // semi-realistic throttle variant
-// ok
                     gamepadRepeatUpdateHandler.post(new SemiRealisticGamepadRptUpdater(whichThrottle, 2));
                 }
                 resetKeyboardString();
@@ -3737,7 +3766,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         if (!isSemiRealisticTrottle) {
                             speedUpdateAndNotify(whichThrottle, newSpeed);
                         } else { // semi-realistic throttle variant
-// ok
                             semiRealisticThrottleSliderPositionUpdate(whichThrottle, newSpeed);
                         }
                     }
@@ -4338,7 +4366,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Attempting to switch direction");
-                    changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
+                    changeActualOrTargetDirectionIfAllowed(whichVolume,
+                            getDirection(whichVolume) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                            false);
+//                    if (!isSemiRealisticTrottle) {
+//                        changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
+//                    } else{
+//                        changeTargetDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
+//                        showTargetDirectionIndication(whichVolume);
+//                    }
                     speedUpdateAndNotify(whichVolume, 0, false);
                 } else {
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
@@ -4365,7 +4401,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
-                    speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
+                    if (!isSemiRealisticTrottle) {
+                        speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
+                    } else {
+                        // set the target speed based on the new Knob position
+                        int vSpeed = (int) ( (float) speed / 126 * (float) getNewSemiRealisticThrottleSliderNotches());
+                        semiRealisticThrottleSliderPositionUpdate(whichVolume,vSpeed);
+                        stopSemiRealsticThrottleSpeedButtonRepeater(whichVolume);
+                        mSemiRealisticAutoIncrementOrDecrement[whichVolume] = auto_increment_or_decrement_type.OFF;;
+                        setTargetSpeed(whichVolume, vSpeed);
+//                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: SRT  speed: " + speed);
+//                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: SRT vSpeed: " + vSpeed);
+                    }
                 } else {
                     // Ignore knob movements for stopped or inactive throttles
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
@@ -4383,10 +4430,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
             if (mainapp.esuMc2BrakePostion != pcntPos) {
                 mainapp.esuMc2BrakePostion = pcntPos;
-                if (mainapp.useEsuMc2DecoderBrakes) {
-                    setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
-                } else if (mainapp.prefEsuMc2SliderType.equals("dim")) {
+                if (mainapp.prefEsuMc2SliderType.equals("dim")) {
                     setScreenBrightness(255 - position);
+                } else {
+                    if (!IS_ESU_MCII) {
+                        if (mainapp.useEsuMc2DecoderBrakes) {
+                            setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
+                        }
+                    } else { // is an ESU MC 2/Pro
+                        if (mainapp.prefEsuMc2SliderType.equals("srt")) {
+                            setBrakeSliderPositionPcnt(whichVolume, 100-pcntPos);
+                        }
+                    }
                 }
             }
         }
@@ -4445,7 +4500,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } // else don't care
         }
     }
-
 
     // Callback for ESU MCII stop button
     private final StopButtonFragment.OnStopButtonListener esuOnStopButtonListener = new StopButtonFragment.OnStopButtonListener() {
@@ -4567,6 +4621,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // Function to move ESU MCII control knob
     protected void setEsuThrottleKnobPosition(int whichThrottle, int speed) {
+        if (!IS_ESU_MCII) return;
+
         Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Request to update knob position for throttle " + whichThrottle);
         if (whichThrottle == whichVolume) {
             int knobPos;
@@ -4584,8 +4640,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void updateEsuMc2ZeroTrim() {
+        if (!IS_ESU_MCII) return;
+        
         int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         Log.d(threaded_application.applicationName, activityName + ": updateEsuMc2ZeroTrim(): ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
+
+        if (esuThrottleFragment == null) return; // not initialised yet
 
         // first the knob
         esuThrottleFragment.setZeroPosition(zeroTrim);
@@ -4597,6 +4657,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int repeatCnt) {
+        Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Button no: " + buttonNo);
 
         if (isEsuMc2Stopped) {
             Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
@@ -4642,21 +4703,39 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
                 case DIRECTION_FORWARD:
                     if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+                        boolean  dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                                direction_type.FORWARD,
+                                false);
+//                        changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
                     }
                     break;
                 case DIRECTION_REVERSE:
                     if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+                        boolean  dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                                direction_type.REVERSE,
+                                false);
+//                        changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
                     }
                     break;
                 case DIRECTION_TOGGLE:
                     if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-                            changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-                        } else {
-                            changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-                        }
+                        boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                                getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
+                                gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
+//                        if (!isSemiRealisticTrottle) {
+//                            if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
+//                                changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                            } else {
+//                                changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                            }
+//                        } else {
+//                            if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
+//                                changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
+//                            } else {
+//                                changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
+//                            }
+//                            showTargetDirectionIndication(whichThrottle);
+//                        }
                     }
                     break;
                 case SPEED_INCREASE:
@@ -5051,6 +5130,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, forceSemiRealistic, false);
     }
     protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic, boolean forceIsLatching) {
+        Log.d(threaded_application.applicationName, activityName + ": sendFunctionToConsistLocos(): whichThrottle: " + whichThrottle + " function: " + function + " buttonPressMessageType: " + buttonPressMessageType);
         Consist con;
         con = mainapp.consists[whichThrottle];
 
@@ -5759,7 +5839,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     doLocoSound(whichThrottle);
                 }
                 // Now update ESU MCII Knob position
-                if (IS_ESU_MCII) {
+                if (IS_ESU_MCII && !isSemiRealisticTrottle) {
                     setEsuThrottleKnobPosition(whichThrottle, speed);
                 }
 
@@ -7359,7 +7439,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.sendEStopMsg();
             speedUpdate(0);  // update all throttles
             applySpeedRelatedOptions();  // update all throttles
-            if (IS_ESU_MCII) {
+            if (IS_ESU_MCII && !isSemiRealisticTrottle) {
                 Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
                 setEsuThrottleKnobPosition(whichVolume, 0);
             }
@@ -7496,6 +7576,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     whichVolume = newThrottle;
                     setVolumeIndicator();
                     setActiveThrottle(whichVolume);
+                    mainapp.EsuMc2FirstServerUpdate[whichVolume] = true;
                 }
                 for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
                     if (mainapp.consists != null && mainapp.consists[i] != null && !mainapp.consists[i].isActive()) {
@@ -8601,12 +8682,15 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void showTargetDirectionIndication(int whichThrottle) {}
     protected int getSpeedFromSemiRealisticThrottleCurrentSliderPosition(int whichThrottle) { return 0; }
     void semiRealisticThrottleSliderPositionUpdate(int whichThrottle, int newSpeed) {}
+    void stopSemiRealsticThrottleSpeedButtonRepeater(int whichThrottle) {}
     void incrementBrakeSliderPosition(int whichThrottle) {}
     void decrementBrakeSliderPosition(int whichThrottle) {}
     void incrementLoadSliderPosition(int whichThrottle) {}
     void decrementLoadSliderPosition(int whichThrottle) {}
     protected int getTargetDirection(int whichThrottle) { return 0; }
     protected int getScaleSpeedFromSemiRealisticThrottleCurrentSliderPosition(int whichThrottle) { return 0; }
+    protected int getNewSemiRealisticThrottleSliderNotches() {return 100; }
+    void setBrakeSliderPositionPcnt(int whichThrottle, float newPositionPcnt) {}
 
         private class SemiRealisticGamepadRptUpdater implements Runnable {
         int whichThrottle;

@@ -64,7 +64,13 @@
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>Žádný</item>
         <item>3 úrovně brzdění dekodéru</item>
+    </string-array>
+
+    <string-array name="prefEsuMc2SliderTypeEntries">  <!-- display version -->
+        <item>Žádný</item>
+        <item>3 úrovně brzdění dekodéru</item>
         <item>Jas obrazovky</item>
+        <item>Use Semi-Realistic Throttle setting</item>
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->

@@ -437,11 +437,19 @@
         <item>EXT（選択不可）</item>
         <item>BOOST（選択不可）</item>
     </string-array>
+
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>なし</item>
         <item>3つのデコーダーブレーキレベル</item>
-        <item>D画面の明るさ</item>
     </string-array>
+
+    <string-array name="prefEsuMc2SliderTypeEntries">  <!-- display version -->
+        <item>なし</item>
+        <item>3つのデコーダーブレーキレベル</item>
+        <item>D画面の明るさ</item>
+        <item>Use Semi-Realistic Throttle setting</item>
+    </string-array>
+
     <string-array name="deviceSoundsEntries">  <!-- display version -->
         <item>なし</item>
         <item>一般的なスチーム (高速)</item>

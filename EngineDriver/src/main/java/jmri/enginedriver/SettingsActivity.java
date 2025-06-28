@@ -85,7 +85,6 @@ import jmri.enginedriver.type.message_type;
 
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.pref_import_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -1256,7 +1255,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideEsuMc2Preferences(PreferenceScreen prefScreen) {
-        // Disable all ESU MC2/Pro preferences if not an ESU MC2/Pro
+        // Disable all ESU MC 2/Pro preferences if not an ESU MC II/Pro
         if (!MobileControl2.isMobileControl2()) {
             enableDisablePreference(prefScreen, "prefEsuMc2", false);
             return;
@@ -1803,7 +1802,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 // //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
                     Preference advancedPreference = findPreference(advancedPreference1);
                     if (advancedPreference != null) {
-                        removePreference(advancedPreference);
+                        if (!MobileControl2.isMobileControl2()) {
+                            removePreference(advancedPreference);
+                        } else {
+                             if (!advancedPreference1.equals("prefEsuMc2")) {
+                                 removePreference(advancedPreference);
+                             }
+                        }
                     } else {
                         Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): '" + advancedPreference1 + "' not found.");
                     }

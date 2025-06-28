@@ -7,6 +7,8 @@
  * Added support for ESU MC Pro. Additional + removed + default options for the MC Pro
  * Bug fix for PoM programming of DCC addresses 1 and 2
  * Preference to using large toolbar buttons. Defaults to large on screens larger than 6.7"/17cm.
+ * Preference screen numeric input dialogs show the keypad not the full keyboard
+ * ESU MC2/Pro fixes to support the SRT
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message

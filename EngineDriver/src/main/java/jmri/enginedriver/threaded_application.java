@@ -499,13 +499,14 @@ public class threaded_application extends Application {
     static boolean activityVisible = false;
     static boolean activityInTransition = false;
 
-    // ESU MC II / Pro
+    // ESU MC 2/Pro
     public String prefEsuMc2SliderType = "esu";
     public boolean useEsuMc2DecoderBrakes = false;
     public int [][] esuMc2BrakeFunctions = {{4,0,0,0,0}, {5,0,0,0,0}, {6,0,0,0,0} };
     public int [] esuMc2BrakeLevels = {30, 60, 100};
     public boolean [][] esuMc2BrakeActive = {{false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}};
     public float esuMc2BrakePostion = 0;
+    public boolean [] EsuMc2FirstServerUpdate = {false, false, false, false, false, false };
 
     public static boolean isActivityVisible() {
         Log.d(applicationName, "t_a: isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));

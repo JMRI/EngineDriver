@@ -108,8 +108,7 @@
                     android:defaultValue="@string/prefSwipeSpeedChangeStepDefaultValue"
                     android:dialogTitle="@string/prefSwipeSpeedChangeStepTitle"
                     android:key="prefSwipeSpeedChangeStep"
-                    android:maxLength="3"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSwipeSpeedChangeStepSummary"
                     android:title="@string/prefSwipeSpeedChangeStepTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -190,10 +189,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
                     android:dialogTitle="@string/prefSliderLeftMarginTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:key="left_slider_margin"
-                    android:maxLength="2"
                     android:summary="@string/prefSliderLeftMarginSummary"
                     android:title="@string/prefSliderLeftMarginTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -226,8 +223,7 @@
                     android:defaultValue="@string/prefSwitchingThrottleSliderDeadZoneDefaultValue"
                     android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                     android:key="prefSwitchingThrottleSliderDeadZone"
-                    android:maxLength="3"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
                     android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -235,10 +231,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefVerticalStopButtonMarginDefaultValue"
                     android:dialogTitle="@string/prefVerticalStopButtonMarginTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:key="prefVerticalStopButtonMargin"
-                    android:maxLength="3"
                     android:summary="@string/prefVerticalStopButtonMarginSummary"
                     android:title="@string/prefVerticalStopButtonMarginTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -285,10 +279,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefHapticFeedbackDurationDefaultValue"
                     android:dialogTitle="@string/prefHapticFeedbackDurationTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:key="prefHapticFeedbackDuration"
-                    android:maxLength="4"
                     android:summary="@string/prefHapticFeedbackDurationSummary"
                     android:title="@string/prefHapticFeedbackDurationTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -333,8 +325,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefDirectionButtonLongPressDelayDefaultValue"
                     android:dialogTitle="@string/prefDirectionButtonLongPressDelayTitle"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:key="prefDirectionButtonLongPressDelay"
-                    android:maxLength="4"
                     android:summary="@string/prefDirectionButtonLongPressDelaySummary"
                     android:title="@string/prefDirectionButtonLongPressDelayTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -448,8 +440,7 @@
                     android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsDefaultValue"
                     android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
                     android:key="prefNumberOfDefaultFunctionLabels"
-                    android:maxLength="2"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
                     android:title="@string/prefNumberOfDefaultFunctionLabelsTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -458,8 +449,7 @@
                     android:defaultValue="@string/prefNumberOfDefaultFunctionLabelsForRosterDefaultValue"
                     android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
                     android:key="prefNumberOfDefaultFunctionLabelsForRoster"
-                    android:maxLength="2"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
                     android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -577,10 +567,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefScreenBrightnessDimDefaultValue"
                     android:dialogTitle="@string/prefScreenBrightnessDimTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:key="prefScreenBrightnessDim"
-                    android:maxLength="3"
                     android:summary="@string/prefScreenBrightnessDimSummary"
                     android:title="@string/prefScreenBrightnessDimTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -614,7 +602,7 @@
                     android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
                     android:inputType="numberDecimal"
                     android:key="prefAccelerometerShakeThreshold"
-                    android:maxLength="5"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_decimal_length_5"
                     android:summary="@string/prefAccelerometerShakeThresholdSummary"
                     android:title="@string/prefAccelerometerShakeThresholdTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -675,9 +663,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleAccelerationRepeatDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleAccelerationRepeatTitle"
                     android:key="prefSemiRealisticThrottleAccelerationRepeat"
-                    android:maxLength="4"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:summary="@string/prefSemiRealisticThrottleAccelerationRepeatSummary"
                     android:title="@string/prefSemiRealisticThrottleAccelerationRepeatTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -686,9 +672,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecelerationRepeatDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecelerationRepeatTitle"
                     android:key="prefSemiRealisticThrottleDecelerationRepeat"
-                    android:maxLength="4"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:summary="@string/prefSemiRealisticThrottleDecelerationRepeatSummary"
                     android:title="@string/prefSemiRealisticThrottleDecelerationRepeatTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -696,10 +680,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefSemiRealisticThrottleSpeedStepDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleSpeedStepTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:key="prefSemiRealisticThrottleSpeedStep"
-                    android:maxLength="2"
                     android:summary="@string/prefSemiRealisticThrottleSpeedStepSummary"
                     android:title="@string/prefSemiRealisticThrottleSpeedStepTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -708,9 +690,7 @@
                     android:defaultValue="@string/prefMaximumThrottleDefaultValue"
                     android:dialogTitle="@string/prefMaximumThrottleTitle"
                     android:key="maximum_throttle_preference"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefMaximumThrottleSummary"
                     android:title="@string/prefMaximumThrottleTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -746,9 +726,7 @@
                     android:defaultValue="@string/prefSemiRealisticMaximumBrakePcntDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticMaximumBrakePcntTitle"
                     android:key="prefSemiRealisticMaximumBrakePcnt"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticMaximumBrakePcntSummary"
                     android:title="@string/prefSemiRealisticMaximumBrakePcntTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -764,9 +742,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleAirRefreshRateDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleAirRefreshRateTitle"
                     android:key="prefSemiRealisticThrottleAirRefreshRate"
-                    android:maxLength="5"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
                     android:summary="@string/prefSemiRealisticThrottleAirRefreshRateSummary"
                     android:title="@string/prefSemiRealisticThrottleAirRefreshRateTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -784,9 +760,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleMaxLoadPcntDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleMaxLoadPcntTitle"
                     android:key="prefSemiRealisticThrottleMaxLoadPcnt"
-                    android:maxLength="5"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
                     android:summary="@string/prefSemiRealisticThrottleMaxLoadPcntSummary"
                     android:title="@string/prefSemiRealisticThrottleMaxLoadPcntTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -804,9 +778,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -815,9 +787,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -826,9 +796,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -837,9 +805,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -848,9 +814,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -859,9 +823,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1030,8 +992,7 @@
             android:defaultValue="@string/prefMaximumThrottleDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="maximum_throttle_preference"
-            android:maxLength="3"
-            android:inputType="number"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -1040,9 +1001,7 @@
             android:defaultValue="@string/prefMaximumThrottleChangeDefaultValue"
             android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
             android:key="maximum_throttle_change_preference"
-            android:maxLength="3"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:summary="@string/prefMaximumThrottleChangeSummary"
             android:title="@string/prefMaximumThrottleChangeTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -1051,9 +1010,7 @@
             android:defaultValue="@string/prefSpeedButtonsSpeedStepDefaultValue"
             android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle"
             android:key="speed_arrows_throttle_speed_step"
-            android:maxLength="2"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:summary="@string/prefSpeedButtonsSpeedStepSummary"
             android:title="@string/prefSpeedButtonsSpeedStepTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -1062,9 +1019,7 @@
             android:defaultValue="@string/prefSpeedButtonsRepeatDefaultValue"
             android:dialogTitle="@string/prefSpeedButtonsRepeatTitle"
             android:key="speed_arrows_throttle_repeat_delay"
-            android:maxLength="4"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -1125,8 +1080,7 @@
                     android:defaultValue="@string/prefLimitSpeedPercentDefaultValue"
                     android:dialogTitle="@string/prefLimitSpeedPercentTitle"
                     android:key="prefLimitSpeedPercent"
-                    android:maxLength="3"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefLimitSpeedPercentSummary"
                     android:title="@string/prefLimitSpeedPercentTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1149,8 +1103,7 @@
                     android:defaultValue="@string/prefPauseSpeedRateDefaultValue"
                     android:dialogTitle="@string/prefPauseSpeedRateTitle"
                     android:key="prefPauseSpeedRate"
-                    android:maxLength="4"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:summary="@string/prefPauseSpeedRateSummary"
                     android:title="@string/prefPauseSpeedRateTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1159,8 +1112,7 @@
                     android:defaultValue="@string/prefPauseSpeedStepDefaultValue"
                     android:dialogTitle="@string/prefPauseSpeedStepTitle"
                     android:key="prefPauseSpeedStep"
-                    android:maxLength="2"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:summary="@string/prefPauseSpeedStepSummary"
                     android:title="@string/prefPauseSpeedStepTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1348,10 +1300,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefVolumeSpeedButtonsSpeedStepDefaultValue"
                     android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:key="prefVolumeSpeedButtonsSpeedStep"
-                    android:maxLength="2"
                     android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1411,10 +1361,8 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefGamePadSpeedButtonsSpeedStepDefaultValue"
                     android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:key="prefGamePadSpeedButtonsSpeedStep"
-                    android:maxLength="2"
                     android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1422,20 +1370,16 @@
                 <EditTextPreference
                     android:defaultValue="@string/prefGamePadFeedbackVolumeDefaultValue"
                     android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:key="prefGamePadFeedbackVolume"
-                    android:maxLength="3"
                     android:summary="@string/prefGamePadFeedbackVolumeSummary"
                     android:title="@string/prefGamePadFeedbackVolumeTitle"
                     android:layout="@layout/checkbox_no_icon" />
                 <EditTextPreference
                     android:defaultValue="@string/prefGamePadSpeedButtonsRepeatDefaultValue"
                     android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
-                    android:maxLength="4"
                     android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                     android:title="@string/prefGamePadSpeedButtonsRepeatTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1645,9 +1589,7 @@
                     android:summary="@string/prefEsuMc2StopButtonDelaySummary"
                     android:defaultValue="@string/prefEsuMc2StopButtonDelayDefaultValue"
                     android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
-                    android:maxLength="4"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
@@ -1704,15 +1646,13 @@
                     Leaving this in anyway -->
 
                 <EditTextPreference
-                    android:key="prefEsuMc2ButtonsRepeatDelay"
-                    android:title="@string/prefEsuMc2ButtonsRepeatTitle"
-                    android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
                     android:defaultValue="@string/prefEsuMc2ButtonsRepeatDefaultValue"
                     android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
-                    android:maxLength="4"
-                    android:digits="0123456789"
-                    android:inputType="number"
-                    android:layout="@layout/checkbox_no_icon" />
+                    android:key="prefEsuMc2ButtonsRepeatDelay"
+                    android:layout="@layout/checkbox_no_icon"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
+                    android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
+                    android:title="@string/prefEsuMc2ButtonsRepeatTitle" />
             </PreferenceCategory>
 
             <!-- knob zero position trim setting -->
@@ -1727,9 +1667,7 @@
                     android:summary="@string/prefEsuMc2ZeroTrimSummary"
                     android:defaultValue="@string/prefEsuMc2ZeroTrimDefaultValue"
                     android:dialogTitle="@string/prefEsuMc2ZeroTrimTitle"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
@@ -1758,8 +1696,8 @@
 
                 <ListPreference
                     android:defaultValue="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue"
-                    android:entries="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries"
-                    android:entryValues="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues"
+                    android:entries="@array/prefEsuMc2SliderTypeEntries"
+                    android:entryValues="@array/prefEsuMc2SliderTypeEntryValues"
                     android:key="prefEsuMc2SliderType"
                     android:summary="@string/prefEsuMc2SliderTypeSummary"
                     android:title="@string/prefEsuMc2SliderTypeTitle"
@@ -1769,9 +1707,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1780,9 +1716,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1791,9 +1725,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1802,9 +1734,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1813,9 +1743,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu"
-                    android:maxLength="10"
-                    android:digits=" -0123456789"
-                    android:inputType="text"
+                    android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1824,9 +1752,7 @@
                     android:defaultValue="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu"
-                    android:maxLength="3"
-                    android:digits="0123456789"
-                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -1971,9 +1897,7 @@
             android:defaultValue="@string/prefMaximumRecentLocosDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
             android:key="maximum_recent_locos_preference"
-            android:maxLength="2"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:summary="@string/prefMaximumRecentLocosSummary"
             android:title="@string/prefMaximumRecentLocosTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -2061,9 +1985,7 @@
                     android:defaultValue="@string/prefDeviceSoundsMomentumDefaultValue"
                     android:dialogTitle="@string/prefDeviceSoundsMomentumTitle"
                     android:key="prefDeviceSoundsMomentum"
-                    android:maxLength="4"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:summary="@string/prefDeviceSoundsMomentumSummary"
                     android:title="@string/prefDeviceSoundsMomentumTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -2079,9 +2001,7 @@
                     android:defaultValue="100"
                     android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
                     android:key="prefDeviceSoundsLocoVolume"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefDeviceSoundsLocoVolumeSummary"
                     android:title="@string/prefDeviceSoundsLocoVolumeTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -2090,9 +2010,7 @@
                     android:defaultValue="100"
                     android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
                     android:key="prefDeviceSoundsBellVolume"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefDeviceSoundsBellVolumeSummary"
                     android:title="@string/prefDeviceSoundsBellVolumeTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -2101,9 +2019,7 @@
                     android:defaultValue="100"
                     android:dialogTitle="@string/prefDeviceSoundsHornVolumeTitle"
                     android:key="prefDeviceSoundsHornVolume"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:digits="0123456789"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:summary="@string/prefDeviceSoundsHornVolumeSummary"
                     android:title="@string/prefDeviceSoundsHornVolumeTitle"
                     android:layout="@layout/checkbox_no_icon" />
@@ -2142,9 +2058,7 @@
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
             android:key="maximum_recent_connections_preference"
-            android:maxLength="2"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -2166,9 +2080,7 @@
         <EditTextPreference
             android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
             android:key="prefConnectTimeoutMs"
-            android:maxLength="5"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
             android:summary="@string/prefConnectTimeoutMsSummary"
             android:title="@string/prefConnectTimeoutMsTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -2176,9 +2088,7 @@
         <EditTextPreference
             android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
             android:key="prefSocketTimeoutMs"
-            android:maxLength="4"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:summary="@string/prefSocketTimeoutMsSummary"
             android:title="@string/prefSocketTimeoutMsTitle"
             android:layout="@layout/checkbox_no_icon" />
@@ -2186,9 +2096,7 @@
         <EditTextPreference
             android:defaultValue="@string/prefHeartbeatResponseFactorDefaultValue"
             android:key="prefHeartbeatResponseFactor"
-            android:maxLength="2"
-            android:inputType="number"
-            android:digits="0123456789"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:summary="@string/prefHeartbeatResponseFactorSummary"
             android:title="@string/prefHeartbeatResponseFactorTitle"
             android:layout="@layout/checkbox_no_icon" />
