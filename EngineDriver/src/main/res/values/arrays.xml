@@ -113,12 +113,25 @@
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
         <item>None</item>
         <item>3 Decoder Brake Levels</item>
-        <item>Screen Brightness</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>none</item>
         <item>esu</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <string-array name="prefEsuMc2SliderTypeEntries">  <!-- display version -->
+        <item>None</item>
+        <item>3 Decoder Brake Levels</item>
+        <item>Screen Brightness</item>
+        <item>Use Semi-Realistic Throttle setting</item>
+    </string-array>
+    <string-array name="prefEsuMc2SliderTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>none</item>
+        <item>esu</item>
         <item>dim</item>
+        <item>srt</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -2433,9 +2446,8 @@
         <item>prefLeftRightSwipeChangesSpeed</item>
         <item>increase_slider_height_preference</item>
         <item>left_slider_margin</item>
-        <item>hide_slider_preference</item>
+<!--        <item>hide_slider_preference</item>-->
         <item>prefHideSliderAndSpeedButtons</item>
-        <item>hide_slider_preference</item>
         <item>prefTickMarksOnSliders</item>
         <item>prefSwitchingThrottleSliderDeadZone</item>
         <item>prefVerticalStopButtonMargin</item>

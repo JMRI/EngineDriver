@@ -696,6 +696,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
 
         calculateDisplayMetrics();
+        for (int i=0; i<6; i++) { // reset the ESU 2/Pro first server update flags
+            mainapp.EsuMc2FirstServerUpdate[i] = true;
+        }
 
         getWifiInfo();
 //        getPhoneInfo();
@@ -775,11 +778,11 @@ public class connection_activity extends AppCompatActivity implements Permission
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         threaded_application.displayMetrics = dm;
-        float yInches= threaded_application.displayMetrics.heightPixels/mainapp.displayMetrics.ydpi;
-        float xInches= threaded_application.displayMetrics.widthPixels/mainapp.displayMetrics.xdpi;
+        float yInches= threaded_application.displayMetrics.heightPixels/threaded_application.displayMetrics.ydpi;
+        float xInches= threaded_application.displayMetrics.widthPixels/threaded_application.displayMetrics.xdpi;
         threaded_application.displayDiagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
-        if (MobileControl2.isMobileControl2()) { // ESU MC2 / Pro mis-report their size
+        if (MobileControl2.isMobileControl2()) { // ESU 2/Pro / Pro mis-report their size
             threaded_application.useSmallToolbarButtonSize = true;
         } else if ( (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE)
                 && (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
@@ -803,7 +806,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         v.setText(String.format(getString(R.string.throttle_name), throttleName));
 
         String ssid = mainapp.client_ssid;
-        StringBuilder warningTextBuilder = new StringBuilder("");
+        StringBuilder warningTextBuilder = new StringBuilder();
         if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) || (ssid.equals("Can't access SSID")) ) {
             if (mainapp.client_type.equals("MOBILE")) {
                 ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
@@ -919,7 +922,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): unable to determine if the location service is enabled");
             }
             if (MobileControl2.isMobileControl2()) {
-                // ESU Mc2/Pro does not have a gps receiver so incorrectly reports that it that the service is disabled
+                // ESU MC 2/Pro does not have a gps receiver so incorrectly reports that it that the service is disabled
                 mainapp.clientLocationServiceEnabled = true;
             }
 
@@ -1132,12 +1135,12 @@ public class connection_activity extends AppCompatActivity implements Permission
             } else {
                 importExportConnectionList.getConnectionsList(addressToRemove, portToRemove);
 
-                if (importExportConnectionList.failureReason.length() > 0) {
+                if (!importExportConnectionList.failureReason.isEmpty()) {
 //                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT);
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
-                            && (importExportConnectionList.connections_list.size() > 1)) || (importExportConnectionList.connections_list.size() > 0)) {
+                            && (importExportConnectionList.connections_list.size() > 1)) || (!importExportConnectionList.connections_list.isEmpty())) {
                         // use connToast so onPause can cancel toast if connection is made
                         if (!mainapp.prefHideInstructionalToasts) {
                             connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));

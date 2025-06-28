@@ -755,7 +755,7 @@ public class throttle_semi_realistic extends throttle {
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
                 setSemiRealisticAutoIncrementDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-                setTargetSpeed(whichThrottle, true);
+                setTargetSpeed(whichThrottle, false);
                 lastSliderPosition = newSliderPosition;
             }
         }
@@ -1127,6 +1127,7 @@ public class throttle_semi_realistic extends throttle {
         mSemiRealisticSpeedButtonsAutoIncrementOrDecrement[whichThrottle] = auto_increment_or_decrement_type.OFF;
         setTargetSpeed(whichThrottle, 0);
         mainapp.sendEStopMsg();
+        if (IS_ESU_MCII) setEsuThrottleKnobPosition(whichThrottle, 0);
     }
 
     // For volume speed buttons.
@@ -1349,6 +1350,10 @@ public class throttle_semi_realistic extends throttle {
             targetSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
         } else {
             targetSpeed = targetSpeeds[whichThrottle];
+        }
+
+        if(IS_ESU_MCII && fromSlider) {
+            setEsuThrottleKnobPosition(whichThrottle, getNewSemiRealisticThrottleSliderPositionFromSpeed(targetSpeed, whichThrottle));
         }
 
         sliderSpeed = getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle);
@@ -1596,7 +1601,17 @@ public class throttle_semi_realistic extends throttle {
         return newSliderPosition;
     }
 
+    protected int getNewSemiRealisticThrottleSliderScale() {
+        return prefDisplaySemiRealisticThrottleNotches;
+    }
+
     void setBrakeSliderPosition(int whichThrottle, int newPosition) {
+        vsbBrakes[whichThrottle].setProgress(newPosition);
+    }
+
+    // set the Brake Slider position from a percentage value
+    void setBrakeSliderPositionPcnt(int whichThrottle, float newPositionPcnt) {
+        int newPosition = Math.round(newPositionPcnt * (float) prefSemiRealisticThrottleNumberOfBrakeSteps / 100);
         vsbBrakes[whichThrottle].setProgress(newPosition);
     }
 
