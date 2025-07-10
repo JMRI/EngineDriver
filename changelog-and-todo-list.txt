@@ -9,6 +9,8 @@
  * Preference to using large toolbar buttons. Defaults to large on screens larger than 6.7"/17cm.
  * Preference screen numeric input dialogs show the keypad not the full keyboard
  * ESU MC2/Pro fixes to support the SRT
+ * Gradle upgrade
+ * minimumSDK raised to 36
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message

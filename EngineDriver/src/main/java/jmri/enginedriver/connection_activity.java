@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_LONG;
@@ -1042,7 +1043,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     // Handle pressing of the back button to request exit
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             mainapp.checkExit(this);
             return true;
         }

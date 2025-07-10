@@ -21,6 +21,7 @@ import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_D;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
@@ -72,7 +73,6 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.Tts;
@@ -847,7 +847,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }

@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
@@ -101,7 +102,6 @@ import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
@@ -1610,7 +1610,7 @@ public class select_loco extends AppCompatActivity {
     public boolean onKeyDown(int key, KeyEvent event) {
         Log.d(threaded_application.applicationName, activityName + ": onKeyDown()");
         mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             overrideThrottleName = "";
             endThisActivity();
             return true;

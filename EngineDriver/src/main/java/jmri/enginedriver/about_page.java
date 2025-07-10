@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +42,6 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 
 public class about_page extends AppCompatActivity {
     static final String activityName = "about_page";
@@ -164,7 +165,7 @@ public class about_page extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }

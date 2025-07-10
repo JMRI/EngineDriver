@@ -169,7 +169,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         mainapp = (threaded_application) this.getApplication();
         mainapp.applyTheme(this,true);
 
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         deviceId = mainapp.getFakeDeviceId();
@@ -701,7 +700,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
     }
 
-    //Handle pressing of the back button to end this activity
+     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;

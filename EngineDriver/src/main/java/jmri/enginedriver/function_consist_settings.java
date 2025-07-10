@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -56,7 +57,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.LocaleHelper;
@@ -441,7 +441,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
 
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }
