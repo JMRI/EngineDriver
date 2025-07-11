@@ -1,5 +1,6 @@
 package jmri.enginedriver.logviewer.ui;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -44,7 +45,6 @@ import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -237,7 +237,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
         mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }

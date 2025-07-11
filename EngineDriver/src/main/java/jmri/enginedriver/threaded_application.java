@@ -2879,11 +2879,6 @@ public class threaded_application extends Application {
         }
     }
 
-    public void hideSoftKeyboardAfterDialog() {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-    }
-
     public void stopAllSounds() {
         Log.d(applicationName, "t_a: stopAllSounds (locoSounds)");
         if (soundPool != null) {

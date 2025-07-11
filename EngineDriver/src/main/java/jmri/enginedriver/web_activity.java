@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -62,7 +63,6 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -596,7 +596,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     //Handle pressing of the back button to end this activity
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             if (webView.canGoBack() && !clearHistory) {
                 webView.goBack();
                 return true;

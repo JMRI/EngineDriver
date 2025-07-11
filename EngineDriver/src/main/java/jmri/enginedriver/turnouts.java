@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.TextUtils.substring;
+import static android.view.KeyEvent.KEYCODE_BACK;
 
 import static jmri.enginedriver.threaded_application.context;
 
@@ -82,7 +83,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.screen_swipe_index_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
@@ -881,7 +881,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
 
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }

@@ -7192,7 +7192,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public boolean onKeyUp(int key, KeyEvent event) {
 
         // Handle pressing of the back button
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             return true; // stop processing this key
         }
 
@@ -8045,7 +8045,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimerActions(kids_timer_action_type.ENABLED, 0);
                 }
 
-                mainapp.hideSoftKeyboardAfterDialog();
+                mainapp.hideSoftKeyboard(input);
                 mainapp.buttonVibration();
             }
         });
@@ -8054,9 +8054,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         mainapp.exitDoubleBackButtonInitiated = 0;
-                        mainapp.hideSoftKeyboardAfterDialog();
+                        mainapp.hideSoftKeyboard(input);
                         mainapp.buttonVibration();
-//                        return;
                     }
                 });
         alert.show();

@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -54,7 +55,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -560,7 +560,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         saveNumberEntries();
         mainapp.exitDoubleBackButtonInitiated = 0;
 
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             endThisActivity();
             return true;
         }

@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
@@ -60,7 +61,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
-import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.type.message_type;
@@ -233,7 +233,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         if (FMenu != null) {
             mainapp.displayEStop(FMenu);
             mainapp.displayFlashlightMenuButton(FMenu);
-            mainapp.setFlashlightActionViewButton(FMenu, findViewById(R.id.flashlight_button));;
+            mainapp.setFlashlightActionViewButton(FMenu, findViewById(R.id.flashlight_button));
             mainapp.displayPowerStateMenuButton(FMenu);
             mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
         }
@@ -314,7 +314,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));;
+                            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -516,7 +516,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
         prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
 
-        if (key == KeyEvent.KEYCODE_BACK) {
+        if (key == KEYCODE_BACK) {
             threaded_application.activityInTransition(activityName);
             endThisActivity();
             return true;
