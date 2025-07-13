@@ -2297,8 +2297,8 @@
                     android:key="prefKidsTimerRestartPassword"
                     android:summary="@string/prefKidsTimerRestartPasswordSummary"
                     android:title="@string/prefKidsTimerRestartPasswordTitle"
-                    android:inputType="text"
-                    android:maxLines="1"
+                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <EditTextPreference
@@ -2307,8 +2307,8 @@
                     android:key="prefKidsTimerResetPassword"
                     android:summary="@string/prefKidsTimerResetPasswordSummary"
                     android:title="@string/prefKidsTimerResetPasswordTitle"
-                    android:inputType="text"
-                    android:maxLines="1"
+                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference

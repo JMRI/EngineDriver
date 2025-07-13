@@ -115,6 +115,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
@@ -6897,6 +6898,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d(threaded_application.applicationName, activityName + ": onDestroy(): called");
         super.onDestroy();
         Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
+
+        kidsTimerActions(kids_timer_action_type.ENDED, 0);
+        kidsTimerActions(kids_timer_action_type.DISABLED, 0);
+
         if (!isRestarting) {
             removeHandlers();
         } else {
@@ -7520,10 +7525,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             showTimerPasswordDialog();
             return true;
         } else if (item.getItemId() == R.id.timer_button) {
-            prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
-            prefKidsTimer = prefKidsTimerButtonDefault;
-            prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
-            kidsTimerActions(kids_timer_action_type.ENABLED, 0);
+            if (mainapp.consists[0].isActive()) {
+                prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
+                prefKidsTimer = prefKidsTimerButtonDefault;
+                prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
+                kidsTimerActions(kids_timer_action_type.ENABLED, 0);
+            }
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
@@ -8023,9 +8030,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
 // Set an EditText view to get user input
         final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         input.setHint(getApplicationContext().getResources().getString(R.string.timerDialogHint));
         alert.setView(input);
+        input.setFocusable(true);
+        input.setFocusableInTouchMode(true);
+        input.requestFocus();
 
         alert.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @SuppressLint("ApplySharedPref")
@@ -8058,7 +8068,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         mainapp.buttonVibration();
                     }
                 });
-        alert.show();
+
+        AlertDialog dialog = alert.create();
+
+        // Show the keyboard after the dialog is shown
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                input.requestFocus(); // Ensure focus is set
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        });
+        // Alternative method to show keyboard using WindowManager flags (might be more reliable in some cases)
+        // dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        dialog.show();
 
     } // end showTimerPasswordDialog
 
