@@ -11,6 +11,7 @@
  * ESU MC2/Pro fixes to support the SRT
  * Gradle upgrade
  * minimumSDK raised to 36
+ * Children's timer changes. Passwords changed to PINs (numeric). Some bug fixes.
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message
