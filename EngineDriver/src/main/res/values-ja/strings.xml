@@ -674,6 +674,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">ツールバーのボタンを使用してタイマーをアクティブにする場合のデフォルト時間。</string>
     <string name="prefKidsTimerButtonDefaultTitle">ボタンのデフォルト</string>
     <string name="prefKidsTimerButtonSummary">タイマーボタンを表示してタイマーを起動します。</string>
+    <string name="prefKidsTimerKioskModeSummary">タイマーが開始したら画面固定（キオスクモード）を有効にする</string>
     <string name="prefKidsTimerButtonTitle">タイマーボタンを表示しますか?</string>
     <string name="prefKidsTimerEnableReverseSummary">逆ボタンを有効にします。</string>
     <string name="prefKidsTimerEnableReverseTitle">逆を許可する</string>
@@ -1193,5 +1194,6 @@
     <string name="prefEsuMc2SliderTypeSummary">スライダーの動作を定義する</string>
     <string name="prefToolbarButtonSizeTitle">ツールバーボタン</string>
     <string name="prefToolbarButtonSizeSummary">ツールバーボタンのサイズを設定します。(再起動が必要です)</string>
+    <string name="prefKidsTimerKioskModeTitle">キオスクモード?</string>
 
 </resources>

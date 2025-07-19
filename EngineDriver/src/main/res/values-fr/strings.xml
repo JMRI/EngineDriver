@@ -979,6 +979,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Durée minuterie si activation via barre d outils</string>
     <string name="prefKidsTimerButtonDefaultTitle">Valeur par défaut de la touche</string>
     <string name="prefKidsTimerButtonSummary">Affiche la touche TIMER pour activer la minuterie</string>
+    <string name="prefKidsTimerKioskModeSummary">Activer l\'épinglage d\'écran (mode kiosque) lorsque le minuteur démarre</string>
     <string name="prefKidsTimerButtonTitle">Affichage de la touche TIMER?</string>
     <string name="prefKidsTimerEnableReverseSummary">Activavtion touche REVERSE</string>
     <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
@@ -1174,5 +1175,6 @@
     <string name="prefEsuMc2SliderTypeSummary">Définir ce que fera le curseur</string>
     <string name="prefToolbarButtonSizeTitle">Bouton de la barre d\\\'outils</string>
     <string name="prefToolbarButtonSizeSummary">Définissez la taille des boutons de la barre d\\\'outils. (Redémarrage requis)</string>
+    <string name="prefKidsTimerKioskModeTitle">Mode kiosque ?</string>
 
 </resources>

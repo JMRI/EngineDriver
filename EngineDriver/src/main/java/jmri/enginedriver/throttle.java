@@ -75,6 +75,7 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -559,6 +560,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private String prefKidsTimerResetPassword = "9999";
     private String prefKidsTimerRestartPassword = "0000";
     private boolean prefKidsTimerEnableReverse = false;
+    private boolean prefKidsTimerKioskMode = false;
     private String passwordText = "";
 
 
@@ -833,6 +835,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
+                stopAppScreenPinning();
                 break;
 
             case kids_timer_action_type.ENABLED:
@@ -864,6 +867,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
                     kidsTimer.start();
                 }
+                startAppScreenPinning();
                 break;
             case kids_timer_action_type.ENDED:
                 speedUpdateAndNotify(0);
@@ -1488,6 +1492,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
         prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
         prefKidsTimerEnableReverse = prefs.getBoolean("prefKidsTimerEnableReverse", getResources().getBoolean(R.bool.prefKidsTimerEnableReverseDefaultValue));
+        prefKidsTimerKioskMode = prefs.getBoolean("prefKidsTimerKioskMode", getResources().getBoolean(R.bool.prefKidsTimerKioskModeDefaultValue));
         prefKidsTimerButtonDefault = prefs.getString("prefKidsTimerButtonDefault", getResources().getString(R.string.prefKidsTimerButtonDefaultDefaultValue));
     }
 
@@ -6903,6 +6908,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         kidsTimerActions(kids_timer_action_type.DISABLED, 0);
 
         if (!isRestarting) {
+            stopAppScreenPinning();
             removeHandlers();
         } else {
             isRestarting = false;
@@ -8051,7 +8057,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     getKidsTimerPrefs();
                 }
 
-                if (passwordText.equals(prefKidsTimerRestartPassword)) { //reset
+                if (passwordText.equals(prefKidsTimerRestartPassword)) { //restart
                     kidsTimerActions(kids_timer_action_type.ENABLED, 0);
                 }
 
@@ -8088,6 +8094,50 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         dialog.show();
 
     } // end showTimerPasswordDialog
+
+    private void startAppScreenPinning() {
+        if (!prefKidsTimerKioskMode) return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Check if the activity is already in lock task mode.
+            ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            if (activityManager != null && activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_NONE) {
+                // App is not yet pinned.
+                // You can start screen pinning. The user will typically see a confirmation dialog.
+                try {
+                    Log.d(threaded_application.applicationName, activityName + "Attempting to start screen pinning.");
+                    startLockTask(); // This is the call to request pinning for the current task
+                } catch (Exception e) {
+                    Log.e(threaded_application.applicationName, activityName + "Error starting screen pinning: " + e.getMessage());
+                    // Handle cases where pinning might fail (e.g., policy disallows it)
+                    // You might want to inform the user or log this.
+                }
+            } else if (activityManager != null) {
+                Log.d(threaded_application.applicationName, activityName + "Screen pinning is already active or in a non-NONE state: " + activityManager.getLockTaskModeState());
+            } else {
+                Log.e(threaded_application.applicationName, activityName + "ActivityManager is null, cannot check or start screen pinning.");
+            }
+        }
+    }
+
+    private void stopAppScreenPinning() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            if (activityManager != null && activityManager.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) {
+                try {
+                    Log.d(threaded_application.applicationName, activityName + "Attempting to stop screen pinning.");
+                    stopLockTask(); // This is the call to stop pinning
+                } catch (Exception e) {
+                    Log.e(threaded_application.applicationName, activityName + "Error stopping screen pinning: " + e.getMessage());
+                }
+            } else if (activityManager != null) {
+                Log.d(threaded_application.applicationName, activityName + "Screen pinning is not currently active.");
+            } else {
+                Log.e(threaded_application.applicationName, activityName + "ActivityManager is null, cannot check or stop screen pinning.");
+            }
+        }
+    }
+
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
