@@ -1135,7 +1135,25 @@
     <string name="prefKidsSectionTitle">Children\'s (Timer) Preferences</string>
     <string name="prefKidsSectionSummary">Options for young children.\nTime controlled running.</string>
     <string name="prefKidsHelpTitle">Notes for the Timer:</string>
-    <string name="prefKidsHelpSummary">- select the loco first.\n- Timer will start with the first increase in speed.\n- You must come back to this preference to reset the time (or clear it) after the timeout.\n\nRecommendations:\n- Disable the volume keys.\n- Disable \'Swipe Through Turnouts\'.\n- Disable \'Swipe Through Routes\'.\n- Disable EStop.</string>
+    <string name="prefKidsHelpSummary">- Select a loco before starting the first time.
+        \n- Timer will start with the first change in speed.
+        \n- When the timer runs out:
+        \n\u00A0 - Click the overflow menu.
+        \n\u00A0 \u00A0   Only the \'Timer\' option will be available.
+        \n\u00A0 - Click \'Timer\' and a password will be requested.
+        \n\u00A0 - Enter one of the two passwords to either:
+        \n\u00A0 \u00A0 - restart the timer for the next period, or
+        \n\u00A0 \u00A0 - end/cancel timer running.
+        \n
+        \nRecommendations:
+        \n- Enable:
+        \n\u00A0 - Immersive Mode
+        \n\u00A0 - The Timer action bar button
+        \n- Disable:
+        \n\u00A0 - the volume keys
+        \n\u00A0 - Swipe Through - Turnouts, Routes, Web
+        \n\u00A0 - Swipe Up and Swipe Down preferences
+        \n\u00A0 - All action bar buttons (except the Timer button)</string>
     <string name="prefKidsTimerTitle">Time limited running</string>
     <string name="prefKidsTimerSummary">Restrict the time that the loco will run. e.g. Each child (operator) will get an equal amount of time.</string>
     <string name="prefKidsTimerDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
@@ -1150,6 +1168,9 @@
 
     <string name="prefKidsTimerEnableReverseTitle">Allow Reverse?</string>
     <string name="prefKidsTimerEnableReverseSummary">Enable the reverse button</string>
+
+    <string name="prefKidsTimerKioskModeTitle">Kiosk Mode?</string>
+    <string name="prefKidsTimerKioskModeSummary">Enable Screen Pinning (Kiosk Mode) when the timer starts</string>
 
     <string name="prefKidsTimerButtonTitle">Show Timer button?</string>
     <string name="prefKidsTimerButtonSummary">Display the Timer Action Bar Button to activate the timer</string>

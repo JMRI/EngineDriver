@@ -976,6 +976,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Tiempo predeterminado Si usa el botón de ToollBar para activar el temporizador.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Predeterminado para el botón</string>
     <string name="prefKidsTimerButtonSummary">Muestra el botón TIMER para activar el temporizador.</string>
+    <string name="prefKidsTimerKioskModeSummary">Habilitar la fijación de pantalla (modo quiosco) cuando se inicia el temporizador</string>
     <string name="prefKidsTimerButtonTitle">Mostrar botón de temporizador?</string>
     <string name="prefKidsTimerEnableReverseSummary">Habilitar el botón Reverso.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir el reverso</string>
@@ -1171,5 +1172,6 @@
     <string name="prefEsuMc2SliderTypeSummary">Define lo que hará el control deslizante</string>
     <string name="prefToolbarButtonSizeTitle">Botón de la barra de herramientas</string>
     <string name="prefToolbarButtonSizeSummary">Establezca el tamaño de los botones de la barra de herramientas. (Es necesario reiniciar).</string>
+    <string name="prefKidsTimerKioskModeTitle">¿Modo quiosco?</string>
 
 </resources>

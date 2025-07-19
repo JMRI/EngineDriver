@@ -923,6 +923,7 @@
     <string name="permissionsINTERNET">Engine Driver do motor precisa de permissões INTERNET para recuperar SSID wi-fi atual.</string>
     <string name="prefKidsTimerEnableReverseTitle">Permitir inverso</string>
     <string name="prefKidsTimerEnableReverseSummary">Ative o botão inverso.</string>
+    <string name="prefKidsTimerKioskModeSummary">Habilitar fixação de tela (modo quiosque) quando o cronômetro iniciar</string>
     <string name="prefKidsTimerButtonTitle">Mostrar o botão do temporizador?</string>
     <string name="prefKidsTimerButtonSummary">Exibe o botão do temporizador para ativar o temporizador.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Padrão para botão</string>
@@ -1127,4 +1128,5 @@
     <string name="prefEsuMc2SliderTypeSummary">Defina o que o Slider fará</string>
     <string name="prefToolbarButtonSizeTitle">Botão da barra de ferramentas</string>
     <string name="prefToolbarButtonSizeSummary">Defina o tamanho dos botões da barra de ferramentas. (Reinicialização necessária)</string>
+    <string name="prefKidsTimerKioskModeTitle">Modo quiosque?</string>
 </resources>

@@ -1084,6 +1084,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Výchozí čas, pokud používáte tlačítko ToollBar pro aktivaci časovače.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Výchozí nastavení pro tlačítko</string>
     <string name="prefKidsTimerButtonSummary">Zobrazte tlačítko časovače pro aktivaci časovače.</string>
+    <string name="prefKidsTimerKioskModeSummary">Aktivujte připnutí obrazovky (režim veřejného terminálu), když se spustí časovač</string>
     <string name="prefKidsTimerButtonTitle">Zobrazit časovače?</string>
     <string name="prefKidsTimerEnableReverseSummary">Povolit tlačítko zpět.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umožnit reverzní</string>
@@ -1269,5 +1270,6 @@
     <string name="prefEsuMc2SliderTypeSummary">Definujte, co bude posuvník dělat</string>
     <string name="prefToolbarButtonSizeTitle">"Tlačítko na panelu nástrojů "</string>
     <string name="prefToolbarButtonSizeSummary">Nastavte velikost tlačítek panelu nástrojů. (Je vyžadován restart)</string>
+    <string name="prefKidsTimerKioskModeTitle">Režim kiosku?</string>
 
 </resources>

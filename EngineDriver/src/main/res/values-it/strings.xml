@@ -918,6 +918,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Tempo predefinito Se si utilizza il pulsante TOOLLBAR per attivare il timer.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Predefinito per il pulsante</string>
     <string name="prefKidsTimerButtonSummary">Visualizza il pulsante TIMER per attivare il timer.</string>
+    <string name="prefKidsTimerKioskModeSummary">Abilita il blocco dello schermo (modalità chiosco) all\'avvio del timer</string>
     <string name="prefKidsTimerButtonTitle">Mostra il pulsante TIMER?</string>
     <string name="prefKidsTimerEnableReverseSummary">Abilita il pulsante inversione.</string>
     <string name="prefKidsTimerEnableReverseTitle">Consentire il retro.</string>
@@ -1122,5 +1123,6 @@
     <string name="prefEsuMc2SliderTypeSummary">Definisci cosa farà lo Slider</string>
     <string name="prefToolbarButtonSizeTitle">Pulsante della barra degli strumenti</string>
     <string name="prefToolbarButtonSizeSummary">Imposta la dimensione dei pulsanti della barra degli strumenti. (Riavvio richiesto)</string>
+    <string name="prefKidsTimerKioskModeTitle">Modalità chiosco?</string>
 
 </resources>

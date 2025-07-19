@@ -2335,6 +2335,13 @@
                     android:title="@string/prefKidsTimerButtonDefaultTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefKidsTimerKioskModeDefaultValue"
+                    android:key="prefKidsTimerKioskMode"
+                    android:layout="@layout/checkbox_icon_right"
+                    android:summary="@string/prefKidsTimerKioskModeSummary"
+                    android:title="@string/prefKidsTimerKioskModeTitle" />
+
                 <Preference
                     android:selectable="false"
                     android:enabled="true"

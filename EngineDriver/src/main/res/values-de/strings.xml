@@ -986,6 +986,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Standardzeit, wenn Sie die TOOLLBAR-Taste verwenden, um den Timer zu aktivieren.</string>
     <string name="prefKidsTimerButtonDefaultTitle">Standard für Button.</string>
     <string name="prefKidsTimerButtonSummary">Zeigen Sie die Timer-Taste an, um den Timer zu aktivieren.</string>
+    <string name="prefKidsTimerKioskModeSummary">Aktivieren Sie die Bildschirmfixierung (Kioskmodus), wenn der Timer startet</string>
     <string name="prefKidsTimerButtonTitle">Timer-Taste anzeigen?</string>
     <string name="prefKidsTimerEnableReverseSummary">Aktivieren Sie die umgekehrte Taste.</string>
     <string name="prefKidsTimerEnableReverseTitle">Umgekehrt zulassen</string>
@@ -1173,5 +1174,6 @@
     <string name="prefEsuMc2SliderTypeSummary">Definieren Sie, was der Slider tun soll</string>
     <string name="prefToolbarButtonSizeTitle">Symbolleistenschaltfläche</string>
     <string name="prefToolbarButtonSizeSummary">Legen Sie die Größe der Symbolleistenschaltflächen fest. (Neustart erforderlich)</string>
+    <string name="prefKidsTimerKioskModeTitle">Kiosk-Modus?</string>
 
 </resources>
