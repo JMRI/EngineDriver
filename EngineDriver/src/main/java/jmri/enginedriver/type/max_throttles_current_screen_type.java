@@ -17,11 +17,16 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface kids_timer_action_type {
-    int DISABLED = 0;
-    int STARTED = 1;
-    int ENABLED = 2;
-    int RUNNING = 3;
-    int DEMO = 888;
-    int ENDED = 999;
+public interface max_throttles_current_screen_type {
+    int DEFAULT = 3;
+    int BIG_BUTTONS = 1;
+    int SEMI_REALISTIC = 1;
+    int SIMPLE = 6;
+    int SWITCHING = 2;
+    int SWITCHING_LEFT_OR_RIGHT = 1;
+    int TABLET_SWITCHING = 6;
+    int SWITCHING_HORIZONTAL = 3;
+    int VERTICAL = 2;
+    int VERTICAL_LEFT_OR_RIGHT = 1;
+    int VERTICAL_TABLET = 6;
 }

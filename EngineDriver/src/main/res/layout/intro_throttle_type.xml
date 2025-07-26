@@ -10,7 +10,8 @@
     android:paddingLeft="10dp"
     android:paddingTop="4dp"
     android:paddingRight="10dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <TextView
         android:id="@+id/intro_throttle_type_title"
@@ -203,6 +204,20 @@
 
                 <RadioButton
                     android:id="@+id/intro_throttle_type_tablet_switching_left_name"
+                    android:layout_width="wrap_content"
+                    android:minWidth="300dp"
+                    android:maxWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/intro_throttle_type_tablet_switching_left"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="18sp"
+                    tools:ignore="RtlHardcoded" />
+
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_tablet_vertical_left_name"
                     android:layout_width="wrap_content"
                     android:minWidth="300dp"
                     android:maxWidth="320dp"

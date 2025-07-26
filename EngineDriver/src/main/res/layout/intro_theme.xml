@@ -9,7 +9,8 @@
     android:paddingLeft="10dp"
     android:paddingTop="4dp"
     android:paddingRight="10dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <TextView
         android:id="@+id/intro_theme_title"

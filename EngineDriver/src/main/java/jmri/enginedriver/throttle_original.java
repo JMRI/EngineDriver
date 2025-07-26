@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.type.slider_type;
@@ -40,7 +41,7 @@ import jmri.enginedriver.type.web_view_location_type;
 public class throttle_original extends throttle {
     static final String activityName = "throttle_original";
 
-    protected static final int MAX_SCREEN_THROTTLES = 3;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.DEFAULT;
 
 
     protected void removeLoco(int whichThrottle) {

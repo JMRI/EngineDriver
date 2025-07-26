@@ -10,8 +10,13 @@
  * Preference screen numeric input dialogs show the keypad not the full keyboard
  * ESU MC2/Pro fixes to support the SRT
  * Gradle upgrade
- * minimumSDK raised to 36
- * Children's timer changes. Passwords changed to PINs (numeric). Some bug fixes. Added Kiosk mode option.
+ * targetSDK raised to 35 - Had to go back to TargetSdk 35 from 36 to get around the edge-to-edge enforcement on Android 16
+ * Children's timer changes. Passwords changed to PINs (numeric). Some bug fixes. Added Kiosk mode option. Added Demo mode option.
+ * Bug fix for the brake slider on the ESU MC Pro
+ * Bug fix for when changing to a throttle screen layout with more possible throttles
+ * Added Option for single throttle EStop on long press of 'stop' button
+ * Fix NPE when changing to a throttle screen layout with more possible throttles
+ * Cleaned up some commented out code (toast commands that have been replaced with safeToast())
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message

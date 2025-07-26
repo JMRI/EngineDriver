@@ -5,7 +5,8 @@
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
     android:orientation="vertical"
-    android:id="@+id/routes_screen">
+    android:id="@+id/routes_screen"
+    android:fitsSystemWindows="true" >
 
     <android.gesture.GestureOverlayView
         android:id="@+id/routes_overlay"

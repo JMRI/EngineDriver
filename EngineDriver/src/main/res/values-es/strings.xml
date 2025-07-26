@@ -334,6 +334,7 @@
     <string name="prefSliderLeftMarginTitle">Margen del deslizador de velocidad del Controlador </string>
     <string name="prefSliderLeftMarginSummary">Número de píxeles para compensar los márgenes de los controles deslizantes de la velocidad del Controlador</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP todas las locomotoras en el acelerador actual con una pulsación prolongada del botón de parada</string>
     <string name="PrefConnectToFirstServerTitle">¿Auto-Conecta al primer servidor WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">¿Conecta automáticamente al primer servidor WiThrottle descubierto?</string>
     <string name="prefDisplayClockTitle">Pantalla de reloj rápido</string>
@@ -506,6 +507,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">La importación automática de preferencias desde el servidor web JMRI se realizó correctamente</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Modo de demostración. Temporizador no iniciado.</string>
     <string name="toastPreferencesOutsideLimits">El valor entrado está fuera de rango (%1$s-%2$s). Reiniciado a %3$s</string>
     <string name="toastPreferencesNotNumeric">El valor entrado no es un valor numérico (%1$s-%2$s). Reiniciado a %3$s</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia las preferencias a valores por defecto!</string>
@@ -1173,5 +1175,9 @@
     <string name="prefToolbarButtonSizeTitle">Botón de la barra de herramientas</string>
     <string name="prefToolbarButtonSizeSummary">Establezca el tamaño de los botones de la barra de herramientas. (Es necesario reiniciar).</string>
     <string name="prefKidsTimerKioskModeTitle">¿Modo quiosco?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Contraseña del modo de demostración</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Contraseña para anular el temporizador (modo de demostración) sin deshabilitarlo</string>
+    <string name="toastKidsTimerNoLoco">Adquiera una locomotora antes de iniciar el cronómetro</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Al detenerse, pulsación larga</string>
 
 </resources>

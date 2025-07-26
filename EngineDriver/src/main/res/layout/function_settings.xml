@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     android:baselineAligned="false"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:ignore="RtlHardcoded,Autofill,LabelFor">
 
     <include layout="@layout/toolbar_screen_name_line" />

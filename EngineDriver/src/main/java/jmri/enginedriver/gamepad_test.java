@@ -346,7 +346,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (testComplete) {
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
             if (!whichGamepadNo.equals(" ")) {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.gamepadTestCompleteToast), Toast.LENGTH_SHORT).show();
                 threaded_application.safeToast(R.string.gamepadTestCompleteToast, Toast.LENGTH_SHORT);
                 if (result != RESULT_OK) {
                     result = RESULT_OK;

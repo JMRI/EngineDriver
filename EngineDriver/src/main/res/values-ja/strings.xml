@@ -414,6 +414,7 @@
     <string name="prefConnectTimeoutMsTitle">初期接続タイムアウト</string>
     <string name="prefConnectTitle">接続設定</string>
     <string name="PrefConnectToFirstServerSummary">最初に検出された WiThrottle サーバーに自動的に接続しますか?</string>
+    <string name="prefStopButtonEStopOnLongPressSummary">停止ボタンを長押しすると、現在のスロットルにあるすべての機関車をESTOPします。</string>
     <string name="PrefConnectToFirstServerTitle">最初の WiThrottle サーバーに自動接続しますか?</string>
     <string name="prefConsistFollowAction1Summary">編成内のどの機関車が、見つかったヘッドライトファンクションに反応するか。</string>
     <string name="prefConsistFollowAction1Title">ヘッドライト特有のアクション 1</string>
@@ -1020,6 +1021,7 @@
 
     <string name="toastPreferencesLocaleChangeSucceeded">ロケール（言語）の変更に成功しました。</string>
     <string name="toastPreferencesNotNumeric">入力された値は数値ではありません (%1$s-%2$s)。 %3$s にリセットします。</string>
+    <string name="toastKidsTimerDemoMode">デモモード。タイマーは開始されていません</string>
     <string name="toastPreferencesOutsideLimits">入力された値は制限 (%1$s-%2$s) を超えています。 %3$s にリセットします。</string>
     <string name="toastPreferencesResetSucceeded">環境設定をデフォルトにリセットします。</string>
     <string name="toastPreferencesSwipeThroughWebDisabled">Web でのスワイプが無効になっています。</string>
@@ -1195,5 +1197,9 @@
     <string name="prefToolbarButtonSizeTitle">ツールバーボタン</string>
     <string name="prefToolbarButtonSizeSummary">ツールバーボタンのサイズを設定します。(再起動が必要です)</string>
     <string name="prefKidsTimerKioskModeTitle">キオスクモード?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">デモモードのパスワード</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">タイマー（デモモード）を無効にせずに上書きするためのパスワード</string>
+    <string name="toastKidsTimerNoLoco">タイマーを開始する前に機関車を入手する</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP 停止時に長押し</string>
 
 </resources>

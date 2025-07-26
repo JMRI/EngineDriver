@@ -112,7 +112,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
@@ -120,7 +119,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
@@ -129,7 +127,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                     Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }

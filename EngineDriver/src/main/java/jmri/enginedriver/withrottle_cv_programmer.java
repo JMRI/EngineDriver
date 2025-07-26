@@ -318,9 +318,6 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
                     if (addr>maxAddr) {
                         addr = -1;
-//                        Toast.makeText(getApplicationContext(),
-//                                getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr))
-//                                , Toast.LENGTH_LONG).show();
                         threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax,
                                                     txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
                         etWitAddressValue.setText(""); //clear the bad entry

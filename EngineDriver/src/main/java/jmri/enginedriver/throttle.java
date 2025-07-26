@@ -158,6 +158,7 @@ import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.light_follow_type;
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.pref_gamepad_button_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
@@ -203,7 +204,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
 
-    protected static final int MAX_SCREEN_THROTTLES = 3;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.DEFAULT;
 
     protected static final int throttleMargin = 8; // forced margin between the horizontal throttles in dp
     protected int titleBar = 45; // estimate of lost screen height in dp
@@ -383,6 +384,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected int prefVolumeSpeedButtonsSpeedStep = 1;
     protected int prefGamePadSpeedButtonsSpeedStep = 4;
     protected boolean prefSpeedButtonsSpeedStepDecrement = false;
+    protected boolean prefStopButtonEStopOnLongPress = false;
 
     protected String speedButtonLeftText;
     protected String speedButtonRightText;
@@ -540,6 +542,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean isDirectionButtonLongPress;
     Handler directionButtonLongPressHandler = new Handler();
 
+    protected int prefStopButtonLongPressDelay = 1000;
+    private boolean isStopButtonLongPress;
+    Handler stopButtonLongPressHandler = new Handler();
+
     // The following are used for the shake detection
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -555,9 +561,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private String prefKidsTimer = PREF_KIDS_TIMER_NONE;
     private String prefKidsTimerButtonDefault = "1";
     private int prefKidsTime = 0;  // in milliseconds
-    private int kidsTimerRunning = 0;
+    private int kidsTimerRunning = kids_timer_action_type.DISABLED;
     private MyCountDownTimer kidsTimer;
     private String prefKidsTimerResetPassword = "9999";
+    private String prefKidsTimerDemoModePassword = "8888";
     private String prefKidsTimerRestartPassword = "0000";
     private boolean prefKidsTimerEnableReverse = false;
     private boolean prefKidsTimerKioskMode = false;
@@ -815,6 +822,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     protected void kidsTimerActions(int action, int arg) {
+        if ((kidsTimerRunning == kids_timer_action_type.DISABLED)
+            && (action != kids_timer_action_type.ENABLED) ) return;
+
         switch (action) {
             case kids_timer_action_type.DISABLED:
                 if (arg == 0) { // not onResume
@@ -836,6 +846,27 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
                 stopAppScreenPinning();
+                break;
+
+            case kids_timer_action_type.DEMO:
+                if (arg == 0) { // not onResume
+                    threaded_application.safeToast(R.string.toastKidsTimerDemoMode, Toast.LENGTH_SHORT);
+                    if (kidsTimer != null) kidsTimer.cancel();
+                    kidsTimerRunning = kids_timer_action_type.DEMO;
+                    for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                        enableDisableButtons(throttleIndex, false);
+                        bSels[throttleIndex].setEnabled(true);
+                        enableDisableButtons(throttleIndex, false);
+                    }
+                    mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                            getApplicationContext().getResources().getString(R.string.app_name),
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle),
+                            "");
+                    if (TMenu != null) {
+                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    }
+                    mainapp.hideSoftKeyboard(this.getCurrentFocus());
+                }
                 break;
 
             case kids_timer_action_type.ENABLED:
@@ -866,9 +897,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     kidsTimerRunning = kids_timer_action_type.RUNNING;
                     kidsTimer = new MyCountDownTimer(prefKidsTime, 1000);
                     kidsTimer.start();
+                    startAppScreenPinning();
                 }
-                startAppScreenPinning();
                 break;
+
             case kids_timer_action_type.ENDED:
                 speedUpdateAndNotify(0);
                 kidsTimerRunning = kids_timer_action_type.ENDED;
@@ -1286,7 +1318,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue);
                 } catch (Exception e) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastUnableToSetBrightness), Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(R.string.toastUnableToSetBrightness, Toast.LENGTH_SHORT);
                 }
             }
@@ -1380,7 +1411,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             setScreenBrightnessMode(screenBrightnessModeOriginal);
         } else {
             screenDimmed = true;
-//            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
@@ -1391,7 +1421,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void setRestoreScreenLockDim(String toastMsg) {
         if (isScreenLocked) {
             isScreenLocked = false;
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleScreenUnlocked), Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(R.string.toastThrottleScreenUnlocked, Toast.LENGTH_SHORT);
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
@@ -1399,7 +1428,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 setImmersiveModeOff(webView, true);
         } else {
             isScreenLocked = true;
-//            Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
@@ -1424,7 +1452,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             case acceleratorometer_action_type.WEB_VIEW:
                                 if ((webViewLocation.equals(web_view_location_type.NONE)) && (keepWebViewLocation.equals(web_view_location_type.NONE))) {
                                     GamepadFeedbackSound(true);
-//                                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeWebViewUnavailable), Toast.LENGTH_SHORT).show();
                                     threaded_application.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
                                 } else {
                                     GamepadFeedbackSound(false);
@@ -1465,7 +1492,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 });
                 accelerometerCurrent = true;
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastAccelerometerNotFound), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastAccelerometerNotFound, Toast.LENGTH_LONG);
             }
         }
@@ -1490,6 +1516,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             prefKidsTime = 0;
         }
         prefKidsTimerResetPassword = prefs.getString("prefKidsTimerResetPassword", getResources().getString(R.string.prefKidsTimerResetPasswordDefaultValue));
+        prefKidsTimerDemoModePassword = prefs.getString("prefKidsTimerDemoModePassword", getResources().getString(R.string.prefKidsTimerDemoModePasswordDefaultValue));
         prefKidsTimerRestartPassword = prefs.getString("prefKidsTimerRestartPassword", getResources().getString(R.string.prefKidsTimerRestartPasswordDefaultValue));
         prefKidsTimerEnableReverse = prefs.getBoolean("prefKidsTimerEnableReverse", getResources().getBoolean(R.bool.prefKidsTimerEnableReverseDefaultValue));
         prefKidsTimerKioskMode = prefs.getBoolean("prefKidsTimerKioskMode", getResources().getBoolean(R.bool.prefKidsTimerKioskModeDefaultValue));
@@ -1506,6 +1533,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         isSemiRealisticTrottle = false;
 
         prefDirectionButtonLongPressDelay = threaded_application.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
+        prefStopButtonLongPressDelay = threaded_application.getIntPrefValue(prefs, "prefStopButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefStopButtonLongPressDelayDefaultValue));
 
         FUNCTION_BUTTON_LOOK_FOR_WHISTLE = getApplicationContext().getResources().getString(R.string.functionButtonLookForWhistle).trim();
         FUNCTION_BUTTON_LOOK_FOR_HORN = getApplicationContext().getResources().getString(R.string.functionButtonLookForHorn).trim();
@@ -1595,6 +1623,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefVolumeSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
+        prefStopButtonEStopOnLongPress = prefs.getBoolean("prefStopButtonEStopOnLongPress", getResources().getBoolean(R.bool.prefStopButtonEStopOnLongPressDefaultValue));
 
         mainapp.prefGamepadOnlyOneGamepad = prefs.getBoolean("prefGamepadOnlyOneGamepad", getResources().getBoolean(R.bool.prefGamepadOnlyOneGamepadDefaultValue));
 
@@ -1688,27 +1717,34 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.useEsuMc2DecoderBrakes = (mainapp.prefEsuMc2SliderType.equals("esu"));
 
             if (mainapp.useEsuMc2DecoderBrakes) {
-                String tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
+                String tmp = prefs.getString("prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuDefaultValue));
                 String[] prefValues = threaded_application.splitByString(tmp, " ");
                 for (int i = 0; i < 5; i++) {
                     if (i < prefValues.length)
                         mainapp.esuMc2BrakeFunctions[0][i] = Integer.parseInt(prefValues[i]);
                     else mainapp.esuMc2BrakeFunctions[0][i] = -1;
                 }
-                tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
+                tmp = prefs.getString("prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuDefaultValue));
                 prefValues = threaded_application.splitByString(tmp, " ");
                 for (int i = 0; i < 5; i++) {
                     if (i < prefValues.length)
                         mainapp.esuMc2BrakeFunctions[1][i] = Integer.parseInt(prefValues[i]);
                     else mainapp.esuMc2BrakeFunctions[1][i] = -1;
                 }
-                tmp = prefs.getString("prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
+                tmp = prefs.getString("prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuDefaultValue));
                 prefValues = threaded_application.splitByString(tmp, " ");
                 for (int i = 0; i < 5; i++) {
                     if (i < prefValues.length)
                         mainapp.esuMc2BrakeFunctions[2][i] = Integer.parseInt(prefValues[i]);
                     else mainapp.esuMc2BrakeFunctions[2][i] = -1;
                 }
+
+                int tmpInt = threaded_application.getIntPrefValue(prefs, "prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuDefaultValue));
+                mainapp.esuMc2BrakeLevels[0] = tmpInt>=0 ? tmpInt : 10000;
+                tmpInt = threaded_application.getIntPrefValue(prefs, "prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuDefaultValue));
+                mainapp.esuMc2BrakeLevels[1] = tmpInt>=0 ? tmpInt : 10000;
+                tmpInt = threaded_application.getIntPrefValue(prefs, "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue));
+                mainapp.esuMc2BrakeLevels[2] = tmpInt>=0 ? tmpInt : 10000;
             }
         }
 
@@ -1805,7 +1841,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 webViewLocation = web_view_location_type.NONE;
                 webView.setVisibility(View.GONE);
                 if (!toastMsg.isEmpty())
-//                    Toast.makeText(getApplicationContext(), toastMsg, Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             }
             webViewIsOn = !webViewIsOn;
@@ -1893,8 +1928,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     // set speed slider to absolute value on one throttle
     void speedUpdate(int whichThrottle, int speed) {
-        if (speed < 0)
-            speed = 0;
+        if(whichThrottle >= mainapp.maxThrottlesCurrentScreen) return;
+
+        if (speed < 0) speed = 0;
         getThrottleSlider(whichThrottle).setProgress(speed);
 
         mainapp.dccexLastKnownSpeed[whichThrottle] = speed;
@@ -2230,7 +2266,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
@@ -2251,7 +2286,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
@@ -4439,11 +4473,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (mainapp.prefEsuMc2SliderType.equals("dim")) {
                     setScreenBrightness(255 - position);
                 } else {
-                    if (!IS_ESU_MCII) {
-                        if (mainapp.useEsuMc2DecoderBrakes) {
-                            setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
-                        }
-                    } else { // is an ESU MC 2/Pro
+                    if (IS_ESU_MCII) {
+                        setEsuMc2DecoderBrake(mainapp.whichThrottleLastTouch);
                         if (mainapp.prefEsuMc2SliderType.equals("srt")) {
                             setBrakeSliderPositionPcnt(whichVolume, 100-pcntPos);
                         }
@@ -4667,7 +4698,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if (isEsuMc2Stopped) {
             Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoButtonPresses), Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
             return;
         }
@@ -4874,6 +4904,136 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
     }
 
+
+    // Listeners for the Stop buttons
+    private class StopButtonTouchListener implements View.OnTouchListener {
+        int whichThrottle;
+
+        private StopButtonTouchListener(int newWhichThrottle) {
+            whichThrottle = newWhichThrottle;
+        }
+
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                if ( (prefStopButtonEStopOnLongPress) && (isStopButtonLongPress) ) {
+                    mainapp.sendEStopOneThrottleMsg(whichThrottle);
+                }
+            }
+        };
+
+        void doStop() {
+            if (prefStopButtonEStopOnLongPress)
+                setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
+
+            set_stop_button(whichThrottle, true);
+
+            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
+                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
+            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
+                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
+            } else if ((getSpeed(whichThrottle) == 0)
+                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
+                disablePauseSpeed(whichThrottle);
+            }
+
+            speedUpdateAndNotify(whichThrottle, 0);
+            set_stop_button(whichThrottle, false);
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouch(final View v, MotionEvent event) {
+            mainapp.exitDoubleBackButtonInitiated = 0;
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                isStopButtonLongPress = true;
+                if (prefStopButtonEStopOnLongPress)
+                    stopButtonLongPressHandler.postDelayed(run, prefDirectionButtonLongPressDelay);
+
+                doStop();
+
+                v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
+                setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
+                mainapp.buttonVibration();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                isStopButtonLongPress = false;
+                if (prefStopButtonEStopOnLongPress)
+                    stopButtonLongPressHandler.removeCallbacks(run);
+            }
+            return true;
+        }
+    }
+
+//    protected class StopButtonClickListener implements View.OnClickListener, View.OnLongClickListener {
+//        int whichThrottle;
+//
+//        protected StopButtonClickListener(int newWhichThrottle) {
+//            whichThrottle = newWhichThrottle;
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            // if gesture in progress, skip button processing
+//            if (gestureInProgress) {
+//                return;
+//            }
+//            view.playSoundEffect(SoundEffectConstants.CLICK);
+//            mainapp.buttonVibration();
+//
+//            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
+//
+//            set_stop_button(whichThrottle, true);
+//
+//            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
+//                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
+//            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
+//                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
+//            } else if ((getSpeed(whichThrottle) == 0)
+//                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
+//                disablePauseSpeed(whichThrottle);
+//            }
+//
+//            speedUpdateAndNotify(whichThrottle, 0);
+//            set_stop_button(whichThrottle, false);
+//        }
+//
+//        @Override
+//        public boolean onLongClick(View view) {
+//            // if gesture in progress, skip button processing
+//            if (gestureInProgress) {
+//                return (true);
+//            }
+//
+//            view.playSoundEffect(SoundEffectConstants.CLICK);
+//            mainapp.buttonVibration();
+//
+//            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
+//
+//            set_stop_button(whichThrottle, true);
+//
+//            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
+//                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
+//            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
+//                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
+//            } else if ((getSpeed(whichThrottle) == 0)
+//                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
+//                disablePauseSpeed(whichThrottle);
+//            }
+//
+//            if (prefStopButtonEStopOnLongPress) {
+//                mainapp.sendEStopOneThrottleMsg(whichThrottle);
+//            } else {
+//                speedUpdateAndNotify(whichThrottle, 0);
+//            }
+//
+//            speedUpdateAndNotify(whichThrottle, 0);
+//            set_stop_button(whichThrottle, false);
+//
+//            return false;
+//        }
+//    }
+
     // Listeners for the Select Loco buttons
 //    protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnLongClickListener {
@@ -4887,14 +5047,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         public void onClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (IS_ESU_MCII && isEsuMc2Stopped) {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT);
             } else if (isSelectLocoAllowed(whichThrottle)) {
                 // don't loco change while moving if the preference is set
                 start_select_loco_activity(whichThrottle); // pass throttle #
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
@@ -5053,7 +5211,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             //v.playSoundEffect(SoundEffectConstants.CLICK);
                             currentSwapForwardReverseButtons[whichThrottle] = !currentSwapForwardReverseButtons[whichThrottle];
                             setDirectionButtonLabels();
-//                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT).show();
                             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT);
                         }
                         doButtonPress();
@@ -5721,22 +5878,22 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
                     switch (this.function) {
-                        case function_button.STOP:
-                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-
-                            set_stop_button(whichThrottle, true);
-
-                            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
-                                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
-                            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
-                                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
-                            } else if ((getSpeed(whichThrottle) == 0)
-                                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
-                                disablePauseSpeed(whichThrottle);
-                            }
-
-                            speedUpdateAndNotify(whichThrottle, 0);
-                            break;
+//                        case function_button.STOP:
+//                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
+//
+//                            set_stop_button(whichThrottle, true);
+//
+//                            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
+//                                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
+//                            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
+//                                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
+//                            } else if ((getSpeed(whichThrottle) == 0)
+//                                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
+//                                disablePauseSpeed(whichThrottle);
+//                            }
+//
+//                            speedUpdateAndNotify(whichThrottle, 0);
+//                            break;
 
                         case function_button.SPEED_LABEL:  // specify which throttle the volume button controls
                             if (getConsist(whichThrottle).isActive() && !(IS_ESU_MCII && isEsuMc2Stopped)) { // only assign if Active and, if an ESU MCII not in Stop mode
@@ -5745,7 +5902,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 set_labels();
                             }
                             if (IS_ESU_MCII && isEsuMc2Stopped) {
-//                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getText(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT).show();
                                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT);
                             }
                             break;
@@ -5762,11 +5918,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 // handle stopping of function on key-up
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    if (function == function_button.STOP) {
-                        set_stop_button(whichThrottle, false);
-                    }
-                    // only process UP event if this is a "function" button
-                    else if (function < direction_button.LEFT) {
+//                    if (function == function_button.STOP) {
+//                        set_stop_button(whichThrottle, false);
+//                    } else
+                    if (function < direction_button.LEFT) { // only process UP event if this is a "function" button
                         isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handling for when using the default function labels, and one of 'Special' function following options
                         sendFunctionToConsistLocos(whichThrottle, function, lab, button_press_message_type.UP, leadOnly, trailOnly, followLeadFunction, isLatching);
                     }
@@ -6186,8 +6341,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             bFwds[i].setOnTouchListener(directionButtonTouchListener);
 
             bStops[i] = bStop;
-            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.STOP, i);
-            bStops[i].setOnTouchListener(functionButtonTouchListener);
+//            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.STOP, i);
+//            bStops[i].setOnTouchListener(functionButtonTouchListener);
+//            StopButtonClickListener stopButtonClickListener = new StopButtonClickListener(i);
+//            bStops[i].setOnClickListener(stopButtonClickListener);
+//            bStops[i].setOnLongClickListener(stopButtonClickListener);
+            StopButtonTouchListener stopButtonTouchListener = new StopButtonTouchListener(i);
+            bStops[i].setOnTouchListener(stopButtonTouchListener);
 
             bRevs[i] = bRev;
             directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.RIGHT, i);
@@ -7244,7 +7404,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     return (true); // stop processing this key
                 }
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
@@ -7536,6 +7695,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 prefKidsTimer = prefKidsTimerButtonDefault;
                 prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
                 kidsTimerActions(kids_timer_action_type.ENABLED, 0);
+            } else {
+                threaded_application.safeToast(R.string.toastKidsTimerNoLoco, Toast.LENGTH_SHORT);
             }
             return true;
 
@@ -7904,7 +8065,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case swipe_up_down_option_type.IMMERSIVE:
                             if (immersiveModeIsOn) {
                                 setImmersiveModeOff(webView, false);
-//                                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT).show();
                                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
                             } else {
                                 setImmersiveModeOn(webView, false);
@@ -8053,6 +8213,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
                     kidsTimerActions(kids_timer_action_type.ENDED, 0);
                     kidsTimerActions(kids_timer_action_type.DISABLED, 0);
+                    prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
+                    getKidsTimerPrefs();
+                }
+
+                if (passwordText.equals(prefKidsTimerDemoModePassword)) { //Demo Mode
+                 kidsTimerActions(kids_timer_action_type.DEMO, 0);
                     prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
                     getKidsTimerPrefs();
                 }
@@ -8333,6 +8499,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.comm_msg_handler.sendMessage(msg);
     }
 
+    @SuppressLint("ApplySharedPref")
+    public void forceReLaunchApp(int forcedRestartReason) {
+        Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
+
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        Message msg = Message.obtain();
+        msg.what = message_type.RELAUNCH_APP;
+        msg.arg1 = forcedRestartReason;
+        mainapp.comm_msg_handler.sendMessage(msg);
+
+    }
+
 
     // implemented in derived class, but called from this class
     protected void redrawSliders() {
@@ -8360,22 +8539,31 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 
+        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThottlesForScreen(prefThrottleScreenType);
+
         if (!webViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
         }
 
         if (!prefThrottleSwitchButtonCycleAll) {
             if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
-                prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption2).commit();
+                prefThrottleScreenType = prefThrottleSwitchOption2;
             } else {
-                prefs.edit().putString("prefThrottleScreenType", prefThrottleSwitchOption1).commit();
+                prefThrottleScreenType = prefThrottleSwitchOption1;
             }
         } else {
-            prefs.edit().putString("prefThrottleScreenType", mainapp.getNextThrottleLayout()).commit();
+            prefThrottleScreenType = mainapp.getNextThrottleLayout();
         }
+
+        prefs.edit().putString("prefThrottleScreenType", prefThrottleScreenType).commit();
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
-        forceRestartApp(restart_reason_type.THROTTLE_SWITCH);
+
+        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+            forceRestartApp(restart_reason_type.THROTTLE_SWITCH);
+        } else {
+            forceReLaunchApp(restart_reason_type.THROTTLE_SWITCH);
+        }
     }
 
     //listeners for the Pause Speed Button

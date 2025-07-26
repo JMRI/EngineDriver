@@ -570,10 +570,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (errMsg.length() != 0)
-//            Toast.makeText(getApplicationContext(), "Save Settings Failed." + errMsg, Toast.LENGTH_LONG).show();
             threaded_application.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
-//            Toast.makeText(getApplicationContext(), "Settings Saved.", Toast.LENGTH_SHORT).show();
             threaded_application.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
 
         prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
@@ -595,7 +593,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                                 Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
@@ -603,7 +600,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
@@ -612,7 +608,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                         Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }

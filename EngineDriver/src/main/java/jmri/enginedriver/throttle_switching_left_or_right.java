@@ -40,6 +40,7 @@ import java.util.LinkedHashMap;
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
@@ -47,9 +48,9 @@ import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_switching_left_or_right extends throttle {
 
-    protected static final int MAX_SCREEN_THROTTLES = 2;
-    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = 1;
-    protected static final int MAX_SCREEN_THROTTLES_TABLET_SWITCHING = 6;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SWITCHING;
+    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
+    protected static final int MAX_SCREEN_THROTTLES_TABLET_SWITCHING = max_throttles_current_screen_type.TABLET_SWITCHING;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;

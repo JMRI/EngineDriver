@@ -426,6 +426,7 @@
     <string name="prefSliderLeftMarginTitle">Okraj posuvníku rychlosti ovladače</string>
     <string name="prefSliderLeftMarginSummary">Počet pixelů k odsazení okraje posuvníku rychlosti ovladače.</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP všechny lokomotivy na aktuálním plynu dlouhým stisknutím tlačítka Stop</string>
     <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu WiThrottle serveru?</string>
     <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému WiThrottle serveru?</string>
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
@@ -660,6 +661,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">Automatický import předvoleb z webového serveru byl úspěšný.</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Demo režim. Časovač není spuštěn</string>
     <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s-%2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesNotNumeric">Zadaná hodnota není číslo (%1$s-%2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Předvolby Nastavení na výchozí hodnoty!</string>
@@ -1271,5 +1273,9 @@
     <string name="prefToolbarButtonSizeTitle">"Tlačítko na panelu nástrojů "</string>
     <string name="prefToolbarButtonSizeSummary">Nastavte velikost tlačítek panelu nástrojů. (Je vyžadován restart)</string>
     <string name="prefKidsTimerKioskModeTitle">Režim kiosku?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Heslo demo režimu</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Heslo pro přepsání časovače (Demo Mode) bez jeho deaktivace</string>
+    <string name="toastKidsTimerNoLoco">Před spuštěním časovače si pořiďte lokomotivu</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Dlouhé stisknutí</string>
 
 </resources>

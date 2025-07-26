@@ -361,6 +361,7 @@
     <string name="prefSliderLeftMarginTitle">Margine Controllo di Velocità</string>
     <string name="prefSliderLeftMarginSummary">Numero di pixels di dislocamento dei bordi del controllo di velocità.</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">Arresta di emergenza tutte le locomotive con l\'acceleratore corrente premendo a lungo il pulsante Stop</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connessione al primo Server WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Connessione automatica al primo Server WiThrottle trovato?</string>
     <string name="prefDisplayClockTitle">Mostrare Orologio Veloce</string>
@@ -537,6 +538,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">Importazione automatica delle preferenze dal server Web JMRI riuscita.</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Modalità demo. Timer non avviato</string>
     <string name="toastPreferencesOutsideLimits">Il valore inserito è fuori dai limiti  (%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesNotNumeric">Il valore inserito non è un numero.(%1$s-%2$s). Ristabilito %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferenze resettate a valori default!</string>
@@ -1124,5 +1126,9 @@
     <string name="prefToolbarButtonSizeTitle">Pulsante della barra degli strumenti</string>
     <string name="prefToolbarButtonSizeSummary">Imposta la dimensione dei pulsanti della barra degli strumenti. (Riavvio richiesto)</string>
     <string name="prefKidsTimerKioskModeTitle">Modalità chiosco?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Password della modalità demo</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Password per ignorare il timer (modalità demo) senza disattivarlo</string>
+    <string name="toastKidsTimerNoLoco">Acquisisci una locomotiva prima di avviare il timer</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Pressione prolungata</string>
 
 </resources>

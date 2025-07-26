@@ -101,6 +101,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.kids_timer_action_type;
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sort_type;
@@ -108,6 +109,7 @@ import jmri.enginedriver.type.message_type;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.source_type;
+import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -1580,8 +1582,16 @@ public class threaded_application extends Application {
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;
-                Log.d(applicationName, "t_a: EStop sent to server for " + i);
+                Log.d(applicationName, activityName + ": sendEStopMsg(): EStop sent to server for throttle " + i);
             }
+        }
+    }
+
+    public void sendEStopOneThrottleMsg(int whichThrottle) {
+        if (consists != null && consists[whichThrottle] != null && consists[whichThrottle].isActive()) {
+            sendMsg(comm_msg_handler, message_type.ESTOP, "", whichThrottle);
+            EStopActivated = true;
+            Log.d(applicationName, activityName + ": sendEStopOneThrottleMsg(): EStop sent to server for throttle " + whichThrottle);
         }
     }
 
@@ -1888,7 +1898,6 @@ public class threaded_application extends Application {
             long time = System.currentTimeMillis();
             if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
                 exitDoubleBackButtonInitiated = time;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
                 safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
             } else {
                 exitConfirmed = true;
@@ -1908,7 +1917,6 @@ public class threaded_application extends Application {
             long time = System.currentTimeMillis();
             if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
                 exitDoubleBackButtonInitiated = time;
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastDoubleBackButtonToExit), Toast.LENGTH_SHORT).show();
                 safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
             } else {
                 exitConfirmed = true;
@@ -2325,36 +2333,67 @@ public class threaded_application extends Application {
         });
     }
 
+    public int getMaxThottlesForScreen(String throttleScreenType) {
+        switch (throttleScreenType) {
+            case throttle_screen_type.SIMPLE:
+                return max_throttles_current_screen_type.SIMPLE;
+            case throttle_screen_type.VERTICAL:
+                return max_throttles_current_screen_type.VERTICAL;
+            case throttle_screen_type.VERTICAL_LEFT:
+            case throttle_screen_type.VERTICAL_RIGHT:
+                return max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT:
+                return max_throttles_current_screen_type.VERTICAL_TABLET;
+            case throttle_screen_type.SWITCHING:
+                return max_throttles_current_screen_type.SWITCHING;
+            case throttle_screen_type.SWITCHING_LEFT:
+            case throttle_screen_type.SWITCHING_RIGHT:
+                return max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_SWITCHING_LEFT:
+                return max_throttles_current_screen_type.TABLET_SWITCHING;
+            case throttle_screen_type.SWITCHING_HORIZONTAL:
+                return max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
+            case throttle_screen_type.BIG_LEFT:
+            case throttle_screen_type.BIG_RIGHT:
+                return max_throttles_current_screen_type.BIG_BUTTONS;
+            case throttle_screen_type.SEMI_REALISTIC_LEFT:
+                return max_throttles_current_screen_type.SEMI_REALISTIC;
+            case throttle_screen_type.DEFAULT:
+            default:
+                return max_throttles_current_screen_type.DEFAULT;
+        }
+    }
+
     public Intent getThrottleIntent() {
         Intent throttle;
         appIsFinishing = false;
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case "Simple":
+            case throttle_screen_type.SIMPLE:
                 throttle = new Intent().setClass(this, throttle_simple.class);
                 break;
-            case "Vertical":
-            case "Vertical Left":
-            case "Vertical Right":
-            case "Tablet Vertical Left":
+            case throttle_screen_type.VERTICAL:
+            case throttle_screen_type.VERTICAL_LEFT:
+            case throttle_screen_type.VERTICAL_RIGHT:
+            case throttle_screen_type.TABLET_VERTICAL_LEFT:
                 throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
                 break;
-            case "Switching":
-            case "Switching Left":
-            case "Switching Right":
-            case "Tablet Switching Left":
+            case throttle_screen_type.SWITCHING:
+            case throttle_screen_type.SWITCHING_LEFT:
+            case throttle_screen_type.SWITCHING_RIGHT:
+            case throttle_screen_type.TABLET_SWITCHING_LEFT:
                 throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
                 break;
-            case "Switching Horizontal":
+            case throttle_screen_type.SWITCHING_HORIZONTAL:
                 throttle = new Intent().setClass(this, throttle_switching_horizontal.class);
                 break;
-            case "Big Left":
-            case "Big Right":
+            case throttle_screen_type.BIG_LEFT:
+            case throttle_screen_type.BIG_RIGHT:
                 throttle = new Intent().setClass(this, throttle_big_buttons.class);
                 break;
-            case "Semi Realistic Left":
+            case throttle_screen_type.SEMI_REALISTIC_LEFT:
                 throttle = new Intent().setClass(this, throttle_semi_realistic.class);
                 break;
-            case "Default":
+            case throttle_screen_type.DEFAULT:
             default:
                 throttle = new Intent().setClass(this, throttle_original.class);
                 break;
@@ -2367,53 +2406,52 @@ public class threaded_application extends Application {
         appIsFinishing = false;
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         switch (prefThrottleScreenType) {
-            case "Simple":
-                prefThrottleScreenType = "Vertical";
+            case throttle_screen_type.SIMPLE:
+                prefThrottleScreenType = throttle_screen_type.VERTICAL;
                 break;
-            case "Vertical":
-                prefThrottleScreenType = "Vertical Left";
+            case throttle_screen_type.VERTICAL:
+                prefThrottleScreenType = throttle_screen_type.VERTICAL_LEFT;
                 break;
-            case "Vertical Left":
-                prefThrottleScreenType = "Vertical Right";
+            case throttle_screen_type.VERTICAL_LEFT:
+                prefThrottleScreenType = throttle_screen_type.VERTICAL_RIGHT;
                 break;
-            case "Vertical Right":
-                prefThrottleScreenType = "Tablet Vertical Left";
+            case throttle_screen_type.VERTICAL_RIGHT:
+                prefThrottleScreenType = throttle_screen_type.TABLET_VERTICAL_LEFT;
                 break;
-            case "Tablet Vertical Left":
-                prefThrottleScreenType = "Switching";
+            case throttle_screen_type.TABLET_VERTICAL_LEFT:
+                prefThrottleScreenType = throttle_screen_type.SWITCHING;
                 break;
-            case "Switching":
-                prefThrottleScreenType = "Switching Left";
+            case throttle_screen_type.SWITCHING:
+                prefThrottleScreenType = throttle_screen_type.SWITCHING_LEFT;
                 break;
-            case "Switching Left":
-                prefThrottleScreenType = "Switching Right";
+            case throttle_screen_type.SWITCHING_LEFT:
+                prefThrottleScreenType = throttle_screen_type.SWITCHING_RIGHT;
                 break;
-            case "Switching Right":
-                prefThrottleScreenType = "Tablet Switching Left";
+            case throttle_screen_type.SWITCHING_RIGHT:
+                prefThrottleScreenType = throttle_screen_type.TABLET_SWITCHING_LEFT;
                 break;
-            case "Tablet Switching Left":
-                prefThrottleScreenType = "Switching Horizontal";
+            case throttle_screen_type.TABLET_SWITCHING_LEFT:
+                prefThrottleScreenType = throttle_screen_type.SWITCHING_HORIZONTAL;
                 break;
-            case "Switching Horizontal":
-                prefThrottleScreenType = "Big Left";
+            case throttle_screen_type.SWITCHING_HORIZONTAL:
+                prefThrottleScreenType = throttle_screen_type.BIG_LEFT;
                 break;
-            case "Big Left":
-                prefThrottleScreenType = "Big Right";
+            case throttle_screen_type.BIG_LEFT:
+                prefThrottleScreenType = throttle_screen_type.BIG_RIGHT;
                 break;
-            case "Big Right":
-                prefThrottleScreenType = "Semi Realistic Left";
+            case throttle_screen_type.BIG_RIGHT:
+                prefThrottleScreenType = throttle_screen_type.SEMI_REALISTIC_LEFT;
                 break;
-            case "Semi Realistic Left":
-                prefThrottleScreenType = "Default";
+            case throttle_screen_type.SEMI_REALISTIC_LEFT:
+                prefThrottleScreenType = throttle_screen_type.DEFAULT;
                 break;
-            case "Default":
+            case throttle_screen_type.DEFAULT:
             default:
-                prefThrottleScreenType = "Simple";
+                prefThrottleScreenType = throttle_screen_type.SIMPLE;
                 break;
         }
         return prefThrottleScreenType;
     }
-
 
 
     public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX) {

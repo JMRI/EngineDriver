@@ -346,6 +346,7 @@
     <string name="prefSliderLeftMarginTitle">Geschwindigkeitsschiebergrenzen</string>
     <string name="prefSliderLeftMarginSummary">Anzahl Pixels Versatz für Rand der Geschwindigkeitsschieber.</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP alle Lokomotiven auf dem aktuellen Fahrregler durch langes Drücken der Stopp-Taste</string>
     <string name="PrefConnectToFirstServerTitle">AutoVerbindung mit erstem Server?</string>
     <string name="PrefConnectToFirstServerSummary">Automatisch mit zuerst gefundenem WiThrottle Server verbinden?</string>
     <string name="prefDisplayClockTitle">Anzeige Schnelle Uhr</string>
@@ -524,6 +525,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">Automatischer Import von Voreinstellungen vom JMRI-Webserver erfolgreich.</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Demo-Modus. Timer nicht gestartet</string>
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
@@ -1175,5 +1177,9 @@
     <string name="prefToolbarButtonSizeTitle">Symbolleistenschaltfläche</string>
     <string name="prefToolbarButtonSizeSummary">Legen Sie die Größe der Symbolleistenschaltflächen fest. (Neustart erforderlich)</string>
     <string name="prefKidsTimerKioskModeTitle">Kiosk-Modus?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Passwort für den Demomodus</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Passwort zum Überschreiben des Timers (Demo-Modus), ohne ihn zu deaktivieren</string>
+    <string name="toastKidsTimerNoLoco">Erwerben Sie eine Lok, bevor Sie den Timer starten</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Bei Stopp Langes Drücken</string>
 
 </resources>
