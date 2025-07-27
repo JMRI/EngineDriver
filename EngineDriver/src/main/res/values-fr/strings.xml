@@ -342,6 +342,7 @@
     <string name="prefSliderLeftMarginTitle">Marge pour curseur de vitesse</string>
     <string name="prefSliderLeftMarginSummary">Nombre de pixels pour marge curseur</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP toutes les locomotives sur la manette actuelle en appuyant longuement sur le bouton Stop</string>
     <string name="PrefConnectToFirstServerTitle">Connexion automatique sur le 1er serveur WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Connexion automatique sur le 1er serveur WiThrottle découvert?</string>
     <string name="prefDisplayClockTitle">Affichage Horloge rapide</string>
@@ -531,6 +532,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s en arret URGENCE</string>
+    <string name="toastKidsTimerDemoMode">Mode démo. Minuterie non démarrée.</string>
     <string name="toastPreferencesOutsideLimits">Valeur entrée hors limites (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesNotNumeric">Valeur entrée non numérique (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Préférences remises aux valeurs par défaut</string>
@@ -1176,5 +1178,9 @@
     <string name="prefToolbarButtonSizeTitle">Bouton de la barre d\\\'outils</string>
     <string name="prefToolbarButtonSizeSummary">Définissez la taille des boutons de la barre d\\\'outils. (Redémarrage requis)</string>
     <string name="prefKidsTimerKioskModeTitle">Mode kiosque ?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Mot de passe du mode démo</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Mot de passe pour remplacer le minuteur (mode démo) sans le désactiver</string>
+    <string name="toastKidsTimerNoLoco">Acquérir une locomotive avant de démarrer le chronomètre</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Sur Arrêt Appui long</string>
 
 </resources>

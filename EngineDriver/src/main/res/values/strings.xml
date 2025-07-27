@@ -543,6 +543,14 @@
     <string name="prefVerticalStopButtonMarginTitle">Stop Button Vertical Margins</string>
     <string name="prefVerticalStopButtonMarginSummary">Number of pixels to offset margins of the stop button from the speed buttons and bottom of screen.</string>
     <string name="prefVerticalStopButtonMarginDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefStopButtonEStopOnLongPressTitle">EStop On Stop Long Press</string>
+    <string name="prefStopButtonEStopOnLongPressSummary">EStop all locos on the current throttle on a long press of the Stop button</string>
+    <string name="prefStopButtonLongPressDelayTitle">Stop button Long Press Delay</string>
+    <string name="prefStopButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the Stop buttons, to initiate EStop</string>
+    <string name="prefStopButtonLongPressDelayDefaultValue" translatable="false">1500</string>  <!-- DO NOT TRANSLATE -->
+
+
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to WiThrottle Server?</string>
     <string name="PrefConnectToFirstServerSummary">Connect automatically to \'first\' WiThrottle Server discovered</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
@@ -914,6 +922,8 @@
     <string name="toastThrottleAlertEstop">Alert: Engine %1$s is set to ESTOP</string>
 <!--    <string name="toastThrottleImportServerAutoSucceeded">Automatic preferences import from Web server succeeded.</string>-->
     <string name="toastInitialisingSounds">Initialising In Phone Loco Sounds.</string>
+    <string name="toastKidsTimerNoLoco">Acquire a loco before starting the timer</string>
+    <string name="toastKidsTimerDemoMode">Demo Mode. Timer not started</string>
 
     <!--    Toast messages for the Preferences page-->
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
@@ -1162,6 +1172,10 @@
     <string name="prefKidsTimerRestartPasswordSummary">Password to restart the timer with the current settings</string>
     <string name="prefKidsTimerRestartPasswordDefaultValue" translatable="false">0000</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefKidsTimerDemoModePasswordTitle">Demo Mode Password</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Password to override the timer (Demo Mode) without disabling it</string>
+    <string name="prefKidsTimerDemoModePasswordDefaultValue" translatable="false">8888</string>  <!-- DO NOT TRANSLATE -->
+
     <string name="prefKidsTimerResetPasswordTitle">Reset/Disable Password</string>
     <string name="prefKidsTimerResetPasswordSummary">Password to reset/disable the timer settings</string>
     <string name="prefKidsTimerResetPasswordDefaultValue" translatable="false">9999</string>  <!-- DO NOT TRANSLATE -->
@@ -1192,7 +1206,7 @@
     <string name="kidsTimer">Timer</string>
     <string name="timerDialogTitle">Timer Password</string>
     <string name="timerDialogMessage">Password :</string>
-    <string name="timerDialogHint">Restart or Reset Pwd</string>
+    <string name="timerDialogHint">Restart, Reset or Demo Pwd</string>
 
 <!--    <string name="permissionsReadRecentConnections">Engine Driver needs STORAGE permissions to read recent connections.</string>-->
 <!--    <string name="permissionsStoreRecentConnections">Engine Driver needs STORAGE permissions to store recent connections.</string>-->

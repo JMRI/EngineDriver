@@ -12,7 +12,8 @@
     android:paddingLeft="16dp"
     android:paddingTop="4dp"
     android:paddingRight="16dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <LinearLayout
         android:id="@+id/intro_buttons_title0"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/introDccexTitle"
             android:textSize="24sp"
+            android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             tools:ignore="RtlHardcoded, TextContrastCheck"  />
 

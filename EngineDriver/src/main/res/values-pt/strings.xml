@@ -362,6 +362,7 @@
     <string name="prefSliderLeftMarginTitle">Margem Controlador de Velocidade</string>
     <string name="prefSliderLeftMarginSummary">Número de pixels de deslocamento das bordas do controlador de velocidade.</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP todas as locomotivas no acelerador atual com um toque longo no botão Parar</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Conexão no primeiro Servidor WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Conexão automática ao primeiro Servidor WiThrottle encontrado?</string>
     <string name="prefDisplayClockTitle">Mostrar Relogio Rápido</string>
@@ -543,6 +544,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">A importação automática de preferências do servidor da Web do JMRI foi bem-sucedida.</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Modo de demonstração. Temporizador não iniciado</string>
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
@@ -1129,4 +1131,8 @@
     <string name="prefToolbarButtonSizeTitle">Botão da barra de ferramentas</string>
     <string name="prefToolbarButtonSizeSummary">Defina o tamanho dos botões da barra de ferramentas. (Reinicialização necessária)</string>
     <string name="prefKidsTimerKioskModeTitle">Modo quiosque?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Senha do modo de demonstração</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Senha para anular o temporizador (Modo Demo) sem desativá-lo</string>
+    <string name="toastKidsTimerNoLoco">Adquira uma locomotiva antes de iniciar o cronômetro</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOPAR Ao Parar Pressione Longo</string>
 </resources>

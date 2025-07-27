@@ -216,7 +216,6 @@ public class InPhoneLocoSoundsLoader {
          }
       }
       if (soundsLoading) {
-//         Toast.makeText(context, R.string.toastInitialisingSounds, Toast.LENGTH_LONG).show();
          threaded_application.safeToast(R.string.toastInitialisingSounds, Toast.LENGTH_LONG);
       }
       return true;   // true = sounds were reloaded

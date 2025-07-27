@@ -137,6 +137,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private String prefThrottleScreenType = "Default";
     private String prefThrottleScreenTypeOriginal = "Default";
+    private int maxThrottlesCurrentScreenTypeOriginal = 1;
     private int prefDisplaySemiRealisticThrottleNotches = 100;
     private int prefDisplaySemiRealisticThrottleNotchesOriginal = 100;
     protected boolean prefBackgroundImage = false;
@@ -367,7 +368,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
         } else {
-//            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG).show();
             threaded_application.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
         }
     }
@@ -437,9 +437,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
-//            Toast.makeText(getApplicationContext(),
-//                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
-//                    Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
@@ -558,9 +555,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
                     prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
                     prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
-//                    Toast.makeText(getApplicationContext(),
-//                            getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
-//                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))), Toast.LENGTH_LONG).show();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
                             prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
                             Toast.LENGTH_LONG);
@@ -790,7 +784,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
             }
             else {
-//                Toast.makeText(this, R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
@@ -808,20 +801,17 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
                 prefText.setText(Integer.toString(maxVal));
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
                 prefText.setText(Integer.toString(minVal));
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                         Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
@@ -884,20 +874,17 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
                 prefText.setText(Float.toString(maxVal));
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                     Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
                 prefText.setText(Float.toString(minVal));
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits, Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                     Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric, Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                     Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
@@ -912,14 +899,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             sharedPreferences.edit().putString("DisplaySpeedUnits", "100").commit();
             prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
             if( prefDisplaySemiRealisticThrottleNotches < 100) {
-                sharedPreferences.edit().putString("speed_arrows_throttle_speed_step", "1").commit();
+                sharedPreferences.edit().putString("speed>Timer_arrows_throttle_speed_step", "1").commit();
             }
         }
-        if ((!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal))
+        if ( (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal))
         || (prefDisplaySemiRealisticThrottleNotchesOriginal != prefDisplaySemiRealisticThrottleNotches) ) {
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
-            forceRestartAppOnPreferencesClose = true;
+
+            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+                forceRestartAppOnPreferencesClose = true;
+            } else {
+                forceReLaunchAppOnPreferencesClose = true;
+            }
             forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
         }
     }
@@ -943,7 +935,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
             if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
                                         textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
@@ -1315,7 +1306,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } catch (IOException except) {
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
-//            Toast.makeText(getApplicationContext(), R.string.prefImportExportErrorReadingList + " " + errMsg, Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
         }
 
@@ -1653,6 +1643,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
                 parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
+                parentActivity.maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThottlesForScreen(parentActivity.prefThrottleScreenTypeOriginal);
 
                 parentActivity.prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", parentActivity.getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
                 parentActivity.prefDisplaySemiRealisticThrottleNotchesOriginal = parentActivity.prefDisplaySemiRealisticThrottleNotches;
@@ -1729,8 +1720,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
                 if (swipeWeb) {
                     prefs.edit().putBoolean("swipe_through_web_preference", false).commit();  //make sure preference is off
-//                    Toast.makeText(parentActivity.getApplicationContext(), parentActivity.getApplicationContext().getResources()
-//                            .getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG).show();
                     threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
                 }
             } else {
@@ -2117,6 +2106,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
 
                     case "prefDirectionButtonLongPressDelay":
+                    case "prefStopButtonLongPressDelay":
                         // limit check new value
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 500, 9999, "1000");
                         break;

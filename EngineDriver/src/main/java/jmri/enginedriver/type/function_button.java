@@ -20,7 +20,7 @@ package jmri.enginedriver.type;
 public interface function_button {
     //Constant values for the function buttons (excluding direction buttons):
     //int FORWARD = 990;
-    int STOP = 991;
+//    int STOP = 991;
     //int REVERSE = 992;
     int SELECT_LOCO = 993;
     int SPEED_LABEL = 994;

@@ -35,6 +35,7 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
@@ -44,9 +45,9 @@ import jmri.enginedriver.type.web_view_location_type;
 public class throttle_vertical_left_or_right extends throttle {
     static final String activityName = "throttle_vertical_left_or_right";
 
-    protected static final int MAX_SCREEN_THROTTLES = 2;
-    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = 1;
-    protected static final int  MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT = 6;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.VERTICAL;
+    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
+    protected static final int  MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT = max_throttles_current_screen_type.VERTICAL_TABLET;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;

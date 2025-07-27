@@ -34,6 +34,7 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
@@ -41,7 +42,7 @@ import jmri.enginedriver.type.slider_type;
 public class throttle_simple extends throttle {
     static final String activityName = "throttle_simple";
 
-    protected static final int MAX_SCREEN_THROTTLES = 6;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SIMPLE;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lLowers;

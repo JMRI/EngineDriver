@@ -471,9 +471,9 @@ public class comm_thread extends Thread {
             wifiSend(String.format("M%sA*<;>X", mainapp.throttleIntToString(whichThrottle)));  //send eStop request
 
         } else { //DCC-EX
-            wifiSend("<!>");
+//            wifiSend("<!>");
             for (int throttleIndex = 0; throttleIndex<mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                sendSpeed(throttleIndex, 0);
+                sendSpeed(throttleIndex, -1); // -1 = EStop
             }
 //            Log.d(threaded_application.applicationName, activityName + ": sendEStop(): DCC-EX: ");
         }
@@ -867,8 +867,12 @@ public class comm_thread extends Thread {
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
-                msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
+                String fmt = ((Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
+                if (speed >= 0) { // not Estop
+                    msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
+                } else { // Estop
+                    msgTxt = String.format(fmt, l.getAddress().substring(1), -1, newDir);
+                }
                 wifiSend(msgTxt);
 //                Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
             }
@@ -1176,7 +1180,7 @@ public class comm_thread extends Thread {
                     }  //end switch inside R
                     break;
                 case 'P': //Panel
-                    // --- PTL[{SystemTurnoutName}{UserName}{State}repeat] where state 1=Unknown. 2=Closed, 4=Thrown
+                    // --- PTL]\[{SystemTurnoutName}|{UserName}|{State}repeat] where state 1=Unknown. 2=Closed, 4=Thrown
                     // --- PTA{NewTurnoutState}{SystemName}
                     // --- PPA{NewPowerState} where state 0=off, 1=on, 2=unknown
                     // --- PFT{FastClockSeconds}<;><time ratio>
@@ -2451,7 +2455,6 @@ public class comm_thread extends Thread {
                 try {
                     host_address = InetAddress.getByName(mainapp.host_ip);
                 } catch (UnknownHostException except) {
-//                        show_toast_message("Can't determine IP address of " + host_ip, Toast.LENGTH_LONG);
                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
                     socketOk = false;
                 } catch (Exception except) {

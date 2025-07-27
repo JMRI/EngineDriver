@@ -107,7 +107,6 @@ public abstract class Flashlight {
                 return true;
             } catch (Exception ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Error switching on flashlight: " + ex.getMessage());
-//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             }
@@ -125,7 +124,6 @@ public abstract class Flashlight {
                 Log.d(threaded_application.applicationName, activityName + ": Flashlight switched off");
             } catch (Exception ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Error switching off flashlight: " + ex.getMessage());
-//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             }
         }
@@ -185,7 +183,6 @@ public abstract class Flashlight {
                 return true;
             } catch (CameraAccessException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOn(): Error switching on flashlight: " + ex.getMessage());
-//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOnFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             } catch (IllegalArgumentException ex) {
@@ -201,7 +198,6 @@ public abstract class Flashlight {
                 Log.d(threaded_application.applicationName, activityName + ": setFlashlightOff(): Flashlight switched off");
             } catch (CameraAccessException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Error switching off flashlight: " + ex.getMessage());
-//                Toast.makeText(flashlightContext, flashlightContext.getResources().getString(R.string.toastFlashlightOffFailed), Toast.LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             } catch (IllegalArgumentException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Problem switching off flashlight:" + ex.getMessage());

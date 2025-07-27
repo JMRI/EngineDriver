@@ -311,7 +311,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 try {
                     connected_port = Integer.parseInt(entry.getText().toString());
                 } catch (Exception except) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                     connected_port = 0;
                     return;
@@ -369,7 +368,6 @@ public class connection_activity extends AppCompatActivity implements Permission
             });
 
         } else {
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(R.string.toastConnectRemoveDemoHostError, Toast.LENGTH_SHORT);
         }
     }
@@ -387,7 +385,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                     try {
                         connected_port = Integer.parseInt(tm.get("port"));
                     } catch (Exception except) {
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT).show();
                         threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                         connected_port = 0;
                         return;
@@ -396,7 +393,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connected_ssid = mainapp.client_ssid;
                     checkIfDccexServerName(connected_hostname, connected_port);
                     connect();
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG).show();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
                 } else {
 //                    if (!mainapp.prefHideInstructionalToasts) {
@@ -1083,7 +1079,6 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-//            Toast.makeText(getApplicationContext(), "Error no recent connections exist", Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(R.string.toastConnectErrorReadingRecentConnections, Toast.LENGTH_SHORT);
         } else {
 
@@ -1137,7 +1132,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 importExportConnectionList.getConnectionsList(addressToRemove, portToRemove);
 
                 if (!importExportConnectionList.failureReason.isEmpty()) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT);
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
@@ -1190,7 +1184,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                     importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToSavePref), LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastConnectUnableToSavePref, LENGTH_LONG);
             }
         }
@@ -1217,7 +1210,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), LENGTH_LONG).show();
                 threaded_application.safeToast(R.string.toastConnectUnableToLoadPref, LENGTH_LONG);
             }
         }

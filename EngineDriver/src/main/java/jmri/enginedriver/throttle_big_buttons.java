@@ -35,6 +35,7 @@ import android.widget.ScrollView;
 
 import java.util.LinkedHashMap;
 
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
@@ -42,7 +43,7 @@ import jmri.enginedriver.type.web_view_location_type;
 public class throttle_big_buttons extends throttle {
     static final String activityName = "throttle_big_buttons";
 
-    protected static final int MAX_SCREEN_THROTTLES = 1;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.BIG_BUTTONS;
 
     private LinearLayout[] lThrottles;
 //    private LinearLayout[] lUppers;

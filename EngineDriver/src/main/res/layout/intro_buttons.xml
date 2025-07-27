@@ -10,7 +10,8 @@
     android:paddingLeft="5dp"
     android:paddingTop="4dp"
     android:paddingRight="5dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <TextView
         android:id="@+id/intro_buttons_title"
@@ -18,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/introButtonsTitle"
         android:textSize="24sp"
+        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold"
         tools:ignore="TextContrastCheck" />
 
@@ -62,6 +64,7 @@
                     android:layout_margin="0dp"
                     android:text="@string/introButtonsSlider"
                     android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
@@ -76,6 +79,7 @@
                     android:layout_margin="0dp"
                     android:text="@string/introButtonsSliderAndButtons"
                     android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
 
@@ -91,6 +95,7 @@
                     android:paddingTop="5dp"
                     android:text="@string/introButtonsNoSlider"
                     android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
@@ -105,6 +110,7 @@
                     android:paddingTop="5dp"
                     android:text="@string/introButtonsNoSliderOrButtons"
                     android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
 

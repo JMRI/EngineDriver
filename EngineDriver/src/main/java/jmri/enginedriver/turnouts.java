@@ -437,7 +437,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     try {
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT).show();
                         threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT);
                         return;
                     }

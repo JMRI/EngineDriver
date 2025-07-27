@@ -10,7 +10,8 @@
     android:paddingLeft="16dp"
     android:paddingTop="4dp"
     android:paddingRight="16dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <TextView
         android:id="@+id/intro_write_settings_title"
@@ -19,6 +20,7 @@
         android:text="@string/permissionsRequestTitle"
         android:textColor="@color/solidWhite"
         android:textSize="24sp"
+        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
 
     <ScrollView

@@ -9,7 +9,8 @@
     android:paddingLeft="10dp"
     android:paddingTop="4dp"
     android:paddingRight="10dp"
-    android:paddingBottom="80dp">
+    android:paddingBottom="80dp"
+    android:fitsSystemWindows="true" >
 
     <TextView
         android:id="@+id/intro_theme_title"
@@ -58,6 +59,7 @@
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck, DuplicateSpeakableTextCheck" />
 
                 <RadioButton
@@ -71,6 +73,7 @@
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
@@ -83,6 +86,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
@@ -96,6 +100,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
@@ -109,6 +114,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 
@@ -122,6 +128,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="@string/prefThemeDefaultValue"
                     tools:ignore="RtlHardcoded" />
 

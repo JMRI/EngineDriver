@@ -5,7 +5,8 @@
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:fitsSystemWindows="true" >
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />

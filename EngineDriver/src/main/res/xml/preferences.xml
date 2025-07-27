@@ -1032,6 +1032,22 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
+            android:defaultValue="@bool/prefStopButtonEStopOnLongPressDefaultValue"
+            android:key="prefStopButtonEStopOnLongPress"
+            android:summary="@string/prefStopButtonEStopOnLongPressSummary"
+            android:title="@string/prefStopButtonEStopOnLongPressTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <EditTextPreference
+            android:defaultValue="@string/prefStopButtonLongPressDelayDefaultValue"
+            android:dialogTitle="@string/prefStopButtonLongPressDelayTitle"
+            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
+            android:key="prefStopButtonLongPressDelay"
+            android:summary="@string/prefStopButtonLongPressDelaySummary"
+            android:title="@string/prefStopButtonLongPressDelayTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnPhonecallDefaultValue"
             android:key="stop_on_phonecall_preference"
             android:summary="@string/prefStopOnPhonecallSummary"
@@ -2307,6 +2323,16 @@
                     android:key="prefKidsTimerResetPassword"
                     android:summary="@string/prefKidsTimerResetPasswordSummary"
                     android:title="@string/prefKidsTimerResetPasswordTitle"
+                    android:inputType="number"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefKidsTimerDemoModePasswordDefaultValue"
+                    android:dialogTitle="@string/prefKidsTimerDemoModePasswordTitle"
+                    android:key="prefKidsTimerDemoModePassword"
+                    android:summary="@string/prefKidsTimerDemoModePasswordSummary"
+                    android:title="@string/prefKidsTimerDemoModePasswordTitle"
                     android:inputType="number"
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:layout="@layout/checkbox_no_icon" />

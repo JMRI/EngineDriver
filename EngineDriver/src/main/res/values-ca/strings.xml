@@ -336,6 +336,7 @@
     <string name="prefSliderLeftMarginTitle">Marge del Lliscador de Velocitat del Controlador</string>
     <string name="prefSliderLeftMarginSummary">Número de píxels per a compensar els marges dels controls lliscants de la velocitat del Controlador</string>
 
+    <string name="prefStopButtonEStopOnLongPressSummary">ATURA totes les locomotores a l\'accelerador actual amb una pressió llarga del botó Stop</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connecta al primer servidor WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Connecta automàticament al primer servidor WiThrottle descobert?</string>
     <string name="prefDisplayClockTitle">Pantalla de rellotge ràpid</string>
@@ -507,6 +508,7 @@
 <!--    <string name="toastThrottleImportServerAutoSucceeded">La importació de preferències automàtiques del servidor web JMRI ha tingut èxit</string>-->
 
     <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerDemoMode">Mode de demostració. El temporitzador no s\'ha iniciat</string>
     <string name="toastPreferencesOutsideLimits">El valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesNotNumeric">El valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les preferències a valors per defecte!</string>
@@ -1186,5 +1188,9 @@
     <string name="prefToolbarButtonSizeTitle">"Botó de la barra d\\'eines "</string>
     <string name="prefToolbarButtonSizeSummary">Estableix la mida dels botons de la barra d\\\'eines. (Cal reiniciar)</string>
     <string name="prefKidsTimerKioskModeTitle">Mode quiosc?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Contrasenya del mode de demostració</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Contrasenya per anul·lar el temporitzador (mode de demostració) sense desactivar-lo</string>
+    <string name="toastKidsTimerNoLoco">Adquirir una locomotora abans d\'engegar el temporitzador</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Premsa llarga</string>
 
 </resources>

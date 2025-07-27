@@ -49,6 +49,7 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.direction_type;
+import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
@@ -62,7 +63,7 @@ import jmri.enginedriver.type.stop_button_type;
 public class throttle_semi_realistic extends throttle {
     static final String activityName = "throttle_semi_realistic";
 
-    protected static final int MAX_SCREEN_THROTTLES = 1;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SEMI_REALISTIC;
 
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;

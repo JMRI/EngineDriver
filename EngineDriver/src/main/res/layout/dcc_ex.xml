@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:ignore="RtlHardcoded,Autofill,LabelFor" >
+    tools:ignore="RtlHardcoded,Autofill,LabelFor"
+    android:fitsSystemWindows="true" >
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />

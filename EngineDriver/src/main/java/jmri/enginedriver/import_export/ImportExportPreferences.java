@@ -98,7 +98,6 @@ public class ImportExportPreferences {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
             @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
-//            Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
             threaded_application.safeToast(m, Toast.LENGTH_SHORT);
             Log.d(threaded_application.applicationName, activityName + ": " + m);
             result = true;
@@ -118,7 +117,6 @@ public class ImportExportPreferences {
         }
         if (!result) {
             Log.e(threaded_application.applicationName, activityName + ": writeExportFile(): Export Failed");
-//            Toast.makeText(context, "Export failed!", Toast.LENGTH_LONG).show();
             threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         } else {
             Log.d(threaded_application.applicationName, activityName + ": writeExportFile(): Export succeeded");
@@ -159,7 +157,6 @@ public class ImportExportPreferences {
         if (!exportedPreferencesFileName.equals(".ed")) {
             writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
         } else {
-//            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportExportFailed), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         }
 
@@ -311,7 +308,6 @@ public class ImportExportPreferences {
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
                     Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + m);
-//                    Toast.makeText(context, m, Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(m, Toast.LENGTH_SHORT);
 
                 } catch (FileNotFoundException e) {

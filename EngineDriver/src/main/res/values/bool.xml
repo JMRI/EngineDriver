@@ -126,7 +126,7 @@
     <bool name="prefTurnoutsShowThrowCloseButtonsDefaultValue">false</bool>
 
     <bool name="prefSemiRealisticThrottleDisableAirDefaultValue">false</bool>
-
     <bool name="prefSelectLocoByRadioButtonsDefaultValue">false</bool>
+    <bool name="prefStopButtonEStopOnLongPressDefaultValue">false</bool>
 
 </resources>
