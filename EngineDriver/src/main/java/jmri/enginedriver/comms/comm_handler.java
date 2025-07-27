@@ -206,6 +206,13 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.ESTOP_ONE_THROTTLE: {
+            final int whichThrottle = msg.arg1;
+            commThread.sendEStopOneThrottle(whichThrottle);
+            mainapp.alert_activities(message_type.ESTOP_ONE_THROTTLE, mainapp.throttleIntToString(msg.arg1));
+            break;
+         }
+
          case message_type.FORCE_THROTTLE_RELOAD: {
             mainapp.alert_activities(message_type.FORCE_THROTTLE_RELOAD, mainapp.throttleIntToString(msg.arg1));
             break;

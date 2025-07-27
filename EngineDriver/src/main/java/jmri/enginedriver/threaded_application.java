@@ -1589,7 +1589,7 @@ public class threaded_application extends Application {
 
     public void sendEStopOneThrottleMsg(int whichThrottle) {
         if (consists != null && consists[whichThrottle] != null && consists[whichThrottle].isActive()) {
-            sendMsg(comm_msg_handler, message_type.ESTOP, "", whichThrottle);
+            sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", whichThrottle);
             EStopActivated = true;
             Log.d(applicationName, activityName + ": sendEStopOneThrottleMsg(): EStop sent to server for throttle " + whichThrottle);
         }

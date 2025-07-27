@@ -479,6 +479,10 @@ public class comm_thread extends Thread {
         }
     }
 
+    protected void sendEStopOneThrottle(int whichThrottle) {
+        sendSpeed(whichThrottle, -1); // -1 = EStop
+    }
+
     protected void sendDisconnect() {
         if (!mainapp.isDCCEX) { // not DCC-EX
             wifiSend("Q");
