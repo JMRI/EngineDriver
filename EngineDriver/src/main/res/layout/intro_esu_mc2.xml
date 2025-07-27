@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="@string/introEsuMc2Title"
             android:textSize="24sp"
+            android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"
             tools:ignore="RtlHardcoded, TextContrastCheck"  />
 
