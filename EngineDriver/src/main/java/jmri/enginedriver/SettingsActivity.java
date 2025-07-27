@@ -2108,7 +2108,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDirectionButtonLongPressDelay":
                     case "prefStopButtonLongPressDelay":
                         // limit check new value
-                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 500, 9999, "1000");
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 250, 9999, "1000");
                         break;
 
                     case "prefEsuMc2ZeroTrim":

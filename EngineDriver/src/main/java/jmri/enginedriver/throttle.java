@@ -4949,7 +4949,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 isStopButtonLongPress = true;
                 if (prefStopButtonEStopOnLongPress)
-                    stopButtonLongPressHandler.postDelayed(run, prefDirectionButtonLongPressDelay);
+                    stopButtonLongPressHandler.postDelayed(run, prefStopButtonLongPressDelay);
 
                 doStop();
 

@@ -101,4 +101,5 @@ public interface message_type {
     int ROUTE_LIST_CHANGED = 79;
     int LOG_ENTRY_RECEIVED = 80;
     int REOPEN_THROTTLE = 81;
+    int ESTOP_ONE_THROTTLE = 82;
 }
