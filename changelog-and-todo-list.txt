@@ -1,9 +1,9 @@
 **Version 2.40.200
- * added a new seperate check for when the app is in background
+ * added a new separate check for when the app is in background
  * reduce the amount of static text related to log messages
  * wholesale cleanup if the code to 'finish' an activity
  * Additional log messages in select_loco
- * Move to AndroidX libaries
+ * Move to AndroidX libraries
  * Added support for ESU MC Pro. Additional + removed + default options for the MC Pro
  * Bug fix for PoM programming of DCC addresses 1 and 2
  * Preference to using large toolbar buttons. Defaults to large on screens larger than 6.7"/17cm.
