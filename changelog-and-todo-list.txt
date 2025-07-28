@@ -1,3 +1,4 @@
+**Version 2.40.202
 **Version 2.40.200
  * added a new separate check for when the app is in background
  * reduce the amount of static text related to log messages
