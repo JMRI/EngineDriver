@@ -143,6 +143,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -311,6 +314,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -472,6 +478,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>
@@ -633,6 +642,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>
@@ -795,6 +807,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -970,6 +985,9 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>

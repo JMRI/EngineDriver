@@ -70,7 +70,7 @@
             tools:ignore="RtlHardcoded,RtlSymmetry" />
         <Button
             android:id="@+id/connect"
-            style="?attr/ed_normal_button_style"
+            style="?attr/ed_normal_button_condensed_style"
             android:layout_width="wrap_content"
             android:minWidth="110dp"
             android:maxWidth="220dp"
@@ -150,7 +150,7 @@
 
         <Button
             android:id="@+id/clear_recent_connections_button"
-            style="?attr/ed_small_button_style"
+            style="?attr/ed_small_button_condensed_text_style"
             android:layout_width="wrap_content"
             android:layout_height="26sp"
             android:layout_alignParentTop="true"

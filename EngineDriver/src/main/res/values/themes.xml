@@ -47,6 +47,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style</item>
@@ -69,6 +70,7 @@
         <item name="ed_large_button_style">@style/large_button_style</item>
         <item name="ed_normal_button_style">@style/normal_button_style</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style</item>
@@ -131,6 +133,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
@@ -141,6 +144,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_icon">@drawable/icon_vector</item>
 
@@ -183,6 +188,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_black</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -200,6 +206,7 @@
         <item name="ed_large_button_style">@style/large_button_style_black</item>
         <item name="ed_normal_button_style">@style/normal_button_style_black</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_black</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_black</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_black</item>
         <item name="ed_small_button_style">@style/small_button_style_black</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_black</item>
@@ -266,6 +273,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
@@ -276,6 +284,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -312,6 +322,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -329,6 +340,7 @@
         <item name="ed_large_button_style">@style/large_button_style_outline</item>
         <item name="ed_normal_button_style">@style/normal_button_style_outline</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_outline</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_outline</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_outline</item>
         <item name="ed_small_button_style">@style/small_button_style_outline</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_outline</item>
@@ -394,6 +406,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
@@ -404,6 +417,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -447,6 +462,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -464,6 +480,7 @@
         <item name="ed_large_button_style">@style/large_button_style_ultra</item>
         <item name="ed_normal_button_style">@style/normal_button_style_ultra</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_ultra</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_ultra</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
         <item name="ed_small_button_style">@style/small_button_style_ultra</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_ultra</item>
@@ -530,6 +547,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
@@ -540,6 +558,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
 
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
@@ -589,6 +609,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_colorful</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_colorful</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style_colorful</item>
@@ -608,6 +629,7 @@
         <item name="ed_large_button_style">@style/large_button_style_colorful</item>
         <item name="ed_normal_button_style">@style/normal_button_style_colorful</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_colorful</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_colorful</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_colorful</item>
         <item name="ed_small_button_style">@style/small_button_style_colorful</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_colorful</item>
@@ -669,6 +691,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
@@ -679,6 +702,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/original_dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
@@ -724,6 +749,7 @@
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_neon</item>
@@ -742,6 +768,7 @@
         <item name="ed_large_button_style">@style/large_button_style_neon</item>
         <item name="ed_normal_button_style">@style/normal_button_style_neon</item>
         <item name="ed_normal_button2_style">@style/normal_button2_style_neon</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_neon</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_neon</item>
         <item name="ed_small_button_style">@style/small_button_style_neon</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_neon</item>
@@ -811,6 +838,7 @@
         <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
@@ -821,6 +849,8 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
 
         <item name="ed_progressBar">@drawable/neon_progress_bar</item>
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>

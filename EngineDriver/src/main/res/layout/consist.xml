@@ -94,9 +94,8 @@
 
             <Button
                 android:id="@+id/consist_edit_button_close"
-                style="?attr/ed_normal_button_style"
+                style="?attr/ed_normal_button_condensed_style"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="0dp"
@@ -104,7 +103,10 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
         </RelativeLayout>
 
     </LinearLayout>

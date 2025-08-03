@@ -55,11 +55,10 @@
 
             <Button
                 android:id="@+id/functionConsistReset"
-                style="?attr/ed_small_button_style"
-                android:fontFamily="sans-serif-condensed"
+                style="?attr/ed_normal_button_condensed_style"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_above="@id/functionConsistClose"
                 android:layout_centerHorizontal="true"
                 android:text="@string/fbResetFunctionLabels"
@@ -70,11 +69,10 @@
 
             <Button
                 android:id="@+id/functionConsistClose"
-                style="?attr/ed_small_button_style"
-                android:fontFamily="sans-serif-condensed"
+                style="?attr/ed_small_button_condensed_text_style"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
@@ -84,7 +82,8 @@
                 android:paddingRight="4dp"
                 android:paddingEnd="4dp"
                 android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         </RelativeLayout>
 
@@ -120,6 +119,7 @@
                         android:textSize="12sp"
                         android:text="@string/functionConsistColumnLocos"
                         android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
                         style="?android:attr/listSeparatorTextViewStyle"  />
 
                     <TextView
@@ -129,6 +129,7 @@
                         android:textSize="12sp"
                         android:text="@string/functionConsistColumnLatching"
                         android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
                         style="?android:attr/listSeparatorTextViewStyle"  />
 
 

@@ -2,6 +2,7 @@
 <resources>
     <attr name="ed_loco_label_style" format="reference" />
     <attr name="floating_text_style" format="reference" />
+    <attr name="floating_text_condensed_style" format="reference" />
     <attr name="edit_label_style" format="reference" />
     <attr name="edit_label_condensed_text_style" format="reference" />
     <attr name="edit_func_style" format="reference" />
@@ -16,6 +17,7 @@
     <attr name="ed_large_button_style" format="reference" />
     <attr name="ed_normal_button_style" format="reference" />
     <attr name="ed_normal_button2_style" format="reference" />
+    <attr name="ed_normal_button_condensed_style" format="reference" />
     <attr name="ed_loco_select_button_style" format="reference" />
     <attr name="ed_small_button_style" format="reference" />
     <attr name="ed_small_button_condensed_text_style" format="reference" />
@@ -86,6 +88,9 @@
     <attr name="ed_download_glyph" format="reference" />
     <attr name="ed_clear_list_glyph" format="reference" />
     <attr name="ed_tick_glyph_large" format="reference" />
+    <attr name="ed_cross_glyph" format="reference" />
+    <attr name="ed_read_glyph" format="reference" />
+    <attr name="ed_write_glyph" format="reference" />
 
     <attr name="ed_dccex_glyph_cv_programmer_pom" format="reference" />
     <attr name="ed_dccex_glyph_cv_programmer_prog_track" format="reference" />

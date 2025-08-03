@@ -669,11 +669,33 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+        if (findViewById(R.id.powerLayoutButton) == null) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+                }
+            }, 100);
+        } else {
+            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+        }
         mainapp.setWebMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
+
         mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+        if (findViewById(R.id.flashlight_button) == null) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+                }
+            }, 100);
+        } else {
+            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+        }
+
 //        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountRoutes);
 
         adjustToolbarSize(menu);

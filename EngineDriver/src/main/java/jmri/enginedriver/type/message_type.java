@@ -102,4 +102,5 @@ public interface message_type {
     int LOG_ENTRY_RECEIVED = 80;
     int REOPEN_THROTTLE = 81;
     int ESTOP_ONE_THROTTLE = 82;
+    int POWER_STATE_REQUEST = 83;
 }

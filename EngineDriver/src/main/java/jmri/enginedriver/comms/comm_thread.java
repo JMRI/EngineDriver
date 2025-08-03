@@ -788,6 +788,13 @@ public class comm_thread extends Thread {
     }
 
     @SuppressLint("DefaultLocale")
+    protected void sendPowerStateRequest() {
+        if (mainapp.isDCCEX) { //only works for DCC-EX
+            wifiSend("<s>");  // no specifc command available, so just ask for the full CS status again
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
     protected void sendPower(int pState, int track) {  // DCC-EX only
         char trackLetter = (char) ('A' + track);
         if (mainapp.isDCCEX) { //DCC-EX

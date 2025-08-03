@@ -203,7 +203,10 @@
                     android:padding="4sp"
                     android:maxWidth="30sp"
                     android:text="@string/DccexWriteAddressButtonLabel"
-                    tools:ignore="VisualLintButtonSize" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_write_glyph"
+                    tools:ignore="RtlSymmetry,VisualLintButtonSize" />
 
             </LinearLayout>
 
@@ -355,9 +358,8 @@
 
                 <Button
                     android:id="@+id/wit_WitClearCommandsButton"
-                    style="?attr/ed_small_button_style"
+                    style="?attr/ed_normal_button_condensed_style"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="@string/DCCEXclearCommands"
                     android:drawableLeft="?attr/ed_clear_list_glyph"
@@ -367,13 +369,15 @@
 
                 <Button
                     android:id="@+id/withrottle_cv_programmer_button_close"
-                    style="?attr/ed_small_button_style"
+                    style="?attr/ed_normal_button_condensed_style"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/logviewerClose"
-                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_cross_glyph"
+                    tools:ignore="RtlHardcoded,RtlSymmetry,RelativeOverlap" />
 
             </RelativeLayout>
 

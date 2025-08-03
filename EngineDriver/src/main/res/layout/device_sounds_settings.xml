@@ -43,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/dss_throttle0_label"
-                    style="?attr/floating_text_style"
+                    style="?attr/floating_text_condensed_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8sp"
@@ -71,7 +71,7 @@
 
                 <TextView
                     android:id="@+id/dss_throttle1_label"
-                    style="?attr/floating_text_style"
+                    style="?attr/floating_text_condensed_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8sp"
@@ -292,13 +292,16 @@
 
             <Button
                 android:id="@+id/device_sounds_settings_button_close"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_normal_button_condensed_style"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:text="@string/logviewerClose" />
+                android:text="@string/logviewerClose"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlSymmetry" />
 
         </RelativeLayout>
 

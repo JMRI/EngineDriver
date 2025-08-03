@@ -1,4 +1,7 @@
 **Version 2.40.202
+ * Corrected theming of the main power button on the power screen
+ * More glyphs and cosmetic changes
+ * Improve the updating of the toolbar power button on some screen when the app is first opened
 **Version 2.40.200
  * added a new separate check for when the app is in background
  * reduce the amount of static text related to log messages
@@ -14,9 +17,8 @@
  * targetSDK raised to 35 - Had to go back to TargetSdk 35 from 36 to get around the edge-to-edge enforcement on Android 16
  * Children's timer changes. Passwords changed to PINs (numeric). Some bug fixes. Added Kiosk mode option. Added Demo mode option.
  * Bug fix for the brake slider on the ESU MC Pro
- * Bug fix for when changing to a throttle screen layout with more possible throttles
+ * Bug fix for NPE when changing to a throttle screen layout with more possible throttles than the previous one
  * Added Option for single throttle EStop on long press of 'stop' button
- * Fix NPE when changing to a throttle screen layout with more possible throttles
  * Cleaned up some commented out code (toast commands that have been replaced with safeToast())
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
@@ -943,6 +945,7 @@
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
+ *   TODO: option to show roster images above each throttle
  * In Phone Loco Sounds (throttle):
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
  *   TODO: work out when to play the engine shut down sounds
