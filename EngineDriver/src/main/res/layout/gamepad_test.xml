@@ -426,7 +426,8 @@
 
                 <Button
                     android:id="@+id/gamepad_test_button_reset"
-                    style="?attr/ed_normal_button_style"
+                    style="?attr/ed_normal_button_condensed_style"
+                    android:layout_height="40dp"
                     android:text="@string/gamepadTestReset"
                     android:drawableLeft="?attr/ed_reset_glyph"
                     android:paddingLeft="8dp"
@@ -436,16 +437,22 @@
 
                 <Button
                     android:id="@+id/gamepad_test_button_cancel"
-                    style="?attr/ed_normal_button_style"
+                    style="?attr/ed_normal_button_condensed_style"
+                    android:layout_height="40dp"
                     android:text="@string/gamepadTestCancel"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    tools:ignore="ButtonOrder" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_cross_glyph"
+                    tools:ignore="RtlHardcoded,RtlSymmetry,ButtonOrder" />
 
                 <Button
                     android:id="@+id/gamepad_test_button_skip"
-                    style="?attr/ed_normal_button_style"
-                    android:layout_gravity="right"                    android:text="@string/gamepadTestSkip"
+                    style="?attr/ed_normal_button_condensed_style"
+                    android:layout_height="40dp"
+                    android:layout_gravity="right"
+                    android:text="@string/gamepadTestSkip"
                     tools:ignore="RtlHardcoded" />
 <!--            </TableRow>-->
 

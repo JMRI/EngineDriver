@@ -42,19 +42,21 @@
 -->
             <Button
                 android:id="@+id/logviewer_button_close"
-                style="?attr/ed_normal_button_style"
-                android:layout_height="40dp"
+                style="?attr/ed_normal_button_condensed_style"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
             <Button
                 android:id="@+id/logviewer_button_save"
-                style="?attr/ed_normal_button_style"
+                style="?attr/ed_normal_button_condensed_style"
+                android:textSize="14sp"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"

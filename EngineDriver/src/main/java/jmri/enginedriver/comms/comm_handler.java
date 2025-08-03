@@ -452,8 +452,11 @@ public class comm_handler extends Handler {
          }
          //send command to change power setting, new state is passed in arg1
          case message_type.POWER_CONTROL:
-//            commThread.wifiSend(String.format("PPA%d", msg.arg1));
             commThread.sendPower(msg.arg1);
+            break;
+         //send command to request the power state.  no argumants
+         case message_type.POWER_STATE_REQUEST:
+            commThread.sendPowerStateRequest();
             break;
          //send whatever command string comes in obj to Withrottle Server
          case message_type.WIFI_SEND:

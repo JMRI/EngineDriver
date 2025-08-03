@@ -618,10 +618,30 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
         mainapp.setPowerMenuOption(menu);
-        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+        if (findViewById(R.id.powerLayoutButton) == null) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+                }
+            }, 100);
+        } else {
+            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+        }
 
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
         mainapp.displayFlashlightMenuButton(menu);
+        if (findViewById(R.id.flashlight_button) == null) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+                }
+            }, 100);
+        } else {
+            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+        }
 
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);

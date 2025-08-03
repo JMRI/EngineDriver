@@ -251,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8sp"
                     android:layout_marginRight="8sp"
-                    android:layout_weight=".15"
+                    android:layout_weight=".155"
                     android:inputType="number"
                     android:maxLength="5"
                     android:nextFocusRight="@id/dexc_DccexCv"
@@ -272,7 +272,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:padding="4sp"
-                    android:text="@string/DccexReadAddressButtonLabel" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_read_glyph"
+                    android:text="@string/DccexReadAddressButtonLabel"
+                    tools:ignore="RtlSymmetry" />
 
                 <Button
                     android:id="@+id/dexc_DccexWriteAddressButton"
@@ -281,7 +285,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteAddressButtonLabel" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_write_glyph"
+                    android:text="@string/DccexWriteAddressButtonLabel"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -362,7 +370,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:padding="4sp"
-                    android:text="@string/DccexReadAddressButtonLabel" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_read_glyph"
+                    android:text="@string/DccexReadAddressButtonLabel"
+                    tools:ignore="RtlSymmetry" />
 
                 <Button
                     android:id="@+id/dexc_DccexWriteCvButton"
@@ -371,7 +383,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteAddressButtonLabel" />
+                    android:paddingLeft="8dp"
+                    android:paddingStart="8dp"
+                    android:drawableLeft="?attr/ed_write_glyph"
+                    android:text="@string/DccexWriteAddressButtonLabel"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -1255,7 +1271,8 @@
 
             <Button
                 android:id="@+id/dexc_DCCEXclearCommandsButton"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:text="@string/DCCEXclearCommands"
                 android:drawableLeft="?attr/ed_clear_list_glyph"
@@ -1265,11 +1282,15 @@
 
             <Button
                 android:id="@+id/dcc_ex_button_close"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
                 android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
 
 

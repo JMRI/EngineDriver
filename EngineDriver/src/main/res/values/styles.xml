@@ -68,6 +68,10 @@
   </style>
   <style name="normal_button2_style" parent="normal_button_style">
   </style>
+  <style name="normal_button_condensed_style" parent="normal_button_style">
+      <item name="fontFamily">sans-serif-condensed</item>
+      <item name="android:layout_height">40dp</item>
+  </style>
 
   <style name="loco_select_button_style" parent="normal_button_style">
     <item name="android:textColor">@color/original_btn_loco_select_text_states</item>
@@ -234,6 +238,10 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+  <style name="floating_text_condensed_style" parent="floating_text_style">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="radio_button_style" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:shadowColor">#FF000000</item>
@@ -505,7 +513,12 @@
   </style>
   <style name="normal_button2_style_black" parent="normal_button_style_black">
   </style>
-  <style name="loco_select_button_style_black" parent="normal_button_style_black">
+    <style name="normal_button_condensed_style_black" parent="normal_button_style_black">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="loco_select_button_style_black" parent="normal_button_style_black">
     <item name="android:textColor">@color/original_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
@@ -587,6 +600,10 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+  <style name="floating_text_condensed_style_black" parent="floating_text_style_black">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="radio_button_style_black" parent="radio_button_style">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:shadowColor">@color/black</item>
@@ -623,7 +640,7 @@
   <style name="list_id_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
-    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textColor">#DEDEDE</item>
     <item name="android:background">@color/transparent</item>
   </style>
   <style name="list_extras_style_black" parent="list_id_style_black">
@@ -690,7 +707,12 @@
   </style>
   <style name="normal_button2_style_outline" parent="normal_button_style_outline">
   </style>
-  <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
+    <style name="normal_button_condensed_style_outline" parent="normal_button_style_outline">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
     <item name="android:textColor">@color/outline_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
@@ -771,6 +793,10 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+  <style name="floating_text_condensed_style_outline" parent="floating_text_style_outline">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="radion_button_style_outline" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:shadowColor">@color/black</item>
@@ -796,7 +822,7 @@
   <style name="list_id_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
-    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textColor">#DEDEDE</item>
     <item name="android:background">@color/transparent</item>
   </style>
   <style name="list_extras_style_outline" parent="list_id_style_outline">
@@ -865,6 +891,11 @@
   </style>
   <style name="normal_button2_style_ultra" parent="normal_button_style_ultra">
   </style>
+  <style name="normal_button_condensed_style_ultra" parent="normal_button_style_ultra">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
+
   <style name="loco_select_button_style_ultra" parent="normal_button_style_ultra">
     <item name="android:textColor">@color/ultra_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
@@ -959,7 +990,7 @@
   <style name="list_id_style_ultra" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
-    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textColor">#DEDEDE</item>
     <item name="android:background">@color/transparent</item>
   </style>
   <style name="list_extras_style_ultra" parent="list_id_style_ultra">
@@ -1095,6 +1126,11 @@
   <style name="normal_button2_style_colorful" parent="normal_button_style_colorful">
     <item name="android:background">@drawable/colorful_sticky_button_states2</item>
   </style>
+  <style name="normal_button_condensed_style_colorful" parent="normal_button_style_colorful">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
+
   <style name="loco_select_button_style_colorful" parent="normal_button_style_colorful">
     <item name="android:textColor">@color/colorful_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
@@ -1209,6 +1245,10 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
   </style>
+  <style name="floating_text_condensed_style_colorful" parent="floating_text_style_colorful">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
   <style name="radio_button_style_colorful" parent="radio_button_style">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:shadowColor">@color/windowBackground_colorful</item>
@@ -1460,6 +1500,12 @@
   </style>
   <style name="normal_button2_style_neon" parent="normal_button_style_neon">
   </style>
+  <style name="normal_button_condensed_style_neon" parent="normal_button_style_neon">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
+
+
   <style name="loco_select_button_style_neon" parent="normal_button_style_neon">
     <item name="android:textColor">@color/neon_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
@@ -1554,7 +1600,7 @@
   <style name="list_id_style_neon" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
-    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:textColor">#DEDEDE</item>
     <item name="android:background">@color/transparent</item>
   </style>
   <style name="list_extras_style_neon" parent="list_id_style_neon">

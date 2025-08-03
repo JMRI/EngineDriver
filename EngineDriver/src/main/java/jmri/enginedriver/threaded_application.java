@@ -1532,7 +1532,11 @@ public class threaded_application extends Application {
 //    }
 
     public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
-        if (menu == null) return;
+        if ( (menu == null) ||  (menuItemViewGroup  == null)) {
+            // the menu or button is not available yet. Force an update request to the get it to update ASAP
+            sendMsg(comm_msg_handler, message_type.POWER_STATE_REQUEST, "", 0);
+            return;
+        }
 
         TypedValue outValue = new TypedValue();
 
@@ -1554,7 +1558,6 @@ public class threaded_application extends Application {
             menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
         }
 
-        if (menuItemViewGroup  == null) return;
         ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
 
         if (image == null) return;

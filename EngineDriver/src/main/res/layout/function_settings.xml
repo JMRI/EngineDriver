@@ -34,8 +34,7 @@
                 tools:ignore="RtlSymmetry" />
 
             <TextView
-                style="?attr/floating_text_style"
-                android:fontFamily="sans-serif-condensed"
+                style="?attr/floating_text_condensed_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="4sp"
@@ -47,7 +46,7 @@
                 style="?attr/ed_small_button_style"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="@string/copy_function_labels"
                 android:drawableLeft="?attr/ed_download_glyph"
                 android:drawablePadding="4dp"
@@ -63,7 +62,7 @@
 
                 <TextView
                     android:id="@+id/fb_number_of_default_function_labels_label"
-                    style="?attr/floating_text_style"
+                    style="?attr/floating_text_condensed_style"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:padding="4dp"
@@ -215,10 +214,10 @@
 
             <Button
                 android:id="@+id/fb_reset_function_labels"
-                style="?attr/ed_small_button_style"
+                style="?attr/ed_normal_button_condensed_style"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="@string/fbResetFunctionLabels"
                 android:drawableLeft="?attr/ed_reset_glyph"
                 android:paddingLeft="8dp"
@@ -228,12 +227,15 @@
 
             <Button
                 android:id="@+id/fb_button_close"
-                style="?attr/ed_small_button_style"
-                android:layout_height="wrap_content"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="30dp"
                 android:text="@string/logviewerClose"
-                tools:ignore="RtlHardcoded" />
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         </LinearLayout>
 
@@ -259,6 +261,7 @@
                         android:textStyle="bold"
                         android:layout_marginRight="6dp"
                         style="?android:attr/listSeparatorTextViewStyle"
+                        android:fontFamily="sans-serif-condensed"
                         tools:ignore="RtlSymmetry" />
 
                     <TextView
@@ -267,6 +270,7 @@
                         android:text="@string/fb_column_function"
                         android:textStyle="bold"
                         style="?android:attr/listSeparatorTextViewStyle"
+                        android:fontFamily="sans-serif-condensed"
                         tools:ignore="RtlSymmetry" />
                 </TableRow>
 
