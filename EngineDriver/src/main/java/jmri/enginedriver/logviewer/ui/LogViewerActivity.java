@@ -565,8 +565,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         getLogFileList(false);
     }
     public boolean getLogFileList(boolean shareLast) {
-        boolean hasLogFiles = false;
-
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
 
