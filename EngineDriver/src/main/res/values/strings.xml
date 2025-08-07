@@ -188,7 +188,11 @@
 
 <!--    <string name="logviewerReset">Reset</string> -->
     <string name="logviewerClose">Close</string>
-    <string name="logviewerSave">Start recording to file</string>
+    <string name="logviewerSave">Start</string>
+    <string name="logviewerStopSave">Stop</string>
+    <string name="logviewerShare">Share last</string>
+    <string name="shareFile">Share File: %s</string>
+    <string name="toastNoAppToShare">No app found to share the file</string>
 
     <string name="rosterEntryImageSelectButtonText">New image</string>
     <string name="rosterEntryImageRemoveButtonText">Remove</string>
