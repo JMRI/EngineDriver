@@ -629,7 +629,7 @@
     <string name="lightsTextUnknown">Inconnu</string>
 
     <string name="logviewerClose">Fermer</string>
-    <string name="logviewerSave">Commencer enregistrement fichier log.</string>
+    <string name="logviewerSave">Commencer</string>
 
     <string name="prefLocaleTitle">Localisation</string>
     <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Les touches de directions seront réinitialisées.</string>
@@ -1026,6 +1026,9 @@
     <string name="rosterEntryImageHelpText">Uniquement les images stockées localement. S\'il existe une image sur le serveur, elle remplacera l image locale.</string>
     <string name="rosterEntryImageRemoveButtonText">Supprimer</string>
     <string name="rosterEntryImageSaveButtonText">Sauvegarde</string>
+    <string name="shareFileDialogTitle">Sélectionnez un fichier à partager</string>
+    <string name="shareFile">Partager le fichier : %s</string>
+    <string name="toastNoAppToShare">Aucune application trouvée pour partager le fichier</string>
     <string name="rosterEntryImageSelectButtonText">Nouvelle image</string>
     <string name="rosterEntryImageServerImageHelpText">Le serveur ayant une image de la loco, vous ne pouvez pas remplacer celle-ci par une image locale, qui sera a nouveau remplacee par celle du serveur.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si actif, Engine Driver ne verifiera pas si plusieurs Gamepads</string>
@@ -1182,5 +1185,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Mot de passe pour remplacer le minuteur (mode démo) sans le désactiver</string>
     <string name="toastKidsTimerNoLoco">Acquérir une locomotive avant de démarrer le chronomètre</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Sur Arrêt Appui long</string>
+    <string name="logviewerStopSave">Arrêt</string>
+    <string name="logviewerShare">Partager</string>
 
 </resources>

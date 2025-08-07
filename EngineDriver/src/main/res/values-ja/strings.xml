@@ -317,7 +317,7 @@
     <string name="LocoSelectMethodRoster">サーバー列車情報</string>
     <string name="logViewer">ログの表示</string>
     <string name="logviewerClose">閉じる</string>
-    <string name="logviewerSave">ファイルへの記録を開始します</string>
+    <string name="logviewerSave">始める</string>
 
 
     <string name="mrc_settings">MRC設定</string>
@@ -941,6 +941,9 @@
     <string name="rosterEntryImageHelpText">ローカルに保存された画像のみ。  サーバーに機関車の画像がある場合、この選択は上書きされます。</string>
     <string name="rosterEntryImageRemoveButtonText">取り除く</string>
     <string name="rosterEntryImageSaveButtonText">保存</string>
+    <string name="shareFileDialogTitle">共有するファイルを選択</string>
+    <string name="shareFile">ファイルを共有: %s</string>
+    <string name="toastNoAppToShare">ファイルを共有するためのアプリが見つかりません</string>
     <string name="rosterEntryImageSelectButtonText">新しい画像</string>
     <string name="rosterEntryImageServerImageHelpText">サーバーには機関車の画像があります。ローカル イメージはサーバー上のイメージによって自動的に上書きされるため、変更することはできません。</string>
     <string name="routes">ルート</string>
@@ -1201,5 +1204,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">タイマー（デモモード）を無効にせずに上書きするためのパスワード</string>
     <string name="toastKidsTimerNoLoco">タイマーを開始する前に機関車を入手する</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP 停止時に長押し</string>
+    <string name="logviewerStopSave">停止</string>
+    <string name="logviewerShare">共有</string>
 
 </resources>

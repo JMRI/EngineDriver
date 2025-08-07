@@ -311,11 +311,6 @@
     <string name="LocoSelectMethodRoster">Catalogue (Roster)</string>
     <string name="logViewer">Affichage du journal</string>
 
-    <string name="logviewerSave">Débuter l\'enregistrement du fichier</string>
-
-
-
-
 
     <string name="none">Aucun</string>
     <string name="notification_text">Appuyer pour ouvrir Engine Driver à nouveau</string>

@@ -20,6 +20,7 @@
  * Bug fix for NPE when changing to a throttle screen layout with more possible throttles than the previous one
  * Added Option for single throttle EStop on long press of 'stop' button
  * Cleaned up some commented out code (toast commands that have been replaced with safeToast())
+ * Added button to share the a log file
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message
@@ -924,6 +925,7 @@
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add option to choose which server to automatically connect to
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
+ *   TODO: Why does the first connection attempt fail sometimes
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also

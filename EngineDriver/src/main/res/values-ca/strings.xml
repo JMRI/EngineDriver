@@ -610,7 +610,7 @@
     <string name="lightsTextUnknown">Desconegut</string>
 
     <string name="logviewerClose">Tanca</string>
-    <string name="logviewerSave">Comenceu la gravació al fitxer</string>
+    <string name="logviewerSave">Comença</string>
 
     <string name="prefLocaleTitle">Localització</string>
     <string name="prefLocaleSummary">Idioma a utilitzar. ADVERTÈNCIA! Es reiniciaran les etiquetes de les tecles de direcció</string>
@@ -1029,6 +1029,9 @@
     <string name="rosterEntryImageHelpText">Imatges emmagatzemades localment. Si el vostre servidor té una imatge per al Loco, sobreescriu aquesta selecció.</string>
     <string name="rosterEntryImageRemoveButtonText">Treure</string>
     <string name="rosterEntryImageSaveButtonText">Estalviar</string>
+    <string name="shareFileDialogTitle">Seleccioneu un fitxer per compartir</string>
+    <string name="shareFile">Comparteix fitxer: %s</string>
+    <string name="toastNoAppToShare">No s\'ha trobat cap aplicació per compartir el fitxer</string>
     <string name="rosterEntryImageSelectButtonText">Nova imatge</string>
     <string name="rosterEntryImageServerImageHelpText">El vostre servidor té una imatge per al loco. Podeu canviar la imatge local, ja que s\'acabarà automàticament per la que hi ha al servidor.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si el controlador del motor activat no comprovarà si hi ha diversos jocs.</string>
@@ -1192,5 +1195,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Contrasenya per anul·lar el temporitzador (mode de demostració) sense desactivar-lo</string>
     <string name="toastKidsTimerNoLoco">Adquirir una locomotora abans d\'engegar el temporitzador</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Premsa llarga</string>
+    <string name="logviewerStopSave">Atureu-vos</string>
+    <string name="logviewerShare">Comparteix</string>
 
 </resources>

@@ -608,7 +608,7 @@
     <string name="lightsTextUnknown">Desconocido</string>
 
     <string name="logviewerClose">Cierra</string>
-    <string name="logviewerSave">Empezar a grabar en archivo</string>
+    <string name="logviewerSave">Comenzar</string>
 
     <string name="prefLocaleTitle">Localización</string>
     <string name="prefLocaleSummary">Idioma a utilizar.\n¡ADVERTENCIA! Se reiniciarán las etiquetas de las teclas de dirección</string>
@@ -1026,6 +1026,9 @@
     <string name="prefDeviceSoundsMomentumOverrideTitle">No clips Loco Paso sonidos</string>
     <string name="rosterEntryImageHelpText">Solo imágenes almacenadas localmente. Si su servidor tiene una imagen para el LOCO, sobrescribirá esta selección.</string>
     <string name="rosterEntryImageServerImageHelpText">Su servidor tiene una imagen para el Loco. No puede cambiar la imagen local, ya que se agregará automáticamente por el en el servidor.</string>
+    <string name="shareFileDialogTitle">Seleccione un archivo para compartir</string>
+    <string name="shareFile">Compartir archivo: %s</string>
+    <string name="toastNoAppToShare">No se encontró ninguna aplicación para compartir el archivo</string>
     <string name="rosterEntryImageSelectButtonText">Nueva imagen</string>
     <string name="rosterEntryImageRemoveButtonText">Remover</string>
     <string name="rosterEntryImageSaveButtonText">Guardar</string>
@@ -1179,5 +1182,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Contraseña para anular el temporizador (modo de demostración) sin deshabilitarlo</string>
     <string name="toastKidsTimerNoLoco">Adquiera una locomotora antes de iniciar el cronómetro</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Al detenerse, pulsación larga</string>
+    <string name="logviewerStopSave">Detener</string>
+    <string name="logviewerShare">Compartir</string>
 
 </resources>

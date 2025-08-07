@@ -145,7 +145,7 @@
     <string name="lightsTextUnknown">Sconosciuto</string>
 
     <string name="logviewerClose">Chiudere</string>
-    <string name="logviewerSave">Inizia la registrazione su file</string>
+    <string name="logviewerSave">Inizio</string>
 
 <!--    <string name="prefTitle">Preferenze</string>-->
     <string name="prefSummary">Preferenze per Engine Driver</string>
@@ -968,6 +968,9 @@
     <string name="prefDeviceSoundsMomentumOverrideTitle">Non clitare i suoni Step Loco</string>
     <string name="rosterEntryImageHelpText">Solo immagini memorizzate localmente. Se il tuo server ha un\'immagine per la loco, sovrascriverà questa selezione.</string>
     <string name="rosterEntryImageServerImageHelpText">Il tuo server ha un\'immagine per la loco. Puoi cambiare l\'immagine locale in quanto verrà automaticamente sovrascritta da quella sul server.</string>
+    <string name="shareFileDialogTitle">Seleziona un file da condividere</string>
+    <string name="shareFile">Condividi file: %s</string>
+    <string name="toastNoAppToShare">Nessuna app trovata per condividere il file</string>
     <string name="rosterEntryImageSelectButtonText">Nuova immagine</string>
     <string name="rosterEntryImageRemoveButtonText">Rimuovere</string>
     <string name="rosterEntryImageSaveButtonText">Salva</string>
@@ -1130,5 +1133,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Password per ignorare il timer (modalità demo) senza disattivarlo</string>
     <string name="toastKidsTimerNoLoco">Acquisisci una locomotiva prima di avviare il timer</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Pressione prolungata</string>
+    <string name="logviewerStopSave">Fermare</string>
+    <string name="logviewerShare">Condividere</string>
 
 </resources>

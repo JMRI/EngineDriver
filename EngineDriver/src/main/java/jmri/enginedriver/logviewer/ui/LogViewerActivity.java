@@ -5,7 +5,9 @@ import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
+
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,6 +65,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private threaded_application mainapp;  // hold pointer to mainapp
 
     private Button saveButton;
+    private Button stopSaveButton;
+    private Button shareButton;
     private TextView saveInfoTV;
 
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
@@ -106,9 +113,24 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //        resetButton.setOnClickListener(reset_click_listener);
 
         saveButton = findViewById(R.id.logviewer_button_save);
-        save_button_listener save_click_listener = new save_button_listener();
-        saveButton.setOnClickListener(save_click_listener);
+        SaveButtonListener saveClickListener = new SaveButtonListener();
+        saveButton.setOnClickListener(saveClickListener);
+
+        stopSaveButton = findViewById(R.id.logviewer_button_stop_save);
+        StopSaveButtonListener stopSaveClickListener = new StopSaveButtonListener();
+        stopSaveButton.setOnClickListener(stopSaveClickListener);
+
         saveInfoTV = findViewById(R.id.logviewer_info);
+
+        shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainapp.buttonVibration(); // If you want vibration
+                showLogFileSelectionDialog();
+            }
+        });
+
         showHideSaveButton();
 
         logReaderTask = new LogReaderTask();
@@ -284,10 +306,17 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
     }
 
-    public class save_button_listener implements View.OnClickListener {
+    public class SaveButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.buttonVibration();
             saveLogFile();
+        }
+    }
+
+    public class StopSaveButtonListener implements View.OnClickListener {
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            stopSaveLogFile();
         }
     }
 
@@ -296,7 +325,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         try {
             Runtime.getRuntime().exec("logcat -c");
-            Runtime.getRuntime().exec("logcat -f " + logFile);
+            mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
@@ -309,13 +338,29 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     }
 
+    private void stopSaveLogFile() {
+        if (mainapp.logcatProcess != null) {
+            mainapp.logcatProcess.destroy(); // Sends SIGTERM to the process
+            mainapp.logcatProcess = null;
+            Log.d(threaded_application.applicationName, "Logcat file recording stopped.");
+            threaded_application.safeToast("Logcat recording stopped.", Toast.LENGTH_SHORT);
+            // You might want to update UI or mainapp.logSaveFilename here if needed
+            mainapp.logSaveFilename = ""; // Or indicate it's no longer active
+            showHideSaveButton();
+        }
+    }
+
     void showHideSaveButton() {
         if (!mainapp.logSaveFilename.isEmpty()) {
             saveButton.setVisibility(View.GONE);
+            stopSaveButton.setVisibility(View.VISIBLE);
+            shareButton.setVisibility(View.GONE);
             saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
-            saveInfoTV.setVisibility(View.VISIBLE);
+            saveInfoTV.setVisibility(View.GONE);
         } else {
             saveButton.setVisibility(View.VISIBLE);
+            stopSaveButton.setVisibility(View.GONE);
+            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
             saveInfoTV.setVisibility(View.GONE);
         }
     }
@@ -514,6 +559,104 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     }
                 });
             }
+        }
+    }
+
+    public boolean checkHasLogFiles() {
+        mainapp.iplsFileNames = new ArrayList<>();
+        mainapp.iplsNames = new ArrayList<>();
+
+        try {
+            File dir = new File(context.getExternalFilesDir(null).getPath());
+            File[] filesList = dir.listFiles();
+            if (filesList != null) {
+                for (File file : filesList) {
+                    String lowercaseFileName = file.getName().toLowerCase();
+                    if ( (lowercaseFileName.startsWith("logcat")) && (lowercaseFileName.endsWith(".txt")) ) {
+                        return true; // got one, so just exit
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.d(threaded_application.applicationName, activityName + ": checkHasLogFiles(): Error trying to find log files");
+        }
+
+        return false;
+    }
+
+    public ArrayList<File> getLogFilesForDialog() {
+        ArrayList<File> logFiles = new ArrayList<>();
+        try {
+            File dir = new File(context.getExternalFilesDir(null).getPath());
+            if (dir.exists() && dir.isDirectory()) {
+                File[] filesList = dir.listFiles();
+                if (filesList != null) {
+                    for (File file : filesList) {
+                        String lowercaseFileName = file.getName().toLowerCase();
+                        if (lowercaseFileName.startsWith("logcat") && lowercaseFileName.endsWith(".txt")) {
+                            logFiles.add(file);
+                            Log.d(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Found: " + file.getName());
+                        }
+                    }
+                    // Optional: Sort the files, e.g., by name or date
+                    Collections.sort(logFiles, (file1, file2) -> file2.getName().compareTo(file1.getName())); // Sort descending by name (newest first if using timestamp)
+                }
+            }
+        } catch (Exception e) {
+            Log.e(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Error trying to find log files", e);
+            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+        }
+        return logFiles;
+    }
+
+    private void showLogFileSelectionDialog() {
+        ArrayList<File> logFiles = getLogFilesForDialog();
+
+        if (logFiles.isEmpty()) return;
+
+        // Extract just the file names for display in the dialog
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (File file : logFiles) {
+            fileNames.add(file.getName());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getApplicationContext().getResources().getString(R.string.shareFileDialogTitle));
+
+        // Convert ArrayList to Array for the dialog
+        final CharSequence[] items = fileNames.toArray(new CharSequence[0]);
+
+        builder.setItems(items, (dialog, which) -> {
+            // 'which' is the index of the selected item
+            File selectedFile = logFiles.get(which);
+            shareFile(selectedFile,selectedFile.getName()); // You'll create this helper method
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void shareFile(File file, String fileName) {
+        Uri fileUri = FileProvider.getUriForFile(
+                this,
+                getApplicationContext().getPackageName() + ".fileprovider",
+                file
+        );
+        shareFile(fileUri, fileName);
+    }
+    private void shareFile(Uri fileUri, String fileName) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain"); // Set the MIME type of the file
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
+
+        // Verify that there are apps available to handle this intent
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
+        } else {
+            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
         }
     }
 

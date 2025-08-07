@@ -145,7 +145,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
         <item name="ed_read_glyph">@drawable/read_glyph_light</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -161,6 +162,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
 
         <item name="ed_icon">@drawable/icon_vector</item>
 
@@ -316,7 +318,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
         <item name="ed_read_glyph">@drawable/read_glyph_light</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -332,6 +335,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
         <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -480,7 +484,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
         <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>
@@ -495,6 +500,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
         <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -644,7 +650,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
         <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>
@@ -659,6 +666,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
 
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
@@ -809,7 +817,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
         <item name="ed_read_glyph">@drawable/read_glyph_light</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_light</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light
         </item>
@@ -825,6 +834,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">
             @drawable/original_dccex_button_cv_programmer_pom
@@ -987,7 +997,8 @@
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
         <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_dark</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
         <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark
         </item>
@@ -1002,6 +1013,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
+        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
 
         <item name="ed_progressBar">@drawable/neon_progress_bar</item>
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>

@@ -621,7 +621,7 @@
     <string name="lightsTextUnknown">Unbekannt</string>
 
     <string name="logviewerClose">Schließen</string>
-    <string name="logviewerSave">Starten Sie die Aufnahme in eine Datei</string>
+    <string name="logviewerSave">Start</string>
 
     <string name="prefLocaleTitle">Lokalisierung</string>
     <string name="prefLocaleSummary">Zu benützende Sprache. WARNUNG! Die Bezeichnungen der Richtungsknöpfe werden zurückgesetzt.</string>
@@ -1037,6 +1037,9 @@
     <string name="rosterEntryImageHelpText">Nur lokal gespeicherte Bilder. Wenn Ihr Server ein Bild für den LOCO hat, wird diese Auswahl überschrieben.</string>
     <string name="rosterEntryImageRemoveButtonText">Entfernen</string>
     <string name="rosterEntryImageSaveButtonText">Speichern</string>
+    <string name="shareFileDialogTitle">Wählen Sie eine Datei zum Freigeben aus</string>
+    <string name="shareFile">Datei freigeben: %s</string>
+    <string name="toastNoAppToShare">Keine App zum Teilen der Datei gefunden</string>
     <string name="rosterEntryImageSelectButtonText">Neues Bild</string>
     <string name="rosterEntryImageServerImageHelpText">Ihr Server verfügt über ein Bild für den Lok. Sie können das lokale Bild ändern, da er von der einem auf dem Server automatisch überwunden wird.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Wenn der aktivierte Motortreiber nicht nach mehreren Gamepads prüft.</string>
@@ -1181,5 +1184,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Passwort zum Überschreiben des Timers (Demo-Modus), ohne ihn zu deaktivieren</string>
     <string name="toastKidsTimerNoLoco">Erwerben Sie eine Lok, bevor Sie den Timer starten</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Bei Stopp Langes Drücken</string>
+    <string name="logviewerStopSave">Stoppen</string>
+    <string name="logviewerShare">Aktie</string>
 
 </resources>

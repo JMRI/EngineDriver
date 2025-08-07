@@ -162,7 +162,7 @@
 
     <!--    <string name="logviewerReset">Reset</string> -->
     <string name="logviewerClose">Zavřít</string>
-    <string name="logviewerSave">Spustit ukládání do souboru</string>
+    <string name="logviewerSave">Start</string>
 
 <!--    <string name="prefTitle">Předvolby</string>-->
     <string name="prefSummary">Předvolby pro Engine Driver</string>
@@ -1136,6 +1136,9 @@
     <string name="rosterEntryImageHelpText">Lokálně uložené obrázky. Pokud má váš server obraz pro LOCO, přepíše tento výběr.</string>
     <string name="rosterEntryImageRemoveButtonText">Odstranit</string>
     <string name="rosterEntryImageSaveButtonText">Uložit</string>
+    <string name="shareFileDialogTitle">Vyberte soubor ke sdílení</string>
+    <string name="shareFile">Sdílet soubor: %s</string>
+    <string name="toastNoAppToShare">Nebyla nalezena žádná aplikace pro sdílení souboru</string>
     <string name="rosterEntryImageSelectButtonText">Nový vzhled</string>
     <string name="rosterEntryImageServerImageHelpText">Váš server má obraz pro LOCO. Můžete změnit místní snímek, protože bude automaticky převaženo jedním na serveru.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Pokud ovladač motoru povolen, nebude kontrolovat více gamepadů.</string>
@@ -1277,5 +1280,7 @@
     <string name="prefKidsTimerDemoModePasswordSummary">Heslo pro přepsání časovače (Demo Mode) bez jeho deaktivace</string>
     <string name="toastKidsTimerNoLoco">Před spuštěním časovače si pořiďte lokomotivu</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Dlouhé stisknutí</string>
+    <string name="logviewerStopSave">Zastávka</string>
+    <string name="logviewerShare">Podíl</string>
 
 </resources>
