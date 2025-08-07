@@ -359,7 +359,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         } else {
             saveButton.setVisibility(View.VISIBLE);
             stopSaveButton.setVisibility(View.GONE);
-            shareButton.setVisibility(View.VISIBLE);
+            shareButton.setVisibility((getLogFileList(false)) ? View.VISIBLE : View.GONE);
             saveInfoTV.setVisibility(View.GONE);
         }
     }
@@ -562,6 +562,11 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     public void getLogFileList() {
+        getLogFileList(false);
+    }
+    public boolean getLogFileList(boolean shareLast) {
+        boolean hasLogFiles = false;
+
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
 
@@ -575,6 +580,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     String fileName = file.getName();
                     String lowercaseFileName = file.getName().toLowerCase();
                     if ( (lowercaseFileName.startsWith("logcat")) && (lowercaseFileName.endsWith(".txt")) ) {
+                        if (!shareLast) return true; // not sharing. got one, so just exit
+
                         try {
                             Log.d(threaded_application.applicationName, activityName + ": getLogFileList(): Found: " + fileName);
                             if (lastFileName.compareTo(fileName) < 0) {
@@ -593,7 +600,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         } catch (Exception e) {
             Log.d(threaded_application.applicationName, activityName + ": getLogFileList(): Error trying to find log files");
         }
+
+        return false;
     }
+
     private void shareFile(File file, String fileName) {
         Uri fileUri = FileProvider.getUriForFile(
                 this,
